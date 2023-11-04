@@ -1,0 +1,43 @@
+// ----------------------------------------------------- //
+// Fonts
+// ---------------------------------------------------- //
+
+@font-face {
+    font-family: 'iransansXV';
+    src: url('~/assets/fonts/IRANSansXV.woff') format('woff-variations'),
+        url('~/assets/fonts/IRANSansXV.woff') format('woff');
+    font-weight: 100 900;
+    font-display: fallback;
+
+}
+
+@font-face {
+    font-family: iransansx;
+    src: url('~/assets/fonts/IRANSansX-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: iransansx;
+    src: url('~/assets/fonts/IRANSansX-Bold.woff') format('woff');
+    font-weight: 700;
+}
+
+// Persian Number font
+
+@font-face {
+    font-family: IranSansFaNum;
+    src: url('~/assets/fonts/IRANSansXFaNum-Medium.ttf') format('ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: IranSansFaNum;
+    src: url('~/assets/fonts/IRANSansXFaNum-Regular.ttf') format('ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: IranSansFaNum;
+    src: url('~/assets/fonts/IRANSansXFaNum-Thin.ttf') format('ttf');
+    font-weight: 300;
+}
