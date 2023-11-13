@@ -4,10 +4,11 @@
 
 // General
 @import "./general/font";
-@import "./general/typography";
 
-// Components
-
+// Tools
+@import "./tools/bp";
+@import "./tools/typo";
+@import "./tools/helpers";
 
 //Views
 @import "./views/auth";

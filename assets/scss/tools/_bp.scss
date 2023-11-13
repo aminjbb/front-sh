@@ -1,0 +1,118 @@
+// Breakpoint Mixin
+@charset "UTF-8";
+
+//@example
+/*
+    .example-class{
+        @include gbp(0, "sm") {
+            background-color: red;
+        }
+    }
+*/
+
+// Variables
+$bp-base-font-size: 16px !default;
+$bp-responsive: true !default;
+
+$bp-breakpoints: (
+    xs: 0,
+    sm: 320px,
+    md: 768px,
+    lg: 992px,
+    xl: 1400px) !default;
+
+$bp-static-breakpoint: desktop !default;
+$bp-show-breakpoints: (
+    ) !default;
+$bp-media-type: all !default;
+
+// Functions
+@function bp-px2em($px, $base-font-size: $bp-base-font-size) {
+    @if unitless($px) {
+        @return bp-px2em($px * 1px, $base-font-size
+    );
+}
+
+@else if unit($px)==em {
+    @return $px;
+}
+
+@return ($px / $base-font-size) * 1em;
+}
+
+@function bp-unit-check($px) {
+    @if unitless($px) {
+        @return $px * 1px;
+    }
+
+    @else if unit($px) !=px {
+        @warn "Please provide px or unitless value";
+    }
+
+    @return $px;
+}
+
+@function bp-get-breakpoint-width($name, $breakpoints: $bp-breakpoints) {
+    @if map-has-key($breakpoints, $name) {
+        @return map-get($breakpoints, $name);
+    }
+
+    @else {
+        @warn "Breakpoint #{$name} wasn't found in $breakpoints.";
+    }
+}
+
+// Mixins
+@mixin gbp($from: false,
+    $until: false,
+    $and: false,
+    $media-type: $bp-media-type,
+    $breakpoints: $bp-breakpoints,
+    $responsive: $bp-responsive,
+    $static-breakpoint: $bp-static-breakpoint) {
+    $min-width: 0;
+    $max-width: 0;
+    $media-query: "";
+
+    @if $from {
+        @if type-of($from)==number {
+            $min-width: bp-unit-check($from);
+        }
+
+        @else {
+            $min-width: bp-unit-check(bp-get-breakpoint-width($from, $breakpoints));
+        }
+    }
+
+    @if $until {
+        @if type-of($until)==number {
+            $max-width: bp-unit-check($until);
+        }
+
+        @else {
+            $max-width: bp-unit-check(bp-get-breakpoint-width($until, $breakpoints)) - 1px;
+        }
+    }
+
+    @if $min-width !=0 {
+        $media-query: "#{$media-query} and (min-width: #{$min-width})";
+    }
+
+    @if $max-width !=0 {
+        $media-query: "#{$media-query} and (max-width: #{$max-width})";
+    }
+
+    @if $and {
+        $media-query: "#{$media-query} and #{$and}";
+    }
+
+    // Remove unnecessary media query prefix 'all and '
+    @if ($media-type =="all" and $media-query !="") {
+        $media-type: "";
+        $media-query: str-slice(unquote($media-query), 6);
+    }
+
+    @media #{$media-type + $media-query} {
+        @content;
+    }
+}

@@ -11,17 +11,6 @@
 
 }
 
-@font-face {
-    font-family: iransansx;
-    src: url('~/assets/fonts/IRANSansX-Regular.woff') format('woff');
-}
-
-@font-face {
-    font-family: iransansx;
-    src: url('~/assets/fonts/IRANSansX-Bold.woff') format('woff');
-    font-weight: 700;
-}
-
 // Persian Number font
 
 @font-face {
@@ -40,4 +29,17 @@
     font-family: IranSansFaNum;
     src: url('~/assets/fonts/IRANSansXFaNum-Thin.ttf') format('ttf');
     font-weight: 300;
+}
+
+@supports (font-variation-settings: normal) {
+    html,
+    html * {
+        font-family: 'iransansXV', sans-serif !important;
+    }
+}
+
+html,
+html * {
+    white-space: normal;
+    font-variation-settings: "wght" 400, "dots" 0
 }
