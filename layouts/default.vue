@@ -1,11 +1,23 @@
 <template>
 <div v-if="screenType !== null">
-    <div class="t12 w700">your screen type is {{ screenType }}</div>
+    <template v-if="screenType === 'desktop'">
+        <desktopHeader />
+        <slot />
+        <desktopFooter />
+    </template>
+
+    <template v-else-if="screenType === 'mobile'">
+        <mobileHeader />
+        <slot />
+        <mobileFooter />
+    </template>
 </div>
 </template>
 
 <script>
 export default {
+    name: "layout",
+
     data() {
         return {
             screenType: null

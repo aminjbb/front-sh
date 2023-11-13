@@ -1,0 +1,27 @@
+@mixin typo($start: 12, $end: 50) {
+    @for $i from $start through $end {
+        $class: "t#{$i}";
+
+        .#{$class} {
+            font-size: #{$i}px;
+            // You can add more styles here if needed
+        }
+    }
+}
+
+
+@mixin font-variation-wght($start: 100, $end: 700, $step: 100) {
+    @for $i from $start through $end {
+        $class: "w#{$i}";
+
+        .#{$class} {
+            font-variation-settings: "wght" #{$i};
+            // You can add more styles here if needed
+        }
+    }
+}
+
+
+// Usage
+@include typo(12, 50);
+@include font-variation-wght(100, 700, 100);
