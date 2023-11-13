@@ -1,6 +1,6 @@
 <template>
 <div v-if="screenType !== null">
-    <div class="t12 w700">your screen type is {{ screenType }}</div>
+    <div class="t12 w700" style="height:1000px">your screen type is {{ screenType }}</div>
 </div>
 </template>
 

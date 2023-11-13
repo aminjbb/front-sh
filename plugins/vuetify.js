@@ -9,11 +9,13 @@ const myTheme = {
     background: '#FFFFFF',
     surface: '#FFFFFF',
     primary: '#D72685',
-    secondary: '#03DAC6',
-    error: '#B00020',
+    secondary: '#757575',
+    error: '#D32F2F',
     info: '#2196F3',
     success: '#4CAF50',
-    warning: '#FB8C00',
+    warning: '#F57C00',
+    danger: '#D32F2F',
+    detail: '#673AB7'
   },
 }
 
