@@ -55,6 +55,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped>
 @import '~/assets/scss/components/mobile/general/footer.scss';
 </style>
