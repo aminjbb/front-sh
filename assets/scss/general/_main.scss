@@ -11,3 +11,9 @@ html *,
 .v-locale--is-ltr{
     direction: rtl !important;
 }
+
+.mobile-no-padd{
+    @include gbp(0, 768) {
+        padding: 0 !important;
+    }
+}
