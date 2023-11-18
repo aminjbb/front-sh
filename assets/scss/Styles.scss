@@ -2,14 +2,14 @@
 // Style
 // ---------------------------------------------------- //
 
-// General
-@import "./general/font";
-@import "./general/main";
-
 // Tools
 @import "./tools/bp";
 @import "./tools/typo";
 @import "./tools/helpers";
+
+// General
+@import "./general/font";
+@import "./general/main";
 
 //Views
 @import "./views/auth";

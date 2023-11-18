@@ -1,0 +1,69 @@
+//------------------------------------------------
+//  Surprise
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.surprise-slider {
+    >div:first-child {
+        background-color: #C51162;
+        height: 292px;
+        padding: 16px 0;
+
+        @include gbp("md") {
+            border-radius: 8px;
+        }
+    }
+
+    &__info {
+        width: 160px;
+        flex: 0 0 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        @include gbp("md") {
+            width: 200px;
+            flex: 0 0 200px;
+        }
+
+        &__counter {
+            span {
+                font-family: 'IranSansFaNum' !important;
+                color: #fff;
+            }
+
+            .v-icon {
+                color: #fff;
+                font-size: 20px;
+            }
+        }
+
+        &__image {
+            width: 111px;
+
+            img {
+                width: 100%;
+                height: auto !important;
+            }
+        }
+
+        &__btn {
+            letter-spacing: 0 !important;
+            width: 114px !important;
+            border-color: #F7F8FA !important;
+            color: #F7F8FA !important;
+            height: 33px !important;
+        }
+    }
+
+    &__swiper {
+        width: calc(100% - 161px);
+        flex: 0 0 calc(100% - 161px);
+
+        @include gbp("md") {
+            width: calc(100% - 200px);
+            flex: 0 0 calc(100% - 200px);
+        }
+    }
+}

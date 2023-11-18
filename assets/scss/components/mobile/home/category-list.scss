@@ -1,0 +1,61 @@
+//------------------------------------------------
+//  Mobile Category List
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+$parent: 'category-list';
+
+.#{$parent} {
+    &--mobile {
+        .#{$parent} {
+            &__items {
+                margin: 0 -6px;
+                flex-wrap: wrap;
+            }
+
+            &__item {
+                flex: 0 0 132px;
+                width: 132px;
+                padding: 6px;
+
+                @include gbp(450, 611) {
+                    flex: 0 0 102px;
+                    width: 102px;
+                }
+
+                @include gbp(0, 450) {
+                    flex: 0 0 84px;
+                    width: 84px;
+                }
+
+                &__image {
+                    height: 120px;
+                    width: 120px;
+                    border-radius: 4px;
+                    background: var(--grey-grey-lighten-4, #F5F5F5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 10px;
+                    overflow: hidden;
+
+                    @include gbp(450, 611) {
+                        height: 90px;
+                        width: 90px;
+                    }
+
+                    @include gbp(0, 450) {
+                        height: 72px;
+                        width: 72px;
+                    }
+
+                    img {
+                        width: auto !important;
+                        height: auto !important;
+                    }
+
+                }
+            }
+        }
+    }
+}
