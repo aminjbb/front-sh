@@ -190,8 +190,10 @@ export default {
 
     methods: {
         openSubMenu(id) {
-            const ulItems = document.querySelectorAll('ul');
-            const liItems = document.querySelectorAll('li');
+            const menu = document.querySelector('.menu');
+            const ulItems = menu.querySelectorAll('ul');
+            const liItems = menu.querySelectorAll('li');
+            
             ulItems.forEach(item => {
                 item.classList.remove('show-mega-menu');
             });
