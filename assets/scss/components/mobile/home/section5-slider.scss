@@ -1,0 +1,130 @@
+//------------------------------------------------
+//  Section 5 - Attr slider
+//------------------------------------------------
+
+@import "~/assets/scss/tools/bp";
+
+.section5-slider {
+    >div:first-child {
+        background-color: #0D47A1;
+        height: 400px;
+        padding: 16px;
+
+        @include gbp(0, 480) {
+            height: auto !important;
+        }
+
+        @include gbp("md") {
+            border-radius: 8px;
+        }
+    }
+
+    &__info {
+        width: 180px;
+        flex: 0 0 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+
+        @include gbp(0, 480) {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+
+        &__title {
+            font-size: 24px;
+            font-weight: 400;
+            text-align: center;
+            padding: 0 28px;
+            width: 100%;
+        }
+
+        &__image {
+            width: 110px;
+
+            img {
+                width: 100%;
+                height: auto !important;
+            }
+
+            @include gbp(0, 480) {
+                display: none;
+            }
+        }
+    }
+
+    &__items {
+        width: calc(100% - 180px);
+        flex: 0 0 calc(100% - 180px);
+
+        @include gbp(480) {
+            overflow-x: auto;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        @include gbp(0, 480) {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+
+        >div {
+            width: 956px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            @include gbp(0, 480) {
+                flex-direction: column;
+                width: 100% !important;
+            }
+        }
+    }
+
+    &__sku-groups {
+        @include gbp(0, 480) {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        &__inner {
+            border-radius: 8px;
+            background: #FFF;
+            padding: 16px;
+            height: 352px;
+
+            @include gbp(0, 480) {
+                height: 325px;
+            }
+
+        }
+    }
+
+    &__item {
+        display: flex;
+        height: 147.5px;
+        width: 50%;
+        flex: 0 0 50%;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+
+        @include gbp(0, 480) {
+            height: 125.5px;
+        }
+
+        &:first-child,
+        &:nth-child(2) {
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        &:first-child,
+        &:nth-child(3) {
+            border-left: 1px solid #E0E0E0;
+        }
+    }
+}

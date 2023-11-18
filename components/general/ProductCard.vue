@@ -1,6 +1,6 @@
 <template lang="">
 <article class="product-card pa-2">
-    <div class="product-card__index">
+    <div v-if="index" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>
 
@@ -51,8 +51,19 @@
 <script>
 export default {
     props: {
+        /**
+         * Content
+         */
         content: Object,
+
+        /**
+         * Show index
+         */
         index: String,
+
+        /**
+         * Hide card info
+         */
         hideInfo: Boolean
     },
 
