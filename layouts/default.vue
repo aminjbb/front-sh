@@ -3,7 +3,6 @@
     <template v-if="screenType === 'desktop'">
         <desktopHeader />
         <slot />
-        <desktopFooter />
     </template>
 
     <template v-else-if="screenType === 'mobile'">
