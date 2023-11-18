@@ -1,0 +1,139 @@
+//------------------------------------------------
+//  desktop header
+//------------------------------------------------
+
+$parent: 'header';
+$parent1: 'menu';
+
+.#{$parent} {
+    &--desktop {
+        display: flex;
+        flex-direction: column;
+        color: gray;
+        margin-top: 28px;
+
+        .#{$parent}__menu {
+            display: flex;
+            width: 100%;
+
+            .#{$parent}__logo {
+                margin-right: 53px;
+            }
+
+            .#{$parent}__search-box {
+                width: 636px;
+                margin-right: 65px;
+            }
+
+            .#{$parent}__icon {
+                display: flex;
+                gap: 10px;
+            }
+        }
+    }
+}
+
+.#{$parent1} {
+    &--desktop {
+        > nav > ul.menu__items {
+            margin-top: 20px;
+            margin-right: 53px;
+            display: flex;
+            font-size: small;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+
+            > li {
+                padding: 10px;
+                list-style: none;
+                position: relative;
+
+                &:hover .mega-menu { 
+                    display: block; 
+                }
+
+                .mega-menu {
+                    display: none;  
+                    position: absolute; 
+                    width: 100vw; 
+                    right: 0;
+                    top: 40px;
+                    > ul {
+                        display: flex;  
+                        flex-direction: column;
+                        background-color: #fff; 
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        width: calc(100% - 106px);
+                        min-height: 420px;
+                        gap: 10px;
+
+                        
+
+                        &::before {
+                            width: 220px;
+                            height: 100%;
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            background: var(--shade-background-color, #F7F8FA);
+                        }
+
+                        > li {
+                            width: 220px;
+                            padding:13px 16px;
+                            &:hover {
+                                background-color: var(--primary-95, #FCE4EC); /* Apply the hover effect here */
+                            }
+                            
+                            > a, > .inner-container {
+                                padding: 10px;
+                                display: block;
+                                display: flex;
+                                align-items: center;
+                                
+                                position: relative;
+                                
+                                &:hover {
+                                    // Apply the hover effect to the entire li element
+                                    background-color: var(--primary-95, #FCE4EC);
+                                }
+                                
+                                
+                            }
+
+                            > div {
+                                display: flex; 
+                                flex-wrap: wrap; 
+                                padding: 0; 
+                                margin: 10px 0;
+                                position: absolute;
+                                width: calc(100vw - 326px);
+                                right: 220px;
+                                top: 0;
+                                padding: 0 12px 12px;
+                                height: 100%; 
+
+                                .image{
+                                    width: 184px;
+                                    flex: 0 0 184;
+                                }
+
+                                >ul{
+                                    flex:1;
+                                    column-count: 4;
+                                    height: 100%;
+                                    li {
+                                        list-style: none !important;
+                                        
+                                    }   
+                                }    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

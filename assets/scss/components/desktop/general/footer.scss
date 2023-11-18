@@ -1,0 +1,24 @@
+//------------------------------------------------
+//  desktop footer
+//------------------------------------------------
+
+$parent: 'footer';
+
+.#{$parent} {
+    &--desktop {
+        height: 560px;
+        width: 100%;
+        background: #fff;
+        
+
+        
+
+            .#{$parent}__logo {
+                display: flex;
+                justify-content: space-between;
+                margin:0px 25px 50px 
+            }
+
+        }
+    
+}
