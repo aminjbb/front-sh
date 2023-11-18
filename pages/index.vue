@@ -6,6 +6,7 @@
             <mobileHomeSurprise :content="surprise" />
             <desktopHomeCategoryList :items="categories" />
             <desktopHomeBanner :items="banner1" col="6" />
+            <MobileHomeSection5Slider :content="section5" />
             <mobileHomeBrands :items="brands" />
             <desktopHomeBanner :items="banner2" col="3" />
             <mobileHomeSection8Slider :items="products" />
@@ -38,6 +39,12 @@
 
         <v-container>
             <mobileHomeBanner :items="banner1" />
+        </v-container>
+
+        <v-container class="mobile-no-padd mt-4">
+            <MobileHomeSection5Slider :content="section5" />
+        </v-container>
+        <v-container>
             <mobileHomeBrands :items="brands" />
             <mobileHomeBanner :items="banner2" />
             <mobileHomeSection8Slider :items="products" />
@@ -437,6 +444,486 @@ export default {
                     title: 'فرق ریمل اصل و فیک اسنس',
                     href: '/'
                 },
+            ],
+            section5: {
+                title: 'مناسب پوست تو',
+                sku_groups: [{
+                        title: 'پوست چرب',
+                        skus: [{
+                                id: 'wed',
+                                image: '',
+                                title: 'بهترین کرم ضدجوش و جای جوش صورت و بدن',
+                                href: '/'
+                            },
+                            {
+                                id: 'wesd',
+                                image: '',
+                                title: 'چطور  ضد آفتاب با SPF مناسب انتخاب کنم؟',
+                                href: '/'
+                            },
+                            {
+                                id: 'werd',
+                                image: '',
+                                title: 'تاثیر یوگا بر رشد مو',
+                                href: '/'
+                            },
+                            {
+                                id: 'wewd',
+                                image: '',
+                                title: 'فرق ریمل اصل و فیک اسنس',
+                                href: '/'
+                            },
+                        ],
+                    },
+                    {
+                        title: 'پوست حساس',
+                        skus: [{
+                                id: 'wed',
+                                image: '',
+                                title: 'بهترین کرم ضدجوش و جای جوش صورت و بدن',
+                                href: '/'
+                            },
+                            {
+                                id: 'wesd',
+                                image: '',
+                                title: 'چطور  ضد آفتاب با SPF مناسب انتخاب کنم؟',
+                                href: '/'
+                            },
+                            {
+                                id: 'werd',
+                                image: '',
+                                title: 'تاثیر یوگا بر رشد مو',
+                                href: '/'
+                            },
+                            {
+                                id: 'wewd',
+                                image: '',
+                                title: 'فرق ریمل اصل و فیک اسنس',
+                                href: '/'
+                            },
+                        ],
+                    },
+                    {
+                        title: 'پوست خشک',
+                        skus: [{
+                                id: 'wed',
+                                image: '',
+                                title: 'بهترین کرم ضدجوش و جای جوش صورت و بدن',
+                                href: '/'
+                            },
+                            {
+                                id: 'wesd',
+                                image: '',
+                                title: 'چطور  ضد آفتاب با SPF مناسب انتخاب کنم؟',
+                                href: '/'
+                            },
+                            {
+                                id: 'werd',
+                                image: '',
+                                title: 'تاثیر یوگا بر رشد مو',
+                                href: '/'
+                            },
+                            {
+                                id: 'wewd',
+                                image: '',
+                                title: 'فرق ریمل اصل و فیک اسنس',
+                                href: '/'
+                            },
+                        ],
+                    }
+                ]
+            },
+            slider5:[
+            {
+                id:'fef',
+                title:'مراقبت پوست',
+                skus: [{
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    }
+                ],
+            },
+            {
+                title:'مراقبت مو',
+                id:'feedef',
+                skus: [{
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    }
+                ],
+            },
+            {
+                title:'آرایش صورت',
+                id:'trt',
+                skus: [{
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    }
+                ],
+            },
+            {
+                title:'آرایش چشم',
+                id:'uju',
+                skus: [{
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    }
+                ],
+            },
+            {
+                title:'آرایش لب',
+                id:'oiu',
+                skus: [{
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    }
+                ],
+            },
+            {
+                title:'بهداشت شخصی',
+                id:'qqw',
+                skus: [{
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    },
+                    {
+                        id: 'wedd',
+                        image: '',
+                        title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        star: '4.1',
+                        href: '/',
+                        price: '184.030',
+                        old_price: '184.030',
+                        new_price: '269,900',
+                        discount: '30%',
+                        currency: 'تومان'
+                    }
+                ],
+            },
             ]
         }
     },
