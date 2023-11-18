@@ -14,21 +14,27 @@
 // Persian Number font
 
 @font-face {
-    font-family: IranSansFaNum;
-    src: url('~/assets/fonts/IRANSansXFaNum-Medium.ttf') format('ttf');
-    font-weight: 400;
-}
-
-@font-face {
-    font-family: IranSansFaNum;
-    src: url('~/assets/fonts/IRANSansXFaNum-Regular.ttf') format('ttf');
+    font-family: 'IranSansFaNum';
+    src: url('~/assets/fonts/IRANSansXFaNum-Medium.woff') format('woff');
     font-weight: 500;
 }
 
 @font-face {
-    font-family: IranSansFaNum;
-    src: url('~/assets/fonts/IRANSansXFaNum-Thin.ttf') format('ttf');
+    font-family: 'IranSansFaNum';
+    src: url('~/assets/fonts/IRANSansXFaNum-Bold.woff') format('woff');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'IranSansFaNum';
+    src: url('~/assets/fonts/IRANSansXFaNum-Light.woff') format('woff');
     font-weight: 300;
+}
+
+@font-face {
+    font-family: 'IranSansFaNum';
+    src: url('~/assets/fonts/IRANSansXFaNum-Regular.woff') format('woff');
+    font-weight: 400;
 }
 
 @supports (font-variation-settings: normal) {
