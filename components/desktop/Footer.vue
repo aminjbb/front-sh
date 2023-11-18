@@ -1,7 +1,9 @@
 <template lang="">
     <footer class="footer footer--desktop">
         <nav class="footer__menu">
+            
             <div class="footer__logo">
+                
                 <a href="/"  title="Shavaz logo">
                     <img
                         src="~/assets/images/shavaz-logo.png"
@@ -23,25 +25,25 @@
             </div>
             <div class="footer__content">
                 <div class="footer__links">
-                    <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                        <li>5</li>
+                    <ul> دسترسی سریع
+                        <li>لوازم آرایشی</li>
+                        <li>مراقبت از پوست</li>
+                        <li>بهداشت خانگی</li>
+                        <li>مراقبت از کودکان</li>
+                        <li>لوازم بهداشتی</li>
                     </ul>
-                    <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                        <li>5</li>
+                    <ul> درباره شاواز
+                        <li>درباره ما</li>
+                        <li>سوالات متدال</li>
+                        <li>فرصت‌های شغلی</li>
+                        <li>فروشنده شوید</li>
+                        
                     </ul>
-                    <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
+                    <ul> راهنمای خرید
+                        <li>نحوه ثبت سفارش</li>
+                        <li>روش‌های پرداخت</li>
+                        <li>شیوه‌های ارسال</li>
+                        <li>شرایط مرجوعی</li>
                     </ul>
                 </div>
                 <div class="logos_email">
@@ -52,8 +54,8 @@
                         src="~/assets/images/entypo-social_instagram-with-circle.png"
                         class=""
                         alt="Shavaz Logo"
-                        width="40"
-                        height="24"
+                        width="28"
+                        height="28"
                         title="instagram"
                     />
                 </a>
@@ -62,8 +64,8 @@
                         src="~/assets/images/entypo-social_youtube-with-circle.png"
                         class=""
                         alt="Shavaz Logo"
-                        width="40"
-                        height="24"
+                        width="28"
+                        height="28"
                         title="youtube"
                     />
                 </a>
@@ -72,8 +74,8 @@
                         src="~/assets/images/bi_telegram.png"
                         class=""
                         alt="Shavaz Logo"
-                        width="40"
-                        height="24"
+                        width="28"
+                        height="28"
                         title="telegram"
                     />
                 </a>
@@ -82,8 +84,8 @@
                         src="~/assets/images/formkit_twitter.png"
                         class=""
                         alt="Shavaz Logo"
-                        width="40"
-                        height="24"
+                        width="28"
+                        height="28"
                         title="twitter"
                     />
                 </a>
@@ -92,8 +94,8 @@
                         src="~/assets/images/entypo-social_linkedin-with-circle.png"
                         class=""
                         alt="Shavaz Logo"
-                        width="40"
-                        height="24"
+                        width="28"
+                        height="28"
                         title="linkdin"
                     />
                 </a>

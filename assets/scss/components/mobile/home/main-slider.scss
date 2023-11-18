@@ -1,0 +1,29 @@
+//------------------------------------------------
+//  Main slider
+//------------------------------------------------
+$parent: 'main-slider';
+
+.#{$parent} {
+    position: relative;
+
+    &--mobile {
+        .#{$parent} {
+            &__image {
+                height: 268px !important;
+                width: 100%;
+                overflow: hidden;
+
+                img {
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+            }
+        }
+
+        .swiper-pagination-bullet {
+            &.swiper-pagination-bullet-active {
+                background-color: #424242 !important;
+            }
+        }
+    }
+}

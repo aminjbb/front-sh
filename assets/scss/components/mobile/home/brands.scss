@@ -1,0 +1,66 @@
+//------------------------------------------------
+//  Brands
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+
+.brands {
+    display: flex;
+    padding: 15px 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @include gbp("md") {
+        flex-direction: row !important;
+        border-radius: 8px;
+        border: 1px solid var(--grey-grey-lighten-2, #E0E0E0);
+        padding: 15px;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @include gbp("md") {
+            width: 200px;
+            flex: 0 0 200px;
+            padding: 10px 30px;
+            text-align: center !important;
+        }
+    }
+
+    &__swiper {
+        width: 100%;
+        margin-top: 20px;
+
+        @include gbp("md") {
+            width: calc(100% - 200px);
+            flex: 0 0 calc(100% - 200px);
+            margin-top: 0;
+        }
+    }
+
+    &__item {
+        display: block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: #FAFAFA;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+
+        @include gbp("md") {
+            width: 84px;
+            height: 84px;
+        }
+
+        img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+        }
+    }
+}

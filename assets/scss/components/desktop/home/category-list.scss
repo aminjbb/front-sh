@@ -1,0 +1,36 @@
+//------------------------------------------------
+//  Desktop category list
+//------------------------------------------------
+
+$parent: 'category-list';
+
+.#{$parent} {
+    &--desktop {
+        .#{$parent} {
+            &__items {
+                margin: 0 -6px;
+                flex-wrap: wrap;
+            }
+
+            &__item {
+                flex: 0 0 154px;
+                width: 154px;
+                height: 154px;
+                margin: 0 6px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: var(--grey-grey-lighten-4, #F5F5F5);
+                border-radius: 4px;
+
+                &__image {
+                    img {
+                        width: 100%;
+                        height: auto;
+                    }
+                }
+            }
+        }
+    }
+}

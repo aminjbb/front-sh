@@ -214,6 +214,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import '~/assets/scss/components/mobile/general/menu.scss';
 </style>
