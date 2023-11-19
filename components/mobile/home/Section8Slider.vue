@@ -3,6 +3,7 @@
     <header class="text-right t20 text-grey-darken-1 py-4">
         پرفروش‌ترین محصولات
     </header>
+    
     <swiper
         dir="rtl"
         :slidesPerView="6"
