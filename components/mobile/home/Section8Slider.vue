@@ -1,6 +1,6 @@
 <template lang="">
 <section class="section8-slider section8-slider--mobile">
-    <header class="text-right t20 text-grey-darken-1 py-4">
+    <header class="text-right t20 text-grey-darken-1 py-4 w500">
         پرفروش‌ترین محصولات
     </header>
     

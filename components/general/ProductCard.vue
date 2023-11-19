@@ -1,5 +1,5 @@
 <template lang="">
-<article class="product-card pa-2">
+<a class="product-card pa-2" :href="content.link">
     <div v-if="index" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>
@@ -45,7 +45,7 @@
             <span class="t12 w300 text-grey-darken-2 currency">{{content.currency}}</span>
         </template>
     </div>
-</article>
+</a>
 </template>
 
 <script>

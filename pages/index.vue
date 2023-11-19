@@ -1,17 +1,34 @@
 <template>
-<main v-if="screenType !== null">
+<main v-if="screenType !== null" class="v-home">
     <template v-if="screenType === 'desktop'">
         <desktopHomeMainSlider :items="mainSliderItems" />
         <v-container>
             <mobileHomeSurprise :content="surprise" />
             <desktopHomeCategoryList :items="categories" />
-            <desktopHomeBanner :items="banner1" col="6" />
-            <MobileHomeSection5Slider :content="section5"/>
-            <desktopHomeTabSlider1 :items="section6" title="پیشنهاد شاواز" />
+            <desktopHomeBanner :items="banner1" col="6" class="pt-3"/>
+            <MobileHomeSection5Slider :content="section5" />
+
+            <generalTabSlider
+                :items="section6"
+                class="tab-slider1"
+                title="پیشنهاد شاواز"
+                :componentProps=tabSlider1ComponentProps
+                columnHeader />
+
             <mobileHomeBrands :items="brands" />
             <desktopHomeBanner :items="banner2" col="3" />
             <mobileHomeSection8Slider :items="products" />
             <desktopHomeBanner :items="banner2" col="3" />
+            <generalTabSlider
+                setRef="tab2"
+                :items="section6"
+                class="tab-slider2"
+                title="جدید‌ترین محصولات"
+                componentName="generalMinimalProductCard"
+                contentWidth="100%"
+                wrapContent
+                limit= 6
+            />
             <desktopHomeBanner :items="banner3" col="4" />
             <template v-if="blogs && blogs.length">
                 <header class="t20 text-right text-grey-darken-2 pa-3 pb-5">
@@ -29,7 +46,7 @@
             </template>
         </v-container>
     </template>
-
+    <!--  mobile size -->
     <template v-else-if="screenType === 'mobile'">
         <mobileHomeMainSlider :items="mainSliderItems" />
 
@@ -43,19 +60,34 @@
         </v-container>
 
         <v-container class="mobile-no-padd mt-4">
-            <MobileHomeSection5Slider :content="section5" title="پیشنهاد شاواز" />
+            <MobileHomeSection5Slider :content="section5" />
         </v-container>
         <v-container>
 
-            <MobileHomeTabSlider1 :items="section6" />
+            <generalTabSlider
+                :items="section6"
+                class="tab-slider1"
+                title="پیشنهاد شاواز"
+                :componentProps=tabSlider1ComponentProps />
 
             <mobileHomeBrands :items="brands" />
             <mobileHomeBanner :items="banner2" />
             <mobileHomeSection8Slider :items="products" />
             <mobileHomeBanner :items="banner2" />
+            <generalTabSlider
+                setRef="tab2"
+                :items="section6"
+                class="tab-slider2"
+                title="جدید‌ترین محصولات"
+                componentName="generalMinimalProductCard"
+                contentWidth="1000px"
+                wrapContent
+                limit= 6
+            />
             <mobileHomeBanner :items="banner3" col="4" />
+
             <template v-if="blogs && blogs.length">
-                <header class="t20 text-right text-grey-darken-2 pa-3 pb-5">
+                <header class="t20 text-right text-grey-darken-2 pa-3 pb-5 w500">
                     پربازدیدترین مقالات
                 </header>
                 <v-row>
@@ -77,6 +109,10 @@
 export default {
     data() {
         return {
+            tabSlider1ComponentProps: {
+                hideInfo: true
+            },
+
             screenType: null,
             mainSliderItems: [{
                     id: 'wed',
@@ -576,6 +612,31 @@ export default {
                             discount: '30%',
                             currency: 'تومان'
                         },
+                        {
+                            id: 'wedd',
+                            image: '',
+                            title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                            star: '4.1',
+                            href: '/',
+                            price: '184.030',
+                            old_price: '184.030',
+                            new_price: '269,900',
+                            discount: '30%',
+                            currency: 'تومان'
+                        },
+                        {
+                            id: 'wedd',
+                            image: '',
+                            title: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                            star: '4.1',
+                            href: '/',
+                            price: '184.030',
+                            old_price: '184.030',
+                            new_price: '269,900',
+                            discount: '30%',
+                            currency: 'تومان'
+                        }
+                        ,
                         {
                             id: 'wedd',
                             image: '',

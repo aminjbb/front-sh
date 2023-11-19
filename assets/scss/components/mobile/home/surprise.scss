@@ -60,6 +60,7 @@
     &__swiper {
         width: calc(100% - 161px);
         flex: 0 0 calc(100% - 161px);
+        padding-left: 2px;
 
         @include gbp("md") {
             width: calc(100% - 200px);
