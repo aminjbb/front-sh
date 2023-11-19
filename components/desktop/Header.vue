@@ -82,13 +82,13 @@
                                             <v-icon icon="mdi-chevron-left"/>
                                         </a>
                                         <div>
-                                            <ul>
-                                                <li v-for="child2 in child1.children" :key="child2.id">
+                                            <ul class="li-child1">
+                                                <li  v-for="child2 in child1.children" :key="child2.id">
                                                     <a>
                                                         <span>{{ child2.title }}</span>
                                                     </a>
                                                     <ul>
-                                                        <li v-for="child3 in child2.children" :key="child3.id">
+                                                        <li class="li-child2" v-for="child3 in child2.children" :key="child3.id">
                                                             <a>
                                                                 <span>{{ child3.title }}</span>
                                                             </a>
@@ -241,7 +241,7 @@ export default {
                     id: '1efe',
                     icon: 'menu',
                     name:'categories',
-                    title: 'لوازم آرایشی',
+                    title: ' دسته‌بندی‌ها ',
                     link: '/',
                     children:[{
                         id: '1',

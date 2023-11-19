@@ -1,24 +1,150 @@
-//------------------------------------------------
-//  desktop footer
-//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
 
 $parent: 'footer';
 
 .#{$parent} {
     &--desktop {
-        height: 560px;
-        width: 100%;
-        background: #fff;
         
-
-        
+        @include gbp('lg') {
+            width: 100%;
+            background: #fff;
+            display: flex;
+            margin-right: 50px;
+            flex-direction: column;
 
             .#{$parent}__logo {
                 display: flex;
                 justify-content: space-between;
-                margin:0px 25px 50px 
+                align-items: center;
+                position: relative;
+                margin-left: 100px;
+
+                button {
+                    color: #9f9b9b;
+                }
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    border-top: .5px solid var(--gray-400, #9f9b9b);
+                    margin-left: 20px;
+                    margin-right: 140px;
+                }
+            }}
+
+        .#{$parent}__content {
+            display: flex;
+            width: 100%;
+
+            .logos_email {
+                color: gray;
+                width: 100%;
+                margin-right: 300px;
+                font-size: small;
+
+                .email-envelop {
+                    display: flex;
+                    width: 500px;
+                    background-color: var(--grey-grey-lighten-4, #F5F5F5);
+                    margin-top: 10px;
+
+                    .envelop {
+                        margin-top: 10px;
+                        margin-right: 5px;
+                    }
+                }
+
+                .email-box {
+                    width: 500px;
+                    border: 1px solid var(--gray-400, #BDBDBD);
+                    background-color: var(--grey-grey-lighten-4, #F5F5F5);
+                    padding-right: 10px;
+
+                    @include gbp('lg') {
+                        width: 700px; // Increased width for larger screens
+                    }
+
+                    @include gbp('xl') {
+                        width: 900px; // Further increased width for extra-large screens
+                    }
+                }
             }
 
+            ul {
+                list-style-type: none;
+                padding-left: 0;
+                width: 100%;
+
+                li {
+                    color: var(--grey-grey, #9E9E9E);
+                    font-size: x-small;
+                    margin-top: 10px;
+                }
+            }
+
+            .#{$parent}__links {
+                display: flex;
+                width: 100%;
+            }
         }
-    
+
+        .#{$parent}__hologram {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+           
+            
+            .icon-separator{
+                font-size: 24px; 
+                line-height: 1;
+               margin-left: 5px;
+            }
+        
+            .hologram-text {
+                margin-top: 40px;
+                font-size: small;
+                color: var(--grey-grey-darken-1, #757575);
+            }
+        
+            .logo-hologram {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+               margin-left:50px;
+        
+                a {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 67px;
+                    height: 79px;
+                    border: 1px solid #9E9E9E;
+                    margin: 5px;
+                    padding: 5px;
+                    box-sizing: border-box;
+        
+                    img {
+                        object-fit: contain;
+                    }
+                }
+            }
+        
+            
+           
+        }
+        
+        
+
+        .footer__text {
+            width: 100%;
+            font-size: x-small;
+            text-align: center;
+            padding: 10px 0;
+            color: var(--grey-grey-darken-1, #757575);
+        }
+    }
 }
