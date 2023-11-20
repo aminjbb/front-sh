@@ -4,11 +4,11 @@
         <ul class="menu__items">
             <li
                 class="menu__item"
-                v-for="item in menus"
+                v-for="(item, index) in menus"
                 :key="item.id"
                 @click="openSubMenu(item.id)"
                 :id="`menu__item--${item.id}`"
-                :class="item.children ? 'has-child' :''">
+                :class="{'has-child' : item.children ,'active-menu' : index === 0 }">
                 <a class="menu__item__link">
                     <v-icon :icon="`mdi-${item.icon}`" />
                     <span>{{item.title}}</span>
@@ -17,6 +17,7 @@
                 <ul
                     v-if="item.children && item.children.length"
                     class="menu__items"
+                    :class="{'show-mega-menu' : index === 0 }"
                     :id="`menu__items--${item.id}`">
                     <li
                         v-for="child1 in item.children"
@@ -189,6 +190,9 @@ export default {
     },
 
     methods: {
+        /**
+         * Open first sub menu
+         */
         openSubMenu(id) {
             const menu = document.querySelector('.menu');
             const ulItems = menu.querySelectorAll('ul');
@@ -206,6 +210,9 @@ export default {
             document.getElementById(`menu__item--${id}`).classList.toggle('active-menu');
         },
 
+        /**
+         * Open second sub menu
+         */
         openSubMenu2(id) {
             const selectedLi = document.getElementById(`menu__item--${id}`);
             selectedLi.classList.toggle('active-sub-menu');

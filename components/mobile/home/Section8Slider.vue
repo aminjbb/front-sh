@@ -1,6 +1,6 @@
 <template lang="">
 <section class="section8-slider section8-slider--mobile">
-    <header class="text-right t20 text-grey-darken-1 py-4">
+    <header class="text-right t20 text-grey-darken-1 py-4 w500">
         پرفروش‌ترین محصولات
     </header>
     
@@ -16,6 +16,10 @@
                     spaceBetween: 15,
                 },
                 '500': {
+                    slidesPerView: 2.8,
+                    spaceBetween: 15,
+                },
+                '650': {
                     slidesPerView: 3.2,
                     spaceBetween: 15,
                 },

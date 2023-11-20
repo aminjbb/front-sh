@@ -1,5 +1,5 @@
 <template>
-<section class="main-slider main-slider--desktop">
+<section v-if="items && items.length" class="main-slider main-slider--desktop">
     <swiper
         :pagination="true"
         :modules="modules"
@@ -39,6 +39,9 @@ import {
 
 export default {
     props: {
+        /**
+         * Item list
+         */
         items: Array,
     },
 
@@ -54,6 +57,7 @@ export default {
     },
 
     methods: {
+        //TODO: Should delete after add endpoint
         imageAddress(path) {
             const assets =
                 import.meta.glob('~/assets/images/should-delete/*', {

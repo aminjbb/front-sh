@@ -27,6 +27,11 @@ export default defineNuxtConfig({
     }
   },
 
+  components: {
+    global: true,
+    dirs: ['~/components']
+  },
+
   css: [
     'vuetify/styles',
     '@mdi/font/css/materialdesignicons.min.css',
@@ -36,7 +41,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  
+
   vite: {
     define: {
       'process.env.DEBUG': false,

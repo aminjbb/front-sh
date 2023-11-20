@@ -1,12 +1,12 @@
 <template lang="">
-<div class="banner banner--mobile">
+<div v-if="items && items.length" class="banner banner--mobile">
     <v-row>
         <v-col
             v-for="item in items"
             :key="item.id"
             cols="12"
             :sm="col">
-            <div class="banner__image mb-3">
+            <div class="banner__image">
                 <img :src="imageAddress('main-slider.jpg')" :title="item.title" :alt="item.title" width="380" height="200" />
             </div>
         </v-col>
