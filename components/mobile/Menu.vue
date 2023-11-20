@@ -126,7 +126,6 @@ export default {
                     icon: 'hair-dryer-outline',
                     title: 'آرایش و مراقبت مو',
                     link: '/',
-                    children: null,
                     children: [{
                         id: 'c1d51',
                         icon: null,
@@ -158,7 +157,6 @@ export default {
                     icon: 'hand-wash-outline',
                     title: 'لوازم بهداشتی',
                     link: '/',
-                    children: null,
                     children: [{
                         id: 'c1d1',
                         icon: null,

@@ -29,7 +29,7 @@
             <div class="flex header__icon">
                 <a href="/" title="Shavaz logo">
                     <img
-                        src="~/assets/images/Group 820.png"
+                        src="~/assets/images/Group820.png"
                         class=""
                         alt="Shavaz Logo"
                         width="40"
@@ -313,7 +313,6 @@ export default {
                         icon: 'hair-dryer-outline',
                         title: 'آرایش و مراقبت مو',
                         link: '/',
-                        children: null,
                         children: [{
                             id: 'c1d51',
                             icon: null,
@@ -345,7 +344,6 @@ export default {
                         icon: 'hand-wash-outline',
                         title: 'لوازم بهداشتی',
                         link: '/',
-                        children: null,
                         children: [{
                             id: 'c1d1',
                             icon: null,
@@ -379,7 +377,6 @@ export default {
                     name:'most seller',
                     title: 'پرفروش‌ترین‌های هفته',
                     link: '/',
-                    children: null
                 },
                 {
                     id: '1eefe',
@@ -387,7 +384,6 @@ export default {
                     name:'discount',
                     title: ' محصولات تخفیف‌دار',
                     link: '/',
-                    children: null
                 },
                 {
                     id: '1eefe',
@@ -395,7 +391,6 @@ export default {
                     name:'most seller',
                     title: ' بلاگ',
                     link: '/',
-                    children: null
                 },
                 {
                     id: '1eefe',

@@ -37,44 +37,32 @@ $parent1: 'menu';
 
 .#{$parent1} {
     &--desktop {
-        
+        position: relative;
+
         >nav>ul.menu__items {
             list-style-type: none;
             padding: 0;
             margin: 0;
             display: flex;
             font-size: small;
+            width: 100%;
 
-            .li-child2{
-                
-            }
-            .li-child1{
-                display: flex;
-                flex-direction:column ;
-                color: aquamarine;
-                
-            }
-
+          
             >li {
                 position: relative;
                 padding: 10px 15px;
                 cursor: pointer;
-
-                &:hover .mega-menu {
-                    display: block;
-                    z-index: 1000;
-                }
-
                 .mega-menu {
                     position: absolute;
-                    top: 100%; 
+                    top: 100%;
                     left: 0;
-                    width: 100%; 
-                    background-color: #ffffff; 
-                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+                    width: 100%;
+                    background-color: #ffffff;
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
                     border: 1px solid #ddd;
                     z-index: 10;
-                    display: block; 
+                    display: block;
+                   
 
                     >ul {
                         display: flex;
@@ -97,7 +85,12 @@ $parent1: 'menu';
                             background: var(--shade-background-color, #F7F8FA);
                         }
 
+                        .menu__items>li:hover>.mega-menu {
+                            display: block; // Show on hover
+                        }
+
                         >li {
+                            display: flex;
                             width: 220px;
                             padding: 13px 16px;
 
@@ -109,23 +102,25 @@ $parent1: 'menu';
                             >a,
                             >.inner-container {
                                 &:hover {
-
+                                                         
                                     background-color: var(--primary-95, #FCE4EC);
                                 }
 
 
                             }
-                           
+
                             >div {
-                                
+
                                 padding: 0;
                                 margin: 10px 0;
                                 position: absolute;
-                                width: calc(100vw - 326px);
+                                
+                                width: 100%;
                                 right: 220px;
-                                top: 0;
+                                top: -30px;
                                 padding: 0 12px 12px;
                                 height: 100%;
+                                display: none;
 
                                 .image {
                                     width: 184px;
@@ -133,37 +128,32 @@ $parent1: 'menu';
                                 }
 
                                 >ul {
-                                    
-                                    display: flex;
-                                    column-count: 6;
-                                    height: 100%;
-                                    
-
-
                                     li {
                                         list-style: none !important;
 
                                     }
                                 }
                             }
+
+                            &:hover>div {
+                                display: block;
+                            }
                         }
                     }
                 }
-                .menu__items > li:hover > .mega-menu {
+
+                .menu__items>li:hover>.mega-menu {
                     display: block;
-                  }
-                  .mega-menu > ul {
-                    list-style: none;
-                    margin: 0;
-                    padding: 0;
-                  }
-                  
-                  
-                  .mega-menu > ul > li {
-                    position: relative; 
-                  }
-                  
-                
+                }
+
+               
+
+
+                .mega-menu>ul>li {
+                    position: relative;
+                }
+
+
             }
         }
     }
