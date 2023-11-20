@@ -2,13 +2,7 @@
 <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden }">
     <div class="d-flex align-center">
         <a href="/" class="d-flex align-center header__logo" title="Shavaz logo">
-            <img 
-                src="~/assets/images/mobile-logo.svg"
-                class=""
-                alt="Shavaz Logo"
-                width="79"
-                height="28"
-                title="Shavaz Logo" />
+            <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
         </a>
         <div class="header__search-box">
             <v-text-field
@@ -76,6 +70,64 @@ export default {
 }
 </script>
 
-<style scoped>
-@import '~/assets/scss/components/mobile/general/header.scss';
+<style lang="scss">
+$parent: 'header';
+
+.#{$parent} {
+    &--mobile {
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        overflow: hidden;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+        width: 100%;
+        height: 56px;
+        background: #fff;
+        z-index: 3;
+        box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.10);
+        padding: 8px;
+
+        .#{$parent} {
+            &__logo {
+                margin-left: 16px;
+            }
+
+            &__search-box {
+                flex: 1;
+                height: 40px;
+
+                .v-input__control,
+                .v-field__prepend-inner,
+                .v-field__field {
+                    height: 40px;
+                }
+
+                .v-field {
+                    box-shadow: none;
+                    background: #EEEEEE;
+                    border-radius: 2px;
+                }
+
+                .v-field__input,
+                .v-field-label {
+                    font-size: 13px !important;
+                }
+            }
+        }
+
+        &.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        &.fixed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+    }
+}
 </style>

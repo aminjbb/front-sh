@@ -38,10 +38,10 @@
                     slidesPerView: 2.2,
                 },
                 '768': {
-                    slidesPerView: 3.8,
+                    slidesPerView: 3.2,
                 },
-                '992': {
-                    slidesPerView: 4.2,
+                '1000': {
+                    slidesPerView:  3.8,
                 },
                 '1200': {
                     slidesPerView: 4.8,

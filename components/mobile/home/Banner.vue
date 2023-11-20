@@ -6,7 +6,7 @@
             :key="item.id"
             cols="12"
             :sm="col">
-            <div class="banner__image mb-3">
+            <div class="banner__image">
                 <img :src="imageAddress('main-slider.jpg')" :title="item.title" :alt="item.title" width="380" height="200" />
             </div>
         </v-col>
