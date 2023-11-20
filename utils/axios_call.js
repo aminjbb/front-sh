@@ -51,11 +51,11 @@ export class AxiosCall {
                     if (err.response.status == 401) {
                         router.push('/login')
                     }
-                    openToast(
-                        this.store,
-                        'تو فرایند آئلود به مشکلی خوردیم',
-                        "error"
-                    );
+                    useNuxtApp().$toast.error('تو فرایند آپلود به مشکلی خوردیم', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme:'dark'
+                    });
                 });
         } else {
             await axios
@@ -71,11 +71,11 @@ export class AxiosCall {
                     if (err.response.status == 401) {
                         router.push('/login')
                     }
-                    openToast(
-                        this.store,
-                        'تو فرایند آئلود به مشکلی خوردیم',
-                        "error"
-                    );
+                    useNuxtApp().$toast.error('تو فرایند آپلود به مشکلی خوردیم', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme:'dark'
+                    });
                 });
         }
         return data;
@@ -103,22 +103,22 @@ export class AxiosCall {
                 })
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            response.data.message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success(response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })
                 .catch((err) => {
                     console.log(err.response.data)
                     if (err.response.data.message){
-                        openToast(
-                            this.store,
-                            err.response.data.message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error(response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     if (err.response.status == 401) {
                         router.push('/login')
@@ -128,44 +128,44 @@ export class AxiosCall {
                         const details = err.response.data.details
                         const key = Object.keys(details)
                         if (key[0] == 'name') {
-                            openToast(
-                                this.store,
-                                'فیلد نام باید یکتا باشد',
-                                "error"
-                            );
+                            useNuxtApp().$toast.error('فیلد نام باید یکتا باشد', {
+                                rtl: true,
+                                position: 'top-center',
+                                theme:'dark'
+                            });
                         }
                         else if (key[0] == 'label') {
-                            openToast(
-                                this.store,
-                                'فیلد لیبل باید یکتا باشد',
-                                "error"
-                            );
+                            useNuxtApp().$toast.error('فیلد لیبل باید یکتا باشد', {
+                                rtl: true,
+                                position: 'top-center',
+                                theme:'dark'
+                            });
                         }
 
                         else if (key[0] == 'email') {
-                            openToast(
-                                this.store,
-                                'فیلد ایمیل باید یکتا باشد',
-                                "error"
-                            );
+                            useNuxtApp().$toast.error('فیلد لیبل باید یکتا باشد', {
+                                rtl: true,
+                                position: 'top-center',
+                                theme:'dark'
+                            });
                         } else if (key[0] == 'phone_number') {
-                            openToast(
-                                this.store,
-                                'فیلد شماره موبایل باید یکتا باشد',
-                                "error"
-                            );
+                            useNuxtApp().$toast.error( 'فیلد شماره موبایل باید یکتا باشد', {
+                                rtl: true,
+                                position: 'top-center',
+                                theme:'dark'
+                            });
                         }else if (key[0] == 'identification_code') {
-                            openToast(
-                                this.store,
-                                'کد ملی وارد شده قبلا استفاده شده است',
-                                "error"
-                            );
+                            useNuxtApp().$toast.error( 'کد ملی وارد شده قبلا استفاده شده است', {
+                                rtl: true,
+                                position: 'top-center',
+                                theme:'dark'
+                            });
                         }else if (key[0] == 'email') {
-                            openToast(
-                                this.store,
-                                'ایمیل وارد شده قبلا استفاده شده است',
-                                "error"
-                            );
+                            useNuxtApp().$toast.error(  'ایمیل وارد شده قبلا استفاده شده است', {
+                                rtl: true,
+                                position: 'top-center',
+                                theme:'dark'
+                            });
                         }
                     }
 
@@ -176,18 +176,22 @@ export class AxiosCall {
                 .then((response) => {
 
                     if (this.toast_success) {
-                        openToast(this.store, response.data.message, "success")
+                        useNuxtApp().$toast.success(  response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })
                 .catch((err) => {
                     console.log('Axios error:',err.response.data.message)
                     if (err.response.data.message){
-                        openToast(
-                            this.store,
-                            err.response.data.message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error(response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     if (err.response.status == 401) {
                         router.push('/login')
@@ -195,12 +199,11 @@ export class AxiosCall {
                     if (err.response.status == 442) {
                         const details = err.response.data.details
                         const key = Object.keys(details)
-                        openToast(
-                            this.store,
-                            key,
-                            "error"
-                        );
-                       
+                        useNuxtApp().$toast.error(key, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         }
@@ -229,11 +232,11 @@ export class AxiosCall {
                 })
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            this.toast_success_message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success( this.toast_success_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })
@@ -242,11 +245,11 @@ export class AxiosCall {
                         router.push('/login')
                     }
                     if (this.toast_error) {
-                        openToast(
-                            this.store,
-                            this.toast_error_message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error( this.toast_error_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         } else {
@@ -254,11 +257,11 @@ export class AxiosCall {
                 .put(url, this.form)
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            this.toast_success_message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success( this.toast_success_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })
@@ -268,11 +271,11 @@ export class AxiosCall {
                     }
                     if (this.toast_error) {
                         
-                        openToast(
-                            this.store,
-                            this.toast_error_message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error( this.toast_error_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         }
@@ -304,11 +307,11 @@ export class AxiosCall {
                 })
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            this.toast_success_message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success( this.toast_success_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })
@@ -317,11 +320,11 @@ export class AxiosCall {
                         router.push('/login')
                     }
                     if (this.toast_error) {
-                        openToast(
-                            this.store,
-                            this.toast_error_message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error( this.toast_error_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         } else {
@@ -329,11 +332,11 @@ export class AxiosCall {
                 .get(url)
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            this.toast_success_message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success( this.toast_success_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })
@@ -342,11 +345,11 @@ export class AxiosCall {
                         router.push('/login')
                     }
                     if (this.toast_error) {
-                        openToast(
-                            this.store,
-                            this.toast_error_message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error( this.toast_error_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         }
@@ -374,11 +377,11 @@ export class AxiosCall {
                 })
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            this.toast_success_message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success( this.toast_success_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
 
                     }
                     data = response.data;
@@ -388,7 +391,11 @@ export class AxiosCall {
                         router.push('/login')
                     }
                     if (this.toast_error) {
-                        openToast(this.store, err.response.data.message, "error")
+                        useNuxtApp().$toast.error( err.response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         } else {
@@ -396,11 +403,11 @@ export class AxiosCall {
                 .delete(url)
                 .then((response) => {
                     if (this.toast_success) {
-                        openToast(
-                            this.store,
-                            this.toast_success_message,
-                            "success"
-                        );
+                        useNuxtApp().$toast.success( this.toast_success_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 })
                 .catch((err) => {
@@ -408,11 +415,11 @@ export class AxiosCall {
                         router.push('/login')
                     }
                     if (this.toast_error) {
-                        openToast(
-                            this.store,
-                            this.toast_error_message,
-                            "error"
-                        );
+                        useNuxtApp().$toast.error( this.toast_error_message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                 });
         }
