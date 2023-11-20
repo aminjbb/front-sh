@@ -93,8 +93,10 @@
                               width="28"
                               height="28"
                               title="envelop"
-                              class="envelop"
+                              class="envelope-icon"
                           />
+                          <span class="icon-separator-email">|</span>
+
                      
                               </button>
                         </div>
@@ -115,7 +117,7 @@
                         <div class="logo-hologram">
                             <a href="/" title="Shavaz logo">
                                 <img
-                                src="~/assets/images/snapppay-png1402-03-27 1 (1).png"
+                                src="~/assets/images/snappay.png"
                                 class=""
                                 alt="Shavaz Logo"
                                 width="52"
@@ -135,7 +137,7 @@
                             </a>
                             <a href="/" title="Shavaz logo">
                                 <img
-                                src="~/assets/images/logonama (1).png"
+                                src="~/assets/images/logonama(1).png"
                                 class="frame-hologram"
                                 alt="Shavaz Logo"
                                 width="52"

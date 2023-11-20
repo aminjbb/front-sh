@@ -29,7 +29,7 @@
             <div class="flex header__icon">
                 <a href="/" title="Shavaz logo">
                     <img
-                        src="~/assets/images/Group 820.png"
+                        src="~/assets/images/Group820.png"
                         class=""
                         alt="Shavaz Logo"
                         width="40"
