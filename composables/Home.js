@@ -2,12 +2,11 @@
  * Home composable
  */
 import { ref} from 'vue';
-import { AxiosCall } from '@/assets/js/axios_call.js'
-import { useCookies } from "vue3-cookies";
+import { AxiosCall } from '~/utils/axios_call.js'
 
 export default function setup(posts) {
     const homeSectionList = ref([]);
-    const cookies = useCookies()
+    const cookies = useCookie()
     const loading = ref(false)
 
     async function getHomeSections(query) {

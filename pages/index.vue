@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import Home from '@/composables/Home';
+import Home from '~/composables/Home';
 
 export default {
     data() {
