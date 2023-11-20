@@ -1,41 +1,52 @@
 <template>
 <main v-if="screenType !== null" class="v-home">
+     <!--  desktop size -->
     <template v-if="screenType === 'desktop'">
         <desktopHomeMainSlider :items="mainSliderItems" />
         <v-container>
-            <mobileHomeSurprise :content="surprise" />
+            <mobileHomeSurprise class="mt-4" :content="surprise" />
+
             <desktopHomeCategoryList :items="categories" />
+
             <desktopHomeBanner
                 :items="banner1"
                 col="6"
-                class="pt-3" />
+                class="pt-3 mb-4" />
+
             <MobileHomeSection5Slider :content="section5" />
 
             <generalTabSlider
                 :items="section6"
-                class="tab-slider1"
+                class="tab-slider1 mb-8"
                 title="پیشنهاد شاواز"
                 :componentProps=tabSlider1ComponentProps
                 columnHeader />
 
             <mobileHomeBrands :items="brands" />
-            <desktopHomeBanner :items="banner2" col="3" />
+
+            <desktopHomeBanner class="mt-3" :items="banner2" col="3" />
+
             <mobileHomeSection8Slider :items="products" />
-            <desktopHomeBanner :items="banner2" col="3" />
+
+            <desktopHomeBanner title="ایده هدیه" :items="banner2" col="3" />
+
             <generalTabSlider
                 setRef="tab2"
                 :items="section6"
-                class="tab-slider2"
+                class="tab-slider2 mb-8"
                 title="جدید‌ترین محصولات"
                 componentName="generalMinimalProductCard"
                 contentWidth="100%"
                 wrapContent
                 limit=6 />
+
             <desktopHomeBanner :items="banner3" col="4" />
+
             <template v-if="blogs && blogs.length">
                 <header class="t20 text-right text-grey-darken-2 pa-3 pb-5">
                     پربازدیدترین مقالات
                 </header>
+                
                 <v-row>
                     <v-col
                         cols="12"
@@ -48,12 +59,14 @@
             </template>
         </v-container>
     </template>
+
     <!--  mobile size -->
     <template v-else-if="screenType === 'mobile'">
         <mobileHomeMainSlider :items="mainSliderItems" />
 
         <v-container class="mobile-no-padd mt-4">
             <mobileHomeSurprise :content="surprise" />
+
             <mobileHomeCategoryList :items="categories" />
         </v-container>
 
@@ -73,8 +86,11 @@
                 :componentProps=tabSlider1ComponentProps />
 
             <mobileHomeBrands :items="brands" />
+
             <mobileHomeBanner :items="banner2" />
+
             <mobileHomeSection8Slider :items="products" />
+
             <mobileHomeBanner :items="banner2" />
             
             <generalTabSlider
@@ -95,6 +111,7 @@
                 <header class="t20 text-right text-grey-darken-2 pa-3 pb-5 w500">
                     پربازدیدترین مقالات
                 </header>
+
                 <v-row>
                     <v-col
                         cols="12"
@@ -111,13 +128,14 @@
 </template>
 
 <script>
+import Home from '~/composables/Home';
+
 export default {
     data() {
         return {
             tabSlider1ComponentProps: {
                 hideInfo: true
             },
-
             screenType: null,
             mainSliderItems: [{
                     id: 'wed',
@@ -996,11 +1014,21 @@ export default {
         }
     },
 
+    setup(props) {
+        const {getHomeSections, homeSectionList,loading } = Home();
+        return {getHomeSections,  homeSectionList,loading };
+    },
+
     mounted() {
         /**
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+
+         /**
+         * Call getHomeSections in setup 
+         */
+        this.getHomeSections();
     },
 }
 </script>

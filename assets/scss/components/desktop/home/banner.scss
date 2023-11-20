@@ -8,6 +8,8 @@ $parent: 'banner';
     &--desktop {
         .#{$parent} {
             &__image{
+                display: flex;
+                
                 img{
                     border-radius: 8px;
                     width: 100%;

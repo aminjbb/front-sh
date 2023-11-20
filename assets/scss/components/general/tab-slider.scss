@@ -38,7 +38,7 @@ $parent: 'tab-slider';
         ul {
             @include gbp (768) {
                 display: flex;
-                padding: 0 24px !important;
+                padding: 0 12px !important;
             }
 
             @include gbp (0, 768) {
@@ -59,7 +59,7 @@ $parent: 'tab-slider';
 
             &.active {
                 span {
-                    border-bottom: 1px solid #D72685;
+                    border-bottom: 2px solid #D72685;
                 }
             }
 
