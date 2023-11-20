@@ -1,5 +1,5 @@
 <template lang="">
-<div class="banner banner--desktop">
+<div v-if="items && items.length" class="banner banner--desktop">
     <v-row>
         <v-col
             v-for="item in items"
@@ -17,7 +17,14 @@
 <script>
 export default {
     props: {
+        /**
+         * Item list
+         */
         items: null,
+
+        /**
+         * Col number for show in desktop
+         */
         col: {
             type: String,
             default: '6'

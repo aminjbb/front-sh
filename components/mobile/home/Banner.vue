@@ -1,5 +1,5 @@
 <template lang="">
-<div class="banner banner--mobile">
+<div v-if="items && items.length" class="banner banner--mobile">
     <v-row>
         <v-col
             v-for="item in items"

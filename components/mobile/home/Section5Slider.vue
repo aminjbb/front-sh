@@ -1,8 +1,8 @@
 <template lang="">
-<section class="section5-slider section5-slider--mobile mb-4">
+<section v-if="content" class="section5-slider section5-slider--mobile mb-4">
     <div class="d-flex align-center flex-wrap" :style="{ backGround: `#${bgColor}` }">
         <div class="section5-slider__info">
-            <div class="section5-slider__info__title text-white mb-2">
+            <div v-if="content.title" class="section5-slider__info__title text-white mb-2">
                 {{content.title}}
             </div>
 
@@ -11,14 +11,14 @@
             </div>
         </div>
 
-        <div class="section5-slider__items">
+        <div v-if="content.sku_groups && content.sku_groups.length" class="section5-slider__items">
             <div>
                 <div
                     v-for="(groups, index) in content.sku_groups.slice(0, 3)"
                     :key="`skus-groups-${index}`"
                     class="section5-slider__sku-groups pa-2">
                     <div class="section5-slider__sku-groups__inner">
-                        <h2 class="t16 w400 text-grey-darken-2 text-right pb-2">
+                        <h2 v-if="groups.title" class="t16 w400 text-grey-darken-2 text-right pb-2">
                             {{groups.title}}
                         </h2>
 
@@ -39,7 +39,15 @@
 export default {
 
     props: {
+        /**
+         * Content
+         */
         content: Object,
+
+        /**
+         * Section background color code
+         * code should without "#"
+         */
         bgColor: String,
     },
 
