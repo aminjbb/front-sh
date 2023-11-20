@@ -1,5 +1,9 @@
 <template lang="">
 <div v-if="items && items.length" class="banner banner--mobile">
+    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+        {{title}}
+    </header>
+
     <v-row>
         <v-col
             v-for="item in items"
@@ -17,11 +21,23 @@
 <script>
 export default {
     props: {
+        /**
+         * Item list
+         */
         items: null,
+
+        /**
+         * Col number for show in desktop
+         */
         col: {
             type: String,
             default: '6'
-        }
+        },
+
+        /**
+         * Section title
+         */
+        title: String
     },
 
     methods: {
