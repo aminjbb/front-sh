@@ -190,6 +190,9 @@ export default {
     },
 
     methods: {
+        /**
+         * Open first sub menu
+         */
         openSubMenu(id) {
             const menu = document.querySelector('.menu');
             const ulItems = menu.querySelectorAll('ul');
@@ -207,8 +210,10 @@ export default {
             document.getElementById(`menu__item--${id}`).classList.toggle('active-menu');
         },
 
+        /**
+         * Open second sub menu
+         */
         openSubMenu2(id) {
-
             const selectedLi = document.getElementById(`menu__item--${id}`);
             selectedLi.classList.toggle('active-sub-menu');
 

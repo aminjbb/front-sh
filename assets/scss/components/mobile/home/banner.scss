@@ -8,6 +8,8 @@ $parent: 'banner';
     &--mobile {
         .#{$parent} {
             &__image{
+                display: flex;
+                
                 img{
                     border-radius: 8px;
                     width: 100%;

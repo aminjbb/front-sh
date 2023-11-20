@@ -1,5 +1,5 @@
 <template>
-<section class="main-slider main-slider--mobile">
+<section v-if="items && items.length" class="main-slider main-slider--mobile">
     <swiper
         :pagination="true"
         :modules="modules"
@@ -39,6 +39,9 @@ import {
 
 export default {
     props: {
+        /**
+         * Item list
+         */
         items: Array,
     },
 

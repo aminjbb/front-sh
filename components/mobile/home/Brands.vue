@@ -3,6 +3,7 @@
     <header class="brands__header text-center t20 text-secondary">
         پرفروش‌ترین برندها
     </header>
+
     <div class="brands__swiper">
         <swiper
             dir="rtl"
@@ -66,7 +67,15 @@ export default {
     },
 
     props: {
-        items: Array
+        /**
+         * Item list
+         */
+        items: Array,
+
+        /**
+         * Title of section
+         */
+        title:String,
     },
 
     setup() {
@@ -86,7 +95,6 @@ export default {
             return assets['/assets/images/should-delete/' + path]
         }
     },
-
 }
 </script>
 

@@ -8,11 +8,12 @@
         <nav class="tab-slider__header">
             <ul class="ma-0 pa-0">
                 <li
-                    v-for="(tab, index) in tabHeader"
+                    v-for="(tab, index) in tabHeader.slice(0,6)"
                     @click="activeTab(tab.id,setRef)"
                     :id="`tab-header-${tab.id}`"
                     :class="index == 0 ? 'active' : ''">
                     <span>{{tab.label}}</span>
+
                     <v-icon
                         v-if="columnHeader"
                         icon="mdi-chevron-left"
@@ -72,7 +73,7 @@ export default {
         },
 
         /**
-         * Content width for horizantal scroll
+         * Content width for horizontal scroll
          */
         contentWidth: {
             type: String,
@@ -129,6 +130,9 @@ export default {
     },
 
     computed: {
+        /**
+         * Header for tab
+         */
         tabHeader() {
             this.items.forEach(item => {
                 const headerItem = {
@@ -140,6 +144,9 @@ export default {
             return this.headerItems;
         },
 
+        /**
+         * Set dynamic class based my props
+         */
         getDynamicClasses() {
             return {
                 'column-header': this.columnHeader,

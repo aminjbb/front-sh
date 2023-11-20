@@ -16,6 +16,10 @@
                     spaceBetween: 15,
                 },
                 '500': {
+                    slidesPerView: 2.8,
+                    spaceBetween: 15,
+                },
+                '650': {
                     slidesPerView: 3.2,
                     spaceBetween: 15,
                 },

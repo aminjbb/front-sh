@@ -3,6 +3,11 @@
 //------------------------------------------------
 
 .v-home {
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
     .tab-slider1 {
         .product-card {
             border: 0;
@@ -22,7 +27,7 @@
     }
 
     .tab-slider2 {
-        .tab-slider__contents{
+        .tab-slider__contents {
             @include gbp (0, 768) {
                 border: 0 !important;
             }
@@ -34,8 +39,8 @@
 
             &:last-child,
             &:nth-last-child(2),
-            &:nth-last-child(3){
-                .minimal-product-card__title{
+            &:nth-last-child(3) {
+                .minimal-product-card__title {
                     border-bottom: 0 !important;
                 }
             }
@@ -43,6 +48,25 @@
             &__title {
                 @include gbp (0, 768) {
                     font-size: 12px !important;
+                }
+            }
+        }
+
+    }
+
+    .custom-banner {
+        .v-row {
+            >div:nth-child(2) {
+                @include gbp (0, 768) {
+                    width: 50%;
+                    flex: 0 0 50% !important
+                }
+            }
+
+            >div:nth-child(3) {
+                @include gbp (0, 768) {
+                    width: 50%;
+                    flex: 0 0 50% !important
                 }
             }
         }

@@ -5,7 +5,10 @@
         <v-container>
             <mobileHomeSurprise :content="surprise" />
             <desktopHomeCategoryList :items="categories" />
-            <desktopHomeBanner :items="banner1" col="6" class="pt-3"/>
+            <desktopHomeBanner
+                :items="banner1"
+                col="6"
+                class="pt-3" />
             <MobileHomeSection5Slider :content="section5" />
 
             <generalTabSlider
@@ -27,8 +30,7 @@
                 componentName="generalMinimalProductCard"
                 contentWidth="100%"
                 wrapContent
-                limit= 6
-            />
+                limit=6 />
             <desktopHomeBanner :items="banner3" col="4" />
             <template v-if="blogs && blogs.length">
                 <header class="t20 text-right text-grey-darken-2 pa-3 pb-5">
@@ -62,8 +64,8 @@
         <v-container class="mobile-no-padd mt-4">
             <MobileHomeSection5Slider :content="section5" />
         </v-container>
-        <v-container>
 
+        <v-container>
             <generalTabSlider
                 :items="section6"
                 class="tab-slider1"
@@ -74,17 +76,20 @@
             <mobileHomeBanner :items="banner2" />
             <mobileHomeSection8Slider :items="products" />
             <mobileHomeBanner :items="banner2" />
+            
             <generalTabSlider
                 setRef="tab2"
                 :items="section6"
                 class="tab-slider2"
                 title="جدید‌ترین محصولات"
                 componentName="generalMinimalProductCard"
-                contentWidth="1000px"
+                contentWidth="1160px"
                 wrapContent
-                limit= 6
-            />
-            <mobileHomeBanner :items="banner3" col="4" />
+                limit=6 />
+
+            <div class="custom-banner">
+                <mobileHomeBanner :items="banner3" col="4" />
+            </div>
 
             <template v-if="blogs && blogs.length">
                 <header class="t20 text-right text-grey-darken-2 pa-3 pb-5 w500">
@@ -635,8 +640,7 @@ export default {
                             new_price: '269,900',
                             discount: '30%',
                             currency: 'تومان'
-                        }
-                        ,
+                        },
                         {
                             id: 'wedd',
                             image: '',
