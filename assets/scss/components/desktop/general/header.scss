@@ -1,0 +1,170 @@
+//------------------------------------------------
+//  desktop header
+//------------------------------------------------
+
+$parent: 'header';
+$parent1: 'menu';
+
+.#{$parent} {
+    &--desktop {
+        display: flex;
+        flex-direction: column;
+        color: gray;
+        margin-top: 28px;
+        margin-left: 30px;
+
+        .#{$parent}__menu {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            .#{$parent}__logo {
+                margin-right: 53px;
+            }
+
+            .#{$parent}__search-box {
+                width: 636px;
+
+            }
+
+            .#{$parent}__icon {
+                display: flex;
+                gap: 10px;
+            }
+        }
+    }
+}
+
+.#{$parent1} {
+    &--desktop {
+        
+        >nav>ul.menu__items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            font-size: small;
+
+            .li-child2{
+                
+            }
+            .li-child1{
+                display: flex;
+                flex-direction:column ;
+                color: aquamarine;
+                
+            }
+
+            >li {
+                position: relative;
+                padding: 10px 15px;
+                cursor: pointer;
+
+                &:hover .mega-menu {
+                    display: block;
+                    z-index: 1000;
+                }
+
+                .mega-menu {
+                    position: absolute;
+                    top: 100%; 
+                    left: 0;
+                    width: 100%; 
+                    background-color: #ffffff; 
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+                    border: 1px solid #ddd;
+                    z-index: 10;
+                    display: block; 
+
+                    >ul {
+                        display: flex;
+                        flex-direction: column;
+                        background-color: #fff;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        width: calc(100% - 106px);
+                        min-height: 420px;
+                        gap: 10px;
+
+
+
+                        &::before {
+                            width: 220px;
+                            height: 100%;
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            background: var(--shade-background-color, #F7F8FA);
+                        }
+
+                        >li {
+                            width: 220px;
+                            padding: 13px 16px;
+
+                            &:hover {
+                                background-color: var(--primary-95, #FCE4EC);
+                                font-weight: bold;
+                            }
+
+                            >a,
+                            >.inner-container {
+                                &:hover {
+
+                                    background-color: var(--primary-95, #FCE4EC);
+                                }
+
+
+                            }
+                           
+                            >div {
+                                
+                                padding: 0;
+                                margin: 10px 0;
+                                position: absolute;
+                                width: calc(100vw - 326px);
+                                right: 220px;
+                                top: 0;
+                                padding: 0 12px 12px;
+                                height: 100%;
+
+                                .image {
+                                    width: 184px;
+                                    flex: 0 0 184;
+                                }
+
+                                >ul {
+                                    
+                                    display: flex;
+                                    column-count: 6;
+                                    height: 100%;
+                                    
+
+
+                                    li {
+                                        list-style: none !important;
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .menu__items > li:hover > .mega-menu {
+                    display: block;
+                  }
+                  .mega-menu > ul {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                  }
+                  
+                  
+                  .mega-menu > ul > li {
+                    position: relative; 
+                  }
+                  
+                
+            }
+        }
+    }
+}
