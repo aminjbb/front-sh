@@ -10,14 +10,14 @@
                     <img
                     src="~/assets/images/shavaz-logo.png"
 
-                        class=""
+                        class="logo-shz"
                         alt="Shavaz Logo"
                         width="107"
                         height="38" 
                         title="Shavaz Logo"
                     />
                 </a>
-                <button >
+                <button @click="scrollToTop" >
                     <span> 
                     بازگشت به بالا
                     </span>
@@ -81,7 +81,7 @@
 
                     </div>
                     <div >
-                        <p>برای اطلاع از آخرین تخفیف‌ها، ایمیل خود را ثبت نمایید.</p>
+                        <p class="mt-3">برای اطلاع از آخرین تخفیف‌ها، ایمیل خود را ثبت نمایید.</p>
                         <div class="email-envelop">
                         <input type="email" class="email-box" placeholder="ثبت ایمیل" />
                         
@@ -182,6 +182,12 @@ export default {
             const menu = document.getElementById("menu--mobile");
             menu.classList.toggle("open-menu");
         },
+        scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     },
 };
 </script>
