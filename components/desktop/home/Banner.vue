@@ -1,5 +1,9 @@
 <template lang="">
 <div v-if="items && items.length" class="banner banner--desktop">
+    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+        {{title}}
+    </header>
+
     <v-row>
         <v-col
             v-for="item in items"
@@ -28,7 +32,12 @@ export default {
         col: {
             type: String,
             default: '6'
-        }
+        },
+
+        /**
+         * Section title
+         */
+        title: String
     },
 
     methods: {
