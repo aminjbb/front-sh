@@ -5,7 +5,7 @@ $parent: 'footer';
 
 .#{$parent} {
     &--desktop {
-        
+
         @include gbp('lg') {
             width: 100%;
             background: #fff;
@@ -34,7 +34,8 @@ $parent: 'footer';
                     margin-left: 20px;
                     margin-right: 140px;
                 }
-            }}
+            }
+        }
 
         .#{$parent}__content {
             display: flex;
@@ -45,6 +46,24 @@ $parent: 'footer';
                 width: 100%;
                 margin-right: 300px;
                 font-size: small;
+                .social-media{
+                    
+                    .v-icon {
+                        color: white;
+                        background-color: #616161;
+                        border-radius: 50%;
+                        padding: 15px;
+                        margin-right: 12px;
+                        margin-bottom: 25px;
+    
+                    }
+                    .custom-svg-icon{
+                        margin-right: 12px;
+                        
+                    }
+                }
+                
+                
 
                 .email-envelop {
                     display: flex;
@@ -96,26 +115,26 @@ $parent: 'footer';
             display: flex;
             width: 100%;
             justify-content: space-between;
-           
-            
-            .icon-separator{
-                font-size: 24px; 
+
+
+            .icon-separator {
+                font-size: 24px;
                 line-height: 1;
-               margin-left: 5px;
+                margin-left: 5px;
             }
-        
+
             .hologram-text {
                 margin-top: 40px;
                 font-size: small;
                 color: var(--grey-grey-darken-1, #757575);
             }
-        
+
             .logo-hologram {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-               margin-left:50px;
-        
+                margin-left: 50px;
+
                 a {
                     display: inline-flex;
                     align-items: center;
@@ -126,18 +145,18 @@ $parent: 'footer';
                     margin: 5px;
                     padding: 5px;
                     box-sizing: border-box;
-        
+
                     img {
                         object-fit: contain;
                     }
                 }
             }
-        
-            
-           
+
+
+
         }
-        
-        
+
+
 
         .footer__text {
             width: 100%;
