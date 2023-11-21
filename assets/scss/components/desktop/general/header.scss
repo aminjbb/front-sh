@@ -10,15 +10,15 @@ $parent1: 'menu';
         display: flex;
         flex-direction: column;
         color: gray;
-        margin-top: 28px;
-        margin-left: 30px;
+        margin-top:20px;
+        margin-left: 52px;
         
 
 
         .#{$parent}__menu {
             display: flex;
             width: 100%;
-            justify-content: space-between;
+            
 
             .#{$parent}__logo {
                 margin-right: 53px;
@@ -27,7 +27,8 @@ $parent1: 'menu';
 
             .#{$parent}__search-box {
                 width: 636px;
-                padding: 0.5rem;
+                margin-right: 225px;
+                
                 padding-right: 1rem;
                 
                 .custom-search-box{
@@ -39,6 +40,9 @@ $parent1: 'menu';
             .#{$parent}__icon {
                 display: flex;
                 gap: 10px;
+                margin-right:360px;
+                margin-top:8px
+                
             }
         }
     }
