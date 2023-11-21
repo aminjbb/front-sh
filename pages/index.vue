@@ -1019,6 +1019,19 @@ export default {
         return {getHomeSections,  homeSectionList,loading };
     },
 
+    methods: {
+        /**
+             * Get data from your data
+             * @param {String} id - id of array
+             * @return {*}
+             */
+             responseDot(id) {
+                console.log(id);
+                if (id) return this.homeSectionList?.find(item => item.id === id);
+                return '';
+            },
+    },
+
     mounted() {
         /**
          * Check screen size
