@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <div v-if="items && items.length" class="banner banner--mobile">
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{title}}
@@ -11,7 +11,7 @@
             cols="12"
             :sm="col">
             <div class="banner__image">
-                <img :src="imageAddress('main-slider.jpg')" :title="item.title" :alt="item.title" width="380" height="200" />
+                <img :src="item.image?.image_url" :title="item.image_alt" :alt="item.image_alt"  width="380" height="200" />
             </div>
         </v-col>
     </v-row>

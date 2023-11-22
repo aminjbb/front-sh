@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <section class="section8-slider section8-slider--mobile">
     <header class="text-right t20 text-grey-darken-1 py-4 w500">
         پرفروش‌ترین محصولات
@@ -38,7 +38,7 @@
                 }
             }"
         class="mySwiper">
-        <swiper-slide v-for="(item, index) in items.slice(0, 6)" :key="`section8-slider-${index}`">
+        <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
             <generalProductCard
                 :content="item"
                 :index="index + 1"
