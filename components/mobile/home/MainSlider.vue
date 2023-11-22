@@ -1,5 +1,5 @@
 <template>
-<section v-if="items && items.length" class="main-slider main-slider--mobile">
+<section v-if="mobileBanners && mobileBanners.length" class="main-slider main-slider--mobile">
     <swiper
         :pagination="true"
         :modules="modules"
@@ -9,10 +9,10 @@
                 disableOnInteraction: false,
             }"
         class="mySwiper">
-        <swiper-slide v-for="(item,index) in items" :key="index">
+        <swiper-slide v-for="(item,index) in mobileBanners" :key="index">
             <a class="main-slider__item" :href="item.link">
                 <div class="main-slider__image">
-                    <img :src="imageAddress('main-slider.jpg')" :title="item.title" :alt="item.title" width="768" height="268" />
+                    <img :src="item?.image.image_url" :title="item.title" :alt="item.title" width="768" height="268" />
                 </div>
             </a>
         </swiper-slide>
@@ -56,17 +56,18 @@ export default {
         };
     },
 
-    methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
-        }
-    },
+  computed:{
+    mobileBanners(){
+      try {
+        const banners = this.items?.banners.filter(item => item.device === 'mobile')
+        if (banners.length) return banners
+        else  return  []
+      }
+      catch (e) {
+        return  []
+      }
+    }
+  }
 };
 </script>
 

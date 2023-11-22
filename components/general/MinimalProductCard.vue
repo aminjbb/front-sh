@@ -1,12 +1,12 @@
-<template lang="">
+<template>
 <a class="minimal-product-card py-2 pr-5 pl-5 d-block" :href="content.link">
     <div class="minimal-product-card__inner d-flex">
         <div class="minimal-product-card__image">
-            <img :src="imageAddress('products.jpg')" :title="content.title" :alt="content.title" width="70" height="70" />
+            <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="70" height="70" />
         </div>
 
         <h3 v-if="content.title" class="t14 w500 text-grey minimal-product-card__title">
-            {{content.title}}
+            {{content.label}}
         </h3>
     </div>
 </a>
