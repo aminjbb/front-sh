@@ -24,7 +24,7 @@
             </v-btn>
         </div>
 
-        <div class="surprise-slider__swiper">
+        <div class="surprise-slider__swiper" v-if="mainBanner.skus && mainBanner.skus.length">
             <swiper
                 dir="rtl"
                 :slidesPerView="6"
@@ -52,10 +52,7 @@
                     }
                 }"
                 class="mySwiper">
-                <swiper-slide
-                    v-if="mainBanner?.skus && mainBanner?.skus.length"
-                    v-for="(item, index) in mainBanner?.skus.slice(0, 10)"
-                    :key="`skus-${index}`">
+                <swiper-slide v-for="(item, index) in mainBanner.skus.slice(0, 10)" :key="`skus-${index}`">
                     <generalProductCard
                         :content="item"
                         hideInfo
@@ -119,10 +116,10 @@ export default {
 
     },
 
-    watch:{
-      mainBanner(){
-        this.startCountdown(this.mainBanner?.end_time);
-      }
+    watch: {
+        mainBanner() {
+            this.startCountdown(this.mainBanner ?.end_time);
+        }
     },
 
     methods: {
@@ -162,22 +159,20 @@ export default {
         }
     },
 
-    computed:{
-        mainBanner(){
-          try {
-            return this.content.sliders[0]
-          }
-          catch (e) {
-            return ''
-          }
+    computed: {
+        mainBanner() {
+            try {
+                return this.content.sliders[0]
+            } catch (e) {
+                return ''
+            }
         },
-        mainBannerImage(){
-          try {
-            return this.mainBanner?.image?.image_url
-          }
-          catch (e) {
-            return ''
-          }
+        mainBannerImage() {
+            try {
+                return this.mainBanner ?.image ?.image_url
+            } catch (e) {
+                return ''
+            }
         }
     }
 }
