@@ -16,14 +16,14 @@
             <div class="header__search-box">
                 <v-text-field
                     :loading="loading"
-                    color="grey-lighten-3"
-                    density="compact"
-                    variant="solo"
+                    class="custom-search-box"
+                    density="compact" 
+                    
+                    variant="outlined"
                     label="جستجو   "
                     prepend-inner-icon="mdi-magnify"
-                    single-line
                     hide-details
-                    @click:append-inner="onClick"
+                    
                 />
             </div>
             <div class="flex header__icon">
@@ -73,17 +73,17 @@
                         <template v-if="item.name == 'categories'">
                             <div v-if="item.children && item.children.length" class="mega-menu">
                                 <ul class="menu__items">
-                                    <li v-for="child1 in item.children" :key="child1.id">
+                                    <li  v-for="child1 in item.children" :key="child1.id">
                                         <a>
                                             <div>
-                                                <v-icon :icon="`mdi-${child1.icon}`" class="ml-1"/>
+                                                <v-icon :icon="`mdi-${child1.icon}`" class="li-parent1"/>
                                                 <span>{{ child1.title }}</span>
                                             </div>
                                             <v-icon icon="mdi-chevron-left"/>
                                         </a>
                                         <div>
-                                            <ul class="li-child1">
-                                                <li  v-for="child2 in child1.children" :key="child2.id">
+                                            <ul >
+                                                <li class="li-child1" v-for="child2 in child1.children" :key="child2.id">
                                                     <a>
                                                         <span>{{ child2.title }}</span>
                                                     </a>
