@@ -1154,7 +1154,7 @@ export default {
       },
       homeBlog(){
         try {
-          return  this.responseDot(12)?.banners.slice(0,4)
+          return  this.responseDot(13)?.banners.slice(0,4)
         }
         catch (e) {
           return []
