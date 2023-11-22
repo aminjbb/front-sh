@@ -1,13 +1,19 @@
 <template>
-<section class="tab-slider mb-4" :class="getDynamicClasses" :ref="setRef">
+<section
+    v-if="categories && categories.length"
+    class="tab-slider mb-4"
+    :class="getDynamicClasses"
+    :ref="setRef">
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{title}}
     </header>
+
     <div>
         <nav class="tab-slider__header">
             <ul class="ma-0 pa-0">
                 <li
                     v-for="(tab, index) in categories"
+                    :key="`tab-slider__${index}`"
                     @click="activeTab(tab.id,setRef)"
                     :id="`tab-header-${tab.id}`"
                     :class="index == 0 ? 'active' : ''">
@@ -28,6 +34,7 @@
                 :key="`tab-content-${item.id}`"
                 :id="`tab-content-${item.id}`"
                 :style="{ width: `${contentWidth}`, flex:`0 0 ${contentWidth}`}">
+
                 <component
                     v-for="sku in item.skus"
                     :key="`tab-skus-${sku.id}`"
@@ -44,7 +51,9 @@
 import {
     resolveComponent
 } from 'vue';
-import {tr} from "vuetify/locale";
+import {
+    tr
+} from "vuetify/locale";
 export default {
     data() {
         return {
@@ -112,7 +121,7 @@ export default {
             default: 5
         },
 
-        setRef:{
+        setRef: {
             type: String,
             default: 'tab1'
         },
@@ -152,12 +161,12 @@ export default {
                 'column-header': this.columnHeader,
             };
         },
-        categories(){
-          try {
-            return this.items.categories.slice(0,6)
-          }catch (e) {
-            return []
-          }
+        categories() {
+            try {
+                return this.items.categories.slice(0, 6)
+            } catch (e) {
+                return []
+            }
         }
     },
 
@@ -183,7 +192,6 @@ export default {
             });
         }
     },
-
 
 }
 </script>

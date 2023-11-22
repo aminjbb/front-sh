@@ -73,7 +73,7 @@
         }
 
         >div {
-            width: 956px;
+            width: 1082px;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -86,7 +86,12 @@
     }
 
     &__sku-groups {
+        width: 33.333%;
+        flex: 0 0 33.333%;
+
         @include gbp(0, 480) {
+            flex:0 0 100%;
+            width: 100%;
             padding-left: 0 !important;
             padding-right: 0 !important;
         }

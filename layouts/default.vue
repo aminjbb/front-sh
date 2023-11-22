@@ -3,6 +3,7 @@
     <template v-if="screenType === 'desktop'">
         <desktopHeader />
         <slot />
+        <div id="body-cover" />
         <desktopFooter />
     </template>
 
