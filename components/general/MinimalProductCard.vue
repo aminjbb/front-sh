@@ -5,7 +5,7 @@
             <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="70" height="70" />
         </div>
 
-        <h3 v-if="content.title" class="t14 w500 text-grey minimal-product-card__title">
+        <h3 v-if="content.label" class="t14 w500 text-grey minimal-product-card__title">
             {{content.label}}
         </h3>
     </div>

@@ -116,7 +116,13 @@ export default {
     },
 
     mounted() {
+
+    },
+
+    watch:{
+      mainBanner(){
         this.startCountdown(this.mainBanner?.end_time);
+      }
     },
 
     methods: {
