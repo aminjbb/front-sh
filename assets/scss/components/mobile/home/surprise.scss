@@ -21,6 +21,7 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        flex-direction: column;
 
         @include gbp("md") {
             width: 200px;
@@ -28,9 +29,14 @@
         }
 
         &__counter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             span {
                 font-family: 'IranSansFaNum' !important;
                 color: #fff;
+                font-weight: 500 !important
             }
 
             .v-icon {
