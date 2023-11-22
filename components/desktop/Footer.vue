@@ -29,26 +29,25 @@
             <div class="footer__content">
                 <div class="footer__links">
                     <ul> دسترسی سریع
-                        <li>لوازم آرایشی</li>
-                        <li>مراقبت از پوست</li>
-                        <li>بهداشت خانگی</li>
-                        <li>مراقبت از کودکان</li>
-                        <li>لوازم بهداشتی</li>
-                    </ul>
-                    <ul> درباره شاواز
-                        <li>درباره ما</li>
-                        <li> تماس با ما</li>
-                        <li>سوالات متدال</li>
-                        <li>فرصت‌های شغلی</li>
-                        <li>فروشنده شوید</li>
-                        
-                    </ul>
-                    <ul> راهنمای خرید
-                        <li>نحوه ثبت سفارش</li>
-                        <li>روش‌های پرداخت</li>
-                        <li>شیوه‌های ارسال</li>
-                        <li>شرایط مرجوعی</li>
-                    </ul>
+        <li><button type="button">لوازم آرایشی</button></li>
+        <li><button type="button">مراقبت از پوست</button></li>
+        <li><button type="button">بهداشت خانگی</button></li>
+        <li><button type="button">مراقبت از کودکان</button></li>
+        <li><button type="button">لوازم بهداشتی</button></li>
+    </ul>
+    <ul> درباره شاواز
+        <li><button type="button">درباره ما</button></li>
+        <li><button type="button">تماس با ما</button></li>
+        <li><button type="button">سوالات متدال</button></li>
+        <li><button type="button">فرصت‌های شغلی</button></li>
+        <li><button type="button">فروشنده شوید</button></li>
+    </ul>
+    <ul> راهنمای خرید
+        <li><button type="button">نحوه ثبت سفارش</button></li>
+        <li><button type="button">روش‌های پرداخت</button></li>
+        <li><button type="button">شیوه‌های ارسال</button></li>
+        <li><button type="button">شرایط مرجوعی</button></li>
+    </ul>
                 </div>
                 <div class="logos_email">
                     <h3>با ما در ارتباط باشید</h3>
@@ -188,9 +187,6 @@ $parent: "footer";
 
 .#{$parent} {
     &--desktop {
-        .v-container {
-    max-width: 1400px;
-}
         @include gbp("lg") {
             width: 100%;
             background: #fff;
@@ -225,7 +221,6 @@ $parent: "footer";
         }
 
         .#{$parent}__content {
-            
             display: flex;
 
             width: 100%;
@@ -240,19 +235,14 @@ $parent: "footer";
                     box-shadow: none;
                     background: #eeeeee;
                     border-radius: 4px;
-                    
-                    
-                   
-                  
                 }
-                
+
                 .h3 {
                     margin-bottom: 10px;
                 }
 
                 .social-media {
                     margin-top: 10px;
-                    
 
                     .v-icon {
                         color: white;
@@ -271,7 +261,7 @@ $parent: "footer";
 
                 .email-envelop {
                     position: relative;
-                    width:100%;
+                    width: 100%;
                     display: flex;
                     align-items: center;
                     margin-top: 1rem;
@@ -292,9 +282,9 @@ $parent: "footer";
                 .envelope-icon {
                     position: absolute;
                     left: 30px;
-                    margin-top:-20px;
-                    color:#9E9E9E;
-                    border-right: 1px solid var(--grey-grey-lighten-1, #BDBDBD);;
+                    margin-top: -20px;
+                    color: #9e9e9e;
+                    border-right: 1px solid var(--grey-grey-lighten-1, #bdbdbd);
                     padding: 28px;
                     margin-top: -39px;
                     box-sizing: border-box;
@@ -329,9 +319,22 @@ $parent: "footer";
                 display: flex;
                 gap: 170px;
                 width: 120%;
+                
+                
                 .ul {
+                    
                     .li {
                         width: 100px;
+                        a, a:-webkit-any-link {
+                text-decoration: none !important;  // Force overriding other styles
+                color: inherit !important;  // Ensure color is inherited
+                cursor: pointer;  // Maintains the pointer cursor on hover
+
+                &:hover, &:focus {
+                    text-decoration: none !important;
+                }
+            }
+                        
                     }
                 }
             }
@@ -348,12 +351,12 @@ $parent: "footer";
                 transform: translateY(-50%) scaleY(1.5) scaleX(0.5);
                 line-height: 1;
                 margin-left: 5px;
-                margin-right:5px
+                margin-right: 5px;
             }
 
             .hologram-text {
                 margin-top: 40px;
-                
+
                 width: 100%;
 
                 font-size: 14px;
@@ -389,7 +392,7 @@ $parent: "footer";
 
         .footer__text {
             width: 100%;
-            
+
             font-size: 12px;
             text-align: center;
             padding: 10px 0;
