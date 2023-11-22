@@ -2,18 +2,54 @@
 // Main style
 // ---------------------------------------------------- //
 
-body{
+body {
     overflow: hidden;
 }
 
 html,
 html *,
-.v-locale--is-ltr{
+.v-locale--is-ltr {
     direction: rtl !important;
 }
 
-.mobile-no-padd{
+.mobile-no-padd {
     @include gbp(0, 768) {
         padding: 0 !important;
+    }
+}
+
+.v-container {
+    @media only screen and (min-width:1920px) {
+        max-width: 1326px !important;
+    }
+
+    @media only screen and (min-width:1500px) {
+        max-width: 1326px !important;
+    }
+
+    @media only screen and (max-width:992px) and (min-width:762px) {
+        max-width: 100% !important;
+    }
+}
+
+body {
+    &::before {
+        display: none;
+        width: 100%;
+        height: 100%;
+        background: rgba(33, 33, 33, 0.46);
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 5;
+        content: '';
+    }
+
+    &.active {
+        position: relative;
+
+        &::before {
+            display: block;
+        }
     }
 }

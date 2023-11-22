@@ -3,6 +3,9 @@
 //------------------------------------------------
 
 .v-home {
+    padding-bottom: 60px;
+    padding-top: 20px;
+
     @include gbp (0, 768) {
         padding-bottom: 60px;
         padding-top: 75px;

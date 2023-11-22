@@ -18,6 +18,7 @@
             <generalTabSlider
                 :items="section6"
                 class="tab-slider1 mb-8"
+                contentWidth="1080px"
                 title="پیشنهاد شاواز"
                 :componentProps=tabSlider1ComponentProps
                 columnHeader />
@@ -51,6 +52,7 @@
                     <v-col
                         cols="12"
                         md="3"
+                        sm="6"
                         v-for="(item, index) in blogs"
                         :key="`blogs-${index}`">
                         <mobileHomeBlogCard :content="item" />
@@ -82,6 +84,7 @@
             <generalTabSlider
                 :items="section6"
                 class="tab-slider1"
+                contentWidth="1080px"
                 title="پیشنهاد شاواز"
                 :componentProps=tabSlider1ComponentProps />
 
