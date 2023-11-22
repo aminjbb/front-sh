@@ -1,7 +1,7 @@
-<template lang="">
-<section v-if="items && items.length" class="brands brands--mobile mb-8">
+<template>
+<section v-if="brands && brands.length" class="brands brands--mobile mb-8">
     <header class="brands__header text-center t20 text-secondary">
-        پرفروش‌ترین برندها
+       {{items.label}}
     </header>
 
     <div class="brands__swiper">
@@ -34,9 +34,9 @@
                     }
                 }"
             class="mySwiper">
-            <swiper-slide v-for="(item, index) in items.slice(0, 7)" :key="`brands-${index}`">
-                <a class="brands__item" :href="item.href" :title="item.title">
-                    <img :src="imageAddress('brands.jpg')" :title="item.title" :alt="item.title" width="72" height="72" />
+            <swiper-slide v-for="(item, index) in brands.slice(0, 7)" :key="`brands-${index}`">
+                <a class="brands__item" :href="item.link" :title="item.label">
+                    <img :src="item.image?.image_url" :title="item.label" :alt="item.label" width="72" height="72" />
                 </a>
             </swiper-slide>
         </swiper>
@@ -84,17 +84,17 @@ export default {
         };
     },
 
-    methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
+
+  computed:{
+      brands(){
+        try {
+          return this.items.brands
         }
-    },
+        catch (e) {
+          return []
+        }
+      }
+  }
 }
 </script>
 

@@ -1,21 +1,21 @@
-<template lang="">
-<section v-if="items && items.length" class="category-list category-list--mobile">
+<template >
+<section v-if="categories && categories.length" class="category-list category-list--mobile">
     <header class="t20 text-center text-grey-darken-2 pa-3">
-        دسته‌بندی‌ها
+      {{ sectionLabel }}
     </header>
 
     <div  class="category-list__items d-flex justify-center align-start">
         <a
-            v-for="item in items"
+            v-for="item in categories"
             :key="item.id"
             :href="item.link"
             class="category-list__item mb-3">
             <div class="category-list__item__image">
-                <img :src="imageAddress('home-category.jpg')" :title="item.title" :alt="item.title" width="90" height="90" />
+                <img :src="item?.image.image_url" :title="item.image_alt" :alt="item.image_alt" width="90" height="90" />
             </div>
 
-            <h3 v-if="item.title" class="t12 w400 text-center mt-2 text-grey-darken-2">
-                {{item.title}}
+            <h3 v-if="item.label" class="t12 w400 text-center mt-2 text-grey-darken-2">
+                {{item.label}}
             </h3>
         </a>
     </div>
@@ -36,17 +36,23 @@ export default {
         title:String,
     },
 
-    methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
+    computed:{
+      categories(){
+        try {
+          return  this.items?.banners
         }
-    },
+        catch (e) {
+          return []
+        }
+      },
+      sectionLabel(){
+        try {
+          return  this.items?.label
+        }catch (e) {
+          return ''
+        }
+      }
+    }
 
 }
 </script>

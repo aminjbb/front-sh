@@ -1,6 +1,6 @@
-<template lang="">
-<section v-if="content" class="surprise-slider surprise-slider--mobile">
-    <div class="d-flex align-center flex-wrap" :style="{ backGround: `#${bgColor}` }">
+<template>
+<section v-if="mainBanner" class="surprise-slider surprise-slider--mobile">
+    <div class="d-flex align-center flex-wrap" :style="{ backGround: `#${mainBanner?.background_hex_code}` }">
         <div class=" surprise-slider__info">
             <div class="surprise-slider__info__counter mb-4">
                 <span class="t14 ml-2">{{ formattedTime }}</span>
@@ -8,7 +8,7 @@
             </div>
 
             <div class="surprise-slider__info__image mb-4">
-                <img :src="imageAddress('surprise.jpg')" title="سپوپرایز" alt="سپوپرایز" width="111" height="118" />
+                <img :src="mainBannerImage" title="سپوپرایز" alt="سپوپرایز" width="111" height="118" />
             </div>
 
             <v-btn
@@ -53,8 +53,8 @@
                 }"
                 class="mySwiper">
                 <swiper-slide
-                    v-if="content.skus && content.skus.length"
-                    v-for="(item, index) in content.skus.slice(0, 10)"
+                    v-if="mainBanner?.skus && mainBanner?.skus.length"
+                    v-for="(item, index) in mainBanner?.skus.slice(0, 10)"
                     :key="`skus-${index}`">
                     <generalProductCard
                         :content="item"
@@ -116,23 +116,14 @@ export default {
     },
 
     mounted() {
-        this.startCountdown(this.targetDate);
+        this.startCountdown(this.mainBanner?.end_time);
     },
 
     methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
-        },
 
         /**
          * Counter for time
-         * @param {*} targetDate 
+         * @param {*} targetDate
          */
         startCountdown(targetDate) {
             // Set the target date and time
@@ -164,6 +155,25 @@ export default {
             }, 1000);
         }
     },
+
+    computed:{
+        mainBanner(){
+          try {
+            return this.content.sliders[0]
+          }
+          catch (e) {
+            return ''
+          }
+        },
+        mainBannerImage(){
+          try {
+            return this.mainBanner?.image?.image_url
+          }
+          catch (e) {
+            return ''
+          }
+        }
+    }
 }
 </script>
 
