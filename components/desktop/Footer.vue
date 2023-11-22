@@ -29,25 +29,25 @@
             <div class="footer__content">
                 <div class="footer__links">
                     <ul> دسترسی سریع
-                        <li>لوازم آرایشی</li>
-                        <li>مراقبت از پوست</li>
-                        <li>بهداشت خانگی</li>
-                        <li>مراقبت از کودکان</li>
-                        <li>لوازم بهداشتی</li>
-                    </ul>
-                    <ul> درباره شاواز
-                        <li>درباره ما</li>
-                        <li>سوالات متدال</li>
-                        <li>فرصت‌های شغلی</li>
-                        <li>فروشنده شوید</li>
-                        
-                    </ul>
-                    <ul> راهنمای خرید
-                        <li>نحوه ثبت سفارش</li>
-                        <li>روش‌های پرداخت</li>
-                        <li>شیوه‌های ارسال</li>
-                        <li>شرایط مرجوعی</li>
-                    </ul>
+        <li><button type="button">لوازم آرایشی</button></li>
+        <li><button type="button">مراقبت از پوست</button></li>
+        <li><button type="button">بهداشت خانگی</button></li>
+        <li><button type="button">مراقبت از کودکان</button></li>
+        <li><button type="button">لوازم بهداشتی</button></li>
+    </ul>
+    <ul> درباره شاواز
+        <li><button type="button">درباره ما</button></li>
+        <li><button type="button">تماس با ما</button></li>
+        <li><button type="button">سوالات متدال</button></li>
+        <li><button type="button">فرصت‌های شغلی</button></li>
+        <li><button type="button">فروشنده شوید</button></li>
+    </ul>
+    <ul> راهنمای خرید
+        <li><button type="button">نحوه ثبت سفارش</button></li>
+        <li><button type="button">روش‌های پرداخت</button></li>
+        <li><button type="button">شیوه‌های ارسال</button></li>
+        <li><button type="button">شرایط مرجوعی</button></li>
+    </ul>
                 </div>
                 <div class="logos_email">
                     <h3>با ما در ارتباط باشید</h3>
@@ -81,23 +81,15 @@
 
                     </div>
                     <div >
-                        <p class="mt-3">برای اطلاع از آخرین تخفیف‌ها، ایمیل خود را ثبت نمایید.</p>
+                        <p  style="font-size: 12px;">برای اطلاع از آخرین تخفیف‌ها، ایمیل خود را ثبت نمایید.</p>
                         <div class="email-envelop">
-                        <input type="email" class="email-box" placeholder="ثبت ایمیل" />
-                        
-                            <button type="submit">
-                          
-                          <img
-                              src="~/assets/images/ic_outline-email.png"
-                              alt="Shavaz Logo"
-                              width="28"
-                              height="28"
-                              title="envelop"
-                              class="envelope-icon"
-                          />
-                          <span class="icon-separator-email">|</span>
-
-                     
+                            <v-text-field
+                            placeholder="ثبت ایمیل"
+                                variant="solo"
+                               
+                            ></v-text-field>                     
+                            <button  type="submit">
+                                <v-icon class="envelope-icon">mdi-email-outline</v-icon>
                               </button>
                         </div>
                         </div>
@@ -107,7 +99,7 @@
             <div class="footer__hologram">
                 <div class="hologram-text">
                     <v-icon>mdi-phone-in-talk-outline</v-icon>
-                    <span>  پشتیبانی شاواز:۰۲۱-۹۱۰۳۲۳۴۳ </span>
+                    <span>  پشتیبانی شاواز:۹۱۰۳۲۳۴۳-۰۲۱</span>
                     <span class="icon-separator">|</span>
                     <span>۲۴ ساعته در ۷ روز هفته پاسخگوی شما هستیم.</span>
                     
@@ -155,10 +147,6 @@
                                 title="linkdin"
                                 />
                             </a>
-                            
-                           
-                            
-                          
                     </div>
                     </div>
                    
@@ -185,14 +173,232 @@ export default {
         scrollToTop() {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth'
+                behavior: "smooth",
             });
-        }
+        },
     },
 };
 </script>
     
-    <style scoped>
-@import "~/assets/scss/components/desktop/general/footer.scss";
+    <style lang="scss">
+@import "~/assets/scss/tools/bp";
+
+$parent: "footer";
+
+.#{$parent} {
+    &--desktop {
+        @include gbp("lg") {
+            width: 100%;
+            background: #fff;
+            display: flex;
+
+            flex-direction: column;
+
+            .#{$parent}__logo {
+                position: relative;
+                display: flex;
+                top: 0;
+                justify-content: space-between;
+                align-items: center;
+
+                button {
+                    color: #9f9b9b;
+                    margin-top: 35px;
+                }
+
+                &:before {
+                    content: "";
+                    position: absolute;
+                    width: 90%;
+                    margin-right: 20px;
+                    display: flex;
+                    top: 25px;
+                    left: 0;
+                    right: 8.5rem;
+                    border-top: 0.5px solid var(--gray-400, #bdbdbd);
+                }
+            }
+        }
+
+        .#{$parent}__content {
+            display: flex;
+
+            width: 100%;
+            margin-top: 20px;
+            .logos_email {
+                color: var(--grey-grey-darken-3, #424242);
+                width: 90%;
+                margin-right: 200px;
+                font-size: 16px;
+                .v-field {
+                    position: relative;
+                    box-shadow: none;
+                    background: #eeeeee;
+                    border-radius: 4px;
+                }
+
+                .h3 {
+                    margin-bottom: 10px;
+                }
+
+                .social-media {
+                    margin-top: 10px;
+
+                    .v-icon {
+                        color: white;
+                        background-color: #616161;
+                        border-radius: 50%;
+                        padding: 15px;
+                        margin-left: 12px;
+                        margin-bottom: 23px;
+                        font-size: 22px;
+                    }
+
+                    .custom-svg-icon {
+                        margin-left: 12px;
+                    }
+                }
+
+                .email-envelop {
+                    position: relative;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    margin-top: 1rem;
+                    margin-bottom: 1rem;
+                }
+
+                .email-box {
+                    width: 100%;
+                    padding: 0.5rem;
+                    padding-right: 1rem;
+                    background-color: #f5f5f5;
+                    border-radius: 4px;
+                }
+                .email-box::placeholder {
+                    color: var(--gray-400, #bdbdbd);
+                }
+
+                .envelope-icon {
+                    position: absolute;
+                    left: 30px;
+                    margin-top: -20px;
+                    color: #9e9e9e;
+                    border-right: 1px solid var(--grey-grey-lighten-1, #bdbdbd);
+                    padding: 28px;
+                    margin-top: -39px;
+                    box-sizing: border-box;
+                    margin-left: -30px;
+                }
+
+                .icon-separator-email {
+                    position: absolute;
+                    left: 40px;
+                    margin-left: 30px;
+                    top: 55%;
+                    transform: translateY(-50%) scaleY(1.5);
+                    font-size: 30px;
+                    color: var(--grey-grey-lighten-1, #bdbdbd);
+                }
+            }
+
+            ul {
+                list-style-type: none;
+                padding-left: 0;
+                width: 100%;
+
+                li {
+                    color: var(--grey-grey, #9e9e9e);
+                    font-size: 12px;
+                    margin-top: 10px;
+                    width: 100px;
+                }
+            }
+
+            .#{$parent}__links {
+                display: flex;
+                gap: 170px;
+                width: 120%;
+                
+                
+                .ul {
+                    
+                    .li {
+                        width: 100px;
+                        a, a:-webkit-any-link {
+                text-decoration: none !important;  // Force overriding other styles
+                color: inherit !important;  // Ensure color is inherited
+                cursor: pointer;  // Maintains the pointer cursor on hover
+
+                &:hover, &:focus {
+                    text-decoration: none !important;
+                }
+            }
+                        
+                    }
+                }
+            }
+        }
+
+        .#{$parent}__hologram {
+            position: relative;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            .icon-separator {
+                font-size: 24px;
+                transform: translateY(-50%) scaleY(1.5) scaleX(0.5);
+                line-height: 1;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            .hologram-text {
+                margin-top: 40px;
+
+                width: 100%;
+
+                font-size: 14px;
+                color: var(--grey-grey-darken-1, #757575);
+            }
+
+            .logo-hologram {
+                position: relative;
+                display: flex;
+                width: 100%;
+                justify-content: flex-end;
+                align-items: center;
+                margin-left: -10px;
+
+                a {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 67px;
+                    height: 79px;
+                    border: 1px solid var(--grey-grey-lighten-2, #e0e0e0);
+                    margin: 5px;
+                    border-radius: 4px;
+                    padding: 5px;
+                    box-sizing: border-box;
+
+                    img {
+                        object-fit: contain;
+                    }
+                }
+            }
+        }
+
+        .footer__text {
+            width: 100%;
+
+            font-size: 12px;
+            text-align: center;
+            padding: 10px 0;
+            color: var(--grey-grey-darken-1, #757575);
+        }
+    }
+}
 </style>
     
