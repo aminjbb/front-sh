@@ -5,20 +5,20 @@ import { ref} from 'vue';
 import { AxiosCall } from '~/utils/axios_call.js'
 
 export default function setup(posts) {
-    const homeSectionList = ref([]);
+    const menuList = ref([]);
     const loading = ref(false)
 
-    async function getHomeSections(query) {
+    async function getMenuList(query) {
         loading.value = true
         const AxiosMethod = new AxiosCall()
-        AxiosMethod.end_point = 'homepage/index'
+        AxiosMethod.end_point = 'system/menu/crud/index'
         let data = await AxiosMethod.axios_get()
         if (data) {
-            homeSectionList.value = data.data
+            menuList.value = data.data
             loading.value = false
         }
     };
 
-    return {getHomeSections, homeSectionList, loading  }
+    return {getMenuList, menuList, loading  }
 }
 

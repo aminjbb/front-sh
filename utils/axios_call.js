@@ -2,6 +2,7 @@ import axios from "axios";
 import qs from "qs";
 import { useRouter, useRoute } from 'vue-router'
 // var FormData = require('form-data');
+const NUXT_PUBLIC_API_BASE = "https://api.shvz.ir/api"
 
 export class AxiosCall {
     constructor() {
@@ -21,7 +22,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            import.meta.env.VITE_API_BASEURL,
+            NUXT_PUBLIC_API_BASE,
             "/",
             this.version,
             "/",
@@ -84,7 +85,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            import.meta.env.VITE_API_BASEURL,
+            NUXT_PUBLIC_API_BASE,
             "/",
             this.version,
             "/",
@@ -213,7 +214,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            import.meta.env.VITE_API_BASEURL,
+            NUXT_PUBLIC_API_BASE,
             "/",
             this.version,
             "/",
@@ -285,7 +286,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            import.meta.env.VITE_API_BASEURL,
+            NUXT_PUBLIC_API_BASE,
             "/",
             this.version,
             "/",
@@ -359,7 +360,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            import.meta.env.VITE_API_BASEURL,
+            NUXT_PUBLIC_API_BASE,
             "/",
             this.version,
             "/",

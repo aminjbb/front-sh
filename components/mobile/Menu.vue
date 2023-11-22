@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import Menu from '~/composables/Menu';
 export default {
     data() {
         return {
@@ -185,6 +186,18 @@ export default {
                 }
             ]
         }
+    },
+
+    setup() {
+        const {getMenuList, menuList,loading } = Menu();
+        return {getMenuList,  menuList,loading };
+    },
+
+    mounted() {
+         /**
+         * Call getHomeSections in setup 
+         */
+        this.getMenuList();
     },
 
     methods: {
