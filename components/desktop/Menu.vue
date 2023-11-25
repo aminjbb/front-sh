@@ -5,147 +5,129 @@
             <ul class="menu__items">
                 <li
                     class="menu__item"
-                    v-for="(menu, index) in menus"
+                    v-for="(menu, index) in menuList"
                     :key="menu.id"
                     @mouseenter="showBodyCover(index)"
                     @mouseleave="hideBodyCover"
                     :class="{'has-child' : menu.children, 'has-mega-menu': index === 0}">
-                    <a class="menu__item__link">
+                    <a :href="menu.name !== 'categories' ? menu.url : ''" class="menu__item__link">
                         <v-icon :icon="`mdi-${menu.icon}`" />
-                        <span>{{menu.title}}</span>
+                        <span>{{menu.label}}</span>
                     </a>
+
                     <template v-if="menu.name == 'categories'">
-                        <div v-if="menu.children && menu.children.length" class="mega-menu">
+                        <div
+                            v-if="menu.children && menu.children.length"
+                            class="mega-menu"
+                            id="mega-menu">
                             <v-container>
-                                <ul class="menu__items">
+                                <ul class="menu__items" @mouseleave="hideBodyCover">
                                     <li v-for="child1 in menu.children" :key="child1.id">
                                         <a>
                                             <div>
                                                 <v-icon :icon="`mdi-${child1.icon}`" class="ml-1" />
-                                                <span>{{ child1.title }}</span>
+                                                <span>{{ child1.label }}</span>
                                             </div>
                                             <v-icon icon="mdi-chevron-left" />
                                         </a>
+
                                         <div class="menu__items__image-child">
                                             <div class="menu__items__image-ul">
                                                 <ul class="menu__items">
                                                     <div>
-                                                        <template v-for="child2 in child1.children">
-                                                            <li
-                                                                v-if="child2.priority === '1'"
-                                                                :key="child2.id"
-                                                                class="menu__item">
-                                                                <span>{{ child2.title }}</span>
-                                                                <ul class="menu-items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child3 in child2.children"
-                                                                        :key="child3.id">
-                                                                        <a>
-                                                                            <span>{{ child3.title }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </template>
+                                                        <li v-if="child1.children&& child1.children[0]" class="menu__item">
+                                                            <span>{{ child1.children[0].label }}</span>
+                                                            <ul class="menu-items">
+                                                                <li
+                                                                    class="menu__item"
+                                                                    v-for="child2 in child1.children[0].children"
+                                                                    :key="child2.id">
+                                                                    <a :href="child2.url">
+                                                                        <span>{{ child2.label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                     </div>
                                                     <div>
-                                                        <template v-for="child2 in child1.children">
-                                                            <li
-                                                                v-if="child2.priority === '2'"
-                                                                :key="child2.id"
-                                                                class="menu__item">
-                                                                <span>{{ child2.title }}</span>
-                                                                <ul class="menu-items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child3 in child2.children"
-                                                                        :key="child3.id">
-                                                                        <a>
-                                                                            <span>{{ child3.title }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
+                                                        <li v-if="child1.children && child1.children[1]" class="menu__item">
+                                                            <span>{{ child1.children[1].label }}</span>
+                                                            <ul class="menu-items">
+                                                                <li
+                                                                    class="menu__item"
+                                                                    v-for="child2 in child1.children[1].children"
+                                                                    :key="child2.id">
+                                                                    <a :href="child2.url">
+                                                                        <span>{{ child2.label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
 
-                                                            <li
-                                                                v-if="child2.priority === '3'"
-                                                                :key="child2.id"
-                                                                class="menu__item">
-                                                                <span>{{ child2.title }}</span>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child3 in child2.children"
-                                                                        :key="child3.id">
-                                                                        <a>
-                                                                            <span>{{ child3.title }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </template>
+                                                        <li v-if="child1.children && child1.children[2]" class="menu__item">
+                                                            <span>{{ child1.children[2].label }}</span>
+                                                            <ul class="menu__items">
+                                                                <li
+                                                                    class="menu__item"
+                                                                    v-for="child2 in child1.children[2].children"
+                                                                    :key="child2.id">
+                                                                    <a :href="child2.url">
+                                                                        <span>{{ child2.label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                     </div>
                                                     <div>
-                                                        <template v-for="child2 in child1.children">
-                                                            <li
-                                                                v-if="child2.priority === '4'"
-                                                                :key="child2.id"
-                                                                class="menu__item">
-                                                                <span>{{ child2.title }}</span>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child3 in child2.children"
-                                                                        :key="child3.id">
-                                                                        <a>
-                                                                            <span>{{ child3.title }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </template>
+                                                        <li v-if="child1.children[3]" class="menu__item">
+                                                            <span>{{ child1.children[3].label }}</span>
+                                                            <ul class="menu__items">
+                                                                <li
+                                                                    class="menu__item"
+                                                                    v-for="child2 in child1.children[3].children"
+                                                                    :key="child2.id">
+                                                                    <a :href="child2.url">
+                                                                        <span>{{ child2.label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                     </div>
                                                     <div>
-                                                        <template v-for="child2 in child1.children">
-                                                            <li
-                                                                v-if="child2.priority === '5'"
-                                                                :key="child2.id"
-                                                                class="menu__item">
-                                                                <span>{{ child2.title }}</span>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child3 in child2.children"
-                                                                        :key="child3.id">
-                                                                        <a>
-                                                                            <span>{{ child3.title }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
+                                                        <li v-if="child1.children[4]" class="menu__item">
+                                                            <span>{{ child1.children[4].label }}</span>
+                                                            <ul class="menu__items">
+                                                                <li
+                                                                    class="menu__item"
+                                                                    v-for="child2 in child1.children[4].children"
+                                                                    :key="child2.id">
+                                                                    <a :href="child2.url">
+                                                                        <span>{{ child2.label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
 
-                                                            <li
-                                                                v-if="child2.priority === '6'"
-                                                                :key="child2.id"
-                                                                class="menu__item">
-                                                                <span>{{ child2.title }}</span>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child3 in child2.children"
-                                                                        :key="child3.id">
-                                                                        <a>
-                                                                            <span>{{ child3.title }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </template>
+                                                        <li v-if="child1.children[5]" class="menu__item">
+                                                            <span>{{ child1.children[4].label }}</span>
+                                                            <ul class="menu__items">
+                                                                <li
+                                                                    class="menu__item"
+                                                                    v-for="child2 in child1.children[5].children"
+                                                                    :key="child2.id">
+                                                                    <a :href="child2.url">
+                                                                        <span>{{ child2.label }}</span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                     </div>
                                                 </ul>
                                             </div>
-                                            <div class="menu__items__image">image</div>
+
+                                            <div class="menu__items__image">
+                                                <img v-if="child1?.image_url && child1?.image_url !== null" :src="child1.image_url" :title="child1.label" :alt="child1.label" width="184" height="388" />
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -160,216 +142,46 @@
 </template>
 
 <script>
+import Menu from '~/composables/Menu';
 export default {
     data() {
-        return {
-            menus: [{
-                    id: '1efe',
-                    icon: 'menu',
-                    name: 'categories',
-                    title: ' دسته‌بندی‌ها ',
-                    link: '/',
-                    children: [{
-                            id: '1',
-                            icon: 'lipstick',
-                            title: 'لوازم آرایشی',
-                            link: '/',
-                            children: [{
-                                    id: 'c131',
-                                    icon: null,
-                                    title: 'پاک کننده آرایش',
-                                    priority: '1',
-                                    link: '/',
-                                    children: [{
-                                            id: 'c281',
-                                            icon: null,
-                                            title: 'پد و پنبه آرایشی',
-                                            link: '/',
-                                        },
-                                        {
-                                            id: 'c722',
-                                            icon: null,
-                                            title: 'بورس صورت',
-                                            link: '/',
-                                        },
-                                        {
-                                            id: 'c293',
-                                            icon: null,
-                                            title: 'پاک‌کننده آرایش صورت',
-                                            link: '/',
-                                        }
-                                    ]
-                                },
-                                {
-                                    id: 'c172',
-                                    icon: null,
-                                    title: 'آرایش لب',
-                                    priority: '2',
-                                    link: '/',
-                                    children: [{
-                                            id: 'c721',
-                                            icon: null,
-                                            title: 'رژ لب',
-                                            link: '',
-                                        },
-                                        {
-                                            id: 'c292',
-                                            icon: null,
-                                            title: 'تینت لب',
-                                            link: '/',
-                                        }
-                                    ]
-                                },
-                                {
-                                    id: '17',
-                                    icon: null,
-                                    title: 'آرایش چشم',
-                                    priority: '3',
-                                    link: '/',
-                                    children: []
-                                },
-                                {
-                                    id: '18',
-                                    icon: null,
-                                    title: 'آرایش صورت',
-                                    priority: '4',
-                                    link: '/',
-                                    children: []
-                                },
-                                {
-                                    id: '18',
-                                    icon: null,
-                                    title: 'آرایش ابرو',
-                                    priority: '5',
-                                    link: '/',
-                                    children: []
-                                },
-                                {
-                                    id: '18',
-                                    icon: null,
-                                    title: 'ابزار آرایشی',
-                                    priority: '6',
-                                    link: '/',
-                                    children: []
-                                }
-                            ]
-                        },
-                        {
-                            id: '02',
-                            icon: 'hair-dryer-outline',
-                            title: 'آرایش و مراقبت مو',
-                            link: '/',
-                            children: [{
-                                id: 'c1d51',
-                                icon: null,
-                                title: 'آرایش مو',
-                                link: '/',
-                                children: [{
-                                        id: 'c291',
-                                        icon: null,
-                                        title: 'چسب مو',
-                                        link: '/',
-                                    },
-                                    {
-                                        id: 'c262',
-                                        icon: null,
-                                        title: 'ماسک مو',
-                                        link: '/',
-                                    },
-                                    {
-                                        id: 'c233',
-                                        icon: null,
-                                        title: 'بی رنگ کننده مو',
-                                        link: '/',
-                                    }
-                                ]
-                            }]
-                        },
-                        {
-                            id: '52',
-                            icon: 'hand-wash-outline',
-                            title: 'لوازم بهداشتی',
-                            link: '/',
-                            children: [{
-                                id: 'c1d1',
-                                icon: null,
-                                title: 'زنانه',
-                                link: '/',
-                                children: [{
-                                        id: 'c521',
-                                        icon: null,
-                                        title: 'شامپو مو',
-                                        link: '/',
-                                    },
-                                    {
-                                        id: 'c272',
-                                        icon: null,
-                                        title: 'شامپو بدن',
-                                        link: '/',
-                                    },
-                                    {
-                                        id: 'c253',
-                                        icon: null,
-                                        title: 'نخ دندان',
-                                        link: '/',
-                                    }
-                                ]
-                            }]
-                        }
-                    ]
-                },
-                {
-                    id: '1eefe',
-                    icon: 'sale-outline',
-                    name: 'most seller',
-                    title: 'پرفروش‌ترین‌های هفته',
-                    link: '/',
-                },
-                {
-                    id: '1eefe',
-                    icon: 'ballot-outline',
-                    name: 'discount',
-                    title: ' محصولات تخفیف‌دار',
-                    link: '/',
-                },
-                {
-                    id: '1eefe',
-                    icon: 'menu',
-                    name: 'most seller',
-                    title: ' بلاگ',
-                    link: '/',
-                },
-                {
-                    id: '1eefe',
-                    icon: 'storefront-outline',
-                    name: 'most seller',
-                    title: 'درباره ما ',
-                    link: '/',
-                    children: null
-                },
-                {
-                    id: '1eefe',
-                    icon: 'phone-in-talk-outline',
-                    name: 'most seller',
-                    title: ' تماس با ما',
-                    link: '/',
-                    children: null
-                },
+        return {}
+    },
 
-            ]
-        }
+    setup() {
+        const {
+            getMenuList,
+            menuList,
+            loading
+        } = Menu();
+        return {
+            getMenuList,
+            menuList,
+            loading
+        };
+    },
+
+    mounted() {
+        /**
+         * Call getHomeSections in setup 
+         */
+        this.getMenuList();
     },
 
     methods: {
         showBodyCover(index) {
             if (index === 0) {
-                document.getElementById('header--desktop').classList.add('show-mega-menu')
+                document.getElementById('header--desktop').classList.add('show-mega-menu');
+                document.getElementById('mega-menu').style.display = "block";
+                document.getElementById('mega-menu').style.zIndex = "1000";
                 document.body.classList.add('active');
             }
         },
 
         hideBodyCover() {
-            document.getElementById('header--desktop').classList.remove('show-mega-menu')
+            document.getElementById('header--desktop').classList.remove('show-mega-menu');
+            document.getElementById('mega-menu').style.display = "none";
+            document.getElementById('mega-menu').style.zIndex = "10";
             document.body.classList.remove('active');
         }
     },
@@ -386,7 +198,6 @@ $parent: 'menu';
 
 .#{$parent} {
     &--desktop {
-
         >ul.menu__items {
             display: flex;
             align-items: center;
@@ -434,11 +245,6 @@ $parent: 'menu';
                     position: relative;
                 }
 
-                &.has-mega-menu:hover .mega-menu {
-                    display: block;
-                    z-index: 1000;
-                }
-
                 .mega-menu {
                     position: absolute;
                     top: 100%;
@@ -446,6 +252,10 @@ $parent: 'menu';
                     width: 100vw;
                     z-index: 10;
                     display: none;
+
+                    a {
+                        text-decoration: none;
+                    }
 
                     .v-container {
                         padding: 0 !important;

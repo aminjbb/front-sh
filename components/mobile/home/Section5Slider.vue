@@ -6,7 +6,7 @@
                 {{slider.label}}
             </div>
 
-            <div class="section5-slider__info__image">
+            <div v-if="slider.image && slider.image.image_url && slider.image.image_url !== null" class="section5-slider__info__image">
                 <img :src="slider.image?.image_url" :title="slider.label" :alt="slider.label" width="111" height="118" />
             </div>
         </div>
@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import {ca} from "vuetify/locale";
-
 export default {
 
     props: {
@@ -53,35 +51,22 @@ export default {
         bgColor: String,
     },
 
-    methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
+    computed: {
+        slider() {
+            try {
+                return this.content ?.sliders[0]
+            } catch (e) {
+                return ''
+            }
+        },
+        sliderPartitions() {
+            try {
+                return this.slider ?.partitions
+            } catch (e) {
+                return []
+            }
         }
-    },
-
-  computed:{
-      slider(){
-        try {
-          return this.content?.sliders[0]
-        }
-        catch (e) {
-          return ''
-        }
-    },
-      sliderPartitions(){
-          try {
-            return  this.slider?.partitions
-          }catch (e) {
-            return []
-          }
-      }
-  }
+    }
 }
 </script>
 

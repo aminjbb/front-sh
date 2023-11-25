@@ -1,7 +1,7 @@
 <template>
 <section v-if="brands && brands.length" class="brands brands--mobile mb-8">
-    <header class="brands__header text-center t20 text-secondary">
-       {{items.label}}
+    <header v-if="items.label" class="brands__header text-center t20 text-secondary">
+        {{items.label}}
     </header>
 
     <div class="brands__swiper">
@@ -75,7 +75,7 @@ export default {
         /**
          * Title of section
          */
-        title:String,
+        title: String,
     },
 
     setup() {
@@ -84,17 +84,15 @@ export default {
         };
     },
 
-
-  computed:{
-      brands(){
-        try {
-          return this.items.brands
+    computed: {
+        brands() {
+            try {
+                return this.items.brands
+            } catch (e) {
+                return []
+            }
         }
-        catch (e) {
-          return []
-        }
-      }
-  }
+    }
 }
 </script>
 

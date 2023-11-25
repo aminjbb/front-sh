@@ -144,7 +144,6 @@ export default {
                     // If the target time has passed, handle it here
                     clearInterval(countdownInterval);
                     this.formattedTime = '00:00:00';
-                    //console.log('The countdown has ended!');
                     return;
                 }
 

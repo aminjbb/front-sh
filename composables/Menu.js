@@ -11,7 +11,7 @@ export default function setup(posts) {
     async function getMenuList(query) {
         loading.value = true
         const AxiosMethod = new AxiosCall()
-        AxiosMethod.end_point = 'system/menu/crud/index'
+        AxiosMethod.end_point = 'system/menu/crud/index?group=1'
         let data = await AxiosMethod.axios_get()
         if (data) {
             menuList.value = data.data

@@ -10,6 +10,7 @@
         :spaceBetween="24"
         :modules="modules"
         :loop="true"
+        :height="286" 
         :breakpoints="{
                 '200': {
                     slidesPerView: 1.3,
@@ -93,6 +94,11 @@ $parent:'section8-slider';
         @include gbp(0, "lg") {
             font-size: 16px !important;
         }
+    }
+
+    .product-card {
+        margin-bottom: 0 !important;
+        height: 276px !important;
     }
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-<header class="header header--desktop" id="header--desktop">
+<header
+    class="header header--desktop w-100"
+    id="header--desktop"
+    :class="{ 'fixed': isFixed, 'hidden': isHidden }">
     <v-container>
         <div class="header__inner d-flex align-center justify-space-between">
             <div class="header__col1 d-flex algin-center">
@@ -52,11 +55,44 @@ export default {
         return {
             isDropdownVisible: false,
             selectedCategory: null,
+            isFixed: true,
+            isHidden: false,
+            lastScrollTop: 0,
         };
     },
 
-    methods: {
+    mounted() {
+        window.addEventListener('scroll', this.handleScroll);
+    },
 
+    beforeDestroy() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
+
+    methods: {
+        /**
+         * Show and hide menu in scroll down and up
+         */
+        handleScroll() {
+            let currentScrollTop = window.scrollY;
+
+            if (window.scrollY > 60) {
+                this.isHidden = true;
+                this.isFixed = false;
+
+                if (currentScrollTop > this.lastScrollTop) {
+                    this.isHidden = true;
+                    this.isFixed = false;
+
+                } else {
+                    this.isFixed = true;
+                    this.isHidden = false;
+
+                }
+
+                this.lastScrollTop = currentScrollTop;
+            }
+        },
     },
 };
 </script>
@@ -68,15 +104,20 @@ $parent: 'header';
 .#{$parent} {
     &--desktop {
         &.show-mega-menu {
-            position: relative;
             z-index: 1000;
         }
 
+        position: fixed;
+        z-index: 10;
         padding: 4px;
         padding-bottom: 0 !important;
         border-bottom: 1px solid #DDDDDD;
         box-shadow: 0px 4px 9px rgba(66, 66, 66, 0.1);
         background: #fff;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        top: 0;
+        right: 0;
 
         .#{$parent} {
             &__logo {
@@ -84,7 +125,8 @@ $parent: 'header';
                 width: 107px;
                 height: 38px;
                 margin-left: 65px;
-                @include gbp(768,1280){
+
+                @include gbp(768, 1280) {
                     margin-left: 12px;
                 }
             }
@@ -95,7 +137,7 @@ $parent: 'header';
                 border-radius: 4px !important;
                 overflow: hidden;
 
-                @include gbp(768,1280){
+                @include gbp(768, 1280) {
                     width: 450px;
                 }
 
@@ -140,6 +182,18 @@ $parent: 'header';
                     font-size: 16px;
                 }
             }
+        }
+
+        &.hidden {
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        &.fixed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
     }
 }

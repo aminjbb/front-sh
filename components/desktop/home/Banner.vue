@@ -39,8 +39,6 @@ export default {
          */
         title: String
     },
-
-
 }
 </script>
 
