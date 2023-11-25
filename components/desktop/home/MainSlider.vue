@@ -60,7 +60,6 @@ export default {
       desktopBanners(){
         try {
           const banners = this.items?.banners.filter(item => item.device === 'desktop')
-          console.log(this.items , 'items')
           if (banners.length) return banners
           else  return  []
         }

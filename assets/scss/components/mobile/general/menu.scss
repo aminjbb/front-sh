@@ -15,6 +15,10 @@ $parent: 'menu';
         background-color: red;
         transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
 
+        a{
+            text-decoration: none !important;
+        }
+
         &.change-height {
             height: calc(100vh - 56px);
             top: 0;

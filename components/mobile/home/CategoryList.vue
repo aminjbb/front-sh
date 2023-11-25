@@ -1,15 +1,11 @@
-<template >
+<template>
 <section v-if="categories && categories.length" class="category-list category-list--mobile">
-    <header class="t20 text-center text-grey-darken-2 pa-3">
-      {{ sectionLabel }}
+    <header v-if="sectionLabel" class="t20 text-center text-grey-darken-2 pa-3">
+        {{ sectionLabel }}
     </header>
 
-    <div  class="category-list__items d-flex justify-center align-start">
-        <a
-            v-for="item in categories"
-            :key="item.id"
-            :href="item.link"
-            class="category-list__item mb-3">
+    <div class="category-list__items d-flex justify-center align-start">
+        <a v-for="item in categories" :key="item.id" :href="item.link" class="category-list__item mb-3">
             <div class="category-list__item__image">
                 <img :src="item?.image.image_url" :title="item.image_alt" :alt="item.image_alt" width="90" height="90" />
             </div>
@@ -33,25 +29,24 @@ export default {
         /**
          * Section title
          */
-        title:String,
+        title: String,
     },
 
-    computed:{
-      categories(){
-        try {
-          return  this.items?.banners
+    computed: {
+        categories() {
+            try {
+                return this.items ?.banners
+            } catch (e) {
+                return []
+            }
+        },
+        sectionLabel() {
+            try {
+                return this.items ?.label
+            } catch (e) {
+                return ''
+            }
         }
-        catch (e) {
-          return []
-        }
-      },
-      sectionLabel(){
-        try {
-          return  this.items?.label
-        }catch (e) {
-          return ''
-        }
-      }
     }
 
 }

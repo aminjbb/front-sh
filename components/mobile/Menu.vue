@@ -1,17 +1,21 @@
 <template lang="">
-<div class="menu menu--mobile" id="menu--mobile">
+<div
+    v-if="menuList && menuList.length"
+    class="menu menu--mobile"
+    id="menu--mobile">
     <nav>
         <ul class="menu__items">
             <li
+                v-if="menuList[0] && menuList[0].children && menuList[0].children.length"
                 class="menu__item"
-                v-for="(item, index) in menus"
+                v-for="(item, index) in menuList[0].children"
                 :key="item.id"
                 @click="openSubMenu(item.id)"
                 :id="`menu__item--${item.id}`"
                 :class="{'has-child' : item.children ,'active-menu' : index === 0 }">
                 <a class="menu__item__link">
                     <v-icon :icon="`mdi-${item.icon}`" />
-                    <span>{{item.title}}</span>
+                    <span>{{item.label}}</span>
                 </a>
 
                 <ul
@@ -27,8 +31,8 @@
                         :id="`menu__item--${child1.id}`"
                         @click="openSubMenu2(child1.id)">
                         <a class="menu__item__link d-flex align-items justify-space-between">
-                            <span class="t13">{{child1.title}}</span>
-                            <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-down"/>
+                            <span class="t13">{{child1.label}}</span>
+                            <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-down" />
                         </a>
 
                         <ul
@@ -39,8 +43,8 @@
                                 v-for="child2 in child1.children"
                                 :key="child2.id"
                                 class="menu__item">
-                                <a class="menu__item__link">
-                                    <span class="t13 w500">{{child2.title}}</span>
+                                <a :href="child2.url" class="menu__item__link">
+                                    <span class="t13 w500">{{child2.label}}</span>
                                 </a>
                             </li>
                         </ul>
@@ -57,150 +61,41 @@ import Menu from '~/composables/Menu';
 export default {
     data() {
         return {
-            menus: [{
-                    id: '1',
-                    icon: 'lipstick',
-                    title: 'لوازم آرایشی',
-                    link: '/',
-                    children: [{
-                            id: 'c131',
-                            icon: null,
-                            title: 'پاک کننده آرایش',
-                            link: '/',
-                            children: [{
-                                    id: 'c281',
-                                    icon: null,
-                                    title: 'پد و پنبه آرایشی',
-                                    link: '/',
-                                },
-                                {
-                                    id: 'c722',
-                                    icon: null,
-                                    title: 'بورس صورت',
-                                    link: '/',
-                                },
-                                {
-                                    id: 'c293',
-                                    icon: null,
-                                    title: 'پاک‌کننده آرایش صورت',
-                                    link: '/',
-                                }
-                            ]
-                        },
-                        {
-                            id: 'c172',
-                            icon: null,
-                            title: 'آرایش لب',
-                            link: '/',
-                            children: [{
-                                    id: 'c721',
-                                    icon: null,
-                                    title: 'رژ لب',
-                                    link: '',
-                                },
-                                {
-                                    id: 'c292',
-                                    icon: null,
-                                    title: 'تینت لب',
-                                    link: '/',
-                                }
-                            ]
-                        },
-                        {
-                            id: '17',
-                            icon: null,
-                            title: 'آرایش چشم',
-                            link: '/',
-                            children: []
-                        },
-                        {
-                            id: '18',
-                            icon: null,
-                            title: 'آرایش صورت',
-                            link: '/',
-                            children: []
-                        }
-                    ]
-                },
-                {
-                    id: '02',
-                    icon: 'hair-dryer-outline',
-                    title: 'آرایش و مراقبت مو',
-                    link: '/',
-                    children: [{
-                        id: 'c1d51',
-                        icon: null,
-                        title: 'آرایش مو',
-                        link: '/',
-                        children: [{
-                                id: 'c291',
-                                icon: null,
-                                title: 'چسب مو',
-                                link: '/',
-                            },
-                            {
-                                id: 'c262',
-                                icon: null,
-                                title: 'ماسک مو',
-                                link: '/',
-                            },
-                            {
-                                id: 'c233',
-                                icon: null,
-                                title: 'بی رنگ کننده مو',
-                                link: '/',
-                            }
-                        ]
-                    }]
-                },
-                {
-                    id: '52',
-                    icon: 'hand-wash-outline',
-                    title: 'لوازم بهداشتی',
-                    link: '/',
-                    children: [{
-                        id: 'c1d1',
-                        icon: null,
-                        title: 'زنانه',
-                        link: '/',
-                        children: [{
-                                id: 'c521',
-                                icon: null,
-                                title: 'شامپو مو',
-                                link: '/',
-                            },
-                            {
-                                id: 'c272',
-                                icon: null,
-                                title: 'شامپو بدن',
-                                link: '/',
-                            },
-                            {
-                                id: 'c253',
-                                icon: null,
-                                title: 'نخ دندان',
-                                link: '/',
-                            }
-                        ]
-                    }]
-                }
-            ]
+            categoriesMenu: []
         }
     },
 
     setup() {
-        const {getMenuList, menuList,loading } = Menu();
-        return {getMenuList,  menuList,loading };
+        const {
+            getMenuList,
+            menuList,
+            loading
+        } = Menu();
+        return {
+            getMenuList,
+            menuList,
+            loading
+        };
     },
 
     mounted() {
-         /**
+        /**
          * Call getHomeSections in setup 
          */
         this.getMenuList();
     },
 
     methods: {
+        getCategoriesMenu() {
+            if (this.menuList && this.menuList.length > 0) {
+                this.menuList.forEach(element => {
+                    if (element.name == 'categories') {
+                        this.categoriesMenu.push(this.element)
+                    }
+                });
+                return this.categoriesMenu;
+            }
+        },
         /**
          * Open first sub menu
          */
@@ -208,7 +103,7 @@ export default {
             const menu = document.querySelector('.menu');
             const ulItems = menu.querySelectorAll('ul');
             const liItems = menu.querySelectorAll('li');
-            
+
             ulItems.forEach(item => {
                 item.classList.remove('show-mega-menu');
             });

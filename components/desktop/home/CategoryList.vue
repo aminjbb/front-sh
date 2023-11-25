@@ -1,6 +1,6 @@
 <template>
 <section v-if="categories && categories.length" class="category-list category-list--desktop">
-    <header class="t24 w500 text-center text-grey-darken-2 pa-6 mt-6">
+    <header v-if="sectionLabel" class="t24 w500 text-center text-grey-darken-2 pa-6 mt-6">
       {{ sectionLabel }}
     </header>
 
