@@ -21,7 +21,19 @@
     }
 }
 
+@mixin line-height($start: 16, $end: 50) {
+    @for $i from $start through $end {
+        $class: "l#{$i}";
+
+        .#{$class} {
+            line-height: #{$i}px;
+            // You can add more styles here if needed
+        }
+    }
+}
+
 
 // Usage
 @include typo(10, 50);
+@include line-height(16, 50);
 @include font-variation-wght(100, 700, 100);
