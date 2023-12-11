@@ -1,0 +1,38 @@
+//------------------------------------------------
+//  About us
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-about {
+    padding-bottom: 60px;
+    padding-top: 160px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    &__banner {
+        img {
+            height: auto !important;
+            max-width: 100%;
+        }
+    }
+
+    &__progress{
+        &__image{
+            img{
+                max-width: 100%;
+                height: auto !important;
+            }
+        }
+    }
+
+    &__values{
+        .v-col-6 > div{
+            @include gbp (0, 598) {
+               display: flex !important;
+            }
+        }
+    }
+}
