@@ -1,0 +1,55 @@
+//------------------------------------------------
+//  User
+//------------------------------------------------
+
+.v-user {
+    padding-bottom: 60px;
+    padding-top: 170px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    .card__header{
+        @include gbp (0, 768) {
+            display: none !important;
+        }
+    }
+
+    .user-phone {
+        font-family: 'IranSansFaNum' !important;
+        color: #757575
+    }
+
+    .user-nav {
+        &__item {
+            padding: 14px 2px 13px;
+        }
+
+        &__item:not(:last-child) {
+            border-bottom: 0.5px solid #BDBDBD;
+        }
+    }
+
+    .v-row.pa-5 {
+        @include gbp (0, 768) {
+            padding: 0 !important;
+        }
+    }
+
+
+    .btn--cancel {
+        @include gbp (0, 768) {
+            width:31.333%
+        }
+    }
+
+    .btn--submit {
+        @include gbp (0, 768) {
+            margin-left: 0 !important;
+            width: 100%;
+            width: 66.666%;
+        }
+    }
+}

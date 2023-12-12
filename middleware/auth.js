@@ -76,7 +76,7 @@ export default {
   async getUserProfile(token) {
     try {
       // Send a GET request to the profile endpoint with the token in the headers
-      const response = await $http.get(`${BASE_URL}/auth/user/profile`, {
+      const response = await axios.post(`${BASE_URL}/auth/user/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

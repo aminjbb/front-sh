@@ -1,0 +1,66 @@
+//------------------------------------------------
+//  From Styles
+//------------------------------------------------
+
+.v-field{
+    &__outline{
+        &__end,
+        &__start{
+            border-radius: 0 !important;
+        }
+        
+        &__start,
+        &__end, 
+        &__notch::before, 
+        &__notch::after {
+            border-color:#BDBDBD !important
+        } 
+
+        &__start{
+            border-top-right-radius: 3px !important; 
+            border-bottom-right-radius: 3px !important;
+        } 
+
+        &__end { 
+            border-top-left-radius: 3px !important; 
+            border-bottom-left-radius: 3px !important; 
+        } 
+
+        &__notch{ 
+            .v-field-label {
+                font-size: 12px !important; 
+                color:#9E9E9E !important; 
+            } 
+        } 
+    }
+
+    &__input{ 
+        padding: 14px 10px !important;
+    } 
+} 
+
+.v-field-label{ 
+    font-size: 14px !important; 
+} 
+
+.btn{
+    letter-spacing:0 !important;
+    height: 44px !important;
+    border:2px solid #D72685 !important;
+    color: #D72685 !important;
+    font-variation-settings: "wght" 500 !important;
+    box-shadow: none !important;
+    
+    &--submit{
+        background-color: #D72685 !important;
+        color: #fff !important;
+    }
+}
+
+.v-btn{
+    &--disabled{
+        border:0 !important;
+        background: rgba(0, 0, 0, 0.12) !important;
+        color: rgba(0, 0, 0, 0.26) !important;
+    }
+}

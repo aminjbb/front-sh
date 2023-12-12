@@ -1,0 +1,28 @@
+//------------------------------------------------
+//  General
+//------------------------------------------------
+
+.v-card,
+.card {
+    border: 1px solid #EEE !important;
+    background-color: transparent !important;
+    padding: 10px;
+    border-radius: 10px !important;
+    margin-bottom: 15px !important;
+    box-shadow: none !important;
+
+    &.mobile-no-border {
+        @include gbp(0, 768) {
+            border: 0 !important;
+        }
+    }
+
+    &.has-header{
+        padding: 0 0 10px !important;
+    }
+
+    .card__header {
+        border-bottom: 1px solid #BDBDBD;
+        padding: 15px 28px;
+    }
+}
