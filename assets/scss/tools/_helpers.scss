@@ -102,10 +102,13 @@
 //-----------------------------------------------------------------
 // Direction
 //-----------------------------------------------------------------
-.dir-rtl, .rtl{
+.dir-rtl,
+.rtl {
 	direction: rtl !important;
 }
-.dir-ltr, .ltr{
+
+.dir-ltr,
+.ltr {
 	direction: ltr !important;
 }
 
@@ -141,21 +144,34 @@
 	white-space: normal !important;
 }
 
-//-----------------------------------------------------------------
+//------------------------------------------------
 // Responsive
 //------------------------------------------------
-.xs-hide{
+.xs-hide {
 	display: block !important;
 }
 
-.xs-show{
+.xs-show {
 	display: none !important;
 }
-@include gbp{
-	.xs-hide{
+
+@include gbp(0, 768) {
+	.xs-hide {
 		display: none !important;
 	}
-	.xs-show{
+
+	.xs-show {
 		display: block !important;
+	}
+}
+
+
+//------------------------------------------------
+// Mobile 
+//------------------------------------------------
+
+.mobile-pa-0 {
+	@include gbp(0, 768) {
+		padding: 10px 0 !important;
 	}
 }
