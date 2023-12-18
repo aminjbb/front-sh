@@ -162,30 +162,6 @@ export default {
         };
     },
 
-    methods: {
-        /**
-         * Get data from your data
-         * @param {String} id - id of array
-         * @return {*}
-         */
-        responseDot(id) {
-            if (id) return this.homeSectionList?.find(item => item.id === id);
-            return '';
-        },
-    },
-
-    mounted() {
-        /**
-         * Check screen size
-         */
-        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
-
-        /**
-         * Call getHomeSections in setup 
-         */
-        this.getHomeSections();
-    },
-
     computed: {
         homeBanners1() {
             try {
@@ -306,6 +282,30 @@ export default {
                 return []
             }
         }
-    }
+    },
+
+    methods: {
+        /**
+         * Get data from your data
+         * @param {String} id - id of array
+         * @return {*}
+         */
+        responseDot(id) {
+            if (id) return this.homeSectionList?.find(item => item.id === id);
+            return '';
+        },
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+
+        /**
+         * Call getHomeSections in setup 
+         */
+        this.getHomeSections();
+    },
 }
 </script>

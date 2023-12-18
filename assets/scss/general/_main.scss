@@ -2,37 +2,14 @@
 // Main style
 // ---------------------------------------------------- //
 
-body {
-    overflow: hidden;
-}
-
 html,
 html *,
 .v-locale--is-ltr {
     direction: rtl !important;
 }
 
-.mobile-no-padd {
-    @include gbp(0, 768) {
-        padding: 0 !important;
-    }
-}
-
-.v-container {
-    @media only screen and (min-width:1920px) {
-        max-width: 1326px !important;
-    }
-
-    @media only screen and (min-width:1500px) {
-        max-width: 1326px !important;
-    }
-
-    @media only screen and (max-width:992px) and (min-width:762px) {
-        max-width: 100% !important;
-    }
-}
-
 body {
+    overflow: hidden;
     &::before {
         display: none;
         width: 100%;
@@ -56,4 +33,24 @@ body {
 
 a{
     text-decoration: none !important;
+}
+
+.mobile-no-padd {
+    @include gbp(0, 768) {
+        padding: 0 !important;
+    }
+}
+
+.v-container {
+    @media only screen and (min-width:1920px) {
+        max-width: 1326px !important;
+    }
+
+    @media only screen and (min-width:1500px) {
+        max-width: 1326px !important;
+    }
+
+    @media only screen and (max-width:992px) and (min-width:762px) {
+        max-width: 100% !important;
+    }
 }
