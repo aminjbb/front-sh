@@ -1,9 +1,16 @@
 <template lang="">
-<main class="v-user">
+<main class="v-user v-user--profile">
+    <header class="v-user__mobile-page-head xs-show">
+        <a href="/user/dashboard" class="ml-3">
+            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        </a>
+        <span class="grey-darken-3 t14">اطلاعات حساب کاربری</span>
+    </header>
+
     <v-container class="pt-0">
         <v-row>
             <div class="col-3 pa-4 xs-hide">
-                <generalSidebar />
+                <generalUserSidebar />
             </div>
             <div class="col-9 pa-4">
                 <v-card class="pa-8 mobile-pa-0 mobile-no-border">
@@ -68,7 +75,7 @@
                             @click="cancelForm()"
                             height="50"
                             title="انصراف"
-                            class="btn btn--cancel ml-2">
+                            class="btn btn--cancel ml-1">
                             انصراف
                         </v-btn>
                         <v-btn
@@ -152,6 +159,10 @@ export default {
     mounted() {
         this.fetchUserProfile();
     },
-
 }
 </script>
+
+<style lang="scss">
+@import "~/assets/scss/tools/bp";
+@import '~/assets/scss/views/user.scss';
+</style>

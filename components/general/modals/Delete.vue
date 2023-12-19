@@ -1,10 +1,23 @@
 <template lang="">
 <div class="c-modal">
-    <v-icon
-        @click="openModal()"
-        icon="mdi-delete-outline"
-        size="small"
-        color="red" />
+    <template v-if="buttonType == 'icon'">
+        <v-icon
+            @click="openModal()"
+            icon="mdi-delete-outline"
+            size="small"
+            color="red" />
+    </template>
+
+    <template v-if="buttonType == 'mobile'">
+        <div @click="openModal()" class="text-grey t14 d-flex align-center py-1">
+            <v-icon
+                icon="mdi-delete-outline"
+                class="ml-2"
+                size="small"
+                color="grey" />
+            <span class="text-grey t14">حذف آدرس</span>
+        </div>
+    </template>
 
     <v-dialog
         v-if="dialog"
@@ -35,7 +48,7 @@
                         @click="closeModal()"
                         height="44"
                         title="انصراف"
-                        class="btn btn--cancel ml-2">
+                        class="btn btn--cancel ml-1">
                         انصراف
                     </v-btn>
 
@@ -71,6 +84,12 @@ export default {
 
         /**Modal submit button text */
         submitText: String,
+
+        /**
+         * Button Type
+         * Can be : icon - Text - mobile
+         */
+        buttonType: String,
     },
 
     methods: {
@@ -90,6 +109,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .c-modal {
     .v-card {
         background: #fff !important;
@@ -98,7 +118,7 @@ export default {
     &__header {
         border-bottom: 1px solid #E0E0E0;
 
-        &__btn{
+        &__btn {
             min-width: auto !important;
         }
     }

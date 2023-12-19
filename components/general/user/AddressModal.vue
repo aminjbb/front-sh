@@ -14,13 +14,13 @@
             height="41"
             title="ثبت آدرس جدید"
             prepend-icon="mdi-plus"
-            class="btn btn--cancel ml-2">
+            class="btn btn--cancel ml-1">
             ثبت آدرس جدید
         </v-btn>
     </template>
 
     <template v-if="buttonType == 'mobile'">
-        <div @click="openModal()" class="text-grey t14">
+        <div @click="openModal()" class="text-grey t14 d-flex align-center py-1">
             <v-icon
                 icon="mdi-square-edit-outline"
                 size="small"
@@ -34,6 +34,7 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
+        class="full full-button"
         width="856px">
         <v-card class="pt-3 px-6 pb-5">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1 border-0">
@@ -248,6 +249,9 @@ export default {
     },
 
     props: {
+        /** Address */
+        address:Object,
+
         /**Modal title */
         title: String,
 
@@ -315,6 +319,7 @@ export default {
 
 <style lang="scss">
 @import url("@neshan-maps-platform/vue3-openlayers/dist/style.css");
+@import "~/assets/scss/tools/bp";
 
 .c-modal {
     .v-card {

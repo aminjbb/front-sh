@@ -1,7 +1,7 @@
 <template lang="">
 <section class="address-card">
     <div class="d-flex align-center justify-space-between">
-        <div class="flex-grow-1 d-flex align-center justify-space-between">
+        <div class="flex-grow-1 d-flex align-center address-card__info">
             <div class="d-flex align-center">
                 <v-icon
                     icon="mdi-circle"
@@ -39,14 +39,46 @@
             </div>
         </div>
         <div class="address-card__actions mr-10">
-            <div class="d-flex align-center justify-space-between">
-                <generalUserAddressModal title="ویرایش آدرس" buttonType="icon" class="ml-5" edit/>
+            <div class="d-flex align-center xs-hide">
+                <generalUserAddressModal
+                    title="ویرایش آدرس"
+                    buttonType="icon"
+                    class="ml-5"
+                    edit />
 
                 <generalModalsDelete
                     title="حذف آدرس"
                     text="آیا از حذف این آدرس اطمینان دارید؟"
                     submitText="حذف آدرس"
+                    buttonType="icon"
                     @removeProduct="removeAddress(address)" />
+            </div>
+
+            <div class="mobile-drop-down xs-show pos-r">
+                <v-icon
+                    icon="mdi-dots-vertical"
+                    color="grey"
+                    @click="openDropDown(id)" />
+
+                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${id}`">
+                    <ul class="ma-0">
+                        <li class="mb-2">
+                            <generalUserAddressModal
+                                title="ویرایش آدرس"
+                                buttonType="mobile"
+                                edit />
+                        </li>
+
+                        <li class="d-flex align-center py-1">
+                            <generalModalsDelete
+                                title="حذف آدرس"
+                                text="آیا از حذف این آدرس اطمینان دارید؟"
+                                submitText="حذف آدرس"
+                                buttonType="mobile"
+                                @removeProduct="removeAddress(address)" />
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -67,6 +99,11 @@ export default {
         removeAddress(address) {
             //TODO: Add remove address api
             console.log('address', address);
+        },
+
+        openDropDown(id) {
+            const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
+            itemDropdown.classList.toggle('show');
         }
     },
 
@@ -74,6 +111,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~/assets/scss/tools/bp";
+
 .address-card {
     border-bottom: 1px solid #eee;
     padding: 20px 0;
@@ -81,6 +120,29 @@ export default {
     .mdi-circle {
         font-size: 4px !important;
         margin-left: 4px;
+    }
+
+    > div:first-child{
+        @include gbp(0, 1280) {
+            align-items: flex-start !important;
+        }
+    }
+
+    &__info {
+        @include gbp(0, 1280) {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+
+        >div {
+            @include gbp(1280) {
+                padding-left: 7%;
+            }
+
+            @include gbp(0, 1280) {
+                margin-bottom: 10px !important;
+            }
+        }
     }
 }
 </style>

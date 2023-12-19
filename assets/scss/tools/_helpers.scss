@@ -147,21 +147,16 @@
 //------------------------------------------------
 // Responsive
 //------------------------------------------------
-.xs-hide {
-	display: block !important;
-}
 
 .xs-show {
-	display: none !important;
-}
-
-@include gbp(0, 768) {
-	.xs-hide {
+	@include gbp(768) {
 		display: none !important;
 	}
+}
 
-	.xs-show {
-		display: block !important;
+.xs-hide {
+	@include gbp(0, 768) {
+		display: none !important;
 	}
 }
 

@@ -5,7 +5,7 @@
             <v-col
                 cols="12"
                 md="3">
-                <generalSidebar />
+                <generalUserSidebar />
             </v-col>
             <v-col cols="12" md="9" class="xs-hide">
                 <v-card class="pa-8 mobile-pa-0 mobile-no-border">
@@ -25,3 +25,9 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+@import "~/assets/scss/tools/bp";
+@import '~/assets/scss/views/user.scss';
+</style>
+

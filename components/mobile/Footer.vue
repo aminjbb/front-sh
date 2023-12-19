@@ -31,7 +31,7 @@
             </li>
 
             <li class="footer__menu__item">
-                <a>
+                <a href="/user/dashboard">
                     <v-icon icon="mdi-account-outline" />
                     <span class="t12 w-400">حساب کاربری</span>
                 </a>

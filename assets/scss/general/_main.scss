@@ -10,6 +10,7 @@ html *,
 
 body {
     overflow: hidden;
+
     &::before {
         display: none;
         width: 100%;
@@ -31,7 +32,7 @@ body {
     }
 }
 
-a{
+a {
     text-decoration: none !important;
 }
 
@@ -52,5 +53,83 @@ a{
 
     @media only screen and (max-width:992px) and (min-width:762px) {
         max-width: 100% !important;
+    }
+}
+
+@include gbp(0, 768) {
+    .v-overlay {
+        &__content {
+            width: 100% !important;
+            max-width: 100% !important;
+            bottom: 0 !important;
+            margin: 0 !important;
+
+            .v-card {
+                border-bottom-right-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+                margin-bottom: 0 !important;
+            }
+
+            .btn {
+                overflow: hidden;
+
+                &--cancel {
+                    @include gbp (0, 768) {
+                        width: 36.333%
+                    }
+                }
+
+                &--submit {
+                    @include gbp (0, 768) {
+                        margin-left: 0 !important;
+                        width: 100%;
+                        width: 61.666%;
+                    }
+                }
+            }
+        }
+
+        &.full {
+            .v-overlay__content {
+                height: 100vh !important;
+                max-height: 100vh;
+
+                .v-card {
+                    height: 100% !important;
+                    border-radius: 0 !important;
+                }
+            }
+        }
+
+        &.full-button {
+            .btn {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+.mobile-drop-down {
+    &__items {
+        min-width: 150px;
+        width: auto;
+        border-radius: 4px;
+        background: var(--shades-white, #FFF);
+        top: 26px;
+        left: 9px;
+        transition: height 0.5s ease;
+        height: 0;
+        overflow: hidden;
+
+        li {
+            list-style: none;
+        }
+
+        &.show{
+            transition: height 0.5s ease;
+            padding: 15px;
+            height: auto;
+            box-shadow: 0px 4px 14px 1px rgba(63, 63, 63, 0.14);
+        }
     }
 }
