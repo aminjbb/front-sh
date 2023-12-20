@@ -5,7 +5,6 @@
 .v-card,
 .card {
     border: 1px solid #EEE !important;
-    background-color: transparent !important;
     padding: 10px;
     border-radius: 10px !important;
     margin-bottom: 15px !important;
@@ -22,7 +21,11 @@
     }
 
     .card__header {
-        border-bottom: 1px solid #BDBDBD;
+        border-bottom: 1px solid #eee;
         padding: 15px 28px;
     }
+}
+
+.card{
+    background-color: transparent !important;
 }

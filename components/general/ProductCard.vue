@@ -4,7 +4,15 @@
         <span class="t16">#{{index}}</span>
     </div>
 
-    <div class="product-card__image mb-3 mt-4">
+    <div v-if="deleteIcon" class="product-card__delete">
+        <generalModalsDelete
+            title="حذف محصول"
+            text="آیا از حذف این محصول از لیست علاقمندی ها اطمینان دارید؟"
+            submitText="حذف کالا"
+            @removeProduct="removeProduct(content)" />
+    </div>
+
+    <div v-if="content.image && content.image.image_url" class="product-card__image mb-3 mt-4">
         <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
 
@@ -45,11 +53,31 @@
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
     </div>
+
+    <div v-if="functions" class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
+        <v-btn
+            @click="showProduct()"
+            height="44"
+            title="مشاهده محصول"
+            class="btn btn--cancel">
+            مشاهده محصول
+        </v-btn>
+        <v-btn
+            :loading="loading"
+            @click="addToCard()"
+            height="44"
+            title="افزودن به سبد"
+            class="btn btn--submit">
+            افزودن به سبد
+        </v-btn>
+    </div>
 </a>
 </template>
 
 <script>
-import {splitChar} from "~/utils/functions.js";
+import {
+    splitChar
+} from "~/utils/functions.js";
 
 export default {
     props: {
@@ -57,21 +85,34 @@ export default {
          * Content
          */
         content: Object,
-
         /**
          * Show index
          */
         index: String,
-
         /**
          * Hide card info
          */
-        hideInfo: Boolean
+        hideInfo: Boolean,
+        /**
+         * Show buy function
+         */
+        functions: Boolean,
+        /**
+         * Active delete icon
+         */
+        deleteIcon: Boolean
     },
 
     methods: {
-      splitChar,
+        splitChar,
 
+        /**
+         * Emit remove function
+         * @param {*} status
+         */
+        removeProduct(content) {
+            this.$emit('removeProduct', content);
+        },
     },
 }
 </script>
