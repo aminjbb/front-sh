@@ -37,6 +37,24 @@
     font-weight: 400;
 }
 
+@font-face {
+    font-family: 'Morabba';
+    src: url('~/assets/fonts/Morabba-Regular.woff') format('woff');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Morabba';
+    src: url('~/assets/fonts/Morabba-Medium.woff') format('woff');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Morabba';
+    src: url('~/assets/fonts/Morabba-Bold.woff') format('woff');
+    font-weight: 700;
+}
+
 @supports (font-variation-settings: normal) {
 
     html,
