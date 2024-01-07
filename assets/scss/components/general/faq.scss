@@ -1,0 +1,48 @@
+//------------------------------------------------
+//  Accordion - v-expansion-panel Component
+//------------------------------------------------
+
+.accordion {
+    &__header {
+        border-radius: 4px;
+        border: 1px solid var(--grey-grey-lighten-2, #E0E0E0);
+        box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+        font-size: 13px !important;
+    }
+
+    .v-expansion-panel-title{
+        padding: 9px 24px;
+        line-height: 28px;
+    }
+
+    >.v-expansion-panel {
+        >.v-expansion-panel__shadow {
+            box-shadow: none !important;
+        }
+    }
+
+    >.v-expansion-panel{
+        &--active {
+            >.v-expansion-panel-title {
+                min-height: 48px !important;
+            }
+    
+            .v-expansion-panel-title__overlay {
+                opacity: 0 !important;
+            }
+        }
+    }
+
+    &__items{
+        &__header{
+            font-size: 13px !important;
+        }
+
+        .v-expansion-panel-title{
+            &--active{
+                background: var(--pink-pink-lighten-5, #FBE9F3);
+            }
+        }
+    }
+
+}

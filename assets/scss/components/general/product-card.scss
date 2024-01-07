@@ -49,6 +49,7 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         -webkit-line-clamp: 2;
+        flex: 1;
 
         @include gbp(0, "sm") {
             font-size: 14px !important;
