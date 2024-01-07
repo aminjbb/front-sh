@@ -73,4 +73,12 @@
             flex: 0 0 calc(100% - 200px);
         }
     }
+
+    .swiper-slide{
+        height: initial !important;
+
+        .product-card{
+            height: calc(100% - 20px) !important;
+        }
+    }
 }
