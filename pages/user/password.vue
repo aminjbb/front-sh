@@ -157,7 +157,18 @@ export default {
     },
 
     setup() {
-        const userToken = useCookie('userToken')
+        const userToken = useCookie('userToken');
+
+        const title = ref('فروشگاه اینترنتی شاواز | رمز عبور')
+        const description = ref("رمز عبور کاربر")
+
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
 
         return {
             userToken

@@ -1,0 +1,51 @@
+//------------------------------------------------
+//  Contact
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-contact {
+    padding-bottom: 60px;
+    padding-top: 160px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    .v-card {
+        border:1px solid #EEE;
+        filter: drop-shadow(0px 6px 30px rgba(0, 0, 0, 0.09));
+        margin-bottom: 20px !important;
+    }
+
+    .faq-box {
+        &__image {
+            width: 111px;
+            height: 122px;
+            background: url('~/assets/images/faq.jpg') no-repeat center center;
+            background-size: 100% auto;
+        }
+    }
+
+    .contact-info{
+        &__socials{
+            a:nth-child(2),
+            a:nth-child(3){
+                margin-bottom: -7px;
+            }
+        }
+    }
+
+    .v-field {
+        &__input {
+            padding: 9px 10px !important;
+        }
+    }
+
+    &__map{
+        img{
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
