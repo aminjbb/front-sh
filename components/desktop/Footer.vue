@@ -34,7 +34,7 @@
                         </header>
                         <ul>
                             <li><a href="/" class="t13 text-grey">درباره ما</a></li>
-                            <li><a href="/" class="t13 text-grey">تماس با ما</a></li>
+                            <li><a href="/contact" class="t13 text-grey">تماس با ما</a></li>
                             <li><a href="/faq" class="t13 text-grey">سوالات متدال</a></li>
                             <li><a href="/" class="t13 text-grey">فرصت‌های شغلی</a></li>
                             <li><a href="/" class="t13 text-grey">فروشنده شوید</a></li>
@@ -136,7 +136,7 @@
         </v-row>
 
         <div class="footer__copy-right-text">
-            <p>استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
+            <p>استفاده از مطالب فروشگاه اینترنتی شاواز فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
         </div>
     </v-container>
 </footer>

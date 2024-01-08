@@ -68,6 +68,11 @@
 }
 
 .v-btn {
+    &__content{
+        letter-spacing: 0;
+        font-variation-settings: "wght" 500;
+    }
+    
     &--disabled {
         border: 0 !important;
         background: rgba(0, 0, 0, 0.12) !important;

@@ -41,8 +41,20 @@ export default {
         }
     },
 
-    methods: {
+    setup(){
+        const title = ref('فروشگاه اینترنتی شاواز | آدرس های من')
+        const description = ref("آدرس های من")
 
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
+    },
+
+    methods: {
         /**
          * Get address list
          */

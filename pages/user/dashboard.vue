@@ -23,6 +23,19 @@ export default {
     data() {
         return {}
     },
+
+    setup(){
+        const title = ref('فروشگاه اینترنتی شاواز | ناحیه کاربری')
+        const description = ref("ناحیه کاربری")
+
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
+    },
 }
 </script>
 

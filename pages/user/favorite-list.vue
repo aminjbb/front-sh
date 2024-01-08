@@ -66,6 +66,19 @@ export default {
         }
     },
 
+    setup(){
+        const title = ref('فروشگاه اینترنتی شاواز | لیست علاقه‌ مندی‌ ها')
+        const description = ref("لیست علاقه‌ مندی ها")
+
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
+    },
+
     methods: {
         removeProduct(content){
             //TODO: Add remove product from favorite list method

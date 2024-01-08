@@ -72,7 +72,7 @@
 <script>
 export default {
     setup(props) {
-        const title = ref('فروشگاه شاواز | درباره ما')
+        const title = ref('فروشگاه اینترنتی شاواز | درباره ما')
         const description = ref("آنچه باید درباره شاواز بدانید")
 
         useHead({
