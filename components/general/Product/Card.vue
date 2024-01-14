@@ -1,5 +1,5 @@
 <template>
-<a class="product-card pa-2" :href="content.link">
+<a v-if="content" class="product-card pa-2" :href="content.link">
     <div v-if="index" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>
@@ -36,20 +36,20 @@
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
                 <span class="product-card__price-info__discount t11 w500">{{content.discount}}</span>
-                <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
+                <span v-if="content.customer_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
                     {{content.customer_price}}
                     <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                 </span>
             </div>
 
-            <span class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+            <span v-if="content.site_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
                 <span>{{splitChar(content.site_price)}}</span>
                 <span class="t10 w300 text-grey currency">تومان</span>
             </span>
         </template>
 
         <template v-else>
-            <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
+            <span v-if="content.customer_price" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
     </div>

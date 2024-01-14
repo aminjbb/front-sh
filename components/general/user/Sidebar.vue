@@ -26,12 +26,12 @@
     </v-card>
     <nav class="card px-5">
         <ul class="user-nav">
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/') }">
+            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/order') }">
                 <v-icon
                     icon="mdi-cart-outline"
                     color="grey"
                     class="ml-3" />
-                <a class="t13 text-grey">لیست سفارشات</a>
+                <a class="t13 text-grey" href="/user/order">لیست سفارشات</a>
             </li>
 
             <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/address') }">
