@@ -1,0 +1,48 @@
+//------------------------------------------------
+//  Order row component
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.order-row{
+    border-bottom:1px solid #E0E0E0;
+
+    &__details{
+        flex-wrap: wrap;
+        > div{
+            @include gbp (0, 1280) {
+                width: 40%;
+                flex: 0 0 40%;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    &__show-details{
+        @include gbp (0, 1280) {
+            margin-right: 0 !important
+        }
+
+        .mdi-chevron-left{
+            font-size: 20px;
+        }
+    }
+
+    .v-icon.mdi-circle{
+        font-size: 5px;
+    }
+
+    .product-card--simple{
+        width: 17.666666667%;
+        flex: 0 0 17.666666667%;
+
+        @include gbp (480, 1280) {
+            width: 25.666666667%;
+            flex: 0 0 25.666666667%;
+        }
+
+        @include gbp (0, 480) {
+            width: 55.666666667%;
+            flex: 0 0 55.666666667%;
+        }
+    }
+}

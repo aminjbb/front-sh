@@ -1,0 +1,187 @@
+//------------------------------------------------
+//  Order
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-order {
+    padding-bottom: 60px;
+    padding-top: 170px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    &__inner{
+        min-height: 100%;
+    }
+
+    .order-tab {
+        &__items-scroll {
+            overflow: hidden;
+            border: 1px solid #EEE;
+            border-radius: 8px;
+
+            @include gbp (0, 992) {
+                overflow-x: auto;
+
+                &::-webkit-scrollbar {
+                    height: 0 !important;
+                }
+            }
+
+            @include gbp (500, 768) {
+                border-top: 0;
+                border-left: 0;
+                border-right: 0;
+            }
+        }
+
+        &__items {
+            height: 89px;
+            cursor: pointer;
+
+            @include gbp (0, 992) {
+                width: 750px;
+            }
+
+            @include gbp (500, 768) {
+                width: 768px;
+            }
+
+            @include gbp (0, 500) {
+                width: 600px;
+            }
+        }
+
+        &__item {
+            padding-top: 61px;
+            background-repeat: no-repeat;
+            background-position: top center;
+            height: 100% !important;
+
+            &.active {
+                &.order-tab__item--one {
+                    background: #FBE9F3 url('~/assets/images/order-tab5.png') no-repeat top center;
+
+                    @include gbp (0, 768) {
+                        background: transparent url('~/assets/images/order-tab5.png') no-repeat top center;
+                    }
+                }
+
+                &.order-tab__item--two {
+                    background: #FBE9F3 url('~/assets/images/order-tab4.png') no-repeat top center;
+
+                    @include gbp (0, 768) {
+                        background: transparent url('~/assets/images/order-tab4.png') no-repeat top center;
+                    }
+                }
+
+                &.order-tab__item--three {
+                    background: #FBE9F3 url('~/assets/images/order-tab3.png') no-repeat top center;
+
+                    @include gbp (0, 768) {
+                        background: transparent url('~/assets/images/order-tab3.png') no-repeat top center;
+                    }
+                }
+
+                &.order-tab__item--four {
+                    background: #FBE9F3 url('~/assets/images/order-tab2.png') no-repeat top center;
+
+                    @include gbp (0, 768) {
+                        background: transparent url('~/assets/images/order-tab2.png') no-repeat top center;
+                    }
+                }
+
+                &.order-tab__item--five {
+                    background: #FBE9F3 url('~/assets/images/order-tab1.png') no-repeat top center;
+
+                    @include gbp (0, 768) {
+                        background: transparent url('~/assets/images/order-tab1.png') no-repeat top center;
+                    }
+                }
+
+                span {
+                    color: #811750 !important
+                }
+
+                .v-tab__slider {
+                    opacity: 0 !important;
+                }
+
+                @include gbp (0, 768) {
+                    position: relative;
+
+                    ::after {
+                        width: 100%;
+                        height: 4px;
+                        border-top-right-radius: 6px;
+                        border-top-left-radius: 6px;
+                        background: var(--Conceptual-Primary, #D72685);
+                        content: '';
+                        position: absolute;
+                        bottom:0;
+                        right: 0;
+                    }
+                }
+            }
+
+            &:not(:last-child) {
+                border-left: 1px solid #EEE;
+
+                @include gbp (0, 768) {
+                    border-left: 0
+                }
+            }
+
+            &--one {
+                background: #FFF url('~/assets/images/order-tab5.png') no-repeat top center;
+            }
+
+            &--two {
+                background: #FFF url('~/assets/images/order-tab4.png') no-repeat top center;
+            }
+
+            &--three {
+                background: #FFF url('~/assets/images/order-tab3.png') no-repeat top center;
+            }
+
+            &--four {
+                background: #FFF url('~/assets/images/order-tab2.png') no-repeat top center;
+            }
+
+            &--five {
+                background: #FFF url('~/assets/images/order-tab1.png') no-repeat top center;
+            }
+        }
+
+        &__content {
+            display: none;
+
+            &.active {
+                display: block;
+            }
+
+            &__empty-button{
+                background-color: transparent !important;
+                border:1px solid #D72685;
+                color:#D72685 !important;
+                box-shadow: none !important;
+                font-size: 16px !important;
+            }
+        }
+    }
+
+    .v-tabs-bar__content {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .order-details{
+        &__item{
+            .v-icon{
+                font-size: 5px;
+            }
+        }
+    }
+}

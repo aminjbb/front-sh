@@ -183,7 +183,37 @@
 // Visibility
 //-----------------------------------------------------------------
 
-.v-hide{
+.v-hide {
 	visibility: hidden;
-    height: 0;
+	height: 0;
+}
+
+//-----------------------------------------------------------------
+// Scroll
+//-----------------------------------------------------------------
+
+.scroll {
+	&--x {
+		overflow-x: auto;
+
+		&::-webkit-scrollbar {
+			height: 6px !important;
+		}
+
+		&::-webkit-scrollbar-track {
+			border-radius: 4px;
+			background-color: #F8BBD0;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 4px;
+			background-color: #811750;
+		}
+
+		@include gbp (0, 768) {
+			&::-webkit-scrollbar {
+				display: none;
+			}
+		}
+	}
 }
