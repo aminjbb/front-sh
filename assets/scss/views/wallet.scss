@@ -1,0 +1,61 @@
+//--------------------------------------------------------------------------------
+//  Wallet
+//--------------------------------------------------------------------------------
+
+.v-wallet {
+    padding-bottom: 60px;
+    padding-top: 170px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    .bold {
+        font-weight: 600;
+    }
+
+    .wallet-card {
+        width: 100%;
+        height: 146px;
+        position: relative;
+        background: url('~/assets/images/wallet.svg') no-repeat center center;
+        border-radius: 5px !important;
+        overflow: hidden;
+        background-size: 100% 100%;
+
+        &__money {
+            top: 0;
+            right: 0;
+            height: 100%;
+
+            &--1st {
+                top: 20px;
+                left: 0;
+            }
+
+            &--2nd {
+                bottom: 46px;
+                right: 0;
+            }
+
+            &--3th {
+                bottom: 12px;
+                right: 0;
+            }
+        }
+    }
+
+    .transactions {
+        border-radius: 8px;
+        background: var(--grey-grey-lighten-4, #F5F5F5);
+        padding: 12px 8px;
+
+        &__item{
+            &:not(:last-child){
+                border-left: 1px solid #AC1E6A;
+            }
+        }
+    }
+
+}

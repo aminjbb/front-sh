@@ -47,7 +47,7 @@
                     icon="mdi-wallet-bifold-outline"
                     color="grey"
                     class="ml-3" />
-                <a class="t13 text-grey">کیف پول</a>
+                <a class="t13 text-grey" href="/user/wallet">کیف پول</a>
             </li>
 
             <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/favorite-list') }">
