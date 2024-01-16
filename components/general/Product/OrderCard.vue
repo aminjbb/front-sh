@@ -1,7 +1,10 @@
 <template lang="">
 <section v-if="content" class="product-card product-card--order">
     <v-row align="center">
-        <v-col md="9" class="d-flex align-center product-card__details">
+        <v-col
+            cols="12"
+            md="9"
+            class="d-flex align-center product-card__details">
             <div v-if="content.image && content.image.image_url" class="product-card__image ml-5">
                 <img :src="/* content?.image?.image_url */imageAddress(content?.image?.image_url)" :title="content.label" :alt="content.label" width="100" height="100" />
             </div>
@@ -44,98 +47,83 @@
                 </div>
             </div>
         </v-col>
-        <v-col md="3" class="d-flex product-card__price-info">
+        <v-col
+            cols="12"
+            md="3"
+            class="d-flex product-card__price-info">
             <div v-if="!cancel" class="t13 w400 text-grey-darken-1 number-font mb-2">
                 تعداد:
                 <template v-if="count">{{count}}</template>
                 <template v-else> {{content.count}}</template>
             </div>
 
-            <div v-if="cancel">
-                <div v-if="showCount && productCount" class="product-card__product-count mb-3">
-                    <v-icon
-                        icon="mdi-plus"
-                        color="grey"
-                        @click="increaseCount()" />
-                    <span class="t16 w300 text-grey-darken-2 number-font">
-                        {{productCount}}
-                    </span>
-                    <v-icon
-                        icon="mdi-minus"
-                        color="grey"
-                        @click="decreaseCount()" />
-                </div>
-
-                <div v-if="showAllCount && content.count" class="product-card__product-count mb-3">
-                    <v-icon icon="mdi-plus" color="grey" />
-                    <span class="t16 w300 text-grey-darken-2 number-font">
-                        {{content.count}}
-                    </span>
-                    <v-icon icon="mdi-minus" color="grey" />
-                </div>
-
-                <div v-if="content.paid_price" class="d-flex align-center justify-space-between">
-                    <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                        {{splitChar(content.paid_price)}}
-                    </span>
-                    <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
-                </div>
-            </div>
-
-            <div v-else>
-                <template v-if="content.discount">
-                    <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
-                        <span class="t19 w400 text-pink_dark product-card__price-info__price product-card__price-info__price--new  number-font">
-                            {{splitChar(content.customer_price)}}
-                            <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
+            <div>
+                <div v-if="cancel">
+                    <div v-if="showCount && productCount" class="product-card__product-count mb-3">
+                        <v-icon
+                            icon="mdi-plus"
+                            color="grey"
+                            @click="increaseCount()" />
+                        <span class="t16 w300 text-grey-darken-2 number-font">
+                            {{productCount}}
                         </span>
+                        <v-icon
+                            icon="mdi-minus"
+                            color="grey"
+                            @click="decreaseCount()" />
                     </div>
 
-                    <span v-if="content.site_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                        <span class="number-font">{{splitChar(content.site_price)}}</span>
-                        <span class="t10 w300 text-grey currency">تومان</span>
-                    </span>
-                </template>
+                    <div v-if="showAllCount && content.count" class="product-card__product-count mb-3">
+                        <v-icon icon="mdi-plus" color="grey" />
+                        <span class="t16 w300 text-grey-darken-2 number-font">
+                            {{content.count}}
+                        </span>
+                        <v-icon icon="mdi-minus" color="grey" />
+                    </div>
 
-                <template v-else>
-                    <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                    <div v-if="content.paid_price" class="d-flex align-center justify-space-between">
                         <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                            {{splitChar(content.customer_price)}}
+                            {{splitChar(content.paid_price)}}
                         </span>
                         <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                     </div>
-                </template>
-            </div>
+                </div>
 
-            <div v-if="!hideButtons" class="d-flex align-center justify-end mt-4">
-                <v-btn
-                    v-if="content.status === 'return-request'"
-                    @click="returnOrderRequest()"
-                    height="36"
-                    title="درخواست مرجوعی"
-                    append-icon="mdi-keyboard-return"
-                    class="btn btn--cancel">
-                    درخواست مرجوعی
-                </v-btn>
+                <div v-else>
+                    <template v-if="content.discount">
+                        <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                            <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
+                                {{splitChar(content.customer_price)}}
+                                <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
+                            </span>
+                        </div>
 
-                <v-btn
-                    v-if="content.status === 'return-cancel'"
-                    @click="CancelOrder()"
-                    height="36"
-                    title="درخواست لغو"
-                    append-icon="mdi-cancel"
-                    class="btn btn--cancel">
-                    درخواست لغو
-                </v-btn>
+                        <span v-if="content.site_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span class="number-font">{{splitChar(content.site_price)}}</span>
+                            <span class="t10 w300 text-grey currency">تومان</span>
+                        </span>
+                    </template>
 
-                <v-btn
-                    @click="SendComment()"
-                    height="36"
-                    title="ثبت دیدگاه"
-                    append-icon="mdi-comment-plus-outline"
-                    class="btn btn--comment">
-                    ثبت دیدگاه
-                </v-btn>
+                    <template v-else>
+                        <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                            <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
+                                {{splitChar(content.customer_price)}}
+                            </span>
+                            <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
+                        </div>
+                    </template>
+                </div>
+
+                <div v-if="!hideButtons" class="d-flex align-center justify-end mt-4">
+                    <v-btn
+                        @click="SendComment()"
+                        height="36"
+                        title="ثبت دیدگاه"
+                        append-icon="mdi-comment-plus-outline"
+                        class="btn btn--comment">
+                        ثبت دیدگاه
+                    </v-btn>
+                </div>
             </div>
         </v-col>
     </v-row>
@@ -146,15 +134,24 @@
             class="ml-1"
             color="grey-darken-1" />
         <span class="text-grey-darken-1 t13 w14">
-            علت لغو کالا:
-            {{title}}
+            <template v-if="orderStatus == 'canceling'">
+                علت لغو کالا:
+            </template>
+
+            <template v-if="orderStatus == 'return'">
+                علت مرجوعی:
+            </template>
+
+            <span class="w500 text-grey-darken-3">{{title}}</span>
         </span>
     </div>
+
     <div v-if="description" class="d-flex align-center mt-5">
         <v-icon
             icon="mdi-circle"
             class="ml-1"
             color="grey-darken-1" />
+
         <span class="text-grey-darken-1 t13 w14 number-font">
             توضیحات:
             {{description}}
@@ -233,7 +230,16 @@ export default {
          * Product count 
          * If isn't in 'Content'
          */
-        count: String
+        count: String,
+
+        /**
+         * Order status
+         * Should be 'canceling - return''
+         */
+        orderStatus: {
+            type: String,
+            default: 'canceling',
+        }
     },
 
     methods: {
@@ -278,6 +284,8 @@ export default {
 
 <style lang="scss">
 @import '~/assets/scss/components/general/product-card.scss';
+@import "~/assets/scss/tools/bp";
+
 $parent:'product-card';
 
 .#{$parent} {
@@ -291,6 +299,12 @@ $parent:'product-card';
             &__price-info {
                 flex-direction: column;
                 align-items: flex-end;
+
+                @include gbp(0, 992) {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                }
             }
         }
 

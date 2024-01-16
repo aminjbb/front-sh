@@ -70,18 +70,18 @@
                 }
 
                 &.order-tab__item--two {
-                    background: #FBE9F3 url('~/assets/images/order-tab4.png') no-repeat top center;
-
-                    @include gbp (0, 768) {
-                        background: transparent url('~/assets/images/order-tab4.png') no-repeat top center;
-                    }
-                }
-
-                &.order-tab__item--three {
                     background: #FBE9F3 url('~/assets/images/order-tab3.png') no-repeat top center;
 
                     @include gbp (0, 768) {
                         background: transparent url('~/assets/images/order-tab3.png') no-repeat top center;
+                    }
+                }
+
+                &.order-tab__item--three {
+                    background: #FBE9F3 url('~/assets/images/order-tab4.png') no-repeat top center;
+
+                    @include gbp (0, 768) {
+                        background: transparent url('~/assets/images/order-tab4.png') no-repeat top center;
                     }
                 }
 
@@ -139,11 +139,11 @@
             }
 
             &--two {
-                background: #FFF url('~/assets/images/order-tab4.png') no-repeat top center;
+                background: #FFF url('~/assets/images/order-tab3.png') no-repeat top center;
             }
 
             &--three {
-                background: #FFF url('~/assets/images/order-tab3.png') no-repeat top center;
+                background: #FFF url('~/assets/images/order-tab4.png') no-repeat top center;
             }
 
             &--four {
@@ -181,6 +181,43 @@
         &__item{
             .v-icon{
                 font-size: 5px;
+            }
+        }
+    }
+
+    &--return{
+        &__status{
+            padding:0 16px;
+            height: 44px;
+            border-radius: 4px;
+
+            @include gbp(0, 480) {
+                justify-content: center;
+            }
+
+            &--loading{
+                background-color: #FFF3E0;
+            }
+
+            &--reject{
+                background-color: #FFEBEE;
+            }
+
+            &--accept{
+                background-color:#E8F5E9 ;
+            }
+        }
+    }
+
+    &__action {
+        @include gbp(0, 480) {
+            flex-direction: column;
+
+            > div,
+            .v-btn{
+                width:100% !important;
+                margin-top: 10px;
+                margin-left: 0 !important;
             }
         }
     }

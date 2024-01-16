@@ -35,7 +35,7 @@
                             <v-col
                                 cols="12"
                                 md="4"
-                                lg="2"
+                                lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">کد سفارش:</span>
@@ -49,6 +49,24 @@
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">تاریخ تحویل:</span>
                                 <span v-if="order && order.date" class="t13 w400 text-grey-darken-3 number-font">{{order.date}}</span>
+                            </v-col>
+
+                            <v-col
+                                cols="12"
+                                md="3"
+                                lg="6"
+                                class="d-flex align-center order-details__item py-5 justify-end">
+                                <a v-if="/* order */mocketData && /* order */mocketData.id" :href="`/user/order/${/* order */mocketData.id}/${/* order */mocketData.status == 'canceling' ? 'cancel' : /* order */mocketData.status == 'return' ? 'return' : ''}`" class="d-flex align-center">
+                                    <span class="text-grey-darken-1 t13 w400">
+                                        <template v-if="/* order */mocketData.status == 'canceling'">
+                                            درخواست لغو
+                                        </template>
+                                        <template v-if="/* order */mocketData.status == 'return'">
+                                            درخواست مرجوعی
+                                        </template>
+                                    </span>
+                                    <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
+                                </a>
                             </v-col>
                         </v-row>
 
@@ -118,7 +136,7 @@
                         <v-divider color="grey" />
 
                         <div>
-                            <template v-for="(item, index) in mocketData" :key="`order${index}`">
+                            <template v-for="(item, index) in mocketData.skus" :key="`order${index}`">
                                 <generalProductOrderCard :content="item" />
                                 <v-divider v-if="index + 1 < mocketData.length " color="grey-lighten-1" />
                             </template>
@@ -131,8 +149,6 @@
 </main>
 </template>
 
-    
-    
 <script>
 import {
     splitChar
@@ -142,43 +158,46 @@ export default {
     data() {
         return {
             order: null,
-            products:null,/* after set api data be in this data */
-            mocketData: [{
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
-                    brand: 'لکسیکال',
-                    color: {
-                        label: 'سبز',
-                        code: '#388E3C',
-                    },
-                    seller: 'سلامت‌گستران نفیس',
-                    count: '2',
-                    customer_price: '42558',
-                    site_price: '51900',
-                    status: 'return-request',
-                    discount: '1'
+            products: null,
+            /* after set api data be in this data */
+            mocketData: {
+                id:1,
+                status: 'return',
+                skus: [{
+                        image: {
+                            image_url: 'products.jpg'
+                        },
+                        label: 'ماشین اصلاح موی صورت لکسیکال مدل LHC-5631',
+                        brand: 'لکسیکال',
+                        color: {
+                            label: 'سبز',
+                            code: '#388E3C',
+                        },
+                        seller: 'سلامت‌گستران نفیس',
+                        count: '2',
+                        customer_price: '42558',
+                        site_price: '51900',
+                        discount: '1'
 
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
                     },
-                    label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا',
-                    brand: 'لکسیکال',
-                    color: {
-                        label: 'توسی',
-                        code: '#aaaaaa',
-                    },
-                    seller: 'سلامت‌گستران نفیس',
-                    count: '5',
-                    customer_price: '42558',
-                    site_price: '51900',
-                    status: 'return-cancel',
-                    discount: '1'
-                }
-            ]
+                    {
+                        image: {
+                            image_url: 'products.jpg'
+                        },
+                        label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا',
+                        brand: 'لکسیکال',
+                        color: {
+                            label: 'توسی',
+                            code: '#aaaaaa',
+                        },
+                        seller: 'سلامت‌گستران نفیس',
+                        count: '5',
+                        customer_price: '42558',
+                        site_price: '51900',
+                        discount: '1'
+                    }
+                ],
+            }
         }
     },
 
@@ -200,9 +219,13 @@ export default {
     }
 }
 </script>
-    
+
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 @import '~/assets/scss/views/user.scss';
 @import '~/assets/scss/views/order.scss';
+
+.mdi-chevron-left {
+    font-size: 15px !important;
+}
 </style>
