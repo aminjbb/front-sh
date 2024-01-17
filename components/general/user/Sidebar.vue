@@ -42,7 +42,7 @@
                 <a class="t13 text-grey" href="/user/address">آدرس‌ها</a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/') }">
+            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/wallet') }">
                 <v-icon
                     icon="mdi-wallet-bifold-outline"
                     color="grey"

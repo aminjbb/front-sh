@@ -160,6 +160,20 @@
 	}
 }
 
+.tablet-show {
+	display: none;
+	
+	@include gbp(550, 1500) {
+		display: block !important;
+	}
+}
+
+.tablet-hide {
+	@include gbp(550, 1500) {
+		display: none !important;
+	}
+}
+
 //------------------------------------------------
 // Border 
 //------------------------------------------------
