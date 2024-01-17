@@ -26,6 +26,12 @@ export default defineNuxtConfig({
       )
     }
   },
+  runtimeConfig: {
+    // Keys within public, will be also exposed to the client-side
+    public: {
+      apiBase: 'https://api.shvz.ir/api/v1'
+    }
+  },
 
   components: {
     global: true,
