@@ -13,7 +13,11 @@
     </div>
 
     <div v-if="content.image && content.image.image_url" class="product-card__image mb-3 mt-4">
-        <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
+        <img  :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
+    </div>
+
+    <div v-else class="product-card__image mb-3 mt-4">
+        <img  :src="imageAddress(content.image)" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
 
     <h3 v-if="content.label" class="t14 w500 text-grey product-card__title mb-2">
@@ -113,6 +117,16 @@ export default {
         removeProduct(content) {
             this.$emit('removeProduct', content);
         },
+
+        //TODO: Should delete after add endpoint
+        imageAddress(path) {
+            const assets =
+                import.meta.glob('~/assets/images/should-delete/*', {
+                    eager: true,
+                    import: 'default',
+                })
+            return assets['/assets/images/should-delete/' + path]
+        }
     },
 }
 </script>
