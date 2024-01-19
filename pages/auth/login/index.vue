@@ -120,6 +120,7 @@
 <script>
 // Middleware
 import auth from '@/middleware/auth';
+import axios from "axios";
 
 export default {
 
@@ -146,10 +147,13 @@ export default {
     },
 
     setup() {
+        const runtimeConfig = useRuntimeConfig()
+
         const userToken = useCookie('userToken')
         userToken.value = ''
         return {
-            userToken
+            userToken,
+            runtimeConfig
         }
     },
 
@@ -193,7 +197,7 @@ export default {
                 this.loading = true;
                 const response = await auth.sendOTP(this.mobile);
 
-                if (response && response.status === "Success") {
+                if (response.data && response.status === 200) {
                     this.loginStep = 2;
                     this.runCountdown();
                 }
@@ -212,17 +216,29 @@ export default {
                 this.loading = true;
 
                 const response = await auth.verifyOTP(this.mobile, this.otp);
-                console.log('response',response)
-                if (response.status === "Success") {
-                    console.log('response.status2',response.status);
-                    this.userToken = response.data.token;
-                    this.$router.push('/user/dashboard');
+                console.log('response2', response)
+
+                if (response.status === 200) {
+                    this.userToken = response.data.data.token;
+
+                    const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
+                        headers: {
+                            Authorization: `Bearer ${this.userToken}`,
+                        },
+                    });
+
+                    if (completeResponse.data == false) {
+                        console.log('false')
+                    } else {
+                        console.log('true')
+                        this.$router.push('/user/dashboard');
+                    }
+
                     useNuxtApp().$toast.success('کاربر عزیز خوش آمدید.', {
                         rtl: true,
                         position: 'top-center',
-                        theme:'dark'
+                        theme: 'dark'
                     });
-                } else {
                 }
             } catch (error) {
                 console.error('Verify OTP error:', error);
