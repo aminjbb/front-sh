@@ -176,6 +176,9 @@ export default {
     },
 
     methods: {
+        /**
+         * Fetch user 
+         */
         async fetchUserProfile() {
             try {
                 const userProfile = await auth.getUserProfile(this.userToken)
