@@ -14,8 +14,10 @@ export default {
       const response = await axios.post(`${BASE_URL}/auth/user/send/otp`, {
         phone_number: phoneNumber
       });
-      return response.data;
+
+      return response;
     } catch (error) {
+
       if (error.response.status == 404) {
         //Go to register form
       }
@@ -32,13 +34,14 @@ export default {
    */
   async verifyOTP(phoneNumber, otp) {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/user/login`, {
+      const response = await axios.post(`${BASE_URL}/auth/user/login-register/otp`, {
         phone_number: phoneNumber,
         code: otp
       });
-      return response.data;
+      return response;
     } catch (error) {
-      if (error.response.status == 400) {
+      if (error.response.status === 400) {
+        
         useNuxtApp().$toast.error('کد وارد شده معتبر نمی‌باشد.', {
           rtl: true,
           position: 'top-center',

@@ -1,5 +1,5 @@
 /**
- * Home composable
+ * Public composable
  */
 import { ref} from 'vue';
 import axios from 'axios'

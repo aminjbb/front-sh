@@ -1,0 +1,77 @@
+//------------------------------------------------
+//  Products
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-product {
+    padding-bottom: 60px;
+    padding-top: 160px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    &__filter {
+        &__items {
+            li {
+                list-style: none;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__contents {
+        border-radius: 8px;
+        border: 1px solid var(--grey-grey-lighten-2, #E0E0E0);
+        overflow: hidden;
+    }
+
+    &__content {
+        border-left: 0.7px solid #E0E0E0;
+        border-bottom: 0.7px solid #E0E0E0;
+
+        .product-card {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+
+            .product-card__title {
+                margin-bottom: 20px !important;
+            }
+        }
+    }
+
+    &__pagination {
+
+        .v-pagination__prev,
+        .v-pagination__next {
+            .v-btn {
+                background: transparent !important;
+            }
+        }
+
+        .v-pagination__item{
+            .v-btn__overlay{
+                background-color: transparent;
+                opacity: 1 !important;
+            }
+
+            .v-btn__content{
+                font-family: 'IranSansFaNum' !important;
+                color:#9E9E9E;
+                z-index: 1;
+            }
+
+            &.v-pagination__item--is-active{
+                .v-btn__overlay{
+                    background-color: #D72685 !important;
+                }
+    
+                .v-btn__content{
+                    color:#fff !important;
+                }
+            }
+        }
+    }
+}

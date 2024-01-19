@@ -80,6 +80,10 @@ export default {
     },
 
     methods: {
+        /**
+         * Remove product from favorite list
+         * @param {*} content 
+         */
         removeProduct(content){
             //TODO: Add remove product from favorite list method
             console.log('level-3',content);
