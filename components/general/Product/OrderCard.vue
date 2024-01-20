@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <section v-if="content" class="product-card product-card--order">
     <v-row align="center">
         <v-col
@@ -10,8 +10,8 @@
             </div>
 
             <div>
-                <h3 v-if="content.label" class="t14 w400 text-grey-darken-1 product-card__title mb-5">
-                    {{content.label}}
+                <h3 v-if="content.shps" class="t14 w400 text-grey-darken-1 product-card__title mb-5">
+                    {{content.shps?.sku?.label}}
                 </h3>
 
                 <div class="d-flex align-center t13 w400 text-grey mb-2">
@@ -21,17 +21,17 @@
                         class="ml-2" />
                     <span>
                         برند:
-                        {{content.brand}}
+                        {{content.shps?.sku?.brand?.label}}
                     </span>
                 </div>
 
                 <div class="d-flex align-center t13 w400 text-grey mb-2">
                     <div class="color-pick ml-2">
-                        <span :style="{ backgroundColor: content.color.code }"></span>
+<!--                        <span :style="{ backgroundColor: content.color.code }"></span>-->
                     </div>
                     <span>
                         رنگ:
-                        {{content.color.label}}
+                        {{content.shps?.sku?.color?.label}}
                     </span>
                 </div>
 
@@ -42,7 +42,7 @@
                         class="ml-2" />
                     <span>
                         فروشنده:
-                        {{content.seller}}
+                        {{content.shps?.sku?.seller?.shopping_name}}
                     </span>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                 علت مرجوعی:
             </template>
 
-            <span class="w500 text-grey-darken-3">{{title}}</span>
+            <span class="w500 text-grey-darken-3">{{title.label}}</span>
         </span>
     </div>
 

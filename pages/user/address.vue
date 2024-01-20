@@ -18,13 +18,14 @@
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide">
                         <span>آدرس‌های شما</span>
 
-                        <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" />
+                        <generalUserAddressModal :getUserAddress="getUserAddress" :userDetail="userDetail" :provinces="provinces" title="ثبت آدرس جدید" buttonType="text" />
                     </header>
-
                     <generalUserAddressCard
+                        :userDetail="userDetail"
                         :provinces="provinces"
                         :address="address"
-                        v-for="(address , index) in userAddress" 
+                        v-for="(address , index) in userAddress"
+                        :getUserAddress="getUserAddress"
                         :key="`address${index}`"/>
 
                     <div class="xs-show v-user--address__mobile-btn">
@@ -40,12 +41,14 @@
 <script>
 import User from '@/composables/User.js'
 import Public from '@/composables/Public.js'
+import auth from "~/middleware/auth.js";
 
 export default {
 
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | آدرس های من')
         const description = ref("آدرس های من")
+        const userToken = useCookie('userToken');
         const {
             getUserAddress,
             userAddress
@@ -65,11 +68,26 @@ export default {
             getUserAddress,
             userAddress,
             getProvince,
-            provinces
+            provinces,
+            userToken
         }
     },
-
+    data(){
+      return{
+        userDetail:null
+      }
+    },
     methods: {
+      /**
+       * fetch user data
+       */
+      async fetchUserProfile() {
+        try {
+          this.userDetail = await auth.getUserProfile(this.userToken)
+        } catch (error) {
+          // Handle errors
+        }
+      },
         /**
          * Get address list
          */
@@ -80,6 +98,7 @@ export default {
     beforeMount() {
         this.getUserAddress()
         this.getProvince()
+        this.fetchUserProfile()
     }
 }
 </script>

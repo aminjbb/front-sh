@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="c-modal">
     <template v-if="buttonType == 'icon'">
         <v-icon
@@ -69,6 +69,7 @@
 
 <script>
 export default {
+
     data() {
         return {
             dialog: false,
