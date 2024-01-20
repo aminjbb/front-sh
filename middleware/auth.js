@@ -97,5 +97,27 @@ export default {
       console.error('Error fetching user profile:', error)
       throw error
     }
+  },
+
+  /**
+   * Get user hase password
+   * @param {*} token
+   */
+  async getUserHasePassword(token) {
+    try {
+
+      const response = await axios.get(`${BASE_URL}/user/profile/password/has`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      // Return the response data
+      return response.data
+    } catch (error) {
+      // Handle any errors here
+      console.error('Error fetching user profile:', error)
+      throw error
+    }
   }
 };
