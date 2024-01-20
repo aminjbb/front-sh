@@ -1,5 +1,7 @@
 <template lang="">
 <main class="v-product v-product--list">
+    <h1 class="v-hide">{{title}}</h1>
+    
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
 
