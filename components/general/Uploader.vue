@@ -64,6 +64,7 @@ const uploadLoading = ref(false)
 let images = ref([])
 const store = useStore()
 const userToken = useCookie('userToken');
+const props = defineProps(['index'])
 
 function onDrop(e) {
     files.value = e.dataTransfer.files
@@ -122,10 +123,10 @@ async function submitImage(index) {
                 }
                 files.value = deletePosition
                 submitImage(index)
-                emit('getImage', data);
+                emit('getImage', data , props.index);
             }
         } else {
-            emit('getImage', data);
+            emit('getImage', data, props.index);
         }
 
         /* openToast(

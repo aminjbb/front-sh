@@ -1,9 +1,14 @@
 import axios from 'axios';
-
 const BASE_URL = 'https://api.shvz.ir/api/v1';
 
 export default {
-
+  /**
+   * check error status code
+   * @param {number} errorStatus
+   */
+  async checkAuthorization(errorStatus) {
+    if (errorStatus.status === 401 || errorStatus.status === 403 ) window.location = '/login'
+  },
   /**
    * Send OTP
    * @param {string | number} phoneNumber 

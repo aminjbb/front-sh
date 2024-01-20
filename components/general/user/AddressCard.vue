@@ -44,12 +44,15 @@
                     title="ویرایش آدرس"
                     buttonType="icon"
                     class="ml-5"
+                    :userDetail="userDetail"
+                    :getUserAddress="getUserAddress"
                     edit
                     :address="address"
                     :provinces="provinces"
                 />
 
                 <generalModalsDelete
+                    :getUserAddress="getUserAddress"
                     title="حذف آدرس"
                     text="آیا از حذف این آدرس اطمینان دارید؟"
                     submitText="حذف آدرس"
@@ -67,13 +70,16 @@
                     <ul class="ma-0">
                         <li class="mb-2">
                             <generalUserAddressModal
+                                :userDetail="userDetail"
                                 title="ویرایش آدرس"
                                 buttonType="mobile"
+                                :getUserAddress="getUserAddress"
                                 edit />
                         </li>
 
                         <li class="d-flex align-center py-1">
                             <generalModalsDelete
+                                :getUserAddress="getUserAddress"
                                 title="حذف آدرس"
                                 text="آیا از حذف این آدرس اطمینان دارید؟"
                                 submitText="حذف آدرس"
@@ -92,8 +98,20 @@
 </template>
 
 <script>
+import axios from "axios";
+import auth from "~/middleware/auth.js";
+
 export default {
+  setup(){
+    const runtimeConfig = useRuntimeConfig()
+    const userToken = useCookie('userToken');
+    return {runtimeConfig , userToken}
+  },
     props: {
+      /** get User Address */
+        getUserAddress: {type: Function},
+        /** User Detail */
+        userDetail:Object,
         /** Address */
         address: Object,
         /** provinces */
@@ -102,6 +120,26 @@ export default {
 
     methods: {
         removeAddress(address) {
+          axios
+              .delete(this.runtimeConfig.public.apiBase + `/user/profile/address/delete/${address.id}`, {
+                headers: {
+                  Authorization: `Bearer ${this.userToken}`,
+                },
+              })
+              .then((response) => {
+                this.dialog = false
+              })
+              .catch((err) => {
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                  rtl: true,
+                  position: 'top-center',
+                  theme: 'dark'
+                });
+              }).finally(() => {
+            this.loading = false
+            this.getUserAddress()
+          });
             //TODO: Add remove address api
             console.log('address', address);
         },

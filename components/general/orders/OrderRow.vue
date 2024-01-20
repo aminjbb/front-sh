@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <section v-if="content" class="order-row pt-5">
     <header class="d-flex justify-space-between align-center mb-8">
         <div class="order-row__details d-flex align-center flex-grow-1">
@@ -7,7 +7,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     وضعیت:
                 </span>
-                <span v-if="content.status" class="t12 w400 text-pink-darken-2">{{content.status}}</span>
+                <span v-if="content.status" class="t12 w400 text-pink-darken-2">{{findOrderStatus(content.status)}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -15,7 +15,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     تاریخ:
                 </span>
-                <span v-if="content.date" class="t12 w400 text-pink-darken-2 number-font">{{content.date}}</span>
+                <span v-if="content.submit_date_fa" class="t12 w400 text-pink-darken-2 number-font">{{content.submit_date_fa}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -23,7 +23,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     کد سفارش:
                 </span>
-                <span v-if="content.order_id" class="t12 w400 text-pink-darken-2 number-font">{{content.order_id}}</span>
+                <span v-if="content.id" class="t12 w400 text-pink-darken-2 number-font">{{content.id}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -31,7 +31,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     مبلغ:
                 </span>
-                <span v-if="content.price" class="t12 w400 text-pink-darken-2  number-font">{{content.price}} تومان</span>
+                <span v-if="content.total_price" class="t12 w400 text-pink-darken-2  number-font">{{splitChar(content.total_price)}} تومان</span>
             </div>
         </div>
         <div class="order-row__show-details mr-10">
@@ -44,9 +44,9 @@
 
     <div class="scroll--x">
         <div class="order-row__items d-flex flex-nowrap pb-5">
-            <template v-if="content.skus && content.skus.length">
+            <template v-if="content.details && content.details.length">
                 <generalProductSimpleCard
-                    v-for="(sku, index) in content.skus"
+                    v-for="(sku, index) in content.details"
                     :key="`sku${index}`"
                     :content="sku" />
             </template>
@@ -62,6 +62,33 @@ export default {
          * Content
          */
         content: Object,
+    },
+    data(){
+      return{
+        /**
+         * order statuses
+         */
+        orderStatus:[
+          {
+            text:'پرداخت شده', value :'paid'
+          },
+          {
+            text:'در حال پردازش', value :'pre_progress'
+          },
+          {
+            text:'ارسال شده', value :'sending'
+          },
+        ]
+      }
+    },
+    methods:{
+      /**
+       * find order status
+       */
+      findOrderStatus(status){
+        const findStatus = this.orderStatus.find(element=> element.value === status)
+        if (findStatus)  return findStatus.text
+      }
     }
 }
 </script>

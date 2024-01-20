@@ -60,11 +60,11 @@
 
               <div class="order-tab__contents flex-grow-1">
                 <div class="order-tab__content active" id="order-tab__content-1">
-                  <template v-if="allOrdersMac && allOrdersMac.length">
+                  <template v-if="userOrders && userOrders.length">
                     <generalOrdersOrderRow
-                        v-for="(item, index) in allOrdersMac"
-                        :key="`all-order${index}`"
-                        :content="item"/>
+                        v-for="(order, index) in userOrders"
+                        :key="`all-order${order.id}`"
+                        :content="order"/>
                   </template>
                   <template v-else>
                     <div class="d-flex flex-column justify-center align-center pt-15">
@@ -82,9 +82,9 @@
                 </div>
 
                 <div class="order-tab__content" id="order-tab__content-2">
-                  <template v-if="allOrdersMac && allOrdersMac.length">
+                  <template v-if="preProgressOrder && preProgressOrder.length">
                     <generalOrdersOrderRow
-                        v-for="(item, index) in allOrdersMac"
+                        v-for="(item, index) in preProgressOrder"
                         :key="`all-order${index}`"
                         :content="item"/>
                   </template>
@@ -104,9 +104,9 @@
                 </div>
 
                 <div class="order-tab__content" id="order-tab__content-3">
-                  <template v-if="allOrdersMac && allOrdersMac.length">
+                  <template v-if="sendingOrder && sendingOrder.length">
                     <generalOrdersOrderRow
-                        v-for="(item, index) in allOrdersMac"
+                        v-for="(item, index) in sendingOrder"
                         :key="`all-order${index}`"
                         :content="item"/>
                   </template>
@@ -126,9 +126,9 @@
                 </div>
 
                 <div class="order-tab__content" id="order-tab__content-4">
-                  <template v-if="allOrdersMac && allOrdersMac.length">
+                  <template v-if="receivedOrder && receivedOrder.length">
                     <generalOrdersOrderRow
-                        v-for="(item, index) in allOrdersMac"
+                        v-for="(item, index) in receivedOrder"
                         :key="`all-order${index}`"
                         :content="item"/>
                   </template>
@@ -185,75 +185,7 @@ export default {
     return {
       tab: null,
       allOrders: [],
-      allOrdersMac: [{
-        status: 'در حال پردازش',
-        date: 'سه شنبه 1402/08/23',
-        order_id: '554364',
-        price: '294,000',
-        skus: [{
-          image: {
-            image_url: 'products.jpg'
-          },
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر'
-        },
-          {
-            image: {
-              image_url: 'products.jpg'
-            },
-            label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
-          },
-          {
-            image: {
-              image_url: 'products.jpg'
-            },
-            label: 'کرم نرم کننده حاوی عصاره جوجوبا مای ظرفیت 150 میلی لیتر '
-          },
-          {
-            image: {
-              image_url: 'products.jpg'
-            },
-            label: 'مداد چشم گلدن رز مدل Dream کد 406'
-          },
-          {
-            image: {
-              image_url: 'products.jpg'
-            },
-            label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
-          },
-        ]
-      },
-        {
-          status: 'در حال پردازش',
-          date: 'سه شنبه 1402/08/23',
-          order_id: '554364',
-          price: '294,000',
-          skus: [{
-            image: {
-              image_url: 'products.jpg'
-            },
-            label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر'
-          },
-            {
-              image: {
-                image_url: 'products.jpg'
-              },
-              label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
-            },
-            {
-              image: {
-                image_url: 'products.jpg'
-              },
-              label: 'کرم نرم کننده حاوی عصاره جوجوبا مای ظرفیت 150 میلی لیتر '
-            },
-            {
-              image: {
-                image_url: 'products.jpg'
-              },
-              label: 'مداد چشم گلدن رز مدل Dream کد 406'
-            }
-          ]
-        },
-      ]
+
     }
   },
   setup() {
@@ -292,16 +224,48 @@ export default {
       });
     }
   },
-  /** user order lsit **/
+
   computed:{
+    /** user order list **/
     userOrders(){
       try {
-        return this.orderList?.data?.data
+        return this.orderList?.data?.data?.data
       }
       catch (e) {
         return []
       }
-    }
+    },
+
+    /** pre_progress order list **/
+    preProgressOrder(){
+      try {
+        const preProgress =  this.userOrders.filter(order => order.status === 'pre_progress')
+        if (preProgress.length) return preProgress
+      }
+      catch (e){
+        return []
+      }
+    },
+    /** pre_progress order list **/
+    sendingOrder(){
+      try {
+        const sendingOrder =  this.userOrders.filter(order => order.status === 'sending')
+        if (sendingOrder.length) return sendingOrder
+      }
+      catch (e){
+        return []
+      }
+    },
+    /** pre_progress order list **/
+    receivedOrder(){
+      try {
+        const receivedOrder =  this.userOrders.filter(order => order.status === 'received')
+        if (receivedOrder.length) return receivedOrder
+      }
+      catch (e){
+        return []
+      }
+    },
   },
 
   beforeMount() {
