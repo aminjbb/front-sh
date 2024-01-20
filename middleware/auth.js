@@ -41,8 +41,8 @@ export default {
       return response;
     } catch (error) {
       if (error.response.status === 400) {
-        
-        useNuxtApp().$toast.error('کد وارد شده معتبر نمی‌باشد.', {
+
+        useNuxtApp().$toast.error(error.response.data.message, {
           rtl: true,
           position: 'top-center',
           theme: 'dark'
@@ -79,7 +79,7 @@ export default {
   async getUserProfile(token) {
     try {
       // Send a GET request to the profile endpoint with the token in the headers
-      const response = await axios.post(`${BASE_URL}/auth/user/profile`, {} , {
+      const response = await axios.post(`${BASE_URL}/auth/user/profile`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

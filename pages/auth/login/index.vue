@@ -9,7 +9,7 @@
                     ref="phoneNumberForm"
                     class="w-100">
                     <div class="w-100 form-inner">
-                        <div class="d-flex justify-center">
+                        <div class="d-flex justify-center mb-5">
                             <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
                         </div>
 
@@ -111,6 +111,40 @@
                         </div>
                     </div>
                 </v-form>
+            </template>
+
+            <template v-else-if="loginStep === 3">
+                <div class="w-100 form-inner">
+                    <div class="d-flex justify-center">
+                        <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image" width="106" height="37">
+                    </div>
+
+                    <div class="t16 w400 text-center text-grey-darken-2">
+                        به شاواز خوش آمدید...
+                    </div>
+
+                    <div class="d-flex justify-center">
+                        <img src="@/assets/images/Welcome.jpg" class="mb-5" alt="shavaz image" width="160" height="160">
+                    </div>
+
+                    <div class="mt-10 d-flex align-center center">
+                        <v-btn
+                            href="/"
+                            height="44"
+                            title="بازگشت به سایت"
+                            class="btn btn--submit ml-2 w-50">
+                            بازگشت به سایت
+                        </v-btn>
+
+                        <v-btn
+                            href="/user/profile"
+                            height="44"
+                            title="تکمیل حساب کاربری"
+                            class="btn btn--cancel mr-2 w-50">
+                            تکمیل حساب کاربری
+                        </v-btn>
+                    </div>
+                </div>
             </template>
         </div>
     </v-locale-provider>
@@ -216,7 +250,6 @@ export default {
                 this.loading = true;
 
                 const response = await auth.verifyOTP(this.mobile, this.otp);
-                console.log('response2', response)
 
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;
@@ -228,17 +261,16 @@ export default {
                     });
 
                     if (completeResponse.data == false) {
-                        console.log('false')
+                        this.loginStep = 3;
+
                     } else {
-                        console.log('true')
+                        useNuxtApp().$toast.success(response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
                         this.$router.push('/user/dashboard');
                     }
-
-                    useNuxtApp().$toast.success('کاربر عزیز خوش آمدید.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
                 }
             } catch (error) {
                 console.error('Verify OTP error:', error);
