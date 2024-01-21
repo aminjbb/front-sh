@@ -150,7 +150,7 @@
                   <div class="d-flex align-center">
                                     <span
                                         class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar('85116') }}
+                                        {{ splitChar(orderReturnOrReject?.refund) }}
                                     </span>
                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                   </div>
@@ -161,7 +161,7 @@
                   <div class="d-flex align-center">
                                     <span
                                         class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar('35000') }}
+                                        {{ splitChar(orderReturnOrReject?.sending_price) }}
                                     </span>
                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                   </div>
@@ -172,7 +172,7 @@
                   <div class="d-flex align-center">
                                     <span
                                         class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar('50116') }}
+                                        {{ splitChar(orderReturnOrReject?.total_refund) }}
                                     </span>
                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                   </div>
@@ -192,7 +192,7 @@
                 </v-btn>
                 <v-btn
                     :loading="loading"
-                    @click="submit()"
+                    @click="createFormDataAndSendToServer(1)"
                     height="44"
                     title="ثبت درخواست"
                     class="btn btn--submit">
@@ -343,12 +343,12 @@ export default {
         }
         else {
           formData.append(`shps_list[${index}][reason]` , this.cancelReasonValueTitle[index].label )
-          formData.append(`shps_list[${index}][description]` , this.cancelReasonValueDesc[index].label )
+          formData.append(`shps_list[${index}][description]` , this.cancelReasonValueDesc[index] )
         }
       })
       formData.append(`order_id` , this.$route.params.id )
       formData.append(`accept` , accept )
-      this.returnOrRejectOrder(formData, 'order/cancel/crud/create')
+      this.returnOrRejectOrder(formData, '/order/cancel/crud/create' , accept)
     },
 
     /**
@@ -374,6 +374,20 @@ export default {
       catch (e) {
 
       }
+    },
+    orderReturnOrReject(){
+      try {
+        return this.orderReturnOrRejectObject?.data?.data
+      }
+      catch (e){
+
+      }
+    }
+  },
+  watch:{
+    /** change Step After get data **/
+    orderReturnOrRejectObject(val){
+      if ( this.cancelingStep ===1)  this.cancelingStep =2
     }
   },
   beforeMount() {
