@@ -13,11 +13,11 @@
     </div>
 
     <div v-if="content.image && content.image.image_url" class="product-card__image mb-3 mt-4">
-        <img  :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
+        <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
 
     <div v-else class="product-card__image mb-3 mt-4">
-        <img  :src="imageAddress(content.image)" :title="content.label" :alt="content.label" width="90" height="90" />
+        <img :src="imageAddress(content.image)" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
 
     <h3 v-if="content.label" class="t14 w500 text-grey product-card__title mb-2">
@@ -56,6 +56,16 @@
             <span v-if="content.customer_price" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
+    </div>
+
+    <div v-if="content.colors && showColors" class="product-card__colors d-flex align-center justify-center">
+        <div
+            class="product-card__colors__item"
+            v-for="(color,index) in content.colors.slice(0,6)"
+            :key="`product-color${index}`">
+            <span :style="{ backgroundColor: color.code }"></span>
+        </div>
+        <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>
     </div>
 
     <div v-if="functions" class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
@@ -104,7 +114,11 @@ export default {
         /**
          * Active delete icon
          */
-        deleteIcon: Boolean
+        deleteIcon: Boolean,
+        /**
+         * Show colors in card
+         */
+        showColors: Boolean
     },
 
     methods: {

@@ -129,30 +129,23 @@ export default {
          * @param {*} targetDate
          */
         startCountdown(targetDate) {
-            // Set the target date and time
             const targetTime = new Date(targetDate).getTime();
 
-            // Update the countdown every second
             const countdownInterval = setInterval(() => {
-                // Get the current date and time
                 const currentTime = new Date().getTime();
 
-                // Calculate the remaining time in milliseconds
                 const remainingTime = targetTime - currentTime;
 
                 if (remainingTime <= 0) {
-                    // If the target time has passed, handle it here
                     clearInterval(countdownInterval);
                     this.formattedTime = '00:00:00';
                     return;
                 }
 
-                // Convert milliseconds to hours, minutes, and seconds
                 const hours = Math.floor(remainingTime / (1000 * 60 * 60));
                 const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-                // Format the time as HH:mm:ss
                 this.formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             }, 1000);
         }

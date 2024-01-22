@@ -6,82 +6,49 @@
         <div class="t12 w400 text-grey-darken-1" @click="removeAllFilter()">حذف همه</div>
     </header>
 
-    <div class="filter-sidebar__card" id="filter-sidebar__card--1">
-        <header class="d-flex align-center justify-space-between filter-sidebar__card__header" @click="slideToggleCard('1')">
-            <span class="t16 w400 text-grey-darken-2">دسته‌بندی</span>
+    <template v-for="(filter, index) in filterList" :key="`filter${index}`">
 
-            <v-icon icon="mdi-chevron-down" color="grey" />
-        </header>
+        <div class="filter-sidebar__card" :id="`filter-sidebar__card--${index}`">
+            <header
+                v-if="filter.type !== 'switch'"
+                class="d-flex align-center justify-space-between filter-sidebar__card__header my-4"
+                @click="slideToggleCard(index)">
+                <span class="t16 w400 text-grey-darken-2">{{filter.label}}</span>
 
-        <nav class="filter-sidebar__card__box">
-            <ul class="w-100 ma-0 pa-0 pt-2">
-                <li
-                    v-for="(category, index) in categories"
-                    :key="`cat${index}`"
-                    @click="chooseCategory(category.id)"
-                    class="t14 w400 text-grey pa-1 mb-1">
-                    {{category.title}}
-                </li>
-            </ul>
-        </nav>
-    </div>
+                <v-icon icon="mdi-chevron-down" color="grey" />
+            </header>
 
-    <v-divider color="grey mt-3" />
+            <template v-if="filter.type === 'list'">
+                <generalProductFilterList
+                    :items="filter.values"
+                    :clear="clearAll"
+                    :name="filter.name"
+                    @listItems="listFiltersModalEmit" />
+            </template>
 
-    <div class="filter-sidebar__card my-2 filter-sidebar__card--status">
-        <div class="d-flex justify-space-between align-center">
-            <span class="t16 w400 text-grey-darken-2">فقط کالاهای موجود</span>
+            <template v-else-if="filter.type === 'switch'">
+                <generalProductFilterSwitch
+                    :title="filter.label"
+                    :clear="clearAll"
+                    :name="filter.name"
+                    :switchName="filter.value" />
+            </template>
 
-            <v-switch
-                v-model="availableItems"
-                inset
-                color="success"
-                hide-details
-                @change="changeStatus()" />
+            <template v-else-if="filter.type === 'select'">
+                <generalProductFilterSelects
+                    :items="filter.values"
+                    :title="filter.label"
+                    :name="filter.name"
+                    :clear="clearAll"
+                    @selectItems="selectFiltersModalEmit" />
+            </template>
         </div>
-    </div>
 
-    <v-divider color="grey" class="mt-3" />
+        <v-divider color="grey" />
+    </template>
 
-    <div class="filter-sidebar__card mt-3" id="filter-sidebar__card--2">
-        <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard('2')">
-            <span class="t16 w400 text-grey-darken-2">برند</span>
-
-            <v-icon icon="mdi-chevron-down" color="grey" />
-        </header>
-
-        <div class="filter-sidebar__card__box">
-            <v-text-field
-                density="compact"
-                variant="outlined"
-                placeholder="جستجو برند"
-                hide-details
-                height="40px"
-                prepend-inner-icon="mdi-magnify"
-                class="mb-3 filter-sidebar__card__search"
-                v-model="searchBrand" />
-
-            <div class="filter-sidebar__card__scroll pl-2 pt-1">
-                <template v-for="brand in filteredBrands" :key="brand.id">
-                    <div class="d-flex justify-space-between align-center">
-                        <v-checkbox
-                            v-model="brandsModel"
-                            :label="brand.label"
-                            @change="selectBrands()"
-                            hide-details
-                            :value="brand.id" />
-
-                        <span class="t11 w500 text-grey-lighten-1">{{brand.name}}</span>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </div>
-
-    <v-divider color="grey" />
-
-    <div class="filter-sidebar__card mt-3" id="filter-sidebar__card--3">
-        <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard('3')">
+    <div class="filter-sidebar__card mt-3" :id="`filter-sidebar__card--${filterList.length}`">
+        <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard(filterList.length)">
             <span class="t16 w400 text-grey-darken-2">محدوده قیمت</span>
 
             <v-icon icon="mdi-chevron-down" color="grey" />
@@ -90,30 +57,6 @@
         <div class="filter-sidebar__card__box">
             <div class="d-flex align-center justify-space-between">
                 <span class="t14 w400 ml-5">حداقل</span>
-
-                <!-- <v-text-field
-                    density="compact"
-                    variant="outlined"
-                    placeholder="مثلا 10,000"
-                    hide-details
-                    suffix="تومان"
-                    height="40px"
-                    class="mb-3 filter-sidebar__card__search"
-                    @keydown.enter="setAmount"
-                    v-model="amount.min" /> -->
-
-                <!-- <v-autocomplete
-                    density="compact"
-                    variant="outlined"
-                    placeholder="مثلا 10,000"
-                    :items="amounts"
-                    item-title="label"
-                    item-value="value"
-                    suffix="تومان"
-                    @keydown.enter="setAmount"
-                    v-model="amount.min"
-                    height="40px"
-                    class="mb-3 filter-sidebar__card__search" /> -->
 
                 <v-autocomplete
                     density="compact"
@@ -157,8 +100,6 @@ export default {
     data() {
         return {
             availableItems: false,
-            brandsModel: [],
-            searchBrand: null,
             amount: {
                 max: null,
                 min: null
@@ -195,41 +136,16 @@ export default {
                     label: '300 هزار',
                     value: '300'
                 }
-            ]
+            ],
         }
     },
 
     props: {
-        /**
-         * Category list
-         */
-        categories: Array,
 
-        /**
-         * Brand list
-         */
-        brands: Array
+        filterList: Array,
     },
 
-    computed: {
-        /**
-         * Filter brands by search and sort
-         */
-        filteredBrands() {
-            if (this.searchBrand == null || this.searchBrand == '') {
-                return this.brands.sort((a, b) => a.label.localeCompare(b.label));
-            } else {
-                const lowerCaseSearch = this.searchBrand.toLowerCase();
-                return this.brands
-                    .sort((a, b) => a.label.localeCompare(b.label))
-                    .filter(
-                        (brand) =>
-                        brand.label.toLowerCase().includes(lowerCaseSearch) ||
-                        brand.name.toLowerCase().includes(lowerCaseSearch)
-                    );
-            }
-        },
-    },
+    computed: {},
 
     methods: {
         /**
@@ -243,26 +159,27 @@ export default {
         },
 
         /**
-         * Select category
-         * @param {*} id 
+         * List type filters
+         * @param {*} arr 
          */
-        chooseCategory(id) {
-            this.$emit('selectByCategory', id);
+        listFiltersModalEmit(arr) {
+            this.$emit('listFiltersModal', arr);
         },
 
         /**
-         * Select by brands
-         * @param {array} brandArr 
+         * Select type filters
+         * @param {array} Arr 
          */
-        selectBrands() {
-            this.$emit('selectByBrands', this.brandsModel);
+        selectFiltersModalEmit(arr) {
+            this.$emit('selectFiltersModal', arr);
         },
 
         /**
-         * Show available Items
+         * switch type filters
+         * @param {array} Arr 
          */
-        changeStatus() {
-            this.$emit('changeStatus', this.availableItems);
+        switchFiltersModalEmit(arr) {
+            this.$emit('switchFiltersModal', arr);
         },
 
         /**
@@ -270,7 +187,7 @@ export default {
          * @param {*} item 
          * @param {*} queryText 
          */
-        customMinFilter(item, queryText) {
+        customMinFilter(queryText) {
             this.amount.min = queryText
 
         },
@@ -280,7 +197,7 @@ export default {
          * @param {*} item 
          * @param {*} queryText 
          */
-        customMaxFilter(item, queryText) {
+        customMaxFilter(queryText) {
             this.amount.max = queryText
 
         },
@@ -289,7 +206,6 @@ export default {
          * Show available Items
          */
         setAmount() {
-            console.log(this.amount);
             this.$emit('setAmount', this.amount);
         }
     }

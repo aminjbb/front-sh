@@ -3,7 +3,8 @@
 //------------------------------------------------
 @import "~/assets/scss/tools/bp";
 
-.v-product {
+$parent : 'v-product';
+.#{$parent} {
     padding-bottom: 60px;
     padding-top: 160px;
 
@@ -71,6 +72,18 @@
                 .v-btn__content{
                     color:#fff !important;
                 }
+            }
+        }
+    }
+
+    &--single{
+        padding-top: 111px !important;
+
+        .surprise-part{
+            > span:first-child{
+                font-family: 'Morabba' !important;
+                font-weight: 500;
+                margin-left: 40px;
             }
         }
     }
