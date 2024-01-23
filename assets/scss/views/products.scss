@@ -86,5 +86,15 @@ $parent : 'v-product';
                 margin-left: 40px;
             }
         }
+
+        &__border {
+            border-radius: 6px;
+            border: 0.5px solid var(--grey-grey-lighten-2, #E0E0E0);
+        }
+
+        &__values {
+            border-radius: 8px;
+            background: var(--grey-grey-lighten-5, #FAFAFA);
+        }
     }
 }
