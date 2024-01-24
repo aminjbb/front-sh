@@ -4,6 +4,7 @@
 @import "~/assets/scss/tools/bp";
 
 $parent : 'v-product';
+
 .#{$parent} {
     padding-bottom: 60px;
     padding-top: 160px;
@@ -52,35 +53,34 @@ $parent : 'v-product';
             }
         }
 
-        .v-pagination__item{
-            .v-btn__overlay{
+        .v-pagination__item {
+            .v-btn__overlay {
                 background-color: transparent;
                 opacity: 1 !important;
             }
 
-            .v-btn__content{
+            .v-btn__content {
                 font-family: 'IranSansFaNum' !important;
-                color:#9E9E9E;
+                color: #9E9E9E;
                 z-index: 1;
             }
 
-            &.v-pagination__item--is-active{
-                .v-btn__overlay{
+            &.v-pagination__item--is-active {
+                .v-btn__overlay {
                     background-color: #D72685 !important;
                 }
-    
-                .v-btn__content{
-                    color:#fff !important;
+
+                .v-btn__content {
+                    color: #fff !important;
                 }
             }
         }
     }
 
-    &--single{
-        padding-top: 111px !important;
+    &--single {
 
-        .surprise-part{
-            > span:first-child{
+        .surprise-part {
+            >span:first-child {
                 font-family: 'Morabba' !important;
                 font-weight: 500;
                 margin-left: 40px;
@@ -95,6 +95,107 @@ $parent : 'v-product';
         &__values {
             border-radius: 8px;
             background: var(--grey-grey-lighten-5, #FAFAFA);
+        }
+
+        .complete-details {
+            &__tabs {
+                border-bottom: 1px solid #E0E0E0;
+
+                li {
+                    list-style: none !important;
+
+                    &.active {
+                        &::before {
+                            width: 100%;
+                            border-top-right-radius: 4px;
+                            border-top-left-radius: 4px;
+                            background: var(--Conceptual-Primary, #D72685);
+                            width: 100%;
+                            height: 4px;
+                            content: '';
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+                        }
+
+                        .v-icon {
+                            color: var(--Conceptual-Primary, #D72685) !important;
+                        }
+                    }
+                }
+            }
+
+            &__product-instructions {
+                .instructions {
+                    overflow: hidden;
+                    height: 145px;
+                    position: relative;
+
+                    &::after {
+                        content: '';
+                        height: 100px;
+                        width: 100%;
+                        background: rgb(255, 255, 255);
+                        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 31%, rgba(253, 187, 45, 0) 100%);
+                        position: absolute;
+                        bottom: 0;
+                        right: 0;
+                    }
+
+                    &.show {
+                        height: auto;
+
+                        &::after {
+                            background: transparent !important;
+                        }
+                    }
+                }
+
+                #show-more {
+                    position: relative;
+                    z-index: 1;
+                    margin-top: 10px;
+                }
+            }
+
+            &__product-adv {
+                ul {
+                    padding-right: 10px;
+                }
+            }
+
+            &__product-info {
+                &__table {
+                    >div:not(:last-child) {
+                        border-bottom: 1px solid #E0E0E0;
+
+                    }
+
+                    >div {
+                        >div:first-child {
+                            width: 15%;
+                            flex: 0 0 15%;
+
+                            @include gbp(481, 768) {
+                                width: 30%;
+                                flex: 0 0 30%;
+                            }
+
+                            @include gbp(0, 480) {
+                                width: 50%;
+                                flex: 0 0 50%;
+                            }
+                        }
+
+                        >div:last-child {
+                            border-right: 1px solid #E0E0E0;
+                            width: 10%;
+                            flex: 0 0 10%;
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

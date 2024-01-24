@@ -30,7 +30,7 @@
                 :items="desktopBanner2"
                 col="3" />
 
-            <mobileHomeSection8Slider :items="homeSkus" />
+            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات"/>
 
             <desktopHomeBanner
                 title="ایده هدیه"
@@ -42,7 +42,7 @@
                 :items="responseDot(11)"
                 class="tab-slider2 mb-8"
                 title="جدید‌ترین محصولات"
-                componentName="generalMinimalProductCard"
+                componentName="generalProductMinimalCard"
                 contentWidth="100%"
                 wrapContent
                 limit=6 />
@@ -98,7 +98,7 @@
 
             <mobileHomeBanner :items="mobileBanner2" />
 
-            <mobileHomeSection8Slider :items="homeSkus" />
+            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات"/>
 
             <mobileHomeBanner :items="mobileBanner3" />
 
@@ -107,7 +107,7 @@
                 :items="responseDot(11)"
                 class="tab-slider2"
                 title="جدید‌ترین محصولات"
-                componentName="generalMinimalProductCard"
+                componentName="generalProductMinimalCard"
                 contentWidth="1160px"
                 wrapContent
                 limit=6 />

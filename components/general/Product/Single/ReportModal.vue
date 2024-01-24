@@ -40,7 +40,6 @@
                         <v-checkbox
                             v-model="reportModel"
                             :label="report.label"
-                            @change="selectReport()"
                             hide-details
                             style="height:38px"
                             :value="report.label" />
@@ -114,6 +113,17 @@ export default {
 
         /** Product id */
         productId: String,
+    },
+
+    watch: {
+        reportModel(newValue) {
+            
+            if (newValue.length) {
+                this.activeButton = true;
+            } else {
+                this.activeButton = false;
+            }
+        },
     },
 
     methods: {
