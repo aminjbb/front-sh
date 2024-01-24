@@ -17,7 +17,6 @@
                 cols="12"
                 lg="7">
                 <generalProductSingleDetails :content="contentMocket" />
-
                 <template v-if="screenType !== null && screenType === 'desktop'">
                     <v-row class="v-product--single__border ma-0 px-1 mt-5">
                         <v-col md="7" lg="8">
@@ -30,20 +29,28 @@
                 </template>
 
                 <template v-else-if="screenType !== null && screenType === 'mobile'">
+                    <v-row class="v-product--single__border ma-0 px-1 mt-5">
+                        <v-col md="7" lg="8">
+                            <mobileProductSingleSelectedSeller :content="selectedSellerMoc" :sellers="contentMocket.sellers" />
+                        </v-col>
+                    </v-row>
                 </template>
             </v-col>
         </v-row>
 
-        <generalAboutOurValues class="v-product--single__values xs-hide ma-0 mt-5" />
+        <template v-if="screenType !== null && screenType === 'desktop'">
+            <generalAboutOurValues class="v-product--single__values ma-0 mt-5" />
 
-        <div class="v-product--single__border mt-5" id="seller-list">
-            <template v-for="(seller, index) in contentMocket.sellers" :key="`seller${index}`">
-                <generalProductSingleSellerCard :seller="seller" />
-                <v-divider v-if="index +1 < contentMocket.sellers.length" color="grey" />
-            </template>
-        </div>
+            <div class="v-product--single__border mt-5" id="seller-list">
+                <template v-for="(seller, index) in contentMocket.sellers" :key="`seller${index}`">
+                    <generalProductSingleSellerCard :seller="seller" />
+                    <v-divider v-if="index +1 < contentMocket.sellers.length" color="grey" />
+                </template>
+            </div>
+        </template>
 
         <mobileHomeSection8Slider
+            class="mt-5 pb-3"
             :items="relatedProductsMocket"
             title="محصولات مشابه"
             hideIndex
@@ -59,6 +66,16 @@
         <v-divider color="grey" class="mt-5" />
 
         <generalProductSingleComments :comments="contentMocket.comments" />
+
+        <template v-if="screenType !== null && screenType === 'mobile'">
+            <div class="mobile-basket">
+                <generalAddToBasket
+                    :content="selectedSellerMoc"
+                    revers="revers"
+                    :mdCols="['6','6']"
+                    :smCols="['4','8']" />
+            </div>
+        </template>
 
     </v-container>
 </main>
@@ -176,6 +193,7 @@ export default {
                         discount: '30%',
                         customer_price: 184030,
                         site_price: 269900,
+                        count: 5,
                     },
                     {
                         name: 'زیبارویان',
@@ -183,6 +201,7 @@ export default {
                         discount: null,
                         customer_price: 289300,
                         site_price: null,
+                        count : 0,
                     },
                     {
                         name: 'شاواز',
@@ -190,6 +209,7 @@ export default {
                         discount: null,
                         customer_price: 291000,
                         site_price: null,
+                        count:100,
                     }
                 ],
                 details: {
@@ -243,6 +263,7 @@ export default {
                 discount: '30%',
                 customer_price: 184030,
                 site_price: 269900,
+                count: 5,
             },
             relatedProducts: [],
             relatedProductsMocket: [{

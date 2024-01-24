@@ -48,7 +48,7 @@
                 </div>
 
                 <div>
-                    <v-divider color="grey" class="mb-3 mt-5"/>
+                    <v-divider color="grey" class="mb-3 mt-5" />
 
                     <label class="d-block t12 text-grey-darken-3 mb-4">توضیحات</label>
                     <v-textarea
@@ -82,9 +82,9 @@ export default {
         return {
             dialog: false,
             activeButton: false,
-            description:null,
-            loading:false,
-            reportModel:[],
+            description: null,
+            loading: false,
+            reportModel: [],
             reportItems: [{
                     label: 'نام کالا نادرست است.'
                 },
@@ -117,7 +117,7 @@ export default {
 
     watch: {
         reportModel(newValue) {
-            
+
             if (newValue.length) {
                 this.activeButton = true;
             } else {
@@ -133,11 +133,18 @@ export default {
 
         closeModal() {
             this.dialog = false;
+            this.description = null;
+            this.reportModel= [];
         },
 
         addReport() {
             this.activeButton = true;
-            //Add ' send report' method
+            useNuxtApp().$toast.success('کاربر گرامی، گزارش شما با موفقیت ارسال شد.', {
+                rtl: true,
+                position: 'top-center',
+                theme: 'dark'
+            });
+            this.dialog = false;
         },
     },
 }
@@ -157,7 +164,7 @@ export default {
         }
     }
 
-    .v-field__input{
+    .v-field__input {
         font-size: 12px;
     }
 }

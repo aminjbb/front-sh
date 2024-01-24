@@ -49,7 +49,7 @@
                             :model-value="rateModel"
                             v-model="rateModel"
                             color="grey"
-                            active-color="primary" />
+                            active-color="orange-darken-1" />
                     </div>
                 </div>
 

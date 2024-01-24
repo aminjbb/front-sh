@@ -45,6 +45,7 @@
                     <v-icon
                         icon="mdi-heart-outline"
                         color="grey-lighten-1"
+                        @click="addToFavorite()"
                         size="small" />
                 </div>
                 <img :src="imageAddress(selectedImage)" :alt="imageAlt" width="351" height="351">
@@ -63,6 +64,7 @@
                 <v-icon
                     icon="mdi-heart-outline"
                     color="grey-lighten-1"
+                    @click="addToFavorite()"
                     size="small" />
             </div>
 
@@ -74,8 +76,8 @@
                     delay: 2500,
                     disableOnInteraction: false,
                 }">
-                <swiper-slide v-for="(item,index) in items" :key="index">
-                    <div @click="openModal()">
+                <swiper-slide v-for="(item,index) in items" :key="index" class="h-100">
+                    <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
                         <img :src="imageAddress(item.image_url)" :title="imageAlt" :alt="imageAlt" width="351" height="351" />
                     </div>
                 </swiper-slide>
