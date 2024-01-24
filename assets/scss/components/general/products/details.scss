@@ -5,6 +5,7 @@
 .product-details {
     .colors-pallet {
         &__item {
+            flex: none !important;
             &__code {
                 width: 22px;
                 height: 22px;
