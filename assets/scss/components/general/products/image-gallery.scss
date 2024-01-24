@@ -6,7 +6,7 @@
 .image-gallery {
     height: 462px;
 
-    @include gbp(0, 992) {
+    @include gbp(0, 768) {
         height: auto !important
     }
 
@@ -72,14 +72,15 @@
         height: 100%;
         position: relative;
 
-        @include gbp(0, 992) {
+        @include gbp(0, 768) {
             border: 0 !important
         }
 
         img {
-            width: 100% !important;
+            width: auto !important;
             height: auto !important;
             max-height: 100% !important;
+            max-width: 100% !important;
         }
 
         &__icons {
@@ -90,7 +91,7 @@
     }
 
     .swiper-wrapper {
-        @include gbp(0, 992) {
+        @include gbp(0, 768) {
             margin-bottom: 30px !important;
         }
     }

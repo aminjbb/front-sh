@@ -1,7 +1,7 @@
 <template lang="">
 <div v-if="items && items.length" class="image-gallery">
-    <v-row class="ma-0 xs-hide">
-        <div class="pa-0 pl-3 image-gallery__thumbnail">
+    <v-row class="ma-0 xs-hide h-100">
+        <div class="pa-0 pl-3 image-gallery__thumbnail h-100">
             <div class="d-flex flex-column align-center">
                 <template v-if="items.length <= 5">
                     <div
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="pa-0 pr-3">
+        <div class="pa-0 pr-3  h-100">
             <div class="image-gallery__selected-image">
                 <div class="image-gallery__selected-image__icons d-flex align-center">
                     <v-icon
