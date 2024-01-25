@@ -79,6 +79,10 @@ $parent : 'v-product';
 
     &--single {
 
+        @include gbp (0, 768) {
+            padding-bottom: 150px !important;
+        }
+
         .surprise-part {
             >span:first-child {
                 font-family: 'Morabba' !important;
@@ -98,6 +102,10 @@ $parent : 'v-product';
         }
 
         .complete-details {
+            @include gbp (0, 768) {
+                margin-top: 0 !important;
+            }
+
             &__tabs {
                 border-bottom: 1px solid #E0E0E0;
 
@@ -198,6 +206,13 @@ $parent : 'v-product';
 
         }
 
+        .product-section-header {
+            @include gbp (0, 768) {
+                font-size: 14px !important;
+                font-variation-settings: "wght" 500 !important;
+            }
+        }
+
         .mobile-basket {
             border-radius: 8px 8px 0px 0px;
             background: #FFF;
@@ -209,7 +224,7 @@ $parent : 'v-product';
             z-index: 2;
             padding: 17px 15px;
 
-            .v-btn{
+            .v-btn {
                 width: 100%;
             }
         }

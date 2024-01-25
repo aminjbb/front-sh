@@ -4,6 +4,21 @@
 @import "~/assets/scss/tools/bp";
 
 .product-comment{
+    > header{
+        @include gbp(0, 768){
+            flex-direction: column;
+            justify-content: flex-start !important;
+            align-items: flex-start !important;
+        }
+
+        .v-btn,
+        .c-moda{
+            @include gbp(0, 768){
+                width: 100%;
+            }
+        }
+    }
+
     &__card{
         &__header{
             display: flex;
@@ -12,6 +27,13 @@
 
             @include gbp(0, 768){
                 justify-content: space-between;
+            }
+        }
+
+        &__msg{
+            @include gbp(0, 768){
+                font-size: 12px !important;
+                line-height: 20px !important;
             }
         }
     }

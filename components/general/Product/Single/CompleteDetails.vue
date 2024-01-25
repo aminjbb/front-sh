@@ -80,7 +80,7 @@
                     icon="mdi-note-text-outline"
                     color="grey"
                     class="ml-2 xs-show" />
-                <h3 class="t20 w400 text-grey-darken-1 my-5">توضیحات</h3>
+                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">توضیحات</h3>
             </header>
 
             <p
@@ -97,7 +97,7 @@
                     icon="mdi-list-status"
                     color="grey"
                     class="ml-2 xs-show" />
-                <h3 class="t20 w400 text-grey-darken-1 my-5">مشخصات محصول</h3>
+                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">مشخصات محصول</h3>
             </header>
 
             <div v-if="attrs" class="complete-details__product-info__table mt-2 mb-7">
@@ -116,7 +116,7 @@
                     icon="mdi-face-man-shimmer-outline"
                     color="grey"
                     class="ml-2 xs-show" />
-                <h3 class="t20 w400 text-grey-darken-1 my-5">روش استفاده</h3>
+                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">روش استفاده</h3>
             </header>
 
             <template v-if="instructions">
@@ -147,7 +147,7 @@
                     color="grey"
                     class="ml-2 xs-show" />
 
-                <h3 class="t20 w400 text-grey-darken-1 my-5">مزایا و معایب</h3>
+                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">مزایا و معایب</h3>
             </header>
 
             <div v-if="advantages">

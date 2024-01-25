@@ -6,7 +6,7 @@
                 icon="mdi-comment-outline"
                 color="grey"
                 class="ml-2 xs-show" />
-            <h3 class="t20 w400 text-grey-darken-1 my-5">دیدگاه مخاطبان</h3>
+            <h3 class="t20 w400 text-grey-darken-1 my-5 product-section-header">دیدگاه مخاطبان</h3>
         </div>
 
        <generalProductSingleAddCommentModal />
@@ -24,13 +24,13 @@
                         color="grey-darken-1"
                         class="ml-2" />
 
-                    <span v-if="comment.author" class="t13 w400 text-grey-darken-1">{{comment.author}}</span>
+                    <span v-if="comment.author" class="t13 w400 text-grey-darken-1 product-comment__card__author">{{comment.author}}</span>
                 </div>
 
                 <span v-if="comment.date" class="t11 w400 text-grey-lighten-1">{{comment.date}}</span>
             </header>
 
-            <p v-if="comment.message" class="t14 w400 l25 text-grey-darken-2">{{comment.message}}</p>
+            <p v-if="comment.message" class="t14 w400 l25 text-grey-darken-2 product-comment__card__msg">{{comment.message}}</p>
 
             <v-divider
                 v-if="index + 1 < comments.length"
