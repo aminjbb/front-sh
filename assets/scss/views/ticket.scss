@@ -1,0 +1,30 @@
+//------------------------------------------------
+//  User tickets
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-ticket {
+    padding-bottom: 60px;
+    padding-top: 170px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    .ticket {
+        &__form {
+            &__item {
+                &--text-field {
+                    input {
+                        height: 42px !important;
+                    }
+
+                    .v-field__input {
+                        font-size: 13px !important;
+                    }
+                }
+            }
+        }
+    }
+}

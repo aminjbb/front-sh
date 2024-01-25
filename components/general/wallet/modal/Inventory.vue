@@ -8,7 +8,7 @@ import { LazyNuxtPage } from '#build/components';
                 size="small"
                 color="grey"
                 class="ml-1" />
-            <span class="text-grey t14 w500">برداشت موجودی</span>
+            <span class="text-grey t14 w500 cur-p">برداشت موجودی</span>
         </div>
     </div>
 
