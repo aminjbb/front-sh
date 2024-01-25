@@ -7,7 +7,7 @@ import { LazyNuxtPage } from '#build/components';
             size="small"
             color="grey"
             class="ml-1" />
-        <span class="text-grey t14 w500">افزایش موجودی</span>
+        <span class="text-grey t14 w500 cur-p">افزایش موجودی</span>
     </div>
 
     <v-dialog
