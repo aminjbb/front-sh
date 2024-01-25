@@ -1,8 +1,21 @@
 //------------------------------------------------
 //  Product details component
 //------------------------------------------------
+@import "~/assets/scss/tools/bp";
 
 .product-details {
+    h1{
+        @include gbp(0,768){
+            font-size: 16px !important;
+        }
+    }
+
+    h2{
+        @include gbp(0,768){
+            font-size: 12px !important;
+        }
+    }
+    
     .colors-pallet {
         &__item {
             flex: none !important;

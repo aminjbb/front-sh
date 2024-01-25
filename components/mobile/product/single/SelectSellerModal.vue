@@ -24,6 +24,13 @@
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </header>
+
+            <div v-if="sellers && sellers.length > 0">
+                <template v-for="(seller, index) in sellers" :key="`seller${index}`">
+                    <generalProductSingleSellerCard :seller="seller" revers/>
+                    <v-divider v-if="index +1 < sellers.length" color="grey-darken-1" />
+                </template>
+            </div>
         </v-card>
     </v-dialog>
 </div>
@@ -35,38 +42,20 @@ export default {
     data() {
         return {
             dialog: false,
-            activeButton: false,
-            description: null,
             loading: false,
-            reportModel: [],
-            reportItems: [{
-                    label: 'نام کالا نادرست است.'
-                },
-                {
-                    label: 'تصویر کالا نادرست است.'
-                },
-                {
-                    label: 'مشخصات کالا نادرست است.'
-                },
-                {
-                    label: 'توضیحات کالا نادرست است.'
-                },
-                {
-                    label: 'روش استفاده کالا نادرست است.'
-                }
-            ]
         }
     },
 
     props: {
-        /**Modal title */
-        title: String,
+        /** 
+         * Sellers list
+         */
+        sellers: String,
 
-        /**Modal text */
-        text: String,
-
-        /** Product id */
-        productId: String,
+        /**
+         * product id
+         */
+        productId:String,
     },
 
     methods: {
@@ -78,10 +67,7 @@ export default {
             this.dialog = false;
         },
 
-        addReport() {
-            this.activeButton = true;
-            //Add ' send report' method
-        },
+        selectSeller() {},
     },
 }
 </script>
@@ -93,7 +79,7 @@ export default {
     }
 
     &__header {
-        border-bottom: 1px solid #E0E0E0;
+        border-bottom: 1px solid #f7f6f6;
 
         &__btn {
             min-width: auto !important;
