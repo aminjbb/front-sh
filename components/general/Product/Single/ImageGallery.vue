@@ -40,6 +40,7 @@
                     <v-icon
                         icon="mdi-share-variant-outline"
                         color="grey-lighten-1"
+                        @click="doCopy()"
                         size="small" />
 
                     <v-icon
@@ -59,6 +60,7 @@
                 <v-icon
                     icon="mdi-share-variant-outline"
                     color="grey-lighten-1"
+                    @click="doCopy()"
                     size="small" />
 
                 <v-icon
@@ -181,6 +183,12 @@ import {
     Autoplay
 } from 'swiper/modules';
 
+// import copyText package
+import {
+    copyText
+} from 'vue3-clipboard'
+import { useRoute } from "vue-router";
+
 export default {
     data() {
         return {
@@ -207,6 +215,8 @@ export default {
     },
 
     setup(props) {
+        const route =useRoute()
+
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
         const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
 
@@ -227,6 +237,27 @@ export default {
             document.getElementById(`slider-thumbs-${index - 1}`).classList.add('active');
         };
 
+        /**
+         * Copy address
+         */
+         const doCopy = () => {
+            copyText(`https://shavaz.com${route.path}`, undefined, (error, event) => {
+                if (error) {
+                    useNuxtApp().$toast.error('کپی لینک با مشکل مواجه شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                } else {
+                    useNuxtApp().$toast.success('لینک  با موفقیت کپی شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+            })
+        }
+
         useHead({
             title,
             meta: [{
@@ -240,6 +271,7 @@ export default {
             setSwiperRef,
             slideTo,
             modules: [FreeMode, Navigation, Pagination, Autoplay],
+            doCopy
         };
 
     },
