@@ -39,14 +39,30 @@
         :sm="smCols[1]"
         :md="mdCols[1]"
         class="d-flex justify-end pa-1">
-        <v-btn
-            :loading="loading"
-            @click="addToCard()"
-            height="44"
-            title="افزودن به سبد"
-            class="btn btn--submit">
-            افزودن به سبد خرید
-        </v-btn>
+        <template v-if="count === 0">
+            <v-btn
+                @click="addToCard()"
+                height="44"
+                title="افزودن به سبد"
+                class="btn btn--submit">
+                افزودن به سبد خرید
+            </v-btn>
+        </template>
+        <template v-else>
+            <div class="product-card__product-count bg-transparent">
+                <v-icon
+                    icon="mdi-plus"
+                    color="primary"
+                    @click="increaseCount()" />
+                <span class="t16 w300 text-primary number-font">
+                    {{count}}
+                </span>
+                <v-icon
+                    :icon="count === 1 ? 'mdi-trash-can-outline': 'mdi-minus'"
+                    color="primary"
+                    @click="decreaseCount()" />
+            </div>
+        </template>
     </v-col>
 </v-row>
 </template>
@@ -56,6 +72,7 @@ export default {
     data() {
         return {
             loading: false,
+            count: 0,
         }
     },
 
@@ -86,9 +103,22 @@ export default {
 
     methods: {
         addToCard() {
-            this.loading = true;
+            this.count = 1;
             //TODO: write add to basket method
-        }
+        },
+
+        increaseCount() {
+            if (this.count < this.content.count) {
+                this.count++;
+            }
+        },
+
+        decreaseCount() {
+            if (this.count > 0) {
+                this.count--;
+            }
+            
+        },
     }
 }
 </script>

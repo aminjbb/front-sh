@@ -41,7 +41,7 @@
         class="py-0">
         <generalAddToBasket
             :content="seller"
-            :revers ="revers"
+            :revers="revers"
             :mdCols="['6','6']"
             :smCols="['4','8']" />
     </v-col>
@@ -63,7 +63,7 @@ export default {
         /**
          * Active add to basket revers prop
          */
-        revers:Boolean
+        revers: Boolean
     }
 }
 </script>
@@ -88,17 +88,19 @@ export default {
         }
     }
 
-    &__date{
+    &__date {
         @include gbp(0, 768) {
             margin-bottom: 15px;
-            border-bottom:0.5px solid #E0E0E0;
+            border-bottom: 0.5px solid #E0E0E0;
             width: 100%;
             padding-bottom: 20px;
         }
     }
 
-    .v-btn{
-        width:100% !important;
+    .v-btn {
+        @include gbp(0, 768) {
+            width: 100% !important;
+        }
     }
 }
 </style>
