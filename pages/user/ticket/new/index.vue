@@ -85,9 +85,9 @@
                             <v-btn
                                 href="/user/ticket"
                                 height="44"
-                                title="انصر اف"
+                                title="انصراف"
                                 class="btn btn--cancel ml-5">
-                                انصر اف
+                                انصراف
                             </v-btn>
 
                             <v-btn
