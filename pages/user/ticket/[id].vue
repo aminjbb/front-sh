@@ -16,7 +16,7 @@
             <div class="col-9 pa-4 mobile-pa-0">
                 <v-card class="pa-8 mobile-pa-0 mobile-no-border has-header">
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide card__header">
-                        <span>جزئیات تیکت</span>
+                        <h1>جزئیات تیکت</h1>
 
                         <v-btn
                             @click="showAnswer()"
@@ -138,6 +138,19 @@ export default {
                 ]
             }
         }
+    },
+
+    setup() {
+        const title = ref('فروشگاه اینترنتی شاواز | تیکت من')
+        const description = ref("صفحه تیکت");
+
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
     },
 
     methods: {

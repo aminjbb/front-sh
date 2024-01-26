@@ -4,7 +4,7 @@
         <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
-        <span class="grey-darken-3 t14">لیست سفارشات</span>
+        <span class="grey-darken-3 t14">ثبت تیکت جدید</span>
     </header>
 
     <v-container>
@@ -20,7 +20,7 @@
                             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
                         </a>
 
-                        <span>ثبت تیکت جدید</span>
+                        <h1>ثبت تیکت جدید</h1>
                     </header>
 
                     <div class="ticket__form pt-8 px-6">
@@ -140,7 +140,7 @@ export default {
 
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | لیست تیکت های من')
-        const description = ref("تماس با پشتیبانی- ارسال تیکت به پشتیبانی- ارسال درخواست جدید به پشتیبانی.");
+        const description = ref("لیست تیکت ها");
 
         useHead({
             title,
