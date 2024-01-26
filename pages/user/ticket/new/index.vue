@@ -20,7 +20,7 @@
                             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
                         </a>
 
-                        <h1>ثبت تیکت جدید</h1>
+                        <span>ثبت تیکت جدید</span>
                     </header>
 
                     <div class="ticket__form" :class="isMobile === true ? 'px-3' : 'pt-8 px-6'">
