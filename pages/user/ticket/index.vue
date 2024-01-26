@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-9 pa-4 mobile-pa-0">
-                <v-card v-if="ticketList && ticketList.length" class="py-3 px-10 d-flex justify-space-around align-center">
+                <v-card v-if="ticketListMoc && ticketListMoc.length" class="py-3 px-10 d-flex justify-space-around align-center v-ticket__info-card">
                     <img src="~/assets/images/ticket.png" class="ml-10" alt="ticket image" width="65" height="65">
 
                     <div class="flex-grow-1">
@@ -37,10 +37,14 @@
                         <span>تیکت</span>
                     </header>
 
-                    <template v-if="ticketList && ticketList.length">
+                    <template v-if="ticketListMoc && ticketListMoc.length">
+                        <div class="px-2 pb-5">
+                            <generalTicketTable :tableHeader="tableHeader" :items="ticketListMoc"/>
+                        </div>
                     </template>
+
                     <template v-else>
-                        <div class="order-tab flex-grow-1 d-flex flex-column mb-8">
+                        <div class="flex-grow-1 d-flex flex-column mb-8">
                             <div class="d-flex flex-column justify-center align-center pt-15">
                                 <svgEmptyTicket />
                                 <span class="t14 w400 text-grey-darken-1 mt-2">تا حالا تیکتی ثبت نکردی!</span>
@@ -67,7 +71,50 @@ export default {
     data() {
         return {
             tab: null,
-            ticketList: [],
+            tableHeader: [{
+                title: 'ردیف',
+                key: 'index',
+            }, {
+                title: 'شماره تیکت',
+                key: 'id',
+            }, {
+                title: 'موضوع',
+                key: 'title',
+            }, {
+                title: 'اولویت',
+                key: 'priority',
+            }, {
+                title: 'تاریخ ارسال',
+                key: 'created_at',
+            }, {
+                title: 'وضعیت',
+                key: 'status',
+            }, {
+                title: 'عملیات',
+                key: '',
+            }],
+            ticketList:[],
+            ticketListMoc:[{
+                id:'15984',
+                title:'نارضایتی از سایت',
+                priority:'ضروری',
+                created_at:'1402/10/07',
+                status:'در  انتظار پاسخ',
+            },
+            {
+                id:'15978',
+                title:'نارضایتی از سایت',
+                priority:'بالا',
+                created_at:'1402/08/07',
+                status:'بسته شده',
+            },
+            {
+                id:'14876',
+                title:'پیگیری سفارش',
+                priority:'متوسط',
+                created_at:'1402/05/19',
+                status:'بسته شده',
+            },],
         }
     },
 
@@ -83,6 +130,7 @@ export default {
             }]
         })
     },
+    
 }
 </script>
 

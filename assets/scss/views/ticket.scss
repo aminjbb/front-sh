@@ -27,4 +27,22 @@
             }
         }
     }
+
+    &__info-card{
+        @include gbp (0, 768) {
+            flex-direction: column !important;
+            padding-bottom: 30px !important;
+            border: 0 !important;
+            border-bottom:1px solid #e0e0e0 !important;
+            border-radius: 0 !important;
+
+            > div{
+                margin: 10px 0;
+            }
+
+            h1,h2{
+                text-align: center !important;
+            }
+        }
+    }
 }
