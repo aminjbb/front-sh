@@ -23,7 +23,7 @@
                         <h1>ثبت تیکت جدید</h1>
                     </header>
 
-                    <div class="ticket__form pt-8 px-6">
+                    <div class="ticket__form" :class="isMobile === true ? 'px-3' : 'pt-8 px-6'">
                         <v-form ref="ticket" v-model="valid">
                             <v-row>
                                 <v-col
@@ -111,6 +111,7 @@
 export default {
     data() {
         return {
+            isMobile:false,
             tab: null,
             form: {
                 title: null,
@@ -155,7 +156,14 @@ export default {
         getImage() {
             //TODO: get image
         }
-    }
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.isMobile = true : this.isMobile = false;
+    },
 }
 </script>
 
