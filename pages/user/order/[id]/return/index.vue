@@ -85,7 +85,7 @@
                     <v-select
                         density="compact"
                         variant="outlined"
-                        single-line
+
                         :rules="rule"
                         item-title="label"
                         item-value="value"
@@ -269,11 +269,11 @@ export default {
       ],
       catchItems: [{
         label: 'مبلغ کالا به کیف پول مرجوع شود.',
-        value: '1'
+        value: 'order'
       },
         {
           label: 'کالا مجددا ارسال شود.',
-          value: '2'
+          value: 'wallet'
         }
       ],
       value: [],
@@ -341,10 +341,10 @@ export default {
     /**
      * gte image from emit
      */
-    getImage(image , index) {
+    getImage(image, index) {
       const form = {
-        image:image.data.data.image_id,
-        index:index
+        image: image.data.data.file_id,
+        index: index
       }
       this.returnImageId.push(form)
     },
@@ -360,23 +360,24 @@ export default {
     /**
      * create formData and send to api
      */
-    createFormDataAndSendToServer(accept){
-      const formData= new FormData()
-      this.selectedProducts.forEach((product , index)=>{
-        formData.append(`shps_list[${index}][shps]` , product?.item?.shps?.id )
-        formData.append(`shps_list[${index}][count]` , product?.count )
-        if (this.chooseAll) {
-          formData.append(`shps_list[${index}][reason]` , this.cancelReasonValueTitleAll.label )
-          formData.append(`shps_list[${index}][description]` , this.cancelReasonValueDescAll )
-        }
-        else {
-          formData.append(`shps_list[${index}][reason]` , this.cancelReasonValueTitle[index].label )
-          formData.append(`shps_list[${index}][description]` , this.cancelReasonValueDesc[index].label )
+    createFormDataAndSendToServer(accept) {
+      const formData = new FormData()
+      this.selectedProducts.forEach((product, index) => {
+        formData.append(`shps_list[${index}][shps]`, product?.item?.shps?.id)
+        formData.append(`shps_list[${index}][returned_count]`, product?.count)
+        formData.append(`shps_list[${index}][return_reason]`, this.returnReasonValueTitle[index].label)
+        formData.append(`shps_list[${index}][description]`, this.returnReasonValueDesc[index])
+        formData.append(`shps_list[${index}][payback_method]`, this.returnReasonValueCatch[index])
+        const returnImages = this.returnImageId.filter((image) => image.index === index)
+        if (returnImages) {
+          returnImages.forEach((image , imageIndex)=>{
+            formData.append(`shps_list[${index}][files][${imageIndex}]`, image)
+          })
         }
       })
-      formData.append(`order_id` , this.$route.params.id )
-      formData.append(`accept` , accept )
-      this.returnOrRejectOrder(formData, 'order/cancel/crud/create')
+      formData.append(`order_id`, this.$route.params.id)
+      formData.append(`accept`, accept)
+      this.returnOrRejectOrder(formData, 'order/returned/crud/create')
     },
     /**
      * Submit return request
@@ -386,14 +387,13 @@ export default {
       this.returnStep = 3;
     },
   },
-  computed:{
+  computed: {
 
     /** single order object **/
-    userOrder(){
+    userOrder() {
       try {
         return this.order?.data?.data
-      }
-      catch (e) {
+      } catch (e) {
 
       }
     }
