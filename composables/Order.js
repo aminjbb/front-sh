@@ -9,6 +9,7 @@ import auth from '@/middleware/auth';
 
 export default function setup(posts) {
     const orderList = ref([]);
+    const returnedOrderList = ref([]);
     const order = ref(null);
     const orderReturnOrRejectObject = ref(null);
     const loading = ref(false)
@@ -27,6 +28,20 @@ export default function setup(posts) {
             })
             .then((response) => {
                 orderList.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+    };
+    async function getReturnedOrderList(query) {
+        axios
+            .get(runtimeConfig.public.apiBase + `/order/returned/crud/index?per_page=100000`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                returnedOrderList.value = response
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
@@ -80,6 +95,7 @@ export default function setup(posts) {
         });
     };
 
-    return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading}
+    return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
+            getReturnedOrderList , returnedOrderList}
 }
 

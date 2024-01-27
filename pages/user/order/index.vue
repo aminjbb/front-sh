@@ -126,11 +126,11 @@
                 </div>
 
                 <div class="order-tab__content" id="order-tab__content-4">
-                  <template v-if="receivedOrder && receivedOrder.length">
+                  <template v-if="userReturnedOrderList && userReturnedOrderList.length">
                     <generalOrdersOrderRow
-                        v-for="(item, index) in receivedOrder"
-                        :key="`all-order${index}`"
-                        :content="item"/>
+                        v-for="(order, index) in userReturnedOrderList"
+                        :key="`all-order${order.id}`"
+                        :content="order"/>
                   </template>
                   <template v-else>
                     <div class="d-flex flex-column justify-center align-center pt-15">
@@ -191,7 +191,7 @@ export default {
   setup() {
     const title = ref('فروشگاه اینترنتی شاواز | لیست سفارشات من')
     const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
-    const {getOrderList, orderList} = new Order()
+    const {getOrderList, orderList , getReturnedOrderList , returnedOrderList} = new Order()
     useHead({
       title,
       meta: [{
@@ -199,7 +199,7 @@ export default {
         content: description
       }]
     })
-    return {getOrderList, orderList}
+    return {getOrderList, orderList , getReturnedOrderList , returnedOrderList}
   },
 
   methods: {
@@ -226,6 +226,15 @@ export default {
   },
 
   computed:{
+    /** user returned Order list **/
+    userReturnedOrderList(){
+      try {
+        return this.returnedOrderList?.data?.data?.data
+      }
+      catch (e) {
+        return []
+      }
+    },
     /** user order list **/
     userOrders(){
       try {
@@ -270,6 +279,7 @@ export default {
 
   beforeMount() {
     this.getOrderList()
+    this.getReturnedOrderList()
   }
 }
 </script>

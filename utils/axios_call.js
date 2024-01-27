@@ -30,12 +30,10 @@ export class AxiosCall {
 
         );
         let data = false;
-        const cookies = useCookie();
         if (this.using_auth) {
 
             await axios
                 .post(url, this.form, {
-                    onUploadProgress: progressEvent => this.store.commit('set_progressUpload', (progressEvent.loaded * 100) / progressEvent.total),
                     headers: {
                         Authorization:
                             "Bearer " + this.token,

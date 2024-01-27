@@ -107,7 +107,7 @@ async function submitImage(index) {
     formdata.append('module', 'page')
     AxiosMethod.using_auth = true
     AxiosMethod.store = store
-    AxiosMethod.token = userToken
+    AxiosMethod.token = userToken.value
     AxiosMethod.end_point = 'file-manager/direct/store'
     AxiosMethod.form = formdata
     let data = await AxiosMethod.axios_image_upload()
