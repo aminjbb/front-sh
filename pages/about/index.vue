@@ -25,35 +25,7 @@
                 ارزش‌های شاواز
             </header>
 
-            <v-row>
-                <v-col cols="6" sm="3">
-                    <div class="d-inline-flex align-center flex-column">
-                        <img src="~/assets/images/about_value1.jpg" class="" alt="Shavaz Logo" width="72" height="72" title="Shavaz values" />
-                        <h4 class="t14 text-grey-darken-2">ارسال به سراسر ایران</h4>
-                    </div>
-                </v-col>
-
-                <v-col cols="6" sm="3">
-                    <div class="d-inline-flex align-center flex-column">
-                        <img src="~/assets/images/about_value2.jpg" class="" alt="Shavaz Logo" width="72" height="72" title="Shavaz values" />
-                        <h4 class="t14 text-grey-darken-2">پشتیبانی ۲۴ ساعته</h4>
-                    </div>
-                </v-col>
-
-                <v-col cols="6" sm="3">
-                    <div class="d-inline-flex align-center flex-column">
-                        <img src="~/assets/images/about_value3.jpg" class="" alt="Shavaz Logo" width="72" height="72" title="Shavaz values" />
-                        <h4 class="t14 text-grey-darken-2">ضمانت اصالت کالا</h4>
-                    </div>
-                </v-col>
-
-                <v-col cols="6" sm="3">
-                    <div class="d-inline-flex align-center flex-column">
-                        <img src="~/assets/images/about_value4.jpg" class="" alt="Shavaz Logo" width="72" height="72" title="Shavaz values" />
-                        <h4 class="t14 text-grey-darken-2">۷ روز ضمانت بازگشت کالا</h4>
-                    </div>
-                </v-col>
-            </v-row>
+            <generalAboutOurValues />
         </div>
 
         <div class="v-about__progress">

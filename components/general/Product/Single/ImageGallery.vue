@@ -1,7 +1,7 @@
 <template lang="">
 <div v-if="items && items.length" class="image-gallery">
-    <v-row class="ma-0 xs-hide">
-        <div class="pa-0 pl-3 image-gallery__thumbnail">
+    <v-row class="ma-0 xs-hide h-100">
+        <div class="pa-0 pl-3 image-gallery__thumbnail h-100">
             <div class="d-flex flex-column align-center">
                 <template v-if="items.length <= 5">
                     <div
@@ -34,17 +34,19 @@
             </div>
         </div>
 
-        <div class="pa-0 pr-3">
+        <div class="pa-0 pr-3  h-100">
             <div class="image-gallery__selected-image">
                 <div class="image-gallery__selected-image__icons d-flex align-center">
                     <v-icon
                         icon="mdi-share-variant-outline"
                         color="grey-lighten-1"
+                        @click="doCopy()"
                         size="small" />
 
                     <v-icon
                         icon="mdi-heart-outline"
                         color="grey-lighten-1"
+                        @click="addToFavorite()"
                         size="small" />
                 </div>
                 <img :src="imageAddress(selectedImage)" :alt="imageAlt" width="351" height="351">
@@ -58,11 +60,13 @@
                 <v-icon
                     icon="mdi-share-variant-outline"
                     color="grey-lighten-1"
+                    @click="doCopy()"
                     size="small" />
 
                 <v-icon
                     icon="mdi-heart-outline"
                     color="grey-lighten-1"
+                    @click="addToFavorite()"
                     size="small" />
             </div>
 
@@ -74,8 +78,8 @@
                     delay: 2500,
                     disableOnInteraction: false,
                 }">
-                <swiper-slide v-for="(item,index) in items" :key="index">
-                    <div @click="openModal()">
+                <swiper-slide v-for="(item,index) in items" :key="index" class="h-100">
+                    <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
                         <img :src="imageAddress(item.image_url)" :title="imageAlt" :alt="imageAlt" width="351" height="351" />
                     </div>
                 </swiper-slide>
@@ -179,6 +183,12 @@ import {
     Autoplay
 } from 'swiper/modules';
 
+// import copyText package
+import {
+    copyText
+} from 'vue3-clipboard'
+import { useRoute } from "vue-router";
+
 export default {
     data() {
         return {
@@ -205,6 +215,8 @@ export default {
     },
 
     setup(props) {
+        const route =useRoute()
+
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
         const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
 
@@ -225,6 +237,27 @@ export default {
             document.getElementById(`slider-thumbs-${index - 1}`).classList.add('active');
         };
 
+        /**
+         * Copy address
+         */
+         const doCopy = () => {
+            copyText(`https://shavaz.com${route.path}`, undefined, (error, event) => {
+                if (error) {
+                    useNuxtApp().$toast.error('کپی لینک با مشکل مواجه شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                } else {
+                    useNuxtApp().$toast.success('لینک  با موفقیت کپی شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+            })
+        }
+
         useHead({
             title,
             meta: [{
@@ -238,6 +271,7 @@ export default {
             setSwiperRef,
             slideTo,
             modules: [FreeMode, Navigation, Pagination, Autoplay],
+            doCopy
         };
 
     },

@@ -1,7 +1,7 @@
 <template>
 <section class="section8-slider section8-slider--mobile" v-if="items && items.length">
-    <header class="text-right t20 text-grey-darken-1 py-4 w500">
-        پرفروش‌ترین محصولات
+    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+        {{ title }}
     </header>
 
     <swiper
@@ -9,6 +9,7 @@
         :slidesPerView="6"
         :spaceBetween="24"
         :modules="modules"
+        :navigation="navigation"
         :loop="true"
         :height="286" 
         :breakpoints="{
@@ -42,7 +43,7 @@
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
             <generalProductCard
                 :content="item"
-                :index="index + 1"
+                :index="hideIndex !== true ? `${index + 1}` : ''"
                 class="mb-4" />
         </swiper-slide>
     </swiper>
@@ -59,10 +60,12 @@ import {
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
 
 // import required modules
 import {
-    FreeMode
+    FreeMode,
+    Navigation
 } from 'swiper/modules';
 
 export default {
@@ -72,12 +75,27 @@ export default {
     },
 
     props: {
-        items: Array
+        /**
+         * product list
+         */
+        items: Array,
+        /**
+         * section title
+         */
+        title:String,
+        /**
+         * Hide index
+         */
+        hideIndex:Boolean,
+        /**
+         * Show navigation
+         */
+         navigation:Boolean
     },
 
     setup() {
         return {
-            modules: [FreeMode],
+            modules: [FreeMode,Navigation],
         };
     },
 
@@ -99,6 +117,23 @@ $parent:'section8-slider';
     .product-card {
         margin-bottom: 0 !important;
         height: 276px !important;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        border:1px solid #9E9E9E;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::after{
+            font-size: 17px !important;
+            color: #D72685 !important;
+        }
     }
 }
 </style>

@@ -2,6 +2,10 @@
 // Main style
 // ---------------------------------------------------- //
 
+html{
+    scroll-behavior: smooth;
+}
+
 html,
 html *,
 .v-locale--is-ltr {

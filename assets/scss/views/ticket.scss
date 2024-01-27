@@ -1,0 +1,48 @@
+//------------------------------------------------
+//  User tickets
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-ticket {
+    padding-bottom: 60px;
+    padding-top: 170px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    .ticket {
+        &__form {
+            &__item {
+                &--text-field {
+                    input {
+                        height: 42px !important;
+                    }
+
+                    .v-field__input {
+                        font-size: 13px !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &__info-card{
+        @include gbp (0, 768) {
+            flex-direction: column !important;
+            padding-bottom: 30px !important;
+            border: 0 !important;
+            border-bottom:1px solid #e0e0e0 !important;
+            border-radius: 0 !important;
+
+            > div{
+                margin: 10px 0;
+            }
+
+            h1,h2{
+                text-align: center !important;
+            }
+        }
+    }
+}

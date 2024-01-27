@@ -1,10 +1,10 @@
 <template>
-  <main class="v-order v-order--list">
+<main class="v-order v-order--list">
     <header class="v-user__mobile-page-head xs-show">
-      <a href="/user/dashboard" class="ml-3">
-        <v-icon icon="mdi-arrow-right" color="grey-darken-3"/>
-      </a>
-      <span class="grey-darken-3 t14">لیست سفارشات</span>
+        <a href="/user/dashboard" class="ml-3">
+            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        </a>
+        <span class="grey-darken-3 t14">لیست سفارشات</span>
     </header>
 
     <v-container>
@@ -148,11 +148,11 @@
                 </div>
 
                 <div class="order-tab__content" id="order-tab__content-5">
-                  <template v-if="allOrdersMac && allOrdersMac.length">
+                  <template v-if="userReturnedOrderList && userReturnedOrderList.length">
                     <generalOrdersOrderRow
-                        v-for="(item, index) in allOrdersMac"
+                        v-for="(order, index) in userReturnedOrderList"
                         :key="`all-order${index}`"
-                        :content="item"/>
+                        :content="order.id"/>
                   </template>
                   <template v-else>
                     <div class="d-flex flex-column justify-center align-center pt-15">
@@ -174,113 +174,108 @@
         </div>
       </v-row>
     </v-container>
-  </main>
+</main>
 </template>
 
 <script>
 import Order from '@/composables/Order.js'
 
-export default {
-  data() {
-    return {
-      tab: null,
-      allOrders: [],
 
+  export default {
+    setup() {
+      const title = ref('فروشگاه اینترنتی شاواز | لیست سفارشات من')
+      const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
+      const {getOrderList, orderList , getReturnedOrderList , returnedOrderList} = new Order()
+      useHead({
+        title,
+        meta: [{
+          name: 'description',
+          content: description
+        }]
+      })
+      return {getOrderList, orderList , getReturnedOrderList , returnedOrderList}
+    },
+
+    methods: {
+      /**
+       * Order tab
+       * @param {*} id
+       */
+      showTab(id) {
+        const orderTab = this.$refs['orderRef'];
+
+        const liItems = orderTab.querySelectorAll('div.order-tab__item');
+        const tabContents = orderTab.querySelectorAll('div.order-tab__content');
+
+        liItems.forEach(item => {
+          item.classList.remove('active');
+          orderTab.querySelector(`#order-tab__item-${id}`).classList.add('active');
+        });
+
+        tabContents.forEach(item => {
+          item.classList.remove('active');
+          orderTab.querySelector(`#order-tab__content-${id}`).classList.add('active');
+        });
+      }
+    },
+
+    computed:{
+      /** user returned Order list **/
+      userReturnedOrderList(){
+        try {
+          return this.returnedOrderList?.data?.data?.data
+        }
+        catch (e) {
+          return []
+        }
+      },
+      /** user order list **/
+      userOrders(){
+        try {
+          return this.orderList?.data?.data?.data
+        }
+        catch (e) {
+          return []
+        }
+      },
+
+      /** pre_progress order list **/
+      preProgressOrder(){
+        try {
+          const preProgress =  this.userOrders.filter(order => order.status === 'pre_progress')
+          if (preProgress.length) return preProgress
+        }
+        catch (e){
+          return []
+        }
+      },
+      /** pre_progress order list **/
+      sendingOrder(){
+        try {
+          const sendingOrder =  this.userOrders.filter(order => order.status === 'sending')
+          if (sendingOrder.length) return sendingOrder
+        }
+        catch (e){
+          return []
+        }
+      },
+      /** pre_progress order list **/
+      receivedOrder(){
+        try {
+          const receivedOrder =  this.userOrders.filter(order => order.status === 'received')
+          if (receivedOrder.length) return receivedOrder
+        }
+        catch (e){
+          return []
+        }
+      },
+    },
+
+    beforeMount() {
+      this.getOrderList()
+      this.getReturnedOrderList()
     }
-  },
-  setup() {
-    const title = ref('فروشگاه اینترنتی شاواز | لیست سفارشات من')
-    const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
-    const {getOrderList, orderList , getReturnedOrderList , returnedOrderList} = new Order()
-    useHead({
-      title,
-      meta: [{
-        name: 'description',
-        content: description
-      }]
-    })
-    return {getOrderList, orderList , getReturnedOrderList , returnedOrderList}
-  },
 
-  methods: {
-    /**
-     * Order tab
-     * @param {*} id
-     */
-    showTab(id) {
-      const orderTab = this.$refs['orderRef'];
-
-      const liItems = orderTab.querySelectorAll('div.order-tab__item');
-      const tabContents = orderTab.querySelectorAll('div.order-tab__content');
-
-      liItems.forEach(item => {
-        item.classList.remove('active');
-        orderTab.querySelector(`#order-tab__item-${id}`).classList.add('active');
-      });
-
-      tabContents.forEach(item => {
-        item.classList.remove('active');
-        orderTab.querySelector(`#order-tab__content-${id}`).classList.add('active');
-      });
-    }
-  },
-
-  computed:{
-    /** user returned Order list **/
-    userReturnedOrderList(){
-      try {
-        return this.returnedOrderList?.data?.data?.data
-      }
-      catch (e) {
-        return []
-      }
-    },
-    /** user order list **/
-    userOrders(){
-      try {
-        return this.orderList?.data?.data?.data
-      }
-      catch (e) {
-        return []
-      }
-    },
-
-    /** pre_progress order list **/
-    preProgressOrder(){
-      try {
-        const preProgress =  this.userOrders.filter(order => order.status === 'pre_progress')
-        if (preProgress.length) return preProgress
-      }
-      catch (e){
-        return []
-      }
-    },
-    /** pre_progress order list **/
-    sendingOrder(){
-      try {
-        const sendingOrder =  this.userOrders.filter(order => order.status === 'sending')
-        if (sendingOrder.length) return sendingOrder
-      }
-      catch (e){
-        return []
-      }
-    },
-    /** pre_progress order list **/
-    receivedOrder(){
-      try {
-        const receivedOrder =  this.userOrders.filter(order => order.status === 'received')
-        if (receivedOrder.length) return receivedOrder
-      }
-      catch (e){
-        return []
-      }
-    },
-  },
-
-  beforeMount() {
-    this.getOrderList()
-    this.getReturnedOrderList()
-  }
 }
 </script>
 

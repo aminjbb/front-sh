@@ -1,7 +1,7 @@
 <template lang="">
 <div v-if="items && items.length" class="product-category-slider">
     <header class="t20 w400 text-grey-darken-3 mb-4">
-        خرید بر اساس دسته‌بندی
+        خرید بر اساس محصول
     </header>
 
     <div class="product-category-slider__swiper">

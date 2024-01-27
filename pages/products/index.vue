@@ -1,7 +1,7 @@
 <template lang="">
 <main class="v-product v-product--list">
     <h1 class="v-hide">{{title}}</h1>
-    
+
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
 
@@ -10,11 +10,10 @@
         <v-row class="mt-10">
             <v-col cols="12" md="3">
                 <generalProductFilterSideBar
-                    :categories="categoryListMocket"
-                    :brands="brandsMocket"
-                    @selectByCategory="selectByCategory"
-                    @selectByBrands="selectByBrands"
-                    @changeStatus="showAvailableItems"
+                    :filterList="filtersMocket"
+                    @listFiltersModal="listFiltersModal"
+                    @selectFiltersModal="selectFiltersModal"
+                    @switchFiltersModal="switchFiltersModal"
                     @setAmount="selectByAmount" />
             </v-col>
             <v-col cols="12" md="9">
@@ -33,9 +32,6 @@
                             <li class="t14 w400 text-grey px-4" @click="biggestDiscount()">بیشترین تخفیف</li>
                         </ul>
                     </nav>
-                    <div class="t14 w400 text-grey number-font">
-                        {{splitChar(productList.length)}} کالا
-                    </div>
                 </div>
 
                 <div class="v-product__contents mt-6">
@@ -45,9 +41,12 @@
                             md="3"
                             v-for="(item, index) in productListMocket"
                             :key="`card-${index}`"
-                            class="v-product__content"
-                            >
-                            <generalProductCard :content="item" class="mb-4" :hideInfo="true"/>
+                            class="v-product__content d-flex">
+                            <generalProductCard
+                                :content="item"
+                                class="mb-4 flex-grow-1"
+                                :hideInfo="true"
+                                :showColors="true" />
                         </v-col>
                     </v-row>
                 </div>
@@ -63,7 +62,6 @@
                 </div>
             </v-col>
         </v-row>
-
     </v-container>
 </main>
 </template>
@@ -89,7 +87,98 @@ export default {
                     label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
                     customer_price: '269900',
                     site_price: '184030',
-                    discount:'30%'
+                    discount: '30%',
+                    colors: [{
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#000000',
+                            label: 'مشکی',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                    ]
+                },
+                {
+                    image: 'category.jpg',
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
+                    customer_price: '269900',
+                    site_price: '184030',
+                    colors: [{
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                        {
+                            code: '#C90000',
+                            label: 'قرمز',
+                        },
+                    ]
+                }, {
+                    image: 'category.jpg',
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
+                    customer_price: '269900',
+                    site_price: '184030',
+                },
+                {
+                    image: 'category.jpg',
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
+                    customer_price: '269900',
+                    site_price: '184030',
+                    discount: '30%'
+                },
+                {
+                    image: 'category.jpg',
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
+                    customer_price: '269900',
+                    site_price: '184030',
+                },
+                {
+                    image: 'category.jpg',
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
+                    customer_price: '269900',
+                    site_price: '184030',
+                },
+                {
+                    image: 'category.jpg',
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
+                    customer_price: '269900',
+                    site_price: '184030',
+                    discount: '30%'
                 },
                 {
                     image: 'category.jpg',
@@ -107,44 +196,7 @@ export default {
                     label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
                     customer_price: '269900',
                     site_price: '184030',
-                    discount:'30%'
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                    discount:'30%'
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                }, {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                    discount:'30%'
+                    discount: '30%'
                 }
             ],
             categoryList: [],
@@ -210,51 +262,133 @@ export default {
                     }
                 }
             ],
-            brands: [],
-            brandsMocket: [{
-                    label: 'آموتیا',
-                    name: 'Amutiya',
-                    id: '1'
+            filters: [],
+            filtersMocket: [{
+                    id: 1,
+                    type: 'list',
+                    label: 'دسته‌بندی',
+                    name: 'category',
+                    values: [{
+                            title: 'کرم پودر',
+                            image: {
+                                image_url: 'category.jpg'
+                            },
+                            id: '1'
+                        },
+                        {
+                            title: 'پرایمر',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'کانتور و هایلایتر',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'پنکیک',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'برنزکننده',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'رژگونه',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'کانسیلر',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'پنکیک',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'برنزکننده',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        },
+                        {
+                            title: 'رژگونه',
+                            image: {
+                                image_url: 'category.jpg'
+                            }
+                        }
+                    ]
                 },
                 {
-                    label: 'استی لودر',
-                    name: 'Estee lauder',
-                    id: '2'
+                    id: 2,
+                    label: 'فقط کالاهای موجود',
+                    type: 'switch',
+                    name: 'avalabel',
+                    values: 'availabel_items'
                 },
                 {
-                    label: 'اسنس',
-                    name: 'Essence',
-                    id: '3'
-                },
-                {
-                    label: 'بورژوا',
-                    name: 'Bourjois',
-                    id: '4'
-                },
-                {
-                    label: 'پریم',
-                    name: 'Prime',
-                    id: '5'
-                },
-                {
-                    label: 'دوسه',
-                    name: 'Doucce',
-                    id: '6'
-                },
-                {
-                    label: 'سینره',
-                    name: 'Cinere',
-                    id: '7'
-                },
-                {
-                    label: 'دیور',
-                    name: 'dior',
-                    id: '8'
-                },
-                {
-                    label: 'فلورما',
-                    name: 'flormar',
-                    id: '9'
+                    id: 3,
+                    label: 'برند',
+                    type: 'select',
+                    name: 'brands',
+                    values: [{
+                            label: 'آموتیا',
+                            name: 'Amutiya',
+                            id: '1'
+                        },
+                        {
+                            label: 'استی لودر',
+                            name: 'Estee lauder',
+                            id: '2'
+                        },
+                        {
+                            label: 'اسنس',
+                            name: 'Essence',
+                            id: '3'
+                        },
+                        {
+                            label: 'بورژوا',
+                            name: 'Bourjois',
+                            id: '4'
+                        },
+                        {
+                            label: 'پریم',
+                            name: 'Prime',
+                            id: '5'
+                        },
+                        {
+                            label: 'دوسه',
+                            name: 'Doucce',
+                            id: '6'
+                        },
+                        {
+                            label: 'سینره',
+                            name: 'Cinere',
+                            id: '7'
+                        },
+                        {
+                            label: 'دیور',
+                            name: 'dior',
+                            id: '8'
+                        },
+                        {
+                            label: 'فلورما',
+                            name: 'flormar',
+                            id: '9'
+                        },
+                    ]
                 },
             ]
         }
@@ -276,33 +410,33 @@ export default {
 
     methods: {
         /**
-         * Filter productList by category id
-         * @param {*} categoryId 
+         * Filter productList by list type items
+         * @param {*} array 
          */
-        selectByCategory(categoryId) {
-            console.log("🚀 ~ selectCategory ~ categoryId:", categoryId);
+        listFiltersModal(array) {
+            console.log("🚀 ~ listFiltersModal:", arr);
 
             //TODO: Add filter for 'productList'
         },
 
         /**
-         * Filter productList by brands list
+         * Filter productList by select type items
          * @param {*} brands 
          */
-        selectByBrands(brands) {
-            console.log("🚀 ~ selectByBrands ~ brands:", brands);
+        selectFiltersModal(array) {
+            console.log("🚀 ~ selectFiltersModal:", array);
 
             //TODO: Add filter for 'productList' by brands
         },
 
         /**
-         * Show available items
+         * Filter productList by switch type items
          * @param {*} status 
          */
-        showAvailableItems(status) {
-            console.log("🚀 ~ status:", status);
+        switchFiltersModal(array) {
+            console.log("🚀 ~ switchFiltersModal:", array);
 
-            //TODO: filter by available items
+            //TODO: filter by switch items like available
         },
 
         /**
