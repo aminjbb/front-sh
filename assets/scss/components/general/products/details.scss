@@ -42,15 +42,16 @@
 
                 .v-icon.mdi-check{
                     position: absolute;
-                    top: 5px;
-                    right: 5px;
+                    top: 3px;
+                    right: 4px;
                     display: none;
+                    font-size: 13px;
                 }
 
-                .colors-pallet__selected{
+                &--selected{
+                    border-color:#9E9E9E !important;
                     .mdi-check{
-                        display: block;
-                        border-color:#9E9E9E;
+                        display: block !important;
                     }
 
                     .colors-pallet__item__label{
