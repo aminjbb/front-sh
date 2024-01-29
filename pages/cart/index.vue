@@ -1,15 +1,153 @@
 <template lang="">
-    <main class="v-cart">
-        <v-container>
-            
-        </v-container>
-    </main>
+<main class="v-cart">
+    <h1 class="ov-h h-0">سبد خرید </h1>
+    <header class="v-user__mobile-page-head xs-show">
+        <a href="/user/dashboard" class="ml-3">
+            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        </a>
+        <span class="grey-darken-3 t14 number-font">سبد خرید ({{skuCount}} کالا)</span>
+    </header>
+
+    <v-container class="pt-0">
+        <template v-if="skuCount === 0">
+            <generalCartEmpty :count="skuCount" :products="suggestProductsMoc" />
+        </template>
+
+        <template v-else>
+            <template v-if="screenType === 'desktop'">
+                <desktopCartStepper :data="productsMoc" />
+            </template>
+            <template v-if="screenType === 'mobile'"></template>
+        </template>
+    </v-container>
+</main>
 </template>
+
 <script>
 export default {
-    
+    data() {
+        return {
+            skuCount: 1,
+            screenType: null,
+            suggestProducts: [],
+            suggestProductsMoc: [{
+                    image: {
+                        image_url: 'products.jpg'
+                    },
+                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر'
+                },
+                {
+                    image: {
+                        image_url: 'products.jpg'
+                    },
+                    label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
+                },
+                {
+                    image: {
+                        image_url: 'products.jpg'
+                    },
+                    label: 'کرم نرم کننده حاوی عصاره جوجوبا مای ظرفیت 150 میلی لیتر '
+                },
+                {
+                    image: {
+                        image_url: 'products.jpg'
+                    },
+                    label: 'مداد چشم گلدن رز مدل Dream کد 406'
+                },
+                {
+                    image: {
+                        image_url: 'products.jpg'
+                    },
+                    label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
+                },
+            ],
+            products: [],
+            productsMoc: {
+                "total_price": 4200000,
+                "paid_price": 3780000,
+                shps: [{
+                        image: {
+                            image_url: 'products.jpg',
+                        },
+                        label: 'ماسک مو فولیکا مدل Arginine B حجم 200 میلی لیتر به همراه شامپو مو فولیکا حجم 400 میلی لیتر و هدیه سرم براق کننده مو فولیکا مدل Detanglin حجم 200 میلی لیتر',
+                        color: {
+                            label: 'مشکی',
+                            code: '#000',
+                        },
+                        shopping_name: 'زیبارویان',
+                        customer_price: 184030,
+                        available: false,
+                        site_price: 269900,
+                        discount: 30,
+                        count: 2,
+                        status: 'change_price'
+                    },
+                    {
+                        image: {
+                            image_url: 'products.jpg',
+                        },
+                        label: 'شامپو تقویت کننده و ضد ریزش مو فولیکا',
+                        color: {
+                            label: 'مشکی',
+                            code: '#000',
+                        },
+                        shopping_name: 'زیبارویان',
+                        customer_price: 184030,
+                        available: true,
+                        site_price: 269900,
+                        discount: null,
+                        count: 2,
+                        status: 'change_price'
+                    },
+                    {
+                        image: {
+                            image_url: 'products.jpg',
+                        },
+                        label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه',
+                        color: {
+                            label: 'مشکی',
+                            code: '#000',
+                        },
+                        shopping_name: 'زیبارویان',
+                        customer_price: 184030,
+                        site_price: 269900,
+                        available: false,
+                        discount: 30,
+                        count: 0,
+                        status: null
+                    }
+                ]
+            }
+        }
+    },
+
+    setup(props) {
+        const title = ref('فروشگاه اینترنتی شاواز | سبد حرید')
+        const description = ref("سبد خرید شاواز ")
+
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
+
+        return {
+            title
+        }
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 }
 </script>
-<style lang="">
-    
+
+<style lang="scss">
+@import "~/assets/scss/tools/bp";
+@import '~/assets/scss/views/cart.scss';
 </style>

@@ -1,6 +1,6 @@
 <template lang="">
 <main class="v-user v-user--dashboard">
-    <h1 class="v-hide">{{title}}</h1>
+    <h1 class="ov-h h-0">ناحیه کاربری</h1>
 
     <v-container>
         <v-row>
