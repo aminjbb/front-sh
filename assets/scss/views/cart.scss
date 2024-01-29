@@ -1,0 +1,24 @@
+//------------------------------------------------
+//  Cart
+//------------------------------------------------
+
+.v-cart {
+    padding-bottom: 30px;
+    padding-top: 160px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+
+    .product-card--simple {
+        border-radius: 8px;
+        border: 1px solid var(--grey-grey-lighten-2, #E0E0E0);
+        height: 100%;
+
+        h3{
+            text-align: right !important;
+            font-variation-settings: "wght" 500 !important;
+        }
+    }
+}

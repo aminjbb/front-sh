@@ -1,5 +1,6 @@
 <template>
 <main class="v-user v-user--address">
+    <h1 class="ov-h h-0">آدرس های من </h1>
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
@@ -18,15 +19,21 @@
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide">
                         <span>آدرس‌های شما</span>
 
-                        <generalUserAddressModal :getUserAddress="getUserAddress" :userDetail="userDetail" :provinces="provinces" title="ثبت آدرس جدید" buttonType="text" />
+                        <generalUserAddressModal
+                            :getUserAddress="getUserAddress"
+                            :userDetail="userDetail"
+                            :provinces="provinces"
+                            title="ثبت آدرس جدید"
+                            buttonType="text" />
                     </header>
+                    
                     <generalUserAddressCard
                         :userDetail="userDetail"
                         :provinces="provinces"
                         :address="address"
                         v-for="(address , index) in userAddress"
                         :getUserAddress="getUserAddress"
-                        :key="`address${index}`"/>
+                        :key="`address${index}`" />
 
                     <div class="xs-show v-user--address__mobile-btn">
                         <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" />
@@ -72,29 +79,26 @@ export default {
             userToken
         }
     },
-    data(){
-      return{
-        userDetail:null
-      }
+
+    data() {
+        return {
+            userDetail: null
+        }
     },
+
     methods: {
-      /**
-       * fetch user data
-       */
-      async fetchUserProfile() {
-        try {
-          this.userDetail = await auth.getUserProfile(this.userToken)
-        } catch (error) {
-          // Handle errors
-        }
-      },
         /**
-         * Get address list
+         * fetch user data
          */
-        getAddressList() {
-            //TODO: Get address list from api
-        }
+        async fetchUserProfile() {
+            try {
+                this.userDetail = await auth.getUserProfile(this.userToken)
+            } catch (error) {
+                // Handle errors
+            }
+        },
     },
+
     beforeMount() {
         this.getUserAddress()
         this.getProvince()

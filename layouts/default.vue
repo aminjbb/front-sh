@@ -1,18 +1,20 @@
 <template>
-<div v-if="screenType !== null">
-    <template v-if="screenType === 'desktop'">
-        <desktopHeader />
-        <slot />
-        <div id="body-cover" />
-        <desktopFooter />
-    </template>
+<v-app>
+    <div v-if="screenType !== null">
+        <template v-if="screenType === 'desktop'">
+            <desktopHeader />
+            <slot />
+            <div id="body-cover" />
+            <desktopFooter />
+        </template>
 
-    <template v-else-if="screenType === 'mobile'">
-        <mobileHeader />
-        <slot />
-        <mobileFooter />
-    </template>
-</div>
+        <template v-else-if="screenType === 'mobile'">
+            <mobileHeader />
+            <slot />
+            <mobileFooter />
+        </template>
+    </div>
+</v-app>
 </template>
 
 <script>

@@ -13,7 +13,8 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
-        width="564px">
+        width="564px"
+        :fullscreen="screenType === 'mobile'? true : false">
         <v-card class="pt-3 px-6 pb-5 c-modal--report">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
                 <span class="t15 w400">
@@ -80,6 +81,7 @@ export default {
 
     data() {
         return {
+            screenType: null,
             dialog: false,
             activeButton: false,
             description: null,
@@ -146,6 +148,13 @@ export default {
             });
             this.dialog = false;
         },
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
 }
 </script>
