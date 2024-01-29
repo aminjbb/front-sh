@@ -63,10 +63,10 @@ a {
 @include gbp(0, 768) {
     .v-overlay {
         &__content {
-            width: 100% !important;
-            max-width: 100% !important;
-            bottom: 0 !important;
-            margin: 0 !important;
+            /* width: 100% !important;
+            max-width: 100% !important; */
+            /* bottom: 0 !important; */
+            /* margin: 0 !important; */
 
             .v-card {
                 border-bottom-right-radius: 0 !important;

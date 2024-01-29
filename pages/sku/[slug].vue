@@ -17,6 +17,7 @@
                 cols="12"
                 lg="7">
                 <generalProductSingleDetails :content="contentMocket" />
+                
                 <template v-if="screenType !== null && screenType === 'desktop'">
                     <v-row class="v-product--single__border ma-0 px-1 mt-5">
                         <v-col md="7" lg="8">
@@ -133,41 +134,62 @@ export default {
                 colors: [{
                         code: '#A81199',
                         label: 'ارغوانی',
-                        id: 1
+                        id: 1,
+                        selected: true,
                     },
                     {
                         code: '#C90000',
                         label: 'آلبالویی',
-                        id: 2
+                        id: 2,
+                        selected: false
                     },
                     {
                         code: '#FFBBCF',
                         label: 'صورتی',
-                        id: 3
+                        id: 3,
+                        selected: false
                     },
                     {
                         code: '#FD4A4A',
                         label: 'نارنجی',
-                        id: 4
+                        id: 4,
+                        selected: false
                     },
                     {
                         code: '#AA483B',
                         label: 'قهوه ای',
-                        id: 5
+                        id: 5,
+                        selected: false
                     },
                     {
                         code: '#FFE4E4',
                         label: 'نود',
-                        id: 6
+                        id: 6,
+                        selected: false
                     }
                 ],
                 titleAttrs: [{
-                        type: 'سازگار با پوست',
-                        value: 'معمولی'
+                        id: 1,
+                        name: 'sazgar',
+                        label: 'سازگار با پوست',
+                        values: [{
+                                label: 'چرب',
+                                id: 12
+                            },
+                            {
+                                label: 'خشک',
+                                id: 10
+                            }
+                        ]
                     },
                     {
-                        type: 'جلوه رنگ',
-                        value: 'مات'
+                        id: 1,
+                        name: 'jelveh',
+                        label: 'جلوه رنگ',
+                        values: [{
+                            label:'مات',
+                            id:15
+                        }]
                     }
                 ],
                 descAttrs: [{
@@ -201,7 +223,7 @@ export default {
                         discount: null,
                         customer_price: 289300,
                         site_price: null,
-                        count : 0,
+                        count: 0,
                     },
                     {
                         name: 'شاواز',
@@ -209,7 +231,7 @@ export default {
                         discount: null,
                         customer_price: 291000,
                         site_price: null,
-                        count:100,
+                        count: 100,
                     }
                 ],
                 details: {

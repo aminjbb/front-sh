@@ -46,13 +46,12 @@
                     :key="`product-single-color${index}`"
                     :id="`color--${color.id}`"
                     @click="selectColor(color.id)">
-                    <div class="colors-pallet__item__code ml-1">
+                    <div class="colors-pallet__item__code ml-1" :class="color.selected === true ? 'colors-pallet__item__code--selected' : ''">
                         <span :style="{backgroundColor: color.code}" />
                         <v-icon
                             icon="mdi-check"
                             size="x-small"
-                            color="white"
-                            class="colors-pallet__selected" />
+                            color="white" />
                     </div>
 
                     <span class="colors-pallet__item__label t12 w500 text-grey">
@@ -69,9 +68,31 @@
 
     <nav class="attribute-list">
         <ul class="ma-0 pa-0 pr-5">
-            <li v-for="attr in content.titleAttrs">
-                <span class="t13 w400 text-grey">{{attr.type}}: </span>
-                <span class="t13 w400 text-grey-darken-1">{{attr.value}}</span>
+            <li
+                v-for="attr in content.titleAttrs"
+                class="d-flex align-center"
+                :class="attr.values.length >1 ? 'mb-2' : ''">
+                <span class="t13 w400 text-grey" :class="attr.values.length >1 ? 'ml-2' : 'ml-1'">{{attr.label}}: </span>
+                <template v-if="attr.values.length == '1'">
+                    <span class="t13 w400 text-grey-darken-1">{{attr.values[0].label}}</span>
+                </template>
+                <template v-else>
+                    <div class="attr-select">
+                        <ClientOnly>
+                            <v-select
+                                height="30"
+                                density="compact"
+                                variant="underlined"
+                                single-line
+                                item-title="label"
+                                item-value="id"
+                                hide-details
+                                :items="attr.values"
+                                v-model="selectedAttr"
+                                @update:modelValue="selectAttr()" />
+                        </ClientOnly>
+                    </div>
+                </template>
             </li>
         </ul>
     </nav>
@@ -85,6 +106,7 @@ export default {
         return {
             formattedTime: '00:00:00',
             targetDate: '2024-01-23 23:59:00',
+            selectedAttr: null,
         }
     },
     props: {
@@ -145,6 +167,15 @@ export default {
 
                 this.formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
             }, 1000);
+        },
+
+        selectColor(id) {
+            console.log("🚀 ~ selectColor ~ id:", id)
+            //TODO: write method for selected color
+        },
+
+        selectAttr() {
+            console.log("🚀 ~ selectAttr ~ selectedAttr:", this.selectedAttr)
         }
     },
 
@@ -157,4 +188,18 @@ export default {
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 @import '~/assets/scss/components/general/products/details.scss';
+
+.attr-select {
+    width: 150px;
+
+    .v-field__input {
+        min-height: 37px;
+        padding: 0 10px !important;
+    }
+
+    .v-select__selection-text {
+        font-size: 13px;
+        color: #616161 !important
+    }
+}
 </style>
