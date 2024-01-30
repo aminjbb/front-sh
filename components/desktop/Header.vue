@@ -37,7 +37,7 @@
 
                 <span class="header__item__sp"></span>
 
-                <a class="header__item">
+                <a class="header__item cur-p" @click="showHeaderBasket()">
                     <v-icon icon="mdi-cart-minus" />
                 </a>
             </div>
@@ -45,6 +45,8 @@
     </v-container>
     <desktopMenu />
 </header>
+
+<desktopHeaderBasket />
 </template>
 
 <script>
@@ -93,6 +95,14 @@ export default {
                 this.lastScrollTop = currentScrollTop;
             }
         },
+
+        /**
+         * show header basket modal
+         */
+        showHeaderBasket(){
+            document.getElementById('basket-header').classList.add('show');
+            document.body.classList.add('active-basket');
+        }
     },
 };
 </script>

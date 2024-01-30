@@ -10,7 +10,7 @@
     </header>
 
     <div>
-        <generalCartProductCard
+        <desktopCartProductCard
             v-if="productList && productList.shps.length"
             v-for="(product, index) in productList.shps"
             :key="`product${index}`"
