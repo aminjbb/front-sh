@@ -1,5 +1,5 @@
 <template>
-<a v-if="content" class="product-card pa-2" :href="content.link">
+<a v-if="content" class="product-card pa-2" :href="`/sku/asdasdasd`">
     <div v-if="index" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>

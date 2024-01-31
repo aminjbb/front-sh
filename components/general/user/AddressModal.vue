@@ -82,134 +82,136 @@
 
         <template v-if="step === '2'">
           <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
+          <v-form v-model="valid" ref="addAddress">
 
-          <div>
-            <v-text-field
-                density="compact"
-                variant="outlined"
-                label="آدرس پستی *"
-                hide-details
-                :rules="rule"
-                :append-inner-icon="rules ? 'mdi-check' : ''"
-                v-model="form.address"/>
+            <div>
+              <v-text-field
+                  density="compact"
+                  variant="outlined"
+                  label="آدرس پستی *"
+                  hide-details
+                  :rules="rule"
+                  :append-inner-icon="rules ? 'mdi-check' : ''"
+                  v-model="form.address"/>
 
-            <span class="t11 w400 text-grey mt-2 d-block">
+              <span class="t11 w400 text-grey mt-2 d-block">
                         آدرس پستی پیشفرض بر اساس موقعیت مکانی انتخابی شما وارد شده است و قابلیت ویرایش دارد.
                     </span>
-          </div>
+            </div>
 
-          <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">
-            <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>
-            <v-icon
-                icon="mdi-chevron-left"
-                color="deep-purple"
-                class="mr-2 t16"/>
-          </a>
+            <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">
+              <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>
+              <v-icon
+                  icon="mdi-chevron-left"
+                  color="deep-purple"
+                  class="mr-2 t16"/>
+            </a>
 
-          <v-row>
-            <v-col cols="12" md="6">
+            <v-row>
+              <v-col cols="12" md="6">
 
-              <v-autocomplete
-                  :items="provinceList"
-                  density="compact"
-                  variant="outlined"
-                  :rules="rule"
-                  label="استان *"
-                  v-model="form.province"
-                  @update:modelValue="getCitiesList()"/>
-            </v-col>
+                <v-autocomplete
+                    :items="provinceList"
+                    density="compact"
+                    variant="outlined"
+                    :rules="rule"
+                    label="استان *"
+                    v-model="form.province"
+                    @update:modelValue="getCitiesList()"/>
+              </v-col>
 
-            <v-col cols="12" md="6">
-              <v-autocomplete
-                  :items="cityList"
-                  density="compact"
-                  variant="outlined"
-                  :rules="rule"
-                  label="شهر *"
-                  v-model="form.city"/>
-            </v-col>
+              <v-col cols="12" md="6">
+                <v-autocomplete
+                    :items="cityList"
+                    density="compact"
+                    variant="outlined"
+                    :rules="rule"
+                    label="شهر *"
+                    v-model="form.city"/>
+              </v-col>
 
-            <v-col cols="12" md="4">
-              <v-text-field
-                  density="compact"
-                  variant="outlined"
-                  label="کد پستی *"
-                  :rules="postalCodeRule"
-                  :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.postal_code"/>
-            </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                    density="compact"
+                    variant="outlined"
+                    label="کد پستی *"
+                    :rules="postalCodeRule"
+                    :append-inner-icon="rules ? 'mdi-check' : ''"
+                    v-model="form.postal_code"/>
+              </v-col>
 
-            <v-col cols="12" md="4">
-              <v-text-field
-                  density="compact"
-                  variant="outlined"
-                  label="پلاک *"
-                  :rules="rule"
-                  :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.number"/>
-            </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                    density="compact"
+                    variant="outlined"
+                    label="پلاک *"
+                    :rules="rule"
+                    :append-inner-icon="rules ? 'mdi-check' : ''"
+                    v-model="form.number"/>
+              </v-col>
 
-            <v-col cols="12" md="4">
-              <v-text-field
-                  density="compact"
-                  variant="outlined"
-                  label="واحد"
-                  :rules="rule"
-                  :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.room_number"/>
-            </v-col>
-          </v-row>
+              <v-col cols="12" md="4">
+                <v-text-field
+                    density="compact"
+                    variant="outlined"
+                    label="واحد"
+                    :rules="rule"
+                    :append-inner-icon="rules ? 'mdi-check' : ''"
+                    v-model="form.room_number"/>
+              </v-col>
+            </v-row>
 
-          <div class="c-modal--address__receiver">
-            <v-checkbox
-                label="گیرنده سفارش خودم نیستم"
-                hide-details
-                v-model="newReceiver"/>
+            <div class="c-modal--address__receiver">
+              <v-checkbox
+                  label="گیرنده سفارش خودم نیستم"
+                  hide-details
+                  v-model="newReceiver"/>
 
-            <template v-if="newReceiver">
-              <v-row>
-                <v-col cols="12" md="4">
-                  <v-text-field
-                      density="compact"
-                      variant="outlined"
-                      label="نام گیرنده *"
-                      :rules="persianRule"
-                      :append-inner-icon="rules ? 'mdi-check' : ''"
-                      v-model="form.first_name"/>
-                </v-col>
+              <template v-if="newReceiver">
+                <v-row>
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                        density="compact"
+                        variant="outlined"
+                        label="نام گیرنده *"
+                        :rules="persianRule"
+                        :append-inner-icon="rules ? 'mdi-check' : ''"
+                        v-model="form.first_name"/>
+                  </v-col>
 
-                <v-col cols="12" md="4">
-                  <v-text-field
-                      density="compact"
-                      variant="outlined"
-                      label=" نام خانوادگی گیرنده *"
-                      :rules="persianRule"
-                      :append-inner-icon="rules ? 'mdi-check' : ''"
-                      v-model="form.last_name"/>
-                </v-col>
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                        density="compact"
+                        variant="outlined"
+                        label=" نام خانوادگی گیرنده *"
+                        :rules="persianRule"
+                        :append-inner-icon="rules ? 'mdi-check' : ''"
+                        v-model="form.last_name"/>
+                  </v-col>
 
-                <v-col cols="12" md="4">
-                  <v-text-field
-                      density="compact"
-                      variant="outlined"
-                      label="شماره تماس گیرنده *"
-                      :rules="mobileRule"
-                      :append-inner-icon="rules ? 'mdi-check' : ''"
-                      v-model="form.phone_number"/>
-                </v-col>
-              </v-row>
-            </template>
-          </div>
+                  <v-col cols="12" md="4">
+                    <v-text-field
+                        density="compact"
+                        variant="outlined"
+                        label="شماره تماس گیرنده *"
+                        :rules="mobileRule"
+                        :append-inner-icon="rules ? 'mdi-check' : ''"
+                        v-model="form.phone_number"/>
+                  </v-col>
+                </v-row>
+              </template>
+            </div>
 
-          <div class="d-flex justify-end">
-            <v-btn
-                :loading="loading"
-                class="btn btn--submit"
-                @click="addressFormDataGenerate()"
-                color="grey-darken-1">
-              ثبت آدرس
-            </v-btn>
-          </div>
+            <div class="d-flex justify-end">
+              <v-btn
+                  :loading="loading"
+                  class="btn btn--submit"
+                  @click="validate()"
+                  color="grey-darken-1">
+                ثبت آدرس
+              </v-btn>
+            </div>
+          </v-form>
         </template>
       </v-card>
     </v-dialog>
@@ -244,6 +246,7 @@ export default {
 
   data() {
     return {
+      valid:true,
       dialog: false,
       step: '1',
       form: {
@@ -314,8 +317,11 @@ export default {
   },
 
   methods: {
-
-    addressFormDataGenerate() {
+    async validate(){
+      await this.$refs.addAddress.validate()
+      if (this.valid) await this.addressFormDataGenerate()
+    },
+    async addressFormDataGenerate() {
       let endPoint = ''
       const formData = new FormData()
 
@@ -325,6 +331,8 @@ export default {
       formData.append('postal_code', this.form.postal_code)
       formData.append('number', this.form.number)
       formData.append('unit', this.form.room_number)
+      formData.append('lat', this.form.latLong.latitude)
+      formData.append('long', this.form.latLong.longitude)
 
       if (this.newReceiver) {
         formData.append('am_i', 0)
@@ -332,7 +340,6 @@ export default {
         formData.append('last_name', this.form.last_name)
         formData.append('phone_number', this.form.phone_number)
       } else {
-        console.log(this.userDetail)
         formData.append('am_i', 1)
         formData.append('first_name', this.userDetail?.data?.first_name)
         formData.append('last_name', this.userDetail?.data?.last_name)
@@ -431,7 +438,7 @@ export default {
         this.form.postal_code = this.address?.postal_code
         this.form.room_number = this.address?.unit
         this.form.province = this.address?.state?.id
-        this.getCities(this.address?.state?.id)
+        if (this.form.province)   this.getCities(this.address?.state?.id)
         this.form.city = this.address?.city?.id
         if (this.address?.am_i) this.newReceiver = false
         else this.newReceiver = true

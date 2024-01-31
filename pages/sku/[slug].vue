@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-product v-product--single">
     <h1 class="v-hide">{{title}}</h1>
 
@@ -83,7 +83,12 @@
 </template>
 
 <script>
+import PDP from '@/composables/PDP.js'
 export default {
+  setup(){
+    const {product ,color,getSecondaryData ,secondaryData} = new PDP()
+    return {product ,color,getSecondaryData ,secondaryData}
+  },
     data() {
         return {
             screenType: null,

@@ -73,6 +73,7 @@ export default {
     data() {
         return {
             dialog: false,
+            loading:false,
         }
     },
 
@@ -103,6 +104,7 @@ export default {
         },
 
         removeProduct() {
+            this.loading =true
             this.$emit('removeProduct');
         },
     },
