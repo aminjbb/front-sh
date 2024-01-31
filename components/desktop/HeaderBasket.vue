@@ -21,8 +21,8 @@
     <template v-if="dataMoc?.shps && dataMoc?.shps.length">
         <div class="header-basket__content header-basket__content--no-empty">
             <div>
-                <template v-for="(item, index) in dataMoc.shps" :key="`header-product${index}`">
-                    <mobileCartProductCard :content="item" />
+                <template v-for="(item, index) in dataMoc.shps" :key="`header-product${index}`" >
+                    <mobileCartProductCard :content="item" noSeller/>
 
                     <v-divider v-if="index + 1 < dataMoc.shps.length" color="grey" />
                 </template>

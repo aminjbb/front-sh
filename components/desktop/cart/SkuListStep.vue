@@ -1,12 +1,20 @@
 <template lang="">
 <v-card class="pa-5 mobile-pa-0 mobile-no-border">
-    <header class="d-flex align-center mb-5 xs-hide">
+    <header class="d-flex align-center justify-space-between mb-5 xs-hide">
+        <div class="d-flex align-center">
+            <v-icon
+                icon="mdi-cart-outline"
+                color="primary"
+                size="small"
+                class="ml-2" />
+            <span class="number-font t16 w400 text-grey-darken-3">سبد خرید ({{count}} کالا) </span>
+        </div>
+
         <v-icon
-            icon="mdi-cart-outline"
-            color="primary"
-            size="small"
-            class="ml-2" />
-        <span class="number-font t16 w400 text-grey-darken-3">سبد خرید ({{count}} کالا) </span>
+            icon="mdi-trash-can-outline"
+            color="grey"
+            @click="deleteAllOrders()"
+            size="small" />
     </header>
 
     <div>
@@ -30,8 +38,16 @@ export default {
         /**
          * Product list
          */
-        productList:Array,
+        productList: Array,
+    },
+
+    methods:{
+        /**
+         * Delete all orders
+         */
+        deleteAllOrders(){
+            //TODO: Write method
+        }
     }
 }
 </script>
-

@@ -19,8 +19,7 @@
         </v-col>
 
         <v-col
-            cols="12"
-            md="9"
+            cols="9"
             class="d-flex align-center product-card__details">
             <div v-if="content.image && content.image.image_url" class="product-card__image ml-5">
                 <img :src="/* content?.image?.image_url */imageAddress(content?.image?.image_url)" :title="content.label" :alt="content.label" width="100" height="100" />
@@ -54,8 +53,7 @@
             </div>
         </v-col>
         <v-col
-            cols="12"
-            md="3"
+            cols="3"
             class="d-flex product-card__price-info">
             <div>
                 <div class="product-card__product-count mb-3">
@@ -67,7 +65,7 @@
                         {{productCount}}
                     </span>
                     <v-icon
-                        icon="mdi-minus"
+                        :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'"
                         color="grey"
                         @click="decreaseCount()" />
                 </div>

@@ -24,10 +24,20 @@
                 </div>
             </div>
             <div class="header__col2 d-flex align-center justify-end">
-                <div class="header__item header__item--profile">
+                <div v-if="isLogin" class="header__item header__item--profile">
                     <v-icon icon="mdi-account-outline" />
                     <v-icon icon="mdi-chevron-down" />
+
+                    <nav class="header-profile-menu">
+                        <ul class="ma-0 pa-0">
+                            
+                        </ul>
+                    </nav>
                 </div>
+                <a v-else class="header__item header__item--btn t12 w400 text-grey" href="/login">
+                    <v-icon icon="mdi-login" color="grey" />
+                    ورود | ثبت نام
+                </a>
 
                 <span class="header__item__sp"></span>
 
@@ -60,6 +70,7 @@ export default {
             isFixed: true,
             isHidden: false,
             lastScrollTop: 0,
+            isLogin:true,
         };
     },
 
@@ -99,7 +110,7 @@ export default {
         /**
          * show header basket modal
          */
-        showHeaderBasket(){
+        showHeaderBasket() {
             document.getElementById('basket-header').classList.add('show');
             document.body.classList.add('active-basket');
         }
@@ -175,9 +186,15 @@ $parent: 'header';
                     align-items: flex-end;
                 }
 
-                .v-icon {
+                .v-icon:not(.mdi-login) {
                     color: #AEAEAE;
                     font-size: 23px;
+                }
+
+                &--btn {
+                    border-radius: 4px;
+                    border: 1px solid var(--grey-grey-lighten-1, #BDBDBD);
+                    padding: 4px 8px
                 }
 
                 &__sp {
