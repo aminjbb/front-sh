@@ -30,10 +30,10 @@
                 :items="desktopBanner2"
                 col="3" />
 
-            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات"/>
+            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9"/>
 
             <desktopHomeBanner
-                title="ایده هدیه"
+                :title="titleSection10"
                 :items="desktopBanner3"
                 col="3" />
 
@@ -41,7 +41,7 @@
                 setRef="tab2"
                 :items="responseDot(11)"
                 class="tab-slider2 mb-8"
-                title="جدید‌ترین محصولات"
+                :title="titleSection11"
                 componentName="generalProductMinimalCard"
                 contentWidth="100%"
                 wrapContent
@@ -51,7 +51,7 @@
 
             <template v-if="homeBlog && homeBlog.length">
                 <header class="t20 text-right text-grey-darken-2 pa-3 pb-5">
-                    پربازدیدترین مقالات
+                  {{titleSection13 }}
                 </header>
 
                 <v-row>
@@ -233,6 +233,36 @@ export default {
                 return []
             }
         },
+
+      titleSection10() {
+        try {
+          return this.responseDot(10)?.label
+        } catch (e) {
+          return ''
+        }
+      },
+      titleSection9() {
+        try {
+          return this.responseDot(9)?.label
+        } catch (e) {
+          return ''
+        }
+      },
+
+      titleSection11() {
+        try {
+          return this.responseDot(11)?.label
+        } catch (e) {
+          return ''
+        }
+      },
+      titleSection13() {
+        try {
+          return this.responseDot(13)?.label
+        } catch (e) {
+          return ''
+        }
+      },
 
         desktopBanner3() {
             try {
