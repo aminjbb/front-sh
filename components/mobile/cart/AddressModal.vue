@@ -15,10 +15,10 @@
         v-model="dialog"
         color="white"
         fullscreen>
-        <v-card class="pt-3 px-6 pb-5 c-modal--comment">
-            <header class="c-modal--comment__header d-flex justify-space-between align-center pb-1">
+        <v-card class="pt-2 pb-5 c-modal--comment">
+            <header class="c-modal--comment__header d-flex justify-space-between align-center pb-1 px-6">
                 <div class="d-flex flex-column c-modal--comment__header__title">
-                    <span class="t16 w400 mb-3">
+                    <span class="t16 w400 mb-1">
                         انتخاب آدرس
                     </span>
                 </div>
@@ -26,14 +26,14 @@
                 <v-btn
                     class="c-modal--comment__header__btn pa-0 text-none"
                     @click="closeModal()"
-                    color="grey-darken-1"
+                    color="grey-darken-3"
                     size="large"
                     variant="icon">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </header>
 
-            <div>
+            <div class="px-6">
                 <template v-for="(address , index) in addressMoc" :key="`address${index}`">
                     <div class="d-flex align-center justify-space-between">
                         <v-checkbox
@@ -56,7 +56,7 @@
                         class="my-3" />
                 </template>
 
-                <div class="xs-show v-user--address__mobile-btn">
+                <div class="xs-show v-user--address__mobile-btn mt-10">
                     <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" />
                 </div>
             </div>
@@ -166,3 +166,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.c-modal--comment__header {
+    background: var(--Shade-white, #FFF);
+    box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
+}
+</style>

@@ -32,7 +32,7 @@
                 </v-btn>
             </header>
 
-            <div class="px-6 ">
+            <div class="px-6">
                 <div class="cart-way-calendar  w-100 mt-3" :ref="`nafisRef-${key}`">
                     <div class="scroll--x">
                         <div class="d-flex align-center" style="width: 768px;">
@@ -160,7 +160,6 @@ export default {
         }
     }
 }
-
 .c-modal--comment__header {
     background: var(--Shade-white, #FFF);
     box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
