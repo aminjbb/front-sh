@@ -137,8 +137,8 @@ export default {
                   theme: 'dark'
                 });
               }).finally(() => {
-            this.loading = false
-            this.getUserAddress()
+              this.loading = false
+              this.getUserAddress()
           });
             //TODO: Add remove address api
             console.log('address', address);
