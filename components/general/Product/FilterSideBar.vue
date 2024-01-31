@@ -59,6 +59,7 @@
                 <span class="t14 w400 ml-5">حداقل</span>
 
                 <v-autocomplete
+
                     density="compact"
                     variant="outlined"
                     placeholder="مثلا 10,000"

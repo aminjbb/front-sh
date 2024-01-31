@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <main class="v-product v-product--list">
     <h1 class="v-hide">{{title}}</h1>
 
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import PLP from '@/composables/PLP.js'
 export default {
     data() {
         return {
@@ -397,7 +398,7 @@ export default {
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
         const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
-
+        const {productList, filterQuery, page , getSecondaryData ,secondaryData} = new PLP()
         useHead({
             title,
             meta: [{
@@ -405,7 +406,7 @@ export default {
                 content: description
             }]
         });
-
+      return {productList, filterQuery, page , getSecondaryData , secondaryData}
     },
 
     methods: {
@@ -449,6 +450,9 @@ export default {
             //TODO: filter by available items
         }
     },
+  beforeMount() {
+    this.getSecondaryData()
+  }
 }
 </script>
 
