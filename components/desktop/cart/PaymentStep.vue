@@ -1,6 +1,6 @@
 <template lang="">
 <v-card class="pa-5 mobile-pa-0 mobile-no-border ov-v">
-    <header class="d-flex align-center mb-5 xs-hide">
+    <header class="d-flex align-center mb-5">
         <v-icon
             icon="mdi-credit-card-outline"
             color="primary"
@@ -11,7 +11,6 @@
 
     <div>
         <template v-for="(payment , index) in paymentTypeListMoc" :key="`payment${index}`">
-
             <div class="d-flex align-center justify-space-between flex-grow-1">
                 <div>
                     <div class="d-flex align-center">
@@ -52,8 +51,10 @@
     </div>
 </v-card>
 
+<v-divider class="xs-show" color="grey-lighten-1" />
+
 <v-card class="pa-5 mobile-pa-0 mobile-no-border discount-code">
-    <header class="d-flex align-center mb-5 xs-hide">
+    <header class="d-flex align-center mb-5">
         <v-icon
             icon="mdi-sale-outline"
             color="primary"
@@ -65,7 +66,7 @@
     <div>
         <p class="t12 w400 text-grey mb-3">برای هر خرید، امکان اعمال تنها یک کد تخفیف می‌باشد.</p>
         <v-row>
-            <v-col md="9" lg="10">
+            <v-col cols="8" md="9" lg="10">
                 <v-text-field
                     color="grey-lighten-3"
                     density="compact"
@@ -75,7 +76,7 @@
                     single-line />
                     <p class="t12 w400 text-danger my-2">{{discountError}}</p>
             </v-col>
-            <v-col md="3" lg="2">
+            <v-col cols="4" md="3" lg="2">
                 <v-btn
                     @click="setDiscountCode()"
                     height="44"

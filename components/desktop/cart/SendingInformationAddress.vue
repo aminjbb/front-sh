@@ -121,7 +121,6 @@ export default {
         selectAddress(){
             this.$emit('selectedAddress', this.addressModal);
         }
-            
     },
 
     beforeMount() {

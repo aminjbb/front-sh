@@ -3,7 +3,7 @@
     <nav class="footer__menu h-100 w-100">
         <ul class="ma-0 pa-0 d-flex justify-space-between align-center h-100">
             <li class="footer__menu__item">
-                <a>
+                <a href="/" :class="{ active: isActive('/') }">
                     <v-icon icon="mdi-home-outline" />
                     <span class="t12 w-400">خانه</span>
                 </a>
@@ -24,16 +24,22 @@
             </li>
 
             <li class="footer__menu__item">
-                <a>
+                <a href="/cart" :class="{ active: isActive('/cart') }">
                     <v-icon icon="mdi-cart-outline" />
                     <span class="t12 w-400">سبد خرید</span>
                 </a>
             </li>
 
-            <li class="footer__menu__item">
-                <a href="/user">
+            <li v-if="isLogin" class="footer__menu__item">
+                <a href="/user/dashboard" :class="{ active: isActive('/user/dashboard') }">
                     <v-icon icon="mdi-account-outline" />
                     <span class="t12 w-400">حساب کاربری</span>
+                </a>
+            </li>
+            <li v-else class="footer__menu__item">
+                <a href="/login" :class="{ active: isActive('/login') }">
+                    <v-icon icon="mdi-login" />
+                    <span class="t12 w-400">ورود | ثبت نام</span>
                 </a>
             </li>
         </ul>
@@ -43,6 +49,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            isLogin:false
+        }
+    },
     methods: {
         /**
          * Open category menu
@@ -50,6 +61,10 @@ export default {
         openCategoryMenu() {
             const menu = document.getElementById('menu--mobile');
             menu.classList.toggle('open-menu');
+        },
+
+        isActive(route) {
+            return this.$route.path === route;
         }
     }
 }
@@ -85,6 +100,17 @@ $parent: 'footer';
 
                         &:hover {
 
+                            span,
+                            .v-icon {
+                                color: #D72685 !important;
+                            }
+
+                            svg path {
+                                stroke: #D72685
+                            }
+                        }
+
+                        &.active {
                             span,
                             .v-icon {
                                 color: #D72685 !important;
