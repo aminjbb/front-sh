@@ -1,5 +1,7 @@
 <template>
   <main class="v-user v-user--profile">
+    <h1 class="ov-h h-0">اطلاعات حساب کاربری</h1>
+
     <header class="v-user__mobile-page-head xs-show">
       <a href="/user/dashboard" class="ml-3">
         <v-icon icon="mdi-arrow-right" color="grey-darken-3"/>

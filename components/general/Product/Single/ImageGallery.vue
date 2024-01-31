@@ -44,8 +44,8 @@
                         size="small" />
 
                     <v-icon
-                        icon="mdi-heart-outline"
-                        color="grey-lighten-1"
+                        :icon="isFavorite ? 'mdi-heart' : 'mdi-heart-outline'"
+                        :color="isFavorite ? 'red' : 'grey-lighten-1'"
                         @click="addToFavorite()"
                         size="small" />
                 </div>
@@ -64,8 +64,8 @@
                     size="small" />
 
                 <v-icon
-                    icon="mdi-heart-outline"
-                    color="grey-lighten-1"
+                    :icon="isFavorite ? 'mdi-heart' : 'mdi-heart-outline'"
+                    :color="isFavorite ? 'red' : 'grey-lighten-1'"
                     @click="addToFavorite()"
                     size="small" />
             </div>
@@ -78,7 +78,10 @@
                     delay: 2500,
                     disableOnInteraction: false,
                 }">
-                <swiper-slide v-for="(item,index) in items" :key="index" class="h-100">
+                <swiper-slide
+                    v-for="(item,index) in items"
+                    :key="index"
+                    class="h-100">
                     <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
                         <img :src="imageAddress(item.image_url)" :title="imageAlt" :alt="imageAlt" width="351" height="351" />
                     </div>
@@ -187,13 +190,16 @@ import {
 import {
     copyText
 } from 'vue3-clipboard'
-import { useRoute } from "vue-router";
+import {
+    useRoute
+} from "vue-router";
 
 export default {
     data() {
         return {
             selectedImage: this.items ? this.items[0] ?.image_url : '',
             dialog: false,
+            isFavorite: false,
         }
     },
 
@@ -215,7 +221,7 @@ export default {
     },
 
     setup(props) {
-        const route =useRoute()
+        const route = useRoute()
 
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
         const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
@@ -240,7 +246,7 @@ export default {
         /**
          * Copy address
          */
-         const doCopy = () => {
+        const doCopy = () => {
             copyText(`https://shavaz.com${route.path}`, undefined, (error, event) => {
                 if (error) {
                     useNuxtApp().$toast.error('کپی لینک با مشکل مواجه شد.', {
@@ -310,6 +316,13 @@ export default {
             this.dialog = false;
             console.log("🚀 ~ closeModal ~ this.dialog:", this.dialog)
         },
+
+        /**
+         * addToFavorite
+         */
+        addToFavorite() {
+            this.isFavorite = !this.isFavorite
+        }
     },
 }
 </script>
@@ -318,7 +331,7 @@ export default {
 @import "~/assets/scss/components/general/products/image-gallery.scss";
 </style>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .c-modal {
     .v-card {
         background: #fff !important;

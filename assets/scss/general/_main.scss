@@ -29,9 +29,23 @@ body {
 
     &.active {
         position: relative;
+        height: 100vh;
+        overflow: hidden;
+
 
         &::before {
             display: block;
+        }
+    }
+
+    &.active-basket {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+
+        &::before {
+            display: block;
+            z-index: 11;
         }
     }
 }
@@ -67,6 +81,11 @@ a {
             max-width: 100% !important;
             //bottom: 0 !important;
             //margin: 0 !important;
+            /* width: 100% !important;
+            max-width: 100% !important; */
+            /* bottom: 0 !important; */
+            /* margin: 0 !important; */
+
 
             .v-card {
                 border-bottom-right-radius: 0 !important;

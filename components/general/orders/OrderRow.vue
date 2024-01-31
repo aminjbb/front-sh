@@ -48,7 +48,8 @@
                 <generalProductSimpleCard
                     v-for="(sku, index) in content.details"
                     :key="`sku${index}`"
-                    :content="sku" />
+                    :image="sku?.image?.image_url"
+                    :title="sku.shps?.sku?.label" />
             </template>
         </div>
     </div>
@@ -63,32 +64,34 @@ export default {
          */
         content: Object,
     },
-    data(){
-      return{
-        /**
-         * order statuses
-         */
-        orderStatus:[
-          {
-            text:'پرداخت شده', value :'paid'
-          },
-          {
-            text:'در حال پردازش', value :'pre_progress'
-          },
-          {
-            text:'ارسال شده', value :'sending'
-          },
-        ]
-      }
+    data() {
+        return {
+            /**
+             * order statuses
+             */
+            orderStatus: [{
+                    text: 'پرداخت شده',
+                    value: 'paid'
+                },
+                {
+                    text: 'در حال پردازش',
+                    value: 'pre_progress'
+                },
+                {
+                    text: 'ارسال شده',
+                    value: 'sending'
+                },
+            ]
+        }
     },
-    methods:{
-      /**
-       * find order status
-       */
-      findOrderStatus(status){
-        const findStatus = this.orderStatus.find(element=> element.value === status)
-        if (findStatus)  return findStatus.text
-      }
+    methods: {
+        /**
+         * find order status
+         */
+        findOrderStatus(status) {
+            const findStatus = this.orderStatus.find(element => element.value === status)
+            if (findStatus) return findStatus.text
+        }
     }
 }
 </script>

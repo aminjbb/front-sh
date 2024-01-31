@@ -13,7 +13,8 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
-        width="850px">
+        width="850px"
+        :fullscreen="screenType === 'mobile'? true : false">
         <v-card class="pt-3 px-6 pb-5 c-modal--comment">
             <header class="c-modal--comment__header d-flex justify-space-between align-center pb-1">
                 <div class="d-flex flex-column c-modal--comment__header__title">
@@ -110,6 +111,7 @@ export default {
     data() {
         return {
             dialog: false,
+            screenType: null,
             loading: false,
             rateModel: 0,
             comment: null,
@@ -141,6 +143,13 @@ export default {
             console.log('this.comment', this.comment)
             //Add ' add comment' method
         },
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
 }
 </script>
