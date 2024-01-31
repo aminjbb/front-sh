@@ -1,16 +1,25 @@
 <template lang="">
-<header class="v-user__mobile-page-head xs-show">
-    <a href="/" class="ml-3">
-        <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
-    </a>
-    <span class="grey-darken-3 t14 number-font">
-        <template v-if="activeStep - 1 === 0">
-            سبد خرید ({{skuCount}} کالا)
-        </template>
-        <template v-else>
-            {{steps[activeStep - 1]}}
-        </template>
-    </span>
+<header class="v-user__mobile-page-head xs-show justify-space-between">
+    <div class="d-flex align-center">
+        <a href="/" class="ml-3">
+            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        </a>
+        <span class="grey-darken-3 t14 number-font">
+            <template v-if="activeStep - 1 === 0">
+                سبد خرید ({{skuCount}} کالا)
+            </template>
+            <template v-else>
+                {{steps[activeStep - 1]}}
+            </template>
+        </span>
+    </div>
+
+    <v-icon
+        v-if="activeStep - 1 === 0"
+        icon="mdi-trash-can-outline"
+        color="grey"
+        @click="deleteAllOrders()"
+        size="small" />
 </header>
 
 <div class="stepper__content">
@@ -29,7 +38,7 @@
     </template>
 
     <template v-if="activeStep === 2">
-        <mobileCartSendingInformationAddress @selectedAddress="getAddress" :userDetail="userDetail"/>
+        <mobileCartSendingInformationAddress @selectedAddress="getAddress" :userDetail="userDetail" />
         <mobileCartSendingInformationTime @selectedDate="getTime" @selectedWay="getWay" />
     </template>
 
@@ -42,7 +51,10 @@
     </template>
 </div>
 
-<v-divider v-if="activeStep !== 4" color="grey-lighten-1" class="my-3" />
+<v-divider
+    v-if="activeStep !== 4"
+    color="grey-lighten-1"
+    class="my-3" />
 
 <v-card v-if="activeStep !== 4" class="px-3 mobile-pa-0 mobile-no-border pb-10 cart-payment-details">
     <div class="d-flex align-center justify-space-between mb-3">
@@ -196,9 +208,16 @@ export default {
             //TODO: Add set payment to cart method
             this.activeButton = true;
         },
+
+        /**
+         * Delete all orders
+         */
+        deleteAllOrders(){
+            //TODO: Write method
+        }
     },
 
-    beforeMount(){
+    beforeMount() {
         this.fetchUserProfile()
     },
 
