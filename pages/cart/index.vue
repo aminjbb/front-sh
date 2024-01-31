@@ -1,13 +1,6 @@
 <template lang="">
 <main class="v-cart">
     <h1 class="ov-h h-0">سبد خرید </h1>
-    <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
-            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
-        </a>
-        <span class="grey-darken-3 t14 number-font">سبد خرید ({{skuCount}} کالا)</span>
-    </header>
-
     <v-container class="pt-0">
         <template v-if="skuCount === 0">
             <generalCartEmpty :count="skuCount" :products="suggestProductsMoc" />
@@ -17,7 +10,9 @@
             <template v-if="screenType === 'desktop'">
                 <desktopCartStepper :data="productsMoc" />
             </template>
-            <template v-if="screenType === 'mobile'"></template>
+            <template v-if="screenType === 'mobile'">
+                <mobileCartStepper :data="productsMoc" />
+            </template>
         </template>
     </v-container>
 </main>
@@ -113,7 +108,7 @@ export default {
                         site_price: 269900,
                         available: false,
                         discount: 30,
-                        count: 0,
+                        count: 1,
                         status: null
                     }
                 ]
@@ -149,5 +144,6 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
+@import '~/assets/scss/views/user.scss';
 @import '~/assets/scss/views/cart.scss';
 </style>

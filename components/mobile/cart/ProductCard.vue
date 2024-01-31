@@ -35,6 +35,17 @@
                     {{content.color.label}}
                 </span>
             </div>
+
+            <div v-if="!noSeller" class="d-flex align-center t13 w400 text-grey mb-2">
+                <v-icon
+                    icon="mdi-store-outline"
+                    color="grey-lighten-1"
+                    class="ml-2" />
+                <span>
+                    فروشگاه:
+                    {{content.shopping_name}}
+                </span>
+            </div>
         </div>
     </div>
 
@@ -49,7 +60,7 @@
                 {{productCount}}
             </span>
             <v-icon
-                icon="mdi-minus"
+                :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'"
                 color="grey"
                 size="small"
                 @click="decreaseCount()" />
@@ -119,7 +130,12 @@ export default {
          */
         status: {
             type: String,
-        }
+        },
+
+        /**
+         * hide seller
+         */
+        noSeller:Boolean
     },
 
     methods: {
