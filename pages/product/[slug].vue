@@ -1,4 +1,4 @@
-<template >
+<template>
 <main class="v-product v-product--list">
     <h1 class="v-hide">{{title}}</h1>
 
@@ -9,32 +9,48 @@
 
         <v-row class="mt-10">
             <v-col cols="12" md="3">
-                <generalProductFilterSideBar
-                    :filterList="filtersMocket"
-                    @listFiltersModal="listFiltersModal"
-                    @selectFiltersModal="selectFiltersModal"
-                    @switchFiltersModal="switchFiltersModal"
-                    @setAmount="selectByAmount" />
+                <template v-if="screenType === 'desktop'">
+                    <generalProductFilterSideBar
+                        :filterList="filtersMocket"
+                        @listFiltersModal="listFiltersModal"
+                        @selectFiltersModal="selectFiltersModal"
+                        @switchFiltersModal="switchFiltersModal"
+                        @setAmount="selectByAmount" />
+                </template>
+
+                <template v-if="screenType === 'mobile'">
+                    <div class="d-flex align-center justify-space-between">
+                        <generalProductFilterSideBarModal
+                            :filterList="filtersMocket"
+                            @listFiltersModal="listFiltersModal"
+                            @selectFiltersModal="selectFiltersModal"
+                            @switchFiltersModal="switchFiltersModal"
+                            @setAmount="selectByAmount" />
+
+                        <generalProductSortModal @selectSort="selectSort" />
+                    </div>
+                </template>
             </v-col>
             <v-col cols="12" md="9">
-                <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
-                    <nav class="d-flex align-center flex-grow-1">
-                        <div class="pl-4">
-                            <v-icon icon="mdi-sort-ascending" color="grey-darken-1" />
-                            <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
-                        </div>
+                <template v-if="screenType === 'desktop'">
+                    <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
+                        <nav class="d-flex align-center flex-grow-1">
+                            <div class="pl-4">
+                                <v-icon icon="mdi-sort-ascending" color="grey-darken-1" />
+                                <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
+                            </div>
 
-                        <ul class="v-product__filter__items d-flex align-center">
-                            <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>
-                            <li class="t14 w400 text-grey px-4" @click="newest()">جدیدترین</li>
-                            <li class="t14 w400 text-grey px-4" @click="cheapest()">ارزان‌ترین</li>
-                            <li class="t14 w400 text-grey px-4" @click="mostExpensive()">گران‌ترین</li>
-                            <li class="t14 w400 text-grey px-4" @click="biggestDiscount()">بیشترین تخفیف</li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <div class="v-product__contents mt-6">
+                            <ul class="v-product__filter__items d-flex align-center">
+                                <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>
+                                <li class="t14 w400 text-grey px-4" @click="newest()">جدیدترین</li>
+                                <li class="t14 w400 text-grey px-4" @click="cheapest()">ارزان‌ترین</li>
+                                <li class="t14 w400 text-grey px-4" @click="mostExpensive()">گران‌ترین</li>
+                                <li class="t14 w400 text-grey px-4" @click="biggestDiscount()">بیشترین تخفیف</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </template>
+                <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
                     <v-row class="ma-0">
                         <v-col
                             cols="12"
@@ -391,14 +407,21 @@ export default {
                         },
                     ]
                 },
-            ]
+            ],
+            screenType: null
         }
     },
 
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
         const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
-        const {productList, filterQuery, page , getSecondaryData ,secondaryData} = new PLP()
+        const {
+            productList,
+            filterQuery,
+            page,
+            getSecondaryData,
+            secondaryData
+        } = new PLP()
         useHead({
             title,
             meta: [{
@@ -406,7 +429,7 @@ export default {
                 content: description
             }]
         });
-      return {productList, filterQuery, page , getSecondaryData , secondaryData}
+        /* return {productList, filterQuery, page , getSecondaryData , secondaryData} */
     },
 
     methods: {
@@ -448,11 +471,26 @@ export default {
             console.log("🚀 ~ amount:", amount);
 
             //TODO: filter by available items
+        },
+
+        selectSort(obj) {
+            console.log("🚀 ~ selectSort:", obj);
+
+            //TODO: Sort items in mobile
         }
+
     },
-  beforeMount() {
-    this.getSecondaryData()
-  }
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
+
+    beforeMount() {
+        /* this.getSecondaryData() */
+    }
 }
 </script>
 

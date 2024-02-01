@@ -234,35 +234,37 @@ export default {
             }
         },
 
-      titleSection10() {
-        try {
-          return this.responseDot(10)?.label
-        } catch (e) {
-          return ''
-        }
-      },
-      titleSection9() {
-        try {
-          return this.responseDot(9)?.label
-        } catch (e) {
-          return ''
-        }
-      },
+        titleSection10() {
+            try {
+            return this.responseDot(10)?.label
+            } catch (e) {
+            return ''
+            }
+        },   
 
-      titleSection11() {
-        try {
-          return this.responseDot(11)?.label
-        } catch (e) {
-          return ''
-        }
-      },
-      titleSection13() {
-        try {
-          return this.responseDot(13)?.label
-        } catch (e) {
-          return ''
-        }
-      },
+        titleSection9() {
+            try {
+            return this.responseDot(9)?.label
+            } catch (e) {
+            return ''
+            }
+        },
+
+        titleSection11() {
+            try {
+            return this.responseDot(11)?.label
+            } catch (e) {
+            return ''
+            }
+        },
+        
+        titleSection13() {
+            try {
+            return this.responseDot(13)?.label
+            } catch (e) {
+            return ''
+            }
+        },
 
         desktopBanner3() {
             try {

@@ -1,10 +1,12 @@
 //------------------------------------------------
 //  Breadcrumbs
 //------------------------------------------------
+@import "~/assets/scss/tools/bp";
 
 .v-breadcrumbs {
     padding-top: 0 !important;
     padding-bottom: 25px !important;
+    padding-right: 0 !important;
     
     .v-breadcrumbs-item {
         font-size: 13px !important;
