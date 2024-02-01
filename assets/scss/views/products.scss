@@ -27,11 +27,21 @@ $parent : 'v-product';
         border-radius: 8px;
         border: 1px solid var(--grey-grey-lighten-2, #E0E0E0);
         overflow: hidden;
+
+        @include gbp (0, 768) {
+            border: 0 !important;
+            border-top: 0.7px solid #E0E0E0 !important;
+            border-radius: 0;
+        }
     }
 
     &__content {
         border-left: 0.7px solid #E0E0E0;
         border-bottom: 0.7px solid #E0E0E0;
+
+        @include gbp (0, 768) {
+            border-left: 0 !important
+        }
 
         .product-card {
             margin: 0 !important;

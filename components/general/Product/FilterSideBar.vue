@@ -142,7 +142,6 @@ export default {
     },
 
     props: {
-
         filterList: Array,
     },
 

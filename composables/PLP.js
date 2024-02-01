@@ -56,10 +56,10 @@ export default function setup(posts) {
                     })
                     .catch((err) => {
                       if (err.response.status){
-                            showError({
+                            /* showError({
                                 statusCode: 404,
                                 statusMessage: "Page Not Found"
-                            })
+                            }) */
                         }
                     }).finally(() => {
                     store.commit('set_loadingModal', false)
