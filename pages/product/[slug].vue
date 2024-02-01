@@ -429,7 +429,7 @@ export default {
                 content: description
             }]
         });
-        /* return {productList, filterQuery, page , getSecondaryData , secondaryData} */
+        return {productList, filterQuery, page , getSecondaryData , secondaryData}
     },
 
     methods: {
@@ -489,7 +489,7 @@ export default {
     },
 
     beforeMount() {
-        /* this.getSecondaryData() */
+        this.getSecondaryData()
     }
 }
 </script>
