@@ -54,6 +54,22 @@ export default {
             isLogin:false
         }
     },
+
+    setup() {
+        const userToken = useCookie('userToken')
+        return {
+            userToken,
+        }
+    },
+
+    created() {
+        if (this.userToken) {
+            this.isLogin = true
+        } else {
+            this.isLogin = false
+        };
+    },
+
     methods: {
         /**
          * Open category menu
@@ -63,6 +79,10 @@ export default {
             menu.classList.toggle('open-menu');
         },
 
+        /**
+         * Active route
+         * @param {*} route 
+         */
         isActive(route) {
             return this.$route.path === route;
         }

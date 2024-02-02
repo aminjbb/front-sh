@@ -24,13 +24,73 @@
                 </div>
             </div>
             <div class="header__col2 d-flex align-center justify-end">
-                <div v-if="isLogin" class="header__item header__item--profile">
-                    <v-icon icon="mdi-account-outline" />
-                    <v-icon icon="mdi-chevron-down" />
+                <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
+                    <div @click="openDropDown('dashboard')" class="cur-p">
+                        <v-icon icon="mdi-account-outline" />
+                        <v-icon icon="mdi-chevron-down" />
+                    </div>
 
-                    <nav class="header-profile-menu">
+                    <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
                         <ul class="ma-0 pa-0">
-                            
+                            <li class="d-flex align-center mb-3 mt-1">
+                                <v-icon
+                                    icon="mdi-account-circle-outline"
+                                    color="grey-darken-3"
+                                    size="x-large"
+                                    class="ml-3" />
+
+                                <template v-if="name">
+                                    <div class="d-flex flex-column">
+                                        <span class="user-phone t16 text-grey-darken-3">نگین اسدی</span>
+                                    </div>
+                                </template>
+                                <template v-else>
+                                    <span class="user-phone t16 text-grey-darken-3">۰۹۳۰۳۷۴۴۱۲۱</span>
+                                </template>
+                            </li>
+                            <li class="mb-2">
+                                <a class="text-grey t14 d-flex align-center py-1" href="/user/order">
+                                    <v-icon
+                                        icon="mdi-cart-outline"
+                                        class="ml-2"
+                                        size="small"
+                                        color="grey" />
+                                    <span class="text-grey t14">لیست سفارشات</span>
+                                </a>
+                            </li>
+
+                            <li class="mb-2">
+                                <a class="text-grey t14 d-flex align-center py-1" href="/user/address">
+                                    <v-icon
+                                        icon="mdi-map-marker-outline"
+                                        class="ml-2"
+                                        size="small"
+                                        color="grey" />
+                                    <span class="text-grey t14">آدرس‌ها</span>
+                                </a>
+                            </li>
+
+                            <li class="mb-2">
+                                <a class="text-grey t14 d-flex align-center py-1" href="/user/favorite-list">
+                                    <v-icon
+                                        icon="mdi-heart-outline"
+                                        class="ml-2"
+                                        size="small"
+                                        color="grey" />
+                                    <span class="text-grey t14">علاقمندی‌ها</span>
+                                </a>
+                            </li>
+
+                            <li class="mb-2">
+                                <a class="text-grey t14 d-flex align-center py-1 cur-p" @click="openModal()">
+                                    <v-icon
+                                        icon="mdi-exit-to-app"
+                                        class="ml-2"
+                                        size="small"
+                                        color="grey" />
+                                    <span class="text-grey t14">خروج</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -57,6 +117,51 @@
 </header>
 
 <desktopHeaderBasket />
+
+<v-dialog
+    v-if="dialog"
+    v-model="dialog"
+    color="white"
+    width="470px">
+    <v-card class="pt-3 px-6 pb-5">
+        <header class="c-modal__header d-flex justify-space-between align-center pb-1">
+            <span class="t15 w400">
+                خروج از حساب کاربری
+            </span>
+
+            <v-btn
+                class="c-modal__header__btn pa-0 text-none"
+                @click="closeModal()"
+                color="grey-darken-1"
+                size="large"
+                variant="icon">
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+        </header>
+
+        <div>
+            <p class="t14 w400 my-8 text-center text-grey-darken-2">آیا از خروج از حساب اطمینان دارید؟ </p>
+
+            <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
+                <v-btn
+                    @click="closeModal()"
+                    height="44"
+                    title="انصراف"
+                    class="btn btn--cancel ml-1">
+                    انصراف
+                </v-btn>
+
+                <v-btn
+                    @click="logout()"
+                    height="44"
+                    title="خروج از حساب"
+                    class="btn btn--submit">
+                    خروج از حساب
+                </v-btn>
+            </div>
+        </div>
+    </v-card>
+</v-dialog>
 </template>
 
 <script>
@@ -70,7 +175,23 @@ export default {
             isFixed: true,
             isHidden: false,
             lastScrollTop: 0,
-            isLogin:true,
+            isLogin: false,
+            dialog: false,
+        };
+    },
+
+    setup() {
+        const userToken = useCookie('userToken')
+        return {
+            userToken,
+        }
+    },
+
+    created() {
+        if (this.userToken) {
+            this.isLogin = true
+        } else {
+            this.isLogin = false
         };
     },
 
@@ -100,11 +221,20 @@ export default {
                 } else {
                     this.isFixed = true;
                     this.isHidden = false;
-
                 }
 
                 this.lastScrollTop = currentScrollTop;
             }
+        },
+
+        /**
+         * Open menu
+         * @param {*} id 
+         */
+        openDropDown(id) {
+            console.log("🚀 ~ openDropDown ~ id:", id)
+            const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
+            itemDropdown.classList.toggle('show');
         },
 
         /**
@@ -113,6 +243,22 @@ export default {
         showHeaderBasket() {
             document.getElementById('basket-header').classList.add('show');
             document.body.classList.add('active-basket');
+        },
+
+        openModal() {
+            this.dialog = true;
+        },
+
+        closeModal() {
+            this.dialog = false;
+        },
+
+        logout() {
+            this.userToken = '';
+            this.$router.push('/');
+            this.closeModal();
+            const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
+            itemDropdown.classList.toggle('show');
         }
     },
 };
@@ -223,5 +369,12 @@ $parent: 'header';
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
     }
+}
+</style>
+
+<style scoped>
+.mobile-drop-down__items {
+    left: 0;
+    width: 172px;
 }
 </style>

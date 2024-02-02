@@ -72,7 +72,7 @@
                                 class=""
                                 variant="outlined" />
                             <div class="mb-1">
-                                <span class="p-auth__text">
+                                <span class="p-auth__text number-font">
                                     کد به شماره {{ mobile }} ارسال شده‌است.
                                 </span>
                             </div>
@@ -96,7 +96,7 @@
                                 </span>
                             </div>
                             <div v-else class="text-center mb-2 pr-1">
-                                <span class="p-auth__text">
+                                <span class="p-auth__text number-font">
                                     {{seconds}} :{{minutes}} مانده تا ارسال مجدد کد تایید
                                 </span>
                             </div>
@@ -281,3 +281,10 @@ export default {
     },
 };
 </script>
+
+<style>
+
+input{
+    font-family: 'IranSansFaNum' !important;
+}
+</style>
