@@ -133,7 +133,7 @@
                                     single-line
                                     :rules="rule"
                                     item-title="label"
-                                    item-value="value"
+                                    item-value="label"
                                     hide-details
                                     :items="categoryTypes"
                                     v-model="form.category" />
@@ -222,11 +222,27 @@ export default {
                 description: null,
             },
             categoryTypes: [{
-                    label: 'دسته‌بندی اول',
+                    label: 'پیشنهادات',
                     value: 'category1'
                 },
                 {
-                    label: 'دسته‌بندی دوم',
+                    label: 'انتقاد و شکایات',
+                    value: 'category2'
+                },
+                {
+                    label: 'ارتباط با واحد بازرگانی',
+                    value: 'category2'
+                },
+                {
+                    label: 'ارتباط با واحد دیجیتال مارکتیمگ',
+                    value: 'category2'
+                },
+                {
+                    label: 'ارتباط با واحد پشتیبانی',
+                    value: 'category2'
+                },
+                {
+                    label: 'سایر موضوعات',
                     value: 'category2'
                 }
             ],
