@@ -16,6 +16,8 @@
             border: 0;
             border-left: 1px solid #E0E0E0;
             border-radius: 0;
+            width: 20%;
+            flex:0 0 20%;
 
             &:last-child {
                 border-left: 0 !important;
