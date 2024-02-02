@@ -34,7 +34,7 @@
                                     class="flex-grow-1 d-flex justify-center align-center text-grey-darken-1 t13 w500"
                                     id="user-commenting__tab--2"
                                     @click="changeTab(2)">
-                                    <img :src="tabImage === 2 ? imageAddress('commenting2-active.png') : imageAddress('commenting2.png')"  class="ml-2" alt="shavaz" width="30" height="30" title="shavaz" />
+                                    <img :src="tabImage === 2 ? imageAddress('commenting2-active.png') : imageAddress('commenting2.png')" class="ml-2" alt="shavaz" width="30" height="30" title="shavaz" />
 
                                     ثبت شده
                                 </li>
@@ -56,10 +56,20 @@
                             </div>
 
                             <div class="user-commenting__content" id="user-commenting__content--2">
-                                <template v-for="(product, index) in commentedProductsMoc" :key="`product-${index}`">
-                                    <generalUserCommentedProducts :content="product" @refreshProducts="refreshProducts"/>
+                                <template v-if="commentedProductsMoc && commentedProductsMoc.length">
+                                    <template v-for="(product, index) in commentedProductsMoc" :key="`product-${index}`">
+                                        <generalUserCommentedProducts :content="product" @refreshProducts="refreshProducts" />
 
-                                    <v-divider color="grey" class="my-2" />
+                                        <v-divider color="grey" class="my-2" />
+                                    </template>
+                                </template>
+
+                                <template v-else>
+                                    <div class="d-flex align-center justify-center flex-column py-15 px-2">
+                                        <img src="~/assets/images/no-comment.jpg" class="ml-2 mt-10" alt="shavaz" width="168" height="86" title="shavaz" />
+
+                                        <span class="t14 w500 text-grey-darken-1 mt-8 mb-10">تا حالا هیچ نظری ثبت نکردی!</span>
+                                    </div>
                                 </template>
                             </div>
                         </div>
@@ -79,7 +89,7 @@ export default {
             loading: false,
             user: null,
             screenType: null,
-            tabImage:1,
+            tabImage: 1,
             commentedProducts: null,
             commentedProductsMoc: [{
                     image: {
@@ -88,7 +98,7 @@ export default {
                     label: 'ماسک مو فولیکا مدل Arginine B حجم 200 میلی لیتر به همراه شامپو مو فولیکا حجم 400 میلی لیتر و هدیه سرم براق کننده مو فولیکا مدل Detanglin حجم 200 میلی لیتر',
                     comment: 'سلام ریمل اسنس سفارش دادم و وقتی رسید دستم پلمپ نبود و تاریخ تولید و انقضا هم نداشت عکسش رو واستون ارسال کردم فقط همین بود بدون تاریخ و پلمپ و هیچی',
                     status: 'accept',
-                    id:65
+                    id: 65
                 },
                 {
                     image: {
@@ -97,7 +107,7 @@ export default {
                     label: 'ماسک مو فولیکا مدل Arginine B حجم 200 میلی لیتر ',
                     comment: 'سلام ریمل اسنس سفارش دادم و وقتی رسید دستم پلمپ نبود و تاریخ تولید و انقضا هم نداشت عکسش رو واستون ارسال کردم فقط همین بود بدون تاریخ و پلمپ و هیچی',
                     status: 'reject',
-                    id:85
+                    id: 85
                 },
                 {
                     image: {
@@ -106,7 +116,7 @@ export default {
                     label: 'ماسک مو فولیکا مدل Arginine B حجم 200 میلی لیتر به همراه شامپو مو فولیکا حجم 400 میلی لیتر و هدیه سرم براق کننده مو فولیکا مدل Detanglin حجم 200 میلی لیتر',
                     comment: 'سلام ریمل اسنس سفارش دادم و وقتی رسید دستم پلمپ نبود و تاریخ تولید و انقضا هم نداشت عکسش رو واستون ارسال کردم فقط همین بود بدون تاریخ و پلمپ و هیچی',
                     status: 'accept',
-                    id:66
+                    id: 66
                 }
             ],
             AwaitingProducts: null,
@@ -175,7 +185,7 @@ export default {
             });
         },
 
-        refreshProducts(){
+        refreshProducts() {
             //TODO: get commented products again
         },
 
