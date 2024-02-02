@@ -36,7 +36,7 @@
                 :style="{ width: `${contentWidth}`, flex:`0 0 ${contentWidth}`}">
 
                 <component
-                    v-for="sku in item.skus"
+                    v-for="sku in item.skus.slice(0,5)"
                     :key="`tab-skus-${sku.id}`"
                     :is="component"
                     v-bind=componentProps
