@@ -66,20 +66,20 @@
                 <a class="t13 text-grey" href="/user/password">رمز عبور</a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/') }">
+            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/comments') }">
                 <v-icon
                     icon="mdi-comment-outline"
                     color="grey"
                     class="ml-3" />
-                <a class="t13 text-grey">نظرات</a>
+                <a class="t13 text-grey" href="/user/comments">نظرات</a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/') }">
+            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/ticket') }">
                 <v-icon
                     icon="mdi-chat-processing-outline"
                     color="grey"
                     class="ml-3" />
-                <a class="t13 text-grey">تیکت</a>
+                <a class="t13 text-grey" href="/user/ticket">تیکت</a>
             </li>
 
             <li class="d-flex align-center user-nav__item">
