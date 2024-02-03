@@ -39,6 +39,9 @@
                     '200': {
                         slidesPerView: 0.8,
                     },
+                    '380': {
+                        slidesPerView: 1.2,
+                    },
                     '500': {
                         slidesPerView: 2.2,
                     },
