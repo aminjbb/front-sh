@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <nav class="filter-sidebar__card__box">
     <ul class="w-100 ma-0 pa-0">
         <li
@@ -6,7 +6,7 @@
             :key="`cat${index}`"
             @click="chooseItem(value.id)"
             class="t14 w400 text-grey pa-1 mb-1">
-            {{value.title}}
+            {{value.label}}
         </li>
     </ul>
 </nav>

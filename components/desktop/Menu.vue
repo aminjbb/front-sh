@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="c-menu">
     <v-container class="pb-0">
         <nav class="menu menu--desktop">
@@ -36,7 +36,10 @@
                                                 <ul class="menu__items">
                                                     <div>
                                                         <li v-if="child1.children&& child1.children[0]" class="menu__item">
+                                                          <a :href="child1.children[0].url">
                                                             <span>{{ child1.children[0].label }}</span>
+                                                          </a>
+
                                                             <ul class="menu-items">
                                                                 <li
                                                                     class="menu__item"

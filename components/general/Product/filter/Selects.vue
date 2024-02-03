@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="filter-sidebar__card__box">
     <v-text-field
         density="compact"
@@ -15,12 +15,11 @@
             <div class="d-flex justify-space-between align-center">
                 <v-checkbox
                     v-model="itemsModel"
-                    :label="item.label"
+                    :label="item.label ? item.label : item.value"
                     @change="selectItems()"
                     hide-details
                     :value="item.id" />
-
-                <span class="t11 w500 text-grey-lighten-1">{{item.name}}</span>
+                <span class="t11 w500 text-grey-lighten-1" v-if="item.name">{{item.name}}</span>
             </div>
         </template>
     </div>
@@ -46,6 +45,10 @@ export default {
          * Name of filter
          */
         name: String,
+        /**
+           * param for filter
+         */
+        param: String,
 
         /**
          * List of item
@@ -67,7 +70,10 @@ export default {
          */
         filteredItems() {
             if (this.searchItem == null || this.searchItem == '') {
-                return this.items.sort((a, b) => a.label.localeCompare(b.label));
+                return this.items.sort((a, b) =>{
+                 if (a.label)  a.label.localeCompare(b.label)
+                  else  a.value.localeCompare(b.value)
+                });
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
                 return this.items
@@ -95,6 +101,7 @@ export default {
          */
         selectItems() {
             const obj = {
+                param:this.param,
                 name: this.name,
                 values: this.itemsModel
             }
