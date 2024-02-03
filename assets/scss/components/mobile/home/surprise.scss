@@ -80,10 +80,15 @@
         width: calc(100% - 161px);
         flex: 0 0 calc(100% - 161px);
         padding-left: 2px;
+        height: 100%;
 
         @include gbp("md") {
             width: calc(100% - 200px);
             flex: 0 0 calc(100% - 200px);
+        }
+
+        .swiper{
+            height: 100%;
         }
     }
 
@@ -94,4 +99,18 @@
             height: calc(100% - 20px) !important;
         }
     }
+
+    .swiper-button-prev,
+        .swiper-button-next {
+            background: var(--Shade-white, #FFF);
+            border: 1px solid #9E9E9E;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+
+            &::after{
+                color:#D72685;
+                font-size: 15px !important;
+            }
+        }
 }

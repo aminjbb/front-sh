@@ -249,7 +249,7 @@ export default {
 
         logout() {
             this.userToken = '';
-            this.$router.push('/');
+            window.location = '/';
             this.closeModal();
             const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
             itemDropdown.classList.toggle('show');

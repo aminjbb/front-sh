@@ -9,9 +9,9 @@
                     ref="phoneNumberForm"
                     class="w-100">
                     <div class="w-100 form-inner">
-                        <div class="d-flex justify-center mb-5">
+                        <a class="d-flex justify-center mb-5" href="/">
                             <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
-                        </div>
+                        </a>
 
                         <div class="mt-6">
                             <div class="p-auth__text">
@@ -49,9 +49,9 @@
                     ref="otpForm"
                     class="w-100">
                     <div class="w-100 form-inner">
-                        <div class="d-flex justify-center">
+                        <a class="d-flex justify-center" href="/">
                             <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
-                        </div>
+                        </a>
 
                         <div class="mt-6">
                             <div v-if="register" class="text-right mb-4 pr-1">
@@ -115,9 +115,9 @@
 
             <template v-else-if="loginStep === 3">
                 <div class="w-100 form-inner">
-                    <div class="d-flex justify-center">
+                    <a class="d-flex justify-center" href="/">
                         <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image" width="106" height="37">
-                    </div>
+                    </a>
 
                     <div class="t16 w400 text-center text-grey-darken-2">
                         به شاواز خوش آمدید...
@@ -269,7 +269,7 @@ export default {
                             position: 'top-center',
                             theme: 'dark'
                         });
-                        this.$router.push('/user/dashboard');
+                        window.location = '/'
                     }
                 }
             } catch (error) {

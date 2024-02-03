@@ -44,12 +44,21 @@
         }
     }
 
+    &__image{
+        max-height: 130px;
+        overflow: hidden;
+        img{
+            max-width: 100%;
+            height: auto;
+            
+        }
+    }
+
     &__title {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         overflow: hidden;
         -webkit-line-clamp: 2;
-        flex: 1;
 
         @include gbp(0, "sm") {
             font-size: 14px !important;

@@ -2,18 +2,18 @@
 <v-app>
     <LoadingModal v-if="loading" />
     <div v-if="screenType !== null">
-
         <template v-if="screenType === 'desktop'">
-            <desktopHeader />
+            <desktopHeader v-if="$route.path !== '/login'"/>
+            
             <slot />
             <div id="body-cover" />
-            <desktopFooter />
+            <desktopFooter v-if="$route.path !== '/login'"/>
         </template>
 
         <template v-else-if="screenType === 'mobile'">
-            <mobileHeader />
+            <mobileHeader v-if="$route.path !== '/login'"/>
             <slot />
-            <mobileFooter />
+            <mobileFooter v-if="$route.path !== '/login'"/>
         </template>
     </div>
 </v-app>
