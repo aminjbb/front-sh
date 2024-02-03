@@ -1,6 +1,6 @@
 <template>
 <section v-if="mainBanner" class="surprise-slider surprise-slider--mobile">
-    <div class="d-flex align-center flex-wrap" :style="{ backGround: `#${mainBanner?.background_hex_code}` }">
+    <div class="d-flex align-center flex-wrap" :style="{ background: `${mainBanner?.background_hex_code}` }">
         <div class=" surprise-slider__info">
             <div class="surprise-slider__info__counter mb-4">
                 <span class="t14 ml-2">{{ formattedTime }}</span>

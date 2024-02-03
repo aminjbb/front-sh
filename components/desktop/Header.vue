@@ -180,10 +180,9 @@ export default {
     },
 
     created() {
-        this.fetchUserProfile();
-
         if (this.userToken) {
             this.isLogin = true
+            this.fetchUserProfile();
         } else {
             this.isLogin = false
         };
