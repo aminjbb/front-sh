@@ -141,7 +141,6 @@ export default {
          * Selected Payment for send package to customer
          */
         selectPayment() {
-            console.log("🚀 ~ selectPayment ~ this.paymentModal:", this.paymentModal)
             this.$emit('selectedPayment', this.paymentModal);
         },
 

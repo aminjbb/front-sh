@@ -120,9 +120,9 @@
                                 <div class="t13 w400 text-grey mb-3">مراحل مرجوع کردن کالا</div>
                                 <nav class="mb-5">
                                     <ul class="pr-4">
-                                        <li class="t13 w400 text-grey-darken-3 mb-1">کالا را با بسته بندی اصلی به پست محله خود تحویل دهید</li>
+                                        <li class="t13 w400 text-grey-darken-3 mb-1">کالا را با بسته بندی اصلی به همراه فاکتور کاغذی به پست محله خود تحویل دهید</li>
                                         <li class="t13 w400 text-grey-darken-3 mb-1">آدرس تحویل را به صورت کامل وارد نمایید</li>
-                                        <li class="t13 w400 text-grey-darken-3 mb-1">کد رهگیری پستی را در فرم زیر وارد نمایید</li>
+                                        <li class="t13 w400 text-grey-darken-3 mb-1">تصویر رسید پرداختی پستی را بارگذاری نمایید</li>
                                     </ul>
                                 </nav>
                                 <div class="t13 w400 text-grey mb-3">آدرس‌ تحویل کالای مرجوعی</div>

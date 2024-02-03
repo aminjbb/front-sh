@@ -164,7 +164,8 @@ export default {
          */
         async fetchUserProfile() {
             try {
-                this.userDetail = await auth.getUserProfile(this.userToken)
+                const response = await auth.getUserProfile(this.userToken)
+                this.userDetail = response.data;
             } catch (error) {
                 // Handle errors
             }
