@@ -178,7 +178,7 @@ export default {
 
         logout() {
             this.userToken = '';
-            this.$router.push('/');
+            window.location = '/';
             this.closeModal();
         },
     },
