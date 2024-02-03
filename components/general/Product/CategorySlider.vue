@@ -14,15 +14,15 @@
             :loop="true"
             :breakpoints="{
                     '200': {
-                        slidesPerView: 4.5,
+                        slidesPerView: 2.5,
                         spaceBetween: 15,
                     },
                     '500': {
-                        slidesPerView: 5.7,
+                        slidesPerView: 2.7,
                         spaceBetween: 15,
                     },
                     '768': {
-                        slidesPerView: 5.5,
+                        slidesPerView: 3.5,
                     },
                     '992': {
                         slidesPerView: 5.8,
@@ -101,6 +101,17 @@ export default {
 @import "~/assets/scss/tools/bp";
 
 .product-category-slider {
+    @include gbp(0, 768) {
+        margin-top: 0 !important;
+    }
+
+    header {
+        @include gbp(0, 768) {
+            font-size: 16px !important;
+            font-variation-settings: "wght"500;
+        }
+    }
+
     &__swiper {
         border-radius: 8px;
         border: 1px solid #D9D9D9;
@@ -112,15 +123,22 @@ export default {
         width: 40px;
         height: 40px;
         background: #fff;
-        border:1px solid #9E9E9E;
+        border: 1px solid #9E9E9E;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
 
-        &::after{
+        &::after {
             font-size: 17px !important;
             color: #D72685 !important;
+        }
+    }
+
+    h2 {
+        @include gbp(0, 768) {
+            font-size: 14px;
+            font-variation-settings: "wght"500;
         }
     }
 }

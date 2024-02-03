@@ -1,5 +1,5 @@
 <template>
-<a class="minimal-product-card py-2 pr-5 pl-5 d-block" :href="content.link">
+<a class="minimal-product-card py-2 pr-5 pl-5 d-block" :href="`/sku/${content.slug}`">
     <div class="minimal-product-card__inner d-flex">
         <div class="minimal-product-card__image">
             <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="70" height="70" />

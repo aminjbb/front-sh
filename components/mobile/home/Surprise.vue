@@ -10,7 +10,7 @@
             <div class="surprise-slider__info__image mb-4">
                 <img :src="mainBannerImage" title="سپوپرایز" alt="سپوپرایز" width="111" height="118" />
             </div>
-          <div class="surprise-slider__info__counter mb-4">
+          <div class="surprise-slider__info__title mb-4">
             <span class="t14 ml-2">  {{content.label}}</span>
           </div>
 
@@ -59,6 +59,7 @@
                     <generalProductCard
                         :content="item"
                         hideInfo
+                        hideLabel
                         class="mb-4" />
                 </swiper-slide>
             </swiper>
