@@ -1,11 +1,13 @@
 <template>
 <section v-if="desktopBanners && desktopBanners.length" class="main-slider main-slider--desktop">
     <swiper
-        :pagination="true"
+        :pagination="{
+        clickable: true,
+        }"
         :modules="modules"
         :loop="true"
         :autoplay="{
-                delay: 2500,
+                delay: 5000,
                 disableOnInteraction: false,
             }"
         class="mySwiper">

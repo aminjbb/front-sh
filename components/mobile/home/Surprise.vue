@@ -34,6 +34,7 @@
                 :spaceBetween="8"
                 :modules="modules"
                 :loop="true"
+                :navigation="true"
                 :breakpoints="{
                     '200': {
                         slidesPerView: 0.8,
@@ -78,10 +79,11 @@ import {
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
 
 // import required modules
 import {
-    FreeMode
+    FreeMode,Navigation
 } from 'swiper/modules';
 
 export default {
@@ -100,7 +102,7 @@ export default {
 
     setup() {
         return {
-            modules: [FreeMode],
+            modules: [FreeMode, Navigation],
         };
     },
 
@@ -174,6 +176,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import '~/assets/scss/components/mobile/home/surprise.scss';
 </style>
+

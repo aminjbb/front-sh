@@ -13,15 +13,17 @@
     </div>
 
     <div v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4">
-        <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
+        <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
     </div>
     <div v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4">
-        <img :src="content?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
+        <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
     </div>
 
-    <h3 v-if="!hideLabel && content.label" class="t14 w500 text-grey product-card__title mb-2">
-        {{content.label}}
-    </h3>
+    <div class="flex-grow-1">
+        <h3 v-if="!hideLabel && content.label" class="t14 w500 text-grey product-card__title mb-2">
+            {{content.label}}
+        </h3>
+    </div>
 
     <div class="product-card__info d-flex align-center justify-space-between mb-2" :class="hideInfo ? 'hideInfo' : ''">
         <div class="product-card__info__send">
@@ -39,14 +41,14 @@
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
                 <span class="product-card__price-info__discount t11 w500">{{content.discount}}%</span>
-                <span v-if="content.customer_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
-                    {{splitChar(content.customer_price)}}
+                <span v-if="content.site_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
+                    {{splitChar(content.site_price)}}
                     <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                 </span>
             </div>
 
-            <span v-if="content.site_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                <span>{{splitChar(content.site_price)}}</span>
+            <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                <span>{{splitChar(content.customer_price)}}</span>
                 <span class="t10 w300 text-grey currency">تومان</span>
             </span>
         </template>
@@ -131,7 +133,7 @@ export default {
         /**
          * Hide label of card
          */
-        hideLabel:{
+        hideLabel: {
             type: Boolean,
             default: false
         },
