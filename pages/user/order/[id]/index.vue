@@ -1,219 +1,227 @@
 <template>
-  <main class="v-order v-order--single">
+<main class="v-order v-order--single">
     <header class="v-user__mobile-page-head xs-show">
-      <a href="/user/dashboard" class="ml-3">
-        <v-icon icon="mdi-arrow-right" color="grey-darken-3"/>
-      </a>
-      <span class="grey-darken-3 t14">جزئیات سفارش</span>
+        <a href="/user/dashboard" class="ml-3">
+            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        </a>
+        <span class="grey-darken-3 t14">جزئیات سفارش</span>
     </header>
 
     <v-container>
-      <v-row>
-        <div class="col-3 pa-4 xs-hide">
-          <generalUserSidebar/>
-        </div>
-        <div class="col-9 pa-4 mobile-pa-0">
-          <v-card class="py-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
-            <header class="d-flex align-center justify-space-between mb-5 xs-hide px-5">
-              <div class="d-flex align-center">
-                <a href="/user/dashboard" class="ml-3">
-                  <v-icon icon="mdi-arrow-right" color="grey-darken-3"/>
-                </a>
-                <span>جزئیات سفارش</span>
-              </div>
+        <v-row>
+            <div class="col-3 pa-4 xs-hide">
+                <generalUserSidebar />
+            </div>
+            <div class="col-9 pa-4 mobile-pa-0">
+                <v-card class="py-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
+                    <header class="d-flex align-center justify-space-between mb-5 xs-hide px-5">
+                        <div class="d-flex align-center">
+                            <a href="/user/dashboard" class="ml-3">
+                                <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+                            </a>
+                            <span>جزئیات سفارش</span>
+                        </div>
 
-              <div class="d-flex align-center">
-                <v-icon icon="mdi-receipt-text-check-outline ml-2" color="grey"/>
-                <span class="t13 w400 text-grey">مشاهده فاکتور</span>
-              </div>
-            </header>
+                        <div class="d-flex align-center">
+                            <v-icon icon="mdi-receipt-text-check-outline ml-2" color="grey" />
+                            <span class="t13 w400 text-grey">مشاهده فاکتور</span>
+                        </div>
+                    </header>
 
-            <v-divider color="grey"/>
+                    <v-divider color="grey" class="xs-hide"/>
 
-            <div class="px-5">
-              <v-row class="order-details my-0">
-                <v-col
-                    cols="12"
-                    md="4"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">کد سفارش:</span>
-                  <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.id }}</span>
-                </v-col>
-                <v-col
-                    cols="12"
-                    md="5"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">تاریخ تحویل:</span>
-                  <span v-if="userOrder && userOrder.receive_date_fa"
-                        class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receive_date_fa }}</span>
-                </v-col>
+                    <div class="px-5">
+                        <v-row class="order-details my-0">
+                            <v-col
+                                cols="12"
+                                sm="4"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">کد سفارش:</span>
+                                <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.id }}</span>
+                            </v-col>
+                            <v-col
+                                cols="12"
+                                sm="5"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">تاریخ تحویل:</span>
+                                <span v-if="userOrder && userOrder.receive_date_fa" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receive_date_fa }}</span>
+                            </v-col>
 
-                <v-col
-                    cols="12"
-                    md="3"
-                    lg="6"
-                    class="d-flex align-center order-details__item py-5 justify-end">
-                  <a v-if="userOrder && userOrder.id"
-                     :href="`/user/order/${userOrder.id}/${userOrder.status == 'pre_progress' ? 'cancel' :(userOrder.status == 'received'|| userOrder.status == 'paid') ? 'return' : ''}`"
-                     class="d-flex align-center">
+                            <v-col
+                                cols="12"
+                                sm="3"
+                                lg="6"
+                                class="d-flex align-center order-details__item py-5 justify-end">
+                                <a 
+                                  v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress' || userOrder.status == 'received')" 
+                                  :href="`/user/order/${userOrder.id}/${userOrder.status == 'pre_progress' ? 'cancel' :(userOrder.status == 'received') ? 'return' : ''}`"
+                                  class="d-flex align-center">
                                     <span class="text-grey-darken-1 t13 w400">
                                         <template v-if="userOrder.status == 'pre_progress'">
                                             درخواست لغو
                                         </template>
-                                        <template v-if="userOrder.status == 'received' || userOrder.status == 'paid'">
+                                        <template v-if="userOrder.status == 'received'">
                                             درخواست مرجوعی
                                         </template>
                                     </span>
-                    <v-icon icon="mdi-chevron-left" color="grey-darken-1"/>
-                  </a>
-                </v-col>
-              </v-row>
+                                    <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
+                                </a>
+                            </v-col>
+                        </v-row>
 
-              <v-divider color="grey"/>
+                        <v-divider color="grey" />
 
-              <v-row class="order-details my-0">
-                <v-col
-                    cols="12"
-                    md="4"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">شماره تماس:</span>
-                  <span v-if="userOrder && userOrder.receiver_mobile"
-                        class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receiver_mobile }}</span>
-                </v-col>
+                        <v-row class="order-details my-0">
+                            <v-col
+                                cols="12"
+                                sm="4"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">شماره تماس:</span>
+                                <span v-if="userOrder && userOrder.receiver_mobile" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receiver_mobile }}</span>
+                            </v-col>
 
-                <v-col
-                    cols="12"
-                    md="5"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">تحویل‌گیرنده:</span>
-                  <span v-if="userOrder && userOrder.receiver_name"
-                        class="t13 w400 text-grey-darken-3">{{ userOrder.receiver_name }}</span>
-                </v-col>
+                            <v-col
+                                cols="12"
+                                sm="5"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">تحویل‌گیرنده:</span>
+                                <span v-if="userOrder && userOrder.receiver_name" class="t13 w400 text-grey-darken-3">{{ userOrder.receiver_name }}</span>
+                            </v-col>
 
-                <v-col cols="12" class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">آدرس:</span>
-                  <span v-if="userOrder && userOrder.receiver_address"
-                        class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receiver_address }}</span>
-                </v-col>
-              </v-row>
+                            <v-col cols="12" class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">آدرس:</span>
+                                <span v-if="userOrder && userOrder.receiver_address" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receiver_address }}</span>
+                            </v-col>
+                        </v-row>
 
-              <v-divider color="grey"/>
+                        <v-divider color="grey" />
 
-              <v-row class="order-details my-0">
-                <v-col
-                    cols="12"
-                    md="4"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">مبلغ:</span>
-                  <span v-if="userOrder && userOrder.total_price"
-                        class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(userOrder.total_price) }} تومان</span>
-                </v-col>
-                <v-col
-                    cols="12"
-                    md="5"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">سود شما:</span>
-                  <span v-if="userOrder && userOrder.paid_price" class="t13 w400 text-grey-darken-3 number-font">
-                    {{ calcProfit(userOrder.paid_price, userOrder.total_price) }}
-                    تومان</span>
-                </v-col>
+                        <v-row class="order-details my-0">
+                            <v-col
+                                cols="12"
+                                sm="3"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">مبلغ:</span>
+                                <span v-if="userOrder && userOrder.total_price" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(userOrder.total_price) }} تومان</span>
+                            </v-col>
 
-                <v-col
-                    cols="12"
-                    md="5"
-                    lg="3"
-                    class="d-flex align-center order-details__item py-5">
-                  <v-icon icon="mdi-circle ml-1" color="grey-darken-1"/>
-                  <span class="t13 w400 text-grey-darken-1">هزینه ارسال:</span>
-                  <span v-if="order && order.shipping"
-                        class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(order.shipping) }} تومان</span>
-                </v-col>
-              </v-row>
+                            <v-col
+                                cols="12"
+                                sm="3"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">سود شما:</span>
+                                <span v-if="userOrder && userOrder.paid_price" class="t13 w400 text-grey-darken-3 number-font">
+                                    {{ calcProfit(userOrder.paid_price, userOrder.total_price) }}
+                                    تومان</span>
+                            </v-col>
 
-              <v-divider color="grey"/>
+                            <v-col
+                                cols="12"
+                                sm="3"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1">هزینه ارسال:</span>
+                                <span v-if="order && order.shipping" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(order.shipping) }} تومان</span>
+                            </v-col>
 
-              <div>
-                <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
-                  <generalProductOrderCard :content="order"/>
-                  <v-divider v-if="index + 1 < userOrder.length " color="grey-lighten-1"/>
-                </template>
-              </div>
+                            <v-col
+                                cols="12"
+                                sm="3"
+                                lg="3"
+                                class="d-flex align-center order-details__item justify-end py-5">
+                                <generalOrdersInterceptionModal />
+                            </v-col>
+                        </v-row>
+
+                        <v-divider color="grey" />
+
+                        <div>
+                            <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
+                                <generalProductOrderCard :content="order" />
+                                <v-divider v-if="index + 1 < userOrder.length " color="grey-lighten-1" />
+                            </template>
+                        </div>
+                    </div>
+                </v-card>
             </div>
-          </v-card>
-        </div>
-      </v-row>
+        </v-row>
     </v-container>
-  </main>
+</main>
 </template>
 
 <script>
 import {
-  splitChar
+    splitChar
 } from "~/utils/functions.js";
 import Order from '@/composables/Order.js'
 
 export default {
-  data() {
-    return {
-      products: null,
+    data() {
+        return {
+            products: null,
 
+        }
+    },
+
+    setup() {
+        const title = ref('فروشگاه اینترنتی شاواز | جزئیات سفارش')
+        const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
+        const {
+            getOrder,
+            order
+        } = new Order()
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        })
+        return {
+            getOrder,
+            order
+        }
+    },
+
+    methods: {
+        splitChar,
+        /** calculate user profit **/
+        calcProfit(paid, totalPrice) {
+            try {
+                const profit = parseInt(totalPrice) - parseInt(paid)
+                return this.splitChar(profit)
+            } catch (e) {
+
+            }
+        }
+    },
+    computed: {
+        /** single order object **/
+        userOrder() {
+            try {
+                return this.order ?.data ?.data
+            } catch (e) {
+
+            }
+        }
+    },
+    beforeMount() {
+        this.getOrder()
     }
-  },
-
-  setup() {
-    const title = ref('فروشگاه اینترنتی شاواز | جزئیات سفارش')
-    const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
-    const {getOrder, order} = new Order()
-    useHead({
-      title,
-      meta: [{
-        name: 'description',
-        content: description
-      }]
-    })
-    return {getOrder, order}
-  },
-
-  methods: {
-    splitChar,
-    /** calculate user profit **/
-    calcProfit(paid , totalPrice){
-      try {
-        const profit = parseInt(totalPrice) - parseInt(paid)
-        return this.splitChar(profit)
-      }
-      catch (e) {
-
-      }
-    }
-  },
-  computed:{
-    /** single order object **/
-    userOrder(){
-      try {
-        return this.order?.data?.data
-      }
-      catch (e) {
-
-      }
-    }
-  },
-  beforeMount() {
-    this.getOrder()
-  }
 }
 </script>
 
@@ -223,6 +231,15 @@ export default {
 @import '~/assets/scss/views/order.scss';
 
 .mdi-chevron-left {
-  font-size: 15px !important;
+    font-size: 15px !important;
+}
+</style>
+
+<style scoped lang="scss">
+@import "~/assets/scss/tools/bp";
+.py-5{
+    @include gbp(0,768){
+        padding: 12px 0 !important;
+    }
 }
 </style>

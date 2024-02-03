@@ -232,7 +232,6 @@ export default {
          * @param {*} id 
          */
         openDropDown(id) {
-            console.log("🚀 ~ openDropDown ~ id:", id)
             const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
             itemDropdown.classList.toggle('show');
         },

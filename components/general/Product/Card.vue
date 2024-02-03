@@ -19,8 +19,7 @@
         <img :src="content?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
 
-
-    <h3 v-if="content.label" class="t14 w500 text-grey product-card__title mb-2">
+    <h3 v-if="!hideLabel && content.label" class="t14 w500 text-grey product-card__title mb-2">
         {{content.label}}
     </h3>
 
@@ -65,6 +64,7 @@
             v-for="(color,index) in content.colors.slice(0,6)"
             :key="`product-color${index}`">
             <span :style="{ backgroundColor: color.code }"></span>
+            <v-tooltip activator="parent" location="top">{{color.label}}</v-tooltip>
         </div>
         <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>
     </div>
@@ -123,7 +123,18 @@ export default {
         /**
          * user this card in plp page for image_url and price
          */
-        isPLP: {type:Boolean , default:false}
+        isPLP: {
+            type: Boolean,
+            default: false
+        },
+
+        /**
+         * Hide label of card
+         */
+        hideLabel:{
+            type: Boolean,
+            default: false
+        },
     },
 
     methods: {
