@@ -20,7 +20,7 @@
     </div>
 
     <div class="flex-grow-1">
-        <h3 v-if="!hideLabel && content.label" class="t14 w500 text-grey product-card__title mb-2">
+        <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title mb-2">
             {{content.label}}
         </h3>
     </div>
@@ -41,7 +41,7 @@
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
                 <span class="product-card__price-info__discount t11 w500">{{content.discount}}%</span>
-                <span v-if="content.site_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
+                <span v-if="content.site_price" class="t18 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
                     {{splitChar(content.site_price)}}
                     <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                 </span>
@@ -54,8 +54,8 @@
         </template>
 
         <template v-else>
-            <span v-if="content.customer_price && !isPLP" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
-            <span v-if="content.site_price && isPLP" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.site_price)}}</span>
+            <span v-if="content.customer_price && !isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
+            <span v-if="content.site_price && isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.site_price)}}</span>
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
     </div>
