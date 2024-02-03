@@ -1,9 +1,9 @@
-<template >
+<template>
   <main class="v-product v-product--list">
-    <h1 class="v-hide">{{title}}</h1>
+    <h1 class="v-hide">{{ title }}</h1>
 
     <v-container>
-      <generalBreadcrumb :items="BreadcrumbItems" />
+      <generalBreadcrumb :items="BreadcrumbItems"/>
 
 
       <v-row class="mt-10">
@@ -13,13 +13,13 @@
               @listFiltersModal="listFiltersModal"
               @selectFiltersModal="selectFiltersModal"
               @switchFiltersModal="switchFiltersModal"
-              @setAmount="selectByAmount" />
+              @setAmount="selectByAmount"/>
         </v-col>
         <v-col cols="12" md="9">
           <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
             <nav class="d-flex align-center flex-grow-1">
               <div class="pl-4">
-                <v-icon icon="mdi-sort-ascending" color="grey-darken-1" />
+                <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
                 <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
               </div>
 
@@ -46,7 +46,7 @@
                     class="mb-4 flex-grow-1"
                     :hideInfo="true"
                     :isPLP="true"
-                    :showColors="true" />
+                    :showColors="true"/>
               </v-col>
             </v-row>
           </div>
@@ -58,7 +58,7 @@
                 size="40"
                 :total-visible="4"
                 prev-icon="mdi-chevron-right"
-                next-icon="mdi-chevron-left" />
+                next-icon="mdi-chevron-left"/>
           </div>
         </v-col>
       </v-row>
@@ -68,6 +68,8 @@
 
 <script>
 import PLP from '@/composables/PLP.js'
+import {stringify} from "qs";
+
 export default {
   data() {
     return {
@@ -90,7 +92,7 @@ export default {
   setup(props) {
     const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
     const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
-    const {productList, filterQuery, page , getSecondaryData ,secondaryData} = new PLP()
+    const {productList, filterQuery, page, getSecondaryData, secondaryData , filterForFilter , query} = new PLP()
     useHead({
       title,
       meta: [{
@@ -98,7 +100,7 @@ export default {
         content: description
       }]
     });
-    return {productList, filterQuery, page , getSecondaryData , secondaryData}
+    return {productList, filterQuery, page, getSecondaryData, secondaryData , filterForFilter , query}
   },
 
   methods: {
@@ -107,7 +109,7 @@ export default {
      * @param {*} array
      */
     listFiltersModal(array) {
-      console.log("🚀 ~ listFiltersModal:", arr);
+      console.log("🚀 ~ listFiltersModal:", array);
 
       //TODO: Add filter for 'productList'
     },
@@ -117,17 +119,23 @@ export default {
      * @param {*} brands
      */
     selectFiltersModal(array) {
-      if (this.filterQuery === null){
-        this.filterQuery = `?${array.param}=[${array.values.toString()}]`
-        this.$router.push(`${this.$route.fullPath}${ this.filterQuery}`)
+      if (array.param === "stock"){
+        this.createQueryForFilter(array)
       }
       else{
-        this.filterQuery = `${array.param}=[${array.values.toString()}]`
+        const findQueryIndex = this.filterQuery.findIndex(query => query.name === array.name)
+        if (findQueryIndex > -1) {
+          if (array.values.length) this.filterQuery[findQueryIndex].values = array.values
+          else this.filterQuery.splice(findQueryIndex, 1)
+        } else {
+          this.filterQuery.push(array)
+        }
+        this.createQueryForFilter()
       }
-      console.log("🚀 ~ selectFiltersModal:", this.filterQuery);
-      //TODO: Add filter for 'productList' by brands
-    },
 
+
+
+    },
     /**
      * Filter productList by switch type items
      * @param {*} status
@@ -141,36 +149,145 @@ export default {
      * Filter by amount
      * @param {*} amount
      */
-    selectByAmount(amount) {
-      console.log("🚀 ~ amount:", amount);
-      //TODO: filter by available items
-    }
+   async selectByAmount(amount) {
+      console.log(amount.amount?.max)
+      if (amount?.param ==="site_price") {
+        let site_price_to  = ''
+        let site_price_from  = ''
+        if (amount.amount?.max){
+          site_price_to  =  amount.amount?.max
+        }
+        if (amount.amount?.min){
+          site_price_from  =  amount.amount?.min
+        }
+
+        await this.setMinAmount(amount )
+        await this.setMaxAmount(amount )
+
+
+
+
+        // else {
+        //   if (site_price_from)  this.$router.push(`${this.$route.path}?site_price_from=${site_price_from}`)
+        //   if (site_price_to)  this.$router.push(`${this.$route.path}?site_price_to=${site_price_to}`)
+        // }
+      }
+    },
+    setMinAmount(amount ){
+      let query = this.$route.query;
+      if (amount.amount?.min){
+        this.$router.push({ query: { ...query,site_price_from: amount.amount?.min } })
+      }
+
+    },
+    setMaxAmount(amount ){
+      let query = this.$route.query;
+      if (amount.amount?.max){
+        this.$router.push({ query: { ...query,site_price_to: amount.amount?.max } })
+      }
+
+    },
+    async paramGenerator(array){
+      let finalFilterObject =[]
+      const newObject = Object.create(this.filterQuery)
+      if (array?.param ==="stock") {
+        let param  = ''
+        if (array.values){
+          param  =  `1`
+        }
+        else {
+          param  =  `0`
+        }
+        let routeSplit = this.$route.fullPath.split('?')
+        let query = this.$route.query;
+        if (routeSplit[1]){
+          if (this.$route.query?.stock){
+            if (query){
+              this.$router.push({ query: { ...query,stock: param } })
+            }
+            else {
+              this.$router.push({ query: {stock: param } })
+            }
+
+          }
+          else{
+            this.$router.push({ query: {...query, stock: param } })
+          }
+        }
+        else {
+          this.$router.push(`${this.$route.path}?stock=${param}`)
+        }
+      }
+      else{
+        await  newObject.forEach((query , index)=>{
+          query.values.forEach(value=>{
+            const form ={
+              param:query.param,
+              value :value
+            }
+            finalFilterObject.push (form)
+          })
+          this.createRoute(finalFilterObject)
+        })
+      }
+    },
+    createRoute(values){
+      let param = ''
+      let brandParam = ''
+      let paramQuery =''
+      const attributeObject = values.filter(filterValue=> filterValue.param == "attributes")
+      const brandObject = values.filter(filterValue=> filterValue.param == "brands")
+      attributeObject.forEach(element=>{
+        param += `${element.value},`
+      })
+      brandObject.forEach(element=>{
+        brandParam += `${element.value},`
+      })
+
+      if (attributeObject.length){
+        let finalParam  = `[${param.substring(0, param.length - 1)}]`
+        if (!paramQuery) paramQuery += `?attribute=${finalParam}`
+        else paramQuery += `&attribute=${finalParam}`
+      }
+      if (brandObject.length){
+        let finalParam  = `[${brandParam.substring(0, brandParam.length - 1)}]`
+        if (!paramQuery) paramQuery += `?brands=${finalParam}`
+        else paramQuery += `&brands=${finalParam}`
+      }
+      this.$router.push(this.$route.path + paramQuery)
+      const form = {
+        ...this.$route.query
+      }
+      console.log(form)
+      this.query = paramQuery
+    },
+    async createQueryForFilter(array) {
+      await this.paramGenerator(array)
+
+    },
   },
-  computed:{
+  computed: {
     /** return data product list  **/
-    productListData(){
+    productListData() {
       try {
         return this.productList.data.data.data
-      }
-      catch (e) {
+      } catch (e) {
         return []
       }
     },
     /** return PageLength product list for pagination **/
-    productListPageLength(){
+    productListPageLength() {
       try {
         return this.productList.data.data.last_page
-      }
-      catch (e) {
+      } catch (e) {
         return 1
       }
     },
     /** return filters on secondaryData slug route **/
-    productFilterSecondaryData(){
+    productFilterSecondaryData() {
       try {
         return this.secondaryData.data.data.filters
-      }
-      catch (e) {
+      } catch (e) {
         return []
       }
     },
