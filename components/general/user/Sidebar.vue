@@ -82,7 +82,7 @@
                 <a class="t13 text-grey" href="/user/ticket">تیکت</a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" @click="openModal()">
+            <li class="d-flex align-center user-nav__item cur-p" @click="openModal()">
                 <v-icon
                     icon="mdi-exit-to-app"
                     color="grey"
@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import auth from '@/middleware/auth';
+
 export default {
     name: "Sidebar",
 
@@ -153,7 +153,6 @@ export default {
                 ['سفارش‌های من', '/user/orders', 'mdi-chat'],
             ],
             dialog: false,
-            userData:null,
         }
     },
 
@@ -182,23 +181,12 @@ export default {
             this.$router.push('/');
             this.closeModal();
         },
-
-        /**
-         * fetch user data
-         */
-        async fetchUserProfile() {
-            try {
-                const response = await auth.getUserProfile(this.userToken)
-                this.userData = response.data.data
-
-            } catch (error) {
-                // Handle errors
-            }
-        },
     },
 
-    created(){
-        this.fetchUserProfile()
-    }
+    computed: {
+        userData() {
+            return this.$store.getters['get_userData']
+        }
+    },
 }
 </script>

@@ -36,9 +36,9 @@
                                                 <ul class="menu__items">
                                                     <div>
                                                         <li v-if="child1.children&& child1.children[0]" class="menu__item">
-                                                          <a :href="child1.children[0].url">
-                                                            <span>{{ child1.children[0].label }}</span>
-                                                          </a>
+                                                            <a :href="child1.children[0].url">
+                                                                <span>{{ child1.children[0].label }}</span>
+                                                            </a>
 
                                                             <ul class="menu-items">
                                                                 <li
@@ -329,8 +329,8 @@ $parent: 'menu';
                                 &:hover {
                                     background-color: #FCE4EC;
 
-                                    span,
-                                    .v-icon {
+                                    >span,
+                                    >.v-icon {
                                         color: #811750;
                                     }
 
@@ -403,6 +403,18 @@ $parent: 'menu';
                                                         padding: 8px 0px 12px;
                                                     }
 
+                                                    >a {
+                                                        font-size: 14px;
+                                                        font-weight: 400;
+                                                        color: #424242;
+                                                        display: block;
+                                                        padding: 8px 0px 12px;
+
+                                                        &:hover {
+                                                            color: #811750;
+                                                        }
+                                                    }
+
                                                     li.menu__item {
                                                         padding: 4px 0;
 
@@ -411,6 +423,12 @@ $parent: 'menu';
                                                                 font-size: 13px;
                                                                 font-weight: 400;
                                                                 color: #9E9E9E;
+                                                            }
+
+                                                            &:hover {
+                                                                > span{
+                                                                    color: #AC1E6A
+                                                                }
                                                             }
                                                         }
                                                     }

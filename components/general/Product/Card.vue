@@ -38,9 +38,9 @@
     <div class="product-card__price-info mb-2">
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
-                <span class="product-card__price-info__discount t11 w500">{{content.discount}}</span>
+                <span class="product-card__price-info__discount t11 w500">{{content.discount}}%</span>
                 <span v-if="content.customer_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
-                    {{content.customer_price}}
+                    {{splitChar(content.customer_price)}}
                     <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                 </span>
             </div>
