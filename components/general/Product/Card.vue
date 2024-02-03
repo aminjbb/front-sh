@@ -12,13 +12,13 @@
             @removeProduct="removeProduct(content)" />
     </div>
 
-    <div v-if="content.image && content.image.image_url" class="product-card__image mb-3 mt-4">
+    <div v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4">
         <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
-
-    <div v-else class="product-card__image mb-3 mt-4">
-        <img :src="imageAddress(content.image)" :title="content.label" :alt="content.label" width="90" height="90" />
+    <div v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4">
+        <img :src="content?.image_url" :title="content.label" :alt="content.label" width="90" height="90" />
     </div>
+
 
     <h3 v-if="content.label" class="t14 w500 text-grey product-card__title mb-2">
         {{content.label}}
@@ -53,7 +53,8 @@
         </template>
 
         <template v-else>
-            <span v-if="content.customer_price" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
+            <span v-if="content.customer_price && !isPLP" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.customer_price)}}</span>
+            <span v-if="content.site_price && isPLP" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.site_price)}}</span>
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
     </div>
@@ -118,7 +119,11 @@ export default {
         /**
          * Show colors in card
          */
-        showColors: Boolean
+        showColors: Boolean,
+        /**
+         * user this card in plp page for image_url and price
+         */
+        isPLP: {type:Boolean , default:false}
     },
 
     methods: {

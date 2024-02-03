@@ -37,8 +37,8 @@ export default function setup(posts) {
     };
     if (route.name == 'product-slug') endPoint.value = '/product/plp/product/'
     else if (route.name == 'sku-group-slug') endPoint.value = '/product/plp/skugroup/'
-    else if (route.name == 'brand-slug') endPoint.value = '/product/plp/brand'
-    else if (route.name == 'category-slug') endPoint.value = '/product/plp/category'
+    else if (route.name == 'brand-slug') endPoint.value = '/product/plp/brand/'
+    else if (route.name == 'category-slug') endPoint.value = '/product/plp/category/'
     else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
     store.commit('set_loadingModal', true),
         useAsyncData(
