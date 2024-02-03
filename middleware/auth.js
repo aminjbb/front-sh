@@ -6,9 +6,9 @@ export default {
    * check error status code
    * @param {number} errorStatus
    */
-  async checkAuthorization(errorStatus) {
-    if (errorStatus.status === 401 || errorStatus.status === 403 ) window.location = '/login'
-  },
+  /* async checkAuthorization(errorStatus) {
+    if (errorStatus.status === 401 || errorStatus.status === 403) window.location = '/login'
+  }, */
   /**
    * Send OTP
    * @param {string | number} phoneNumber 
@@ -82,6 +82,8 @@ export default {
    * @param {*} token
    */
   async getUserProfile(token) {
+    const router = useRouter()
+    
     try {
       // Send a GET request to the profile endpoint with the token in the headers
       const response = await axios.post(`${BASE_URL}/auth/user/profile`, {}, {
@@ -91,10 +93,12 @@ export default {
       })
 
       // Return the response data
-      return response.data
+      return response
     } catch (error) {
       // Handle any errors here
-      console.error('Error fetching user profile:', error)
+      if (error.response.status = 401) {
+        router.push('/login');
+      }
       throw error
     }
   },

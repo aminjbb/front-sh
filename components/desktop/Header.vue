@@ -10,18 +10,7 @@
                     <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
                 </a>
 
-                <div class="header__search-box">
-                    <v-text-field
-                        :loading="loading"
-                        color="grey-lighten-3"
-                        density="compact"
-                        variant="solo"
-                        label="جستجو در شاواز "
-                        prepend-inner-icon="mdi-magnify"
-                        single-line
-                        hide-details
-                        @click:append-inner="onClick" />
-                </div>
+                <desktopSearchResult />
             </div>
             <div class="header__col2 d-flex align-center justify-end">
                 <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
@@ -39,13 +28,13 @@
                                     size="x-large"
                                     class="ml-3" />
 
-                                <template v-if="name">
+                                <template v-if="userData && userData.first_name && userData.last_name">
                                     <div class="d-flex flex-column">
-                                        <span class="user-phone t16 text-grey-darken-3">نگین اسدی</span>
+                                        <span class="user-phone t16 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
                                     </div>
                                 </template>
                                 <template v-else>
-                                    <span class="user-phone t16 text-grey-darken-3">۰۹۳۰۳۷۴۴۱۲۱</span>
+                                    <span v-if="userData && userData.phone_number" class="user-phone t16 text-grey-darken-3">{{ userData.phone_number }}</span>
                                 </template>
                             </li>
                             <li class="mb-2">
@@ -71,7 +60,7 @@
                             </li>
 
                             <li class="mb-2">
-                                <a class="text-grey t14 d-flex align-center py-1" href="/user/favorite-list">
+                                <a class="text-grey t14 d-flex align-center py-1 cur-p" href="/user/favorite-list">
                                     <v-icon
                                         icon="mdi-heart-outline"
                                         class="ml-2"
@@ -101,7 +90,7 @@
 
                 <span class="header__item__sp"></span>
 
-                <a class="header__item">
+                <a class="header__item" @click="$router.push('/user/favorite-list')">
                     <v-icon icon="mdi-heart-outline" />
                 </a>
 
@@ -165,6 +154,8 @@
 </template>
 
 <script>
+import auth from '@/middleware/auth';
+
 export default {
     name: "Desktop Header",
 
@@ -177,6 +168,7 @@ export default {
             lastScrollTop: 0,
             isLogin: false,
             dialog: false,
+            userData: null,
         };
     },
 
@@ -188,6 +180,8 @@ export default {
     },
 
     created() {
+        this.fetchUserProfile();
+
         if (this.userToken) {
             this.isLogin = true
         } else {
@@ -227,12 +221,12 @@ export default {
             }
         },
 
+
         /**
          * Open menu
          * @param {*} id 
          */
         openDropDown(id) {
-            console.log("🚀 ~ openDropDown ~ id:", id)
             const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
             itemDropdown.classList.toggle('show');
         },
@@ -255,11 +249,25 @@ export default {
 
         logout() {
             this.userToken = '';
-            this.$router.push('/');
+            window.location = '/';
             this.closeModal();
             const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
             itemDropdown.classList.toggle('show');
-        }
+        },
+
+        /**
+         * fetch user data
+         */
+        async fetchUserProfile() {
+            try {
+                const response = await auth.getUserProfile(this.userToken)
+                this.userData = response.data.data
+                this.$store.commit('set_userData', this.userData)
+
+            } catch (error) {
+                // Handle errors
+            }
+        },
     },
 };
 </script>
@@ -303,9 +311,62 @@ $parent: 'header';
                 height: 40px;
                 border-radius: 4px !important;
                 overflow: hidden;
+                position: relative;
 
                 @include gbp(768, 1280) {
                     width: 450px;
+                }
+
+                &__inner {
+                    background: #EEEEEE;
+                    border-radius: 2px;
+
+                    input {
+                        font-size: 13px !important;
+                        height: 40px;
+                        border: 0 !important;
+                        outline: 0 !important;
+
+                        &:focus {
+                            border: 0 !important;
+                        }
+                    }
+
+                }
+
+                .search-result {
+                    display: none;
+                    width: 100%;
+                    position: absolute;
+                    background: #fff;
+                    z-index: 5;
+                }
+
+                &.active {
+                    border-radius: 4px;
+                    border: 1px solid var(--grey-grey-lighten-3, #EEE);
+                    background: var(--Shade-white, #FFF);
+                    border-bottom: 0 !important;
+                    overflow: visible;
+
+                    .#{$parent}__search-box__inner {
+                        background-color: #fff !important;
+                    }
+
+                    .search-result {
+                        display: block;
+                        border: 1px solid var(--grey-grey-lighten-3, #EEE);
+                        border-top: 0 !important;
+                        top: 38px;
+                        right: 0;
+                        padding: 0 12px 12px;
+                        width: calc(100% + 2px);
+                        margin: -1px;
+
+                        hr {
+                            opacity: 1;
+                        }
+                    }
                 }
 
                 .v-input__control,

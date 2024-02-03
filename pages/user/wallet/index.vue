@@ -197,8 +197,9 @@ export default {
         async fetchUserProfile() {
             try {
                 const userProfile = await auth.getUserProfile(this.userToken)
+                
                 // Use the userProfile data as needed
-                console.log('User Profile Data:', userProfile)
+                console.log('User Profile Data:', userProfile.data)
             } catch (error) {
                 // Handle errors
             }

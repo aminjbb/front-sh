@@ -2,7 +2,7 @@
 // Main style
 // ---------------------------------------------------- //
 
-html{
+html {
     scroll-behavior: smooth;
 }
 
@@ -65,7 +65,7 @@ a {
         max-width: 1326px !important;
     }
 
-    @media only screen and (min-width:1500px) {
+    @media only screen and (min-width:1400px) {
         max-width: 1326px !important;
     }
 
@@ -148,7 +148,7 @@ a {
             list-style: none;
         }
 
-        &.show{
+        &.show {
             transition: height 0.5s ease;
             padding: 15px;
             height: auto;
@@ -156,4 +156,13 @@ a {
             z-index: 1;
         }
     }
+}
+
+.simple-button {
+    font-size: 12px;
+    color: var(--grey-grey-lighten-1, #BDBDBD);
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--grey-grey-lighten-1, #BDBDBD);
 }

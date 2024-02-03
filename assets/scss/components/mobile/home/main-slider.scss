@@ -9,7 +9,6 @@ $parent: 'main-slider';
     &--mobile {
         .#{$parent} {
             &__image {
-                height: 268px !important;
                 width: 100%;
                 overflow: hidden;
 

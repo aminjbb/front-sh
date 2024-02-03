@@ -9,14 +9,14 @@
                     size="x-large"
                     class="ml-3" />
 
-                <template v-if="name">
+                <template v-if="userData">
                     <div class="d-flex flex-column">
-                        <span class="user-phone t16">نگین اسدی</span>
-                        <span class="user-phone t13 text-grey mt-2">۰۹۳۰۳۷۴۴۱۲۱</span>
+                        <span v-if="userData.first_name && userData.last_name" class="user-phone t16">{{userData.first_name}} {{userData.last_name}}</span>
+                        <span v-if="userData && userData.phone_number" class="user-phone t13 text-grey mt-2">{{userData.phone_number}}</span>
                     </div>
                 </template>
                 <template v-else>
-                    <span class="user-phone t16">۰۹۳۰۳۷۴۴۱۲۱</span>
+                    <span v-if="userData && userData.phone_number" class="user-phone t16">{{userData.phone_number}}</span>
                 </template>
             </div>
             <a href="/user/profile">
@@ -82,7 +82,7 @@
                 <a class="t13 text-grey" href="/user/ticket">تیکت</a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" @click="openModal()">
+            <li class="d-flex align-center user-nav__item cur-p" @click="openModal()">
                 <v-icon
                     icon="mdi-exit-to-app"
                     color="grey"
@@ -140,6 +140,7 @@
 </template>
 
 <script>
+
 export default {
     name: "Sidebar",
 
@@ -177,8 +178,14 @@ export default {
 
         logout() {
             this.userToken = '';
-            this.$router.push('/');
+            window.location = '/';
             this.closeModal();
+        },
+    },
+
+    computed: {
+        userData() {
+            return this.$store.getters['get_userData']
         }
     },
 }
