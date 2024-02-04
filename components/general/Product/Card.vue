@@ -19,7 +19,7 @@
         <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
     </div>
 
-    <div class="flex-grow-1">
+    <div class="flex-grow-1 w-100">
         <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title mb-2">
             {{content.label}}
         </h3>

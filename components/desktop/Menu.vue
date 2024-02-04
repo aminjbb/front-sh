@@ -218,7 +218,7 @@ $parent: 'menu';
                 cursor: pointer;
 
                 @include gbp(768, 1280) {
-                    margin-left: 10px;
+                    margin-left: 25px;
                 }
 
                 >a.menu__item__link {
