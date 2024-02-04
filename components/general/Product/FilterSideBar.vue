@@ -28,9 +28,12 @@
             <template v-else-if="filter.type === 'switch'">
                 <generalProductFilterSwitch
                     :title="filter.name"
-                    :clear="clearAll"
+                    :param="filter.param"
                     :name="filter.name"
-                    :switchName="filter.value" />
+                    :clear="clearAll"
+                    :switchName="filter.value"
+                    @changeStatus="selectFiltersModalEmit"
+                />
             </template>
 
             <template v-else-if="filter.type === 'checkbox'">
@@ -50,7 +53,6 @@
                     <span class="t14 w400 ml-5">حداقل</span>
 
                     <v-autocomplete
-
                         density="compact"
                         variant="outlined"
                         placeholder="مثلا 10,000"
@@ -58,7 +60,7 @@
                         item-title="label"
                         item-value="value"
                         suffix="تومان"
-                        @keydown.enter="setAmount"
+                        @blur="setAmount(filter.param)"
                         v-model="amount.min"
                         :custom-filter="customMinFilter"
                         height="40px"
@@ -67,7 +69,6 @@
 
                   <div class="d-flex align-center justify-space-between">
                     <span class="t14 w400 ml-5">حداکثر</span>
-
                     <v-autocomplete
                         density="compact"
                         variant="outlined"
@@ -76,7 +77,7 @@
                         item-title="label"
                         item-value="value"
                         suffix="تومان"
-                        @keydown.enter="setAmount"
+                        @blur="setAmount(filter.param)"
                         v-model="amount.max"
                         :custom-filter="customMaxFilter"
                         height="40px"
@@ -141,6 +142,7 @@ export default {
 
     props: {
         filterList: Array,
+
     },
 
     computed: {},
@@ -197,14 +199,17 @@ export default {
          */
         customMaxFilter(queryText) {
             this.amount.max = queryText
-
         },
 
         /**
          * Show available Items
          */
-        setAmount() {
-            this.$emit('setAmount', this.amount);
+        setAmount(param) {
+            const form = {
+              param :param,
+              amount : this.amount
+            }
+            this.$emit('setAmount', form);
         }
     }
 }

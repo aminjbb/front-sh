@@ -6,12 +6,14 @@ import axios from 'axios'
 import {useRoute, useRouter} from "vue-router";
 import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
+import {stringify} from "qs";
 
 export default function setup(posts) {
     const productList = ref([]);
     const secondaryData = ref([]);
     const page = ref(1);
-    const filterQuery = ref(null);
+    const filterQuery = ref([]);
+    const filterForFilter = ref('');
     const endPoint = ref(null);
     const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
@@ -20,6 +22,7 @@ export default function setup(posts) {
     const router = useRouter()
     const error = useError();
     const store = useStore()
+    const query = ref('')
 
     async function getSecondaryData(query) {
         axios
@@ -43,8 +46,8 @@ export default function setup(posts) {
     store.commit('set_loadingModal', true),
         useAsyncData(
             () =>
-                axios.get(runtimeConfig.public.apiBase + `${endPoint.value}${route.params.slug}`, {
-                        page: page.value
+                axios.get(runtimeConfig.public.apiBase + `${endPoint.value}${route.params.slug}${query.value}`, {
+                        ...route.query
                     },
                     {
                         headers: {
@@ -64,10 +67,10 @@ export default function setup(posts) {
                     }).finally(() => {
                     store.commit('set_loadingModal', false)
                 }), {
-                watch: [page]
+                watch: [route]
             }
         )
 
-    return {productList, filterQuery, getSecondaryData, secondaryData, page}
+    return {productList, filterQuery, getSecondaryData, secondaryData, page , filterForFilter , query}
 }
 
