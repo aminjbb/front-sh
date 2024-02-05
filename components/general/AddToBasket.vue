@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <v-row class="add-to-basket ma-0">
     <v-col
         xs="4"
@@ -7,7 +7,7 @@
         :class="revers === true ? 'revers' : ''"
         class="d-flex justify-end pa-1 align-center">
         <div class="add-to-basket__price-info">
-            <template v-if="content.count > 0">
+            <template v-if="content.stock">
                 <template v-if="content.discount">
                     <div class="d-flex align-center justify-space-between">
                         <span class="product-card__price-info__discount t11 w500 ml-2">{{content.discount}}</span>

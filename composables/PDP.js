@@ -21,13 +21,13 @@ export default function setup(posts) {
 
     async function getSecondaryData(query) {
         axios
-            .get(runtimeConfig.public.apiBase + `product/pdp/details/${route.params.slug}`, {
+            .get(runtimeConfig.public.apiBase + `/product/pdp/details/${route.params.slug}`, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
-                params: {
-                    comment_per_page: 20
-                }
+                // params: {
+                //     comment_per_page: 20
+                // }
             })
             .then((response) => {
                 secondaryData.value = response
@@ -39,7 +39,7 @@ export default function setup(posts) {
     store.commit('set_loadingModal', true),
     useAsyncData(
         () =>
-        axios.get(runtimeConfig.public.apiBase + `product/pdp/get/${route.params.slug}`,
+        axios.get(runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
             {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,

@@ -1,14 +1,14 @@
-<template lang="">
+<template>
 <div v-if="content" class="selected-seller">
     <div class="d-flex align-center mb-3">
         <span class="t14 w400 text-grey-darken-3 ml-1">فروشگاه:</span>
 
-        <span v-if="content.name" class="t12 w400 text-grey-darken-1">
+        <span v-if="content.seller_shopping_name" class="t12 w400 text-grey-darken-1">
             <v-icon
                 icon="mdi-account-outline"
                 color="grey-darken-1"
                 class="t15" />
-            {{content.name}}
+            {{content.seller_shopping_name}}
         </span>
     </div>
 

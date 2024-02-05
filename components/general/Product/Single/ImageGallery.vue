@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div v-if="items && items.length" class="image-gallery">
     <v-row class="ma-0 xs-hide h-100">
         <div class="pa-0 pl-3 image-gallery__thumbnail h-100">

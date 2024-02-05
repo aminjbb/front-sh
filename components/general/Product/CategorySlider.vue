@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div v-if="items && items.length" class="product-category-slider">
     <header class="t20 w400 text-grey-darken-3 mb-4">
         خرید بر اساس محصول
@@ -36,9 +36,9 @@
                 }"
             class="mySwiper">
             <swiper-slide v-for="(item, index) in items" :key="`brands-${index}`">
-                <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="item.link" :title="item.label">
-                    <img :src="imageAddress(item.image?.image_url)" :title="item.label" :alt="item.label" width="116" height="116" />
-                    <h2 class="t16 w400 mt-2 text-grey-darken-2 text-center">{{item.title}}</h2>
+                <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="`product/${item.slug}`" :title="item.label">
+                    <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="116" height="116" />
+                    <h2 class="t16 w400 mt-2 text-grey-darken-2 text-center">{{item.label}}</h2>
                 </a>
             </swiper-slide>
         </swiper>

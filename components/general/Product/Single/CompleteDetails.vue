@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <section class="complete-details mt-10">
     <nav class="xs-hide">
         <ul class="complete-details__tabs d-flex pa-0 ma-0 w-100" ref="detailsRef">
@@ -102,7 +102,7 @@
 
             <div v-if="attrs" class="complete-details__product-info__table mt-2 mb-7">
                 <div class="d-flex align-center w-100 pa-0" v-for="(attr, indx) in attrs">
-                    <div class="text-grey t13 w400 pr-2 pl-10 py-3">{{attr.label}}</div>
+                    <div class="text-grey t13 w400 pr-2 pl-10 py-3">{{attr.attribute}}</div>
                     <div class="text-grey-darken-2 t14 w400 number-font pr-3 py-3 flex-grow-1">{{attr.value}}</div>
                 </div>
             </div>
