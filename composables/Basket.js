@@ -65,8 +65,46 @@ export default function setup() {
                 // auth.checkAuthorization(err.response)
             });
     };
+    async function calculateSendingPrice(address_id , sending_method ) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/calculate/sending/price`, {
+                address_id:address_id,
+                sending_method:sending_method,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                getBasket()
+            })
+            .catch((err) => {
+                // auth.checkAuthorization(err.response)
+            });
+    };
+    async function createOrder(sending_method , invitation_code , address_id , payment_method ) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/crud/create`, {
+                address_id:address_id,
+                invitation_code:invitation_code,
+                sending_method:sending_method,
+                payment_method:payment_method
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                window.location = response.data.data.payment_link
+
+            })
+            .catch((err) => {
+                // auth.checkAuthorization(err.response)
+            });
+    };
 
 
-    return {getBasket, loading ,addToBasket , deleteShpsBasket}
+
+    return {getBasket, loading ,addToBasket , deleteShpsBasket , calculateSendingPrice , createOrder}
 }
 
