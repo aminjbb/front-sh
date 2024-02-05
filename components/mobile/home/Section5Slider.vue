@@ -1,6 +1,6 @@
 <template>
 <section v-if="content" class="section5-slider section5-slider--mobile mb-4">
-    <div class="d-flex align-center flex-wrap" :style="{ backGround: `#${slider.background_hex_code}` }">
+    <div class="d-flex align-center flex-wrap" :style="{ background: `${slider.background_hex_code}` }">
         <div class="section5-slider__info">
             <div v-if="content.label" class="section5-slider__info__title text-white mb-2">
                 {{slider.label}}
