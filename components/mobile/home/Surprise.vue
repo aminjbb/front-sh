@@ -33,7 +33,6 @@
                 :slidesPerView="6"
                 :spaceBetween="8"
                 :modules="modules"
-                :loop="true"
                 :navigation="true"
                 :breakpoints="{
                     '200': {

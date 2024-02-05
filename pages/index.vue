@@ -1,5 +1,7 @@
 <template>
 <main v-if="screenType !== null" class="v-home">
+
+    <h1 class="ov-h h-0">{{ title }}</h1>
     <!--  desktop size -->
     <template v-if="screenType === 'desktop'">
         <desktopHomeMainSlider :items="responseDot(1)" />
@@ -30,7 +32,7 @@
                 :items="desktopBanner2"
                 col="3" />
 
-            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9"/>
+            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" />
 
             <desktopHomeBanner
                 :title="titleSection10"
@@ -50,8 +52,10 @@
             <desktopHomeBanner :items="desktopBanner4" col="4" />
 
             <template v-if="homeBlog && homeBlog.length">
-                <header class="t20 text-right text-grey-darken-2 pa-3 pb-5">
-                  {{titleSection13 }}
+                <header class="pa-3 pb-5">
+                    <h2 class="t20 text-right text-grey-darken-2">
+                        {{titleSection13 }}
+                    </h2>
                 </header>
 
                 <v-row>
@@ -98,7 +102,7 @@
 
             <mobileHomeBanner :items="mobileBanner2" />
 
-            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات"/>
+            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" class="mb-5"/>
 
             <mobileHomeBanner :items="mobileBanner3" />
 
@@ -117,8 +121,10 @@
             </div>
 
             <template v-if="homeBlog && homeBlog.length">
-                <header class="t20 text-right text-grey-darken-2 pa-3 pb-5 w500">
-                    پربازدیدترین مقالات
+                <header class="pa-3 pb-5 w500">
+                    <h2 class="t20 text-right text-grey-darken-2">
+                        پربازدیدترین مقالات
+                    </h2>
                 </header>
 
                 <v-row>
@@ -151,7 +157,7 @@ export default {
 
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | خرید لوازم آرایشی، بهداشتی، عطر')
-        const description = ref(' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com')
+        const description = ref(' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com - خرید اینترنتی لوازم آرایشی و بهداشتی با ضمانت اصالت کالا -  برای خرید کلیک کنید!')
 
         useHead({
             title,
@@ -169,19 +175,20 @@ export default {
         return {
             getHomeSections,
             homeSectionList,
-            loading
+            loading,
+            title
         };
     },
 
     computed: {
         homeBanners1() {
             try {
-                return this.responseDot(4)?.banners
+                return this.responseDot(4) ?.banners
             } catch (e) {
                 return []
             }
         },
-        
+
         desktopBanner1() {
             try {
                 const banners = this.homeBanners1.filter(item => item.device === 'desktop')
@@ -202,7 +209,7 @@ export default {
 
         homeBanners2() {
             try {
-                return this.responseDot(8)?.banners
+                return this.responseDot(8) ?.banners
             } catch (e) {
                 return []
             }
@@ -228,7 +235,7 @@ export default {
 
         homeBanners3() {
             try {
-                return this.responseDot(10)?.banners
+                return this.responseDot(10) ?.banners
             } catch (e) {
                 return []
             }
@@ -236,33 +243,33 @@ export default {
 
         titleSection10() {
             try {
-            return this.responseDot(10)?.label
+                return this.responseDot(10) ?.label
             } catch (e) {
-            return ''
+                return ''
             }
-        },   
+        },
 
         titleSection9() {
             try {
-            return this.responseDot(9)?.label
+                return this.responseDot(9) ?.label
             } catch (e) {
-            return ''
+                return ''
             }
         },
 
         titleSection11() {
             try {
-            return this.responseDot(11)?.label
+                return this.responseDot(11) ?.label
             } catch (e) {
-            return ''
+                return ''
             }
         },
-        
+
         titleSection13() {
             try {
-            return this.responseDot(13)?.label
+                return this.responseDot(13) ?.label
             } catch (e) {
-            return ''
+                return ''
             }
         },
 
@@ -286,7 +293,7 @@ export default {
 
         homeBanners4() {
             try {
-                return this.responseDot(12)?.banners
+                return this.responseDot(12) ?.banners
             } catch (e) {
                 return []
             }
@@ -312,7 +319,7 @@ export default {
 
         homeSkus() {
             try {
-                return this.responseDot(9)?.skus.slice(0, 6)
+                return this.responseDot(9) ?.skus.slice(0, 6)
             } catch (e) {
                 return []
             }
@@ -320,7 +327,7 @@ export default {
 
         homeBlog() {
             try {
-                return this.responseDot(13)?.banners.slice(0, 4)
+                return this.responseDot(13) ?.banners.slice(0, 4)
             } catch (e) {
                 return []
             }
@@ -334,7 +341,7 @@ export default {
          * @return {*}
          */
         responseDot(id) {
-            if (id) return this.homeSectionList?.find(item => item.id === id);
+            if (id) return this.homeSectionList ?.find(item => item.id === id);
             return '';
         },
     },

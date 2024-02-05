@@ -13,7 +13,7 @@
     }
 
     .v-card {
-        border:1px solid #EEE;
+        border: 1px solid #EEE;
         filter: drop-shadow(0px 6px 30px rgba(0, 0, 0, 0.09));
         margin-bottom: 20px !important;
     }
@@ -27,11 +27,27 @@
         }
     }
 
-    .contact-info{
-        &__socials{
+    .contact-info {
+        &__socials {
+
             a:nth-child(2),
-            a:nth-child(3){
+            a:nth-child(3) {
                 margin-bottom: -7px;
+            }
+
+            i,
+            path {
+                transition: color 0.5s ease;
+            }
+
+            a:hover {
+                i {
+                    color: #D72685 !important
+                }
+
+                path {
+                    fill: #D72685 !important
+                }
             }
         }
     }
@@ -42,8 +58,8 @@
         }
     }
 
-    &__map{
-        img{
+    &__map {
+        img {
             max-width: 100%;
             height: auto;
         }

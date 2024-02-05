@@ -15,42 +15,30 @@
             <div class="col-9">
                 <v-row class="ma-0 pa-0">
                     <div class="col-5 pa-3">
-                        <generalWalletCard :wallet="walletMocData" />
+                        <generalWalletCard :wallet="userWallet.wallet" />
                     </div>
 
                     <div class="col-7 pa-3">
                         <generalWalletTransaction
                             :details="detailsMac"
                             :tableHeader="tableHeader"
-                            :items="transactionTableMacData" />
+                            :items="formatTransaction" />
                     </div>
                 </v-row>
             </div>
         </v-row>
     </v-container>
+    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="getLastTransaction" :phoneNumber="userWallet.phone_number"/>
 </main>
 </template>
 
 <script>
-import auth from '@/middleware/auth';
-import {
-    splitChar
-} from "~/utils/functions.js";
+import User from '@/composables/User.js';
 
 export default {
 
     data() {
         return {
-            user: null,
-            password: null,
-            visible: false,
-            wallet: null,
-            walletMocData: {
-                all_mony: '243500',
-                accept_mony: '98000',
-                forbidden_money: '145000'
-            },
-            rule: [v => !!v || 'این فیلد الزامی است'],
             detailsMac: {
                 all: '1250000',
                 bought: '1105000',
@@ -72,103 +60,6 @@ export default {
                 title: 'تاریخ تراکنش',
                 key: 'date_fa',
             }],
-            transactionTableMacData: [{
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'increase',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                },
-                {
-                    type: 'decrease',
-                    price: '34300',
-                    code: '52589',
-                    date_fa: '1402/06/12 - 11:24:52'
-                }
-            ]
         }
     },
 
@@ -178,36 +69,66 @@ export default {
         const title = ref('فروشگاه اینترنتی شاواز | کیف پول')
         const description = ref("شارژ کیف پول، برداشت از کیف پول، کیف پول کاربر، پنل کیف پول")
 
+        const {
+            getUserWallet,
+            userWallet
+        } = new User()
+
         useHead({
             title,
             meta: [{
                 name: 'description',
                 content: description
             }]
+
         })
 
         return {
-            userToken
+            userToken,
+            getUserWallet,
+            userWallet
         };
     },
 
-    methods: {
-        splitChar,
+    computed: {
+        formatTransaction() {
+            const transactionArray = [];
+            if (this.userWallet.transactions && this.userWallet.transactions.length > 0) {
 
-        async fetchUserProfile() {
-            try {
-                const userProfile = await auth.getUserProfile(this.userToken)
-                
-                // Use the userProfile data as needed
-                console.log('User Profile Data:', userProfile.data)
-            } catch (error) {
-                // Handle errors
+                this.userWallet.transactions.forEach(element => {
+                    const obj = {
+                        type: element.description,
+                        price: element.amount,
+                        code: element.id,
+                        date_fa: element.created_at_fa,
+                    }
+                    transactionArray.push(obj);
+                })
             }
+            return transactionArray;
+        },
+
+        getLastTransaction(){
+            if(this.userWallet.transactions && this.userWallet.transactions.length > 0){
+                return this.userWallet.transactions[this.userWallet.transactions.length -1];
+            }
+            return '';
         }
     },
 
     mounted() {
-        this.fetchUserProfile();
+        if (!this.userToken) {
+            window.location = '/login';
+        } else {
+            this.getUserWallet();
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            this.$refs.resultModal.openModal();
+        }
     },
 }
 </script>
