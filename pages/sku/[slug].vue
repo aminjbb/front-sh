@@ -1,6 +1,6 @@
 <template>
 <main class="v-product v-product--single">
-    <h1 class="v-hide">{{title}}</h1>
+    <h1 class="v-hide">{{productLabel}}</h1>
 
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
@@ -16,15 +16,15 @@
                 class="pa-3"
                 cols="12"
                 lg="7">
-                <generalProductSingleDetails :content="contentMocket" />
+                <generalProductSingleDetails :content="productDetail" />
                 
                 <template v-if="screenType !== null && screenType === 'desktop'">
                     <v-row class="v-product--single__border ma-0 px-1 mt-5">
                         <v-col md="7" lg="8">
-                            <desktopProductSingleSelectedSeller :content="selectedSellerMoc" />
+                            <desktopProductSingleSelectedSeller :content="productSelectedSeller" />
                         </v-col>
                         <v-col md="5" lg="4">
-                            <generalAddToBasket :content="selectedSellerMoc" />
+                            <generalAddToBasket :content="productSelectedSeller" />
                         </v-col>
                     </v-row>
                 </template>
@@ -32,7 +32,7 @@
                 <template v-else-if="screenType !== null && screenType === 'mobile'">
                     <v-row class="v-product--single__border ma-0 px-1 mt-5">
                         <v-col md="7" lg="8">
-                            <mobileProductSingleSelectedSeller :content="selectedSellerMoc" :sellers="contentMocket.sellers" />
+                            <mobileProductSingleSelectedSeller :content="productSelectedSeller" :sellers="productSellers" />
                         </v-col>
                     </v-row>
                 </template>
@@ -43,26 +43,25 @@
             <generalAboutOurValues class="v-product--single__values ma-0 mt-5" />
 
             <div class="v-product--single__border mt-5" id="seller-list">
-                <template v-for="(seller, index) in contentMocket.sellers" :key="`seller${index}`">
+                <template v-for="(seller, index) in productSellers" :key="`seller${index}`">
                     <generalProductSingleSellerCard :seller="seller" />
                     <v-divider v-if="index +1 < contentMocket.sellers.length" color="grey" />
                 </template>
             </div>
         </template>
-
         <mobileHomeSection8Slider
             class="mt-5 pb-3"
-            :items="relatedProductsMocket"
+            :items="relatedProducts"
             title="محصولات مشابه"
             hideIndex
             navigation />
 
         <generalProductSingleCompleteDetails
-            :description="contentMocket.details.general"
-            :attrs="contentMocket.descAttrs"
-            :instructions="contentMocket.details.instructions"
-            :advantages="contentMocket.details.advantages"
-            :disadvantages="contentMocket.details.disadvantages" />
+            :description="pdpSecondaryData?.description"
+            :attrs="pdpSecondaryData?.specifics"
+            :instructions="pdpSecondaryData?.how_to_use"
+            :advantages="pdpSecondaryData?.advantage"
+            :disadvantages="pdpSecondaryData?.disadvantage" />
 
         <v-divider color="grey" class="mt-5" />
 
@@ -292,7 +291,6 @@ export default {
                 site_price: 269900,
                 count: 5,
             },
-            relatedProducts: [],
             relatedProductsMocket: [{
                     image: 'category.jpg',
                     label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
@@ -364,6 +362,51 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+    beforeMount() {
+      this.getSecondaryData()
+    },
+  computed:{
+      productDetail(){
+        try {
+          return this.product.data.data
+        }
+        catch (e) {
+          return  ''
+        }
+      },
+      productSelectedSeller(){
+        try {
+          return this.productDetail.shps_list[0]
+        }
+        catch (e) {
+          return  ''
+        }
+      },
+      productSellers(){
+        try {
+          return this.productDetail.shps_list
+        }
+        catch (e) {
+          return  ''
+        }
+      },
+      relatedProducts(){
+        try {
+          return this.secondaryData?.data?.data?.related_products
+        }
+        catch (e) {
+          return []
+        }
+      },
+      pdpSecondaryData(){
+        try {
+          return this.secondaryData?.data?.data
+        }
+        catch (e) {
+          return []
+        }
+      }
+    }
 }
 </script>
 

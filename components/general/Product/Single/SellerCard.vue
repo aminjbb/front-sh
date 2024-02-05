@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <v-row
     v-if="seller"
     class="seller-card ma-0 pa-3"
@@ -7,12 +7,12 @@
         cols="12"
         md="3"
         class="py-0 d-flex align-center seller-card__seller-name">
-        <div v-if="seller.name" class="d-flex align-center">
+        <div v-if="seller.seller_shopping_name" class="d-flex align-center">
             <v-icon
                 :icon="selected === true ? 'mdi-account-check-outline' : 'mdi-account-outline'"
                 :color="selected === true ? 'green' :'grey'"
                 class="t15 ml-1" />
-            <span class="16 w400 text-grey-darken-4 ml-1">فروشگاه {{seller.name}}</span>
+            <span class="16 w400 text-grey-darken-4 ml-1">فروشگاه {{seller.seller_shopping_name}}</span>
         </div>
     </v-col>
 
