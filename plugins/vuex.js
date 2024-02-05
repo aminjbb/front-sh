@@ -11,11 +11,15 @@ const store = createStore({
         first_name: null,
         last_name: null,
         phone_number: null,
+        basket:[]
       }
     };
   },
 
   mutations: {
+    set_basket(state , obj){
+      state.basket = obj
+    },
     set_loadingModal(state, bool) {
       state.loadingModal = bool
     },
@@ -32,6 +36,9 @@ const store = createStore({
   },
 
   getters: {
+    get_basket(state ){
+      return  state.basket
+    },
     get_loadingModal(state) {
       return state.loadingModal
     },

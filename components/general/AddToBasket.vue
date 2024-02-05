@@ -40,12 +40,14 @@
         :md="mdCols[1]"
         class="d-flex justify-end pa-1">
         <template v-if="count === 0">
+
             <v-btn
-                @click="addToCard()"
+                @click="addToCard(content.id)"
                 height="44"
                 title="افزودن به سبد"
                 class="btn btn--submit">
                 افزودن به سبد خرید
+
             </v-btn>
         </template>
         <template v-else>
@@ -68,7 +70,14 @@
 </template>
 
 <script>
+import axios from "axios";
+import Basket from '@/composables/Basket.js'
 export default {
+    setup(){
+      const  {addToBasket ,deleteShpsBasket} = new Basket()
+      return {addToBasket , deleteShpsBasket}
+    },
+
     data() {
         return {
             loading: false,
@@ -102,24 +111,35 @@ export default {
     },
 
     methods: {
-        addToCard() {
-            this.count = 1;
-            //TODO: write add to basket method
+        async addToCard(id) {
+          this.count ++;
+          this.addToBasket(id , this.count)
         },
-
         increaseCount() {
-            if (this.count < this.content.count) {
+            if (this.count < this.content.order_limit) {
                 this.count++;
+                this.addToBasket(this.content.id , this.count )
             }
         },
-
         decreaseCount() {
             if (this.count > 0) {
                 this.count--;
+                if (this.count == 0) this.deleteShpsBasket(this.content.id)
+                else this.addToBasket(this.content.id , this.count )
+            }
+            else{
+
             }
             
         },
-    }
+    },
+
+  watch:{
+      content(val){
+        if (val.in_basket > 0) this.count = val.in_basket
+      }
+  }
+
 }
 </script>
 
