@@ -101,7 +101,7 @@
 
         <v-card class="pa-8 mobile-no-border">
             <div class="contact-info">
-                <h1 class="t16 w500 mb-8 text-grey-darken-2">حرف هاتون رو میخونیم و منتظر نظراتتون هستیم</h1>
+                <h2 class="t16 w500 mb-8 text-grey-darken-2">حرف هاتون رو میخونیم و منتظر نظراتتون هستیم</h2>
 
                 <div class="contact__form mt-5">
                     <v-form ref="contact" v-model="valid">

@@ -17,17 +17,18 @@
                     </h2>
 
                     <ul class="ma-0 pa-0 pr-5">
-                        <li class="t14 w400 text-grey-darken-1">
-                            لینک دعوت زیر را برای دوستات بفرست تا با ثبت‌نام در شاواز کد تخفیف ۲۰٬۰۰۰ تومانی هدیه بگیرند.
+                        <li class="t14 w400 text-grey-darken-1 number-font">
+                            لینک دعوت زیر را برای دوستات بفرست تا با ثبت‌نام در شاواز کد تخفیف 20,000 تومانی هدیه بگیرند.
                         </li>
-                        <li class="t14 w400 text-grey-darken-1">
-                            با اولین سفارش هر دوستت، کیف پول تو هم 15,۰۰۰ تومان شارژ میشه.
+                        <li class="t14 w400 text-grey-darken-1 number-font mt-1">
+                            با اولین سفارش هر دوستت، کیف پول تو هم 15,000 تومان شارژ میشه.
                         </li>
 
                         <div class="d-flex align-center mt-5">
                             <div class="ml-10 w-50">
                                 <label class="d-block t12 text-grey-darken-2 mb-2">کد معرف</label>
                                 <v-text-field
+                                    class="cur-p"
                                     color="grey-lighten-3"
                                     density="compact"
                                     variant="solo"
@@ -75,7 +76,7 @@ export default {
 
     data() {
         return {
-            identificationCode: null,
+            identificationCode: 'identification code moc data',
             products: [],
             productsMoc: [{
                     image: {

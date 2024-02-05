@@ -1,8 +1,8 @@
 <template>
 <div class="c-menu">
     <v-container class="pb-0">
-        <nav class="menu menu--desktop">
-            <ul class="menu__items">
+        <nav class="menu menu--desktop d-flex justify-space-between align-center">
+            <ul class="menu__items flex-grow-1 ml-3">
                 <li
                     class="menu__item"
                     v-for="(menu, index) in menuList"
@@ -139,6 +139,14 @@
                     </template>
                 </li>
             </ul>
+
+            <a class="d-flex align-center" href="/">
+                <v-icon
+                    icon="mdi-fire"
+                    color="primary"
+                    class="ml-2" />
+                <span class="t14 w500 text-primary">فروش ویژه</span>
+            </a>
         </nav>
     </v-container>
 </div>
@@ -426,7 +434,7 @@ $parent: 'menu';
                                                             }
 
                                                             &:hover {
-                                                                > span{
+                                                                >span {
                                                                     color: #AC1E6A
                                                                 }
                                                             }
