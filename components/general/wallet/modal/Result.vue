@@ -1,6 +1,5 @@
 <template lang="">
 <div>
-    <div @click="openModal()">1111111</div>
     <v-dialog
         v-if="dialog"
         v-model="dialog"

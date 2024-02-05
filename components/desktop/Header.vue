@@ -107,7 +107,7 @@
     <desktopMenu />
 </header>
 
-<desktopHeaderBasket />
+<desktopHeaderBasket :userBasket="userBasket" />
 
 <v-dialog
     v-if="dialog"
@@ -157,6 +157,7 @@
 
 <script>
 import auth from '@/middleware/auth';
+import Basket from '@/composables/Basket.js'
 
 export default {
     name: "Desktop Header",
@@ -174,10 +175,23 @@ export default {
         };
     },
 
+    computed: {
+        userBasket() {
+            try {
+                const basket = this.$store.getters['get_basket']
+                return basket ?.data ?.data
+            } catch (e) {
+                return []
+            }
+        }
+    },
+
     setup() {
         const userToken = useCookie('userToken')
+        const {getBasket} = new Basket()
         return {
             userToken,
+            getBasket
         }
     },
 
@@ -193,6 +207,7 @@ export default {
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         document.addEventListener('click', this.closeDropDown);
+        this.getBasket();
     },
 
     beforeDestroy() {
@@ -450,7 +465,6 @@ $parent: 'header';
     }
 }
 </style>
-
 <style scoped>
 .mobile-drop-down__items {
     left: 0;

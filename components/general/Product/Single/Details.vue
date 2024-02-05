@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="product-details">
     <div class="d-flex justify-space-between align-center">
         <div class="d-flex align-center surprise-part">
@@ -38,16 +38,17 @@
     <div class="colors-pallet mb-2">
         <h4 class="t16 w400 text-grey-darken-3 mb-3">رنگ:</h4>
 
-        <div class="scroll--x">
+        <div class="scroll--x pb-3">
             <div class="d-flex align-center">
+
                 <div
                     class="d-flex align-center colors-pallet__item ml-5"
                     v-for="(color,index) in content.colors"
                     :key="`product-single-color${index}`"
                     :id="`color--${color.id}`"
-                    @click="selectColor(color.id)">
-                    <div class="colors-pallet__item__code ml-1" :class="color.selected === true ? 'colors-pallet__item__code--selected' : ''">
-                        <span :style="{backgroundColor: color.code}" />
+                    @click="selectColor(color.slug)">
+                    <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color.slug) === true ? 'colors-pallet__item__code--selected' : ''">
+                        <span :style="{backgroundColor: color.value}" />
                         <v-icon
                             icon="mdi-check"
                             size="x-small"
@@ -68,13 +69,15 @@
 
     <nav class="attribute-list">
         <ul class="ma-0 pa-0 pr-5">
+
             <li
-                v-for="attr in content.titleAttrs"
+                v-for="attr in content.attributes"
                 class="d-flex align-center"
-                :class="attr.values.length >1 ? 'mb-2' : ''">
-                <span class="t13 w400 text-grey" :class="attr.values.length >1 ? 'ml-2' : 'ml-1'">{{attr.label}}: </span>
-                <template v-if="attr.values.length == '1'">
-                    <span class="t13 w400 text-grey-darken-1">{{attr.values[0].label}}</span>
+                :class="attr.attribute_values.length >1 ? 'mb-2' : ''">
+                <span class="t13 w400 text-grey" :class="attr.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr.label}}: </span>
+
+                <template v-if="attr.attribute_values">
+                    <span class="t13 w400 text-grey-darken-1 mr-2">{{attr.attribute_values.label}}</span>
                 </template>
                 <template v-else>
                     <div class="attr-select">
@@ -87,7 +90,7 @@
                                 item-title="label"
                                 item-value="id"
                                 hide-details
-                                :items="attr.values"
+                                :items="attr.attribute_values"
                                 v-model="selectedAttr"
                                 @update:modelValue="selectAttr()" />
                         </ClientOnly>
@@ -143,6 +146,10 @@ export default {
     },
 
     methods: {
+        isColorSelected(colorSlug){
+          if (colorSlug === this.$route.params.slug) return true
+          return false
+        },
         /**
          * Counter for time
          * @param {*} targetDate
@@ -169,9 +176,9 @@ export default {
             }, 1000);
         },
 
-        selectColor(id) {
-            console.log("🚀 ~ selectColor ~ id:", id)
-            //TODO: write method for selected color
+        selectColor(slug) {
+            this.$router.push(`/sku/${slug}`)
+
         },
 
         selectAttr() {

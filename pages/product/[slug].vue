@@ -5,7 +5,7 @@
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
 
-        <generalProductCategorySlider :items="categoryListMocket" class="mt-5" />
+<!--        <generalProductCategorySlider :items="categoryListMocket" class="mt-5" />-->
 
         <v-row class="mt-10">
             <v-col cols="12" md="3">

@@ -5,7 +5,7 @@
     <v-container>
       <generalBreadcrumb :items="BreadcrumbItems"/>
 
-
+      <generalProductCategorySlider :items="productsSecondaryData" class="mt-5" />
       <v-row class="mt-10">
         <v-col cols="12" md="3">
           <generalProductFilterSideBar
@@ -287,6 +287,15 @@ export default {
     productFilterSecondaryData() {
       try {
         return this.secondaryData.data.data.filters
+      } catch (e) {
+        return []
+      }
+    },
+
+    /** return filters on secondaryData slug route **/
+    productsSecondaryData() {
+      try {
+        return this.secondaryData.data.data.products
       } catch (e) {
         return []
       }

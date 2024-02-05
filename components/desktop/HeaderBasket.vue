@@ -1,11 +1,11 @@
-<template lang="">
+<template>
 <div class="header-basket" id="basket-header">
     <header class="header-basket__header d-flex align-center justify-space-between pr-4 py-2">
         <div class="d-flex align-center ">
             <a href="/user/dashboard" class="ml-3">
                 <v-icon icon="mdi-cart-minus" color="grey" />
             </a>
-            <span class="text-grey w400 t13 number-font">سبد خرید ({{dataMoc?.shps.length ? dataMoc?.shps.length : 0}} کالا)</span>
+            <span class="text-grey w400 t13 number-font">سبد خرید ({{userBasket?.details.length ? userBasket?.details.length : 0}} کالا)</span>
         </div>
 
         <v-btn
@@ -18,13 +18,13 @@
         </v-btn>
     </header>
 
-    <template v-if="dataMoc?.shps && dataMoc?.shps.length">
+    <template v-if="userBasket?.details && userBasket?.details.length">
         <div class="header-basket__content header-basket__content--no-empty">
             <div>
-                <template v-for="(item, index) in dataMoc.shps" :key="`header-product${index}`" >
+                <template v-for="(item, index) in userBasket.details" :key="`header-product${index}`" >
                     <mobileCartProductCard :content="item" noSeller/>
 
-                    <v-divider v-if="index + 1 < dataMoc.shps.length" color="grey" />
+                    <v-divider v-if="index + 1 < userBasket.details.length" color="grey" />
                 </template>
             </div>
         </div>
@@ -32,10 +32,10 @@
         <div class="header-basket__price">
             <div class="d-flex align-center justify-space-between">
                 <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-                <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(dataMoc.paid_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(userBasket.paid_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
             </div>
 
-            <p class="text-green t12 w400 pt-1 number-font">میزان سود شما از این خرید {{splitChar(dataMoc.total_price - dataMoc.paid_price)}} می‌باشد.</p>
+            <p v-if="(userBasket.total_price - userBasket.paid_price) > 0" class="text-green t12 w400 pt-1 number-font">میزان سود شما از این خرید {{splitChar(userBasket.total_price - userBasket.paid_price)}} می‌باشد.</p>
 
             <div class="d-flex align-center justify-center mt-5 w-100">
                 <v-btn
@@ -87,6 +87,10 @@
 
 <script>
 export default {
+    props:{
+      /** user basket fro vuex **/
+      userBasket: null
+    },
     data() {
         return {
             suggestProducts: [],
