@@ -12,11 +12,11 @@
                 <template v-if="userData">
                     <div class="d-flex flex-column">
                         <span v-if="userData.first_name && userData.last_name" class="user-phone t16">{{userData.first_name}} {{userData.last_name}}</span>
-                        <span v-if="userData && userData.phone_number" class="user-phone t13 text-grey mt-2">{{userData.phone_number}}</span>
+                        <span v-if="userData && userData.phone_number" class="user-phone t13 text-grey mt-2 number-font">{{userData.phone_number}}</span>
                     </div>
                 </template>
                 <template v-else>
-                    <span v-if="userData && userData.phone_number" class="user-phone t16">{{userData.phone_number}}</span>
+                    <span v-if="userData && userData.phone_number" class="user-phone t16 number-font">{{userData.phone_number}}</span>
                 </template>
             </div>
             <a href="/user/profile">

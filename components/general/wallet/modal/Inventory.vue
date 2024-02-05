@@ -108,14 +108,13 @@
                         <span class="t12 w400 text-grey-darken-1 mb-2 d-block">شماره کارت <span class="text-red">*</span></span>
 
                         <v-text-field
-                            class="w-100"
+                            :rules="NumberCardCodeRule"
+                            class="w-100 mb-10"
                             density="compact"
                             variant="outlined"
+                            hint="اطلاعات کارت داده شده باید متعلق به صاحب حساب باشد."
                             append-inner-icon="mdi-credit-card-outline"
-                            hide-details
                             v-model="cartNumber" />
-
-                        <span class="t10 w400 text-grey mb-10 d-block mt-1">اطلاعات کارت داده شده باید متعلق به صاحب حساب باشد.</span>
 
                         <v-btn
                             :disabled="cartNumber === null || cartNumber == '' ? true : false"
@@ -208,6 +207,10 @@ export default {
             step: 1,
             screenType: null,
             cartNumber: null,
+            NumberCardCodeRule: [
+                (v) => !!v || "این فیلد الزامی است",
+                (v) => /^[0-9]{16}$/.test(v) || "شماره کارت معتبر وارد کنید",
+            ],
         }
     },
 
