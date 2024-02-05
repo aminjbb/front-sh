@@ -21,16 +21,16 @@
         </div>
 
         <div class="v-about__values">
-            <header class="t20 text-right text-grey-darken-2 pa-3 pb-5 pr-0 mt-4">
-                ارزش‌های شاواز
+            <header class="pa-3 pb-5 pr-0 mt-4">
+               <h2 class="t20 text-right text-grey-darken-2"> ارزش‌های شاواز</h2>
             </header>
 
             <generalAboutOurValues />
         </div>
 
         <div class="v-about__progress">
-            <header class="t20 text-right text-grey-darken-2 pa-3 pb-5 pr-0 mt-5">
-                مسیر شاواز
+            <header class="pa-3 pb-5 pr-0 mt-5">
+               <h2 class="t20 text-right text-grey-darken-2"> مسیر شاواز</h2>
             </header>
 
             <div class="v-about__progress__image d-flex justify-center">
@@ -45,7 +45,7 @@
 export default {
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | درباره ما')
-        const description = ref("آنچه باید درباره شاواز بدانید")
+        const description = ref("آنچه باید درباره شاواز بدانید | فروشگاه اینترنتی شاواز (شرکت سلامت آوران یزدان نفیس) با معرفی و عرضه بهترین محصولات لوازم آرایشی و بهداشتی، عطر و ادکلن، بهداشت شخصی وبا 7 روز ضمانت بازگشت کالا، ارسال سریع و تضمین اصل بودن کالا تجربه‌ای متفاوت از خرید اینترنتی را برای شما ایجاد خواهد کرد.")
 
         useHead({
             title,

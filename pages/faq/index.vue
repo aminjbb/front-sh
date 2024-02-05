@@ -1,6 +1,7 @@
 <template lang="">
 <main class="v-faq">
-    <h1 class="v-hide">{{title}}</h1>
+    <h1 class="ov-h h-0">سوالات متداول</h1>
+    
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems"/>
 
@@ -43,6 +44,7 @@ export default {
             faqList: [{
                     id: 'fwef',
                     title: 'چطور می‌توانم سفارشم را پیگیری کنم؟',
+                    
                     items: [{
                             id: 'fwwqwef',
                             title: 'میتوانم سفارشم را بصورت اقساطی ( اعتباری ) پرداخت کنم؟',
@@ -91,7 +93,7 @@ export default {
     },
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | سوالات متداول')
-        const description = ref("سوالات متداول از فروشگاه اینترنتی شاواز")
+        const description = ref("سوالات متداول و پرسش های پرتکرار از فروشگاه اینترنتی شاواز")
 
         useHead({
             title,

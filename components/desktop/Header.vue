@@ -14,35 +14,39 @@
             </div>
             <div class="header__col2 d-flex align-center justify-end">
                 <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
-                    <div @click="openDropDown('dashboard')" class="cur-p">
+                    <div
+                        @click="openDropDown('dashboard')"
+                        class="cur-p"
+                        id="mobile-drop-down__show-dashboard">
                         <v-icon icon="mdi-account-outline" />
                         <v-icon icon="mdi-chevron-down" />
                     </div>
 
                     <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
                         <ul class="ma-0 pa-0">
-                            <li class="d-flex align-center mb-3 mt-1">
-                                <v-icon
-                                    icon="mdi-account-circle-outline"
-                                    color="grey-darken-3"
-                                    size="x-large"
-                                    class="ml-3" />
+                            <li class="mb-4 mt-1">
+                                <a href="/user/dashboard" class="d-flex align-center">
+                                    <v-icon
+                                        icon="mdi-account-circle-outline"
+                                        color="grey-darken-3"
+                                        size="large"
+                                        class="ml-2" />
 
-                                <template v-if="userData && userData.first_name && userData.last_name">
-                                    <div class="d-flex flex-column">
-                                        <span class="user-phone t16 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
-                                    </div>
-                                </template>
-                                <template v-else>
-                                    <span v-if="userData && userData.phone_number" class="user-phone t16 text-grey-darken-3">{{ userData.phone_number }}</span>
-                                </template>
+                                    <template v-if="userData && userData.first_name && userData.last_name">
+                                        <div class="d-flex flex-column">
+                                            <span class="user-phone t15 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3">{{ userData.phone_number }}</span>
+                                    </template>
+                                </a>
                             </li>
                             <li class="mb-2">
                                 <a class="text-grey t14 d-flex align-center py-1" href="/user/order">
                                     <v-icon
                                         icon="mdi-cart-outline"
                                         class="ml-2"
-                                        size="small"
                                         color="grey" />
                                     <span class="text-grey t14">لیست سفارشات</span>
                                 </a>
@@ -53,7 +57,6 @@
                                     <v-icon
                                         icon="mdi-map-marker-outline"
                                         class="ml-2"
-                                        size="small"
                                         color="grey" />
                                     <span class="text-grey t14">آدرس‌ها</span>
                                 </a>
@@ -75,7 +78,6 @@
                                     <v-icon
                                         icon="mdi-exit-to-app"
                                         class="ml-2"
-                                        size="small"
                                         color="grey" />
                                     <span class="text-grey t14">خروج</span>
                                 </a>
@@ -90,7 +92,7 @@
 
                 <span class="header__item__sp"></span>
 
-                <a class="header__item" @click="$router.push('/user/favorite-list')">
+                <a class="header__item" href="/user/favorite-list">
                     <v-icon icon="mdi-heart-outline" />
                 </a>
 
@@ -190,13 +192,16 @@ export default {
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
+        document.addEventListener('click', this.closeDropDown);
     },
 
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
+        document.removeEventListener('click', this.closeDropDown);
     },
 
     methods: {
+
         /**
          * Show and hide menu in scroll down and up
          */
@@ -220,7 +225,6 @@ export default {
             }
         },
 
-
         /**
          * Open menu
          * @param {*} id 
@@ -228,6 +232,16 @@ export default {
         openDropDown(id) {
             const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
             itemDropdown.classList.toggle('show');
+        },
+
+        /**
+         * Close search box if I click in outside
+         * @param {*} event 
+         */
+        closeDropDown(event) {
+            if (!event.target.closest('#mobile-drop-down__show-dashboard')) {
+                document.getElementById('mobile-drop-down__items-dashboard').classList.remove('show');
+            }
         },
 
         /**
@@ -392,8 +406,13 @@ $parent: 'header';
                     align-items: flex-end;
                 }
 
-                .v-icon:not(.mdi-login) {
+                .v-icon {
                     color: #AEAEAE;
+                }
+
+                .v-icon.mdi-cart-minus,
+                .v-icon.mdi-heart-outline,
+                .v-icon.mdi-account-outline {
                     font-size: 23px;
                 }
 

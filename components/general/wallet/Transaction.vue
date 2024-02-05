@@ -1,6 +1,8 @@
 <template lang="">
 <v-card class="pa-8 mobile-pa-0 mobile-no-border has-header">
-    <header class="card__header">تراکنش‌ها</header>
+    <header class="card__header">
+        <h2 class="t16">تراکنش‌ها</h2>
+    </header>
 
     <div class="px-5 mt-5 transactions">
         <div class="d-flex align-center transactions__details">
@@ -30,48 +32,55 @@
         </div>
 
         <v-data-table
+            v-if="tableContent && tableContent.length >0"
             class="table mt-5"
             :headers="tableHeader"
             :items="tableContent"
             :height="isMobile ? '' : 358"
             item-value="index">
             <template v-slot:item="{ item }">
-                <tr class="v-data-table__tr">
-                    <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
-                        <span class="w600 text-black ml-10" v-if="isMobile">ردیف : </span>
-                        {{ item.raw.index }}
-                    </td>
-                    <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
-                        <span class="w600 text-black ml-10" v-if="isMobile">نوع تراکنش : </span>
-                        <v-icon
-                            :icon="item.raw.type == 'increase' ? 'mdi-plus-circle-outline' : 'mdi-arrow-top-left-thin-circle-outline'"
-                            :color="item.raw.type == 'increase' ? 'success' : 'red-lighten-1'"
-                            size="small"
-                            class="ml-1" />
-                        <span :class="item.raw.type == 'increase' ? 'text-success' : 'text-red-lighten-1'" class="t12 w500">
-                            <template v-if="item.raw.type == 'increase'">
-                                شارژ کیف پول
-                            </template>
-                            <template v-else>
-                                برداشت از کیف پول
-                            </template>
-                        </span>
-                    </td>
-                    <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
-                        <span class="w600 text-black ml-10" v-if="isMobile">مبلغ : </span>
-                        {{ splitChar(item.raw.price) }}
-                    </td>
-                    <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
-                        <span class="w600 text-black ml-10" v-if="isMobile">کد سفارش : </span>
-                        {{ item.raw.code }}
-                    </td>
-                    <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
-                        <span class="w600 text-black ml-10" v-if="isMobile">تاریخ تراکنش : </span>
-                        {{ item.raw.date_fa }}
-                    </td>
-                </tr>
+                <template v-if="item">
+                    <tr class="v-data-table__tr">
+                        <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
+                            <span class="w600 text-black ml-10" v-if="isMobile">ردیف : </span>
+                            {{ item.raw.index }}
+                        </td>
+                        <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
+                            <span class="w600 text-black ml-10" v-if="isMobile">نوع تراکنش : </span>
+                            <v-icon
+                                :icon="item.raw.type == 'transaction.wallet_deposit' ? 'mdi-plus-circle-outline' : 'mdi-arrow-top-left-thin-circle-outline'"
+                                :color="item.raw.type == 'transaction.wallet_deposit' ? 'success' : 'red-lighten-1'"
+                                size="small"
+                                class="ml-1" />
+                            <span :class="item.raw.type == 'transaction.wallet_deposit' ? 'text-success' : 'text-red-lighten-1'" class="t12 w500">
+                                <template v-if="item.raw.type == 'transaction.wallet_deposit'">
+                                    شارژ کیف پول
+                                </template>
+                                <template v-else>
+                                    برداشت از کیف پول
+                                </template>
+                            </span>
+                        </td>
+                        <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
+                            <span class="w600 text-black ml-10" v-if="isMobile">مبلغ : </span>
+                            {{ splitChar(Number(String(item.raw.price).slice(0, -1))) }}
+                        </td>
+                        <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
+                            <span class="w600 text-black ml-10" v-if="isMobile">کد سفارش : </span>
+                            {{ item.raw.code }}
+                        </td>
+                        <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
+                            <span class="w600 text-black ml-10" v-if="isMobile">تاریخ تراکنش : </span>
+                            {{ item.raw.date_fa }}
+                        </td>
+                    </tr>
+                </template>
             </template>
         </v-data-table>
+
+        <div v-else class="table text-center t14 w500 text-grey-darken-3 pa-5 mt-5">
+            تراکنشی وجود ندارد
+        </div>
     </div>
 </v-card>
 </template>
@@ -112,18 +121,19 @@ export default {
     computed: {
         tableContent() {
             const tableItems = []
-            this.items.forEach((element, index) => {
-                const obj = {
-                    'index': index + 1,
-                    'type': element.type,
-                    'price': element.price,
-                    'code': element.code,
-                    'date_fa': element.date_fa
-                }
+            if (this.items && this.items.length > 0) {
+                this.items.forEach((element, index) => {
+                    const obj = {
+                        'index': index + 1,
+                        'type': element.type,
+                        'price': element.price,
+                        'code': element.code,
+                        'date_fa': element.date_fa
+                    }
 
-                tableItems.push(obj);
-            });
-
+                    tableItems.push(obj);
+                });
+            }
             return tableItems;
         }
     },

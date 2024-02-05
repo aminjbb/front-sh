@@ -1,6 +1,8 @@
 <template lang="">
 <v-card class="wallet pa-8 mobile-pa-0 mobile-no-border has-header">
-    <header class="card__header xs-hide">کیف پول</header>
+    <header class="card__header xs-hide">
+        <h1 class="t16">کیف پول</h1>
+    </header>
     <div class="px-6">
         <v-row class="ma-0 pa-0">
             <div class="pa-0 col-6">
@@ -8,7 +10,7 @@
                     <img src="~/assets/images/wallet.svg" class="wallet-card__image" alt="Shavaz wallet image" width="339" height="146">
                     <div class="pos-a w-100 wallet-card__money">
                         <div class="pos-a d-flex align-center wallet-card__money--1st pa-2">
-                            <span v-if="wallet && wallet.all_mony" class="text-primary t14 bold number-font">{{splitChar(wallet.all_mony)}}</span>
+                            <span v-if="wallet && wallet.value" class="text-primary t14 bold number-font">{{splitChar(amount)}}</span>
                             <span class="t11 w300 text-primary mr-2">تومان</span>
                         </div>
 
@@ -16,7 +18,7 @@
                             <span class="t12 w400 text-grey-darken-3">موجودی قابل برداشت: </span>
 
                             <div class="d-flex align-center">
-                                <span v-if="wallet && wallet.accept_mony" class="text-grey-darken-3 t14 bold number-font">{{splitChar(wallet.accept_mony)}}</span>
+                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 bold number-font">{{splitChar(amount)}}</span>
                                 <span class="t11 w300 text-grey-darken-3 mr-2">تومان</span>
                             </div>
                         </div>
@@ -25,7 +27,7 @@
                             <span class="t12 w400 text-grey-darken-3">موجودی غیر قابل برداشت:</span>
 
                             <div class="d-flex align-center">
-                                <span v-if="wallet && wallet.forbidden_money" class="text-grey-darken-3 t14 bold number-font">{{splitChar(wallet.forbidden_money)}}</span>
+                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 bold number-font">{{splitChar(0)}}</span>
                                 <span class="t11 w300 text-grey-darken-3 mr-2">تومان</span>
                             </div>
                         </div>
@@ -57,9 +59,9 @@
         </v-row>
 
         <div class="d-flex justify-space-between align-center mb-4">
-            <generalWalletModalInventoryIncrease />
+            <generalWalletModalInventoryIncrease :walletInventory="amount" />
 
-            <generalWalletModalInventory />
+            <generalWalletModalInventory :walletInventory="amount" />
         </div>
 
         <v-divider color="grey" class="mb-5 tablet-hide" />
@@ -89,9 +91,18 @@
 
 <script>
 export default {
+    computed: {
+        amount() {
+            try {
+                return Number(String(this.wallet.value).slice(0, -1))
+            } catch (e) {
+                return null;
+            }
+        }
+    },
     props: {
-        wallet: Object
-    }
+        wallet: Object,
+    },
 }
 </script>
 
@@ -106,7 +117,7 @@ export default {
     }
 
     >div.px-6 {
-        @include gbp(0,768) {
+        @include gbp(0, 768) {
             padding: 0 !important;
         }
     }
