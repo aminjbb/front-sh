@@ -24,7 +24,7 @@
 
                     <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
                         <ul class="ma-0 pa-0">
-                            <li class="mb-4 mt-1">
+                            <li class="mb-4 mt-1 user-data">
                                 <a href="/user/dashboard" class="d-flex align-center">
                                     <v-icon
                                         icon="mdi-account-circle-outline"
@@ -35,10 +35,11 @@
                                     <template v-if="userData && userData.first_name && userData.last_name">
                                         <div class="d-flex flex-column">
                                             <span class="user-phone t15 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
+                                            <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span>
                                         </div>
                                     </template>
                                     <template v-else>
-                                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3">{{ userData.phone_number }}</span>
+                                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
                                     </template>
                                 </a>
                             </li>
@@ -188,7 +189,9 @@ export default {
 
     setup() {
         const userToken = useCookie('userToken')
-        const {getBasket} = new Basket()
+        const {
+            getBasket
+        } = new Basket()
         return {
             userToken,
             getBasket
@@ -465,9 +468,20 @@ $parent: 'header';
     }
 }
 </style>
-<style scoped>
+
+<style lang="scss" scoped>
 .mobile-drop-down__items {
     left: 0;
     width: 172px;
+
+    li:not(.user-data) {
+        a:hover {
+
+            span,
+            .v-icon {
+                color: #D72685 !important;
+            }
+        }
+    }
 }
 </style>

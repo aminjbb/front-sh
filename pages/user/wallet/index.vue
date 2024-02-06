@@ -99,13 +99,15 @@ export default {
                     const obj = {
                         type: element.description,
                         price: element.amount,
-                        code: element.id,
+                        code: element.order_id,
                         date_fa: element.created_at_fa,
                     }
                     transactionArray.push(obj);
                 })
             }
-            return transactionArray;
+
+            const finalArray = transactionArray.reverse();
+            return finalArray;
         },
 
         getLastTransaction(){

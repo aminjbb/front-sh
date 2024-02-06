@@ -174,6 +174,7 @@ export default {
             this.loading = true;
 
             const formData = new FormData()
+            this.mount = digits(this.mount, 'en');
 
             formData.append('amount', this.mount + '0')
 
@@ -185,11 +186,6 @@ export default {
                 })
                 .then((response) => {
                     window.location = response.data.data.payment_link
-                    useNuxtApp().$toast.success('کیف پول با موفقیت شارژ شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
                 })
                 .catch((err) => {
                     useNuxtApp().$toast.error(err.response.data.message, {
