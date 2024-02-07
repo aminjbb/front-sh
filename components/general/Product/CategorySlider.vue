@@ -82,18 +82,6 @@ export default {
             modules: [FreeMode, Navigation],
         };
     },
-
-    methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
-        }
-    },
 }
 </script>
 
