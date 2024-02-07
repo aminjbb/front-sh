@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-9 pa-4 mobile-pa-0">
-                <v-card v-if="ticketListMoc && ticketListMoc.length" class="py-3 px-10 d-flex justify-space-around align-center v-ticket__info-card">
+                <v-card v-if="ticketList && ticketList.data" class="py-3 px-10 d-flex justify-space-around align-center v-ticket__info-card">
                     <img src="~/assets/images/ticket.png" class="ml-10" alt="ticket image" width="65" height="65">
 
                     <div class="flex-grow-1">
@@ -23,7 +23,7 @@
                     </div>
 
                     <v-btn
-                        href="/"
+                        href="/user/ticket/new"
                         height="44"
                         title="ثبت تیکت جدید"
                         prepend-icon="mdi-plus"
@@ -37,9 +37,9 @@
                         <span>تیکت</span>
                     </header>
 
-                    <template v-if="ticketListMoc && ticketListMoc.length">
+                    <template v-if="ticketList && ticketList.data && ticketList.data.length">
                         <div class="px-2 pb-5">
-                            <generalTicketTable :tableHeader="tableHeader" :items="ticketListMoc"/>
+                            <generalTicketTable :tableHeader="tableHeader" :items="ticketList.data"/>
                         </div>
                     </template>
 
@@ -93,34 +93,19 @@ export default {
                 title: 'عملیات',
                 key: '',
             }],
-            ticketList:[],
-            ticketListMoc:[{
-                id:'15984',
-                title:'نارضایتی از سایت',
-                priority:'ضروری',
-                created_at:'1402/10/07',
-                status:'در  انتظار پاسخ',
-            },
-            {
-                id:'15978',
-                title:'نارضایتی از سایت',
-                priority:'بالا',
-                created_at:'1402/08/07',
-                status:'بسته شده',
-            },
-            {
-                id:'14876',
-                title:'پیگیری سفارش',
-                priority:'متوسط',
-                created_at:'1402/05/19',
-                status:'بسته شده',
-            },],
         }
     },
 
     setup() {
+        const userToken = useCookie('userToken');
+
         const title = ref('فروشگاه اینترنتی شاواز | لیست تیکت های من')
         const description = ref("تماس با پشتیبانی- ارسال تیکت به پشتیبانی- ارسال درخواست جدید به پشتیبانی.");
+
+        const {
+            getUserTicketList,
+            ticketList
+        } = new User();
 
         useHead({
             title,
@@ -128,7 +113,21 @@ export default {
                 name: 'description',
                 content: description
             }]
-        })
+        });
+
+        return {
+            userToken,
+            getUserTicketList,
+            ticketList
+        };
+    },
+
+    mounted() {
+        if (!this.userToken) {
+            window.location = '/login';
+        } else {
+            this.getUserTicketList();
+        }
     },
     
 }

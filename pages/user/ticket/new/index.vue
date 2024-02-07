@@ -108,16 +108,19 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
-            isMobile:false,
+            isMobile: false,
             tab: null,
+            images: [],
+            ticketImage: [],
             form: {
                 title: null,
                 priority: null,
                 content: null,
-                files: null,
             },
             priorities: [{
                     title: 'فوری',
@@ -143,19 +146,73 @@ export default {
         const title = ref('فروشگاه اینترنتی شاواز | لیست تیکت های من')
         const description = ref("لیست تیکت ها");
 
+        const runtimeConfig = useRuntimeConfig()
+        const userToken = useCookie('userToken');
+
         useHead({
             title,
             meta: [{
                 name: 'description',
                 content: description
             }]
-        })
+        });
+
+        return {
+            runtimeConfig,
+            userToken,
+        }
     },
 
     methods: {
-        getImage() {
-            //TODO: get image
-        }
+        /**
+         * Get image 
+         * @param {*} image 
+         */
+        getImage(response) {
+            const image = response.file_id;
+            this.images.push(image);
+        },
+
+        /**
+         * Add ticket
+         */
+        addTicket() {
+            this.loading = true;
+            const formData = new FormData()
+
+            formData.append('title', this.form.title)
+            formData.append('content', this.form.content)
+            formData.append('priority', this.form.priority)
+            if (this.images) {
+                this.images.forEach((image, index) => {
+                    formData.append(`files_id[${index}]`, image)
+                })
+            }
+
+            axios
+                .post(this.runtimeConfig.public.apiBase + '/ticket/user/crud/create', formData, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.$router.push(`/user/ticket/${response?.data?.data?.id}`);
+                    useNuxtApp().$toast.success('تیکت شما با موفقیت ایجاد شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.loading = false;
+                });
+        },
     },
 
     mounted() {
