@@ -17,7 +17,7 @@
                 cols="12"
                 lg="7">
                 <generalProductSingleDetails :content="productDetail" />
-                
+
                 <template v-if="screenType !== null && screenType === 'desktop'">
                     <v-row class="v-product--single__border ma-0 px-1 mt-5">
                         <v-col md="7" lg="8">
@@ -84,10 +84,20 @@
 <script>
 import PDP from '@/composables/PDP.js'
 export default {
-  setup(){
-    const {product ,color,getSecondaryData ,secondaryData} = new PDP()
-    return {product ,color,getSecondaryData ,secondaryData}
-  },
+    setup() {
+        const {
+            product,
+            color,
+            getSecondaryData,
+            secondaryData
+        } = new PDP()
+        return {
+            product,
+            color,
+            getSecondaryData,
+            secondaryData
+        }
+    },
     data() {
         return {
             screenType: null,
@@ -135,84 +145,6 @@ export default {
                         image_url: 'product2.png',
                     },
                 ],
-                colors: [{
-                        code: '#A81199',
-                        label: 'ارغوانی',
-                        id: 1,
-                        selected: true,
-                    },
-                    {
-                        code: '#C90000',
-                        label: 'آلبالویی',
-                        id: 2,
-                        selected: false
-                    },
-                    {
-                        code: '#FFBBCF',
-                        label: 'صورتی',
-                        id: 3,
-                        selected: false
-                    },
-                    {
-                        code: '#FD4A4A',
-                        label: 'نارنجی',
-                        id: 4,
-                        selected: false
-                    },
-                    {
-                        code: '#AA483B',
-                        label: 'قهوه ای',
-                        id: 5,
-                        selected: false
-                    },
-                    {
-                        code: '#FFE4E4',
-                        label: 'نود',
-                        id: 6,
-                        selected: false
-                    }
-                ],
-                titleAttrs: [{
-                        id: 1,
-                        name: 'sazgar',
-                        label: 'سازگار با پوست',
-                        values: [{
-                                label: 'چرب',
-                                id: 12
-                            },
-                            {
-                                label: 'خشک',
-                                id: 10
-                            }
-                        ]
-                    },
-                    {
-                        id: 1,
-                        name: 'jelveh',
-                        label: 'جلوه رنگ',
-                        values: [{
-                            label:'مات',
-                            id:15
-                        }]
-                    }
-                ],
-                descAttrs: [{
-                        label: 'حجم',
-                        value: '50 میلی لیتر'
-                    },
-                    {
-                        label: 'نوع',
-                        value: 'چند رنگ'
-                    },
-                    {
-                        label: 'جلوه رنگ',
-                        value: 'مات'
-                    },
-                    {
-                        label: 'سازگار با پوست',
-                        value: 'معمولی'
-                    },
-                ],
                 sellers: [{
                         name: 'پخش رخسار',
                         stock: false,
@@ -238,12 +170,6 @@ export default {
                         count: 100,
                     }
                 ],
-                details: {
-                    general: '<div>آبرسانی فوق العاده به پوست</div><div>مناسب پوست معمولی تا مختلط</div><div>فوق سبک</div><div>فاقد الکل و چربی</div><div>ماندگاری 24 ساعته</div>',
-                    instructions: 'فواید استفاده از محصولات آبرسان شاید این سوال برای شما هم پیش آمده باشد که فایده استفاده از محصولات آبرسان برای پوست چیست و این محصولات چه عملکردی روی پوست دارد؟ محصولات آبرسان سبب تأمین رطوبت برای پوست شده و یا از خروج رطوبت موجود در بافت پوست جلوگیری می‌کند و به سبب همین ویژگی امروزه به یکی از پرکاربرد ترین محصولات مراقبت پوستی تبدیل شده است. استفاده از آب روی پوست و یا نوشیدن زیاد مایعات با وجود اینکه یکی از عوامل تأمین رطوبت برای پوست است اما استفاده تنها از آن برای پوست کافی نیست. توجه به این نکته ضروری است که کاربرد محصولات مرطوب کننده و آبرسان مشابه یکدیگر نبوده و باید از هرکدام از آن‌ها با توجه به نیاز پوستی استفاده کرد. امروزه واتر ژل نوتروژینا یکی از محبوب‌ترین محصولات آبرسان است که به دلیل کیفیت بالا، تبدیل به یکی از پرفروش‌ترین محصولات حال حاضر تبدیل شده است.نحوه عملکرد آبرسان بر پوست همه افراد باید به این نکته توجه داشته باشند که تنها افراد با پوست خشک نیازمند به استفاده از محصولات پوستی نیستند، بلکه همه انواع پوستی چرب، نرمال یا مختلظ نیز باید از محصولات مراقبتی پوست استفاده کنند تا دچار مشکلات پوستی نظیر چین و چروک، پیری زودرس و یا موارد مشابه نشوند. مهم‌ترین عملکرد آبرسان نگهداری رطوبت در سطح پوست و یا جذب رطوبت از هوای اطراف است. پس استفاده از محصولات آبرسان‌ نظیر واتر ژل آبرسان نوتروژینا برای حفظ رطوبت موردنیاز در پوست لازم و ضروری است.',
-                    advantages: '<ul><li>بستن منافذ باز</li><li>سازگار با انواع پوست</li><li>رفع چین و چروک های غیر عمیق دور لب</li></ul>',
-                    disadvantages: '<ul><li>عدم استفاده دور چشم</li><li>نامناسب برای استفاده روزانه و امکان ایجاد خشکی در صورت عدم رعایت</li></ul>',
-                },
                 comments: [{
                         id: 1,
                         author: 'نگین اسدی',
@@ -356,57 +282,55 @@ export default {
             ],
         }
     },
+    
+    computed: {
+        productDetail() {
+            try {
+                return this.product.data.data
+            } catch (e) {
+                return ''
+            }
+        },
+        productSelectedSeller() {
+            try {
+                return this.productDetail.shps_list[0]
+            } catch (e) {
+                return ''
+            }
+        },
+        productSellers() {
+            try {
+                return this.productDetail.shps_list
+            } catch (e) {
+                return ''
+            }
+        },
+        relatedProducts() {
+            try {
+                return this.secondaryData ?.data ?.data ?.related_products
+            } catch (e) {
+                return []
+            }
+        },
+        pdpSecondaryData() {
+            try {
+                return this.secondaryData ?.data ?.data
+            } catch (e) {
+                return []
+            }
+        }
+    },
+
     mounted() {
         /**
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+
     beforeMount() {
-      this.getSecondaryData()
+        this.getSecondaryData()
     },
-  computed:{
-      productDetail(){
-        try {
-          return this.product.data.data
-        }
-        catch (e) {
-          return  ''
-        }
-      },
-      productSelectedSeller(){
-        try {
-          return this.productDetail.shps_list[0]
-        }
-        catch (e) {
-          return  ''
-        }
-      },
-      productSellers(){
-        try {
-          return this.productDetail.shps_list
-        }
-        catch (e) {
-          return  ''
-        }
-      },
-      relatedProducts(){
-        try {
-          return this.secondaryData?.data?.data?.related_products
-        }
-        catch (e) {
-          return []
-        }
-      },
-      pdpSecondaryData(){
-        try {
-          return this.secondaryData?.data?.data
-        }
-        catch (e) {
-          return []
-        }
-      }
-    }
 }
 </script>
 
