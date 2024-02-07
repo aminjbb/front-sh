@@ -173,7 +173,6 @@ export default {
     data() {
         return {
             products: null,
-
         }
     },
 
@@ -199,6 +198,7 @@ export default {
 
     methods: {
         splitChar,
+
         /** calculate user profit **/
         calcProfit(paid, totalPrice) {
             try {
@@ -209,6 +209,7 @@ export default {
             }
         }
     },
+
     computed: {
         /** single order object **/
         userOrder() {
@@ -219,6 +220,7 @@ export default {
             }
         }
     },
+    
     beforeMount() {
         this.getOrder()
     }
