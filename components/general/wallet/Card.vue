@@ -33,9 +33,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="d-flex justify-space-between align-center mb-4 tablet-show">
+                    <generalWalletModalInventoryIncrease :walletInventory="amount" />
+
+                    <generalWalletModalInventory :walletInventory="amount" />
+                </div>
             </div>
 
-            <div class="col-6 tablet-show">
+            <div class="col-6 tablet-show py-5 px-3">
                 <div class="wallet-rules">
                     <div class="d-flex align-top">
                         <v-icon
@@ -58,7 +64,7 @@
             </div>
         </v-row>
 
-        <div class="d-flex justify-space-between align-center mb-4">
+        <div class="d-flex justify-space-between align-center mb-4 tablet-hide">
             <generalWalletModalInventoryIncrease :walletInventory="amount" />
 
             <generalWalletModalInventory :walletInventory="amount" />
@@ -120,10 +126,6 @@ export default {
         @include gbp(0, 768) {
             padding: 0 !important;
         }
-    }
-
-    .tablet-show {
-        padding: 20px 10px;
     }
 
     .wallet-card {

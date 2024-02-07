@@ -161,10 +161,12 @@
 }
 
 .tablet-show {
-	display: none;
-	
-	@include gbp(550, 1500) {
-		display: block !important;
+	@include gbp(1500) {
+		display: none !important;
+	}
+
+	@include gbp(0, 550) {
+		display: none !important;
 	}
 }
 
