@@ -318,6 +318,46 @@ export default {
         edit: Boolean,
     },
 
+    computed: {
+        /**
+         * City list
+         */
+        cityList() {
+            try {
+                let cityList = []
+                this.cities.forEach(city => {
+                    const form = {
+                        title: city.label,
+                        value: city.id
+                    }
+                    cityList.push(form)
+                })
+                return cityList
+            } catch (e) {
+                return []
+            }
+        },
+
+        /**
+         * Province list
+         */
+        provinceList() {
+            try {
+                let provinceList = []
+                this.provinces.data.forEach(province => {
+                    const form = {
+                        title: province.label,
+                        value: province.id
+                    }
+                    provinceList.push(form)
+                })
+                return provinceList
+            } catch (e) {
+                return e
+            }
+        },
+    },
+
     methods: {
         async validate() {
             await this.$refs.addAddress.validate()
@@ -370,7 +410,12 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.dialog = false
+                    this.dialog = false;
+                    useNuxtApp().$toast.success('آدرس شما با موفقیت ایحاد شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
                 })
                 .catch((err) => {
                     auth.checkAuthorization(err.response)
@@ -463,45 +508,6 @@ export default {
 
             }
         }
-    },
-    computed: {
-        /**
-         * City list
-         */
-        cityList() {
-            try {
-                let cityList = []
-                this.cities.forEach(city => {
-                    const form = {
-                        title: city.label,
-                        value: city.id
-                    }
-                    cityList.push(form)
-                })
-                return cityList
-            } catch (e) {
-                return []
-            }
-        },
-
-        /**
-         * Province list
-         */
-        provinceList() {
-            try {
-                let provinceList = []
-                this.provinces.data.forEach(province => {
-                    const form = {
-                        title: province.label,
-                        value: province.id
-                    }
-                    provinceList.push(form)
-                })
-                return provinceList
-            } catch (e) {
-                return e
-            }
-        },
     },
 
     mounted() {

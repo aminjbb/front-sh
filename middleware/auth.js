@@ -100,10 +100,10 @@ export default {
   },
 
   /**
-   * Get user hase password
+   * Get user has password
    * @param {*} token
    */
-  async getUserHasePassword(token) {
+  async getUserHasPassword(token) {
     try {
 
       const response = await axios.get(`${BASE_URL}/user/profile/password/has`, {
