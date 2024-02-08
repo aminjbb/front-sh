@@ -17,9 +17,9 @@
             <div class="col-9 pa-4">
                 <v-card class="pa-8 mobile-pa-0 mobile-no-border has-header">
                     <header class="card__header">لیست علاقمندی‌ها</header>
-                    <v-row class="favorite-list ma-0">
+                    <v-row v-if="wishList && wishList.data" class="favorite-list ma-0">
                         <v-col
-                            v-for="item in favoriteList"
+                            v-for="item in wishList.data"
                             cols="12"
                             class="favorite-list__item"
                             lg="4"
@@ -69,8 +69,15 @@ export default {
     },
 
     setup(){
-        const title = ref('فروشگاه اینترنتی شاواز | لیست علاقه‌ مندی‌ ها')
-        const description = ref("لیست علاقه‌ مندی ها")
+        const userToken = useCookie('userToken');
+
+        const title = ref('فروشگاه اینترنتی شاواز | لیست علاقه‌ مندی‌ ها');
+        const description = ref("لیست علاقه‌ مندی ها");
+
+        const {
+            getUserWhishList,
+            wishList
+        } = new User();
 
         useHead({
             title,
@@ -78,7 +85,13 @@ export default {
                 name: 'description',
                 content: description
             }]
-        })
+        });
+
+        return {
+            userToken,
+            getUserWhishList,
+            wishList
+        };
     },
 
     methods: {
@@ -89,6 +102,14 @@ export default {
         removeProduct(content){
             //TODO: Add remove product from favorite list method
             console.log('level-3',content);
+        }
+    },
+
+    mounted() {
+        if (!this.userToken) {
+            window.location = '/login';
+        } else {
+            this.getUserWhishList();
         }
     },
 }

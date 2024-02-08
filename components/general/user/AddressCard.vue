@@ -8,7 +8,7 @@
                     color="deep-purple"
                     size="x-small" />
                 <span class="t12 w400 text-deep-purple">شهر / استان:</span>
-                <span class="t12 w400 text-deep-purple">{{ address?.city?.label }} / {{  address?.state?.label }}</span>
+                <span class="t12 w400 text-deep-purple">{{ address?.city?.label }} / {{ address?.state?.label }}</span>
             </div>
 
             <div class="d-flex align-center">
@@ -48,10 +48,10 @@
                     :getUserAddress="getUserAddress"
                     edit
                     :address="address"
-                    :provinces="provinces"
-                />
+                    :provinces="provinces" />
 
                 <generalModalsDelete
+                    ref="deleteAddress"
                     :getUserAddress="getUserAddress"
                     title="حذف آدرس"
                     text="آیا از حذف این آدرس اطمینان دارید؟"
@@ -64,21 +64,24 @@
                 <v-icon
                     icon="mdi-dots-vertical"
                     color="grey"
-                    @click="openDropDown(id)" />
+                    @click="openDropDown(address.id)" />
 
-                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${id}`">
+                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${address.id}`">
                     <ul class="ma-0">
                         <li class="mb-2">
                             <generalUserAddressModal
-                                :userDetail="userDetail"
                                 title="ویرایش آدرس"
                                 buttonType="mobile"
+                                :userDetail="userDetail"
                                 :getUserAddress="getUserAddress"
-                                edit />
+                                edit
+                                :address="address"
+                                :provinces="provinces" />
                         </li>
 
                         <li class="d-flex align-center py-1">
                             <generalModalsDelete
+                                ref="deleteAddress"
                                 :getUserAddress="getUserAddress"
                                 title="حذف آدرس"
                                 text="آیا از حذف این آدرس اطمینان دارید؟"
@@ -102,46 +105,56 @@ import axios from "axios";
 import auth from "~/middleware/auth.js";
 
 export default {
-  setup(){
-    const runtimeConfig = useRuntimeConfig()
-    const userToken = useCookie('userToken');
-    return {runtimeConfig , userToken}
-  },
+    setup() {
+        const runtimeConfig = useRuntimeConfig()
+        const userToken = useCookie('userToken');
+        return {
+            runtimeConfig,
+            userToken
+        }
+    },
     props: {
-      /** get User Address */
-        getUserAddress: {type: Function},
+        /** get User Address */
+        getUserAddress: {
+            type: Function
+        },
+
         /** User Detail */
-        userDetail:Object,
+        userDetail: Object,
+
         /** Address */
         address: Object,
+
         /** provinces */
         provinces: Object
     },
 
     methods: {
         removeAddress(address) {
-          axios
-              .delete(this.runtimeConfig.public.apiBase + `/user/profile/address/delete/${address.id}`, {
-                headers: {
-                  Authorization: `Bearer ${this.userToken}`,
-                },
-              })
-              .then((response) => {
-                this.dialog = false
-              })
-              .catch((err) => {
-                auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
+            axios
+                .delete(this.runtimeConfig.public.apiBase + `/user/profile/address/delete/${address.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.$refs.deleteAddress.closeModal();
+                    useNuxtApp().$toast.success('آدرس شما با موفقیت حذف شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                })
+                .catch((err) => {
+                    auth.checkAuthorization(err.response)
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.getUserAddress()
                 });
-              }).finally(() => {
-              this.loading = false
-              this.getUserAddress()
-          });
-            //TODO: Add remove address api
-            console.log('address', address);
         },
 
         openDropDown(id) {
@@ -165,7 +178,7 @@ export default {
         margin-left: 4px;
     }
 
-    > div:first-child{
+    >div:first-child {
         @include gbp(0, 1280) {
             align-items: flex-start !important;
         }

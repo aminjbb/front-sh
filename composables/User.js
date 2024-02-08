@@ -12,6 +12,7 @@ export default function setup() {
     const userTransactions = ref([]);
     const ticketList = ref([]);
     const singleTicket = ref(null);
+    const wishList = ref([]);
     const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
@@ -104,6 +105,24 @@ export default function setup() {
             });
     };
 
+    /**
+     * Get user ticket list
+     */
+    async function getUserWhishList() {
+        axios
+            .get(runtimeConfig.public.apiBase + `/product/wishlist/crud/index`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                wishList.value = response.data.data
+            })
+            .catch((err) => {
+
+            });
+    };
+
     return {
         getUserAddress,
         userAddress,
@@ -115,6 +134,8 @@ export default function setup() {
         ticketList,
         getUserTicketById,
         singleTicket,
+        getUserWhishList,
+        wishList,
         loading
     }
 }
