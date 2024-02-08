@@ -26,7 +26,7 @@
                 </v-btn>
             </header>
 
-            <div>
+            <div class="interception-modal">
                 <v-data-table
                     class="table mt-5"
                     :headers="tableHeader"
@@ -174,98 +174,100 @@ export default {
     }
 }
 
-.table {
-    @include gbp(768) {
-        border-radius: 8px;
-        border: 1px solid #F5F5F5;
-        overflow: hidden;
-    }
+.interception-modal {
+    .table {
+        @include gbp(768) {
+            border-radius: 8px;
+            border: 1px solid #F5F5F5;
+            overflow: hidden;
+        }
 
-    thead {
-        background-color: #FFFFFF;
-        padding: 12px 0;
+        thead {
+            background-color: #FFFFFF;
+            padding: 12px 0;
 
-        .v-data-table-header__content {
-            span {
-                font-size: 12px;
-                color: #000;
-                font-variation-settings: "wght"500;
+            .v-data-table-header__content {
+                span {
+                    font-size: 12px;
+                    color: #000;
+                    font-variation-settings: "wght"500;
+                }
+
+                .mdi-arrow-up {
+                    display: none;
+                }
             }
 
-            .mdi-arrow-up {
-                display: none;
+            th {
+                background-color: #FFFFFF !important;
             }
         }
 
-        th {
-            background-color: #FFFFFF !important;
+        .v-table__wrapper {
+            height: auto !important;
+            overflow: visible !important;
+
+            &::-webkit-scrollbar {
+                width: 4px !important;
+                border-radius: 4px;
+            }
+
+            &::-webkit-scrollbar-track {
+                border-radius: 4px;
+                background-color: #F9F9F9;
+                border-radius: 4px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: #9E9E9E;
+                border-radius: 4px;
+            }
         }
-    }
 
-    .v-table__wrapper {
-        height: auto !important;
-        overflow: visible !important;
-
-        &::-webkit-scrollbar {
-            width: 4px !important;
-            border-radius: 4px;
-        }
-
-        &::-webkit-scrollbar-track {
-            border-radius: 4px;
-            background-color: #F9F9F9;
-            border-radius: 4px;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            border-radius: 4px;
-            background-color: #9E9E9E;
-            border-radius: 4px;
-        }
-    }
-
-    @include gbp(768) {
+        @include gbp(768) {
             tbody tr:nth-child(2n-1)>td {
                 background-color: #FBFBFC !important;
             }
         }
 
-    .v-data-table-footer {
-        display: none;
-    }
-}
-
-@include gbp(0, 768) {
-    .v-data-table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
+        .v-data-table-footer {
+            display: none;
+        }
     }
 
-    .v-data-table td {
-        display: block;
-        text-align: right;
-        line-height: 48px;
-        border-bottom: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
-    }
+    @include gbp(0, 768) {
+        .v-data-table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
 
-    .v-data-table tr {
-        margin-bottom: 20px !important;
-        display: block;
-        border-radius: 8px;
-        border: 1px solid #F5F5F5;
-        overflow: hidden;
-    }
+        .v-data-table td {
+            display: block;
+            text-align: right;
+            line-height: 48px;
+            border-bottom: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
+        }
 
-    .v-data-table td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
+        .v-data-table tr {
+            margin-bottom: 20px !important;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #F5F5F5;
+            overflow: hidden;
+        }
+
+        .v-data-table td::before {
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+        }
     }
 }
 </style>

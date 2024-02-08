@@ -170,7 +170,7 @@ export default {
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 
-.table {
+.ticket-table .table {
     @include gbp(768) {
         border-radius: 8px;
         border: 1px solid #F5F5F5;
