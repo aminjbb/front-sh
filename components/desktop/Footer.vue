@@ -29,8 +29,8 @@
                     </div>
 
                     <div>
-                        <header class="t16 mb-4">
-                            درباره شاواز
+                        <header class="mb-4">
+                            <h4 class="t16">درباره شاواز</h4>
                         </header>
                         <ul>
                             <li><a href="/" class="t13 text-grey">درباره ما</a></li>
@@ -42,7 +42,9 @@
                     </div>
 
                     <div>
-                        <header class="t16 mb-4">راهنمای خرید</header>
+                        <header class="mb-4">
+                            <h4 class="t16">راهنمای خرید</h4>
+                        </header>
                         <ul>
                             <li><a href="/" class="t13 text-grey">نحوه ثبت سفارش</a></li>
                             <li><a href="/" class="t13 text-grey">روش‌های پرداخت</a></li>
@@ -53,7 +55,9 @@
                 </div>
             </v-col>
             <v-col cols="12" md="5">
-                <header class="t16 mb-4 mt-4">با ما در ارتباط باشید</header>
+                <header class="mb-4 mt-4">
+                   <h4 class="t16"> با ما در ارتباط باشید</h4>
+                </header>
 
                 <div class="footer__social-media mb-7" title="Shavaz instagram">
                     <a href="/" title="instagram">
@@ -116,27 +120,27 @@
 
             <v-col cols="12" lg="6">
                 <div class="footer__logo-hologram">
-                    <a href="/" title="Shavaz logo">
-                        <img src="~/assets/images/should-delete/snappay.png" class="" alt="" width="52" height="61" title="" />
+                    <a href="/" title="Shavaz hologram">
+                        <img src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz logo">
-                        <img src="~/assets/images/should-delete/1d2ab0.png" class="" alt="" width="52" height="61" title="" />
+                    <a href="/" title="Shavaz hologram">
+                        <img src="~/assets/images/should-delete/1d2ab0.png" class="" alt="hologram" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz logo">
+                    <a href="/" title="Shavaz hologram">
                         <img src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz logo">
-                        <img src="~/assets/images/should-delete/samandehi.png" class="" alt="" width="52" height="61" title="" />
+                    <a href="/" title="Shavaz hologram">
+                        <img src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="61" title="" />
                     </a>
                 </div>
             </v-col>
         </v-row>
 
         <div class="footer__copy-right-text">
-            <p>استفاده از مطالب فروشگاه اینترنتی شاواز فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
+            <p>استفاده از مطالب <h5 class="d-inline t12">فروشگاه اینترنتی شاواز</h5> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
         </div>
     </v-container>
 </footer>

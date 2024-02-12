@@ -306,7 +306,6 @@ export default {
          */
         openModal() {
             this.dialog = true;
-            console.log("🚀 ~ openModal ~ this.dialog:", this.dialog)
         },
 
         /**
@@ -314,7 +313,6 @@ export default {
          */
         closeModal() {
             this.dialog = false;
-            console.log("🚀 ~ closeModal ~ this.dialog:", this.dialog)
         },
 
         /**

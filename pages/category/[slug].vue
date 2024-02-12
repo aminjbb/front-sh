@@ -198,7 +198,6 @@ export default {
          * @param {*} amount
          */
         async selectByAmount(amount) {
-            console.log(amount.amount ?.max)
             if (amount ?.param === "site_price") {
                 let site_price_to = ''
                 let site_price_from = ''

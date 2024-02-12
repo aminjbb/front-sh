@@ -111,7 +111,6 @@ export class AxiosCall {
                     data = response.data;
                 })
                 .catch((err) => {
-                    console.log(err.response.data)
                     if (err.response.data.message){
                         useNuxtApp().$toast.error(response.data.message, {
                             rtl: true,
@@ -184,7 +183,6 @@ export class AxiosCall {
                     data = response.data;
                 })
                 .catch((err) => {
-                    console.log('Axios error:',err.response.data.message)
                     if (err.response.data.message){
                         useNuxtApp().$toast.error(response.data.message, {
                             rtl: true,

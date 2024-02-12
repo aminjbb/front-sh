@@ -7,7 +7,7 @@
     <div class="category-list__items d-flex justify-center align-start">
         <a v-for="item in categories" :key="item.id" :href="item.link" class="category-list__item mb-3">
             <div class="category-list__item__image">
-                <img :src="item?.image.image_url" :title="item.image_alt" :alt="item.image_alt" width="90" height="90" />
+                <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="90" height="90" />
             </div>
 
             <h3 v-if="item.label" class="t12 w400 text-center mt-2 text-grey-darken-2">

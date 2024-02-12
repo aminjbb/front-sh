@@ -69,7 +69,6 @@ const props = defineProps(['index'])
 function onDrop(e) {
     files.value = e.dataTransfer.files
     file = files.value[0]
-    console.log(files.value.length)
     submitImage(0)
 }
 /**
@@ -114,7 +113,6 @@ async function submitImage(index) {
     if (data) {
         uploadLoading.value = false
         if (index >= 0) {
-            console.log(files.value.length - 1, index)
             if (files.value.length - 1 > index) {
 
                 file = files.value[++index]

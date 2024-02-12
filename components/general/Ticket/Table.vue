@@ -89,7 +89,6 @@ export default {
 
     computed: {
         tableContent() {
-            console.log(this.items);
             const tableItems = []
             this.items.forEach((element, index) => {
                 const obj = {
