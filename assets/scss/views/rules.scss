@@ -1,0 +1,14 @@
+//------------------------------------------------
+//  FAQ
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+
+.v-rules {
+    padding-bottom: 60px;
+    padding-top: 160px;
+
+    @include gbp (0, 768) {
+        padding-bottom: 60px;
+        padding-top: 75px;
+    }
+}
