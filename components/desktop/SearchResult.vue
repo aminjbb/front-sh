@@ -83,17 +83,21 @@
             </v-col>
         </v-row>
 
-        <v-divider color="grey-lighten-3" />
+        <v-divider v-if="filteredWords && filteredWords.length" color="grey-lighten-3" />
 
-        <nav class="search-result__list py-3">
+        <nav v-if="filteredWords && filteredWords.length" class="search-result__list py-3">
             <ul class="ma-0">
                 <li
                     class="mb-2"
-                    v-for="(item, index) in skuGroupListMoc.slice(0,5)"
+                    v-for="(item, index) in filteredWords.slice(0,5)"
                     :key="`category-search-${index}`">
                     <a class="d-flex align-center" :href="`/sku/${item.slug}`">
-                        <v-icon icon="mdi-magnify" size="x-small" color="grey-lighten-1" class="ml-2"/>
-                        <span class="t13 w400 text-grey-darken-2">{{item.label}}</span>
+                        <v-icon
+                            icon="mdi-magnify"
+                            size="x-small"
+                            color="grey-lighten-1"
+                            class="ml-2" />
+                        <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item.label)"></span>
                     </a>
                 </li>
             </ul>
@@ -255,6 +259,12 @@ export default {
         }
     },
 
+    computed: {
+        filteredWords() {
+            return this.skuGroupListMoc.filter(word => word.label.includes(this.search));
+        }
+    },
+
     components: {
         Swiper,
         SwiperSlide,
@@ -297,7 +307,20 @@ export default {
          */
         searchProducts() {
             console.log("🚀 ~ this.search:", this.search)
+            //TODO: Add search products methods - then remove console.log
+        },
 
+        /**
+         * Highlight word when you search in search box
+         */
+         highlightWord(word) {
+            const index = word.toLowerCase().indexOf(this.search.toLowerCase());
+            if (index !== -1) {
+                const highlightedWord = word.substring(0, index) + '<span class="text-primary">' + word.substring(index, index + this.search.length) + '</span>' + word.substring(index + this.search.length);
+                return highlightedWord;
+            } else {
+                return word;
+            }
         },
 
         //TODO: Should delete after add endpoint
