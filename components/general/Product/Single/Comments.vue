@@ -81,7 +81,6 @@ export default {
         },
 
         showAllComment() {
-            console.log("🚀 ~ showAllComment ~ document.getElementById('show-more-comments'):", document.getElementById('show-more-comments'))
             document.getElementById('show-more-comments').classList.add('hide');
             this.commentList = [];
             this.commentList = this.comments

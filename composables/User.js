@@ -18,6 +18,9 @@ export default function setup() {
     const userToken = useCookie('userToken')
     const route = useRoute()
 
+    /**
+     * Get user address
+     */
     async function getUserAddress() {
         axios
             .get(runtimeConfig.public.apiBase + `/user/profile/address`, {

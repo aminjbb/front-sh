@@ -17,7 +17,7 @@
 
     <div class="product-details__rate d-flex align-center mt-3">
         <div class="product-details__rate__star d-flex align-center ltr ml-2">
-            <template v-for="icon in generateStarIcons">
+            <template v-for="(icon, index) in generateStarIcons" :key="`icon${index}`">
                 <v-icon
                     v-if="icon === 'mdi-star'"
                     :icon="icon"
@@ -71,8 +71,9 @@
         <ul class="ma-0 pa-0 pr-5">
 
             <li
-                v-for="attr in content.attributes"
+                v-for="(attr, index) in content.attributes"
                 class="d-flex align-center"
+                :key="`attr${index}`"
                 :class="attr.attribute_values.length >1 ? 'mb-2' : ''">
                 <span class="t13 w400 text-grey" :class="attr.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr.label}}: </span>
 

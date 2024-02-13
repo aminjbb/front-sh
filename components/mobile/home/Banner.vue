@@ -10,9 +10,9 @@
             :key="item.id"
             cols="12"
             :sm="col">
-            <div class="banner__image">
-                <img :src="item.image?.image_url" :title="item.image_alt" :alt="item.image_alt"  width="380" height="200" />
-            </div>
+            <a class="banner__image d-block" :href="item.link">
+                <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
+            </a>
         </v-col>
     </v-row>
 </div>
