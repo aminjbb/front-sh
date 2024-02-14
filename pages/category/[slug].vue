@@ -5,7 +5,7 @@
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
 
-        <generalProductCategorySlider :items="productsSecondaryData" class="mt-5" />
+        <generalProductCategorySlider :items="productsSecondaryData" class="mt-5" :loop="false"/>
         <v-row class="mt-10">
             <v-col cols="12" md="3">
                 <generalProductFilterSideBar

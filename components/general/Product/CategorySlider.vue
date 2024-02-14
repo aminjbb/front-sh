@@ -11,7 +11,7 @@
             :spaceBetween="60"
             :navigation="true"
             :modules="modules"
-            :loop="true"
+            :loop="loop"
             :breakpoints="{
                     '200': {
                         slidesPerView: 2.5,
@@ -75,6 +75,14 @@ export default {
          * Item list
          */
         items: Array,
+
+        /**
+         * slider loop
+         */
+        loop:{
+            type: Boolean,
+            default: true,
+        }
     },
 
     setup() {
