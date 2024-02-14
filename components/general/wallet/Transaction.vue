@@ -186,7 +186,7 @@ export default {
     }
 
     .table {
-        @include gbp(768) {
+        @include gbp(769) {
             border-radius: 8px;
             border: 1px solid #F5F5F5;
             overflow: hidden;
@@ -228,7 +228,7 @@ export default {
             }
         }
 
-        @include gbp(768) {
+        @include gbp(769) {
             tbody tr:nth-child(2n-1)>td {
                 background-color: #FBFBFC !important;
             }

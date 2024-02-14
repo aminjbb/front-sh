@@ -46,7 +46,7 @@
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey" :style="isMobile === true ? { display: 'none !important'} : ''">
                     <span class="w600 text-black ml-10" v-if="isMobile">عملیات : </span>
-                    <a :href="`/user/ticket/${id}`">
+                    <a :href="`/user/ticket/${item.raw.id}`">
                         <v-icon
                             icon="mdi-eye-outline"
                             size="x-small"
@@ -89,7 +89,6 @@ export default {
 
     computed: {
         tableContent() {
-            console.log(this.items);
             const tableItems = []
             this.items.forEach((element, index) => {
                 const obj = {
@@ -97,7 +96,7 @@ export default {
                     'id': element.id,
                     'title': element.title,
                     'priority': element.priority,
-                    'created_at': element.created_at,
+                    'created_at': element.created_at_fa,
                     'status': element.status,
                     'setting': ''
                 }
@@ -170,8 +169,8 @@ export default {
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 
-.table {
-    @include gbp(768) {
+.ticket-table .table {
+    @include gbp(769) {
         border-radius: 8px;
         border: 1px solid #F5F5F5;
         overflow: hidden;

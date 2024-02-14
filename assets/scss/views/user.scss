@@ -144,6 +144,12 @@
 
     &--address {
         &__mobile-btn {
+            width: 100%;
+            position: fixed;
+            bottom: 56px;
+            right: 0;
+            background-color: #fff;
+            padding: 10px;
             .btn {
                 width: 100% !important;
                 background: #D72685 !important;

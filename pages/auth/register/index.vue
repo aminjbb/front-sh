@@ -193,9 +193,7 @@ export default {
                 const response = await auth.register(this.user);
                 if (response && response.success) {
                     //TODO: You can redirect the user to the dashboard after register
-                    console.log('ثبت نام با موفقیت انحام شد');
                 } else {
-                    //TODO: Handle OTP verification failure. You can display an error message here
                 }
             } catch (error) {
                 console.error('Register error:', error);
@@ -241,12 +239,9 @@ export default {
                         },
                     });
 
-                    if (completeResponse.data == false) {
-                        console.log('false')
-                    } else {
-                        console.log('true')
+                    if (completeResponse.data === true) {
                         this.$router.push('/user/dashboard');
-                    }
+                    } 
 
                     useNuxtApp().$toast.success('کاربر عزیز خوش آمدید.', {
                         rtl: true,

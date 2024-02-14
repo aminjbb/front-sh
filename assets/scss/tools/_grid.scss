@@ -6,7 +6,7 @@
     flex: 0 0 100%;
     max-width: 100%;
 
-    @include gbp(768) {
+    @include gbp(769) {
         flex: 0 0 25%;
         max-width: 25%;
     }
@@ -16,7 +16,7 @@
     flex: 0 0 100%;
     max-width: 100%;
     
-    @include gbp(768) {
+    @include gbp(769) {
         flex: 0 0 75%;
         max-width: 75%;
     }

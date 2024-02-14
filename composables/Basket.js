@@ -28,7 +28,7 @@ export default function setup() {
                 store.commit('set_basket', response)
             })
             .catch((err) => {
-                auth.checkAuthorization(err.response)
+                //auth.checkAuthorization(err.response)
             });
     };
 

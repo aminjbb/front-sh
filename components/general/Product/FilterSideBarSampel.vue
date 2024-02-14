@@ -195,7 +195,6 @@ export default {
             if (this.searchBrand == null || this.searchBrand == '') {
                 return this.brands.sort((a, b) => a.label.localeCompare(b.label));
             } else {
-                console.log(this.searchBrand);
                 const lowerCaseSearch = this.searchBrand.toLowerCase();
                 return this.brands
                     .sort((a, b) => a.label.localeCompare(b.label))
@@ -267,7 +266,6 @@ export default {
          * Show available Items
          */
         setAmount() {
-            console.log(this.amount);
             this.$emit('setAmount', this.amount);
         }
     }

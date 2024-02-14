@@ -1,8 +1,10 @@
 <template>
+<div v-if="bannerItem" class="fixed-banner" id="top-banner"></div>
+
 <header
     class="header header--desktop w-100"
     id="header--desktop"
-    :class="{ 'fixed': isFixed, 'hidden': isHidden }">
+    :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
     <v-container>
         <div class="header__inner d-flex align-center justify-space-between">
             <div class="header__col1 d-flex algin-center">
@@ -24,7 +26,7 @@
 
                     <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
                         <ul class="ma-0 pa-0">
-                            <li class="mb-4 mt-1">
+                            <li class="mb-4 mt-1 user-data">
                                 <a href="/user/dashboard" class="d-flex align-center">
                                     <v-icon
                                         icon="mdi-account-circle-outline"
@@ -35,10 +37,11 @@
                                     <template v-if="userData && userData.first_name && userData.last_name">
                                         <div class="d-flex flex-column">
                                             <span class="user-phone t15 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
+                                            <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span>
                                         </div>
                                     </template>
                                     <template v-else>
-                                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3">{{ userData.phone_number }}</span>
+                                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
                                     </template>
                                 </a>
                             </li>
@@ -172,6 +175,10 @@ export default {
             isLogin: false,
             dialog: false,
             userData: null,
+            hasBanner: false,
+            isBanner: false,
+            isTop: false,
+            bannerItem:null,
         };
     },
 
@@ -188,7 +195,9 @@ export default {
 
     setup() {
         const userToken = useCookie('userToken')
-        const {getBasket} = new Basket()
+        const {
+            getBasket
+        } = new Basket()
         return {
             userToken,
             getBasket
@@ -208,6 +217,14 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
         document.addEventListener('click', this.closeDropDown);
         this.getBasket();
+
+        const banner = document.getElementById("top-banner");
+        if (banner) {
+            this.isBanner = true;
+            this.hasBanner = true;
+            document.getElementsByTagName('body')[0].classList.add('hasBanner');
+            
+        }
     },
 
     beforeDestroy() {
@@ -223,20 +240,43 @@ export default {
         handleScroll() {
             let currentScrollTop = window.scrollY;
 
-            if (window.scrollY > 60) {
-                this.isHidden = true;
-                this.isFixed = false;
+            if (this.isBanner) {
+                if (window.scrollY > 74) {
+                    this.isHidden = true;
+                    this.isFixed = false;
+                    this.hasBanner = false;
 
-                if (currentScrollTop > this.lastScrollTop) {
+                    if (currentScrollTop > this.lastScrollTop) {
+                        this.isHidden = true;
+                        this.isFixed = false;
+
+                    } else {
+                        this.isFixed = true;
+                        this.isHidden = false;
+                    }
+
+                    this.lastScrollTop = currentScrollTop;
+                }
+
+                if (window.scrollY <= 74) {
+                    this.hasBanner = true;
+                }
+            } else {
+                if (window.scrollY > 60) {
                     this.isHidden = true;
                     this.isFixed = false;
 
-                } else {
-                    this.isFixed = true;
-                    this.isHidden = false;
-                }
+                    if (currentScrollTop > this.lastScrollTop) {
+                        this.isHidden = true;
+                        this.isFixed = false;
 
-                this.lastScrollTop = currentScrollTop;
+                    } else {
+                        this.isFixed = true;
+                        this.isHidden = false;
+                    }
+
+                    this.lastScrollTop = currentScrollTop;
+                }
             }
         },
 
@@ -304,13 +344,22 @@ export default {
 @import "~/assets/scss/tools/bp";
 $parent: 'header';
 
+.fixed-banner {
+    width: 100%;
+    height: 64px;
+    background: red;
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 11;
+}
+
 .#{$parent} {
     &--desktop {
         &.show-mega-menu {
             z-index: 1000;
         }
 
-        position: fixed;
         z-index: 10;
         padding: 4px;
         padding-bottom: 0 !important;
@@ -329,7 +378,7 @@ $parent: 'header';
                 height: 38px;
                 margin-left: 65px;
 
-                @include gbp(768, 1280) {
+                @include gbp(769, 1280) {
                     margin-left: 12px;
                 }
             }
@@ -341,7 +390,7 @@ $parent: 'header';
                 overflow: hidden;
                 position: relative;
 
-                @include gbp(768, 1280) {
+                @include gbp(769, 1280) {
                     width: 450px;
                 }
 
@@ -451,13 +500,19 @@ $parent: 'header';
             }
         }
 
+        &.has-banner {
+            top: 64px;
+        }
+
         &.hidden {
+            position: fixed;
             opacity: 0;
             transform: translateY(-100%);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         &.fixed {
+            position: fixed;
             opacity: 1;
             transform: translateY(0);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -465,9 +520,20 @@ $parent: 'header';
     }
 }
 </style>
-<style scoped>
+
+<style lang="scss" scoped>
 .mobile-drop-down__items {
     left: 0;
     width: 172px;
+
+    li:not(.user-data) {
+        a:hover {
+
+            span,
+            .v-icon {
+                color: #D72685 !important;
+            }
+        }
+    }
 }
 </style>

@@ -28,22 +28,27 @@
                     </header>
 
                     <div class="single-ticket flex-grow-1 d-flex flex-column" :class="isMobile === true ? 'px-3 mb-2' : 'px-6 mb-8'">
-                        <generalTicketSingleInfoCard :content="ticketMoc" />
+                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" />
 
-                        <div class="single-ticket__list">
-                            <template v-for="ticket in ticketMoc.threads" :key="ticket.id">
+                        <div v-if="singleTicket" class="single-ticket__list">
+                            <generalTicketUserAnswer :content="singleTicket.content" :fileList="singleTicket.files"/>
+
+                            <template v-if="singleTicket.threads" v-for="ticket in singleTicket.threads" :key="ticket.id">
                                 <template v-if="ticket.creator === 'user'">
-                                    <generalTicketUserAnswer :answer="ticket" />
+                                    <generalTicketUserAnswer :content="ticket.content" :fileList="ticket.files"/>
                                 </template>
                                 <template v-if="ticket.creator === 'admin'">
-                                    <generalTicketAdminAnswer :answer="ticket" />
+                                    <generalTicketAdminAnswer :content="ticket.content" :fileList="ticket.files"/>
                                 </template>
                             </template>
                         </div>
                     </div>
                 </v-card>
 
-                <v-divider v-if="isMobile" color="grey-lighten-1" class="mb-3" />
+                <v-divider
+                    v-if="isMobile"
+                    color="grey-lighten-1"
+                    class="mb-3" />
 
                 <div v-if="!showAnswerBox" class="xs-show px-3">
                     <v-btn
@@ -74,7 +79,7 @@
                                     <label class="d-block t12 text-grey-darken-3 mb-1">تصویر یا ویدیو </label>
                                     <span class="t11 w400 text-grey mb-3 d-block">در صورت نیاز، تصویر یا ویدیو مورد نظر خود را بارگذاری نمایید.</span>
 
-                                    <generalUploader @getImage="getImage" />
+                                    <generalUploader ref="imageUploader" @getImage="getImage" />
                                 </v-col>
                             </v-row>
 
@@ -107,42 +112,33 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
             ticket: null,
             loading: false,
             showAnswerBox: false,
-            isMobile:false,
+            isMobile: false,
             form: {
                 content: null,
-                files: null,
             },
-            ticketMoc: {
-                id: 15423,
-                priority: 'medium',
-                title: 'پیگیری سفارش',
-                created_at_fa: '1402/06/27',
-                updated_at_fa: '1402/06/29',
-                status: 'answered',
-                threads: [{
-                        id: 156,
-                        creator: 'user',
-                        content: 'سلام ریمل اسنس سفارش دادم و وقتی رسید دستم پلمپ نبود و تاریخ تولید و انقضا هم نداشت عکسش رو واستون ارسال کردم فقط همین بود بدون تاریخ و پلمپ',
-                    },
-                    {
-                        id: 569,
-                        creator: 'admin',
-                        content: 'سلام نگین اسدی عزیز. لطفا درخواست خود را در قسمت مرجوعی در سایت ثبت نمایید.',
-                    }
-                ]
-            }
+            images: null,
         }
     },
 
     setup() {
+        const userToken = useCookie('userToken');
+        const runtimeConfig = useRuntimeConfig()
+
         const title = ref('فروشگاه اینترنتی شاواز | تیکت من')
         const description = ref("صفحه تیکت");
+
+        const {
+            getUserTicketById,
+            singleTicket
+        } = new User();
 
         useHead({
             title,
@@ -150,15 +146,24 @@ export default {
                 name: 'description',
                 content: description
             }]
-        })
+        });
+
+        return {
+            userToken,
+            getUserTicketById,
+            singleTicket,
+            runtimeConfig
+        };
     },
 
     methods: {
         /**
-         * upload image
+         * Get image 
+         * @param {*} response 
          */
-        getImage() {
-            //TODO: get image
+        getImage(response) {
+            const image = response.file_id;
+            this.images.push(image);
         },
 
         /**
@@ -172,16 +177,62 @@ export default {
          * Add answer
          */
         addAnswer() {
-            //TODO:  Add answer
-        }
+            this.loading = true;
+
+            const formData = new FormData();
+
+            formData.append('content', this.form.content)
+            if (this.images) {
+                this.images.forEach((image, index) => {
+                    formData.append(`files_id[${index}]`, image)
+                })
+            }
+
+            axios
+                .post(this.runtimeConfig.public.apiBase + `/ticket/user/crud/update/threads/${this.$route.params.id}`, formData, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    useNuxtApp().$toast.success('پاسخ شما با موفقیت ارسال شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                    this.getUserTicketById();
+                    this.form= {
+                        content: null,
+                    },
+
+                    this.images = [];
+                    this.$refs.imageUploader.files = [];
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.loading = false;
+                });
+        },
     },
 
     mounted() {
+        if (!this.userToken) {
+            window.location = '/login';
+        } else {
+            this.getUserTicketById();
+        }
+
         /**
          * Check screen size
          */
         window.innerWidth < 769 ? this.isMobile = true : this.isMobile = false;
     },
+
 }
 </script>
 

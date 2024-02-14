@@ -83,7 +83,7 @@ export default {
    */
   async getUserProfile(token) {
     const router = useRouter()
-    
+
     try {
       // Send a GET request to the profile endpoint with the token in the headers
       const response = await axios.post(`${BASE_URL}/auth/user/profile`, {}, {
@@ -95,19 +95,15 @@ export default {
       // Return the response data
       return response
     } catch (error) {
-      // Handle any errors here
-      if (error.response.status = 401) {
-        router.push('/login');
-      }
       throw error
     }
   },
 
   /**
-   * Get user hase password
+   * Get user has password
    * @param {*} token
    */
-  async getUserHasePassword(token) {
+  async getUserHasPassword(token) {
     try {
 
       const response = await axios.get(`${BASE_URL}/user/profile/password/has`, {

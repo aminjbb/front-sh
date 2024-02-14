@@ -2,9 +2,9 @@
 <section v-if="content" class="section5-slider section5-slider--mobile mb-4">
     <div class="d-flex align-center flex-wrap" :style="{ background: `${slider.background_hex_code}` }">
         <div class="section5-slider__info">
-            <div v-if="content.label" class="section5-slider__info__title text-white mb-2">
+            <header v-if="content.label" class="section5-slider__info__title text-white mb-2">
                 {{slider.label}}
-            </div>
+            </header>
 
             <div v-if="slider.image && slider.image.image_url && slider.image.image_url !== null" class="section5-slider__info__image">
                 <img :src="slider.image?.image_url" :title="slider.label" :alt="slider.label" width="111" height="118" />

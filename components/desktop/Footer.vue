@@ -29,11 +29,11 @@
                     </div>
 
                     <div>
-                        <header class="t16 mb-4">
-                            درباره شاواز
+                        <header class="mb-4">
+                            <h4 class="t16">درباره شاواز</h4>
                         </header>
                         <ul>
-                            <li><a href="/" class="t13 text-grey">درباره ما</a></li>
+                            <li><a href="/about" class="t13 text-grey">درباره ما</a></li>
                             <li><a href="/contact" class="t13 text-grey">تماس با ما</a></li>
                             <li><a href="/faq" class="t13 text-grey">سوالات متدال</a></li>
                             <li><a href="/" class="t13 text-grey">فرصت‌های شغلی</a></li>
@@ -42,7 +42,9 @@
                     </div>
 
                     <div>
-                        <header class="t16 mb-4">راهنمای خرید</header>
+                        <header class="mb-4">
+                            <h4 class="t16">راهنمای خرید</h4>
+                        </header>
                         <ul>
                             <li><a href="/" class="t13 text-grey">نحوه ثبت سفارش</a></li>
                             <li><a href="/" class="t13 text-grey">روش‌های پرداخت</a></li>
@@ -53,18 +55,20 @@
                 </div>
             </v-col>
             <v-col cols="12" md="5">
-                <header class="t16 mb-4 mt-4">با ما در ارتباط باشید</header>
+                <header class="mb-4 mt-4">
+                   <h4 class="t16"> با ما در ارتباط باشید</h4>
+                </header>
 
-                <div class="footer__social-media mb-7" title="Shavaz instagram">
-                    <a href="/" title="instagram">
+                <div class="footer__social-media mb-7">
+                    <a href="https://www.instagram.com/shavazcom" title="Shavaz instagram account | اکانت اینستاگرام شاواز ">
                         <v-icon icon="mdi-instagram" />
                     </a>
 
-                    <a href="/" title="Shavaz youtube">
+                    <a href="https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4" title="Shavaz youtube account | اکانت یونیوب شاواز ">
                         <v-icon icon="mdi-youtube" />
                     </a>
 
-                    <a href="/" title="Shavaz telegram">
+                    <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
                         <svg class="custom-svg-icon" xmlns="http://www.w3.org/2000/svg" width="30" height="29" viewBox="0 0 28 28" fill="gray">
                             <g clip-path="url(#clip0_322_133)">
                                 <path d="M28 14C28 17.713 26.525 21.274 23.8995 23.8995C21.274 26.525 17.713 28 14 28C10.287 28 6.72601 26.525 4.10051 23.8995C1.475 21.274 0 17.713 0 14C0 10.287 1.475 6.72601 4.10051 4.10051C6.72601 1.475 10.287 0 14 0C17.713 0 21.274 1.475 23.8995 4.10051C26.525 6.72601 28 10.287 28 14ZM14.5022 10.3355C13.1407 10.9025 10.4178 12.075 6.33675 13.853C5.67525 14.1155 5.327 14.3745 5.2955 14.6265C5.243 15.0517 5.77675 15.2198 6.503 15.449L6.80925 15.5453C7.52325 15.778 8.48575 16.0492 8.9845 16.0597C9.4395 16.0702 9.94525 15.8848 10.5035 15.4998C14.3167 12.9255 16.2855 11.6252 16.408 11.5972C16.4955 11.5763 16.618 11.5518 16.6985 11.6252C16.7808 11.697 16.772 11.8352 16.7633 11.872C16.7108 12.0977 14.616 14.0437 13.5327 15.0518C13.195 15.3667 12.9552 15.589 12.9062 15.6398C12.7984 15.75 12.6887 15.8585 12.5772 15.9653C11.9122 16.6058 11.4152 17.0853 12.6035 17.8693C13.1757 18.2473 13.6342 18.557 14.091 18.8685C14.588 19.208 15.085 19.5457 15.729 19.9692C15.8917 20.0743 16.0493 20.188 16.2015 20.2965C16.7808 20.7095 17.304 21.0805 17.9463 21.021C18.3207 20.986 18.7075 20.636 18.9035 19.586C19.3673 17.1063 20.279 11.7355 20.489 9.52175C20.5018 9.33772 20.4942 9.15284 20.4662 8.9705C20.4498 8.82336 20.3786 8.6878 20.2668 8.59075C20.1075 8.48083 19.9177 8.42389 19.7243 8.428C19.1992 8.43675 18.389 8.7185 14.5022 10.3355Z" fill="#616161" />
@@ -80,11 +84,11 @@
                         </svg>
                     </a>
 
-                    <a href="/" title="Shavaz twitter">
+                    <a href="https://twitter.com/ShavazCom" title="Shavaz twitter account | اکانت تویتر شاواز ">
                         <v-icon icon="mdi-twitter" />
                     </a>
 
-                    <a href="/" title="Shavaz linkdin">
+                    <a href="https://www.linkedin.com/company/shavaz/about" title="shavaz linkedin account | اکانت لینکدین شاواز ">
                         <v-icon icon="mdi-linkedin" />
                     </a>
                 </div>
@@ -116,27 +120,27 @@
 
             <v-col cols="12" lg="6">
                 <div class="footer__logo-hologram">
-                    <a href="/" title="Shavaz logo">
-                        <img src="~/assets/images/should-delete/snappay.png" class="" alt="" width="52" height="61" title="" />
+                    <a href="/" title="Shavaz hologram">
+                        <img src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz logo">
-                        <img src="~/assets/images/should-delete/1d2ab0.png" class="" alt="" width="52" height="61" title="" />
+                    <a href="/" title="Shavaz hologram">
+                        <img src="~/assets/images/should-delete/1d2ab0.png" class="" alt="hologram" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz logo">
+                    <a href="/" title="Shavaz hologram">
                         <img src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz logo">
-                        <img src="~/assets/images/should-delete/samandehi.png" class="" alt="" width="52" height="61" title="" />
+                    <a href="/" title="Shavaz hologram">
+                        <img src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="61" title="" />
                     </a>
                 </div>
             </v-col>
         </v-row>
 
         <div class="footer__copy-right-text">
-            <p>استفاده از مطالب فروشگاه اینترنتی شاواز فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
+            <p>استفاده از مطالب <h5 class="d-inline t12">فروشگاه اینترنتی شاواز</h5> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
         </div>
     </v-container>
 </footer>
@@ -146,7 +150,7 @@
 export default {
     methods: {
         /**
-         * Scoll top
+         * Scroll top
          */
         scrollToTop() {
             window.scrollTo({
@@ -267,7 +271,7 @@ $parent: "footer";
             justify-content: flex-end;
             align-items: center;
 
-            @include gbp(768, 1280) {
+            @include gbp(769, 1280) {
                 justify-content: flex-start;
                 margin-bottom: 20px;
             }

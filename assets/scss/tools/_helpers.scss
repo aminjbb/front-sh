@@ -1,32 +1,9 @@
 //-----------------------------------------------------------------
 // Cursor
 //-----------------------------------------------------------------
-.cur-a {
-	cursor: auto !important;
-}
-
-.cur-d {
-	cursor: default !important;
-}
-
-.cur-ha {
-	cursor: hand !important;
-}
-
-.cur-he {
-	cursor: help !important;
-}
-
-.cur-m {
-	cursor: move !important;
-}
 
 .cur-p {
 	cursor: pointer !important;
-}
-
-.cur-t {
-	cursor: text !important;
 }
 
 //-----------------------------------------------------------------
@@ -91,10 +68,6 @@
 	position: absolute !important;
 }
 
-.pos-s {
-	position: static !important;
-}
-
 .pos-f {
 	position: fixed !important;
 }
@@ -149,7 +122,7 @@
 //------------------------------------------------
 
 .xs-show {
-	@include gbp(768) {
+	@include gbp(769) {
 		display: none !important;
 	}
 }
@@ -161,10 +134,12 @@
 }
 
 .tablet-show {
-	display: none;
-	
-	@include gbp(550, 1500) {
-		display: block !important;
+	@include gbp(1500) {
+		display: none !important;
+	}
+
+	@include gbp(0, 550) {
+		display: none !important;
 	}
 }
 
