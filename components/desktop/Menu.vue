@@ -225,8 +225,12 @@ $parent: 'menu';
                 padding: 14px 0;
                 cursor: pointer;
 
-                @include gbp(768, 1280) {
+                @include gbp(992, 1280) {
                     margin-left: 25px;
+                }
+
+                @include gbp(769, 992) {
+                    margin-left: 2px;
                 }
 
                 >a.menu__item__link {
@@ -293,7 +297,7 @@ $parent: 'menu';
                                 right: 0;
                                 background: var(--shade-background-color, #F7F8FA);
 
-                                @include gbp(768, 1280) {
+                                @include gbp(769, 1280) {
                                     width: 180px;
                                 }
                             }
@@ -304,7 +308,7 @@ $parent: 'menu';
                                 z-index: 1;
                                 cursor: pointer;
 
-                                @include gbp(768, 1280) {
+                                @include gbp(769, 1280) {
                                     width: 180px;
                                     padding: 13px 5px;
                                 }
@@ -356,7 +360,7 @@ $parent: 'menu';
                                     height: 100%;
                                     position: absolute;
 
-                                    @include gbp(768, 1280) {
+                                    @include gbp(769, 1280) {
                                         width: calc(100% - 180px);
                                         right: 180px;
                                     }

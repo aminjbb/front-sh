@@ -140,7 +140,7 @@
 </template>
 
 <script>
-
+import auth from '@/middleware/auth';
 export default {
     name: "Sidebar",
 
@@ -153,6 +153,7 @@ export default {
                 ['سفارش‌های من', '/user/orders', 'mdi-chat'],
             ],
             dialog: false,
+            userData: null,
         }
     },
 
@@ -181,12 +182,26 @@ export default {
             window.location = '/';
             this.closeModal();
         },
+
+        /**
+         * fetch user data
+         */
+        async fetchUserProfile() {
+            try {
+                const response = await auth.getUserProfile(this.userToken)
+                this.userData = response.data.data
+                console.log("🚀 ~ fetchUserProfile ~ userData:", userData)
+
+            } catch (error) {
+                // Handle errors
+            }
+        },
     },
 
-    computed: {
-        userData() {
-            return this.$store.getters['get_userData']
-        }
+    created() {
+        if (this.userToken) {
+            this.fetchUserProfile();
+        } 
     },
 }
 </script>

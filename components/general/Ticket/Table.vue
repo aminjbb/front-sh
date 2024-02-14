@@ -170,7 +170,7 @@ export default {
 @import "~/assets/scss/tools/bp";
 
 .ticket-table .table {
-    @include gbp(768) {
+    @include gbp(769) {
         border-radius: 8px;
         border: 1px solid #F5F5F5;
         overflow: hidden;

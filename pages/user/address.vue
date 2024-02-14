@@ -51,6 +51,12 @@ import Public from '@/composables/Public.js'
 import auth from "~/middleware/auth.js";
 
 export default {
+    data() {
+        return {
+            userDetail: null,
+            userData:null,
+        }
+    },
 
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | آدرس های من')
@@ -80,19 +86,13 @@ export default {
         }
     },
 
-    data() {
-        return {
-            userDetail: null
-        }
-    },
-
     methods: {
         /**
          * fetch user data
          */
         async fetchUserProfile() {
             try {
-                this.userDetail = await auth.getUserProfile(this.userToken)
+                this.userDetail = await auth.getUserProfile(this.userToken);
             } catch (error) {
                 // Handle errors
             }

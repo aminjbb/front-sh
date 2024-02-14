@@ -68,6 +68,8 @@
 </template>
 
 <script>
+import auth from "~/middleware/auth.js";
+
 import {
     copyText
 } from 'vue3-clipboard'
@@ -78,6 +80,7 @@ export default {
         return {
             identificationCode: 'identification code moc data',
             products: [],
+            userDetail: null,
             productsMoc: [{
                     image: {
                         image_url: 'products.jpg'
@@ -115,6 +118,7 @@ export default {
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | ناحیه کاربری')
         const description = ref("ناحیه کاربری");
+        const userToken = useCookie('userToken');
 
         /**
          * Copy identification code
@@ -147,7 +151,8 @@ export default {
         })
 
         return {
-            doCopy
+            doCopy,
+            userToken
         }
     },
 }
