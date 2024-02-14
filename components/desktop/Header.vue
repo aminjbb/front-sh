@@ -1,8 +1,10 @@
 <template>
+<div v-if="bannerItem" class="fixed-banner" id="top-banner"></div>
+
 <header
     class="header header--desktop w-100"
     id="header--desktop"
-    :class="{ 'fixed': isFixed, 'hidden': isHidden }">
+    :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
     <v-container>
         <div class="header__inner d-flex align-center justify-space-between">
             <div class="header__col1 d-flex algin-center">
@@ -173,6 +175,10 @@ export default {
             isLogin: false,
             dialog: false,
             userData: null,
+            hasBanner: false,
+            isBanner: false,
+            isTop: false,
+            bannerItem:null,
         };
     },
 
@@ -211,6 +217,14 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
         document.addEventListener('click', this.closeDropDown);
         this.getBasket();
+
+        const banner = document.getElementById("top-banner");
+        if (banner) {
+            this.isBanner = true;
+            this.hasBanner = true;
+            document.getElementsByTagName('body')[0].classList.add('hasBanner');
+            
+        }
     },
 
     beforeDestroy() {
@@ -226,20 +240,43 @@ export default {
         handleScroll() {
             let currentScrollTop = window.scrollY;
 
-            if (window.scrollY > 60) {
-                this.isHidden = true;
-                this.isFixed = false;
+            if (this.isBanner) {
+                if (window.scrollY > 74) {
+                    this.isHidden = true;
+                    this.isFixed = false;
+                    this.hasBanner = false;
 
-                if (currentScrollTop > this.lastScrollTop) {
+                    if (currentScrollTop > this.lastScrollTop) {
+                        this.isHidden = true;
+                        this.isFixed = false;
+
+                    } else {
+                        this.isFixed = true;
+                        this.isHidden = false;
+                    }
+
+                    this.lastScrollTop = currentScrollTop;
+                }
+
+                if (window.scrollY <= 74) {
+                    this.hasBanner = true;
+                }
+            } else {
+                if (window.scrollY > 60) {
                     this.isHidden = true;
                     this.isFixed = false;
 
-                } else {
-                    this.isFixed = true;
-                    this.isHidden = false;
-                }
+                    if (currentScrollTop > this.lastScrollTop) {
+                        this.isHidden = true;
+                        this.isFixed = false;
 
-                this.lastScrollTop = currentScrollTop;
+                    } else {
+                        this.isFixed = true;
+                        this.isHidden = false;
+                    }
+
+                    this.lastScrollTop = currentScrollTop;
+                }
             }
         },
 
@@ -307,13 +344,22 @@ export default {
 @import "~/assets/scss/tools/bp";
 $parent: 'header';
 
+.fixed-banner {
+    width: 100%;
+    height: 64px;
+    background: red;
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 11;
+}
+
 .#{$parent} {
     &--desktop {
         &.show-mega-menu {
             z-index: 1000;
         }
 
-        position: fixed;
         z-index: 10;
         padding: 4px;
         padding-bottom: 0 !important;
@@ -332,7 +378,7 @@ $parent: 'header';
                 height: 38px;
                 margin-left: 65px;
 
-                @include gbp(768, 1280) {
+                @include gbp(769, 1280) {
                     margin-left: 12px;
                 }
             }
@@ -344,7 +390,7 @@ $parent: 'header';
                 overflow: hidden;
                 position: relative;
 
-                @include gbp(768, 1280) {
+                @include gbp(769, 1280) {
                     width: 450px;
                 }
 
@@ -454,13 +500,19 @@ $parent: 'header';
             }
         }
 
+        &.has-banner {
+            top: 64px;
+        }
+
         &.hidden {
+            position: fixed;
             opacity: 0;
             transform: translateY(-100%);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         &.fixed {
+            position: fixed;
             opacity: 1;
             transform: translateY(0);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;

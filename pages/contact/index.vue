@@ -68,7 +68,7 @@
 
                 <h2 class="t24 w500 mb-5 text-grey-darken-2 mt-8">شبکه های مجازی</h2>
                 <div class="d-flex align-center contact-info__socials">
-                    <a href="https://www.instagram.com/shavazcom" target="_blank" title="shavaz-instagram-account" class="ml-2 d-block">
+                    <a href="https://www.instagram.com/shavazcom" target="_blank" title="Shavaz instagram account | اکانت اینستاگرام شاواز " class="ml-2 d-block">
                         <v-icon icon="mdi-instagram" color="grey" />
                     </a>
 
@@ -78,21 +78,21 @@
                         </svg>
                     </a>
 
-                    <a href="https://t.me/shavazcomm" target="_blank" title="shavaz-instagram-account" class="ml-2 d-block">
+                    <a href="https://t.me/shavazcomm" target="_blank" title="Shavaz telegram account | اکانت تلگرام شاواز " class="ml-2 d-block">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M20.3764 4.19134L2.6573 11.0595C1.94425 11.3794 1.70308 12.0199 2.48496 12.3675L7.03066 13.8196L18.0216 6.99185C18.6217 6.56322 19.2361 6.67751 18.7074 7.14904L9.26769 15.7402L8.97116 19.376C9.24581 19.9374 9.7487 19.94 10.0695 19.661L12.6811 17.177L17.154 20.5437C18.1928 21.1619 18.7581 20.763 18.9816 19.6299L21.9154 5.66623C22.22 4.2715 21.7006 3.65697 20.3764 4.19134Z" fill="#9E9E9E" />
                         </svg>
                     </a>
 
-                    <a href="https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4w" target="_blank" title="shavaz-youtube-account" class="ml-2 d-block">
+                    <a href="https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4w" target="_blank" title="Shavaz youtube account | اکانت یونیوب شاواز " class="ml-2 d-block">
                         <v-icon icon="mdi-youtube" color="grey" />
                     </a>
 
-                    <a href="https://twitter.com/ShavazCom" target="_blank" title="shavaz-twitter-account" class="ml-2 d-block">
+                    <a href="https://twitter.com/ShavazCom" target="_blank" title="Shavaz twitter account | اکانت تویتر شاواز " class="ml-2 d-block">
                         <v-icon icon="mdi-twitter" color="grey" />
                     </a>
 
-                    <a href="https://www.linkedin.com/company/shavaz/about" target="_blank" title="shavaz-linkedin-account" class="ml-2 d-block">
+                    <a href="https://www.linkedin.com/company/shavaz/about" target="_blank" title="shavaz linkedin account | اکانت لینکدین شاواز " class="ml-2 d-block">
                         <v-icon icon="mdi-linkedin" color="grey" />
                     </a>
                 </div>

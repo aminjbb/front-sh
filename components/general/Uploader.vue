@@ -128,6 +128,14 @@ export default {
         border-radius: 12px;
         border: 1px dashed var(--Gray-200, #EEE);
 
+        >div.v-row{
+            @include gbp (0, 768) {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
         .v-btn {
             box-shadow: none;
             background: #FBE9F3;
