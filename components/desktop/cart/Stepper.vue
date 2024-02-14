@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <div class="stepper">
     <header class="stepper__header d-flex align-center w-100">
         <div
@@ -26,12 +26,12 @@
         <v-row v-if="activeStep !== 4">
             <v-col md="9">
                 <template v-if="activeStep === 1">
-                    <desktopCartSkuListStep :count="data.count" :productList="data" />
+                    <desktopCartSkuListStep :count="dataCount" :productList="data.details" />
                 </template>
 
                 <template v-if="activeStep === 2">
                     <desktopCartSendingInformationAddress @selectedAddress="getAddress" />
-                    <desktopCartSendingInformationTime @selectedDate="getTime" @selectedWay="getWay" />
+                    <desktopCartSendingInformationTime v-if="orderAddressId" @selectedDate="getTime" @selectedWay="getWay" />
                 </template>
 
                 <template v-if="activeStep === 3">
@@ -49,7 +49,7 @@
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(shippingCost)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(data.sending_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
@@ -89,7 +89,12 @@
 </template>
 
 <script>
+import Basket from '@/composables/Basket.js'
 export default {
+  setup(){
+    const {calculateSendingPrice , createOrder} = new Basket()
+    return {calculateSendingPrice , createOrder}
+  },
     data() {
         return {
             steps: [
@@ -130,11 +135,19 @@ export default {
                             theme: 'dark'
                         });
                     } else {
-                        this.active[this.activeStep] = false;
-                        this.activeStep++;
-                        this.active[this.activeStep] = true;
+                        if (this.activeStep === 3){
+                            this.createOrder(this.orderSendingMethod, '' , this.orderAddressId , this.orderPaymentMethod)
+                        }
+                        else{
+                          this.active[this.activeStep] = false;
+                          this.activeStep++;
+                          this.active[this.activeStep] = true;
+                        }
+
                     }
-                } else {
+                }
+
+                else {
                     this.active[this.activeStep] = false;
                     this.activeStep++;
                     this.active[this.activeStep] = true;
@@ -149,9 +162,10 @@ export default {
          * @param {*} id 
          */
         getAddress(id) {
-            console.log("🚀 ~ getAddress ~ id:", id)
-            //TODO: Add address time to cart method
+          if (id){
+            this.$store.commit('set_orderAddress' , id)
             this.activeButton = true;
+          }
         },
 
         /**
@@ -159,8 +173,10 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-            console.log("🚀 ~ getWay ~ way:", way)
-            //TODO: Add set way to cart method
+          if (way) {
+            this.$store.commit('set_orderSendingMethod' , way)
+            this.calculateSendingPrice(this.orderAddressId ,way )
+          }
         },
 
         /**
@@ -178,12 +194,29 @@ export default {
          * @param {*} id 
          */
         getPayment(id) {
-            console.log("🚀 ~ getPayment ~ id:", id)
-            //TODO: Add set payment to cart method
+            this.$store.commit('set_orderPayMethod' , id)
             this.activeButton = true;
         },
     },
-
+    computed:{
+      orderSendingMethod(){
+        return this.$store.getters['get_orderSendingMethod']
+      },
+      orderPaymentMethod(){
+        return this.$store.getters['get_orderPayMethod']
+      },
+      orderAddressId(){
+        return this.$store.getters['get_orderAddress']
+      },
+      dataCount(){
+        try {
+          return this.data.details.length
+        }
+        catch (e) {
+          return 0
+        }
+      }
+    },
     mounted() {
         this.active[this.activeStep] = true;
     }

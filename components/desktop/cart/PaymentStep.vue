@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <v-card class="pa-5 mobile-pa-0 mobile-no-border ov-v">
     <header class="d-flex align-center mb-5">
         <v-icon
@@ -19,7 +19,7 @@
                             v-model="paymentModal"
                             @change="selectPayment()"
                             hide-details
-                            :value="payment.id" />
+                            :value="payment.type" />
                         <h3 class="t15 w400 text-grey-darken-2">{{payment.label}}</h3>
                     </div>
                     <p class="number-font t12 w400 text-grey">

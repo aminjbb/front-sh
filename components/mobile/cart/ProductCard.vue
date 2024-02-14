@@ -10,7 +10,7 @@
          class="t12 w400 l-28">
 
         <template v-if="content.site_price !== content.current_site_price ">
-          کالا افزایش قیمت داشته است.
+          کالا  تغییر قیمت داشته است.
         </template>
         <template v-else-if="content.site_stock === 0">
           کالا به اتمام رسیده است.
@@ -20,7 +20,7 @@
 
     <div class="d-flex align-center product-card__details">
       <div v-if="content.shps && content.shps?.sku?.image_url" class="product-card__image ml-5">
-        <img :src="/* content?.image?.image_url */content.shps?.sku?.image_url" :title="content.label"
+        <img :src="content.shps?.sku?.image_url" :title="content.label"
              :alt="content.label" width="100" height="100"/>
       </div>
 

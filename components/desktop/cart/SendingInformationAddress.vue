@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <v-card class="pa-5 mobile-pa-0 mobile-no-border ov-v">
     <header class="d-flex justify-space-between  align-center mb-5 xs-hide">
         <div class="d-flex align-center">
@@ -19,7 +19,7 @@
     </header>
 
     <div>
-        <template v-for="(address , index) in addressMoc" :key="`address${index}`">
+        <template v-for="(address , index) in userAddress" :key="`address${index}`">
             <div class="d-flex align-center justify-space-between">
                 <v-checkbox
                     class="address-checkbox"

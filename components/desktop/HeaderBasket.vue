@@ -71,16 +71,16 @@
             </v-btn>
         </div>
 
-        <div class="pa-3">
-            <v-row>
-                <v-col
-                    v-for="(product, index) in suggestProductsMoc"
-                    :key="`product${index}`"
-                    sm="6">
-                    <generalProductSimpleCard :image="product.image.image_url" :label="product.label" />
-                </v-col>
-            </v-row>
-        </div>
+<!--        <div class="pa-3">-->
+<!--            <v-row>-->
+<!--                <v-col-->
+<!--                    v-for="(product, index) in suggestProductsMoc"-->
+<!--                    :key="`product${index}`"-->
+<!--                    sm="6">-->
+<!--                    <generalProductSimpleCard :image="product.image.image_url" :label="product.label" />-->
+<!--                </v-col>-->
+<!--            </v-row>-->
+<!--        </div>-->
     </div>
 </div>
 </template>

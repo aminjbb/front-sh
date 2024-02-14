@@ -11,12 +11,24 @@ const store = createStore({
         first_name: null,
         last_name: null,
         phone_number: null,
-        basket:[]
-      }
+      },
+      basket:[],
+      orderAddress:null,
+      orderPayMethod:null,
+      orderSendingMethod:null,
     };
   },
 
   mutations: {
+    set_orderSendingMethod(state , value){
+      state.orderSendingMethod = value
+    },
+    set_orderPayMethod(state , value){
+      state.orderPayMethod = value
+    },
+    set_orderAddress(state , id){
+      state.orderAddress = id
+    },
     set_basket(state , obj){
       state.basket = obj
     },
@@ -36,6 +48,15 @@ const store = createStore({
   },
 
   getters: {
+    get_orderSendingMethod(state){
+      return  state.orderSendingMethod
+    },
+    get_orderPayMethod(state){
+      return   state.orderPayMethod
+    },
+    get_orderAddress(state){
+      return  state.orderAddress
+    },
     get_basket(state ){
       return  state.basket
     },
