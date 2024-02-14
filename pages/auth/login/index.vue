@@ -45,6 +45,64 @@
             <template v-else-if="loginStep === 2">
                 <!-- Step 2: Enter OTP -->
                 <v-form
+                    v-if="passwordWay"
+                    @submit.prevent="verifyPassword"
+                    ref="otpForm"
+                    class="w-100">
+                    <div class="w-100 form-inner">
+                        <a class="d-flex justify-center" href="/">
+                            <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
+                        </a>
+
+                        <div class="mt-6">
+                            <div v-if="register" class="text-right mb-4 pr-1">
+                                <span class="p-auth__text">
+                                    حساب کاربری با شماره {{ mobile }} وجود ندارد. کد تایید ارسال شده را وارد نمایید.
+                                </span>
+                            </div>
+
+                            <div class="text-right mb-2 pr-1">
+                                <span class="p-auth__text">
+                                رمز عبور  خود را وارد نمایید
+                                </span>
+                            </div>
+
+                            <v-text-field
+                                v-model="password"
+                                class=""
+                                variant="outlined" />
+
+                            <a @click="backStep1()" class="cur-p d-block back-step text-light-blue darken-1 mb-3">
+                                تغییر شماره
+                                <v-icon icon="mdi-chevron-left" color="light-blue darken-1" />
+                            </a>
+
+                            <a @click="loginWithMobile()" class="cur-p d-block back-step text-light-blue darken-1">
+                                ورود رمز یکبار مصرف
+                                <v-icon icon="mdi-chevron-left" color="light-blue darken-1" />
+                            </a>
+                        </div>
+
+                        <div class="mt-10">
+                            <div class="text-center mb-2 pr-1">
+                                <span class="p-auth__text number-font">
+                                    {{seconds}} :{{minutes}} مانده تا ارسال مجدد کد تایید
+                                </span>
+                            </div>
+                            <v-btn
+                                :loading="loading"
+                                color="primary"
+                                block
+                                rounded="xl"
+                                type="submit">
+                                ورود
+                            </v-btn>
+                        </div>
+                    </div>
+                </v-form>
+
+                <v-form
+                    v-else
                     @submit.prevent="verifyOTP"
                     ref="otpForm"
                     class="w-100">
@@ -71,14 +129,20 @@
                                 :rules="otpRule"
                                 class=""
                                 variant="outlined" />
-                            <div class="mb-1">
+                                
+                            <div class="mb-2">
                                 <span class="p-auth__text number-font">
                                     کد به شماره {{ mobile }} ارسال شده‌است.
                                 </span>
                             </div>
 
-                            <a @click="backStep1()" class="back-step text-light-blue darken-1">
+                            <a @click="backStep1()" class="cur-p d-block back-step text-light-blue darken-1 mb-3">
                                 تغییر شماره
+                                <v-icon icon="mdi-chevron-left" color="light-blue darken-1" />
+                            </a>
+
+                            <a @click="loginWithPasswords()" class="cur-p d-block back-step text-light-blue darken-1">
+                                ورود با رمز عبور
                                 <v-icon icon="mdi-chevron-left" color="light-blue darken-1" />
                             </a>
                         </div>
@@ -163,6 +227,7 @@ export default {
             loginStep: 1,
             mobile: '',
             otp: '',
+            password:null,
             loading: false,
             mobileRule: [
                 (v) => !!v || "این فیلد الزامی است",
@@ -177,12 +242,23 @@ export default {
             showRetry: true,
             counter: '',
             startTime: 2,
+            passwordWay: false,
         };
     },
 
     setup() {
-        const runtimeConfig = useRuntimeConfig()
+        const title = ref('فروشگاه اینترنتی شاواز | ورود به پنل کاربری')
+        const description = ref(' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com - خرید اینترنتی لوازم آرایشی و بهداشتی با ضمانت اصالت کالا -  برای خرید کلیک کنید!')
 
+        useHead({
+            title,
+            meta: [{
+                name: 'description',
+                content: description
+            }]
+        });
+
+        const runtimeConfig = useRuntimeConfig()
         const userToken = useCookie('userToken')
         userToken.value = ''
         return {
@@ -194,6 +270,15 @@ export default {
     methods: {
         backStep1() {
             this.loginStep = 1;
+            this.passwordWay = false;
+        },
+
+        loginWithPasswords(){
+            this.passwordWay = true;
+        },
+
+        loginWithMobile(){
+            this.passwordWay = false;
         },
 
         /**
@@ -250,6 +335,43 @@ export default {
                 this.loading = true;
 
                 const response = await auth.verifyOTP(this.mobile, this.otp);
+
+                if (response.status === 200) {
+                    this.userToken = response.data.data.token;
+
+                    const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
+                        headers: {
+                            Authorization: `Bearer ${this.userToken}`,
+                        },
+                    });
+
+                    if (completeResponse.data == false) {
+                        this.loginStep = 3;
+
+                    } else {
+                        useNuxtApp().$toast.success(response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                        window.location = '/'
+                    }
+                }
+            } catch (error) {
+                console.error('Verify OTP error:', error);
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        /**
+         * Verify password
+         */
+         async verifyPassword() {
+            try {
+                this.loading = true;
+
+                const response = await auth.verifyPassword(this.mobile, this.password);
 
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;

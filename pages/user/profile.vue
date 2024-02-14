@@ -16,7 +16,7 @@
             </div>
             <div class="col-9 pa-4">
                 <v-form ref="editUser" v-model="valid">
-                    <v-card class="pa-8 mobile-pa-0 mobile-no-border">
+                    <v-card class="pa-8 mobile-pa-0 mobile-no-border ov-v">
                         <v-row class="pa-5">
                             <v-col cols="12" md="6">
                                 <v-text-field
@@ -64,12 +64,16 @@
                                     v-model="form.national_code" />
                             </v-col>
 
-                            <v-col cols="12" md="6">
+                            <v-col cols="12" md="6" class="form-date">
                                 <v-text-field
                                     density="compact"
                                     label="تاریخ تولد"
                                     variant="outlined"
                                     v-model="form.birth_date" />
+
+                                <client-only>
+                                    <date-picker v-model="form.birth_date" :column="1" mode="single" :placeholder="form.birth_date ? form.birth_date : ''"></date-picker>
+                                </client-only>
                             </v-col>
                         </v-row>
 
@@ -102,6 +106,9 @@
 <script>
 import auth from '@/middleware/auth';
 import axios from "axios";
+
+//component
+import DatePicker from '@alireza-ab/vue3-persian-datepicker';
 
 export default {
 
@@ -166,6 +173,10 @@ export default {
             userDetail,
             runtimeConfig
         };
+    },
+
+    components: {
+        DatePicker
     },
 
     methods: {

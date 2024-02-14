@@ -23,7 +23,7 @@
                                 v-if="hasPassword"
                                 cols="12"
                                 md="7">
-                                <label class="d-block t14 text-grey-darken-3 mb-4">رمز عبور فعلی *</label>
+                                <label class="d-block t14 text-grey-darken-3 mb-4">رمز عبور فعلی <span class="text-red-accent-4">*</span></label>
 
                                 <v-text-field
                                     :rules="rule"
