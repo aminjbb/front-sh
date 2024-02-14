@@ -19,7 +19,7 @@
 
                     <div class="flex-grow-1">
                         <h1 class="t15 w400 text-grey-darken-3 mb-2">آیا نیاز به پشتیبانی دارید؟</h1>
-                        <p class="t12 w400 text-grey-darken-1">لطفا پیش از ثبت تیکت، ابتدا بخش <span class="text-blue">سوالات متداول</span> را مطالعه نمایید. </p>
+                        <p class="t12 w400 text-grey-darken-1">لطفا پیش از ثبت تیکت، ابتدا بخش <a class="text-blue" href="/faq">سوالات متداول</a> را مطالعه نمایید. </p>
                     </div>
 
                     <v-btn

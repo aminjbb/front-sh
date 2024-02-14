@@ -15,7 +15,7 @@
                 class="ml-2"
                 size="small"
                 color="grey" />
-            <span class="text-grey t14">حذف آدرس</span>
+            <span class="text-grey t14">{{ title }}</span>
         </div>
     </template>
 

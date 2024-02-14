@@ -37,6 +37,7 @@
 
     &__input {
         padding: 14px 10px !important;
+        font-family: 'IranSansFaNum' !important;
     }
 }
 
@@ -45,17 +46,18 @@
 }
 
 
-.v-input__details{
-    padding:5px 0 0 !important;
+.v-input__details {
+    padding: 5px 0 0 !important;
 }
 
-.v-messages__message{
+.v-messages__message {
     font-size: 11px !important;
 }
 
-.v-label{
-    &--clickable{
+.v-label {
+    &--clickable {
         font-size: 14px !important;
+        font-family: 'IranSansFaNum' !important;
     }
 }
 
@@ -77,11 +79,11 @@
 }
 
 .v-btn {
-    &__content{
+    &__content {
         letter-spacing: 0;
         font-variation-settings: "wght" 500;
     }
-    
+
     &--disabled {
         border: 0 !important;
         background: rgba(0, 0, 0, 0.12) !important;
@@ -89,8 +91,53 @@
     }
 }
 
-/* .v-overlay-container * {
-    font-size: 14px !important;
-    color:#757575 !important;
-    font-family: 'IranSansFaNum' !important;
-} */
+.form-date {
+    position: relative;
+
+    .v-field__input{
+        color: transparent !important;
+    }
+
+    .pdp-footer{
+        display: none !important;
+    }
+
+    .pdp {
+        position: absolute;
+        top: 5px;
+    }
+
+    .pdp-icon {
+        display: none;
+    }
+
+    .pdp-input {
+        border: 0 !important;
+        height: 63px !important;
+    }
+
+    .pdp-weekday,
+    .pdp-overlay,
+    .pdp-day,
+    .pdp-year,
+    .pdp-input,
+    .pdp-select-year li {
+        font-family: 'IranSansFaNum' !important;
+    }
+
+    .pdp-year,
+    .friday,
+    .pdp-month {
+        color: #D72685 !important;
+    }
+
+    .pdp .pdp-picker .pdp-main .pdp-date .pdp-column .pdp-days .pdp-day:not(.disabled):hover,
+    .pdp .pdp-picker .pdp-main .pdp-date .pdp-column .pdp-days .pdp-day.today {
+        border-color: #D72685 !important;
+    }
+
+    .pdp .pdp-picker .pdp-main .pdp-date .pdp-column .pdp-days .pdp-day.start-range,
+    .pdp .pdp-picker .pdp-main .pdp-date .pdp-column .pdp-days .pdp-day.end-range {
+        background-color: #D72685 !important;
+    }
+}

@@ -17,12 +17,7 @@ export default defineNuxtConfig({
           name: 'login',
           path: '/login',
           file: '~/pages/auth/login/index.vue'
-        },
-        {
-          name: 'register',
-          path: '/register',
-          file: '~/pages/auth/register/index.vue'
-        },
+        }
       )
     }
   },

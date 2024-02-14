@@ -32,6 +32,7 @@
                         :provinces="provinces"
                         :address="address"
                         v-for="(address , index) in userAddress"
+                        :class="index+1 == userAddress.length ? 'border-0' :''"
                         :getUserAddress="getUserAddress"
                         :key="`address${index}`" />
 

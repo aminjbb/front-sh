@@ -59,6 +59,33 @@ export default {
   },
 
   /**
+   * Get OTP for login
+   * @param {string | number} phoneNumber 
+   * @param {*} password 
+   * @returns 
+   */
+  async verifyPassword(phoneNumber, password) {
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/user/login-register/password`, {
+        phone_number: phoneNumber,
+        password: password
+      });
+      return response;
+    } catch (error) {
+      if (error.response.status === 400) {
+
+        useNuxtApp().$toast.error(error.response.data.message, {
+          rtl: true,
+          position: 'top-center',
+          theme: 'dark'
+        });
+      }
+      console.error('Verify password error:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Register
    * @param {array} user 
    * @returns 

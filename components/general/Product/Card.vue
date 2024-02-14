@@ -9,6 +9,7 @@
             title="حذف محصول"
             text="آیا از حذف این محصول از لیست علاقمندی ها اطمینان دارید؟"
             submitText="حذف کالا"
+            buttonType="icon"
             @removeProduct="removeProduct(content)" />
     </div>
 

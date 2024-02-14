@@ -17,7 +17,7 @@
             <div class="col-9 pa-4">
                 <v-card class="pa-8 mobile-pa-0 mobile-no-border has-header">
                     <header class="card__header">لیست علاقمندی‌ها</header>
-                    <v-row v-if="wishList && wishList.data" class="favorite-list ma-0">
+                    <v-row v-if="wishList && wishList.data && wishList.data.length > 0" class="favorite-list ma-0">
                         <v-col
                             v-for="item in wishList.data"
                             cols="12"
@@ -33,6 +33,21 @@
                                 :content="item" />
                         </v-col>
                     </v-row>
+
+                    <template v-else>
+                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                            <svgEmptyFavoriteList class="mt-10"/>
+
+                            <span class="t14 w400 text-grey-darken-1 mt-2">لیست علاقمندی‌های شما خالی است.</span>
+
+                            <v-btn
+                                href="/"
+                                title="بازدید از سایت"
+                                class="mt-5 btn btn--cancel mb-10 px-8">
+                                بازدید از سایت
+                            </v-btn>
+                        </div>
+                    </template>
                 </v-card>
             </div>
         </v-row>
@@ -68,7 +83,7 @@ export default {
         }
     },
 
-    setup(){
+    setup() {
         const userToken = useCookie('userToken');
 
         const title = ref('فروشگاه اینترنتی شاواز | لیست علاقه‌ مندی‌ ها');
@@ -99,9 +114,31 @@ export default {
          * Remove product from favorite list
          * @param {*} content 
          */
-        removeProduct(content){
-            //TODO: Add remove product from favorite list method
-            console.log('level-3',content);
+        removeProduct(content) {
+            axios
+                .delete(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/delete/${content.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.closeModal();
+
+                    useNuxtApp().$toast.success('محصول مورد نظر، با موفقیت از لیست علاقه مندی های شما حذف شد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.loading = false;
+                });
         }
     },
 
@@ -119,4 +156,3 @@ export default {
 @import "~/assets/scss/tools/bp";
 @import '~/assets/scss/views/user.scss';
 </style>
-
