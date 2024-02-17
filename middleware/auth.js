@@ -118,7 +118,6 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       })
-
       // Return the response data
       return response
     } catch (error) {

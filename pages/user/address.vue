@@ -18,7 +18,6 @@
                 <v-card class="pa-5 mobile-pa-0 mobile-no-border">
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide">
                         <span>آدرس‌های شما</span>
-
                         <generalUserAddressModal
                             :getUserAddress="getUserAddress"
                             :userDetail="userDetail"
@@ -54,7 +53,6 @@ import auth from "~/middleware/auth.js";
 export default {
     data() {
         return {
-            userDetail: null,
             userData:null,
         }
     },
@@ -87,24 +85,21 @@ export default {
         }
     },
 
-    methods: {
-        /**
-         * fetch user data
-         */
-        async fetchUserProfile() {
-            try {
-                this.userDetail = await auth.getUserProfile(this.userToken);
-            } catch (error) {
-                // Handle errors
-            }
-        },
-    },
-
     beforeMount() {
         this.getUserAddress()
         this.getProvince()
-        this.fetchUserProfile()
-    }
+    },
+
+  computed:{
+      userDetail(){
+        try {
+          return this.$store.getters['get_userData']
+        }
+        catch (e) {
+          return null
+        }
+      }
+  }
 }
 </script>
 
