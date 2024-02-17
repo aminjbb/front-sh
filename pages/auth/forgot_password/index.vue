@@ -2,7 +2,7 @@
   <div class="p-auth login">
     <v-locale-provider rtl>
       <div class="p-auth__card">
-        <template v-if="loginStep === 1">
+        <template v-if="forgotPasswordStep === 1">
           <!-- Step 1: Get user's phone number -->
           <v-form
               @submit.prevent="sendOTP"
@@ -15,7 +15,7 @@
 
               <div class="mt-6">
                 <div class="p-auth__text">
-                  برای ورود و ثبت‌نام، شماره موبایل خود را وارد نمایید.
+                  برای تغییر رمز عبور، شماره تماس خود را وارد نمایید.
                 </div>
 
                 <v-text-field
@@ -34,80 +34,14 @@
                     type="submit">
                   دریافت کد
                 </v-btn>
-                <p class="p-auth__text">
-                  ورود به معنای پذیرش <a href="/rules/general-rules">شرایط و قوانین حریم</a> خصوصی شاواز می‌باشد.
-                </p>
               </div>
             </div>
           </v-form>
         </template>
 
-        <template v-else-if="loginStep === 2">
-          <!-- Step 2: Enter OTP -->
-          <v-form
-              v-if="passwordWay"
-              @submit.prevent="verifyPassword"
-              ref="otpForm"
-              class="w-100">
-            <div class="w-100 form-inner">
-              <a class="d-flex justify-center" href="/">
-                <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
-              </a>
-
-              <div class="mt-6">
-                <div v-if="register" class="text-right mb-4 pr-1">
-                                <span class="p-auth__text">
-                                    حساب کاربری با شماره {{ mobile }} وجود ندارد. کد تایید ارسال شده را وارد نمایید.
-                                </span>
-                </div>
-
-                <div class="text-right mb-2 pr-1">
-                                <span class="p-auth__text">
-                                رمز عبور  خود را وارد نمایید
-                                </span>
-                </div>
-
-                <v-text-field
-                    v-model="password"
-                    class=""
-                    :type="passwordType"
-                    variant="outlined">
-                  <template v-slot:append-inner>
-                    <v-icon @click="changePasswordType()">mdi-eye</v-icon>
-                  </template>
-                </v-text-field>
-
-                <a @click="forgotPassword()" class="cur-p d-block back-step text-light-blue darken-1 mb-3">
-                  فراموشی رمز عبور
-                  <v-icon icon="mdi-chevron-left" color="light-blue darken-1"/>
-                </a>
-
-                <a @click="loginWithMobile()" class="cur-p d-block back-step text-light-blue darken-1">
-                  ورود رمز یکبار مصرف
-                  <v-icon icon="mdi-chevron-left" color="light-blue darken-1"/>
-                </a>
-              </div>
-
-              <div class="mt-10">
-                <div class="text-center mb-2 pr-1">
-                                <span class="p-auth__text number-font">
-                                    {{ seconds }} :{{ minutes }} مانده تا ارسال مجدد کد تایید
-                                </span>
-                </div>
-                <v-btn
-                    :loading="loading"
-                    color="primary"
-                    block
-                    rounded="xl"
-                    type="submit">
-                  ورود
-                </v-btn>
-              </div>
-            </div>
-          </v-form>
+        <template v-else-if="forgotPasswordStep === 2">
 
           <v-form
-              v-else
               @submit.prevent="verifyOTP"
               ref="otpForm"
               class="w-100">
@@ -117,11 +51,6 @@
               </a>
 
               <div class="mt-6">
-                <div v-if="register" class="text-right mb-4 pr-1">
-                                <span class="p-auth__text">
-                                    حساب کاربری با شماره {{ mobile }} وجود ندارد. کد تایید ارسال شده را وارد نمایید.
-                                </span>
-                </div>
 
                 <div class="text-right mb-2 pr-1">
                                 <span class="p-auth__text">
@@ -141,15 +70,6 @@
                                 </span>
                 </div>
 
-                <a @click="backStep1()" class="cur-p d-block back-step text-light-blue darken-1 mb-3">
-                  تغییر شماره
-                  <v-icon icon="mdi-chevron-left" color="light-blue darken-1"/>
-                </a>
-
-                <a @click="loginWithPasswords()" class="cur-p d-block back-step text-light-blue darken-1">
-                  ورود با رمز عبور
-                  <v-icon icon="mdi-chevron-left" color="light-blue darken-1"/>
-                </a>
               </div>
 
               <div class="mt-10">
@@ -182,40 +102,61 @@
           </v-form>
         </template>
 
-        <template v-else-if="loginStep === 3">
-          <div class="w-100 form-inner">
-            <a class="d-flex justify-center" href="/">
-              <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image" width="106" height="37">
-            </a>
+        <template v-else-if="forgotPasswordStep === 3">
+          <v-form
+              @submit.prevent="resetPassword"
+              ref="resetPasswordForm"
+              v-model="resetPasswordValid"
+              class="w-100 ltr">
+            <div class="w-100 form-inner">
+              <a class="d-flex justify-center mb-5" href="/">
+                <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
+              </a>
 
-            <div class="t16 w400 text-center text-grey-darken-2">
-              به شاواز خوش آمدید...
+              <div class="mt-6">
+                <div class="p-auth__text">
+                  رمز عبور را وارد نمایید
+                </div>
+
+                <v-text-field
+                    v-model="newPassword"
+                    class=""
+                    :rules="blankRule"
+                    :type="newPasswordType"
+                    variant="outlined">
+                  <template v-slot:append-inner>
+                    <v-icon @click="newPasswordTypeChange()">mdi-eye</v-icon>
+                  </template>
+                </v-text-field>
+              </div>
+              <div class="mt-6">
+                <div class="p-auth__text">
+                  رمز عبور را تکرار نمایید
+                </div>
+
+                <v-text-field
+                    :rules="confirmPasswordRules"
+                    v-model="passwordConfirmation"
+                    class=""
+                    :type="passwordConfirmationType"
+                    variant="outlined">
+                  <template v-slot:append-inner>
+                    <v-icon @click="passwordConfirmationTypeChange()">mdi-eye</v-icon>
+                  </template>
+                </v-text-field>
+              </div>
+              <div class="mt-10">
+                <v-btn
+                    :loading="loading"
+                    color="primary"
+                    block
+                    type="submit">
+                  تایید
+                </v-btn>
+              </div>
             </div>
-
-            <div class="d-flex justify-center">
-              <img src="@/assets/images/Welcome.jpg" class="mb-5" alt="shavaz image" width="160" height="160">
-            </div>
-
-            <div class="mt-10 d-flex align-center center">
-              <v-btn
-                  href="/"
-                  height="44"
-                  title="بازگشت به سایت"
-                  class="btn btn--submit ml-2 w-50">
-                بازگشت به سایت
-              </v-btn>
-
-              <v-btn
-                  href="/user/profile"
-                  height="44"
-                  title="تکمیل حساب کاربری"
-                  class="btn btn--cancel mr-2 w-50">
-                تکمیل حساب کاربری
-              </v-btn>
-            </div>
-          </div>
+          </v-form>
         </template>
-
       </div>
     </v-locale-provider>
   </div>
@@ -225,22 +166,29 @@
 // Middleware
 import auth from '@/middleware/auth';
 import axios from "axios";
+import password from "~/pages/user/password.vue";
 
 export default {
 
   data() {
     return {
-      loginStep: 1,
+      forgotPasswordStep: 1,
       mobile: '',
       otp: '',
-      password: null,
+      newPassword: null,
+      passwordConfirmation: null,
       loading: false,
+      blankRule: [(v) => !!v || "این فیلد الزامی است"],
       mobileRule: [
         (v) => !!v || "این فیلد الزامی است",
         (v) =>
             /^(?:(\u0660\u0669[\u0660-\u0669][\u0660-\u0669]{8})|(\u06F0\u06F9[\u06F0-\u06F9][\u06F0-\u06F9]{8})|(09[0-9][0-9]{8}))$/.test(
                 v
             ) || "شماره موبایل معتبر نیست",
+      ],
+      confirmPasswordRules: [
+        (value) => !!value || "این فیلد الزامی است",
+        (value) => value === this.newPassword || "تکرار رمز صحیح نیست. لطفا مجدد رمز خود را وارد کنید.",
       ],
       otpRule: [v => !!v || "کد تایید را وارد نمایید"],
       minutes: null,
@@ -249,7 +197,9 @@ export default {
       counter: '',
       startTime: 2,
       passwordWay: false,
-      passwordType:'password'
+      passwordConfirmationType: 'password',
+      newPasswordType: 'password',
+      resetPasswordValid: true
     };
   },
 
@@ -275,15 +225,22 @@ export default {
   },
 
   methods: {
-    changePasswordType(){
-      if (this.passwordType === 'password') this.passwordType = 'text'
-      else  this.passwordType = 'password'
+    /**
+     * change new password type
+     */
+    newPasswordTypeChange() {
+      if (this.newPasswordType === 'password') this.newPasswordType = 'text'
+      else this.newPasswordType = 'password'
     },
-    forgotPassword() {
-      this.$router.push('/forgot_password')
+    /**
+     * change new confirmation password type
+     */
+    passwordConfirmationTypeChange() {
+      if (this.passwordConfirmationType === 'password') this.passwordConfirmationType = 'text'
+      else this.passwordConfirmationType = 'password'
     },
     backStep1() {
-      this.loginStep = 1;
+      this.forgotPasswordStep = 1;
       this.passwordWay = false;
     },
 
@@ -323,15 +280,15 @@ export default {
     },
 
     /**
-     * Send OTP
+     * Send OTP for forgot Password
      */
     async sendOTP() {
       try {
         this.loading = true;
-        const response = await auth.sendOTP(this.mobile);
+        const response = await auth.sendForgotPasswordOTP(this.mobile);
 
         if (response.data && response.status === 200) {
-          this.loginStep = 2;
+          this.forgotPasswordStep = 2;
           this.runCountdown();
         }
       } catch (error) {
@@ -346,66 +303,33 @@ export default {
      */
     async verifyOTP() {
       try {
-        this.loading = true;
-
-        const response = await auth.verifyOTP(this.mobile, this.otp);
-
-        if (response.status === 200) {
-          this.userToken = response.data.data.token;
-
-          const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
-            headers: {
-              Authorization: `Bearer ${this.userToken}`,
-            },
-          });
-
-          if (completeResponse.data == false) {
-            this.loginStep = 3;
-
-          } else {
-            useNuxtApp().$toast.success(response.data.message, {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
-            window.location = '/'
-          }
-        }
+        this.forgotPasswordStep = 3
       } catch (error) {
-        console.error('Verify OTP error:', error);
+
       } finally {
         this.loading = false;
       }
     },
 
     /**
-     * Verify password
+     * reset password
      */
-    async verifyPassword() {
+    async resetPassword() {
       try {
-        this.loading = true;
-
-        const response = await auth.verifyPassword(this.mobile, this.password);
-
-        if (response.status === 200) {
-          this.userToken = response.data.data.token;
-
-          const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
-            headers: {
-              Authorization: `Bearer ${this.userToken}`,
-            },
-          });
-
-          if (completeResponse.data == false) {
-            this.loginStep = 3;
-
-          } else {
+        await this.$refs.resetPasswordForm.validate
+        if (this.resetPasswordValid) {
+          this.loading = true;
+          const response = await auth.resetPassword(this.mobile, this.newPassword, this.passwordConfirmation, this.otp);
+          if (response.status === 200) {
+            this.userToken = response.data.data.token;
             useNuxtApp().$toast.success(response.data.message, {
               rtl: true,
               position: 'top-center',
               theme: 'dark'
             });
-            window.location = '/'
+            setTimeout(() => {
+              this.$router.push('/login')
+            }, 2000)
           }
         }
       } catch (error) {
