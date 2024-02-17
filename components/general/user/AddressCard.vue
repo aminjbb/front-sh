@@ -81,7 +81,7 @@
 
                         <li class="d-flex align-center py-1">
                             <generalModalsDelete
-                                ref="deleteAddress"
+                                :ref="`deleteAddress${address.id}`"
                                 :getUserAddress="getUserAddress"
                                 title="حذف آدرس"
                                 text="آیا از حذف این آدرس اطمینان دارید؟"
@@ -138,7 +138,7 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.$refs.deleteAddress.closeModal();
+
                     useNuxtApp().$toast.success('آدرس شما با موفقیت حذف شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -153,6 +153,7 @@ export default {
                         theme: 'dark'
                     });
                 }).finally(() => {
+                    this.$refs[`deleteAddress${address.id}`];
                     this.getUserAddress()
                 });
         },

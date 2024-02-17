@@ -103,9 +103,10 @@ export default {
             this.dialog = false;
         },
 
-        removeProduct() {
+       async removeProduct() {
             this.loading =true
             this.$emit('removeProduct');
+
         },
     },
 }
