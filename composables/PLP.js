@@ -8,7 +8,7 @@ import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
 import {stringify} from "qs";
 
-export default function setup(posts) {
+export default function setup() {
     const productList = ref([]);
     const secondaryData = ref([]);
     const page = ref(1);

@@ -7,7 +7,7 @@ import {useRoute, useRouter} from "vue-router";
 import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
 
-export default function setup(posts) {
+export default function setup() {
     const product = ref([]);
     const secondaryData = ref([]);
     const color = ref(null);

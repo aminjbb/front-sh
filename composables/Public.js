@@ -4,7 +4,7 @@
 import { ref} from 'vue';
 import axios from 'axios'
 
-export default function setup(posts) {
+export default function setup() {
     const provinces = ref([]);
     const cities = ref([]);
     const loading = ref(false)

@@ -7,7 +7,7 @@ import axios from 'axios'
 import {useRoute , useRouter} from "vue-router";
 import auth from '@/middleware/auth';
 
-export default function setup(posts) {
+export default function setup() {
     const orderList = ref([]);
     const returnedOrderList = ref([]);
     const order = ref(null);
