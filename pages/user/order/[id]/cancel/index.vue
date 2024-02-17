@@ -1,7 +1,7 @@
 <template>
 <main class="v-order v-order--canceling">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
+        <a href="/user/orders" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14">درخواست لغو</span>
@@ -37,7 +37,7 @@
                         <v-divider color="grey" />
 
                         <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
-                            <div class="d-flex align-center justify-start">
+                            <div v-if="order.count && order.count !== 0 " class="d-flex align-center justify-start">
                                 <div>
                                     <v-checkbox
                                         hide-details
@@ -84,6 +84,8 @@
 
                             <v-divider color="grey-lighten-1" />
                         </template>
+
+                        {{ cancelReasonValueTitle }}
 
                         <div v-if="chooseAll === true" class="v-order--canceling__accordion mt-5">
                             <div class="mb-5">
@@ -133,13 +135,12 @@
 
                     <div v-if="cancelingStep === 2" class="px-5">
                         <template v-for="(selected, index) in selectedProducts" :key="`orders${index}`">
-
                             <generalProductOrderCard
                                 :hideButtons="true"
                                 :content="selected.item"
                                 :count="selected.count"
-                                :title="chooseAll === true ? cancelReasonValueTitleAll : cancelReasonValueTitle[index]"
-                                :description="chooseAll === true ?cancelReasonValueDescAll : cancelReasonValueDesc[index]" />
+                                :title="chooseAll === true ? cancelReasonValueTitleAll : cancelReasonValueTitleStep2[index]"
+                                :description="chooseAll === true ?cancelReasonValueDescAll : cancelReasonValueDescStep2[index]" />
                             <v-divider v-if="index < selectedProducts.length" color="grey-lighten-1" />
                         </template>
 
@@ -151,7 +152,7 @@
                                 <div class="t13 w400 text-grey mb-2">مبلغ مرجوعی کالا:</div>
                                 <div class="d-flex align-center">
                                     <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar(orderReturnOrReject?.refund) }}
+                                        {{splitChar(Number(String(orderReturnOrReject?.refund).slice(0, -1)))}}
                                     </span>
                                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                                 </div>
@@ -164,7 +165,7 @@
                                 <div class="t13 w400 text-grey mb-2">هزینه ارسال:</div>
                                 <div class="d-flex align-center">
                                     <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar(orderReturnOrReject?.sending_price) }}
+                                        {{splitChar(Number(String(orderReturnOrReject?.sending_price).slice(0, -1)))}}
                                     </span>
                                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                                 </div>
@@ -177,7 +178,7 @@
                                 <div class="t13 w400 text-grey mb-2">هزینه مرجوعی:</div>
                                 <div class="d-flex align-center">
                                     <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar(orderReturnOrReject?.total_refund) }}
+                                        {{splitChar(Number(String(orderReturnOrReject?.total_refund).slice(0, -1)))}}
                                     </span>
                                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                                 </div>
@@ -249,6 +250,9 @@ export default {
             cancelReasonValueTitleAll: null,
             cancelReasonValueDescAll: null,
             selectedProducts: [],
+            cancelReasonValueTitleStep2: [],
+            cancelReasonValueDescStep2: [],
+            
         }
     },
 
@@ -275,6 +279,25 @@ export default {
             returnOrRejectOrder,
             orderReturnOrRejectObject,
             loading
+        }
+    },
+
+    computed: {
+        /** single order object **/
+        userOrder() {
+            try {
+                return this.order ?.data ?.data
+            } catch (e) {
+
+            }
+        },
+
+        orderReturnOrReject() {
+            try {
+                return this.orderReturnOrRejectObject ?.data ?.data
+            } catch (e) {
+
+            }
         }
     },
 
@@ -350,51 +373,46 @@ export default {
          */
         createFormDataAndSendToServer(accept) {
             const formData = new FormData()
-            this.selectedProducts.forEach((product, index) => {
-                formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
-                formData.append(`shps_list[${index}][count]`, product ?.count)
-                if (this.chooseAll) {
-                    formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
-                    formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
-                } else {
-                    formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[index].label)
-                    formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[index])
-                }
-            })
-            formData.append(`order_id`, this.$route.params.id)
-            formData.append(`accept`, accept)
-            this.returnOrRejectOrder(formData, '/order/cancel/crud/create', accept)
+            
+           if(this.selectedProducts && this.selectedProducts.length){
+                this.selectedProducts.forEach((product, index) => {
+                    const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
+
+                    formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
+                    formData.append(`shps_list[${index}][count]`, product ?.count)
+                    if (this.chooseAll) {
+                        formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
+                        formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
+                    } else {
+                        formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[findIndex].label)
+                        formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[findIndex])
+
+                        this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].label);
+                        this.cancelReasonValueDescStep2.push(this.cancelReasonValueDesc[findIndex]);
+                    }
+                })
+                formData.append(`order_id`, this.$route.params.id)
+                formData.append(`accept`, accept)
+                this.returnOrRejectOrder(formData, '/order/cancel/crud/create', accept)
+           }else{
+                useNuxtApp().$toast.error('هیچ آیتمی انتخاب نشده است.', {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+           }
+            
         },
 
         /**
          * Submit selected product
          */
         selectProducts() {
-            //To Do: After submit should fill this method and fill
             this.createFormDataAndSendToServer(0)
-            // this.cancelingStep = 2;
         },
 
         submit() {
             //To Do: Send request for order canceling
-        }
-    },
-    computed: {
-
-        /** single order object **/
-        userOrder() {
-            try {
-                return this.order ?.data ?.data
-            } catch (e) {
-
-            }
-        },
-        orderReturnOrReject() {
-            try {
-                return this.orderReturnOrRejectObject ?.data ?.data
-            } catch (e) {
-
-            }
         }
     },
 
@@ -402,7 +420,7 @@ export default {
         /** change Step After get data **/
         orderReturnOrRejectObject(val) {
             if (this.cancelingStep === 1) this.cancelingStep = 2
-        }
+        },
     },
     
     beforeMount() {

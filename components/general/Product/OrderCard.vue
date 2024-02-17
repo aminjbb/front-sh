@@ -5,8 +5,8 @@
             cols="12"
             md="9"
             class="d-flex align-center product-card__details">
-            <div v-if="content.image && content.image.image_url" class="product-card__image ml-5">
-                <img :src="/* content?.image?.image_url */imageAddress(content?.image?.image_url)" :title="content.label" :alt="content.label" width="100" height="100" />
+            <div v-if="content.shps?.sku?.image_url && content.shps?.sku?.image_url" class="product-card__image ml-5">
+                <img :src="content.shps?.sku?.image_url" :title="content.shps?.sku?.brand?.label" :alt="content.shps?.sku?.brand?.label" width="100" height="100" />
             </div>
 
             <div>
@@ -27,7 +27,7 @@
 
                 <div class="d-flex align-center t13 w400 text-grey mb-2">
                     <div class="color-pick ml-2">
-<!--                        <span :style="{ backgroundColor: content.color.code }"></span>-->
+                        <span :style="{ backgroundColor: content.shps?.sku?.color?.color }"></span>
                     </div>
                     <span>
                         رنگ:
@@ -91,23 +91,23 @@
 
                 <div v-else>
                     <template v-if="content.discount">
-                        <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.paid_price !== null" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
-                                {{splitChar(content.customer_price)}}
+                                {{splitChar(content.paid_price)}}
                                 <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                             </span>
                         </div>
 
-                        <span v-if="content.site_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                            <span class="number-font">{{splitChar(content.site_price)}}</span>
+                        <span v-if="content.total_price !== null" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span class="number-font">{{splitChar(content.total_price)}}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
                         </span>
                     </template>
 
                     <template v-else>
-                        <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.total_price !== null" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                                {{splitChar(content.customer_price)}}
+                                {{splitChar(content.total_price)}}
                             </span>
                             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                         </div>
@@ -116,7 +116,7 @@
 
                 <div v-if="!hideButtons" class="d-flex align-center justify-end mt-4">
                     <v-btn
-                        @click="SendComment()"
+                        :href="`/sku/${slug}/#comments`"
                         height="36"
                         title="ثبت دیدگاه"
                         append-icon="mdi-comment-plus-outline"
@@ -127,6 +127,16 @@
             </div>
         </v-col>
     </v-row>
+
+    <div v-if="content.count === 0" class="d-flex align-center mt-3">
+        <v-icon
+            icon="mdi-circle"
+            class="ml-1"
+            color="primary" />
+        <span class="text-grey-darken-1 t13 w14">
+            <span class="w500 text-grey-darken-3">کالا لغو شده است.</span>
+        </span>
+    </div>
 
     <div v-if="title" class="d-flex align-center mt-5">
         <v-icon
@@ -142,7 +152,7 @@
                 علت مرجوعی:
             </template>
 
-            <span class="w500 text-grey-darken-3">{{title.label}}</span>
+            <span class="w500 text-grey-darken-3">{{title}}</span>
         </span>
     </div>
 
@@ -169,6 +179,7 @@ export default {
     data() {
         return {
             productCount: 1,
+            slug : this.content.shps?.sku?.slug
         }
     },
     props: {

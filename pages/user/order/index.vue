@@ -262,7 +262,7 @@ export default {
         /** pre_progress order list **/
         preProgressOrder() {
             try {
-                const preProgress = this.userOrders.filter(order => order.status === 'pre_progress')
+                const preProgress = this.userOrders.filter(order => order.status === 'processing')
                 if (preProgress.length) return preProgress
             } catch (e) {
                 return []
