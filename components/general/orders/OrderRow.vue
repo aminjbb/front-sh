@@ -7,7 +7,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     وضعیت:
                 </span>
-                <span v-if="content.status" class="t12 w400 text-pink-darken-2">{{findOrderStatus(content.status)}}</span>
+                <span v-if="content.status" class="t12 w400 text-pink-darken-2 mr-1">{{findOrderStatus(content.status)}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -31,7 +31,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     مبلغ:
                 </span>
-                <span v-if="content.total_price" class="t12 w400 text-pink-darken-2  number-font">{{splitChar(content.total_price)}} تومان</span>
+                <span v-if="content.paid_price !== null" class="t12 w400 text-pink-darken-2 number-font">{{splitChar(content.paid_price)}} تومان</span>
             </div>
         </div>
         <div class="order-row__show-details mr-10">
@@ -48,8 +48,9 @@
                 <generalProductSimpleCard
                     v-for="(sku, index) in content.details"
                     :key="`sku${index}`"
-                    :image="sku?.image?.image_url"
-                    :title="sku.shps?.sku?.label" />
+                    tag="div"
+                    :image="sku.shps?.sku?.image_url"
+                    :label="sku.shps?.sku?.label" />
             </template>
         </div>
     </div>
@@ -57,6 +58,10 @@
 </template>
 
 <script>
+import {
+    splitChar
+} from "~/utils/functions.js";
+
 export default {
     props: {
         /**
@@ -74,17 +79,23 @@ export default {
                     value: 'paid'
                 },
                 {
-                    text: 'در حال پردازش',
+                    text: 'پیش پردازش',
                     value: 'pre_progress'
                 },
                 {
                     text: 'ارسال شده',
                     value: 'sending'
                 },
+                {
+                    text: 'در حال پردازش',
+                    value: 'processing'
+                },
             ]
         }
     },
     methods: {
+        splitChar,
+
         /**
          * find order status
          */
