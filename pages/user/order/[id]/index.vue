@@ -1,7 +1,7 @@
 <template>
 <main class="v-order v-order--single">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
+        <a href="/user/orders" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14">جزئیات سفارش</span>
@@ -142,17 +142,17 @@
                                 cols="12"
                                 sm="3"
                                 lg="3"
-                                class="d-flex align-center order-details__item justify-end py-5">
+                                class="d-flex align-center order-details__item justify-end py-3">
                                 <generalOrdersInterceptionModal />
                             </v-col>
                         </v-row>
 
                         <v-divider color="grey" />
 
-                        <div>
-                            <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
+                        <div v-if="userOrder && userOrder.details && userOrder.details.length">
+                            <template v-for="(order, index) in userOrder.details" :key="`order${order.id}`">
                                 <generalProductOrderCard :content="order" />
-                                <v-divider v-if="index + 1 < userOrder.length " color="grey-lighten-1" />
+                                <v-divider v-if="index + 1 < userOrder.details.length " color="grey-lighten-1" />
                             </template>
                         </div>
                     </div>
@@ -196,6 +196,17 @@ export default {
         }
     },
 
+    computed: {
+        /** single order object **/
+        userOrder() {
+            try {
+                return this.order ?.data ?.data
+            } catch (e) {
+
+            }
+        }
+    },
+
     methods: {
         splitChar,
 
@@ -204,17 +215,6 @@ export default {
             try {
                 const profit = parseInt(totalPrice) - parseInt(paid)
                 return this.splitChar(profit)
-            } catch (e) {
-
-            }
-        }
-    },
-
-    computed: {
-        /** single order object **/
-        userOrder() {
-            try {
-                return this.order ?.data ?.data
             } catch (e) {
 
             }

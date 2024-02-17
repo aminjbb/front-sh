@@ -1,5 +1,8 @@
 <template>
-<a class="product-card--simple d-flex flex-column align-center justify-cneter" :href="href">
+<component
+    :is="tag"
+    class="product-card--simple d-flex flex-column align-center"
+    :href="href">
     <div v-if="image" class="product-card__image mb-3 mt-4">
         <img :src="image" :title="label" :alt="label" width="79" height="80" />
     </div>
@@ -7,7 +10,7 @@
     <h3 class="t13 w400 text-grey text-grey text-center mb-2">
         {{label}}
     </h3>
-</a>
+</component>
 </template>
 
 <script>
@@ -27,6 +30,15 @@ export default {
          * Content href
          */
         href: String,
+
+        /**
+         * Component main tag
+         * If be a should ser href prop too
+         */
+        tag: {
+            type: String,
+            default: 'a',
+        }
     },
 }
 </script>

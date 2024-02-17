@@ -182,6 +182,10 @@
             .v-icon{
                 font-size: 5px;
             }
+
+            @include gbp (0, 768) {
+               justify-content: flex-start !important;
+            }
         }
     }
 

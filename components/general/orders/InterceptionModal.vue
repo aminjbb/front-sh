@@ -1,6 +1,6 @@
 <template>
 <div class="c-modal">
-    <div class="simple-button" @click="openModal()">
+    <div class="simple-button cur-p" @click="openModal()">
         رهگیری مرسوله
     </div>
 
