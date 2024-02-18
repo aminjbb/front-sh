@@ -36,6 +36,27 @@ export default function setup() {
                 auth.checkAuthorization(err.response)
             });
     };
+    async function getPdpData(query) {
+        axios.get(runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                product.value = response
+            })
+            .catch((err) => {
+                if (err.response.status){
+                    showError({
+                        statusCode: 404,
+                        statusMessage: "Page Not Found"
+                    })
+                }
+            }).finally(() => {
+            store.commit('set_loadingModal', false)
+        })
+    };
     store.commit('set_loadingModal', true),
     useAsyncData(
         () =>
@@ -62,6 +83,6 @@ export default function setup() {
         }
     )
 
-    return {product, color, getSecondaryData, secondaryData}
+    return {product, color, getSecondaryData, secondaryData , getPdpData}
 }
 

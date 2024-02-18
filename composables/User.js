@@ -11,6 +11,7 @@ export default function setup() {
     const userWallet = ref([]);
     const userTransactions = ref([]);
     const ticketList = ref([]);
+    const productUserHistory = ref([]);
     const singleTicket = ref(null);
     const wishList = ref([]);
     const loading = ref(false)
@@ -126,6 +127,24 @@ export default function setup() {
             });
     };
 
+    /**
+     * Get user product history on th profile page
+     */
+    async function getProductUserHistory() {
+        axios
+            .get(runtimeConfig.public.apiBase + `/product/user/history`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                productUserHistory.value = response.data.data
+            })
+            .catch((err) => {
+
+            });
+    };
+
     return {
         getUserAddress,
         userAddress,
@@ -139,6 +158,8 @@ export default function setup() {
         singleTicket,
         getUserWhishList,
         wishList,
-        loading
+        loading,
+        getProductUserHistory,
+        productUserHistory
     }
 }

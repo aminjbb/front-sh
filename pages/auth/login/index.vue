@@ -368,7 +368,13 @@ export default {
               position: 'top-center',
               theme: 'dark'
             });
-            window.location = '/'
+            if (localStorage.getItem('returnPathAfterLogin')){
+              window.location = localStorage.getItem('returnPathAfterLogin')
+              localStorage.removeItem('returnPathAfterLogin')
+            }
+            else{
+              window.location = '/'
+            }
           }
         }
       } catch (error) {
@@ -405,7 +411,14 @@ export default {
               position: 'top-center',
               theme: 'dark'
             });
-            window.location = '/'
+            if (localStorage.getItem('returnPathAfterLogin')){
+              window.location = localStorage.getItem('returnPathAfterLogin')
+              localStorage.removeItem('returnPathAfterLogin')
+            }
+            else{
+              window.location = '/'
+            }
+
           }
         }
       } catch (error) {
