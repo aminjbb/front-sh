@@ -65,7 +65,7 @@
 
         <v-divider color="grey" class="mt-5" />
 
-        <generalProductSingleComments :comments="contentMocket.comments" />
+        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" />
 
         <template v-if="screenType !== null && screenType === 'mobile'">
             <div class="mobile-basket">
@@ -209,77 +209,7 @@ export default {
             },
             selectedSeller: null,
             /** cheaper seller or selected seller*/
-            selectedSellerMoc: {
-                name: 'پخش رخسار',
-                stock: true,
-                discount: '30%',
-                customer_price: 184030,
-                site_price: 269900,
-                count: 5,
-            },
-            relatedProductsMocket: [{
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                    discount: '30%'
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                }, {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                    discount: '30%'
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                    discount: '30%'
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                }, {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                },
-                {
-                    image: 'category.jpg',
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '269900',
-                    site_price: '184030',
-                    discount: '30%'
-                }
-            ],
+
         }
     },
     
@@ -318,7 +248,15 @@ export default {
             } catch (e) {
                 return []
             }
+        },
+      skuComments(){
+        try {
+          return this.secondaryData.comments.data
         }
+        catch (e) {
+
+        }
+      }
     },
 
     mounted() {
