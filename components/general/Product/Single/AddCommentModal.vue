@@ -185,12 +185,7 @@ export default {
 
           })
           .catch((err) => {
-            if (err.response.status) {
-              showError({
-                statusCode: 404,
-                statusMessage: "Page Not Found"
-              })
-            }
+
           }).finally(() => {
         this.loading = false
         this.closeModal()
