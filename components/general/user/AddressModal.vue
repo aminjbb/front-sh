@@ -387,9 +387,9 @@ export default {
                 formData.append('phone_number', this.form.phone_number)
             } else {
                 formData.append('am_i', 1)
-                formData.append('first_name', this.userDetail ?.data ?.first_name)
-                formData.append('last_name', this.userDetail ?.data ?.last_name)
-                formData.append('phone_number', this.userDetail ?.data ?.phone_number)
+                formData.append('first_name', this.userDetail ?.first_name)
+                formData.append('last_name', this.userDetail ?.last_name)
+                formData.append('phone_number', this.userDetail ?.phone_number)
             }
             if (this.edit) endPoint = `/user/profile/address/update/${this.address.id}`
             else endPoint = `/user/profile/address/add`
@@ -410,6 +410,8 @@ export default {
                     },
                 })
                 .then((response) => {
+                    this.$refs.addAddress.reset()
+                    this.step = '1'
                     this.dialog = false;
                     useNuxtApp().$toast.success('آدرس شما با موفقیت ایحاد شد.', {
                         rtl: true,

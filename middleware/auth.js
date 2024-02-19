@@ -30,6 +30,27 @@ export default {
       throw error;
     }
   },
+  /**
+   * Send OTP For Forgot Password
+   * @param {string | number} phoneNumber
+   * @returns
+   */
+  async sendForgotPasswordOTP(phoneNumber) {
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/user/forgot-password`, {
+        phone_number: phoneNumber
+      });
+
+      return response;
+    } catch (error) {
+
+      if (error.response.status == 404) {
+        //Go to register form
+      }
+      console.error('Send OTP error:', error);
+      throw error;
+    }
+  },
 
   /**
    * Get OTP for login
@@ -85,6 +106,36 @@ export default {
     }
   },
 
+
+  /**
+   * Reset Password With OtpCode Forgot Password
+   * @param {string | number} phoneNumber
+   * @param {string | number} otpCode
+   * @param {*} newPassword
+   * @param {*} passwordConfirmation
+   * @returns
+   */
+  async resetPassword(phoneNumber, newPassword ,passwordConfirmation , otpCode) {
+    try {
+      const response = await axios.post(`${BASE_URL}/auth/user/reset-password`, {
+        phone_number: phoneNumber,
+        password: newPassword,
+        password_confirmation: passwordConfirmation,
+        code: otpCode,
+      });
+      return response;
+    } catch (error) {
+      if (error.response.status === 400) {
+
+        useNuxtApp().$toast.error(error.response.data.message, {
+          rtl: true,
+          position: 'top-center',
+          theme: 'dark'
+        });
+      }
+      throw error;
+    }
+  },
   /**
    * Register
    * @param {array} user 
@@ -118,7 +169,6 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       })
-
       // Return the response data
       return response
     } catch (error) {

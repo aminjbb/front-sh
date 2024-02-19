@@ -17,7 +17,12 @@ export default defineNuxtConfig({
           name: 'login',
           path: '/login',
           file: '~/pages/auth/login/index.vue'
-        }
+        },
+          {
+            name: 'forgotPassword',
+            path: '/forgot_password',
+            file: '~/pages/auth/forgot_password/index.vue'
+          }
       )
     }
   },

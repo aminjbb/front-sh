@@ -4,7 +4,7 @@
 import { ref} from 'vue';
 import { AxiosCall } from '~/utils/axios_call.js'
 
-export default function setup(posts) {
+export default function setup() {
     const menuList = ref([]);
     const loading = ref(false)
 

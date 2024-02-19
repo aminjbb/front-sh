@@ -1,4 +1,4 @@
-<template lang="">
+<template >
 <div id="comments" class="product-comment">
     <header class="d-flex align-center justify-space-between mb-2">
         <div class="d-flex align-center">
@@ -9,7 +9,7 @@
             <h3 class="t20 w400 text-grey-darken-1 my-5 product-section-header">دیدگاه مخاطبان</h3>
         </div>
 
-       <generalProductSingleAddCommentModal />
+       <generalProductSingleAddCommentModal :productSelectedSeller="productSelectedSeller"/>
     </header>
 
     <div v-if="commentList && commentList.length" class="product-comment__list">
@@ -61,6 +61,8 @@ export default {
 
     props: {
         comments: Array,
+        /** productSelectedSeller for add comment **/
+        productSelectedSeller:Object,
     },
 
     methods: {
