@@ -28,7 +28,7 @@
     </div>
     <template v-if="files.length">
         <div
-            v-for="(image, index) in files"
+            v-for="(image, index) in uploadedFiles"
             :key="`image_${index}`"
             class="mt-2 ">
             <v-col cols="12" md="3">
@@ -50,6 +50,7 @@ export default {
     data() {
         return {
             files: [],
+            uploadedFiles:[],
             uploadLoading: false,
             file: null
         }
@@ -100,18 +101,16 @@ export default {
                     },
                 })
                 .then((response) => {
-                    if(response){
-                        useNuxtApp().$toast.success("فایل مورد نظر با موفقیت ذخیره شد.", {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                    useNuxtApp().$toast.success("فایل مورد نظر با موفقیت ذخیره شد.", {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
 
-                        this.$emit('getImage', response?.data?.data?.data);
-                    }
+                    this.$emit('getImage', response?.data?.data?.data);
+                    this.uploadedFiles.push(this.file);
                 })
                 .catch((err) => {
-
                 }).finally(() => {
                     this.uploadLoading = false;
                 });

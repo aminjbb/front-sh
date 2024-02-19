@@ -133,9 +133,9 @@
                             </div>
 
                             <div class="order-tab__content" id="order-tab__content-4">
-                                <template v-if="userReturnedOrderList && userReturnedOrderList.length">
+                                <template v-if="receivedOrder && receivedOrder.length">
                                     <generalOrdersOrderRow
-                                        v-for="order in userReturnedOrderList"
+                                        v-for="order in receivedOrder"
                                         :key="`all-order${order.id}`"
                                         :content="order" />
                                 </template>
@@ -162,7 +162,8 @@
                                     <generalOrdersOrderRow
                                         v-for="(order, index) in userReturnedOrderList"
                                         :key="`all-order${index}`"
-                                        :content="order.id" />
+                                        :content="order"
+                                        returnTab />
                                 </template>
 
                                 <template v-else>
@@ -259,7 +260,7 @@ export default {
             }
         },
 
-        /** pre_progress order list **/
+        /** Pre progress order list **/
         preProgressOrder() {
             try {
                 const preProgress = this.userOrders.filter(order => order.status === 'processing')
@@ -268,7 +269,7 @@ export default {
                 return []
             }
         },
-        /** pre_progress order list **/
+        /** Sending order list **/
         sendingOrder() {
             try {
                 const sendingOrder = this.userOrders.filter(order => order.status === 'sending')
@@ -277,7 +278,7 @@ export default {
                 return []
             }
         },
-        /** pre_progress order list **/
+        /** Received order list **/
         receivedOrder() {
             try {
                 const receivedOrder = this.userOrders.filter(order => order.status === 'received')

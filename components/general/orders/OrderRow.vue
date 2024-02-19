@@ -42,7 +42,14 @@
         </div>
     </header>
 
-    <div class="scroll--x">
+    <div v-if="returnTab">
+        <template v-for="(order, index) in content.details" :key="`order${order.id}`">
+            <generalProductOrderCard :content="order" />
+            <v-divider v-if="index + 1 < content.details.length " color="grey-lighten-1" />
+        </template>
+    </div>
+
+    <div v-else class="scroll--x">
         <div class="order-row__items d-flex flex-nowrap pb-5">
             <template v-if="content.details && content.details.length">
                 <generalProductSimpleCard
@@ -68,6 +75,8 @@ export default {
          * Content
          */
         content: Object,
+
+        returnTab: Boolean
     },
     data() {
         return {
@@ -83,16 +92,29 @@ export default {
                     value: 'pre_progress'
                 },
                 {
-                    text: 'ارسال شده',
+                    text: 'در حال ارسال',
                     value: 'sending'
                 },
                 {
                     text: 'در حال پردازش',
                     value: 'processing'
                 },
+                {
+                    text: 'لغو شده',
+                    value: 'cancelled'
+                },
+                {
+                    text: 'تحویل شده',
+                    value: 'received'
+                },
+                {
+                    text: 'مرجوعی',
+                    value: 'returned'
+                }
             ]
         }
     },
+
     methods: {
         splitChar,
 

@@ -81,9 +81,9 @@
                         <v-icon icon="mdi-minus" color="grey" />
                     </div>
 
-                    <div v-if="content.paid_price" class="d-flex align-center justify-space-between">
+                    <div v-if="content.site_price" class="d-flex align-center justify-space-between">
                         <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                            {{splitChar(content.paid_price)}}
+                            {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
                         </span>
                         <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                     </div>
@@ -91,23 +91,23 @@
 
                 <div v-else>
                     <template v-if="content.discount">
-                        <div v-if="content.paid_price !== null" class="d-flex align-center justify-end">
+                        <div v-if="content.site_price !== null" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
-                                {{splitChar(content.paid_price)}}
+                                {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
                                 <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                             </span>
                         </div>
 
-                        <span v-if="content.total_price !== null" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                            <span class="number-font">{{splitChar(content.total_price)}}</span>
+                        <span v-if="content.customer_price !== null" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span class="number-font">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
                         </span>
                     </template>
 
                     <template v-else>
-                        <div v-if="content.total_price !== null" class="d-flex align-center justify-end">
+                        <div v-if="content.customer_price !== null" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                                {{splitChar(content.total_price)}}
+                                {{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}
                             </span>
                             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                         </div>
