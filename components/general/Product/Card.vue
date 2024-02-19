@@ -41,7 +41,7 @@
     <div class="product-card__price-info mb-2">
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
-                <span class="product-card__price-info__discount t11 w500">{{content.discount}}%</span>
+                <span class="product-card__price-info__discount t11 w500">{{content.discount_percent}}%</span>
                 <span v-if="content.site_price" class="t18 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
                     {{splitChar(content.site_price)}}
                     <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
@@ -66,7 +66,7 @@
             class="product-card__colors__item"
             v-for="(color,index) in content.colors.slice(0,6)"
             :key="`product-color${index}`">
-            <span :style="{ backgroundColor: color.code }"></span>
+            <span :style="{ backgroundColor: color.value }"></span>
             <v-tooltip activator="parent" location="top">{{color.label}}</v-tooltip>
         </div>
         <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>

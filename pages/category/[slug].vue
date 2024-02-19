@@ -251,59 +251,60 @@ export default {
          * @param {*} array 
          */
         async paramGenerator(array) {
-            let finalFilterObject = []
-            const newObject = Object.create(this.filterQuery)
-            if (array ?.param === "stock") {
-                let param = ''
-                if (array.values) {
-                    param = `1`
-                } else {
-                    param = `0`
-                }
-                let routeSplit = this.$route.fullPath.split('?')
-                let query = this.$route.query;
-                if (routeSplit[1]) {
-                    if (this.$route.query ?.stock) {
-                        if (query) {
-                            this.$router.push({
-                                query: {
-                                    ...query,
-                                    stock: param
-                                }
-                            })
-                        } else {
-                            this.$router.push({
-                                query: {
-                                    stock: param
-                                }
-                            })
-                        }
+          let finalFilterObject = []
 
-                    } else {
-                        this.$router.push({
-                            query: {
-                                ...query,
-                                stock: param
-                            }
-                        })
-                    }
-                } else {
-                    this.$router.push(`${this.$route.path}?stock=${param}`)
-                }
+          const newObject = Object.create(this.filterQuery)
+          if (array?.param === "stock") {
+            let param = ''
+            if (array.values) {
+              param = `1`
             } else {
-                await newObject.forEach((query, index) => {
-                    query.values.forEach(value => {
-                        const form = {
-                            param: query.param,
-                            value: value
-                        }
-                        finalFilterObject.push(form)
-                    })
-                    this.createRoute(finalFilterObject)
-                })
+              param = `0`
             }
-        },
+            let routeSplit = this.$route.fullPath.split('?')
+            let query = this.$route.query;
+            if (routeSplit[1]) {
+              if (this.$route.query ?.stock) {
+                if (query) {
+                  this.$router.push({
+                    query: {
+                      ...query,
+                      stock: param
+                    }
+                  })
+                } else {
+                  this.$router.push({
+                    query: {
+                      stock: param
+                    }
+                  })
+                }
 
+              } else {
+                this.$router.push({
+                  query: {
+                    ...query,
+                    stock: param
+                  }
+                })
+              }
+            } else {
+              this.$router.push(`${this.$route.path}?stock=${param}`)
+            }
+          }
+          else {
+            await newObject.forEach((query, index) => {
+              query.values.forEach(value => {
+                const form = {
+                  param: query.param,
+                  value: value
+                }
+                finalFilterObject.push(form)
+              })
+            })
+            this.createRoute(finalFilterObject)
+          }
+        },
         /**
          * Create route after filter
          * @param {*} values 
@@ -311,7 +312,7 @@ export default {
         createRoute(values) {
             let param = ''
             let brandParam = ''
-            let paramQuery = ''
+            let paramQuery =''
             const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
             const brandObject = values.filter(filterValue => filterValue.param == "brands")
             attributeObject.forEach(element => {
@@ -331,11 +332,18 @@ export default {
                 if (!paramQuery) paramQuery += `?brands=${finalParam}`
                 else paramQuery += `&brands=${finalParam}`
             }
+          if (this.$route.query.site_price_from) {
+            if (!paramQuery) paramQuery += `?site_price_from=${this.$route.query.site_price_from}`
+            else paramQuery += `&site_price_from=${this.$route.query.site_price_from}`
+          }
+          if (this.$route.query.site_price_to) {
+            if (!paramQuery) paramQuery += `?site_price_to=${this.$route.query.site_price_to}`
+            else paramQuery += `&site_price_to=${this.$route.query.site_price_to}`
+          } if (this.$route.query.stock) {
+            if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
+            else paramQuery += `&stock=${this.$route.query.stock}`
+          }
             this.$router.push(this.$route.path + paramQuery)
-            const form = {
-                ...this.$route.query
-            }
-            console.log(form)
             this.query = paramQuery
         },
         async createQueryForFilter(array) {
