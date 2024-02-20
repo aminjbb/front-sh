@@ -22,6 +22,7 @@
           <generalProductFilterList
               :items="filter.data"
               :clear="clearAll"
+              :param="filter.param"
               :name="filter.name"
               @listItems="listFiltersModalEmit"/>
         </template>

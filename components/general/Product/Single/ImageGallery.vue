@@ -1,4 +1,5 @@
 <template>
+
   <div v-if="items && items.length" class="image-gallery">
     <v-row class="ma-0 xs-hide h-100">
       <div class="pa-0 pl-3 image-gallery__thumbnail h-100">
@@ -8,14 +9,14 @@
                 class="image-gallery__thumbnail__item"
                 v-for="(item, index) in items"
                 :key="`image-gallery__thumbnail-${index}`">
-              <img :src="imageAddress(item.image_url)" :alt="imageAlt" width="70" height="70"
+              <img :src="item.image_url" :alt="item.alt" width="70" height="70"
                    @click="selectImage(item.image_url)">
             </div>
           </template>
 
           <template v-else v-for="(item, index) in items.slice(0, 5)" :key="`image-gallery__thumbnail-${index}`">
             <div v-if="index === 0 || index === 1 || index === 2 || index === 3" class="image-gallery__thumbnail__item">
-              <img :src="imageAddress(item.image_url)" :alt="imageAlt" width="70" height="70"
+              <img :src="item.image_url" :alt="item.alt" width="70" height="70"
                    @click="selectImage(item.image_url)">
             </div>
 
@@ -23,7 +24,7 @@
                 v-if="index === 4"
                 class="image-gallery__thumbnail__item"
                 @click="openModal()">
-              <img :src="imageAddress(items[4].image_url)" :alt="imageAlt" width="70" height="70">
+              <img :src="items[4].image_url" :alt="items[4].alt" width="70" height="70">
 
               <span>
                             <v-icon
@@ -51,7 +52,7 @@
                 @click="checkFavorite()"
                 size="small"/>
           </div>
-          <img :src="imageAddress(selectedImage)" :alt="imageAlt" width="351" height="351">
+          <img :src="selectedImage" :alt="imageAlt" width="351" height="351">
         </div>
       </div>
     </v-row>
@@ -85,7 +86,7 @@
               :key="index"
               class="h-100">
             <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
-              <img :src="imageAddress(item.image_url)" :title="imageAlt" :alt="imageAlt" width="351" height="351"/>
+              <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="351" height="351"/>
             </div>
           </swiper-slide>
         </swiper>
@@ -234,7 +235,7 @@ export default {
     getPdpData: Function,
 
   },
-  setup(props) {
+  setup() {
     const route = useRoute()
     const userToken = useCookie('userToken')
     const runtimeConfig = useRuntimeConfig()
@@ -299,15 +300,7 @@ export default {
 
   },
   methods: {
-    //TODO: Should delete after add endpoint
-    imageAddress(path) {
-      const assets =
-          import.meta.glob('~/assets/images/should-delete/*', {
-            eager: true,
-            import: 'default',
-          })
-      return assets['/assets/images/should-delete/' + path]
-    },
+
 
     /**
      * Show selected image
@@ -396,6 +389,10 @@ export default {
     }
   },
   watch:{
+    items(){
+      console.log(this.items[0])
+      if (this.items?.length) this.selectImage(this.items[0].image_url)
+    },
     wishlist(){
       if (this.wishlist.is_favorite) this.isFavorite = true
       else  this.isFavorite = false

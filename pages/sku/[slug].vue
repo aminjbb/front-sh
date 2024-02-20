@@ -1,7 +1,6 @@
 <template>
   <main class="v-product v-product--single">
     <h1 class="v-hide">{{ productLabel }}</h1>
-
     <v-container>
       <generalBreadcrumb :items="BreadcrumbItems"/>
       <v-row>
@@ -9,8 +8,9 @@
             class="pa-3"
             cols="12"
             lg="5">
+
           <generalProductSingleImageGallery :getPdpData="getPdpData" :wishlist="wishlist" :productSelectedSeller="productSelectedSeller"
-                                            :items="contentMocket.images" :imageAlt="contentMocket.label"/>
+                                            :items="skuImageGallery"/>
         </v-col>
 
         <v-col
@@ -46,7 +46,7 @@
         <div class="v-product--single__border mt-5" id="seller-list">
           <template v-for="(seller, index) in productSellers" :key="`seller${index}`">
             <generalProductSingleSellerCard :seller="seller"/>
-            <v-divider v-if="index +1 < contentMocket.sellers.length" color="grey"/>
+<!--            <v-divider v-if="index +1 < productSellers?.sellers.length" color="grey"/>-->
           </template>
         </div>
       </template>
@@ -55,6 +55,7 @@
           :items="relatedProducts"
           title="محصولات مشابه"
           hideIndex
+          isPLP
           navigation/>
 
       <generalProductSingleCompleteDetails
@@ -122,95 +123,7 @@ export default {
         }
       ],
       content: null,
-      contentMocket: {
-        label: 'پالت سایه چشم 32 رنگ رولوشن مدل Flawless 3 Resurrection',
-        name: 'Revolution Flawless 3 Resurrection Eye Shadow Palette',
-        starNumber: 4.5,
-        numberOfVotes: 217,
-        images: [{
-          image_url: 'product2.png',
-        },
-          {
-            image_url: 'product2.png',
-          },
-          {
-            image_url: 'products.jpg',
-          },
-          {
-            image_url: 'product2.png',
-          },
-          {
-            image_url: 'product2.png',
-          },
-          {
-            image_url: 'product2.png',
-          },
-          {
-            image_url: 'product2.png',
-          },
-        ],
-        sellers: [{
-          name: 'پخش رخسار',
-          stock: false,
-          discount: '30%',
-          customer_price: 184030,
-          site_price: 269900,
-          count: 5,
-        },
-          {
-            name: 'زیبارویان',
-            stock: true,
-            discount: null,
-            customer_price: 289300,
-            site_price: null,
-            count: 0,
-          },
-          {
-            name: 'شاواز',
-            stock: true,
-            discount: null,
-            customer_price: 291000,
-            site_price: null,
-            count: 100,
-          }
-        ],
-        comments: [{
-          id: 1,
-          author: 'نگین اسدی',
-          message: 'هرچقدر از خوشگلی این سایه بگم کمههههه یه شاین خیلی ریز روش داره وقتی استفاده کنید به لایه ی مات می‌رسید رنگ آبی و زردش محشرنننننن پیشنهاد میکنم',
-          date: '۱۹ اردیبهشت ۱۴۰۱'
-        },
-          {
-            id: 1,
-            author: 'نگین اسدی',
-            message: 'محشرهههههه',
-            date: '۱۹ اردیبهشت ۱۴۰۱'
-          },
-          {
-            id: 1,
-            author: 'نگین اسدی',
-            message: 'خیلی بده... اصلا پخش نمیشه',
-            date: '۱۹ اردیبهشت ۱۴۰۱'
-          },
-          {
-            id: 1,
-            author: 'نگین اسدی',
-            message: 'محشرهههههه',
-            date: '۱۹ اردیبهشت ۱۴۰۱'
-          }, {
-            id: 1,
-            author: 'نگین اسدی',
-            message: 'هرچقدر از خوشگلی این سایه بگم کمههههه یه شاین خیلی ریز روش داره وقتی استفاده کنید به لایه ی مات می‌رسید رنگ آبی و زردش محشرنننننن پیشنهاد میکنم',
-            date: '۱۹ اردیبهشت ۱۴۰۱'
-          },
-          {
-            id: 1,
-            author: 'نگین اسدی',
-            message: 'خیلی بده... اصلا پخش نمیشه',
-            date: '۱۹ اردیبهشت ۱۴۰۱'
-          }
-        ]
-      },
+
       selectedSeller: null,
       /** cheaper seller or selected seller*/
 
@@ -265,6 +178,13 @@ export default {
         return this.secondaryData.comments.data
       } catch (e) {
 
+      }
+    },
+    skuImageGallery() {
+      try {
+        return this.pdpSecondaryData?.image_gallery
+      } catch (e) {
+        return []
       }
     }
   },
