@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <div class="order-tab__contents flex-grow-1">
+                        <div class="order-tab__contents flex-grow-1" :class="screenType === 'mobile' ? 'px-2' : ''">
                             <div class="order-tab__content active" id="order-tab__content-1">
                                 <template v-if="userOrders && userOrders.length">
                                     <generalOrdersOrderRow
@@ -159,11 +159,10 @@
 
                             <div class="order-tab__content" id="order-tab__content-5">
                                 <template v-if="userReturnedOrderList && userReturnedOrderList.length">
-                                    <generalOrdersOrderRow
+                                    <generalOrdersReturnOrderRow
                                         v-for="(order, index) in userReturnedOrderList"
                                         :key="`all-order${index}`"
-                                        :content="order"
-                                        returnTab />
+                                        :content="order" />
                                 </template>
 
                                 <template v-else>
@@ -195,6 +194,12 @@
 import Order from '@/composables/Order.js'
 
 export default {
+    data() {
+        return {
+            screenType: null
+        }
+    },
+
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | لیست سفارشات من')
         const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
@@ -216,29 +221,6 @@ export default {
             orderList,
             getReturnedOrderList,
             returnedOrderList
-        }
-    },
-
-    methods: {
-        /**
-         * Order tab
-         * @param {*} id
-         */
-        showTab(id) {
-            const orderTab = this.$refs['orderRef'];
-
-            const liItems = orderTab.querySelectorAll('div.order-tab__item');
-            const tabContents = orderTab.querySelectorAll('div.order-tab__content');
-
-            liItems.forEach(item => {
-                item.classList.remove('active');
-                orderTab.querySelector(`#order-tab__item-${id}`).classList.add('active');
-            });
-
-            tabContents.forEach(item => {
-                item.classList.remove('active');
-                orderTab.querySelector(`#order-tab__content-${id}`).classList.add('active');
-            });
         }
     },
 
@@ -289,10 +271,40 @@ export default {
         },
     },
 
+    methods: {
+        /**
+         * Order tab
+         * @param {*} id
+         */
+        showTab(id) {
+            const orderTab = this.$refs['orderRef'];
+
+            const liItems = orderTab.querySelectorAll('div.order-tab__item');
+            const tabContents = orderTab.querySelectorAll('div.order-tab__content');
+
+            liItems.forEach(item => {
+                item.classList.remove('active');
+                orderTab.querySelector(`#order-tab__item-${id}`).classList.add('active');
+            });
+
+            tabContents.forEach(item => {
+                item.classList.remove('active');
+                orderTab.querySelector(`#order-tab__content-${id}`).classList.add('active');
+            });
+        }
+    },
+
     beforeMount() {
         this.getOrderList()
         this.getReturnedOrderList()
-    }
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 
 }
 </script>

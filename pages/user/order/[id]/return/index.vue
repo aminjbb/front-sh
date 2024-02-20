@@ -115,7 +115,7 @@
                                 </v-btn>
 
                                 <v-btn
-                                    :loading="loading"
+                                    :loading="loadingStep1"
                                     @click="selectProducts()"
                                     height="44"
                                     :disabled="activeSubmit === true ? true : false"
@@ -165,7 +165,7 @@
                             </v-btn>
 
                             <v-btn
-                                :loading="loading"
+                                :loading="loadingStep2"
                                 @click="submit()"
                                 height="44"
                                 title="ثبت درخواست"
@@ -187,7 +187,7 @@
 
                         <div class="d-flex align-center justify-end mt-5">
                             <v-btn
-                                href="/"
+                                href="/user/order"
                                 height="44"
                                 title="بازگشت به صفحه اصلی"
                                 class="btn btn--cancel ml-3">
@@ -259,6 +259,8 @@ export default {
             returnReasonValueDescStep2: [],
             returnReasonValueCatchStep2: [],
             accept:null,
+            loadingStep1:false,
+            loadingStep2:false
         }
     },
 
@@ -369,6 +371,11 @@ export default {
          * create formData and send to api
          */
         createFormDataAndSendToServer(accept) {
+            if(accept === 0){
+                this.loadingStep1 = true;
+            }else{
+                this.loadingStep2 = true;
+            }
             const formData = new FormData()
             this.selectedProducts.forEach((product, index) => {
                 const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
@@ -396,6 +403,7 @@ export default {
             formData.append(`accept`, accept)
             this.accept = accept;
             this.returnOrRejectOrder(formData, '/order/returned/crud/create');
+            this.loadingStep1 = false;
         },
 
         /**
