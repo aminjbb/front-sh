@@ -74,7 +74,7 @@
                                     <label class="d-block t13 text-grey-darken-1 mb-2">تصویر یا ویدیو </label>
                                     <span class="t12 w500 text-grey mb-4 d-block">در صورت قابل رویت بودن ایراد کالا در ظاهر، به صورتی عکس بگیرید که مشخص باشد.</span>
 
-                                    <generalUploader :index="index" @getImage="getImage" />
+                                    <generalUploader :ref="`imageUploader${index}`" @getImage="(image) => getImage(image, index)" />
                                 </div>
 
                                 <div class="mb-5">
@@ -95,24 +95,35 @@
                             <v-divider color="grey-lighten-1" />
                         </template>
 
-                        <div class="d-flex align-center justify-end mt-5">
-                            <v-btn
-                                @click="$router.go(-1)"
-                                height="44"
-                                title="بازگشت"
-                                class="btn btn--cancel ml-3">
-                                بازگشت
-                            </v-btn>
+                        <div class="d-flex align-center justify-space-between">
+                            <div class="d-flex flex-column">
+                                <span class="t12 w400 text-grey-darken-1 mb-2 mt-4">مبلغ مرجوعی</span>
+                                <div>
+                                    <span class="t18 w400 text-grey-darken-2 number-font">
+                                        {{ splitChar(SelectedProductPrice(selectedProducts)) }}</span>
+                                    <span class="t12 w300 text-grey-darken-2">تومان</span>
+                                </div>
+                            </div>
 
-                            <v-btn
-                                :loading="loading"
-                                @click="selectProducts()"
-                                height="44"
-                                :disabled="activeSubmit === true ? true : false"
-                                title="ادامه"
-                                class="btn btn--submit">
-                                ادامه
-                            </v-btn>
+                            <div class="d-flex align-center justify-end mt-5">
+                                <v-btn
+                                    @click="$router.go(-1)"
+                                    height="44"
+                                    title="بازگشت"
+                                    class="btn btn--cancel ml-3">
+                                    بازگشت
+                                </v-btn>
+
+                                <v-btn
+                                    :loading="loadingStep1"
+                                    @click="selectProducts()"
+                                    height="44"
+                                    :disabled="activeSubmit === true ? true : false"
+                                    title="ادامه"
+                                    class="btn btn--submit">
+                                    ادامه
+                                </v-btn>
+                            </div>
                         </div>
                     </div>
 
@@ -122,8 +133,8 @@
                                 :hideButtons="true"
                                 :content="selected.item"
                                 :count="selected.count"
-                                :title="returnReasonValueTitle[index]"
-                                :description="returnReasonValueDesc[index]" />
+                                :title="returnReasonValueTitleStep2[index]"
+                                :description="returnReasonValueDescStep2[index]" />
                             <v-divider v-if="index < selectedProducts.length" color="grey-lighten-1" />
                         </template>
 
@@ -135,7 +146,7 @@
                                 <div class="t13 w400 text-grey mb-2">هزینه مرجوعی:</div>
                                 <div class="d-flex align-center">
                                     <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar('50116') }}
+                                        {{ splitChar(SelectedProductPrice(selectedProducts)) }}
                                     </span>
                                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                                 </div>
@@ -154,7 +165,7 @@
                             </v-btn>
 
                             <v-btn
-                                :loading="loading"
+                                :loading="loadingStep2"
                                 @click="submit()"
                                 height="44"
                                 title="ثبت درخواست"
@@ -170,13 +181,13 @@
                             طریق پیامک به شما اطلاع خواهیم داد.</p>
 
                         <div class="d-flex align-center">
-                            <span class="t13 w400 text-grey">کد پیگیری مرجوعی:</span>
-                            <span class="t13 w500 text-grey-darken-3">RE-368294</span>
+                            <span class="t13 w400 text-grey ml-2">کد پیگیری مرجوعی:</span>
+                            <span v-if="orderReturnOrRejectObject.data.data && orderReturnOrRejectObject.data.data.id" class="t13 w500 text-grey-darken-3 number-font">{{orderReturnOrRejectObject.data.data.id}}</span>
                         </div>
 
                         <div class="d-flex align-center justify-end mt-5">
                             <v-btn
-                                href="/"
+                                href="/user/order"
                                 height="44"
                                 title="بازگشت به صفحه اصلی"
                                 class="btn btn--cancel ml-3">
@@ -217,15 +228,15 @@ export default {
             products: [],
             returnReasonItems: [{
                     label: 'کالا اشتباه ارسال شده است',
-                    value: '1'
+                    value: 'wrong'
                 },
                 {
                     label: 'کالا خراب است.',
-                    value: '3'
+                    value: 'broken'
                 },
                 {
                     label: 'کالا به دستم نرسیده است.',
-                    value: '2'
+                    value: 'lost'
                 }
             ],
             catchItems: [{
@@ -243,7 +254,13 @@ export default {
             returnReasonValueCatch: [],
             returnImageId: [],
             selectedProducts: [],
-            trackingCode: null
+            trackingCode: null,
+            returnReasonValueTitleStep2: [],
+            returnReasonValueDescStep2: [],
+            returnReasonValueCatchStep2: [],
+            accept:null,
+            loadingStep1:false,
+            loadingStep2:false
         }
     },
 
@@ -268,6 +285,29 @@ export default {
             order,
             returnOrRejectOrder,
             orderReturnOrRejectObject
+        }
+    },
+
+    computed: {
+        /** single order object **/
+        userOrder() {
+            try {
+                return this.order ?.data ?.data
+            } catch (e) {
+
+            }
+        }
+    },
+
+    watch:{
+        orderReturnOrRejectObject(newValue) {
+            if(newValue.status === 200 && this.accept === 0){
+                this.returnStep = 2;
+            }
+
+            if(newValue.status === 200 && this.accept === 1){
+                this.returnStep = 3;
+            }
         }
     },
 
@@ -313,63 +353,82 @@ export default {
          */
         getImage(image, index) {
             const form = {
-                image: image.data.data.file_id,
+                file_id: image.file_id,
                 index: index
             }
             this.returnImageId.push(form)
         },
+           
 
         /**
          * Submit selected product
          */
         selectProducts() {
-            //To Do: After submit should fill this method and fill
             this.createFormDataAndSendToServer(0)
-            // this.returnStep = 2;
         },
 
         /**
          * create formData and send to api
          */
         createFormDataAndSendToServer(accept) {
+            if(accept === 0){
+                this.loadingStep1 = true;
+            }else{
+                this.loadingStep2 = true;
+            }
             const formData = new FormData()
             this.selectedProducts.forEach((product, index) => {
+                const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
+
                 formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
                 formData.append(`shps_list[${index}][returned_count]`, product ?.count)
-                formData.append(`shps_list[${index}][return_reason]`, this.returnReasonValueTitle[index].label)
-                formData.append(`shps_list[${index}][description]`, this.returnReasonValueDesc[index])
-                formData.append(`shps_list[${index}][payback_method]`, this.returnReasonValueCatch[index])
-                const returnImages = this.returnImageId.filter((image) => image.index === index)
+                formData.append(`shps_list[${index}][return_reason]`, this.returnReasonValueTitle[findIndex].value)
+                formData.append(`shps_list[${index}][description]`, this.returnReasonValueDesc[findIndex])
+                formData.append(`shps_list[${index}][payback_method]`, this.returnReasonValueCatch[findIndex].value)
+
+                const returnImages = this.returnImageId.filter((image) => image.index === findIndex)
+                
+
                 if (returnImages) {
                     returnImages.forEach((image, imageIndex) => {
-                        formData.append(`shps_list[${index}][files][${imageIndex}]`, image)
+                        formData.append(`shps_list[${index}][files][${imageIndex}]`, image.file_id)
                     })
                 }
+
+                this.returnReasonValueTitleStep2.push(this.returnReasonValueTitle[findIndex].label);
+                this.returnReasonValueDescStep2.push(this.returnReasonValueDesc[findIndex]);
+                this.returnReasonValueCatchStep2.push(this.returnReasonValueCatch[findIndex].value);
             })
             formData.append(`order_id`, this.$route.params.id)
             formData.append(`accept`, accept)
-            this.returnOrRejectOrder(formData, 'order/returned/crud/create')
+            this.accept = accept;
+            this.returnOrRejectOrder(formData, '/order/returned/crud/create');
+            this.loadingStep1 = false;
         },
 
         /**
          * Submit return request
          */
         submit() {
-            //To Do: Send request for order return
-            this.returnStep = 3;
+            this.createFormDataAndSendToServer(1)
         },
-    },
-    computed: {
 
-        /** single order object **/
-        userOrder() {
-            try {
-                return this.order ?.data ?.data
-            } catch (e) {
-
+        /**
+         * Sum selected products price
+         * @param {*} array 
+         */
+        SelectedProductPrice(array){
+            let sum = 0;
+            if(array){
+                    array.forEach(element => {
+                    sum = sum + element?.item?.site_price;
+                })
             }
+            
+            return Number(String(sum).slice(0, -1))
         }
     },
+
     beforeMount() {
         this.getOrder()
     }

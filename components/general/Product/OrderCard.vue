@@ -51,7 +51,7 @@
             cols="12"
             md="3"
             class="d-flex product-card__price-info">
-            <div v-if="!cancel" class="t13 w400 text-grey-darken-1 number-font mb-2">
+            <div v-if="!cancel && (count || content.count)" class="t13 w400 text-grey-darken-1 number-font mb-2">
                 تعداد:
                 <template v-if="count">{{count}}</template>
                 <template v-else> {{content.count}}</template>
@@ -81,9 +81,9 @@
                         <v-icon icon="mdi-minus" color="grey" />
                     </div>
 
-                    <div v-if="content.paid_price" class="d-flex align-center justify-space-between">
+                    <div v-if="content.site_price" class="d-flex align-center justify-space-between">
                         <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                            {{splitChar(content.paid_price)}}
+                            {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
                         </span>
                         <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                     </div>
@@ -91,23 +91,23 @@
 
                 <div v-else>
                     <template v-if="content.discount">
-                        <div v-if="content.paid_price !== null" class="d-flex align-center justify-end">
+                        <div v-if="content.site_price !== null" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
-                                {{splitChar(content.paid_price)}}
+                                {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
                                 <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                             </span>
                         </div>
 
-                        <span v-if="content.total_price !== null" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                            <span class="number-font">{{splitChar(content.total_price)}}</span>
+                        <span v-if="content.customer_price !== null" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span class="number-font">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
                         </span>
                     </template>
 
                     <template v-else>
-                        <div v-if="content.total_price !== null" class="d-flex align-center justify-end">
+                        <div v-if="content.customer_price !== null" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                                {{splitChar(content.total_price)}}
+                                {{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}
                             </span>
                             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                         </div>
@@ -139,10 +139,19 @@
     </div>
 
     <div v-if="title" class="d-flex align-center mt-5">
+        <span v-if="returnTab" class="product-card--order__attention ml-2">
+            <v-icon
+                icon="mdi-exclamation"
+                size="x-small"
+                color="white" />
+        </span>
+
         <v-icon
+            v-else
             icon="mdi-circle"
             class="ml-1"
             color="grey-darken-1" />
+
         <span class="text-grey-darken-1 t13 w14">
             <template v-if="orderStatus == 'canceling'">
                 علت لغو کالا:
@@ -250,21 +259,19 @@ export default {
         orderStatus: {
             type: String,
             default: 'canceling',
-        }
+        },
+
+        /**
+         * Return page
+         */
+         returnTab: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     methods: {
         splitChar,
-
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
-        },
 
         increaseCount() {
             if (this.productCount < this.content.count) {
@@ -317,6 +324,16 @@ $parent:'product-card';
                     justify-content: space-between;
                 }
             }
+        }
+
+        &__attention{
+            width: 20px;
+            height: 20px;
+            background: #424242;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
         .color-pick {

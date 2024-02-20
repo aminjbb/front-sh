@@ -1,7 +1,7 @@
 <template>
 <main class="v-order v-order--single">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/orders" class="ml-3">
+        <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14">جزئیات سفارش</span>
@@ -16,7 +16,7 @@
                 <v-card class="py-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide px-5">
                         <div class="d-flex align-center">
-                            <a href="/user/dashboard" class="ml-3">
+                            <a href="/user/order" class="ml-3">
                                 <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
                             </a>
                             <span>جزئیات سفارش</span>

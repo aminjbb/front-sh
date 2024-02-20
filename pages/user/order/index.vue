@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <div class="order-tab__contents flex-grow-1">
+                        <div class="order-tab__contents flex-grow-1" :class="screenType === 'mobile' ? 'px-2' : ''">
                             <div class="order-tab__content active" id="order-tab__content-1">
                                 <template v-if="userOrders && userOrders.length">
                                     <generalOrdersOrderRow
@@ -133,9 +133,9 @@
                             </div>
 
                             <div class="order-tab__content" id="order-tab__content-4">
-                                <template v-if="userReturnedOrderList && userReturnedOrderList.length">
+                                <template v-if="receivedOrder && receivedOrder.length">
                                     <generalOrdersOrderRow
-                                        v-for="order in userReturnedOrderList"
+                                        v-for="order in receivedOrder"
                                         :key="`all-order${order.id}`"
                                         :content="order" />
                                 </template>
@@ -159,10 +159,10 @@
 
                             <div class="order-tab__content" id="order-tab__content-5">
                                 <template v-if="userReturnedOrderList && userReturnedOrderList.length">
-                                    <generalOrdersOrderRow
+                                    <generalOrdersReturnOrderRow
                                         v-for="(order, index) in userReturnedOrderList"
                                         :key="`all-order${index}`"
-                                        :content="order.id" />
+                                        :content="order" />
                                 </template>
 
                                 <template v-else>
@@ -194,6 +194,12 @@
 import Order from '@/composables/Order.js'
 
 export default {
+    data() {
+        return {
+            screenType: null
+        }
+    },
+
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | لیست سفارشات من')
         const description = ref("لیست سفارشات کاربر - سفارشات تایید شده - سفارشات در حال پردازش - سفارشات ارسال شده - سفارشات در حال ارسال - سفارشات مرجوعی")
@@ -216,6 +222,53 @@ export default {
             getReturnedOrderList,
             returnedOrderList
         }
+    },
+
+    computed: {
+        /** user returned Order list **/
+        userReturnedOrderList() {
+            try {
+                return this.returnedOrderList ?.data ?.data ?.data
+            } catch (e) {
+                return []
+            }
+        },
+        /** user order list **/
+        userOrders() {
+            try {
+                return this.orderList ?.data ?.data ?.data
+            } catch (e) {
+                return []
+            }
+        },
+
+        /** Pre progress order list **/
+        preProgressOrder() {
+            try {
+                const preProgress = this.userOrders.filter(order => order.status === 'processing')
+                if (preProgress.length) return preProgress
+            } catch (e) {
+                return []
+            }
+        },
+        /** Sending order list **/
+        sendingOrder() {
+            try {
+                const sendingOrder = this.userOrders.filter(order => order.status === 'sending')
+                if (sendingOrder.length) return sendingOrder
+            } catch (e) {
+                return []
+            }
+        },
+        /** Received order list **/
+        receivedOrder() {
+            try {
+                const receivedOrder = this.userOrders.filter(order => order.status === 'received')
+                if (receivedOrder.length) return receivedOrder
+            } catch (e) {
+                return []
+            }
+        },
     },
 
     methods: {
@@ -241,57 +294,17 @@ export default {
         }
     },
 
-    computed: {
-        /** user returned Order list **/
-        userReturnedOrderList() {
-            try {
-                return this.returnedOrderList ?.data ?.data ?.data
-            } catch (e) {
-                return []
-            }
-        },
-        /** user order list **/
-        userOrders() {
-            try {
-                return this.orderList ?.data ?.data ?.data
-            } catch (e) {
-                return []
-            }
-        },
-
-        /** pre_progress order list **/
-        preProgressOrder() {
-            try {
-                const preProgress = this.userOrders.filter(order => order.status === 'processing')
-                if (preProgress.length) return preProgress
-            } catch (e) {
-                return []
-            }
-        },
-        /** pre_progress order list **/
-        sendingOrder() {
-            try {
-                const sendingOrder = this.userOrders.filter(order => order.status === 'sending')
-                if (sendingOrder.length) return sendingOrder
-            } catch (e) {
-                return []
-            }
-        },
-        /** pre_progress order list **/
-        receivedOrder() {
-            try {
-                const receivedOrder = this.userOrders.filter(order => order.status === 'received')
-                if (receivedOrder.length) return receivedOrder
-            } catch (e) {
-                return []
-            }
-        },
-    },
-
     beforeMount() {
         this.getOrderList()
         this.getReturnedOrderList()
-    }
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 
 }
 </script>
