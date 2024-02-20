@@ -1,7 +1,9 @@
 <template>
 <section v-if="categories && categories.length" class="category-list category-list--mobile">
-    <header v-if="sectionLabel" class="t20 text-center text-grey-darken-2 pa-3">
-        {{ sectionLabel }}
+    <header v-if="sectionLabel" class="pa-3 mt-3">
+        <h2 class="t20 text-center text-grey-darken-2">
+            {{ sectionLabel }}
+        </h2>
     </header>
 
     <div class="category-list__items d-flex justify-center align-start">

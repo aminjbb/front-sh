@@ -3,7 +3,7 @@
 //------------------------------------------------
 
 .p-auth {
-    background: url('~/assets/images/login-pattern.jpg') repeat right top;
+    background:#FDEFF4 url('~/assets/images/login-pattern.svg') repeat right top;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -16,12 +16,12 @@
     &__card {
         width: 417px;
         min-height: 470px;
-        border: 1px solid #880E4F;
         border-radius: 4px;
         background-color: #fff;
         padding: 32px;
         display: flex;
         justify-content: space-between;
+        box-shadow: 0px 4px 14px 1px rgba(63, 63, 63, 0.14);
         align-items: stretch;
 
         @media screen and (max-width: 992px) {
