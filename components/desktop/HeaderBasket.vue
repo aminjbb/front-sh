@@ -21,8 +21,8 @@
     <template v-if="userBasket && userBasket?.details && userBasket?.details.length">
         <div class="header-basket__content header-basket__content--no-empty">
             <div>
-                <template v-for="(item, index) in userBasket.details" :key="`header-product${index}`" >
-                    <mobileCartProductCard :content="item" noSeller/>
+                <template v-for="(item, index) in userBasket.details" :key="`header-product${index}`">
+                    <mobileCartProductCard :content="item" noSeller />
 
                     <v-divider v-if="index + 1 < userBasket.details.length" color="grey" />
                 </template>
@@ -57,7 +57,7 @@
         </div>
     </template>
 
-    <div v-else class="header-basket__content header__basket__content--empty">
+    <div v-else class="header-basket__content header-basket__content--empty">
         <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
             <div>
                 <svgEmptyCart />
@@ -71,26 +71,30 @@
             </v-btn>
         </div>
 
-<!--        <div class="pa-3">-->
-<!--            <v-row>-->
-<!--                <v-col-->
-<!--                    v-for="(product, index) in suggestProductsMoc"-->
-<!--                    :key="`product${index}`"-->
-<!--                    sm="6">-->
-<!--                    <generalProductSimpleCard :image="product.image.image_url" :label="product.label" />-->
-<!--                </v-col>-->
-<!--            </v-row>-->
-<!--        </div>-->
+        <div v-if="productUserHistory && productUserHistory.length" class="pa-3">
+            <v-divider color="grey"/>
+            <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخبر</h5>
+            <v-row>
+                <v-col
+                    v-for="(product, index) in productUserHistory.slice(0,5)"
+                    :key="`product${index}`"
+                    href=""
+                    sm="6">
+                    <generalProductSimpleCard :image="product?.image_url" :label="product?.label" :href="`/sku/${product.slug}`"/>
+                </v-col>
+            </v-row>
+        </div>
     </div>
 </div>
 </template>
 
 <script>
+import User from '@/composables/User.js'
 export default {
 
-    props:{
-      /** user basket from vuex **/
-      userBasket: null
+    props: {
+        /** user basket from vueX **/
+        userBasket: null
     },
 
     data() {
@@ -99,11 +103,27 @@ export default {
         }
     },
 
+    setup() {
+        const {
+            getProductUserHistory,
+            productUserHistory
+        } = new User();
+
+        return {
+            getProductUserHistory,
+            productUserHistory
+        }
+    },
+
     methods: {
         close() {
             document.getElementById('basket-header').classList.remove('show');
             document.body.classList.remove('active-basket');
         }
+    },
+
+    created() {
+        this.getProductUserHistory()
     }
 }
 </script>
@@ -119,11 +139,13 @@ export default {
     left: 0;
     top: 0;
     overflow: hidden;
-    display: none;
     z-index: 12;
+    left:-358px;
+    transition: all 0.5s ease;
 
     &.show {
-        display: block !important;
+        transition: all 0.5s ease;
+        left:0;
     }
 
     &__header {
