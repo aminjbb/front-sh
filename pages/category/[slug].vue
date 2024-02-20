@@ -177,19 +177,10 @@ export default {
 
       //TODO: Sort items in mobile
     },
-    /**
-     * Filter productList by list type items
-     * @param {*} array
-     */
-    listFiltersModal(array) {
-      console.log("🚀 ~ listFiltersModal:", array);
-
-      //TODO: Add filter for 'productList'
-    },
 
     /**
      * Filter productList by select type items
-     * @param {*} brands
+     * @param {*} array
      */
     selectFiltersModal(array) {
       if (array.param === "stock") {
@@ -206,15 +197,6 @@ export default {
       }
 
     },
-    /**
-     * Filter productList by switch type items
-     * @param {*} status
-     */
-    switchFiltersModal(array) {
-      console.log("🚀 ~ switchFiltersModal:", array);
-      //TODO: filter by switch items like available
-    },
-
     /**
      * Filter by amount
      * @param {*} amount
@@ -383,6 +365,20 @@ export default {
   },
   beforeMount() {
     this.getSecondaryData()
+  },
+
+  watch:{
+    page(val){
+      let query = this.$route.query;
+      if (val) {
+        this.$router.push({
+          query: {
+            ...query,
+            page: val
+          }
+        })
+      }
+    }
   }
 }
 </script>
