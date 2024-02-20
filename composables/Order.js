@@ -18,7 +18,10 @@ export default function setup() {
     const route = useRoute()
     const router = useRouter()
 
-    /** get user order list **/
+    /**
+     * Get user order list
+     * @param {*} query 
+     */
     async function getOrderList(query) {
         axios
             .get(runtimeConfig.public.apiBase + `/order/crud/index?per_page=100000`, {
@@ -33,6 +36,11 @@ export default function setup() {
                 auth.checkAuthorization(err.response)
             });
     };
+
+    /**
+     * Get return order list
+     * @param {*} query 
+     */
     async function getReturnedOrderList(query) {
         axios
             .get(runtimeConfig.public.apiBase + `/order/returned/crud/index?per_page=100000`, {
@@ -48,7 +56,29 @@ export default function setup() {
             });
     };
 
-    /** get user one order **/
+    /**
+     * Get return order details by id
+     * @param {*} query 
+     */
+    async function getReturnedOrderDetails() {
+        axios
+            .get(runtimeConfig.public.apiBase + `/order/returned/crud/index?per_page=100000`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                returnedOrderList.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+    };
+
+    /**
+     * Get user one order
+     * @param {*} query 
+     */
     async function getOrder(query) {
         axios
             .get(runtimeConfig.public.apiBase + `/order/crud/get/${route.params.id}`, {
@@ -64,6 +94,12 @@ export default function setup() {
             });
     };
 
+    /**
+     * returnOrRejectOrder
+     * @param {*} form 
+     * @param {*} endPoint 
+     * @param {*} accept 
+     */
     async function returnOrRejectOrder(form, endPoint ,accept) {
         loading.value = true
         axios

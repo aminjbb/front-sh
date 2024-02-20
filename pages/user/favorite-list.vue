@@ -29,6 +29,7 @@
                                 functions
                                 removeIcon
                                 deleteIcon
+                                isPLP
                                 @removeProduct="removeProduct"
                                 :content="item" />
                         </v-col>

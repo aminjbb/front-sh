@@ -1,5 +1,5 @@
 <template>
-<a v-if="content" class="product-card pa-2" :href="`/sku/${content.slug}`">
+<div v-if="content" class="product-card pa-2">
     <div v-if="index" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>
@@ -13,18 +13,18 @@
             @removeProduct="removeProduct(content)" />
     </div>
 
-    <div v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4">
+    <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href="`/sku/${content.slug}`">
         <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
-    </div>
-    <div v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4">
+    </a>
+    <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href="`/sku/${content.slug}`">
         <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
-    </div>
+    </a>
 
-    <div class="flex-grow-1 w-100">
+    <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`">
         <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title mb-2">
             {{content.label}}
         </h3>
-    </div>
+    </a>
 
     <div class="product-card__info d-flex align-center justify-space-between mb-2" :class="hideInfo ? 'hideInfo' : ''">
         <div class="product-card__info__send">
@@ -74,22 +74,29 @@
 
     <div v-if="functions" class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
         <v-btn
-            @click="showProduct()"
+            :href="`/sku/${content.slug}`"
             height="44"
             title="مشاهده محصول"
             class="btn btn--cancel">
             مشاهده محصول
         </v-btn>
         <v-btn
+            :href="`/sku/${content.slug}`"
+            height="44"
+            title="افزودن به سبد"
+            class="btn btn--submit">
+            افزودن به سبد
+        </v-btn>
+        <!-- <v-btn
             :loading="loading"
             @click="addToCard()"
             height="44"
             title="افزودن به سبد"
             class="btn btn--submit">
             افزودن به سبد
-        </v-btn>
+        </v-btn> -->
     </div>
-</a>
+</div>
 </template>
 
 <script>
