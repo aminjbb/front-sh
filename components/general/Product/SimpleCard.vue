@@ -3,12 +3,22 @@
     :is="tag"
     class="product-card--simple d-flex flex-column align-center"
     :href="href">
-    <div v-if="image" class="product-card__image mb-3 mt-4">
+    <div v-if="tag==='a' && image" class="product-card__image mb-3 mt-4">
         <img :src="image" :title="label" :alt="label" width="79" height="80" />
     </div>
 
-    <h3 class="t13 w400 text-grey text-grey text-center mb-2">
-        {{label}}
+    <a v-else-if="tag==='div' && image" class="product-card__image mb-3 mt-4" :href="href">
+        <img :src="image" :title="label" :alt="label" width="79" height="80" />
+    </a>
+
+    <h3 class="t13 w400 text-grey text-center mb-2">
+        <a v-if="tag==='div'" class="t13 w400 text-grey">
+            {{label}}
+        </a>
+
+        <template v-else>
+            {{label}}
+        </template>
     </h3>
 </component>
 </template>
