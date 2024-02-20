@@ -323,7 +323,6 @@ export default {
 
                 if (this.counter === '00:00') {
                     this.showRetry = true;
-                    c
                     learInterval(myCountdown);
                 }
 
