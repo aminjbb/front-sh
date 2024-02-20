@@ -74,8 +74,9 @@ import axios from "axios";
 import Basket from '@/composables/Basket.js'
 export default {
     setup(){
+      const userToken = useCookie('userToken')
       const  {addToBasket ,deleteShpsBasket} = new Basket()
-      return {addToBasket , deleteShpsBasket}
+      return {addToBasket , deleteShpsBasket , userToken}
     },
 
     data() {
@@ -112,8 +113,14 @@ export default {
 
     methods: {
         async addToCard(id) {
-          this.count ++;
-          this.addToBasket(id , this.count)
+          if (this.userToken){
+            this.count ++;
+            this.addToBasket(id , this.count)
+          }
+          else{
+            localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
+            this.$router.push('/login')
+          }
         },
         increaseCount() {
             if (this.count < this.content.order_limit) {

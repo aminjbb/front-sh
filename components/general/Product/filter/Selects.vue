@@ -71,17 +71,16 @@ export default {
         filteredItems() {
             if (this.searchItem == null || this.searchItem == '') {
                 return this.items.sort((a, b) =>{
-                 if (a.label)  a.label.localeCompare(b.label)
+                 if (a.name)  a.name.localeCompare(b.name)
                   else  a.value.localeCompare(b.value)
                 });
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
                 return this.items
-                    .sort((a, b) => a.label.localeCompare(b.label))
+                    .sort((a, b) => a.value.localeCompare(b.value))
                     .filter(
                         (brand) =>
-                        brand.label.toLowerCase().includes(lowerCaseSearch) ||
-                        brand.name.toLowerCase().includes(lowerCaseSearch)
+                        brand.value.toLowerCase().includes(lowerCaseSearch)
                     );
             }
         },

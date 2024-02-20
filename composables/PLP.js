@@ -6,7 +6,7 @@ import axios from 'axios'
 import {useRoute, useRouter} from "vue-router";
 import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
-import {stringify} from "qs";
+import qs, {stringify} from "qs";
 
 export default function setup() {
     const productList = ref([]);
@@ -44,21 +44,28 @@ export default function setup() {
     else if (route.name == 'category-slug') endPoint.value = '/product/plp/category/'
     else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
     store.commit('set_loadingModal', true),
+
         useAsyncData(
-            () =>
-                axios.get(runtimeConfig.public.apiBase + `${endPoint.value}${route.params.slug}${query.value}`, {
-                        ...route.query
+            () =>{
+                let url = "".concat(
+                    runtimeConfig.public.apiBase,
+                    endPoint.value,
+                    route.params.slug,
+                );
+
+                axios({
+                    method: 'get',
+                    url:url,
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
                     },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${userToken.value}`,
-                        },
-                    })
-                    .then((response) => {
+                    params:{...route.query}
+                })
+                    .then(response => {
                         productList.value = response
                     })
-                    .catch((err) => {
-                      if (err.response.status){
+                    .catch(err => {
+                        if (err.response.status){
                             showError({
                                 statusCode: 404,
                                 statusMessage: "Page Not Found"
@@ -66,7 +73,9 @@ export default function setup() {
                         }
                     }).finally(() => {
                     store.commit('set_loadingModal', false)
-                }), {
+                })
+            },
+            {
                 watch: [route]
             }
         )

@@ -35,32 +35,35 @@
                             v-if="filter.type !== 'switch'"
                             class="d-flex align-center justify-space-between filter-sidebar__card__header my-4"
                             @click="slideToggleCard(index)">
-                            <span class="t16 w400 text-grey-darken-2">{{filter.label}}</span>
+                            <span class="t16 w400 text-grey-darken-2">{{filter.name}}</span>
 
                             <v-icon icon="mdi-chevron-down" color="grey" />
                         </header>
 
-                        <template v-if="filter.type === 'list'">
+                      <template v-if="filter.type === 'select'">
                             <generalProductFilterList
-                                :items="filter.values"
+                                :items="filter.data"
                                 :clear="clearAll"
                                 :name="filter.name"
+                                :param="filter.param"
                                 @listItems="listFiltersModalEmit" />
                         </template>
 
                         <template v-else-if="filter.type === 'switch'">
                             <generalProductFilterSwitch
-                                :title="filter.label"
+                                :title="filter.name"
                                 :clear="clearAll"
                                 :name="filter.name"
+                                :param="filter.param"
                                 :switchName="filter.value" />
                         </template>
 
-                        <template v-else-if="filter.type === 'select'">
+                        <template v-else-if="filter.type === 'checkbox'">
                             <generalProductFilterSelects
-                                :items="filter.values"
-                                :title="filter.label"
+                                :items="filter.data"
+                                :title="filter.name"
                                 :name="filter.name"
+                                :param="filter.param"
                                 :clear="clearAll"
                                 @selectItems="selectFiltersModalEmit" />
                         </template>
@@ -205,7 +208,8 @@ export default {
          * @param {array} Arr 
          */
         selectFiltersModalEmit(arr) {
-            this.$emit('selectFiltersModal', arr);
+          console.log(arr , 'selectFiltersModalEmit')
+          this.$emit('selectFiltersModal', arr);
         },
 
         /**
