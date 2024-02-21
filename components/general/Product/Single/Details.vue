@@ -11,12 +11,13 @@
         <generalProductSingleReportModal class="xs-hide" :title="content.label" />
     </div>
 
-    <h1 class="t20 w400 text-grey-darken-4 mb-3 mt-2">{{content.label}}</h1>
+    <h1 v-if="content.label" class="t20 w400 text-grey-darken-4 mb-3 mt-2">{{content.label}}</h1>
 
-    <h2 class="t12 w400 text-grey">{{content.name}}</h2>
+    <h2 v-if="content.name" class="t12 w400 text-grey">{{content.name}}</h2>
 
     <div class="product-details__rate d-flex align-center mt-3">
         <div class="product-details__rate__star d-flex align-center ltr ml-2">
+            
             <template v-for="(icon, index) in generateStarIcons" :key="`icon${index}`">
                 <v-icon
                     v-if="icon === 'mdi-star'"
@@ -27,9 +28,16 @@
                     :icon="icon"
                     color="orange-lighten-2" />
             </template>
+            <template v-if="emptyStar !== 0" >
+                <template v-for="(icon, index) in emptyStar" :key="`icon${index}`">
+                    <v-icon
+                    icon="mdi-star"
+                    color="grey-lighten-2" />
+                </template>
+            </template>
         </div>
 
-        <span class="t12 w400 text-grey-lighten-1 number-font">({{content.numberOfVotes}})</span>
+        <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{content.score}})</span>
     </div>
 
     <v-divider color="grey" class="my-3" />
@@ -111,6 +119,7 @@ export default {
             formattedTime: '00:00:00',
             targetDate: '2024-01-23 23:59:00',
             selectedAttr: null,
+            emptyStar:0,
         }
     },
     props: {
@@ -140,6 +149,10 @@ export default {
 
             if (hasHalfStar) {
                 stars.push('mdi-star-half-full');
+            }
+
+            if(stars.length < 6){
+                this.emptyStar = 5 - (stars.length);
             }
 
             return stars;

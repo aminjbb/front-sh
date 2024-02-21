@@ -1,204 +1,211 @@
 <template>
-  <main class="v-product v-product--single">
+<main class="v-product v-product--single">
     <h1 class="v-hide">{{ productLabel }}</h1>
     <v-container>
-      <generalBreadcrumb :items="BreadcrumbItems"/>
-      <v-row>
-        <v-col
-            class="pa-3"
-            cols="12"
-            lg="5">
+        <generalBreadcrumb :items="BreadcrumbItems" />
+        <v-row>
+            <v-col
+                class="pa-3"
+                cols="12"
+                lg="5">
+                <generalProductSingleImageGallery
+                    :getPdpData="getPdpData"
+                    :wishlist="wishlist"
+                    :productSelectedSeller="productSelectedSeller"
+                    :items="skuImageGallery" />
+            </v-col>
 
-          <generalProductSingleImageGallery :getPdpData="getPdpData" :wishlist="wishlist" :productSelectedSeller="productSelectedSeller"
-                                            :items="skuImageGallery"/>
-        </v-col>
+            <v-col
+                class="pa-3"
+                cols="12"
+                lg="7">
+                <generalProductSingleDetails :content="productDetail" />
 
-        <v-col
-            class="pa-3"
-            cols="12"
-            lg="7">
-          <generalProductSingleDetails :content="productDetail"/>
+                <template v-if="screenType !== null && screenType === 'desktop'">
+                    <v-row class="v-product--single__border ma-0 px-1 mt-5">
+                        <v-col md="7" lg="8">
+                            <desktopProductSingleSelectedSeller :content="productSelectedSeller" />
+                        </v-col>
+                        <v-col md="5" lg="4">
+                            <generalAddToBasket :content="productSelectedSeller" />
+                        </v-col>
+                    </v-row>
+                </template>
 
-          <template v-if="screenType !== null && screenType === 'desktop'">
-            <v-row class="v-product--single__border ma-0 px-1 mt-5">
-              <v-col md="7" lg="8">
-                <desktopProductSingleSelectedSeller :content="productSelectedSeller"/>
-              </v-col>
-              <v-col md="5" lg="4">
-                <generalAddToBasket :content="productSelectedSeller"/>
-              </v-col>
-            </v-row>
-          </template>
+                <template v-else-if="screenType !== null && screenType === 'mobile'">
+                    <v-row class="v-product--single__border ma-0 px-1 mt-5">
+                        <v-col md="7" lg="8">
+                            <mobileProductSingleSelectedSeller :content="productSelectedSeller" :sellers="productSellers" />
+                        </v-col>
+                    </v-row>
+                </template>
+            </v-col>
+        </v-row>
 
-          <template v-else-if="screenType !== null && screenType === 'mobile'">
-            <v-row class="v-product--single__border ma-0 px-1 mt-5">
-              <v-col md="7" lg="8">
-                <mobileProductSingleSelectedSeller :content="productSelectedSeller" :sellers="productSellers"/>
-              </v-col>
-            </v-row>
-          </template>
-        </v-col>
-      </v-row>
+        <template v-if="screenType !== null && screenType === 'desktop'">
+            <generalAboutOurValues class="v-product--single__values ma-0 mt-5" />
 
-      <template v-if="screenType !== null && screenType === 'desktop'">
-        <generalAboutOurValues class="v-product--single__values ma-0 mt-5"/>
+            <div class="v-product--single__border mt-5" id="seller-list">
+                <template v-for="(seller, index) in productSellers" :key="`seller${index}`">
+                    <generalProductSingleSellerCard :seller="seller" />
+                </template>
+            </div>
+        </template>
 
-        <div class="v-product--single__border mt-5" id="seller-list">
-          <template v-for="(seller, index) in productSellers" :key="`seller${index}`">
-            <generalProductSingleSellerCard :seller="seller"/>
-<!--            <v-divider v-if="index +1 < productSellers?.sellers.length" color="grey"/>-->
-          </template>
-        </div>
-      </template>
-      <mobileHomeSection8Slider
-          class="mt-5 pb-3"
-          :items="relatedProducts"
-          title="محصولات مشابه"
-          hideIndex
-          isPLP
-          navigation/>
+        <mobileHomeSection8Slider
+            class="mt-5 pb-3"
+            :items="relatedProducts"
+            title="محصولات مشابه"
+            hideIndex
+            isPLP
+            navigation />
 
-      <generalProductSingleCompleteDetails
-          :description="pdpSecondaryData?.description"
-          :attrs="pdpSecondaryData?.specifics"
-          :instructions="pdpSecondaryData?.how_to_use"
-          :advantages="pdpSecondaryData?.advantage"
-          :disadvantages="pdpSecondaryData?.disadvantage"/>
+        <generalProductSingleCompleteDetails
+            :description="pdpSecondaryData?.story"
+            :attrs="pdpSecondaryData?.specifics"
+            :instructions="pdpSecondaryData?.how_to_use"
+            :advantages="pdpSecondaryData?.advantage"
+            :disadvantages="pdpSecondaryData?.disadvantage" />
 
-      <v-divider color="grey" class="mt-5"/>
+        <v-divider color="grey" class="mt-5" />
 
-      <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments"/>
+        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" />
 
-      <template v-if="screenType !== null && screenType === 'mobile'">
-        <div class="mobile-basket">
-          <generalAddToBasket
-              :content="selectedSellerMoc"
-              revers="revers"
-              :mdCols="['6','6']"
-              :smCols="['4','8']"/>
-        </div>
-      </template>
+        <template v-if="screenType !== null && screenType === 'mobile'">
+            <div class="mobile-basket">
+                <generalAddToBasket
+                    :content="selectedSellerMoc"
+                    revers="revers"
+                    :mdCols="['6','6']"
+                    :smCols="['4','8']" />
+            </div>
+        </template>
 
     </v-container>
-  </main>
+</main>
 </template>
 
 <script>
 import PDP from '@/composables/PDP.js'
 
 export default {
-  setup() {
-    const {
-      product,
-      color,
-      getSecondaryData,
-      secondaryData,
-      getPdpData
-    } = new PDP()
-    return {
-      product,
-      color,
-      getSecondaryData,
-      secondaryData,
-      getPdpData
-    }
-  },
-  data() {
-    return {
-      screenType: null,
-      BreadcrumbItems: [{
-        title: 'لوازم آرایشی',
-        /* Should be main category */
-        href: '/'
-      },
-        {
-          title: 'آرایش چشم',
-          /* Should be sub category */
-          href: '/products'
-        },
-        {
-          title: 'سایه چشم',
-          /* Should be sub category */
-          href: '/products'
+    setup() {
+        const {
+            product,
+            color,
+            getSecondaryData,
+            secondaryData,
+            getPdpData
+        } = new PDP()
+        return {
+            product,
+            color,
+            getSecondaryData,
+            secondaryData,
+            getPdpData
         }
-      ],
-      content: null,
+    },
+    data() {
+        return {
+            screenType: null,
+            BreadcrumbItems: [{
+                    title: 'لوازم آرایشی',
+                    /* Should be main category */
+                    href: '/'
+                },
+                {
+                    title: 'آرایش چشم',
+                    /* Should be sub category */
+                    href: '/products'
+                },
+                {
+                    title: 'سایه چشم',
+                    /* Should be sub category */
+                    href: '/products'
+                }
+            ],
+            content: null,
 
-      selectedSeller: null,
-      /** cheaper seller or selected seller*/
+            selectedSeller: null,
+            /** cheaper seller or selected seller*/
+        }
+    },
 
-    }
-  },
+    computed: {
+        productDetail() {
+            try {
+                return this.product.data.data
+            } catch (e) {
+                return ''
+            }
+        },
 
-  computed: {
-    productDetail() {
-      try {
-        return this.product.data.data
-      } catch (e) {
-        return ''
-      }
-    },
-    wishlist() {
-      try {
-        return this.productDetail.wishlist
-      } catch (e) {
-        return null
-      }
-    },
-    productSelectedSeller() {
-      try {
-        return this.productDetail.shps_list[0]
-      } catch (e) {
-        return ''
-      }
-    },
-    productSellers() {
-      try {
-        return this.productDetail.shps_list
-      } catch (e) {
-        return ''
-      }
-    },
-    relatedProducts() {
-      try {
-        return this.secondaryData?.data?.data?.related_products
-      } catch (e) {
-        return []
-      }
-    },
-    pdpSecondaryData() {
-      try {
-        return this.secondaryData?.data?.data
-      } catch (e) {
-        return []
-      }
-    },
-    skuComments() {
-      try {
-        return this.secondaryData.comments.data
-      } catch (e) {
+        wishlist() {
+            try {
+                return this.productDetail.wishlist
+            } catch (e) {
+                return null
+            }
+        },
 
-      }
+        productSelectedSeller() {
+            try {
+                return this.productDetail.shps_list[0]
+            } catch (e) {
+                return ''
+            }
+        },
+
+        productSellers() {
+            try {
+                return this.productDetail.shps_list
+            } catch (e) {
+                return ''
+            }
+        },
+
+        relatedProducts() {
+            try {
+                return this.secondaryData ?.data ?.data ?.related_products
+            } catch (e) {
+                return []
+            }
+        },
+
+        pdpSecondaryData() {
+            try {
+                return this.secondaryData ?.data ?.data
+            } catch (e) {
+                return []
+            }
+        },
+        skuComments() {
+            try {
+                return this.secondaryData.comments.data
+            } catch (e) {
+
+            }
+        },
+
+        skuImageGallery() {
+            try {
+                return this.pdpSecondaryData ?.image_gallery
+            } catch (e) {
+                return []
+            }
+        }
     },
-    skuImageGallery() {
-      try {
-        return this.pdpSecondaryData?.image_gallery
-      } catch (e) {
-        return []
-      }
-    }
-  },
 
-  mounted() {
-    /**
-     * Check screen size
-     */
-    window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
-  },
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 
-  beforeMount() {
-    this.getSecondaryData()
-  },
+    beforeMount() {
+        this.getSecondaryData()
+    },
 }
 </script>
 
