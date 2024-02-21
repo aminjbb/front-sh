@@ -32,10 +32,10 @@
         <div class="header-basket__price">
             <div class="d-flex align-center justify-space-between">
                 <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-                <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(userBasket.paid_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(userBasket.paid_price).slice(0, -1))) }}<span class="t12 w400 text-grey-darken-3">تومان</span></span>
             </div>
 
-            <p v-if="(userBasket.total_price - userBasket.paid_price) > 0" class="text-green t12 w400 pt-1 number-font">میزان سود شما از این خرید {{splitChar(userBasket.total_price - userBasket.paid_price)}} می‌باشد.</p>
+            <p v-if="(userBasket.total_price - userBasket.paid_price) > 0" class="text-green t12 w400 pt-1 number-font">میزان سود شما از این خرید {{ splitChar(Number(String(userBasket.total_price - userBasket.paid_price).slice(0, -1))) }} می‌باشد.</p>
 
             <div class="d-flex align-center justify-center mt-5 w-100">
                 <v-btn

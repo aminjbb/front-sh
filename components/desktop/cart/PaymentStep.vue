@@ -24,7 +24,7 @@
                     </div>
                     <p class="number-font t12 w400 text-grey">
                         <template v-if="payment.type === 'snap_pay'">
-                            4 قسط ماهیانه {{splitChar(payment.payment_mount)}} تومان (برون کارمزد)
+                            4 قسط ماهیانه {{ splitChar(Number(String(payment.payment_mount).slice(0, -1))) }}تومان (برون کارمزد)
                         </template>
                         <template v-else-if="payment.type === 'bank'">پرداخت آنلاین با تمام کارت های بانکی</template>
                         <template v-else-if="payment.type === 'wallet'">پرداخت آنلاین با تمام کارت های بانکی</template>

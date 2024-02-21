@@ -59,22 +59,22 @@
 <v-card v-if="activeStep !== 4" class="px-3 mobile-pa-0 mobile-no-border pb-10 cart-payment-details">
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(data.paid_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.paid_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div v-if="shippingCost" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(shippingCost)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(shippingCost).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(data.total_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.total_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-success">سود شما:</span>
-        <span class="t16 w400 text-success number-font">{{splitChar(data.total_price - data.paid_price)}} <span class="t12 w400 text-success">تومان</span></span>
+        <span class="t16 w400 text-success number-font">{{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}<span class="t12 w400 text-success">تومان</span></span>
     </div>
 
     <v-divider color="grey-lighten-1" class="mb-3" />
@@ -91,7 +91,7 @@
 <div v-if="activeStep !== 4" class="cart-mobile-stepper">
     <div class="d-flex align-center justify-space-between">
         <span class="t12 w400 text-grey-darken-1">جمع قابل پرداخت:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(data.paid_price)}} <span class="t11 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}<span class="t11 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div>
