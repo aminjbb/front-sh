@@ -17,9 +17,8 @@
             size="small" />
     </header>
 
-    <div>
+    <div v-if="productList && productList.length">
         <desktopCartProductCard
-            v-if="productList && productList.length"
             v-for="(product, index) in productList"
             :key="`product${index}`"
             :content="product" />
@@ -43,10 +42,10 @@ export default {
 
     methods:{
         /**
-         * Delete all orders
+         * Delete all orders from vuex
          */
         deleteAllOrders(){
-            //TODO: Write method
+            this.$store.commit('set_basket' , []);
         }
     }
 }

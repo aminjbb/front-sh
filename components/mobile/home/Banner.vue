@@ -3,12 +3,11 @@
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{title}}
     </header>
-
     <v-row>
         <v-col
             v-for="item in items"
             :key="item.id"
-            cols="12"
+            :cols="generalCol"
             :sm="col">
             <a class="banner__image d-block" :href="item.link">
                 <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
@@ -32,6 +31,14 @@ export default {
         col: {
             type: String,
             default: '6'
+        },
+
+        /**
+         * Col number for show in mobile
+         */
+        generalCol: {
+            type: String,
+            default: '12'
         },
 
         /**

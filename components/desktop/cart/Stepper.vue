@@ -42,24 +42,24 @@
                 <v-card class="py-5 px-3">
                     <div class="d-flex align-center justify-space-between">
                         <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(data.paid_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}<span class="t12 w400 text-grey-darken-3">تومان</span></span>
                     </div>
 
                     <v-divider color="grey-lighten-2" class="my-3" />
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(data.sending_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{splitChar(data.total_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.total_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-success">سود شما:</span>
-                        <span class="t19 w400 text-success number-font">{{splitChar(data.total_price - data.paid_price)}} <span class="t12 w400 text-success">تومان</span></span>
+                        <span class="t19 w400 text-success number-font">{{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }} <span class="t12 w400 text-success">تومان</span></span>
                     </div>
 
                     <p class="t14 w400 text-grey-darken-1">
