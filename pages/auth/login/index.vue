@@ -94,7 +94,6 @@
                                     {{ seconds }} :{{ minutes }} مانده تا ارسال مجدد کد تایید
                                 </span>
                             </div>
-                            
                             <v-btn
                                 :loading="loading"
                                 color="primary"
@@ -165,13 +164,11 @@
                                     </div>
                                 </span>
                             </div>
-
                             <div v-else class="text-center mb-2 pr-1">
                                 <span class="p-auth__text number-font">
                                     {{ seconds }} :{{ minutes }} مانده تا ارسال مجدد کد تایید
                                 </span>
                             </div>
-
                             <v-btn
                                 :loading="loading"
                                 color="primary"
@@ -218,6 +215,7 @@
                     </div>
                 </div>
             </template>
+
         </div>
     </v-locale-provider>
 </div>
@@ -289,6 +287,10 @@ export default {
         backStep1() {
             this.loginStep = 1;
             this.passwordWay = false;
+            this.minutes = null;
+            this.seconds = null;
+            this.startTime = 2;
+            this.counter = '';
         },
 
         loginWithPasswords() {
@@ -321,7 +323,11 @@ export default {
 
                 if (this.counter === '00:00') {
                     this.showRetry = true;
-                    clearInterval(myCountdown);
+                    learInterval(myCountdown);
+                }
+
+                if (this.loginStep === 1) {
+                    learInterval(myCountdown);
                 }
             }, 1000);
         },
