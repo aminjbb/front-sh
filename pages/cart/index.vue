@@ -59,61 +59,16 @@ export default {
                 },
             ],
             products: [],
-            productsMoc: {
-                "total_price": 4200000,
-                "paid_price": 3780000,
-                shps: [{
-                        image: {
-                            image_url: 'products.jpg',
-                        },
-                        label: 'ماسک مو فولیکا مدل Arginine B حجم 200 میلی لیتر به همراه شامپو مو فولیکا حجم 400 میلی لیتر و هدیه سرم براق کننده مو فولیکا مدل Detanglin حجم 200 میلی لیتر',
-                        color: {
-                            label: 'مشکی',
-                            code: '#000',
-                        },
-                        shopping_name: 'زیبارویان',
-                        customer_price: 184030,
-                        available: false,
-                        site_price: 269900,
-                        discount: 30,
-                        count: 2,
-                        status: 'change_price'
-                    },
-                    {
-                        image: {
-                            image_url: 'products.jpg',
-                        },
-                        label: 'شامپو تقویت کننده و ضد ریزش مو فولیکا',
-                        color: {
-                            label: 'مشکی',
-                            code: '#000',
-                        },
-                        shopping_name: 'زیبارویان',
-                        customer_price: 184030,
-                        available: true,
-                        site_price: 269900,
-                        discount: null,
-                        count: 2,
-                        status: 'change_price'
-                    },
-                    {
-                        image: {
-                            image_url: 'products.jpg',
-                        },
-                        label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه',
-                        color: {
-                            label: 'مشکی',
-                            code: '#000',
-                        },
-                        shopping_name: 'زیبارویان',
-                        customer_price: 184030,
-                        site_price: 269900,
-                        available: false,
-                        discount: 30,
-                        count: 1,
-                        status: null
-                    }
-                ]
+        }
+    },
+
+    computed: {
+        userBasket() {
+            try {
+                const userBasket = this.$store.getters['get_basket']
+                return userBasket.data.data
+            } catch (e) {
+                return []
             }
         }
     },
@@ -141,16 +96,6 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
-    computed: {
-        userBasket() {
-            try {
-                const userBasket = this.$store.getters['get_basket']
-                return userBasket.data.data
-            } catch (e) {
-                return []
-            }
-        }
-    }
 }
 </script>
 

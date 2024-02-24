@@ -9,7 +9,7 @@
             <h2 class="text-grey-darken-3 t14 w500">انتخاب آدرس</h2>
         </div>
 
-        <p class="t12 w400 text-grey-darken-1 mb-5">{{selectedAddressMoc.address}}</p>
+        <p v-if="selectedAddress" class="t12 w400 text-grey-darken-1 mb-5">{{selectedAddress.address}}</p>
 
         <mobileCartAddressModal @selectedAddress="getAddress" :userDetail="userDetail" />
     </div>
@@ -37,8 +37,9 @@ export default {
         /**
          * Emit Address id to Mobile stepper
          */
-        getAddress(id) {
-            this.$emit('selectedAddress', id);
+        getAddress(address) {
+            this.selectedAddress = address;
+            this.$emit('selectedAddress', address);
         }
     },
 }

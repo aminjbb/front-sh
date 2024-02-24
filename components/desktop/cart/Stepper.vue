@@ -1,4 +1,4 @@
-<template >
+<template>
 <div class="stepper">
     <header class="stepper__header d-flex align-center w-100">
         <div
@@ -8,11 +8,11 @@
             :class="index + 1 < steps.length ? 'flex-grow-1' : ''">
             <div class="stepper__header__content">
                 <v-badge
-                    :color="active[index+1] ? 'primary' : 'grey'"
+                    :color="active[index+1] ? 'primary': previousSteps[index+1] ? 'grey-darken-3' : 'grey'"
                     :content="index+1"
                     class="ml-2 mr-2"
                     inline />
-                <span class="t15 w400 pl-2" :class="active[index+1] ? 'text-primary' : 'text-grey'">{{step}}</span>
+                <span class="t15 w400 pl-2" :class="active[index+1] ? 'text-primary': previousSteps[index+1] ? 'text-grey-darken-3' : 'text-grey'">{{step}}</span>
             </div>
 
             <v-divider
@@ -31,11 +31,15 @@
 
                 <template v-if="activeStep === 2">
                     <desktopCartSendingInformationAddress @selectedAddress="getAddress" />
-                    <desktopCartSendingInformationTime v-if="orderAddressId" @selectedDate="getTime" @selectedWay="getWay" />
+                    
+                    <desktopCartSendingInformationTime
+                        v-if="orderAddressId"
+                        @selectedDate="getTime"
+                        @selectedWay="getWay" />
                 </template>
 
                 <template v-if="activeStep === 3">
-                    <desktopCartPaymentStep @selectedPayment="getPayment" />
+                    <desktopCartPaymentStep @selectedPayment="getPayment" :paymentMount="data.paid_price"/>
                 </template>
             </v-col>
             <v-col md="3">
@@ -91,10 +95,6 @@
 <script>
 import Basket from '@/composables/Basket.js'
 export default {
-  setup(){
-    const {calculateSendingPrice , createOrder} = new Basket()
-    return {calculateSendingPrice , createOrder}
-  },
     data() {
         return {
             steps: [
@@ -104,6 +104,7 @@ export default {
                 'اتمام خرید'
             ],
             active: [],
+            previousSteps:[],
             activeStep: 1,
             profit: 0,
             buttonText: [
@@ -122,6 +123,39 @@ export default {
         data: Object
     },
 
+    computed: {
+        orderSendingMethod() {
+            return this.$store.getters['get_orderSendingMethod']
+        },
+
+        orderPaymentMethod() {
+            return this.$store.getters['get_orderPayMethod']
+        },
+
+        orderAddressId() {
+            return this.$store.getters['get_orderAddress']
+        },
+
+        dataCount() {
+            try {
+                return this.data.details.length
+            } catch (e) {
+                return 0
+            }
+        }
+    },
+
+    setup() {
+        const {
+            calculateSendingPrice,
+            createOrder
+        } = new Basket()
+        return {
+            calculateSendingPrice,
+            createOrder
+        }
+    },
+
     methods: {
         nextStep() {
             if (this.activeStep < 5) {
@@ -135,22 +169,23 @@ export default {
                             theme: 'dark'
                         });
                     } else {
-                        if (this.activeStep === 3){
-                            this.createOrder(this.orderSendingMethod, '' , this.orderAddressId , this.orderPaymentMethod)
-                        }
-                        else{
-                          this.active[this.activeStep] = false;
-                          this.activeStep++;
-                          this.active[this.activeStep] = true;
+                        if (this.activeStep === 3) {
+                            this.createOrder(this.orderSendingMethod, '', this.orderAddressId, this.orderPaymentMethod)
+                        } else {
+                            this.active[this.activeStep] = false;
+                            this.previousSteps[this.activeStep] = false;
+                            this.activeStep++;
+                            this.active[this.activeStep] = true;
+                            this.previousSteps[this.activeStep -1] = true;
                         }
 
                     }
-                }
-
-                else {
+                } else {
                     this.active[this.activeStep] = false;
+                    this.previousSteps[this.activeStep] = false;
                     this.activeStep++;
                     this.active[this.activeStep] = true;
+                    this.previousSteps[this.activeStep -1] = true;
                 }
 
                 this.activeButton = false;
@@ -159,13 +194,15 @@ export default {
 
         /**
          * Selected address from SendingInformationAddress component
-         * @param {*} id 
+         * @param {*} address 
          */
-        getAddress(id) {
-          if (id){
-            this.$store.commit('set_orderAddress' , id)
-            this.activeButton = true;
-          }
+        getAddress(address) {
+            if (address !== false) {
+                this.$store.commit('set_orderAddress', address)
+                this.activeButton = true;
+            } else{
+                this.$store.commit('set_orderAddress', null)
+            }
         },
 
         /**
@@ -173,10 +210,12 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-          if (way) {
-            this.$store.commit('set_orderSendingMethod' , way)
-            this.calculateSendingPrice(this.orderAddressId ,way )
-          }
+            if (way) {
+                this.$store.commit('set_orderSendingMethod', way)
+                this.calculateSendingPrice(this.orderAddressId, way)
+            } else{
+                this.$store.commit('set_orderSendingMethod', null)
+            }
         },
 
         /**
@@ -194,31 +233,15 @@ export default {
          * @param {*} id 
          */
         getPayment(id) {
-            this.$store.commit('set_orderPayMethod' , id)
+            this.$store.commit('set_orderPayMethod', id)
             this.activeButton = true;
         },
     },
-    computed:{
-      orderSendingMethod(){
-        return this.$store.getters['get_orderSendingMethod']
-      },
-      orderPaymentMethod(){
-        return this.$store.getters['get_orderPayMethod']
-      },
-      orderAddressId(){
-        return this.$store.getters['get_orderAddress']
-      },
-      dataCount(){
-        try {
-          return this.data.details.length
-        }
-        catch (e) {
-          return 0
-        }
-      }
-    },
+
     mounted() {
         this.active[this.activeStep] = true;
+        this.$store.commit('set_orderAddress', null);
+        this.$store.commit('set_orderSendingMethod', null);
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template >
-<v-card class="pa-5 mobile-pa-0 mobile-no-border ov-v">
+<v-card class="cart-address-list pa-5 mobile-pa-0 mobile-no-border ov-v">
     <header class="d-flex justify-space-between  align-center mb-5 xs-hide">
         <div class="d-flex align-center">
             <v-icon
@@ -31,9 +31,11 @@
                 <generalUserAddressCardSimple
                     class="flex-grow-1"
                     :address="address"
+                    :provinces="provinces"
+                    :userDetail="userDetail"
                     :getUserAddress="getUserAddress" />
             </div>
-            <v-divider v-if="index+1 < addressMoc.length" color="grey-lighten-1"  class="my-3"/>
+            <v-divider v-if="index+1 < userAddress.length" color="grey-lighten-1"  class="my-3"/>
         </template>
     </div>
 </v-card>
@@ -47,42 +49,6 @@ export default {
     data() {
         return {
             addressModal: null,
-            addressMoc: [{
-                "id": 2,
-                "user_id": 4,
-                "first_name": "حسین",
-                "last_name": "نصیری",
-                "address": "پاسداران خیابان هروی",
-                "state_id": 1,
-                "city_id": 1,
-                "postal_code": "1234567890",
-                "number": "20",
-                "unit": "202",
-                "phone_number": "09125555555",
-                "am_i": 1,
-                "created_at": "2024-01-15T14:56:28.000000Z",
-                "updated_at": "2024-01-15T14:56:28.000000Z",
-                "receiver_full_name": "حسین نصیری",
-                "state": {
-                    "id": 1,
-                    "name": "fars",
-                    "label": "فارس",
-                    "priority": "5",
-                    "is_active": 1,
-                    "created_at": null,
-                    "updated_at": null
-                },
-                "city": {
-                    "id": 1,
-                    "name": null,
-                    "label": "شیراز",
-                    "priority": "1",
-                    "state_id": 1,
-                    "is_active": 1,
-                    "created_at": null,
-                    "updated_at": null
-                }
-            }]
         }
     },
 
@@ -136,7 +102,10 @@ export default {
     flex: 0 0 50px;
 }
 
-.address-card {
-    border-bottom: 0 !important;
+.cart-address-list{
+    .address-card {
+        border-bottom: 0 !important;
+    }
 }
+
 </style>

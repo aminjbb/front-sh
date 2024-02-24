@@ -27,13 +27,13 @@
                     </header>
                     
                     <generalUserAddressCard
+                        v-for="(address , index) in userAddress"
+                        :key="`address${index}`"
                         :userDetail="userDetail"
                         :provinces="provinces"
                         :address="address"
-                        v-for="(address , index) in userAddress"
                         :class="index+1 == userAddress.length ? 'border-0' :''"
-                        :getUserAddress="getUserAddress"
-                        :key="`address${index}`" />
+                        :getUserAddress="getUserAddress"/>
 
                     <div class="xs-show v-user--address__mobile-btn">
                         <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" />
@@ -48,7 +48,6 @@
 <script>
 import User from '@/composables/User.js'
 import Public from '@/composables/Public.js'
-import auth from "~/middleware/auth.js";
 
 export default {
     data() {
