@@ -141,35 +141,35 @@ export default {
             },
             amounts: [{
                     label: '10 هزار',
-                    value: '10'
+                    value: '100000'
                 },
                 {
                     label: '25 هزار',
-                    value: '25'
+                    value: '250000'
                 },
                 {
                     label: '50 هزار',
-                    value: '50'
+                    value: '500000'
                 },
                 {
                     label: '100 هزار',
-                    value: '100'
+                    value: '1000000'
                 },
                 {
                     label: '150 هزار',
-                    value: '150'
+                    value: '1500000'
                 },
                 {
                     label: '200 هزار',
-                    value: '200'
+                    value: '2000000'
                 },
                 {
                     label: '250 هزار',
-                    value: '250'
+                    value: '2500000'
                 },
                 {
                     label: '300 هزار',
-                    value: '300'
+                    value: '3000000'
                 }
             ]
         }
