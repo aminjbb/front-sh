@@ -10,7 +10,7 @@
     </header>
 
     <div>
-        <template v-for="(payment , index) in paymentTypeListMoc" :key="`payment${index}`">
+        <template v-for="(payment , index) in paymentTypeList" :key="`payment${index}`">
             <div class="d-flex align-center justify-space-between flex-grow-1">
                 <div>
                     <div class="d-flex align-center">
@@ -24,10 +24,10 @@
                     </div>
                     <p class="number-font t12 w400 text-grey">
                         <template v-if="payment.type === 'snap_pay'">
-                            4 قسط ماهیانه {{ splitChar(Number(String(payment.payment_mount).slice(0, -1))) }}تومان (برون کارمزد)
+                            4 قسط ماهیانه {{ splitChar(Number(String(paymentMount / 4 ).slice(0, -1))) }}تومان (برون کارمزد)
                         </template>
                         <template v-else-if="payment.type === 'bank'">پرداخت آنلاین با تمام کارت های بانکی</template>
-                        <template v-else-if="payment.type === 'wallet'">پرداخت آنلاین با تمام کارت های بانکی</template>
+                        <template v-else-if="payment.type === 'wallet'">پرداخت از طریق کیف پول</template>
                     </p>
                 </div>
                 <template v-if="payment.type === 'snap_pay'">
@@ -44,7 +44,7 @@
 
             </div>
             <v-divider
-                v-if="index+1 < paymentTypeListMoc.length"
+                v-if="index+1 < paymentTypeList.length"
                 color="grey-lighten-1"
                 class="my-3" />
         </template>
@@ -95,8 +95,7 @@ export default {
     data() {
         return {
             paymentModal: null,
-            paymentTypeList: [],
-            paymentTypeListMoc: [{
+            paymentTypeList: [{
                     id: 1,
                     label: 'پرداخت اقساطی اسنپ پی',
                     type: 'snap_pay',
@@ -118,6 +117,10 @@ export default {
             discountCode: null,
             discountError: null,
         }
+    },
+
+    props:{
+        paymentMount:String
     },
 
     setup() {

@@ -25,15 +25,15 @@
 <div class="stepper__content">
     <template v-if="activeStep === 1">
         <template v-if="screenType === 'mobile'">
-            <template v-for="(item, index) in data.shps" :key="`header-product${index}`">
+            <template v-for="(item, index) in data.details" :key="`header-product${index}`">
                 <mobileCartProductCard :content="item" />
 
-                <v-divider v-if="index + 1 < data.shps.length" color="grey" />
+                <v-divider v-if="index + 1 < data.details.length" color="grey" />
             </template>
         </template>
 
         <template v-if="screenType === 'tablet'">
-            <desktopCartSkuListStep :count="data.count" :productList="data" />
+            <desktopCartSkuListStep :count="dataCount" :productList="data.details" />
         </template>
     </template>
 
@@ -64,7 +64,7 @@
 
     <div v-if="shippingCost" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(shippingCost).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
@@ -107,6 +107,8 @@
 </template>
 
 <script>
+import Basket from '@/composables/Basket.js'
+
 export default {
     data() {
         return {
@@ -134,6 +136,28 @@ export default {
          * Basket data
          */
         data: Object
+    },
+
+    computed: {
+        orderSendingMethod() {
+            return this.$store.getters['get_orderSendingMethod']
+        },
+
+        orderPaymentMethod() {
+            return this.$store.getters['get_orderPayMethod']
+        },
+
+        orderAddressId() {
+            return this.$store.getters['get_orderAddress']
+        },
+
+        dataCount() {
+            try {
+                return this.data.details.length
+            } catch (e) {
+                return 0
+            }
+        }
     },
 
     methods: {
@@ -173,12 +197,15 @@ export default {
 
         /**
          * Selected address from SendingInformationAddress component
-         * @param {*} id 
+         * @param {*} address 
          */
-        getAddress(id) {
-            console.log("🚀 ~ getAddress ~ id:", id)
-            //TODO: Add address time to cart method
-            this.activeButton = true;
+         getAddress(address) {
+            if (address && address !== false){
+                this.$store.commit('set_orderAddress' , address)
+                this.activeButton = true;
+            } else{
+                this.$store.commit('set_orderAddress', null)
+            }
         },
 
         /**
@@ -186,8 +213,12 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-            console.log("🚀 ~ getWay ~ way:", way)
-            //TODO: Add set way to cart method
+          if (way) {
+            this.$store.commit('set_orderSendingMethod' , way)
+            this.calculateSendingPrice(this.orderAddressId ,way )
+          } else{
+                this.$store.commit('set_orderSendingMethod', null)
+            }
         },
 
         /**
@@ -205,16 +236,26 @@ export default {
          * @param {*} id 
          */
         getPayment(id) {
-            console.log("🚀 ~ getPayment ~ id:", id)
-            //TODO: Add set payment to cart method
+            this.$store.commit('set_orderPayMethod' , id)
             this.activeButton = true;
         },
-
+        
         /**
-         * Delete all orders
+         * Delete all orders from vuex
          */
-        deleteAllOrders(){
-            //TODO: Write method
+         deleteAllOrders() {
+            this.$store.commit('set_basket', []);
+        }
+    },
+
+    setup() {
+        const {
+            calculateSendingPrice,
+            createOrder
+        } = new Basket()
+        return {
+            calculateSendingPrice,
+            createOrder
         }
     },
 
@@ -226,7 +267,7 @@ export default {
         /**
          * Check screen size
          */
-        window.innerWidth <= 540 ? this.screenType = 'mobile' : 540 < window.innerWidth < 768 ? this.screenType = 'tablet' : this.screenType = 'desktop';
+        window.innerWidth <= 540 ? this.screenType = 'mobile' : 540 < window.innerWidth <= 768 ? this.screenType = 'tablet' : this.screenType = 'desktop';
     },
 }
 </script>

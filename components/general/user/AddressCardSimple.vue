@@ -11,11 +11,11 @@
                 <v-icon
                     icon="mdi-dots-vertical"
                     color="grey"
-                    @click="openDropDown(id)" />
+                    @click="openDropDown(address.id)" />
 
-                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${id}`">
+                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${address.id}`">
                     <ul class="ma-0">
-                        <li class="mb-2">
+                        <li class="mb-2 cur-p">
                             <generalUserAddressModal
                                 title="ویرایش آدرس"
                                 buttonType="mobile"
@@ -26,7 +26,7 @@
                                 :provinces="provinces" />
                         </li>
 
-                        <li class="d-flex align-center py-1">
+                        <li class="d-flex align-center py-1 cur-p">
                             <generalModalsDelete
                                 :getUserAddress="getUserAddress"
                                 title="حذف آدرس"

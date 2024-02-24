@@ -1,9 +1,11 @@
 <template>
 <section v-if="content" class="product-card product-card--order">
     <v-row align="center">
-        <v-col cols="12" class="d-flex align-center">
+        <v-col
+            v-if="content.site_price !== content.current_site_price || content.site_stock === 0"
+            cols="12"
+            class="d-flex align-center">
             <v-icon
-                v-if="content.site_price !== content.current_site_price || content.site_stock === 0"
                 icon="mdi-alert-circle-outline"
                 :color="content.site_price !== content.current_site_price ? 'deep-purple' :  content.site_stock === 0 ? 'danger' : 'grey'"
                 class="ml-2" />
@@ -51,7 +53,7 @@
                 <!--                </div>-->
             </div>
         </v-col>
-        <v-col cols="3" class="d-flex product-card__price-info">
+        <v-col cols="3" class="d-flex product-card__price-info justify-end">
             <div>
                 <div class="product-card__product-count mb-3">
                     <v-icon
@@ -69,23 +71,23 @@
 
                 <template v-if="content.count > 0">
                     <template v-if="content.discount">
-                        <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.current_total_site_price" class="d-flex align-center justify-space-between">
                             <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
-                                {{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}
+                                {{ splitChar(Number(String(content.current_total_site_price).slice(0, -1))) }}
                                 <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                             </span>
                         </div>
 
-                        <span v-if="content.site_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                            <span class="number-font">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
+                        <span v-if="content.current_total_customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span class="number-font">{{ splitChar(Number(String(content.current_total_customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
                         </span>
                     </template>
 
                     <template v-else>
-                        <div v-if="content.customer_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.current_total_site_price" class="d-flex align-center justify-space-between">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                                {{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}
+                                {{ splitChar(Number(String(content.site_prcurrent_total_site_priceice).slice(0, -1))) }}
                             </span>
                             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                         </div>
