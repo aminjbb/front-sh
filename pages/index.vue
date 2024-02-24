@@ -104,7 +104,7 @@
 
             <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" class="mb-5"/>
             
-            <mobileHomeBanner :items="mobileBanner3" generalCol="6" col="6"/>
+            <mobileHomeBanner :items="mobileBanner3" :title="titleSection10" generalCol="6" col="6"/>
 
             <generalTabSlider
                 setRef="tab2"

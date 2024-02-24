@@ -1,5 +1,5 @@
 <template>
-<div class="header-basket" id="basket-header">
+<div class="header-basket" id="basket-header" :class="userBasket && userBasket?.details && userBasket?.details.length ? 'header-basket--no-empty' : ''">
     <header class="header-basket__header d-flex align-center justify-space-between pr-4 py-2">
         <div class="d-flex align-center ">
             <a href="/user/dashboard" class="ml-3">
@@ -142,6 +142,10 @@ export default {
     z-index: 12;
     left:-358px;
     transition: all 0.5s ease;
+
+    &--no-empty{
+        padding-bottom: 145px;
+    }
 
     &.show {
         transition: all 0.5s ease;
