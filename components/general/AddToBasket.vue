@@ -35,6 +35,7 @@
         </div>
     </v-col>
     <v-col
+        v-if="content.stock"
         xs="8"
         :sm="smCols[1]"
         :md="mdCols[1]"
