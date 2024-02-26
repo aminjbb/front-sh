@@ -23,9 +23,9 @@
             </div>
 
             <div class="d-flex align-center justify-space-between">
-                <p class="t12 w400 text-grey">{{way.desc}}</p>
+                <p class="t12 w400 text-grey number-font">{{way.desc}}</p>
 
-                <div class="t14 w400 text-grey-darken-1 number-font">{{splitChar(way.price)}} <span class="t12">تومان</span></div>
+                <div class="t14 w400 text-grey-darken-1 number-font">{{ splitChar(Number(String(way.price).slice(0, -1))) }} <span class="t12">تومان</span></div>
             </div>
 
             <template v-if="waysModal === 'nafis' && index === 0">
@@ -63,17 +63,17 @@ export default {
                 //     desc: 'زمان تقریبی تحویل سفارش ۲ الی ۳ روز کاری می‌باشد. (تحویل در بازه ساعات کاری)',
                 //     price: 51000
                 // },
-                // {
-                //     title: 'پست',
-                //     type: 'post',
-                //     desc: 'زمان تقریبی تحویل سفارش ۷ الی 10 روز کاری می‌باشد. (تحویل در بازه ساعات کاری)',
-                //     price: 27000
-                // },
+                {
+                    title: 'پست',
+                    type: 'post',
+                    desc: 'زمان تقریبی تحویل سفارش 7 الی 10 روز کاری می‌باشد. (تحویل در بازه ساعات کاری)',
+                    price: 270000
+                },
                 {
                     title: 'تیپاکس',
                     type: 'tipax',
-                    desc: 'زمان تقریبی تحویل سفارش ۵ الی 8 روز کاری می‌باشد.',
-                    price: 72000
+                    desc: 'زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.',
+                    price: 720000
                 }
             ],
             calendar: [],

@@ -15,7 +15,7 @@
         v-model="dialog"
         color="white"
         fullscreen>
-        <v-card class="pt-2 pb-5 c-modal--comment">
+        <v-card class="pt-2 pb-5 c-modal--comment c-modal--cart-mobile-address">
             <header class="c-modal--comment__header d-flex justify-space-between align-center pb-1 px-6">
                 <div class="d-flex flex-column c-modal--comment__header__title">
                     <span class="t16 w400 mb-1">
@@ -34,7 +34,7 @@
             </header>
 
             <div class="px-6">
-                <template v-for="(address , index) in addressMoc" :key="`address${index}`">
+                <template v-for="(address , index) in userAddress" :key="`address${index}`">
                     <div class="d-flex align-center justify-space-between">
                         <v-checkbox
                             class="address-checkbox"
@@ -46,12 +46,12 @@
                         <generalUserAddressCardSimple
                             :userDetail="userDetail"
                             :provinces="provinces"
-                            class="flex-grow-1"
+                            class="flex-grow-1 border-0"
                             :address="address"
                             :getUserAddress="getUserAddress" />
                     </div>
                     <v-divider
-                        v-if="index+1 < addressMoc.length"
+                        v-if="index+1 < userAddress.length"
                         color="grey-lighten-1"
                         class="my-3" />
                 </template>
@@ -75,42 +75,6 @@ export default {
             userDetail: null,
             dialog: false,
             addressModal: null,
-            addressMoc: [{
-                "id": 2,
-                "user_id": 4,
-                "first_name": "حسین",
-                "last_name": "نصیری",
-                "address": "پاسداران خیابان هروی",
-                "state_id": 1,
-                "city_id": 1,
-                "postal_code": "1234567890",
-                "number": "20",
-                "unit": "202",
-                "phone_number": "09125555555",
-                "am_i": 1,
-                "created_at": "2024-01-15T14:56:28.000000Z",
-                "updated_at": "2024-01-15T14:56:28.000000Z",
-                "receiver_full_name": "حسین نصیری",
-                "state": {
-                    "id": 1,
-                    "name": "fars",
-                    "label": "فارس",
-                    "priority": "5",
-                    "is_active": 1,
-                    "created_at": null,
-                    "updated_at": null
-                },
-                "city": {
-                    "id": 1,
-                    "name": null,
-                    "label": "شیراز",
-                    "priority": "1",
-                    "state_id": 1,
-                    "is_active": 1,
-                    "created_at": null,
-                    "updated_at": null
-                }
-            }]
         }
     },
 
@@ -167,9 +131,21 @@ export default {
 }
 </script>
 
-<style scoped>
-.c-modal--comment__header {
-    background: var(--Shade-white, #FFF);
-    box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
+<style scoped lang="scss">
+.c-modal--comment{
+    &__header {
+        background: var(--Shade-white, #FFF);
+        box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
+    }
+}
+
+.c-modal--cart-mobile-address{
+    .v-user--address__mobile-btn{
+        border-radius: 8px 8px 0px 0px;
+        background: #FFF;
+        box-shadow: 0px 0px 15px 0px rgba(89, 89, 89, 0.50);
+        bottom:0 !important;
+        padding:25px !important
+    }
 }
 </style>

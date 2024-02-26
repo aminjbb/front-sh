@@ -1,5 +1,5 @@
 <template>
-<div class="header-basket" id="basket-header">
+<div class="header-basket" id="basket-header" :class="userBasket && userBasket?.details && userBasket?.details.length ? 'header-basket--no-empty' : ''">
     <header class="header-basket__header d-flex align-center justify-space-between pr-4 py-2">
         <div class="d-flex align-center ">
             <a href="/user/dashboard" class="ml-3">
@@ -76,7 +76,7 @@
             <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخبر</h5>
             <v-row>
                 <v-col
-                    v-for="(product, index) in productUserHistory.slice(0,5)"
+                    v-for="(product, index) in productUserHistory.slice(0,6)"
                     :key="`product${index}`"
                     href=""
                     sm="6">
@@ -95,12 +95,6 @@ export default {
     props: {
         /** user basket from vueX **/
         userBasket: null
-    },
-
-    data() {
-        return {
-            suggestProducts: [],
-        }
     },
 
     setup() {
@@ -142,6 +136,10 @@ export default {
     z-index: 12;
     left:-358px;
     transition: all 0.5s ease;
+
+    &--no-empty{
+        padding-bottom: 145px;
+    }
 
     &.show {
         transition: all 0.5s ease;

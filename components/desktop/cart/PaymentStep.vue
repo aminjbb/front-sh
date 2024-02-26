@@ -1,4 +1,4 @@
-<template >
+<template>
 <v-card class="pa-5 mobile-pa-0 mobile-no-border ov-v">
     <header class="d-flex align-center mb-5">
         <v-icon
@@ -10,7 +10,7 @@
     </header>
 
     <div>
-        <template v-for="(payment , index) in paymentTypeListMoc" :key="`payment${index}`">
+        <template v-for="(payment , index) in paymentTypeList" :key="`payment${index}`">
             <div class="d-flex align-center justify-space-between flex-grow-1">
                 <div>
                     <div class="d-flex align-center">
@@ -24,17 +24,17 @@
                     </div>
                     <p class="number-font t12 w400 text-grey">
                         <template v-if="payment.type === 'snap_pay'">
-                            4 قسط ماهیانه {{ splitChar(Number(String(payment.payment_mount).slice(0, -1))) }}تومان (برون کارمزد)
+                            4 قسط ماهیانه {{ splitChar(Number(String(paymentMount / 4 ).slice(0, -1))) }}تومان (برون کارمزد)
                         </template>
-                        <template v-else-if="payment.type === 'bank'">پرداخت آنلاین با تمام کارت های بانکی</template>
-                        <template v-else-if="payment.type === 'wallet'">پرداخت آنلاین با تمام کارت های بانکی</template>
+                        <template v-else-if="payment.type === 'online'">پرداخت آنلاین با تمام کارت های بانکی</template>
+                        <template v-else-if="payment.type === 'wallet'">پرداخت از طریق کیف پول</template>
                     </p>
                 </div>
                 <template v-if="payment.type === 'snap_pay'">
                     <img src="~/assets/images/payment-snap.jpg" alt="payment-image" width="85" height="54">
                 </template>
 
-                <template v-else-if="payment.type === 'bank'">
+                <template v-else-if="payment.type === 'online'">
                     <img src="~/assets/images/payment-bank.jpg" alt="payment-image" width="85" height="54">
                 </template>
 
@@ -44,7 +44,7 @@
 
             </div>
             <v-divider
-                v-if="index+1 < paymentTypeListMoc.length"
+                v-if="index+1 < paymentTypeList.length"
                 color="grey-lighten-1"
                 class="my-3" />
         </template>
@@ -66,17 +66,23 @@
     <div>
         <p class="t12 w400 text-grey mb-3">برای هر خرید، امکان اعمال تنها یک کد تخفیف می‌باشد.</p>
         <v-row>
-            <v-col cols="8" md="9" lg="10">
+            <v-col
+                cols="8"
+                md="9"
+                lg="10">
                 <v-text-field
                     color="grey-lighten-3"
                     density="compact"
                     variant="outlined"
                     hide-details
-                    v-modal="discountCode"
-                    single-line />
-                    <p class="t12 w400 text-danger my-2">{{discountError}}</p>
+                    v-model="discountCode" />
+
+                <p class="t12 w400 text-danger my-2">{{discountError}}</p>
             </v-col>
-            <v-col cols="4" md="3" lg="2">
+            <v-col
+                cols="4"
+                md="3"
+                lg="2">
                 <v-btn
                     @click="setDiscountCode()"
                     height="44"
@@ -95,8 +101,7 @@ export default {
     data() {
         return {
             paymentModal: null,
-            paymentTypeList: [],
-            paymentTypeListMoc: [{
+            paymentTypeList: [{
                     id: 1,
                     label: 'پرداخت اقساطی اسنپ پی',
                     type: 'snap_pay',
@@ -105,7 +110,7 @@ export default {
                 {
                     id: 2,
                     label: 'پرداخت اینترنتی',
-                    type: 'bank',
+                    type: 'online',
                     payment_mount: ''
                 },
                 {
@@ -118,6 +123,10 @@ export default {
             discountCode: null,
             discountError: null,
         }
+    },
+
+    props: {
+        paymentMount: String
     },
 
     setup() {
@@ -147,7 +156,14 @@ export default {
         /**
          * Set discount code
          */
-        setDiscountCode(){
+        setDiscountCode() {
+            if (this.discountCode === null) {
+                useNuxtApp().$toast.error('کد تخفیف را وارد کنید.', {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            }
             this.$emit('setDiscountCode', this.discountCode);
         }
 
@@ -156,8 +172,8 @@ export default {
 </script>
 
 <style lang="scss">
-.discount-code{
-    input{
+.discount-code {
+    input {
         height: 44px !important;
     }
 }

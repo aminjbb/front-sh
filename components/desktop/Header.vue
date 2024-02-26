@@ -160,7 +160,6 @@
 
 <script>
 import auth from '@/middleware/auth';
-import Basket from '@/composables/Basket.js'
 
 export default {
     name: "Desktop Header",
@@ -195,12 +194,8 @@ export default {
 
     setup() {
         const userToken = useCookie('userToken')
-        const {
-            getBasket
-        } = new Basket()
         return {
             userToken,
-            getBasket
         }
     },
 
@@ -215,8 +210,9 @@ export default {
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
-        document.addEventListener('click', this.closeDropDown);
-        this.getBasket();
+        if( document.getElementById('mobile-drop-down__items-dashboard')){
+            document.addEventListener('click', this.closeDropDown);
+        }
 
         const banner = document.getElementById("top-banner");
         if (banner) {
@@ -229,7 +225,10 @@ export default {
 
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
-        document.removeEventListener('click', this.closeDropDown);
+        if( document.getElementById('mobile-drop-down__items-dashboard')){
+            document.removeEventListener('click', this.closeDropDown);
+        }
+        
     },
 
     methods: {
