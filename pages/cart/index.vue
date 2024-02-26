@@ -2,8 +2,8 @@
 <main class="v-cart">
     <h1 class="ov-h h-0">سبد خرید </h1>
     <v-container class="pt-0">
-        <template v-if="userBasket?.details?.length === 0">
-            <generalCartEmpty :count="skuCount" :products="suggestProductsMoc" />
+        <template v-if="userBasket.length < 1">
+            <generalCartEmpty :count="skuCount" :products="productUserHistory.slice(0,6)" />
         </template>
 
         <template v-else>
@@ -19,46 +19,12 @@
 </template>
 
 <script>
-import Basket from '@/composables/Basket.js'
-
+import User from '@/composables/User.js';
 export default {
     data() {
         return {
             skuCount: 0,
             screenType: null,
-            suggestProducts: [],
-            suggestProductsMoc: [{
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر'
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'کرم نرم کننده حاوی عصاره جوجوبا مای ظرفیت 150 میلی لیتر '
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'مداد چشم گلدن رز مدل Dream کد 406'
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'شامپو تقویت‌کننده و ضدریزش مو فولیکا'
-                },
-            ],
-            products: [],
         }
     },
 
@@ -85,8 +51,15 @@ export default {
             }]
         })
 
+        const {
+            getProductUserHistory,
+            productUserHistory
+        } = new User();
+
         return {
-            title
+            title,
+            getProductUserHistory,
+            productUserHistory
         }
     },
 
@@ -95,6 +68,8 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+        
+        this.getProductUserHistory();
     },
 }
 </script>

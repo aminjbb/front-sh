@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import Basket from '@/composables/Basket.js'
+
 export default {
     data() {
         return {
@@ -75,12 +77,24 @@ export default {
                 content: description
             }]
         })
+
+        const {
+            getTransactionData,
+            transactionData,
+        } = new Basket()
+
         return {
-            userToken
+            userToken,
+            getTransactionData,
+            transactionData,
         }
     },
 
     methods: {},
+
+    mounted(){
+        this.getTransactionData();
+    }
 }
 </script>
 

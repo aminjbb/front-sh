@@ -39,31 +39,67 @@
                 </template>
 
                 <template v-if="activeStep === 3">
-                    <desktopCartPaymentStep @selectedPayment="getPayment" :paymentMount="data.paid_price"/>
+                    <desktopCartPaymentStep @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price"/>
                 </template>
             </v-col>
             <v-col md="3">
                 <v-card class="py-5 px-3">
                     <div class="d-flex align-center justify-space-between">
                         <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}<span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">
+                            <template v-if="voucher && voucher.paid_price">
+                                {{ splitChar(Number(String(voucher.paid_price).slice(0, -1))) }}
+                            </template>
+
+                            <template v-else>
+                                {{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}
+                            </template>
+
+                            <span class="t12 w400 text-grey-darken-3">تومان</span>
+                        </span>
                     </div>
 
                     <v-divider color="grey-lighten-2" class="my-3" />
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">
+                           <template v-if="voucher && voucher.sending_price">
+                            {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }} 
+                           </template>
+
+                           <template v-else>
+                            {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} 
+                           </template>
+
+                            <span class="t12 w400 text-grey-darken-3">تومان</span>
+                        </span>
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.total_price).slice(0, -1))) }} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+                        <span class="t19 w400 text-grey-darken-3 number-font">
+                            <template v-if="voucher && voucher.total_price">
+                                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }} 
+                            </template>
+                            <template v-else>
+                                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }} 
+                            </template>
+                            <span class="t12 w400 text-grey-darken-3">تومان</span>
+                        </span>
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-success">سود شما:</span>
-                        <span class="t19 w400 text-success number-font">{{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }} <span class="t12 w400 text-success">تومان</span></span>
+                        <span class="t19 w400 text-success number-font">
+                            <template v-if="voucher && voucher.total_price && voucher.paid_price">
+                                {{ splitChar(Number(String(voucher.total_price - voucher.paid_price).slice(0, -1))) }}
+                            </template> 
+                            <template v-else>
+                                {{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}
+                            </template>
+                            <span class="t12 w400 text-success">تومان</span>
+                        </span>
                     </div>
 
                     <p class="t14 w400 text-grey-darken-1">
@@ -148,11 +184,15 @@ export default {
     setup() {
         const {
             calculateSendingPrice,
-            createOrder
+            calculateVoucher,
+            createOrder,
+            voucher
         } = new Basket()
         return {
             calculateSendingPrice,
-            createOrder
+            calculateVoucher,
+            createOrder,
+            voucher
         }
     },
 
@@ -236,12 +276,27 @@ export default {
             this.$store.commit('set_orderPayMethod', id)
             this.activeButton = true;
         },
+
+        /**
+         * Get discount code
+         * @param {*} id 
+         */
+        getDiscountCode(code){
+            this.calculateVoucher(code);
+        }
     },
 
     mounted() {
         this.active[this.activeStep] = true;
         this.$store.commit('set_orderAddress', null);
         this.$store.commit('set_orderSendingMethod', null);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            this.activeStep === 4;
+        }
     }
 }
 </script>
