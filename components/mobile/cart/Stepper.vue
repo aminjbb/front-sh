@@ -25,15 +25,15 @@
 <div class="stepper__content">
     <template v-if="activeStep === 1">
         <template v-if="screenType === 'mobile'">
-            <template v-for="(item, index) in data.shps" :key="`header-product${index}`">
+            <template v-for="(item, index) in data.details" :key="`header-product${index}`">
                 <mobileCartProductCard :content="item" />
 
-                <v-divider v-if="index + 1 < data.shps.length" color="grey" />
+                <v-divider v-if="index + 1 < data.details.length" color="grey" />
             </template>
         </template>
 
         <template v-if="screenType === 'tablet'">
-            <desktopCartSkuListStep :count="data.count" :productList="data" />
+            <desktopCartSkuListStep :count="dataCount" :productList="data.details" />
         </template>
     </template>
 
@@ -43,7 +43,7 @@
     </template>
 
     <template v-if="activeStep === 3">
-        <desktopCartPaymentStep @selectedPayment="getPayment" />
+        <desktopCartPaymentStep @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price"/>
     </template>
 
     <template v-if="activeStep === 4">
@@ -59,22 +59,56 @@
 <v-card v-if="activeStep !== 4" class="px-3 mobile-pa-0 mobile-no-border pb-10 cart-payment-details">
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(data.paid_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">
+            <template v-if="voucher && voucher.paid_price">
+                {{ splitChar(Number(String(voucher.paid_price).slice(0, -1))) }}
+            </template>
+
+            <template v-else>
+                {{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}
+            </template>
+            <span class="t12 w400 text-grey-darken-3">تومان</span>
+        </span>
     </div>
 
     <div v-if="shippingCost" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(shippingCost)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">
+            <template v-if="voucher && voucher.sending_price">
+                {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }} 
+            </template>
+
+            <template v-else>
+                {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} 
+            </template>
+            <span class="t12 w400 text-grey-darken-3">تومان</span>
+        </span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(data.total_price)}} <span class="t12 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">
+            <template v-if="voucher && voucher.total_price">
+                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }} 
+            </template>
+            <template v-else>
+                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }} 
+            </template>
+            <span class="t12 w400 text-grey-darken-3">تومان</span>
+        </span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-success">سود شما:</span>
-        <span class="t16 w400 text-success number-font">{{splitChar(data.total_price - data.paid_price)}} <span class="t12 w400 text-success">تومان</span></span>
+        <span class="t16 w400 text-success number-font">
+            <template v-if="voucher && voucher.total_price && voucher.paid_price">
+                {{ splitChar(Number(String(voucher.total_price - voucher.paid_price).slice(0, -1))) }}
+            </template> 
+            <template v-else>
+                {{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}
+            </template>
+            <span class="t12 w400 text-success">تومان</span>
+        </span>
     </div>
 
     <v-divider color="grey-lighten-1" class="mb-3" />
@@ -91,7 +125,7 @@
 <div v-if="activeStep !== 4" class="cart-mobile-stepper">
     <div class="d-flex align-center justify-space-between">
         <span class="t12 w400 text-grey-darken-1">جمع قابل پرداخت:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{splitChar(data.paid_price)}} <span class="t11 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}<span class="t11 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div>
@@ -107,6 +141,8 @@
 </template>
 
 <script>
+import Basket from '@/composables/Basket.js'
+
 export default {
     data() {
         return {
@@ -134,6 +170,43 @@ export default {
          * Basket data
          */
         data: Object
+    },
+
+    computed: {
+        orderSendingMethod() {
+            return this.$store.getters['get_orderSendingMethod']
+        },
+
+        orderPaymentMethod() {
+            return this.$store.getters['get_orderPayMethod']
+        },
+
+        orderAddressId() {
+            return this.$store.getters['get_orderAddress']
+        },
+
+        dataCount() {
+            try {
+                return this.data.details.length
+            } catch (e) {
+                return 0
+            }
+        }
+    },
+
+    setup() {
+        const {
+            calculateSendingPrice,
+            calculateVoucher,
+            createOrder,
+            voucher
+        } = new Basket()
+        return {
+            calculateSendingPrice,
+            calculateVoucher,
+            createOrder,
+            voucher
+        }
     },
 
     methods: {
@@ -173,12 +246,15 @@ export default {
 
         /**
          * Selected address from SendingInformationAddress component
-         * @param {*} id 
+         * @param {*} address 
          */
-        getAddress(id) {
-            console.log("🚀 ~ getAddress ~ id:", id)
-            //TODO: Add address time to cart method
-            this.activeButton = true;
+         getAddress(address) {
+            if (address && address !== false){
+                this.$store.commit('set_orderAddress' , address)
+                this.activeButton = true;
+            } else{
+                this.$store.commit('set_orderAddress', null)
+            }
         },
 
         /**
@@ -186,8 +262,12 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-            console.log("🚀 ~ getWay ~ way:", way)
-            //TODO: Add set way to cart method
+          if (way) {
+            this.$store.commit('set_orderSendingMethod' , way)
+            this.calculateSendingPrice(this.orderAddressId ,way )
+          } else{
+                this.$store.commit('set_orderSendingMethod', null)
+            }
         },
 
         /**
@@ -205,16 +285,23 @@ export default {
          * @param {*} id 
          */
         getPayment(id) {
-            console.log("🚀 ~ getPayment ~ id:", id)
-            //TODO: Add set payment to cart method
+            this.$store.commit('set_orderPayMethod' , id)
             this.activeButton = true;
+        },
+        
+        /**
+         * Delete all orders from vuex
+         */
+         deleteAllOrders() {
+            this.$store.commit('set_basket', []);
         },
 
         /**
-         * Delete all orders
+         * Get discount code
+         * @param {*} id 
          */
-        deleteAllOrders(){
-            //TODO: Write method
+         getDiscountCode(code){
+            this.calculateVoucher(code);
         }
     },
 
@@ -226,7 +313,17 @@ export default {
         /**
          * Check screen size
          */
-        window.innerWidth <= 540 ? this.screenType = 'mobile' : 540 < window.innerWidth < 768 ? this.screenType = 'tablet' : this.screenType = 'desktop';
+        window.innerWidth <= 540 ? this.screenType = 'mobile' : 540 < window.innerWidth <= 768 ? this.screenType = 'tablet' : this.screenType = 'desktop';
+
+        this.$store.commit('set_orderAddress', null);
+        this.$store.commit('set_orderSendingMethod', null);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            this.activeStep === 4;
+        }
     },
 }
 </script>

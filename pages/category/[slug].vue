@@ -43,7 +43,7 @@
                   <li class="t14 w400 text-grey px-4" @click="sort('created_at', 'desc')">جدیدترین</li>
                   <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'asc')">ارزان‌ترین</li>
                   <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'desc')">گران‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort()">بیشترین تخفیف</li>
+                  <li class="t14 w400 text-grey px-4" @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                 </ul>
               </nav>
             </div>

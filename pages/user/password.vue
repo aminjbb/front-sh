@@ -27,12 +27,12 @@
 
                                 <v-text-field
                                     :rules="rule"
-                                    :append-inner-icon="visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                                    :type="visible ? 'text' : 'password'"
+                                    :append-inner-icon="visibleNow ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    :type="visibleNow ? 'text' : 'password'"
                                     density="compact"
                                     variant="outlined"
                                     v-model="form.previous_password"
-                                    @click:append-inner="visible = !visible" />
+                                    @click:append-inner="visibleNow = !visibleNow" />
                             </v-col>
 
                             <v-col cols="12" md="7">
@@ -43,12 +43,12 @@
 
                                 <v-text-field
                                     :rules="rule"
-                                    :append-inner-icon="visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                                    :type="visible ? 'text' : 'password'"
+                                    :append-inner-icon="visibleNew ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    :type="visibleNew ? 'text' : 'password'"
                                     density="compact"
                                     variant="outlined"
                                     v-model="form.new_password"
-                                    @click:append-inner="visible = !visible" />
+                                    @click:append-inner="visibleNew = !visibleNew" />
 
                                 <div class="t12 text-deep-purple">پسورد انتخابی شما باید حداقل دارای 8 کاراکتر باشد</div>
 
@@ -64,13 +64,13 @@
                                 </label>
 
                                 <v-text-field
-                                    :append-inner-icon="visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
-                                    :type="visible ? 'text' : 'password'"
+                                    :append-inner-icon="visibleConfirm ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    :type="visibleConfirm ? 'text' : 'password'"
                                     density="compact"
                                     variant="outlined"
                                     v-model="form.repetition_password"
                                     :rules="confirmPasswordRules"
-                                    @click:append-inner="visible = !visible" />
+                                    @click:append-inner="visibleConfirm = !visibleConfirm" />
 
                             </v-col>
                         </v-row>
@@ -111,13 +111,19 @@ export default {
             hasPassword: false,
             user: null,
             password: null,
-            visible: false,
+            visibleNow: false,
+            visibleNew: false,
+            visibleConfirm: false,
             form: {
                 new_password: null,
                 repetition_password: null,
                 previous_password: null
             },
             rule: [v => !!v || 'این فیلد الزامی است'],
+            /* passwordRule: [
+                (value) => !!value || "این فیلد الزامی است",
+                (value) => /^{8}$/.test(value) || "طول پسورد باید 8 کارکتر باشد.",
+            ], */
             confirmPasswordRules: [
                 (value) => !!value || "این فیلد الزامی است",
                 (value) => value === this.form.new_password || "تکرار رمز صحیح نیست. لطفا مجدد رمز خود را وارد کنید.",
@@ -181,7 +187,7 @@ export default {
 
             formData.append('password', this.form.new_password)
             formData.append('password_confirmation', this.form.repetition_password)
-            
+
             await axios.post(`${this.runtimeConfig.public.apiBase}/user/profile/password/update`, formData, {
                 headers: {
                     Authorization: `Bearer ${this.userToken}`,

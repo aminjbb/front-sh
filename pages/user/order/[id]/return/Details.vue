@@ -62,7 +62,7 @@
                             </div>
 
                             <v-btn
-                                @click="cancelRequest()"
+                                @click="cancelReturnRequest()"
                                 height="44"
                                 :disabled="/* content.status == 'accept' ? true :  */false"
                                 title="لغو درخواست"
@@ -73,7 +73,7 @@
                     </div>
                 </v-card>
 
-                <v-card class="py-5 mobile-pa-0 mobile-no-border d-flex flex-column">
+                <v-card v-if="content && content.status == 'accept'" class="py-5 mobile-pa-0 mobile-no-border d-flex flex-column">
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide px-5">
                         <div class="d-flex align-center">
                             <span>جزئیات دریافت مرجوعی</span>
