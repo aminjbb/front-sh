@@ -55,8 +55,8 @@
         </template>
 
         <template v-else>
-            <span v-if="content.customer_price && !isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
-            <span v-if="content.site_price && isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{splitChar(content.site_price)}}</span>
+            <span v-if="content.customer_price/*  && !isPLP */" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+            <!-- <span v-if="content.site_price && isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span> -->
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
     </div>
@@ -66,7 +66,8 @@
             class="product-card__colors__item"
             v-for="(color,index) in content.colors.slice(0,6)"
             :key="`product-color${index}`">
-            <span :style="{ backgroundColor: color.value }"></span>
+            <span :style="{ backgroundColor: color.value }" :class="color.value === '#ffffff' || color.value === '#FF00FF00' ? 'border' : '' "></span>
+            
             <v-tooltip activator="parent" location="top">{{color.label}}</v-tooltip>
         </div>
         <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>

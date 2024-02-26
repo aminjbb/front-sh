@@ -76,7 +76,7 @@
             <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخبر</h5>
             <v-row>
                 <v-col
-                    v-for="(product, index) in productUserHistory.slice(0,5)"
+                    v-for="(product, index) in productUserHistory.slice(0,6)"
                     :key="`product${index}`"
                     href=""
                     sm="6">
@@ -95,12 +95,6 @@ export default {
     props: {
         /** user basket from vueX **/
         userBasket: null
-    },
-
-    data() {
-        return {
-            suggestProducts: [],
-        }
     },
 
     setup() {
