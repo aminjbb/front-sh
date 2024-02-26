@@ -15,6 +15,8 @@ export default function setup() {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
+    const voucher = ref({})
+    const transactionData = ref({})
 
     /** get user basket and save on vuex **/
     async function getBasket() {
@@ -49,6 +51,7 @@ export default function setup() {
                 // auth.checkAuthorization(err.response)
             });
     };
+
     async function deleteShpsBasket(shps ) {
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/delete/shps`, {
@@ -65,6 +68,7 @@ export default function setup() {
                 // auth.checkAuthorization(err.response)
             });
     };
+
     async function calculateSendingPrice(address_id , sending_method ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/calculate/sending/price`, {
@@ -82,6 +86,24 @@ export default function setup() {
                 // auth.checkAuthorization(err.response)
             });
     };
+
+    async function calculateVoucher(code ) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/calculate/voucher`, {
+                code:code,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                voucher = response.data.data
+            })
+            .catch((err) => {
+                // auth.checkAuthorization(err.response)
+            });
+    };
+
     async function createOrder(sending_method , invitation_code , address_id , payment_method ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/crud/create`, {
@@ -95,8 +117,34 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                window.location = response.data.data.payment_link
+                if(response.data === null){
+                    useNuxtApp().$toast.error(response.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+                else{
+                    window.location = response.data.data.payment_link
+                }
 
+            })
+            .catch((err) => {
+                // auth.checkAuthorization(err.response)
+            });
+    };
+
+    async function getTransactionData(token) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/finance/user/transaction/crud/get`, {
+                token:route.params.token,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                transactionData = response.data.data
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)
@@ -105,6 +153,6 @@ export default function setup() {
 
 
 
-    return {getBasket, loading ,addToBasket , deleteShpsBasket , calculateSendingPrice , createOrder}
+    return {getBasket, loading ,addToBasket , deleteShpsBasket , calculateSendingPrice , createOrder,calculateVoucher,voucher,getTransactionData,transactionData }
 }
 
