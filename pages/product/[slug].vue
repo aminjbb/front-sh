@@ -41,11 +41,11 @@
                 </div>
 
                 <ul class="v-product__filter__items d-flex align-center">
-                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="newest()">جدیدترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="cheapest()">ارزان‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="mostExpensive()">گران‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="biggestDiscount()">بیشترین تخفیف</li>
+<!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
+                  <li class="t14 w400 text-grey px-4" @click="sort('created_at', 'desc')">جدیدترین</li>
+                  <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                  <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'desc')">گران‌ترین</li>
+                  <li class="t14 w400 text-grey px-4" @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                 </ul>
               </nav>
             </div>
@@ -55,7 +55,7 @@
               <v-col
                   cols="12"
                   md="3"
-                  v-for="(item, index) in productListMocket"
+                  v-for="(item, index) in productListData"
                   :key="`card-${index}`"
                   class="v-product__content d-flex">
                 <generalProductCard
@@ -640,6 +640,19 @@ export default {
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
     },
+    sort(order, orderType) {
+      let query = this.$route.query;
+      if (order && orderType) {
+        this.$router.push({
+          query: {
+            ...query,
+            order: order, order_type: orderType
+
+          }
+        })
+      }
+
+    },
     async createQueryForFilter(array) {
 
       await this.paramGenerator(array)
@@ -648,10 +661,36 @@ export default {
   },
 
   computed:{
+
+    /** return data product list  **/
+    productListData() {
+      try {
+        return this.productList.data.data.data
+      } catch (e) {
+        return []
+      }
+    },
+    /** return PageLength product list for pagination **/
+    productListPageLength() {
+      try {
+        return this.productList.data.data.last_page
+      } catch (e) {
+        return 1
+      }
+    },
     /** return filters on secondaryData slug route **/
     productFilterSecondaryData() {
       try {
         return this.secondaryData.data.data.filters
+      } catch (e) {
+        return []
+      }
+    },
+
+    /** return filters on secondaryData slug route **/
+    productsSecondaryData() {
+      try {
+        return this.secondaryData.data.data.products
       } catch (e) {
         return []
       }
