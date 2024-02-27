@@ -2,7 +2,7 @@
 <main class="v-cart">
     <h1 class="ov-h h-0">سبد خرید </h1>
     <v-container class="pt-0">
-        <template v-if="userBasket.length < 1">
+        <template v-if="!lastStep && userBasket.length < 1">
             <generalCartEmpty :count="skuCount" :products="productUserHistory.slice(0,6)" />
         </template>
 
@@ -25,6 +25,7 @@ export default {
         return {
             skuCount: 0,
             screenType: null,
+            lastStep: false,
         }
     },
 
@@ -70,6 +71,13 @@ export default {
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
         
         this.getProductUserHistory();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (token) {
+            this.lastStep = true;
+        }
     },
 }
 </script>

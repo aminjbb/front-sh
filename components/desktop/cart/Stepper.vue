@@ -48,11 +48,11 @@
                         <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
                         <span class="t19 w400 text-grey-darken-3 number-font">
                             <template v-if="voucher && voucher.paid_price">
-                                {{ splitChar(Number(String(voucher.paid_price).slice(0, -1))) }}
+                                {{ splitChar(Number(String(voucher.paid_price + voucher.sending_price).slice(0, -1))) }}
                             </template>
 
                             <template v-else>
-                                {{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}
+                                {{ splitChar(Number(String(data.paid_price + data.sending_price).slice(0, -1))) }}
                             </template>
 
                             <span class="t12 w400 text-grey-darken-3">تومان</span>
@@ -263,7 +263,6 @@ export default {
          * @param {*} arr 
          */
         getTime(arr) {
-            console.log("🚀 ~ getTime ~ arr:", arr)
             //TODO: Add set time to cart
             this.activeButton = true;
         },
@@ -290,12 +289,13 @@ export default {
         this.active[this.activeStep] = true;
         this.$store.commit('set_orderAddress', null);
         this.$store.commit('set_orderSendingMethod', null);
+        this.$store.commit('set_orderPayMethod', null);
 
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
 
         if (token) {
-            this.activeStep === 4;
+            this.activeStep = 4;
         }
     }
 }
