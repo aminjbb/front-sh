@@ -162,6 +162,7 @@
                                     <generalOrdersReturnOrderRow
                                         v-for="(order, index) in userReturnedOrderList"
                                         :key="`all-order${index}`"
+                                        v-if="order.details.length"
                                         :content="order" />
                                 </template>
 
