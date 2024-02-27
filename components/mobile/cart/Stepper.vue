@@ -71,7 +71,7 @@
         </span>
     </div>
 
-    <div v-if="shippingCost" class="d-flex align-center justify-space-between mb-3">
+    <div v-if="data.sending_price || voucher.sending_price" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
         <span class="t16 w400 text-grey-darken-3 number-font">
             <template v-if="voucher && voucher.sending_price">
@@ -125,7 +125,15 @@
 <div v-if="activeStep !== 4" class="cart-mobile-stepper">
     <div class="d-flex align-center justify-space-between">
         <span class="t12 w400 text-grey-darken-1">جمع قابل پرداخت:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}<span class="t11 w400 text-grey-darken-3">تومان</span></span>
+        <span class="t16 w400 text-grey-darken-3 number-font">
+            <template v-if="voucher && voucher.paid_price">
+                {{ splitChar(Number(String(voucher.paid_price + voucher.sending_price).slice(0, -1))) }}
+            </template>
+
+            <template v-else>
+                {{ splitChar(Number(String(data.paid_price + data.sending_price).slice(0, -1))) }}
+            </template>
+            <span class="t11 w400 text-grey-darken-3">تومان</span></span>
     </div>
 
     <div>
@@ -222,7 +230,11 @@ export default {
                             theme: 'dark'
                         });
                     } else {
-                        this.activeStep++;
+                        if (this.activeStep === 3) {
+                            this.createOrder(this.orderSendingMethod, '', this.orderAddressId.id, this.orderPaymentMethod)
+                        }else{
+                            this.activeStep++;
+                        }
                     }
                 } else {
                     this.activeStep++;
@@ -251,6 +263,7 @@ export default {
          getAddress(address) {
             if (address && address !== false){
                 this.$store.commit('set_orderAddress' , address)
+                this.$store.commit('set_failedTransactionOrderAddress' , address)
                 this.activeButton = true;
             } else{
                 this.$store.commit('set_orderAddress', null)
@@ -264,7 +277,8 @@ export default {
         getWay(way) {
           if (way) {
             this.$store.commit('set_orderSendingMethod' , way)
-            this.calculateSendingPrice(this.orderAddressId ,way )
+            this.$store.commit('set_failedTransactionOrderSendingMethod' , way)
+            this.calculateSendingPrice(this.orderAddressId.id, way)
           } else{
                 this.$store.commit('set_orderSendingMethod', null)
             }
@@ -275,7 +289,6 @@ export default {
          * @param {*} arr 
          */
         getTime(arr) {
-            console.log("🚀 ~ getTime ~ arr:", arr)
             //TODO: Add set time to cart
             this.activeButton = true;
         },
@@ -317,12 +330,13 @@ export default {
 
         this.$store.commit('set_orderAddress', null);
         this.$store.commit('set_orderSendingMethod', null);
+        this.$store.commit('set_orderPayMethod', null);
 
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
 
         if (token) {
-            this.activeStep === 4;
+            this.activeStep = 4;
         }
     },
 }

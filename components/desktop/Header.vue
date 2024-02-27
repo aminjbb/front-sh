@@ -101,7 +101,13 @@
 
                 <span class="header__item__sp"></span>
 
-                <a class="header__item cur-p" @click="showHeaderBasket()">
+                <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()">
+                    <v-badge
+                        v-if="userBasket && userBasket.details.length"
+                        color="primary"
+                        class="number-font"
+                        :content="userBasket.details.length"
+                        inline />
                     <v-icon icon="mdi-cart-minus" />
                 </a>
             </div>
@@ -495,6 +501,20 @@ $parent: 'header';
 
                 .mdi-chevron-down {
                     font-size: 16px;
+                }
+
+                &--basket{
+                    position: relative;
+                    .v-badge{
+                        position: absolute;
+                        z-index: 2;
+                        left: 5px;
+                        top: -5px;
+
+                        &__badge{
+                            font-family: 'IranSansFaNum' !important;
+                        }
+                    }
                 }
             }
         }
