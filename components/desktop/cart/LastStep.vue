@@ -55,19 +55,19 @@
         </header>
 
         <div class="d-flex flex-column align-center justify-center mt-10">
-            <h2 class="t22 w500 text-grey-darken-3 mb-5">
-                سفارش شما به شماره {{transactionData.order_id}} به مبلغ {{transactionData.amount}} تومان در انتظار پرداخت است
+            <h2 class="t22 w500 text-grey-darken-3 mb-5 number-font pt-10">
+                سفارش شما به شماره {{transactionData.order_id}} به مبلغ {{ splitChar(Number(String(transactionData.amount ).slice(0, -1))) }} تومان در انتظار پرداخت است
             </h2>
-
+            
             <span class="t14 text-grey-darken-2 mb-10 number-font">
                 در صورت عدم پرداخت، سفارش شما تا 1 ساعت آینده به صورت خودکار لغو خواهد شد
             </span>
 
             <img src="~/assets/images/basket-failed.jpg" alt="payment-image" width="217" height="163">
 
-            <div class="d-flex align-center justify-center mt-2 mb-10 w-100">
+            <div class="d-flex align-center justify-center mt-2 mb-10 w-100 mt-10">
                 <v-btn
-                    href="/"
+                    @click="createFailedOrder(transactionData.order_id)"
                     height="44"
                     width="180"
                     title="پرداخت"
@@ -76,7 +76,7 @@
                 </v-btn>
 
                 <v-btn
-                    href="/cart"
+                    :href="`/user/order/${transactionData.order_id}`"
                     height="44"
                     width="180"
                     title="جزئیات سفارش"
@@ -91,7 +91,6 @@
 
 <script>
 import Basket from '@/composables/Basket.js'
-
 export default {
     data() {
         return {
@@ -116,16 +115,19 @@ export default {
         const {
             getTransactionData,
             transactionData,
+            createFailedOrder,
         } = new Basket()
 
         return {
             userToken,
             getTransactionData,
             transactionData,
+            createFailedOrder
         }
     },
 
-    methods: {},
+    methods: {
+    },
 
     mounted() {
         this.getTransactionData();

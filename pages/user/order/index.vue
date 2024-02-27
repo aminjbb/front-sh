@@ -229,7 +229,7 @@ export default {
         /** user returned Order list **/
         userReturnedOrderList() {
             try {
-                return this.returnedOrderList ?.data ?.data ?.data
+                return this.returnedOrderList ?.data ?.data ?.data.reverse()
             } catch (e) {
                 return []
             }
@@ -237,7 +237,7 @@ export default {
         /** user order list **/
         userOrders() {
             try {
-                return this.orderList ?.data ?.data ?.data
+                return this.orderList ?.data ?.data ?.data.reverse()
             } catch (e) {
                 return []
             }
@@ -247,7 +247,7 @@ export default {
         preProgressOrder() {
             try {
                 const preProgress = this.userOrders.filter(order => order.status === 'processing')
-                if (preProgress.length) return preProgress
+                if (preProgress.length) return preProgress.reverse()
             } catch (e) {
                 return []
             }
@@ -256,7 +256,7 @@ export default {
         sendingOrder() {
             try {
                 const sendingOrder = this.userOrders.filter(order => order.status === 'sending')
-                if (sendingOrder.length) return sendingOrder
+                if (sendingOrder.length) return sendingOrder.reverse()
             } catch (e) {
                 return []
             }
@@ -265,7 +265,7 @@ export default {
         receivedOrder() {
             try {
                 const receivedOrder = this.userOrders.filter(order => order.status === 'received')
-                if (receivedOrder.length) return receivedOrder
+                if (receivedOrder.length) return receivedOrder.reverse()
             } catch (e) {
                 return []
             }
