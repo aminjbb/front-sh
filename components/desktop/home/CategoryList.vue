@@ -37,7 +37,8 @@ export default {
     computed: {
         categories() {
             try {
-                return this.items ?.banners
+              const categories = this.items?.banners.filter(category => category.is_active === 1)
+                return categories
             } catch (e) {
                 return []
             }

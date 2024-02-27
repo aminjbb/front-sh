@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <div class="product-card__price-info mb-2">
+    <div class="product-card__price-info mb-2" v-if="content.stock">
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
                 <span class="product-card__price-info__discount t11 w500">{{content.discount_percent}}%</span>
@@ -53,12 +53,14 @@
                 <span class="t10 w300 text-grey currency">تومان</span>
             </span>
         </template>
-
         <template v-else>
             <span v-if="content.customer_price/*  && !isPLP */" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
             <!-- <span v-if="content.site_price && isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span> -->
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
+    </div>
+    <div class="product-card__price-info mb-2" v-else>
+      <span class="t14 w800 text-grey-darken-2 currency ">ناموجود</span>
     </div>
 
     <div v-if="content.colors && showColors" class="product-card__colors d-flex align-center justify-center">
