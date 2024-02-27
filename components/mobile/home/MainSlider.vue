@@ -59,7 +59,7 @@ export default {
   computed:{
     mobileBanners(){
       try {
-        const banners = this.items?.banners.filter(item => item.device === 'mobile')
+        const banners = this.items?.banners.filter(item => item.device === 'mobile' && item.is_active === 1)
         if (banners.length) return banners
         else  return  []
       }
