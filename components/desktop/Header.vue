@@ -103,7 +103,7 @@
 
                 <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()">
                     <v-badge
-                        v-if="userBasket && userBasket.details.length"
+                        v-if="userBasket && userBasket.details && userBasket.details.length"
                         color="primary"
                         class="number-font"
                         :content="userBasket.details.length"

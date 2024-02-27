@@ -97,7 +97,7 @@ export default {
 
                 this.userWallet.transactions.forEach(element => {
                     const obj = {
-                        type: element.description,
+                        type: element.type,
                         price: element.amount,
                         code: element.order_id,
                         date_fa: element.created_at_fa,

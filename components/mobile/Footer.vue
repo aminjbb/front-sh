@@ -24,8 +24,14 @@
             </li>
 
             <li class="footer__menu__item">
-                <a href="/cart" :class="{ active: isActive('/cart') }">
+                <a href="/cart" :class="{ active: isActive('/cart') }" class="pos-r footer__menu__item--basket">
                     <v-icon icon="mdi-cart-outline" />
+                    <v-badge
+                        v-if="userBasket && userBasket.details && userBasket.details.length"
+                        color="primary"
+                        class="number-font"
+                        :content="userBasket.details.length"
+                        inline />
                     <span class="t12 w-400">سبد خرید</span>
                 </a>
             </li>
@@ -59,6 +65,17 @@ export default {
         const userToken = useCookie('userToken')
         return {
             userToken,
+        }
+    },
+
+    computed: {
+        userBasket() {
+            try {
+                const basket = this.$store.getters['get_basket']
+                return basket ?.data ?.data
+            } catch (e) {
+                return []
+            }
         }
     },
 
@@ -120,24 +137,38 @@ $parent: 'footer';
 
                         &:hover {
 
-                            span,
-                            .v-icon {
+                            > span,
+                            > .v-icon {
                                 color: #D72685 !important;
                             }
 
-                            svg path {
+                            > svg path {
                                 stroke: #D72685
                             }
                         }
 
                         &.active {
-                            span,
-                            .v-icon {
+                            > span,
+                            > .v-icon {
                                 color: #D72685 !important;
                             }
 
-                            svg path {
+                            > svg path {
                                 stroke: #D72685
+                            }
+                        }
+                    }
+
+                    &--basket{
+                        .v-badge{
+                            position: absolute;
+                            z-index: 2;
+                            left: 50%;
+                            top: 3px;
+
+                            &__badge{
+                                font-family: 'IranSansFaNum' !important;
+                                color:#fff !important;
                             }
                         }
                     }

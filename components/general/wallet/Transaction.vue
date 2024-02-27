@@ -31,6 +31,7 @@
             </div>
         </div>
 
+
         <v-data-table
             v-if="tableContent && tableContent.length >0"
             class="table mt-5"
@@ -48,12 +49,12 @@
                         <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                             <span class="w600 text-black ml-10" v-if="isMobile">نوع تراکنش : </span>
                             <v-icon
-                                :icon="item.raw.type == 'transaction.wallet_deposit' ? 'mdi-plus-circle-outline' : 'mdi-arrow-top-left-thin-circle-outline'"
-                                :color="item.raw.type == 'transaction.wallet_deposit' ? 'success' : 'red-lighten-1'"
+                                :icon="item.raw.type == 'deposit' ? 'mdi-plus-circle-outline' : 'mdi-arrow-top-left-thin-circle-outline'"
+                                :color="item.raw.type == 'deposit' ? 'success' : 'red-lighten-1'"
                                 size="small"
                                 class="ml-1" />
-                            <span :class="item.raw.type == 'transaction.wallet_deposit' ? 'text-success' : 'text-red-lighten-1'" class="t12 w500">
-                                <template v-if="item.raw.type == 'transaction.wallet_deposit'">
+                            <span :class="item.raw.type == 'deposit' ? 'text-success' : 'text-red-lighten-1'" class="t12 w500">
+                                <template v-if="item.raw.type == 'deposit'">
                                     شارژ کیف پول
                                 </template>
                                 <template v-else>
@@ -123,6 +124,7 @@ export default {
             const tableItems = []
             if (this.items && this.items.length > 0) {
                 this.items.forEach((element, index) => {
+                    console.log(element)
                     const obj = {
                         'index': index + 1,
                         'type': element.type,

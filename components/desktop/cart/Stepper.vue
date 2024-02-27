@@ -43,6 +43,7 @@
                 </template>
             </v-col>
             <v-col md="3">
+                
                 <v-card class="py-5 px-3">
                     <div class="d-flex align-center justify-space-between">
                         <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
@@ -296,6 +297,8 @@ export default {
 
         if (token) {
             this.activeStep = 4;
+            this.active[1] = false;
+            this.active[4] = true;
         }
     }
 }
