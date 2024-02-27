@@ -10,6 +10,7 @@ import auth from '@/middleware/auth';
 export default function setup() {
     const orderList = ref([]);
     const returnedOrderList = ref([]);
+    const returnedOrderDetail = ref([]);
     const order = ref(null);
     const orderReturnOrRejectObject = ref(null);
     const loading = ref(false)
@@ -39,9 +40,8 @@ export default function setup() {
 
     /**
      * Get return order list
-     * @param {*} query 
      */
-    async function getReturnedOrderList(query) {
+    async function getReturnedOrderList() {
         axios
             .get(runtimeConfig.public.apiBase + `/order/returned/crud/index?per_page=100000`, {
                 headers: {
@@ -54,21 +54,22 @@ export default function setup() {
             .catch((err) => {
                 auth.checkAuthorization(err.response)
             });
-    };
+    }
 
     /**
      * Get return order details by id
      * @param {*} query 
      */
-    async function getReturnedOrderDetails() {
+    async function getReturnedOrderDetails(orderId) {
         axios
-            .get(runtimeConfig.public.apiBase + `/order/returned/crud/index?per_page=100000`, {
+            .get(runtimeConfig.public.apiBase + `/order/returned/detail/${route.params.id}`, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
             })
             .then((response) => {
-                returnedOrderList.value = response
+
+                returnedOrderDetail.value = response.data;
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
@@ -130,8 +131,24 @@ export default function setup() {
             loading.value = false
         });
     };
+    async function cancelReturnedOrder() {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/returned/detail/cancel/${route.params.id}`, {
+
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                getReturnedOrderList()
+            })
+            .catch((err) => {
+
+            });
+    };
 
     return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
-            getReturnedOrderList , returnedOrderList}
+            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder}
 }
 
