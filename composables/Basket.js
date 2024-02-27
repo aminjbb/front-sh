@@ -97,7 +97,7 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                voucher = response.data.data
+                voucher.value = response.data.data
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)
@@ -125,7 +125,9 @@ export default function setup() {
                     });
                 }
                 else{
-                    window.location = response.data.data.payment_link
+                    if(sending_method === 'online'){
+                        window.location = response.data.data.payment_link
+                    }
                 }
 
             })
@@ -134,17 +136,15 @@ export default function setup() {
             });
     };
 
-    async function getTransactionData(token) {
+    async function getTransactionData() {
         axios
-            .post(runtimeConfig.public.apiBase + `/finance/user/transaction/crud/get`, {
-                token:route.params.token,
-            }, {
+            .get(runtimeConfig.public.apiBase + `/finance/user/transaction/crud/get?token=${route.query.token}`, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
             })
             .then((response) => {
-                transactionData = response.data.data
+                transactionData.value = response.data.data
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)

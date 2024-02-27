@@ -62,7 +62,8 @@ export default {
             waysModal: null,
             showSelectedTime: null,
             ways: [],
-            waysMoc: [{
+            waysMoc: [
+                /* {
                     title: 'نفیس اکسپرس',
                     type: 'nafis',
                     desc: 'انتخاب زمان ارسال. بازه زمانی صبح ساعت ۹ الی ۱۵ و بازه زمانی عصر ۱۵ الی  ۲۱ می‌باشد. ',
@@ -73,7 +74,7 @@ export default {
                     type: 'fast-post',
                     desc: 'زمان تقریبی تحویل سفارش ۲ الی ۳ روز کاری می‌باشد. (تحویل در بازه ساعات کاری)',
                     price: 51000
-                },
+                }, */
                 {
                     title: 'پست',
                     type: 'post',
