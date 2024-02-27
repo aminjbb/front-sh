@@ -87,7 +87,7 @@
                     <template v-else>
                         <div v-if="content.current_total_site_price" class="d-flex align-center justify-space-between">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                                {{ splitChar(Number(String(content.site_prcurrent_total_site_priceice).slice(0, -1))) }}
+                                {{ splitChar(Number(String(content.current_total_customer_price).slice(0, -1))) }}
                             </span>
                             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                         </div>

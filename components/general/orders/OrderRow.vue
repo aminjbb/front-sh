@@ -102,6 +102,10 @@ export default {
                 {
                     text: 'مرجوعی',
                     value: 'returned'
+                },
+                {
+                    text: 'در انتظار پرداخت',
+                    value: 'payment_in_progress'
                 }
             ]
         }

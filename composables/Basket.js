@@ -100,7 +100,13 @@ export default function setup() {
                 voucher.value = response.data.data
             })
             .catch((err) => {
-                // auth.checkAuthorization(err.response)
+                if(err.response.data){
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
             });
     };
 
@@ -117,22 +123,25 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                if(response.data === null){
-                    useNuxtApp().$toast.error(response.message, {
+                if(payment_method === 'online' || payment_method === 'wallet'){
+                    window.location = response.data.data.payment_link
+                } else{
+                    useNuxtApp().$toast.error('روش انتخابی در حال حاضر فعال نیست.', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
                     });
                 }
-                else{
-                    if(sending_method === 'online'){
-                        window.location = response.data.data.payment_link
-                    }
-                }
 
             })
             .catch((err) => {
-                // auth.checkAuthorization(err.response)
+                if(err.response.data.data === null){
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
             });
     };
 
@@ -151,8 +160,27 @@ export default function setup() {
             });
     };
 
+    async function createFailedOrder(orderId) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/crud/pay/${orderId}`, {},{
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                window.location = response.data.data.payment_link
+            })
+            .catch((err) => {
+                if(err.response.data.data === null){
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+            });
+    };
 
-
-    return {getBasket, loading ,addToBasket , deleteShpsBasket , calculateSendingPrice , createOrder,calculateVoucher,voucher,getTransactionData,transactionData }
+    return {getBasket, loading ,addToBasket , deleteShpsBasket , calculateSendingPrice , createOrder,calculateVoucher,voucher,getTransactionData,transactionData,createFailedOrder }
 }
 
