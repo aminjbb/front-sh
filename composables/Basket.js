@@ -48,6 +48,10 @@ export default function setup() {
                 getBasket()
             })
             .catch((err) => {
+                if (err.response.status === 401){
+                    localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
+                    router.push('/login')
+                }
                 // auth.checkAuthorization(err.response)
             });
     };

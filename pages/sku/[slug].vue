@@ -74,7 +74,7 @@
         <template v-if="screenType !== null && screenType === 'mobile'">
             <div class="mobile-basket">
                 <generalAddToBasket
-                    :content="selectedSellerMoc"
+                    :content="productSelectedSeller"
                     revers="revers"
                     :mdCols="['6','6']"
                     :smCols="['4','8']" />

@@ -114,6 +114,7 @@ export default {
       getSecondaryData,
       secondaryData,
       filterForFilter,
+      getBreadcrumb , breadcrumb,
       query
     } = new PLP()
     useHead({
@@ -130,7 +131,8 @@ export default {
       getSecondaryData,
       secondaryData,
       filterForFilter,
-      query
+      query,
+      getBreadcrumb , breadcrumb,
     }
   },
 
@@ -377,6 +379,7 @@ export default {
   },
   beforeMount() {
     this.getSecondaryData()
+    this.getBreadcrumb('category')
   },
 
   watch:{
