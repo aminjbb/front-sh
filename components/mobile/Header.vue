@@ -125,7 +125,6 @@ $parent: 'header';
     .search-result {
         display: none;
         width: 100%;
-        position: absolute;
         background: #fff;
         z-index: 5;
     }

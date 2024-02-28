@@ -5,12 +5,16 @@
             icon="mdi-magnify"
             color="grey-darken-1"
             class="ml-2" />
-        <input placeholder="جستجو در شاواز " class="w-100" @click="openSearchbox()" v-model="search" @input="searchProducts" />
+
+        <form @submit.prevent="showResultPlp" class="flex-grow-1">
+            <input placeholder="جستجو در شاواز" class="w-100" @click="openSearchbox()" v-model="search" v-debounce:1s.unlock="searchInSite()" />
+        </form>
     </div>
 
-    <div class="search-result" id="search-result">
+    <div class="search-result search-result--desktop" id="search-result">
         <v-divider color="primary" />
         <swiper
+            v-if="searchResult && searchResult.skus && searchResult.skus.length"
             dir="rtl"
             :slidesPerView="3.2"
             :spaceBetween="8"
@@ -25,10 +29,10 @@
                 }
             }"
             class="mySwiper search-result__sku">
-            <swiper-slide v-for="(item, index) in skuListMoc.slice(0,10)" :key="`sku-search-${index}`">
-                <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3" :href="`/sku/${item.slug}`">
-                    <div class="search-result__sku__image">
-                        <img :src="imageAddress(item?.image?.image_url)" :title="item.label" :alt="item.label" width="48" height="48" />
+            <swiper-slide v-for="(item, index) in searchResult.skus.slice(0,10)" :key="`sku-search-${index}`">
+                <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3 w-100" :href="`/sku/${item.slug}`">
+                    <div v-if="item.image" class="search-result__sku__image">
+                        <img :src="item.image" :title="item.label" :alt="item.label" width="48" height="48" />
                     </div>
 
                     <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
@@ -38,11 +42,11 @@
             </swiper-slide>
         </swiper>
 
-        <v-divider color="grey-lighten-3" />
+        <v-divider v-if="(searchResult && searchResult.categories && searchResult.categories.length) || (searchResult && searchResult.brands && searchResult.brands.length)" color="grey-lighten-3" />
 
         <v-row class="ma-0">
             <v-col cols="6" class="pa-0">
-                <div class="search-result__list search-result__list--border pa-3 pb-1">
+                <div v-if="searchResult && searchResult.categories && searchResult.categories.length" class="search-result__list search-result__list--border pa-3 pb-1">
                     <header>
                         <h2 class="t14 w400 text-grey-darken-4 mb-2">دسته‌بندی‌های مرتبط</h2>
                     </header>
@@ -51,9 +55,9 @@
                         <ul class="ma-0">
                             <li
                                 class="mb-2"
-                                v-for="(item, index) in categoryListMoc.slice(0,5)"
+                                v-for="(item, index) in searchResult.categories.slice(0,5)"
                                 :key="`category-search-${index}`">
-                                <a class="t13 w400 text-grey-darken-2" :href="`/sku/${item.slug}`">
+                                <a class="t13 w400 text-grey-darken-2" :href="`/category/${item.slug}`">
                                     {{item.label}}
                                 </a>
                             </li>
@@ -62,7 +66,7 @@
                 </div>
             </v-col>
             <v-col cols="6" class="pa-0">
-                <div class="search-result__list pa-3 pb-1">
+                <div v-if="searchResult && searchResult.brands && searchResult.brands.length" class="search-result__list pa-3 pb-1">
                     <header>
                         <h2 class="t14 w400 text-grey-darken-4 mb-2">برندهای مرتبط</h2>
                     </header>
@@ -71,9 +75,9 @@
                         <ul class="ma-0">
                             <li
                                 class="mb-2"
-                                v-for="(item, index) in brandListMoc"
+                                v-for="(item, index) in searchResult.brands.slice(0,5)"
                                 :key="`category-search-${index}`">
-                                <a class="t13 w400 text-grey-darken-2" :href="`/sku/${item.slug}`">
+                                <a class="t13 w400 text-grey-darken-2" :href="`/brand/${item.slug}`">
                                     {{item.label}}
                                 </a>
                             </li>
@@ -91,7 +95,7 @@
                     class="mb-2"
                     v-for="(item, index) in filteredWords.slice(0,5)"
                     :key="`category-search-${index}`">
-                    <a class="d-flex align-center" :href="`/sku/${item.slug}`">
+                    <a class="d-flex align-center" @click="SearchMostSearchItem(item.label)">
                         <v-icon
                             icon="mdi-magnify"
                             size="x-small"
@@ -107,17 +111,17 @@
 
         <div class="search-result__most-search">
             <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
-
             <swiper
+                v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"
                 dir="rtl"
                 :slidesPerView="'auto'"
                 :spaceBetween="8"
                 :modules="modules"
                 :navigation="true"
                 class="mySwiper">
-                <swiper-slide v-for="(item, index) in mostSearchItemsMoc.slice(0,15)" :key="`most-search-${index}`">
-                    <a class="search-result__most-search__item t12 w400 px-3 py-1 bg-grey-lighten-3 text-grey-darken-2" :href="`/sku/${item.slug}`">
-                        {{item.label}}
+                <swiper-slide v-for="(item, index) in mostSearchItems.data.slice(0,15)" :key="`most-search-${index}`">
+                    <a class="search-result__most-search__item t12 w400 px-3 py-1 bg-grey-lighten-3 text-grey-darken-2 cur-p" @click="SearchMostSearchItem(item.needle)">
+                        {{item.needle}}
                     </a>
                 </swiper-slide>
             </swiper>
@@ -142,126 +146,27 @@ import {
     Navigation
 } from 'swiper/modules';
 
+import Search from '@/composables/Search.js';
+
+import axios from "axios";
+
 export default {
     data() {
         return {
             search: null,
-            mostSearchItems: [],
-            mostSearchItemsMoc: [{
-                    label: 'سرم ویتامین C',
-                    slug: ''
-                },
-                {
-                    label: 'کرم کوشن',
-                    slug: ''
-                },
-                {
-                    label: 'رژگونه شیگلم',
-                    slug: ''
-                },
-                {
-                    label: 'تینت لب',
-                    slug: ''
-                },
-                {
-                    label: 'چسب مو',
-                    slug: ''
-                },
-                {
-                    label: 'عطر و ادکلن اورجینال',
-                    slug: ''
-                },
-                {
-                    label: 'تقویت کننده ناخن',
-                    slug: ''
-                }
-            ],
-            skuList: [],
-            skuListMoc: [{
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'پماد پیشگیری کننده سوختگی پای کودک وی کر ظرفیت 75 میلی لیتر'
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'پماد پیشگیری کننده سوختگی پای کودک وی کر ظرفیت 75 میلی لیتر'
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'پماد پیشگیری کننده سوختگی پای کودک وی کر ظرفیت 75 میلی لیتر'
-                },
-                {
-                    image: {
-                        image_url: 'products.jpg'
-                    },
-                    label: 'پماد پیشگیری کننده سوختگی پای کودک وی کر ظرفیت 75 میلی لیتر'
-                }
-            ],
-            categoryList: [],
-            categoryListMoc: [{
-                    label: 'کرم پودر',
-                    slug: ''
-                },
-                {
-                    label: 'کرم و بالم لب',
-                    slug: ''
-                },
-                {
-                    label: 'کرم، شامپو و اسپری رنگ مو',
-                    slug: ''
-                },
-                {
-                    label: 'روغن و کرم برنز',
-                    slug: ''
-                },
-                {
-                    label: 'کرم دور چشم',
-                    slug: ''
-                }
-            ],
-            brandList: [],
-            brandListMoc: [{
-                    label: 'کریستال',
-                    slug: ''
-                },
-                {
-                    label: 'وی کر',
-                    slug: ''
-                },
-                {
-                    label: 'کریستیم دیور',
-                    slug: ''
-                }
-            ],
-            skuGroupList: [],
-            skuGroupListMoc: [{
-                    label: 'کرم کودک',
-                    slug: ''
-                },
-                {
-                    label: 'کرم دست',
-                    slug: ''
-                },
-                {
-                    label: 'کرم ضد آفتاب',
-                    slug: ''
-                },
-                {
-                    label: 'کراتین مو',
-                    slug: ''
-                }
-            ],
+            searchNew: null,
+            searchResult:[],
         }
     },
 
     computed: {
         filteredWords() {
-            return this.skuGroupListMoc.filter(word => word.label.includes(this.search));
+            if(this.searchResult && this.searchResult.last_searches && this.searchResult.last_searches.length){
+                return this.searchResult.last_searches.filter(word => word.label.includes(this.search));
+            }else{
+                return '';
+            }
+            
         }
     },
 
@@ -271,13 +176,25 @@ export default {
     },
 
     setup() {
+        const runtimeConfig = useRuntimeConfig()
+
+        const {
+            getMostSearch,
+            mostSearchItems
+        } = new Search()
+
         return {
+            runtimeConfig,
             modules: [Navigation],
+            mostSearchItems,
+            getMostSearch
         };
     },
 
     mounted() {
         document.addEventListener('click', this.closeSearchBox);
+
+        this.getMostSearch();
     },
 
     beforeDestroy() {
@@ -303,17 +220,51 @@ export default {
         },
 
         /**
+         * Show Result in PLP search
+         */
+        showResultPlp(){
+            window.location = `/search?needle=${this.search}`;
+        },
+
+        /**
          * Search
          */
-        searchProducts() {
-            console.log("🚀 ~ this.search:", this.search)
-            //TODO: Add search products methods - then remove console.log
+        searchInSite(){
+            if(this.search !== null && this.search !== this.searchNew){
+                this.searchNew = this.search;
+                axios
+                    .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
+                    .then((response) => {
+                        this.searchResult = response?.data?.data;
+                    })
+                    .catch((err) => {
+
+                    }).finally(() => {
+
+                    });
+            }
+        },
+
+        /**
+         * Search By most search label
+         */
+        SearchMostSearchItem(label){
+            this.search = label;
+
+            axios
+                .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${label}`)
+                .then((response) => {
+                    this.searchResult = response?.data?.data;
+                })
+                .catch((err) => {
+                }).finally(() => {
+                });
         },
 
         /**
          * Highlight word when you search in search box
          */
-         highlightWord(word) {
+        highlightWord(word) {
             const index = word.toLowerCase().indexOf(this.search.toLowerCase());
             if (index !== -1) {
                 const highlightedWord = word.substring(0, index) + '<span class="text-primary">' + word.substring(index, index + this.search.length) + '</span>' + word.substring(index + this.search.length);
@@ -322,16 +273,6 @@ export default {
                 return word;
             }
         },
-
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
-        }
     }
 }
 </script>
@@ -371,9 +312,11 @@ export default {
             flex: 0 0 48px;
             margin-left: 7px;
             height: 100%;
+            height: 48px;
 
             img {
                 max-width: 100%;
+                max-height: 100%;
             }
         }
 
