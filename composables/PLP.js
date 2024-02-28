@@ -38,19 +38,19 @@ export default function setup() {
                 auth.checkAuthorization(err.response)
             });
     };
-    if (route.name == 'product-slug') endPoint.value = '/product/plp/product/'
-    else if (route.name == 'sku-group-slug') endPoint.value = '/product/plp/skugroup/'
-    else if (route.name == 'brand-slug') endPoint.value = '/product/plp/brand/'
-    else if (route.name == 'category-slug') endPoint.value = '/product/plp/category/'
-    else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
+    if (route.name == 'product-slug') endPoint.value = '/product/plp/product/' + route.params.slug
+    else if (route.name == 'sku-group-slug') endPoint.value = '/product/plp/skugroup/'+ route.params.slug
+    else if (route.name == 'brand-slug') endPoint.value = '/product/plp/brand/'+ route.params.slug
+    else if (route.name == 'category-slug') endPoint.value = '/product/plp/category/'+ route.params.slug
+    else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'+ route.params.slug
+    else if (route.name == 'search') endPoint.value = `/product/plp/search/`
     store.commit('set_loadingModal', true),
-
         useAsyncData(
             () =>{
                 let url = "".concat(
                     runtimeConfig.public.apiBase,
                     endPoint.value,
-                    route.params.slug,
+
                 );
 
                 axios({
