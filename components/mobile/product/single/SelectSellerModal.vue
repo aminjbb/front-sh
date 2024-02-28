@@ -1,6 +1,6 @@
 <template>
 <div class="c-modal">
-    <a class="d-block t12 w400 text-info number-font" @click="openModal()">
+    <a v-if="sellers.length > 1" class="d-block t12 w400 text-info number-font" @click="openModal()">
         2 فروشنده دیگر
     </a>
 

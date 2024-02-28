@@ -83,7 +83,7 @@ export default {
                 },
                 {
                     title: 'تیپاکس',
-                    type: 'tbox',
+                    type: 'tipax',
                     desc: 'زمان تقریبی تحویل سفارش ۵ الی 8 روز کاری می‌باشد.',
                     price: 350000
                 }
