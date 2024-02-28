@@ -23,9 +23,9 @@
             </span>
         </div>
 
-        <a href="#seller-list" class="d-block t12 w400 text-info number-font">
+        <!-- <a href="#seller-list" class="d-block t12 w400 text-info number-font">
             2 فروشنده دیگر 
-        </a>
+        </a> -->
     </div>
 </template>
 <script>
