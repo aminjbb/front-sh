@@ -29,6 +29,7 @@ export default function setup() {
         if (route.name != 'search') {
              return route.params.slug
         }
+        return  ''
     };
 
     async function getSecondaryData(query) {
