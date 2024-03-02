@@ -92,6 +92,14 @@
                 </v-btn>
             </v-col>
         </v-row>
+
+        <div v-if="deleteVoucher" class="d-flex align-center mt-3">
+            <div class="t13 w500 text-grey-darken-3 ml-2">کد تخفیف اعمال شده: </div>
+            <div class="d-flex align-center">
+                <div class="t14 w400 text-primary ml-3">{{ discountCodeShow }}</div>
+                <v-icon icon="mdi-delete-outline" color="primary"/>
+            </div>
+        </div>
     </div>
 </v-card>
 </template>
@@ -121,7 +129,9 @@ export default {
                 }
             ],
             discountCode: null,
+            discountCodeShow: null,
             discountError: null,
+            deleteVoucher: false,
         }
     },
 
@@ -145,6 +155,27 @@ export default {
         }
     },
 
+    /*  watch: {
+         discountCode(newValue) {
+             if (newValue === null || newValue === '') {
+                 this.voucherButton = 'اعمال کد';
+                 this.deleteVoucher = false;
+             } else {
+                 this.voucherButton = 'حذف کد';
+                 this.deleteVoucher = true;
+             }
+         }
+     }, */
+
+    watch: {
+        deleteVoucher(newVal) {
+            if (newVal === true) {
+                this.discountCodeShow = this.discountCode
+                this.discountCode = null
+            }
+        }
+    },
+
     methods: {
         /**
          * Selected Payment for send package to customer
@@ -157,14 +188,17 @@ export default {
          * Set discount code
          */
         setDiscountCode() {
-            if (this.discountCode === null) {
+            if (this.discountCode === null ||  this.discountCode === '') {
                 useNuxtApp().$toast.error('کد تخفیف را وارد کنید.', {
                     rtl: true,
                     position: 'top-center',
                     theme: 'dark'
                 });
             }
-            this.$emit('setDiscountCode', this.discountCode);
+            else{
+                this.deleteVoucher = false;
+                this.$emit('setDiscountCode', this.discountCode);
+            }
         }
 
     },
