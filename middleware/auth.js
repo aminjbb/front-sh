@@ -1,7 +1,11 @@
 import axios from 'axios';
 const BASE_URL = 'https://api.shvz.ir/api/v1';
-
 export default {
+
+  runtimeConfig(){
+    return useRuntimeConfig();
+  },
+
   /**
    * check error status code
    * @param {number} errorStatus
@@ -16,8 +20,9 @@ export default {
    */
   async sendOTP(phoneNumber) {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/user/send/otp`, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/send/otp`, {
         phone_number: phoneNumber
+      
       });
 
       return response;
@@ -37,7 +42,7 @@ export default {
    */
   async sendForgotPasswordOTP(phoneNumber) {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/user/forgot-password`, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/forgot-password`, {
         phone_number: phoneNumber
       });
 
@@ -60,7 +65,7 @@ export default {
    */
   async verifyOTP(phoneNumber, otp) {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/user/login-register/otp`, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/login-register/otp`, {
         phone_number: phoneNumber,
         code: otp
       });
@@ -87,7 +92,7 @@ export default {
    */
   async verifyPassword(phoneNumber, password) {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/user/login-register/password`, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/login-register/password`, {
         phone_number: phoneNumber,
         password: password
       });
@@ -115,9 +120,9 @@ export default {
    * @param {*} passwordConfirmation
    * @returns
    */
-  async resetPassword(phoneNumber, newPassword ,passwordConfirmation , otpCode) {
+  async resetPassword(phoneNumber, newPassword, passwordConfirmation, otpCode) {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/user/reset-password`, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/reset-password`, {
         phone_number: phoneNumber,
         password: newPassword,
         password_confirmation: passwordConfirmation,
@@ -143,7 +148,7 @@ export default {
    */
   async register(user) {
     try {
-      const response = await axios.post(`${BASE_URL}auth/admin/verify-otp`, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}auth/admin/verify-otp`, {
         phone_number: user.mobile,
         last_name: user.last_name,
         fist_name: user.first_name
@@ -164,7 +169,7 @@ export default {
 
     try {
       // Send a GET request to the profile endpoint with the token in the headers
-      const response = await axios.post(`${BASE_URL}/auth/user/profile`, {}, {
+      const response = await axios.post(`${this.runtimeConfig.public.apiBase}/auth/user/profile`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -183,7 +188,7 @@ export default {
   async getUserHasPassword(token) {
     try {
 
-      const response = await axios.get(`${BASE_URL}/user/profile/password/has`, {
+      const response = await axios.get(`${this.runtimeConfig.public.apiBase}/user/profile/password/has`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
