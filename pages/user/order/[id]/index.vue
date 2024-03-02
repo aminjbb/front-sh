@@ -44,17 +44,17 @@
                             <v-col
                                 cols="12"
                                 sm="5"
-                                lg="3"
+                                lg="5"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">تاریخ تحویل:</span>
-                                <span v-if="userOrder && userOrder.receive_date_fa" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receive_date_fa }}</span>
+                                <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
                             </v-col>
 
                             <v-col
                                 cols="12"
                                 sm="3"
-                                lg="6"
+                                lg="4"
                                 class="d-flex align-center order-details__item py-5 justify-end">
                                 <a 
                                   v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress' || userOrder.status == 'received')" 
@@ -135,7 +135,7 @@
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">هزینه ارسال:</span>
-                                <span v-if="order && order.shipping" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(order.shipping) }} تومان</span>
+                                <span v-if="userOrder && userOrder.sending_price" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.sending_price}} تومان</span>
                             </v-col>
 
                             <v-col
