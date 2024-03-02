@@ -92,7 +92,18 @@ export default {
     beforeMount() {
         this.getUserAddress()
         this.getProvince()
+    },
+
+  computed:{
+    userDetail(){
+      try {
+        return this.$store.getters['get_userData']
+      }
+      catch (e) {
+        return null
+      }
     }
+  }
 }
 </script>
 

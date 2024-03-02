@@ -2,10 +2,12 @@ import axios from "axios";
 import qs from "qs";
 import { useRouter, useRoute } from 'vue-router'
 // var FormData = require('form-data');
-const NUXT_PUBLIC_API_BASE = "https://api.shvz.ir/api"
+
 
 export class AxiosCall {
+
     constructor() {
+        this.runtimeConfig = useRuntimeConfig()
         this.version = "v1";
         this.end_point = "";
         this.form = new FormData();
@@ -22,9 +24,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            NUXT_PUBLIC_API_BASE,
-            "/",
-            this.version,
+            this.runtimeConfig.public.apiBase,
             "/",
             this.end_point
 
@@ -83,9 +83,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            NUXT_PUBLIC_API_BASE,
-            "/",
-            this.version,
+            this.runtimeConfig.public.apiBase,
             "/",
             this.end_point
 
@@ -210,9 +208,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            NUXT_PUBLIC_API_BASE,
-            "/",
-            this.version,
+            this.runtimeConfig.public.apiBase,
             "/",
             this.end_point,
             "/"
@@ -282,9 +278,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            NUXT_PUBLIC_API_BASE,
-            "/",
-            this.version,
+            this.runtimeConfig.public.apiBase,
             "/",
             this.end_point
         );
@@ -356,9 +350,7 @@ export class AxiosCall {
         const router = useRouter()
         const route = useRoute()
         let url = "".concat(
-            NUXT_PUBLIC_API_BASE,
-            "/",
-            this.version,
+            this.runtimeConfig.public.apiBase,
             "/",
             this.end_point,
             "/"
