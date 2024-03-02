@@ -54,14 +54,13 @@
 
             <template v-if="step === '1'">
                 <p class="t12 w400 text-grey mb-5">موقعیت مکانی آدرس را در نقشه زیر مشخص کنید.</p>
-
                 <div class="map mb-5">
                     <ClientOnly>
                         <NeshanMap
                             height="420px"
                             ref="myMap"
-                            mapKey="web.0bfff696f3a1488d972d6047de31ab48"
-                            serviceKey="service.217a0b81087143108632348cba35fe9e"
+                            :mapKey="runtimeConfig.public.neshanMapKey"
+                            :serviceKey="runtimeConfig.public.serviceKey"
                             :center="form.latLong"
                             :poi="false"
                             :traffic="false"
