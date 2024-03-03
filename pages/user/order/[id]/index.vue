@@ -135,7 +135,7 @@
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">هزینه ارسال:</span>
-                                <span v-if="userOrder && userOrder.sending_price" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.sending_price}} تومان</span>
+                                <span v-if="userOrder && userOrder.sending_price" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(userOrder.sending_price).slice(0, -1))) }}  تومان</span>
                             </v-col>
 
                             <v-col
