@@ -206,6 +206,7 @@ export default {
     },
 
     created() {
+      this.fetchUserProfile();
         if (this.userToken) {
             this.isLogin = true
             this.fetchUserProfile();

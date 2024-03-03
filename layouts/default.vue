@@ -56,7 +56,6 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
-
         if (this.$route.name !== 'login' && this.$route.name !== 'forgotPassword') {
             this.getBasket();
         }

@@ -94,13 +94,22 @@ export default {
         this.getProvince()
     },
 
-  computed:{
+    computed:{
     userDetail(){
       try {
         return this.$store.getters['get_userData']
       }
       catch (e) {
         return null
+      }
+    }
+  },
+
+  watch:{
+    userAddress(val){
+      if (val){
+        this.addressModal= val[0].id
+        this.selectAddress()
       }
     }
   }
