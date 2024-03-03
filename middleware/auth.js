@@ -166,10 +166,9 @@ export default {
    */
   async getUserProfile(token) {
     const router = useRouter()
-
     try {
       // Send a GET request to the profile endpoint with the token in the headers
-      const response = await axios.post(`${this.runtimeConfig.public.apiBase}/auth/user/profile`, {}, {
+      const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/profile`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
