@@ -124,7 +124,6 @@ export default {
             const tableItems = []
             if (this.items && this.items.length > 0) {
                 this.items.forEach((element, index) => {
-                    console.log(element)
                     const obj = {
                         'index': index + 1,
                         'type': element.type,

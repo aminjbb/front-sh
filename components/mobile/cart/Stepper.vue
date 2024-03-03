@@ -43,7 +43,7 @@
     </template>
 
     <template v-if="activeStep === 3">
-        <desktopCartPaymentStep @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price"/>
+        <desktopCartPaymentStep  ref="paymentStep" @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price"/>
     </template>
 
     <template v-if="activeStep === 4">
@@ -60,12 +60,12 @@
     <div class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
         <span class="t16 w400 text-grey-darken-3 number-font">
-            <template v-if="voucher && voucher.paid_price">
-                {{ splitChar(Number(String(voucher.paid_price).slice(0, -1))) }}
+            <template v-if="voucher && voucher.total_price && voucher.paid_price">
+                {{ splitChar(Number(String(voucher.paid_price + voucher.sending_price).slice(0, -1))) }}
             </template>
 
             <template v-else>
-                {{ splitChar(Number(String(data.paid_price).slice(0, -1))) }}
+                {{ splitChar(Number(String(data.paid_price + data.sending_price).slice(0, -1))) }}
             </template>
             <span class="t12 w400 text-grey-darken-3">تومان</span>
         </span>
@@ -320,6 +320,16 @@ export default {
 
     beforeMount() {
         this.fetchUserProfile()
+    },
+
+    watch: {
+        voucher(newVal) {
+            if (newVal && newVal.paid_price) {
+                this.$refs.paymentStep.deleteVoucher = true;
+            } else {
+                this.$refs.paymentStep.deleteVoucher = false;
+            }
+        }
     },
 
     mounted() {

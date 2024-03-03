@@ -3,17 +3,17 @@
     <LoadingModal v-if="loading" />
     <div v-if="screenType !== null">
         <template v-if="screenType === 'desktop'">
-            <desktopHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'"/>
-            
+            <desktopHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
+
             <slot />
             <div id="body-cover" />
-            <desktopFooter v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'"/>
+            <desktopFooter v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
         </template>
 
         <template v-else-if="screenType === 'mobile'">
-            <mobileHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'"/>
+            <mobileHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
             <slot />
-            <mobileFooter v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'"/>
+            <mobileFooter v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
         </template>
     </div>
 </v-app>
@@ -25,7 +25,7 @@ import Basket from '@/composables/Basket.js'
 
 export default {
     name: "layout",
-    
+
     components: {
         LoadingModal
     },
@@ -57,8 +57,10 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
 
-        this.getBasket();
+        if (this.$route.name !== 'login' && this.$route.name !== 'forgotPassword') {
+            this.getBasket();
+        }
     }
-    
+
 }
 </script>

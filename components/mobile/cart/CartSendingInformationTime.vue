@@ -23,7 +23,7 @@
                     <h3 class="t16 w400 text-grey-darken-1">{{way.title}}</h3>
                 </div>
                 <div class="t14 w400 text-grey-darken-1 number-font">
-                    {{splitChar(way.price)}} <span class="t12">تومان</span>
+                    {{ splitChar(Number(String(way.price).slice(0, -1))) }} <span class="t12">تومان</span>
                 </div>
             </div>
 

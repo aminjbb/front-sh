@@ -1,5 +1,5 @@
 <template>
-<div class="header-basket" id="basket-header" :class="userBasket && userBasket?.details && userBasket?.details.length ? 'header-basket--no-empty' : ''">
+<div class="header-basket" id="basket-header" :class="userBasket?.details && userBasket?.details.length ? 'header-basket--no-empty' : ''">
     <header class="header-basket__header d-flex align-center justify-space-between pr-4 py-2">
         <div class="d-flex align-center ">
             <a href="/user/dashboard" class="ml-3">
@@ -39,7 +39,7 @@
 
             <div class="d-flex align-center justify-center mt-5 w-100">
                 <v-btn
-                    href="/products"
+                    href="/"
                     height="44"
                     title="مشاهده کالاهای بیشتر"
                     class="btn btn--submit ml-3 w-50">
@@ -64,7 +64,7 @@
             </div>
             <h2 class="t13 w400 text-grey-darken-1 mt-5">سبد خرید شما خالی است!</h2>
             <v-btn
-                href="/product"
+                href="/"
                 title="مشاهده محصولات"
                 class="mt-5 btn btn--cancel">
                 مشاهده محصولات
@@ -94,7 +94,7 @@ export default {
 
     props: {
         /** user basket from vueX **/
-        userBasket: null
+        userBasket: Object
     },
 
     setup() {
@@ -113,6 +113,14 @@ export default {
         close() {
             document.getElementById('basket-header').classList.remove('show');
             document.body.classList.remove('active-basket');
+        }
+    },
+
+    watch:{
+        userBasket(newVal){
+            if(newVal?.details.length === 0){
+                document.body.classList.remove('active-basket');
+            }
         }
     },
 

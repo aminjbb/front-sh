@@ -31,7 +31,7 @@
 
                 <template v-if="activeStep === 2">
                     <desktopCartSendingInformationAddress @selectedAddress="getAddress" />
-                    
+
                     <desktopCartSendingInformationTime
                         v-if="orderAddressId"
                         @selectedDate="getTime"
@@ -39,11 +39,15 @@
                 </template>
 
                 <template v-if="activeStep === 3">
-                    <desktopCartPaymentStep @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price"/>
+                    <desktopCartPaymentStep
+                        ref="paymentStep"
+                        @selectedPayment="getPayment"
+                        @setDiscountCode="getDiscountCode"
+                        :paymentMount="data.paid_price" />
                 </template>
             </v-col>
             <v-col md="3">
-                
+
                 <v-card class="py-5 px-3">
                     <div class="d-flex align-center justify-space-between">
                         <span class="t14 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
@@ -65,13 +69,13 @@
                     <div class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
                         <span class="t19 w400 text-grey-darken-3 number-font">
-                           <template v-if="voucher && voucher.sending_price">
-                            {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }} 
-                           </template>
+                            <template v-if="voucher && voucher.sending_price">
+                                {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
+                            </template>
 
-                           <template v-else>
-                            {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} 
-                           </template>
+                            <template v-else>
+                                {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }}
+                            </template>
 
                             <span class="t12 w400 text-grey-darken-3">تومان</span>
                         </span>
@@ -81,10 +85,10 @@
                         <span class="t14 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
                         <span class="t19 w400 text-grey-darken-3 number-font">
                             <template v-if="voucher && voucher.total_price">
-                                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }} 
+                                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }}
                             </template>
                             <template v-else>
-                                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }} 
+                                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }}
                             </template>
                             <span class="t12 w400 text-grey-darken-3">تومان</span>
                         </span>
@@ -95,7 +99,7 @@
                         <span class="t19 w400 text-success number-font">
                             <template v-if="voucher && voucher.total_price && voucher.paid_price">
                                 {{ splitChar(Number(String(voucher.total_price - voucher.paid_price).slice(0, -1))) }}
-                            </template> 
+                            </template>
                             <template v-else>
                                 {{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}
                             </template>
@@ -141,7 +145,7 @@ export default {
                 'اتمام خرید'
             ],
             active: [],
-            previousSteps:[],
+            previousSteps: [],
             activeStep: 1,
             profit: 0,
             buttonText: [
@@ -217,7 +221,7 @@ export default {
                             this.previousSteps[this.activeStep] = false;
                             this.activeStep++;
                             this.active[this.activeStep] = true;
-                            this.previousSteps[this.activeStep -1] = true;
+                            this.previousSteps[this.activeStep - 1] = true;
                         }
 
                     }
@@ -226,7 +230,7 @@ export default {
                     this.previousSteps[this.activeStep] = false;
                     this.activeStep++;
                     this.active[this.activeStep] = true;
-                    this.previousSteps[this.activeStep -1] = true;
+                    this.previousSteps[this.activeStep - 1] = true;
                 }
 
                 this.activeButton = false;
@@ -241,7 +245,7 @@ export default {
             if (address !== false) {
                 this.$store.commit('set_orderAddress', address)
                 this.activeButton = true;
-            } else{
+            } else {
                 this.$store.commit('set_orderAddress', null)
             }
         },
@@ -254,7 +258,7 @@ export default {
             if (way) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId, way)
-            } else{
+            } else {
                 this.$store.commit('set_orderSendingMethod', null)
             }
         },
@@ -281,8 +285,18 @@ export default {
          * Get discount code
          * @param {*} id 
          */
-        getDiscountCode(code){
+        getDiscountCode(code) {
             this.calculateVoucher(code);
+        }
+    },
+
+    watch: {
+        voucher(newVal) {
+            if (newVal && newVal.paid_price) {
+                this.$refs.paymentStep.deleteVoucher = true;
+            } else {
+                this.$refs.paymentStep.deleteVoucher = false;
+            }
         }
     },
 
