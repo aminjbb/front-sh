@@ -56,7 +56,7 @@ export default function setup() {
 
             })
             .then((response) => {
-                breadcrumb.value = response.data
+                breadcrumb.value = response.data.data
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
