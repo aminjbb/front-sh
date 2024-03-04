@@ -95,14 +95,16 @@ export default {
             color,
             getSecondaryData,
             secondaryData,
-            getPdpData
+            getPdpData,
+            getBreadcrumb , breadcrumb
         } = new PDP()
         return {
             product,
             color,
             getSecondaryData,
             secondaryData,
-            getPdpData
+            getPdpData,
+          getBreadcrumb , breadcrumb
         }
     },
     data() {
@@ -205,6 +207,7 @@ export default {
 
     beforeMount() {
         this.getSecondaryData()
+      this.getBreadcrumb('sku')
     },
 }
 </script>

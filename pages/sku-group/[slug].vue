@@ -66,7 +66,8 @@ export default {
         const {
             productList,
             page,
-            query
+            query,
+            getBreadcrumb , breadcrumb
         } = new PLP()
         useHead({
             title,
@@ -78,7 +79,8 @@ export default {
         return {
             productList,
             page,
-            query
+            query,
+            getBreadcrumb , breadcrumb
         }
     },
 
@@ -107,6 +109,10 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+  beforeMount() {
+
+    this.getBreadcrumb('sku-group')
+  },
 
     watch: {
         page(val) {
