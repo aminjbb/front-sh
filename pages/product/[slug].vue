@@ -420,7 +420,8 @@ export default {
       filterQuery,
       page,
       getSecondaryData,
-      secondaryData
+      secondaryData,
+      getBreadcrumb , breadcrumb,
     } = new PLP()
     useHead({
       title,
@@ -429,7 +430,7 @@ export default {
         content: description
       }]
     });
-    return {productList, filterQuery, page , getSecondaryData , secondaryData}
+    return {productList, filterQuery, page , getSecondaryData , secondaryData, getBreadcrumb , breadcrumb,}
   },
 
   methods: {
@@ -706,6 +707,7 @@ export default {
 
   beforeMount() {
     this.getSecondaryData()
+    this.getBreadcrumb('product')
   }
 }
 </script>

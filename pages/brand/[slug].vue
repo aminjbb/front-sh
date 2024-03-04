@@ -3,6 +3,7 @@
     <h1 class="v-hide">{{ title }}</h1>
 
     <v-container>
+      <generalBreadcrumb :items="BreadcrumbItems"/>
       <v-row class="mt-10">
         <v-col cols="12" md="3">
           <template v-if="screenType === 'desktop'">
@@ -84,6 +85,17 @@ import PLP from '@/composables/PLP.js'
 export default {
   data() {
     return {
+      BreadcrumbItems: [{
+        title: 'لوازم آرایشی',
+        /* Should be main category */
+        href: '/'
+      },
+        {
+          title: 'آرایش صورت',
+          /* Should be sub category */
+          href: '/products'
+        }
+      ],
       productList: [],
       filters: [],
       screenType: null
@@ -100,6 +112,7 @@ export default {
       getSecondaryData,
       secondaryData,
       filterForFilter,
+      getBreadcrumb , breadcrumb,
       query
     } = new PLP()
     useHead({
@@ -116,6 +129,7 @@ export default {
       getSecondaryData,
       secondaryData,
       filterForFilter,
+      getBreadcrumb , breadcrumb,
       query
     }
   },
@@ -363,6 +377,7 @@ export default {
   },
   beforeMount() {
     this.getSecondaryData()
+    this.getBreadcrumb('brand')
   },
 
   watch:{
