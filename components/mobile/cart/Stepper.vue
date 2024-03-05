@@ -237,7 +237,13 @@ export default {
                         }
                     }
                 } else {
+                  if (this.userToken){
                     this.activeStep++;
+                  }
+                  else{
+                    localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
+                    this.$router.push('/login')
+                  }
                 }
 
                 this.activeButton = false;
