@@ -32,6 +32,7 @@ export default defineNuxtConfig({
       apiBase: 'https://api.shvz.ir/api/v1',
       neshanMapKey:'web.0bfff696f3a1488d972d6047de31ab48',
       serviceKey:'service.217a0b81087143108632348cba35fe9e',
+      basketRandomNumber:9999999999999999999
     }
   },
 

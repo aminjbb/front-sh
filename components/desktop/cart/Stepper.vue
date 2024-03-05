@@ -187,6 +187,7 @@ export default {
     },
 
     setup() {
+      const userToken = useCookie('userToken')
         const {
             calculateSendingPrice,
             calculateVoucher,
@@ -197,7 +198,8 @@ export default {
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
-            voucher
+            voucher,
+            userToken
         }
     },
 
@@ -226,11 +228,18 @@ export default {
 
                     }
                 } else {
+                  if (this.userToken){
                     this.active[this.activeStep] = false;
                     this.previousSteps[this.activeStep] = false;
                     this.activeStep++;
                     this.active[this.activeStep] = true;
                     this.previousSteps[this.activeStep - 1] = true;
+                  }
+                  else{
+                    localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
+                    this.$router.push('/login')
+                  }
+
                 }
 
                 this.activeButton = false;
