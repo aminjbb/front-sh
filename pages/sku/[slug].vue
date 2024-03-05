@@ -69,7 +69,7 @@
 
         <v-divider color="grey" class="mt-5" />
 
-        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" />
+        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getSecondaryData" />
 
         <template v-if="screenType !== null && screenType === 'mobile'">
             <div class="mobile-basket">
@@ -234,7 +234,7 @@ export default {
         },
         skuComments() {
             try {
-                return this.secondaryData.comments.data
+                return this.pdpSecondaryData.comments.data
             } catch (e) {
 
             }

@@ -9,13 +9,13 @@
             <h3 class="t20 w400 text-grey-darken-1 my-5 product-section-header">دیدگاه مخاطبان</h3>
         </div>
 
-       <generalProductSingleAddCommentModal :productSelectedSeller="productSelectedSeller"/>
+       <generalProductSingleAddCommentModal :productSelectedSeller="productSelectedSeller" :getSecondaryData="getSecondaryData"/>
     </header>
 
-    <div v-if="commentList && commentList.length" class="product-comment__list">
+    <div v-if="comments && comments.length" class="product-comment__list">
         <div
             class="product-comment__card"
-            v-for="(comment, index) in commentList"
+            v-for="(comment, index) in comments"
             :key="`comment${index}`">
             <header class="product-comment__card__header mb-3">
                 <div class="d-flex align-center ml-8">
@@ -24,13 +24,13 @@
                         color="grey-darken-1"
                         class="ml-2" />
 
-                    <span v-if="comment.author" class="t13 w400 text-grey-darken-1 product-comment__card__author">{{comment.author}}</span>
+                    <span v-if="comment.user" class="t13 w400 text-grey-darken-1 product-comment__card__author">{{comment.user?.first_name}} {{comment.user?.last_name}}</span>
                 </div>
 
                 <span v-if="comment.date" class="t11 w400 text-grey-lighten-1">{{comment.date}}</span>
             </header>
 
-            <p v-if="comment.message" class="t14 w400 l25 text-grey-darken-2 product-comment__card__msg">{{comment.message}}</p>
+            <p v-if="comment.comment" class="t14 w400 l25 text-grey-darken-2 product-comment__card__msg">{{comment.comment}}</p>
 
             <v-divider
                 v-if="index + 1 < comments.length"
@@ -55,14 +55,15 @@
 export default {
     data() {
         return {
-            commentList: []
         }
     },
 
     props: {
-        comments: Array,
+        comments: [],
         /** productSelectedSeller for add comment **/
         productSelectedSeller:Object,
+      /** method for get SecondaryData after add comment **/
+        getSecondaryData:Function
     },
 
     methods: {
