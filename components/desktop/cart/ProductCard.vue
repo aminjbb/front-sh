@@ -153,8 +153,10 @@ export default {
         splitChar,
 
         increaseCount() {
-            this.productCount++;
-            this.addToBasket(this.content ?.shps ?.id, this.productCount)
+            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
+                this.productCount++;
+                this.addToBasket(this.content ?.shps ?.id, this.productCount)
+            }
         },
 
         decreaseCount() {
