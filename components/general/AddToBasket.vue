@@ -76,8 +76,10 @@ import Basket from '@/composables/Basket.js'
 export default {
     setup(){
       const userToken = useCookie('userToken')
-      const  {addToBasket ,deleteShpsBasket} = new Basket()
-      return {addToBasket , deleteShpsBasket , userToken}
+      const randomNumberForBasket = useCookie('randomNumberForBasket')
+      const runtimeConfig = useRuntimeConfig()
+      const  {addToBasket ,deleteShpsBasket , beforeAuthAddToBasket} = new Basket()
+      return {addToBasket , deleteShpsBasket , userToken , runtimeConfig , randomNumberForBasket , beforeAuthAddToBasket}
     },
 
     data() {
@@ -119,8 +121,16 @@ export default {
             this.addToBasket(id , this.count)
           }
           else{
-            localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
-            this.$router.push('/login')
+            if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+              this.count ++;
+              this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket)
+            }
+            else{
+              const randomNumber = Math.floor(Math.random() * this.runtimeConfig.public.basketRandomNumber)
+              this.randomNumberForBasket = randomNumber
+              this.count ++;
+              this.beforeAuthAddToBasket(id , this.count , randomNumber.toString())
+            }
           }
         },
         increaseCount() {
