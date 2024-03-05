@@ -75,7 +75,7 @@ export default function setup() {
                         beforeAuthAddToBasket(shps , count)
                     }
                     else{
-                        const randomNumber = Math.random(10000000000000000000,99999999999999999999)
+                        const randomNumber = createRandomNumber()
                         randomNumberForBasket.value = randomNumber
                         this.count ++;
                         beforeAuthAddToBasket(shps , count)
@@ -84,6 +84,14 @@ export default function setup() {
                 // auth.checkAuthorization(err.response)
             });
     };
+    async function createRandomNumber(){
+        let result = '';
+        for(let i = 0; i < 20; i++) {
+            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+        }
+        return result
+
+    }
     async function beforeAuthAddToBasket(shps , count , number) {
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
