@@ -120,8 +120,9 @@ export default {
          * @param {*} event 
          */
          closeDropDown(event) {
-            if (!event.target.closest('.basket-header')) {
+            if (!event.target.closest('.basket-header') && !event.target.closest('#toggle-basket')) {
                 document.getElementById('basket-header').classList.remove('show');
+                document.body.classList.remove('active-basket');
             }
         },
     },
@@ -140,13 +141,13 @@ export default {
         this.getProductUserHistory()
     },
 
-    /* mounted(){
+    mounted(){
         document.addEventListener('click', this.closeDropDown);
     },
 
     beforeDestroy() {
         document.removeEventListener('click', this.closeDropDown);
-    }, */
+    },
 
 }
 </script>
