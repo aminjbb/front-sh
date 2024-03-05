@@ -118,8 +118,10 @@ export default {
 
     watch:{
         userBasket(newVal){
-            if(newVal?.details.length === 0){
-                document.body.classList.remove('active-basket');
+            if(newVal){
+                if(newVal.details && newVal?.details.length === 0){
+                    document.body.classList.remove('active-basket');
+                }
             }
         }
     },

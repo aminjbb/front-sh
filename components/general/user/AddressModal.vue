@@ -409,7 +409,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.$refs.addAddress.reset()
+                    if(!this.edit){
+                        this.$refs.addAddress.reset()
+                    }
                     this.step = '1'
                     this.dialog = false;
                     useNuxtApp().$toast.success('آدرس شما با موفقیت ایحاد شد.', {
@@ -492,6 +494,7 @@ export default {
          * set address detail on form after monut modal
          */
         setAddressForm() {
+            console.log('address',this.address);
             try {
                 this.form.address = this.address ?.address
                 this.form.full_name = this.address ?.receiver_full_name
@@ -509,6 +512,7 @@ export default {
 
             }
         }
+            
     },
 
     mounted() {

@@ -43,7 +43,8 @@
                         ref="paymentStep"
                         @selectedPayment="getPayment"
                         @setDiscountCode="getDiscountCode"
-                        :paymentMount="data.paid_price" />
+                        :paymentMount="data.paid_price"
+                        @deleteBasketVoucher = "deleteBasketVoucher" />
                 </template>
             </v-col>
             <v-col md="3">
@@ -188,12 +189,14 @@ export default {
 
     setup() {
         const {
+            deleteVoucherFromBasket,
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
             voucher
         } = new Basket()
         return {
+            deleteVoucherFromBasket,
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
@@ -255,14 +258,17 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-            if (way) {
+            if (way !== false) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId, way)
+
                 this.activeButton = true;
 
             } else {
-                this.$store.commit('set_orderSendingMethod', null)
+                this.$store.commit('set_orderSendingMethod', null);
+                this.activeButton = false;
             }
+
         },
 
         /**
@@ -289,6 +295,15 @@ export default {
          */
         getDiscountCode(code) {
             this.calculateVoucher(code);
+        },
+
+        /**
+         * Delete voucher from basket
+         */
+        deleteBasketVoucher(active){
+            if(active){
+                this.deleteVoucherFromBasket();
+            }
         }
     },
 
