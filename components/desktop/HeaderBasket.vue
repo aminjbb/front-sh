@@ -113,7 +113,17 @@ export default {
         close() {
             document.getElementById('basket-header').classList.remove('show');
             document.body.classList.remove('active-basket');
-        }
+        },
+
+        /**
+         * Close Header basket if I click in outside
+         * @param {*} event 
+         */
+         closeDropDown(event) {
+            if (!event.target.closest('.basket-header')) {
+                document.getElementById('basket-header').classList.remove('show');
+            }
+        },
     },
 
     watch:{
@@ -128,7 +138,16 @@ export default {
 
     created() {
         this.getProductUserHistory()
-    }
+    },
+
+    /* mounted(){
+        document.addEventListener('click', this.closeDropDown);
+    },
+
+    beforeDestroy() {
+        document.removeEventListener('click', this.closeDropDown);
+    }, */
+
 }
 </script>
 

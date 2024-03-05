@@ -67,7 +67,7 @@
 
                     <v-divider color="grey-lighten-2" class="my-3" />
 
-                    <div class="d-flex align-center justify-space-between mb-4">
+                    <div v-if="data.sending_price !== 0 && data.sending_price !== null" class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
                         <span class="t19 w400 text-grey-darken-3 number-font">
                             <template v-if="voucher && voucher.sending_price">
