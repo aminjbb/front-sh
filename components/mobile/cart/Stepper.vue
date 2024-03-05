@@ -191,6 +191,7 @@ export default {
     },
 
     setup() {
+      const userToken = useCookie('userToken')
         const {
             deleteVoucherFromBasket,
             calculateSendingPrice,
@@ -203,7 +204,8 @@ export default {
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
-            voucher
+            voucher,
+            userToken
         }
     },
 
@@ -227,6 +229,7 @@ export default {
                         }
                     }
                 } else {
+                  console.log(this.userToken)
                   if (this.userToken){
                     this.activeStep++;
                   }
