@@ -9,17 +9,12 @@
                 سبد خرید ({{skuCount}} کالا)
             </template>
             <template v-else>
-                {{steps[activeStep - 1]}}
+                {{ steps[activeStep - 1] }}
             </template>
         </span>
     </div>
 
-    <v-icon
-        v-if="activeStep - 1 === 0"
-        icon="mdi-trash-can-outline"
-        color="grey"
-        @click="deleteAllOrders()"
-        size="small" />
+    <v-icon v-if="activeStep - 1 === 0" icon="mdi-trash-can-outline" color="grey" @click="deleteAllOrders()" size="small" />
 </header>
 
 <div class="stepper__content">
@@ -43,7 +38,7 @@
     </template>
 
     <template v-if="activeStep === 3">
-        <desktopCartPaymentStep  ref="paymentStep" @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price"/>
+        <desktopCartPaymentStep ref="paymentStep" @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price" @deleteBasketVoucher="deleteBasketVoucher" />
     </template>
 
     <template v-if="activeStep === 4">
@@ -51,10 +46,7 @@
     </template>
 </div>
 
-<v-divider
-    v-if="activeStep !== 4"
-    color="grey-lighten-1"
-    class="my-3" />
+<v-divider v-if="activeStep !== 4" color="grey-lighten-1" class="my-3" />
 
 <v-card v-if="activeStep !== 4" class="px-3 mobile-pa-0 mobile-no-border pb-10 cart-payment-details">
     <div class="d-flex align-center justify-space-between mb-3">
@@ -75,11 +67,11 @@
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
         <span class="t16 w400 text-grey-darken-3 number-font">
             <template v-if="voucher && voucher.sending_price">
-                {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }} 
+                {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
             </template>
 
             <template v-else>
-                {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }} 
+                {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }}
             </template>
             <span class="t12 w400 text-grey-darken-3">تومان</span>
         </span>
@@ -89,10 +81,10 @@
         <span class="t12 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
         <span class="t16 w400 text-grey-darken-3 number-font">
             <template v-if="voucher && voucher.total_price">
-                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }} 
+                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }}
             </template>
             <template v-else>
-                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }} 
+                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }}
             </template>
             <span class="t12 w400 text-grey-darken-3">تومان</span>
         </span>
@@ -103,7 +95,7 @@
         <span class="t16 w400 text-success number-font">
             <template v-if="voucher && voucher.total_price && voucher.paid_price">
                 {{ splitChar(Number(String(voucher.total_price - voucher.paid_price).slice(0, -1))) }}
-            </template> 
+            </template>
             <template v-else>
                 {{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}
             </template>
@@ -137,11 +129,7 @@
     </div>
 
     <div>
-        <v-btn
-            @click="nextStep()"
-            height="44"
-            :title="buttonText[activeStep - 1]"
-            class="btn btn--submit w-100 mt-3">
+        <v-btn @click="nextStep()" height="44" :title="buttonText[activeStep - 1]" class="btn btn--submit w-100 mt-3">
             {{buttonText[activeStep- 1]}}
         </v-btn>
     </div>
@@ -204,12 +192,14 @@ export default {
 
     setup() {
         const {
+            deleteVoucherFromBasket,
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
             voucher
         } = new Basket()
         return {
+            deleteVoucherFromBasket,
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
@@ -232,7 +222,7 @@ export default {
                     } else {
                         if (this.activeStep === 3) {
                             this.createOrder(this.orderSendingMethod, '', this.orderAddressId.id, this.orderPaymentMethod)
-                        }else{
+                        } else {
                             this.activeStep++;
                         }
                     }
@@ -266,12 +256,12 @@ export default {
          * Selected address from SendingInformationAddress component
          * @param {*} address 
          */
-         getAddress(address) {
-            if (address && address !== false){
-                this.$store.commit('set_orderAddress' , address)
-                this.$store.commit('set_failedTransactionOrderAddress' , address)
+        getAddress(address) {
+            if (address && address !== false) {
+                this.$store.commit('set_orderAddress', address)
+                this.$store.commit('set_failedTransactionOrderAddress', address)
                 this.activeButton = true;
-            } else{
+            } else {
                 this.$store.commit('set_orderAddress', null)
             }
         },
@@ -281,11 +271,11 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-          if (way) {
-            this.$store.commit('set_orderSendingMethod' , way)
-            this.$store.commit('set_failedTransactionOrderSendingMethod' , way)
-            this.calculateSendingPrice(this.orderAddressId.id, way)
-          } else{
+            if (way) {
+                this.$store.commit('set_orderSendingMethod', way)
+                this.$store.commit('set_failedTransactionOrderSendingMethod', way)
+                this.calculateSendingPrice(this.orderAddressId.id, way)
+            } else {
                 this.$store.commit('set_orderSendingMethod', null)
             }
         },
@@ -304,14 +294,14 @@ export default {
          * @param {*} id 
          */
         getPayment(id) {
-            this.$store.commit('set_orderPayMethod' , id)
+            this.$store.commit('set_orderPayMethod', id)
             this.activeButton = true;
         },
-        
+
         /**
          * Delete all orders from vuex
          */
-         deleteAllOrders() {
+        deleteAllOrders() {
             this.$store.commit('set_basket', []);
         },
 
@@ -319,8 +309,17 @@ export default {
          * Get discount code
          * @param {*} id 
          */
-         getDiscountCode(code){
+        getDiscountCode(code) {
             this.calculateVoucher(code);
+        },
+
+        /**
+         * Delete voucher from basket
+         */
+         deleteBasketVoucher(active){
+            if(active){
+                this.deleteVoucherFromBasket();
+            }
         }
     },
 

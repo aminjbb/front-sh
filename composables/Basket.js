@@ -161,6 +161,28 @@ export default function setup() {
             });
     };
 
+    async function deleteVoucherFromBasket() {
+        axios
+            .post(runtimeConfig.public.apiBase + `/basket/crud/delete/voucher`, {}, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                voucher.value = null;
+                store.commit('set_basket', response);
+            })
+            .catch((err) => {
+                if(err.response.data){
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+            });
+    };
+
     async function createOrder(sending_method , invitation_code , address_id , payment_method ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/crud/create`, {
@@ -234,6 +256,6 @@ export default function setup() {
 
     return {getBasket, loading ,addToBasket , deleteShpsBasket ,
         calculateSendingPrice , createOrder,calculateVoucher,voucher,
-        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket }
+        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket }
 }
 
