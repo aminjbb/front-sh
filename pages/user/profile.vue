@@ -48,7 +48,6 @@
 
                             <v-col cols="12" md="6">
                                 <v-text-field
-                                    :rules="emailRule"
                                     density="compact"
                                     variant="outlined"
                                     label="ایمیل"
@@ -57,7 +56,6 @@
 
                             <v-col cols="12" md="6">
                                 <v-text-field
-                                    :rules="nationalCodeRule"
                                     density="compact"
                                     variant="outlined"
                                     label="کد ملی"
@@ -129,17 +127,6 @@ export default {
                 /^(?:(\u0660\u0669[\u0660-\u0669][\u0660-\u0669]{8})|(\u06F0\u06F9[\u06F0-\u06F9][\u06F0-\u06F9]{8})|(09[0-9][0-9]{8}))$/.test(
                     v
                 ) || "شماره موبایل معتبر نیست",
-            ],
-            emailRule: [
-                (v) => !!v || "این فیلد الزامی است",
-                (v) =>
-                /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-                    v
-                ) || " ایمیل معتبر نیست",
-            ],
-            nationalCodeRule: [
-                (v) => !!v || "این فیلد الزامی است",
-                (v) => /^[0-9]{10}$/.test(v) || "کد ملی معتبر وارد کنید",
             ],
             form: {
                 name: '',
