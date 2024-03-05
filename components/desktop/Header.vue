@@ -101,7 +101,7 @@
 
                 <span class="header__item__sp"></span>
 
-                <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()">
+                <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
                     <v-badge
                         v-if="userBasket && userBasket.details && userBasket.details.length"
                         color="primary"
