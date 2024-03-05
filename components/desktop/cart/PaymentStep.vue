@@ -24,7 +24,7 @@
                     </div>
                     <p class="number-font t12 w400 text-grey">
                         <template v-if="payment.type === 'snap_pay'">
-                            4 قسط ماهیانه {{ splitChar(Number(String(paymentMount / 4 ).slice(0, -1))) }}تومان (برون کارمزد)
+                            4 قسط ماهیانه {{ splitChar(Number(String(paymentMount / 4 ).slice(0, -1))) }}تومان (بدون کارمزد)
                         </template>
                         <template v-else-if="payment.type === 'online'">پرداخت آنلاین با تمام کارت های بانکی</template>
                         <template v-else-if="payment.type === 'wallet'">پرداخت از طریق کیف پول</template>
@@ -97,7 +97,7 @@
             <div class="t13 w500 text-grey-darken-3 ml-2">کد تخفیف اعمال شده: </div>
             <div class="d-flex align-center">
                 <div class="t14 w400 text-primary ml-3">{{ discountCodeShow }}</div>
-                <v-icon icon="mdi-delete-outline" color="primary"/>
+                <v-icon @click="deleteBasketVoucher()" icon="mdi-delete-outline" color="primary"/>
             </div>
         </div>
     </div>
@@ -155,18 +155,6 @@ export default {
         }
     },
 
-    /*  watch: {
-         discountCode(newValue) {
-             if (newValue === null || newValue === '') {
-                 this.voucherButton = 'اعمال کد';
-                 this.deleteVoucher = false;
-             } else {
-                 this.voucherButton = 'حذف کد';
-                 this.deleteVoucher = true;
-             }
-         }
-     }, */
-
     watch: {
         deleteVoucher(newVal) {
             if (newVal === true) {
@@ -199,6 +187,10 @@ export default {
                 this.deleteVoucher = false;
                 this.$emit('setDiscountCode', this.discountCode);
             }
+        },
+
+        deleteBasketVoucher(){
+            this.$emit('deleteBasketVoucher', true);
         }
 
     },
