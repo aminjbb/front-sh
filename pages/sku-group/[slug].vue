@@ -3,7 +3,7 @@
     <h1 class="v-hide">{{ title }}</h1>
 
     <v-container>
-        <generalBreadcrumb :items="BreadcrumbItems" />
+        <generalBreadcrumb :items="breadcrumbList" />
         <v-row class="mt-10">
             <v-col cols="12">
                 <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
@@ -66,7 +66,8 @@ export default {
         const {
             productList,
             page,
-            query
+            query,
+            getBreadcrumb , breadcrumb
         } = new PLP()
         useHead({
             title,
@@ -78,11 +79,63 @@ export default {
         return {
             productList,
             page,
-            query
+            query,
+            getBreadcrumb , breadcrumb
         }
     },
 
     computed: {
+      breadcrumbList(){
+        let breadcrumb = []
+        if(this.breadcrumb?.category_l1){
+          const form = {
+            type : "category_l1",
+            href: `/category/${this.breadcrumb.category_l1.slug}`,
+            title: this.breadcrumb.category_l1.name
+          }
+          breadcrumb.push(form)
+
+        }
+        if(this.breadcrumb?.category_l2){
+          const form = {
+            type : "category_l2",
+            href: `/category/${this.breadcrumb.category_l2.slug}`,
+            title: this.breadcrumb.category_l2.name
+          }
+          breadcrumb.push(form)
+
+        }
+        if(this.breadcrumb?.category_l3){
+          const form = {
+            type : "category_l3",
+            href: `/category/${this.breadcrumb.category_l3.slug}`,
+            title: this.breadcrumb.category_l3.name
+          }
+          breadcrumb.push(form)
+
+        }
+
+        if(this.breadcrumb?.product){
+          const form = {
+            type : "product",
+            href: `/product/${this.breadcrumb.product.slug}`,
+            title: this.breadcrumb.product.name
+          }
+          breadcrumb.push(form)
+
+        }
+        if(this.breadcrumb?.sku_group){
+          const form = {
+            type : "sku_group",
+            href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
+            title: this.breadcrumb.sku_group.name
+          }
+          breadcrumb.push(form)
+
+        }
+
+        return breadcrumb
+      },
         /** return data product list  **/
         productListData() {
             try {
@@ -107,6 +160,10 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+  beforeMount() {
+
+    this.getBreadcrumb('sku-group')
+  },
 
     watch: {
         page(val) {

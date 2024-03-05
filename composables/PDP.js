@@ -10,6 +10,7 @@ import {useStore} from 'vuex'
 export default function setup() {
     const product = ref([]);
     const secondaryData = ref([]);
+    const breadcrumb = ref(null);
     const color = ref(null);
     const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
@@ -31,6 +32,21 @@ export default function setup() {
             })
             .then((response) => {
                 secondaryData.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+    };
+    async function getBreadcrumb(type) {
+        axios
+            .get(runtimeConfig.public.apiBase + `/product/breadcrumb/index?type=${type}&slug=${route.params.slug}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+
+            })
+            .then((response) => {
+                breadcrumb.value = response.data.data
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
@@ -83,6 +99,6 @@ export default function setup() {
         }
     )
 
-    return {product, color, getSecondaryData, secondaryData , getPdpData}
+    return {product, color, getSecondaryData, secondaryData , getPdpData,  getBreadcrumb, breadcrumb}
 }
 
