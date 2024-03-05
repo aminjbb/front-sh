@@ -126,7 +126,7 @@ export default {
               this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket)
             }
             else{
-              const randomNumber = Math.floor(Math.random() * this.runtimeConfig.public.basketRandomNumber)
+              const randomNumber = Math.random(10000000000000000000,99999999999999999999)
               this.randomNumberForBasket = randomNumber
               this.count ++;
               this.beforeAuthAddToBasket(id , this.count , randomNumber.toString())

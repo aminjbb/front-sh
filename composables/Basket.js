@@ -75,7 +75,7 @@ export default function setup() {
                         beforeAuthAddToBasket(shps , count)
                     }
                     else{
-                        const randomNumber = Math.floor(Math.random() * runtimeConfig.public.basketRandomNumber)
+                        const randomNumber = Math.random(10000000000000000000,99999999999999999999)
                         randomNumberForBasket.value = randomNumber
                         this.count ++;
                         beforeAuthAddToBasket(shps , count)
