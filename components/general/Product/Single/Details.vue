@@ -37,7 +37,7 @@
             </template>
         </div>
 
-        <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{content.score}})</span>
+        <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{Math.floor(content.score)}})</span>
     </div>
 
     <v-divider color="grey" class="my-3" />
@@ -139,8 +139,8 @@ export default {
 
     computed: {
         generateStarIcons() {
-            const fullStars = Math.floor(this.content.starNumber);
-            const hasHalfStar = this.content.starNumber % 1 !== 0;
+            const fullStars = Math.floor(this.content.score);
+            const hasHalfStar = this.content.score % 1 !== 0;
 
             const stars = [];
             for (let i = 0; i < fullStars; i++) {

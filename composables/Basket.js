@@ -12,6 +12,7 @@ export default function setup() {
     const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
+    const randomNumberForBasket = useCookie('randomNumberForBasket')
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
@@ -20,11 +21,31 @@ export default function setup() {
 
     /** get user basket and save on vuex **/
     async function getBasket() {
+        const randomNumberForBasket = useCookie('randomNumberForBasket')
+        if (userToken.value){
+            axios
+                .get(runtimeConfig.public.apiBase + `/basket/crud/get`, {
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
+                    },
+                })
+                .then((response) => {
+                    store.commit('set_basket', response)
+                })
+                .catch((err) => {
+                   if ( err.response.status === 401 ||  err.response.status === 403) {
+                       if (randomNumberForBasket.value && randomNumberForBasket.value != "") getBasketBeforeLogin()
+                   }
+                });
+        }
+        else{
+            if (randomNumberForBasket.value && randomNumberForBasket.value != "") getBasketBeforeLogin()
+        }
+    };
+    async function getBasketBeforeLogin() {
+        const randomNumberForBasket = useCookie('randomNumberForBasket')
         axios
-            .get(runtimeConfig.public.apiBase + `/basket/crud/get`, {
-                headers: {
-                    Authorization: `Bearer ${userToken.value}`,
-                },
+            .get(runtimeConfig.public.apiBase + `/basket/crud/get?identifier=${randomNumberForBasket.value}`, {
             })
             .then((response) => {
                 store.commit('set_basket', response)
@@ -35,6 +56,7 @@ export default function setup() {
     };
 
     async function addToBasket(shps , count) {
+        const randomNumberForBasket = useCookie('randomNumberForBasket')
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
                 shps:shps,
@@ -43,6 +65,39 @@ export default function setup() {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
+            })
+            .then((response) => {
+                getBasket()
+            })
+            .catch((err) => {
+                if (err.response.status === 401){
+                    if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
+                        beforeAuthAddToBasket(shps , count)
+                    }
+                    else{
+                        const randomNumber = createRandomNumber()
+                        randomNumberForBasket.value = randomNumber
+                        this.count ++;
+                        beforeAuthAddToBasket(shps , count)
+                    }
+                }
+                // auth.checkAuthorization(err.response)
+            });
+    };
+    async function createRandomNumber(){
+        let result = '';
+        for(let i = 0; i < 20; i++) {
+            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+        }
+        return result
+
+    }
+    async function beforeAuthAddToBasket(shps , count , number) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
+                shps:shps,
+                count:count,
+                identifier:number
             })
             .then((response) => {
                 getBasket()
@@ -102,6 +157,28 @@ export default function setup() {
             })
             .then((response) => {
                 voucher.value = response.data.data
+            })
+            .catch((err) => {
+                if(err.response.data){
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+            });
+    };
+
+    async function deleteVoucherFromBasket() {
+        axios
+            .post(runtimeConfig.public.apiBase + `/basket/crud/delete/voucher`, {}, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                voucher.value = null;
+                store.commit('set_basket', response);
             })
             .catch((err) => {
                 if(err.response.data){
@@ -185,6 +262,8 @@ export default function setup() {
             });
     };
 
-    return {getBasket, loading ,addToBasket , deleteShpsBasket , calculateSendingPrice , createOrder,calculateVoucher,voucher,getTransactionData,transactionData,createFailedOrder }
+    return {getBasket, loading ,addToBasket , deleteShpsBasket ,
+        calculateSendingPrice , createOrder,calculateVoucher,voucher,
+        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket }
 }
 

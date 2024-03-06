@@ -114,6 +114,7 @@
 import axios from "axios";
 
 export default {
+
   setup() {
     const userToken = useCookie('userToken')
     const runtimeConfig = useRuntimeConfig()
@@ -142,6 +143,8 @@ export default {
     productId: String,
     /** productSelectedSeller for add comment **/
     productSelectedSeller: Object,
+    /** method for get SecondaryData after add comment **/
+    getSecondaryData:Function
   },
 
   methods: {
@@ -182,7 +185,8 @@ export default {
 
           },)
           .then((response) => {
-
+            this.getSecondaryData()
+            this.$refs.addComment.reset()
           })
           .catch((err) => {
 

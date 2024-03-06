@@ -43,7 +43,8 @@
                         ref="paymentStep"
                         @selectedPayment="getPayment"
                         @setDiscountCode="getDiscountCode"
-                        :paymentMount="data.paid_price" />
+                        :paymentMount="data.paid_price"
+                        @deleteBasketVoucher = "deleteBasketVoucher" />
                 </template>
             </v-col>
             <v-col md="3">
@@ -66,7 +67,7 @@
 
                     <v-divider color="grey-lighten-2" class="my-3" />
 
-                    <div class="d-flex align-center justify-space-between mb-4">
+                    <div v-if="data.sending_price !== 0 && data.sending_price !== null" class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
                         <span class="t19 w400 text-grey-darken-3 number-font">
                             <template v-if="voucher && voucher.sending_price">
@@ -187,17 +188,21 @@ export default {
     },
 
     setup() {
+      const userToken = useCookie('userToken')
         const {
+            deleteVoucherFromBasket,
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
             voucher
         } = new Basket()
         return {
+            deleteVoucherFromBasket,
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
-            voucher
+            voucher,
+            userToken
         }
     },
 
@@ -226,11 +231,18 @@ export default {
 
                     }
                 } else {
+                  if (this.userToken){
                     this.active[this.activeStep] = false;
                     this.previousSteps[this.activeStep] = false;
                     this.activeStep++;
                     this.active[this.activeStep] = true;
                     this.previousSteps[this.activeStep - 1] = true;
+                  }
+                  else{
+                    localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
+                    this.$router.push('/login')
+                  }
+
                 }
 
                 this.activeButton = false;
@@ -255,14 +267,17 @@ export default {
          * @param {*} way 
          */
         getWay(way) {
-            if (way) {
+            if (way !== false) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId, way)
+
                 this.activeButton = true;
 
             } else {
-                this.$store.commit('set_orderSendingMethod', null)
+                this.$store.commit('set_orderSendingMethod', null);
+                this.activeButton = false;
             }
+
         },
 
         /**
@@ -289,6 +304,15 @@ export default {
          */
         getDiscountCode(code) {
             this.calculateVoucher(code);
+        },
+
+        /**
+         * Delete voucher from basket
+         */
+        deleteBasketVoucher(active){
+            if(active){
+                this.deleteVoucherFromBasket();
+            }
         }
     },
 

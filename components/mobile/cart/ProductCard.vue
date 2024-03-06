@@ -67,7 +67,7 @@
                 @click="decreaseCount()" />
         </div>
 
-        <div v-if="content.count > 0">
+        <div v-if="content.site_stock > 0">
             <template v-if="content.discount">
                 <div v-if="content.current_total_site_price" class="d-flex align-center justify-space-between">
                     <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
@@ -154,8 +154,10 @@ export default {
         splitChar,
 
         increaseCount() {
-            this.productCount++;
-            this.addToBasket(this.content ?.shps ?.id, this.productCount)
+            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
+                this.productCount++;
+                this.addToBasket(this.content ?.shps ?.id, this.productCount)
+            }
         },
 
         decreaseCount() {

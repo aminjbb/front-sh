@@ -79,7 +79,7 @@ export default {
 
   data() {
     return {
-      identificationCode: 'identification code moc data',
+      identificationCode: '',
       products: [],
       userDetail: null,
     }

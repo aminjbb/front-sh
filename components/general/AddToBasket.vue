@@ -76,8 +76,10 @@ import Basket from '@/composables/Basket.js'
 export default {
     setup(){
       const userToken = useCookie('userToken')
-      const  {addToBasket ,deleteShpsBasket} = new Basket()
-      return {addToBasket , deleteShpsBasket , userToken}
+      const randomNumberForBasket = useCookie('randomNumberForBasket')
+      const runtimeConfig = useRuntimeConfig()
+      const  {addToBasket ,deleteShpsBasket , beforeAuthAddToBasket} = new Basket()
+      return {addToBasket , deleteShpsBasket , userToken , runtimeConfig , randomNumberForBasket , beforeAuthAddToBasket}
     },
 
     data() {
@@ -119,21 +121,65 @@ export default {
             this.addToBasket(id , this.count)
           }
           else{
-            localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
-            this.$router.push('/login')
+            if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+              this.count ++;
+              this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket)
+            }
+            else{
+              const randomNumber = this.createRandomNumber()
+              this.randomNumberForBasket = randomNumber
+              this.count ++;
+              this.beforeAuthAddToBasket(id , this.count , randomNumber.toString())
+            }
           }
+        },
+        createRandomNumber(){
+          let result = '';
+          for(let i = 0; i < 20; i++) {
+            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+          }
+          return result
         },
         increaseCount() {
             if (this.count < this.content.order_limit) {
-                this.count++;
-                this.addToBasket(this.content.id , this.count )
+              if (this.userToken){
+                this.count ++;
+                this.addToBasket(this.content.id  , this.count)
+              }
+              else{
+                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                  this.count ++;
+                  this.beforeAuthAddToBasket(this.content.id  , this.count ,this.randomNumberForBasket)
+                }
+                else{
+                  const randomNumber = this.createRandomNumber()
+                  this.randomNumberForBasket = randomNumber
+                  this.count ++;
+                  this.beforeAuthAddToBasket(this.content.id  , this.count , randomNumber.toString())
+                }
+              }
+
             }
         },
         decreaseCount() {
             if (this.count > 0) {
                 this.count--;
                 if (this.count == 0) this.deleteShpsBasket(this.content.id)
-                else this.addToBasket(this.content.id , this.count )
+                else{
+                  if (this.userToken){
+                    this.addToBasket(this.content.id  , this.count)
+                  }
+                  else{
+                    if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                      this.beforeAuthAddToBasket(this.content.id  , this.count ,this.randomNumberForBasket)
+                    }
+                    else{
+                      const randomNumber = this.createRandomNumber()
+                      this.randomNumberForBasket = randomNumber
+                      this.beforeAuthAddToBasket(this.content.id  , this.count , randomNumber.toString())
+                    }
+                  }
+                }
             }
             else{
 

@@ -113,20 +113,47 @@ export default {
         close() {
             document.getElementById('basket-header').classList.remove('show');
             document.body.classList.remove('active-basket');
+        },
+
+        /**
+         * Close Header basket if I click in outside
+         * @param {*} event 
+         */
+
+         closeDropDown(event) {
+            const basketHeader = document.getElementById('basket-header');
+            const toggleBasket = document.getElementById('toggle-basket');
+
+            if (!basketHeader.contains(event.target) && !event.target.closest('#toggle-basket')) {
+                console.log('hiiii')
+                basketHeader.classList.remove('show');
+                document.body.classList.remove('active-basket');
+            }
         }
-    },
+},
 
     watch:{
         userBasket(newVal){
-            if(newVal?.details.length === 0){
-                document.body.classList.remove('active-basket');
+            if(newVal){
+                if(newVal.details && newVal?.details.length === 0){
+                    document.body.classList.remove('active-basket');
+                }
             }
         }
     },
 
     created() {
         this.getProductUserHistory()
-    }
+    },
+
+    mounted(){
+        document.addEventListener('click', this.closeDropDown);
+    },
+
+    beforeDestroy() {
+        document.removeEventListener('click', this.closeDropDown);
+    },
+
 }
 </script>
 
