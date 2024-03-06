@@ -490,6 +490,7 @@ export default {
          * get cities after select province
          */
         getCitiesList() {
+            this.form.city = null
             this.getCities(this.form.province)
         },
 
