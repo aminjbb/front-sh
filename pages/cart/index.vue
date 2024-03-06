@@ -41,7 +41,7 @@ export default {
     },
 
     setup(props) {
-        const title = ref('فروشگاه اینترنتی شاواز | سبد حرید')
+        const title = ref('فروشگاه اینترنتی شاواز | سبد خرید')
         const description = ref("سبد خرید شاواز ")
 
         useHead({

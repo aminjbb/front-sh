@@ -1,39 +1,23 @@
 <template>
 <section class="address-card">
-    
+
     <div class="d-flex align-center justify-space-between">
         <p class="t14 number-font text-grey-darken-1 l25 ma-0">
             {{address?.address}}
         </p>
 
-        <div class="address-card__actions mr-10">
+        <div class="address-card__actions mr-10" :id="`mobile-drop-down__${address.id}`">
             <div class="mobile-drop-down pos-r">
-                <v-icon
-                    icon="mdi-dots-vertical"
-                    color="grey"
-                    @click="openDropDown(address.id)" />
+                <v-icon icon="mdi-dots-vertical" color="grey" @click="openDropDown(address.id)" />
 
                 <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${address.id}`">
                     <ul class="ma-0">
                         <li class="mb-2 cur-p">
-                            <generalUserAddressModal
-                                title="ویرایش آدرس"
-                                buttonType="mobile"
-                                :userDetail="userDetail"
-                                :getUserAddress="getUserAddress"
-                                edit
-                                :address="address"
-                                :provinces="provinces" />
+                            <generalUserAddressModal title="ویرایش آدرس" buttonType="mobile" :userDetail="userDetail" :getUserAddress="getUserAddress" edit :address="address" :provinces="provinces" />
                         </li>
 
                         <li class="d-flex align-center py-1 cur-p">
-                            <generalModalsDelete
-                                :getUserAddress="getUserAddress"
-                                title="حذف آدرس"
-                                text="آیا از حذف این آدرس اطمینان دارید؟"
-                                submitText="حذف آدرس"
-                                buttonType="mobile"
-                                @removeProduct="removeAddress(address)" />
+                            <generalModalsDelete :getUserAddress="getUserAddress" title="حذف آدرس" text="آیا از حذف این آدرس اطمینان دارید؟" submitText="حذف آدرس" buttonType="mobile" @removeProduct="removeAddress(address)" />
                         </li>
                     </ul>
                 </nav>
@@ -73,6 +57,10 @@ export default {
     },
 
     methods: {
+        /**
+         * Remove address
+         * @param {*} address 
+         */
         removeAddress(address) {
             axios
                 .delete(this.runtimeConfig.public.apiBase + `/user/profile/address/delete/${address.id}`, {
@@ -96,10 +84,38 @@ export default {
                 });
         },
 
+        /**
+         * Open drop down
+         * @param {*} id 
+         */
         openDropDown(id) {
             const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
+            const itemDropdownParent = document.getElementById(`mobile-drop-down__${id}`);
             itemDropdown.classList.toggle('show');
-        }
+            itemDropdownParent.classList.toggle('show');
+        },
+
+        /**
+         * Close dropdown
+         * @param {*} event 
+         */
+        closeDropDown(event) {
+            if (document.getElementById(`mobile-drop-down__${this.address.id}`).classList.contains('show')) {
+                const dropMenu = document.getElementById(`mobile-drop-down__${this.address.id}`);
+                if (!dropMenu.contains(event.target)) {
+                    document.getElementById(`mobile-drop-down__items-${this.address.id}`).classList.remove('show');
+                    document.getElementById(`mobile-drop-down__${this.address.id}`).classList.remove('show');
+                }
+            }
+        },
+    },
+
+    mounted() {
+        document.addEventListener('click', this.closeDropDown);
+    },
+
+    beforeDestroy() {
+        document.removeEventListener('click', this.closeDropDown);
     },
 
 }

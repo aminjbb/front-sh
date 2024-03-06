@@ -23,7 +23,9 @@
 
         <v-col cols="9" class="d-flex align-center product-card__details">
             <div v-if="content.shps && content.shps?.sku?.image_url" class="product-card__image ml-5">
-                <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
+                <a :href="`/sku/${content.shps?.slug}`" class="d-block">
+                    <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
+                </a>
             </div>
 
             <div>
@@ -41,16 +43,16 @@
                     </span>
                 </div>
 
-                <!--                <div class="d-flex align-center t13 w400 text-grey mb-2">-->
-                <!--                    <v-icon-->
-                <!--                        icon="mdi-store-outline"-->
-                <!--                        color="grey-lighten-1"-->
-                <!--                        class="ml-2" />-->
-                <!--                    <span>-->
-                <!--                        فروشگاه:-->
-                <!--                        {{content.shopping_name}}-->
-                <!--                    </span>-->
-                <!--                </div>-->
+                <div v-if="!noSeller" class="d-flex align-center t13 w400 text-grey mb-2">
+                    <v-icon
+                        icon="mdi-store-outline"
+                        color="grey-lighten-1"
+                        class="ml-2" />
+                    <span>
+                        فروشگاه:
+                        {{content.shps?.seller?.company_name}}
+                    </span>
+                </div>
             </div>
         </v-col>
         <v-col cols="3" class="d-flex product-card__price-info justify-end">
@@ -115,13 +117,19 @@ import Basket from '@/composables/Basket.js'
 
 export default {
     setup() {
+      const randomNumberForBasket = useCookie('randomNumberForBasket')
+      const userToken = useCookie('userToken');
         const {
             addToBasket,
-            deleteShpsBasket
+            deleteShpsBasket,
+          beforeAuthAddToBasket
         } = new Basket()
         return {
             addToBasket,
-            deleteShpsBasket
+            deleteShpsBasket,
+          beforeAuthAddToBasket,
+          randomNumberForBasket,
+          userToken
         }
     },
     data() {
@@ -146,23 +154,65 @@ export default {
          */
         status: {
             type: String,
-        }
+        },
+
+        /**
+         * hide seller
+         */
+        noSeller: Boolean
     },
 
     methods: {
         splitChar,
 
         increaseCount() {
-            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
+            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
+              if (this.userToken){
                 this.productCount++;
-                this.addToBasket(this.content ?.shps ?.id, this.productCount)
+               this.addToBasket(this.content ?.shps ?.id, this.productCount)
+              }
+              else{
+                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                  this.productCount++;
+                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+                }
+                else{
+                  const randomNumber = this.createRandomNumber()
+                  this.randomNumberForBasket = randomNumber
+                  this.productCount++;
+                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
+                }
+              }
+
             }
         },
 
+      createRandomNumber(){
+        let result = '';
+        for(let i = 0; i < 20; i++) {
+          result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+        }
+        return result
+      },
+
         decreaseCount() {
             if (this.productCount > 1) {
+              if (this.userToken){
                 this.productCount--;
                 this.addToBasket(this.content ?.shps ?.id, this.productCount)
+              }
+              else{
+                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                  this.productCount--;
+                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+                }
+                else{
+                  const randomNumber = this.createRandomNumber()
+                  this.randomNumberForBasket = randomNumber
+                  this.productCount--;
+                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
+                }
+              }
             } else {
                 this.deleteShpsBasket(this.content ?.shps ?.id)
             }

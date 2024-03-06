@@ -84,7 +84,6 @@
             <template v-if="step === '2'">
                 <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
                 <v-form v-model="valid" ref="addAddress">
-
                     <div>
                         <v-text-field
                             density="compact"
@@ -293,8 +292,10 @@ export default {
         getUserAddress: {
             type: Function
         },
+
         /** User Detail */
         userDetail: Object,
+        
         /** Address */
         address: Object,
 
@@ -502,7 +503,6 @@ export default {
          * set address detail on form after monut modal
          */
         setAddressForm() {
-            console.log('address',this.address);
             try {
                 this.form.address = this.address ?.address
                 this.form.full_name = this.address ?.receiver_full_name
