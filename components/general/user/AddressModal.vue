@@ -418,7 +418,7 @@ export default {
                     }
                     this.step = '1'
                     this.dialog = false;
-                    useNuxtApp().$toast.success('آدرس شما با موفقیت ایحاد شد.', {
+                    useNuxtApp().$toast.success('آدرس شما با موفقیت ایجاد شد.', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
@@ -476,7 +476,7 @@ export default {
         closeModal() {
             this.dialog = false;
             this.isDisable= true
-        },
+            },
 
         /**
          * back 'step' to 1 for show map
