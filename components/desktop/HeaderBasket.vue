@@ -125,7 +125,6 @@ export default {
             const toggleBasket = document.getElementById('toggle-basket');
 
             if (!basketHeader.contains(event.target) && !event.target.closest('#toggle-basket')) {
-                console.log('hiiii')
                 basketHeader.classList.remove('show');
                 document.body.classList.remove('active-basket');
             }
@@ -141,7 +140,7 @@ export default {
             }
         }
     },
-
+ 
     created() {
         this.getProductUserHistory()
     },

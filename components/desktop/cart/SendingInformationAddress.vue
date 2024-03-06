@@ -1,5 +1,5 @@
 <template >
-<v-card class="cart-address-list pa-5 mobile-pa-0 mobile-no-border ov-v">
+<v-card class="cart-address-list pa-5 mobile-pa-0 mobile-no-border ov-v pos-un">
     <header class="d-flex justify-space-between  align-center mb-5 xs-hide">
         <div class="d-flex align-center">
             <v-icon
