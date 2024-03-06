@@ -138,6 +138,7 @@
 
 <script>
 import Basket from '@/composables/Basket.js'
+import axios from "axios";
 
 export default {
     data() {
@@ -192,6 +193,7 @@ export default {
 
     setup() {
       const userToken = useCookie('userToken')
+      const runtimeConfig = useRuntimeConfig()
         const {
             deleteVoucherFromBasket,
             calculateSendingPrice,
@@ -205,7 +207,8 @@ export default {
             calculateVoucher,
             createOrder,
             voucher,
-            userToken
+            userToken,
+          runtimeConfig
         }
     },
 
@@ -298,12 +301,35 @@ export default {
             this.activeButton = true;
         },
 
-        /**
-         * Delete all orders from vuex
-         */
-        deleteAllOrders() {
-            this.$store.commit('set_basket', []);
-        },
+      /**
+       * Delete all orders from vuex
+       */
+      deleteAllOrders() {
+        let endpoint = ''
+        if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
+          endpoint = `/basket/crud/delete?identifier=${this.randomNumberForBasket}`
+        }
+        else{
+          endpoint = `/basket/crud/delete`
+        }
+        axios.delete(this.runtimeConfig.public.apiBase + endpoint, {
+          headers: {
+            Authorization: `Bearer ${this.userToken}`,
+          },
+
+        }, )
+            .then((response) => {
+              this.$store.commit('set_basket' , '')
+              if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
+                this.randomNumberForBasket = ''
+              }
+            })
+            .catch((err) => {
+
+            }).finally(() => {
+
+        })
+      },
 
         /**
          * Get discount code
