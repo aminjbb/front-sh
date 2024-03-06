@@ -196,7 +196,7 @@ export default {
         },
 
         selectAttr() {
-            console.log("🚀 ~ selectAttr ~ selectedAttr:", this.selectedAttr)
+           // console.log("🚀 ~ selectAttr ~ selectedAttr:", this.selectedAttr)
         }
     },
 

@@ -232,7 +232,6 @@ export default {
                         }
                     }
                 } else {
-                  console.log(this.userToken)
                   if (this.userToken){
                     this.activeStep++;
                   }
@@ -265,7 +264,6 @@ export default {
         getAddress(address) {
             if (address && address !== false) {
                 this.$store.commit('set_orderAddress', address)
-                this.$store.commit('set_failedTransactionOrderAddress', address)
                 this.activeButton = true;
             } else {
                 this.$store.commit('set_orderAddress', null)
@@ -279,7 +277,6 @@ export default {
         getWay(way) {
             if (way) {
                 this.$store.commit('set_orderSendingMethod', way)
-                this.$store.commit('set_failedTransactionOrderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId.id, way)
             } else {
                 this.$store.commit('set_orderSendingMethod', null)

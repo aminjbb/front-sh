@@ -158,6 +158,17 @@ export default {
                 behavior: "smooth",
             });
         },
+
+        /**
+         * Sumbit email for newsletter
+         */
+        onClick(){
+            useNuxtApp().$toast.success('ایمیل شما با موفقیت ثبت شد.', {
+                rtl: true,
+                position: 'top-center',
+                theme: 'dark'
+            });
+        },
     },
 };
 </script>
