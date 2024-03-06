@@ -224,13 +224,6 @@ export default {
   },
 
   methods: {
-
-    selectSort(obj) {
-      console.log("🚀 ~ selectSort:", obj);
-
-      //TODO: Sort items in mobile
-    },
-
     /**
      * Filter productList by select type items
      * @param {*} array
@@ -382,7 +375,6 @@ export default {
       let paramQuery = ''
       const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
       const brandObject = values.filter(filterValue => filterValue.param == "brands")
-      console.log(brandObject , 'brandObject')
       attributeObject.forEach(element => {
         param += `${element.value},`
       })

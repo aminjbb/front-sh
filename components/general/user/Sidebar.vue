@@ -190,7 +190,6 @@ export default {
             try {
                 const response = await auth.getUserProfile(this.userToken)
                 this.userData = response.data.data
-                console.log("🚀 ~ fetchUserProfile ~ userData:", userData)
 
             } catch (error) {
                 // Handle errors

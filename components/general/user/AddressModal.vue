@@ -82,7 +82,6 @@
             <template v-if="step === '2'">
                 <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
                 <v-form v-model="valid" ref="addAddress">
-
                     <div>
                         <v-text-field
                             density="compact"
@@ -290,8 +289,10 @@ export default {
         getUserAddress: {
             type: Function
         },
+
         /** User Detail */
         userDetail: Object,
+        
         /** Address */
         address: Object,
 
