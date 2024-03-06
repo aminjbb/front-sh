@@ -9,6 +9,7 @@ import auth from '@/middleware/auth';
 import {useStore} from "vuex";
 
 export default function setup() {
+
     const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
@@ -112,16 +113,20 @@ export default function setup() {
     };
 
     async function deleteShpsBasket(shps ) {
+        const formData = new FormData()
+        formData.append('shps' , shps)
+        if (randomNumberForBasket.value && randomNumberForBasket.value != ""){
+            formData.append('identifier' , randomNumberForBasket.value )
+        }
         axios
-            .post(runtimeConfig.public.apiBase + `/basket/crud/delete/shps`, {
-                shps:shps,
-            }, {
+            .post(runtimeConfig.public.apiBase + `/basket/crud/delete/shps`, formData, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
             })
             .then((response) => {
                 getBasket()
+                randomNumberForBasket.value = ''
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)
