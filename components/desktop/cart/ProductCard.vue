@@ -23,7 +23,9 @@
 
         <v-col cols="9" class="d-flex align-center product-card__details">
             <div v-if="content.shps && content.shps?.sku?.image_url" class="product-card__image ml-5">
-                <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
+                <a :href="`/sku/${content.shps?.slug}`" class="d-block">
+                    <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
+                </a>
             </div>
 
             <div>
@@ -41,16 +43,16 @@
                     </span>
                 </div>
 
-                <!--                <div class="d-flex align-center t13 w400 text-grey mb-2">-->
-                <!--                    <v-icon-->
-                <!--                        icon="mdi-store-outline"-->
-                <!--                        color="grey-lighten-1"-->
-                <!--                        class="ml-2" />-->
-                <!--                    <span>-->
-                <!--                        فروشگاه:-->
-                <!--                        {{content.shopping_name}}-->
-                <!--                    </span>-->
-                <!--                </div>-->
+                <div v-if="!noSeller" class="d-flex align-center t13 w400 text-grey mb-2">
+                    <v-icon
+                        icon="mdi-store-outline"
+                        color="grey-lighten-1"
+                        class="ml-2" />
+                    <span>
+                        فروشگاه:
+                        {{content.shps?.seller?.company_name}}
+                    </span>
+                </div>
             </div>
         </v-col>
         <v-col cols="3" class="d-flex product-card__price-info justify-end">
@@ -146,7 +148,12 @@ export default {
          */
         status: {
             type: String,
-        }
+        },
+
+        /**
+         * hide seller
+         */
+        noSeller: Boolean
     },
 
     methods: {

@@ -130,6 +130,10 @@ export default {
     },
 
     methods: {
+        /**
+         * Remove address
+         * @param {*} address 
+         */
         removeAddress(address) {
             axios
                 .delete(this.runtimeConfig.public.apiBase + `/user/profile/address/delete/${address.id}`, {
@@ -158,12 +162,15 @@ export default {
                 });
         },
 
+        /**
+         * Open drop down
+         * @param {*} id 
+         */
         openDropDown(id) {
             const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
             itemDropdown.classList.toggle('show');
-        }
+        },
     },
-
 }
 </script>
 

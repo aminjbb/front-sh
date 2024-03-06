@@ -71,6 +71,8 @@
 
                 <div class="d-flex justify-end">
                     <v-btn
+                    :disabled="isDisable"
+            
                         class="btn btn--submit"
                         @click="getLocation()"
                         color="grey-darken-1">
@@ -248,6 +250,7 @@ export default {
             valid: true,
             dialog: false,
             step: '1',
+            isDisable : true,
             form: {
                 address: '',
                 latLong: {
@@ -448,11 +451,14 @@ export default {
                 this.form.latLong.latitude = this.$refs.myMap.state.reverseResult.mapCoords[1]
                 this.form.latLong.longitude = this.$refs.myMap.state.reverseResult.mapCoords[0]
                 this.form.address = this.$refs.myMap.state.reverseResult.formatted_address
+                this.isDisable = false
             }, 1000)
+           
             return {
                 src: "https://img.icons8.com/fluency/344/find-clinic.png",
                 iconScale: 0.09
             }
+        
         },
 
         /**
@@ -468,6 +474,7 @@ export default {
          */
         closeModal() {
             this.dialog = false;
+            this.isDisable= true
         },
 
         /**
@@ -488,6 +495,7 @@ export default {
         editMode() {
             if (this.edit) {
                 this.step = '2'
+                this.isDisable = false
             }
         },
         /**
