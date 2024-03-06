@@ -14,7 +14,7 @@
             <svgEmptyCart />
             <h2 class="t13 w400 text-grey-darken-1 mt-5">سبد خرید شما خالی است!</h2>
             <v-btn
-                href="/product"
+                href="/"
                 title="مشاهده محصولات"
                 class="mt-5 btn btn--cancel">
                 مشاهده محصولات

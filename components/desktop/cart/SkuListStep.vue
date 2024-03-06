@@ -28,7 +28,19 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+    setup(){
+      const runtimeConfig = useRuntimeConfig()
+      const userToken = useCookie('userToken');
+      const randomNumberForBasket = useCookie('randomNumberForBasket')
+      return {
+        runtimeConfig,
+        randomNumberForBasket,
+        userToken
+      }
+    },
     props: {
         /**
          * Sku count
@@ -46,8 +58,31 @@ export default {
          * Delete all orders from vuex
          */
         deleteAllOrders() {
-            this.$store.commit('set_basket', []);
+          let endpoint = ''
+          if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
+            endpoint = `/basket/crud/delete?identifier=${this.randomNumberForBasket}`
+          }
+          else{
+            endpoint = `/basket/crud/delete`
+          }
+          axios.delete(this.runtimeConfig.public.apiBase + endpoint, {
+            headers: {
+              Authorization: `Bearer ${this.userToken}`,
+            },
+
+          }, )
+              .then((response) => {
+                this.$store.commit('set_basket' , '')
+                if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
+                  this.randomNumberForBasket = ''
+                }
+              })
+              .catch((err) => {
+
+              }).finally(() => {
+
+          })
         }
-    }
+    },
 }
 </script>
