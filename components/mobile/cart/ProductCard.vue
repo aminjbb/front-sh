@@ -113,13 +113,19 @@ import Basket from '@/composables/Basket.js'
 
 export default {
     setup() {
+      const randomNumberForBasket = useCookie('randomNumberForBasket')
+      const userToken = useCookie('userToken');
         const {
             addToBasket,
-            deleteShpsBasket
+            deleteShpsBasket,
+          beforeAuthAddToBasket
         } = new Basket()
         return {
             addToBasket,
-            deleteShpsBasket
+            deleteShpsBasket,
+          beforeAuthAddToBasket,
+          randomNumberForBasket,
+          userToken
         }
     },
     data() {
@@ -156,19 +162,48 @@ export default {
         splitChar,
 
         increaseCount() {
-            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
-                this.productCount++;
-                this.addToBasket(this.content ?.shps ?.id, this.productCount)
+          if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
+            if (this.userToken){
+              this.productCount++;
+              this.addToBasket(this.content ?.shps ?.id, this.productCount)
             }
+            else{
+              if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                this.productCount++;
+                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+              }
+              else{
+                const randomNumber = this.createRandomNumber()
+                this.randomNumberForBasket = randomNumber
+                this.productCount++;
+                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
+              }
+            }
+
+          }
         },
 
         decreaseCount() {
-            if (this.productCount > 1) {
-                this.productCount--;
-                this.addToBasket(this.content ?.shps ?.id, this.productCount)
-            } else {
-                this.deleteShpsBasket(this.content ?.shps ?.id)
+          if (this.productCount > 1) {
+            if (this.userToken){
+              this.productCount--;
+              this.addToBasket(this.content ?.shps ?.id, this.productCount)
             }
+            else{
+              if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                this.productCount--;
+                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+              }
+              else{
+                const randomNumber = this.createRandomNumber()
+                this.randomNumberForBasket = randomNumber
+                this.productCount--;
+                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
+              }
+            }
+          } else {
+            this.deleteShpsBasket(this.content ?.shps ?.id)
+          }
 
         },
     },
