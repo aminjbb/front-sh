@@ -115,13 +115,19 @@ import Basket from '@/composables/Basket.js'
 
 export default {
     setup() {
+      const randomNumberForBasket = useCookie('randomNumberForBasket')
+      const userToken = useCookie('userToken');
         const {
             addToBasket,
-            deleteShpsBasket
+            deleteShpsBasket,
+          beforeAuthAddToBasket
         } = new Basket()
         return {
             addToBasket,
-            deleteShpsBasket
+            deleteShpsBasket,
+          beforeAuthAddToBasket,
+          randomNumberForBasket,
+          userToken
         }
     },
     data() {
@@ -161,29 +167,54 @@ export default {
          * Increase count of product
          */
         increaseCount() {
-            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
+          if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
+            if (this.userToken){
+              this.productCount++;
+              this.addToBasket(this.content ?.shps ?.id, this.productCount)
+            }
+            else{
+              if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
                 this.productCount++;
-                this.addToBasket(this.content ?.shps ?.id, this.productCount)
-            }
-        },
-
-        /**
-         * Decrease count of product
-         */
-        decreaseCount() {
-            if (this.productCount > 1) {
-                this.productCount--;
-                this.addToBasket(this.content ?.shps ?.id, this.productCount)
-            } else {
-                this.$refs.deleteProduct.dialog = true;
+                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+              }
+              else{
+                const randomNumber = this.createRandomNumber()
+                this.randomNumberForBasket = randomNumber
+                this.productCount++;
+                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
+              }
             }
 
+          }
         },
+      /**
+       * Decrease count of product
+       */
+      decreaseCount() {
+        if (this.productCount > 1) {
+          if (this.userToken){
+            this.productCount--;
+            this.addToBasket(this.content ?.shps ?.id, this.productCount)
+          }
+          else{
+            if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+              this.productCount--;
+              this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+            }
+            else{
+              const randomNumber = this.createRandomNumber()
+              this.randomNumberForBasket = randomNumber
+              this.productCount--;
+              this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
+            }
+          }
+        } else {
+          this.$refs.deleteProduct.dialog = true;
+        }
+      },
 
-        /**
-         * Remove product from basket
-         */
-         removeProductFromBasket(){
+
+      removeProductFromBasket(){
             this.deleteShpsBasket(this.content ?.shps ?.id)
         }
     },

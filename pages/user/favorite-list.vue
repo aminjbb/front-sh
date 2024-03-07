@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-user v-user--favorite-list">
     <h1 class="ov-h h-0">لیست علاقمندی‌ها</h1>
 
