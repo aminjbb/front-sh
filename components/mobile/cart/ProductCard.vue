@@ -102,6 +102,8 @@
             </div>
         </div>
     </div>
+
+    <generalModalsDelete ref="deleteProduct" title="حذف کالاها از سبد" text="آیا از حذف تمام کالاها از سبد خرید اطمینان دارید؟ " submitText="حذف" @removeProduct="removeProductFromBasket"/>
 </section>
 </template>
 
@@ -155,6 +157,9 @@ export default {
     methods: {
         splitChar,
 
+        /**
+         * Increase count of product
+         */
         increaseCount() {
             if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
                 this.productCount++;
@@ -162,15 +167,25 @@ export default {
             }
         },
 
+        /**
+         * Decrease count of product
+         */
         decreaseCount() {
             if (this.productCount > 1) {
                 this.productCount--;
                 this.addToBasket(this.content ?.shps ?.id, this.productCount)
             } else {
-                this.deleteShpsBasket(this.content ?.shps ?.id)
+                this.$refs.deleteProduct.dialog = true;
             }
 
         },
+
+        /**
+         * Remove product from basket
+         */
+         removeProductFromBasket(){
+            this.deleteShpsBasket(this.content ?.shps ?.id)
+        }
     },
 
     mounted() {

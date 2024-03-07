@@ -73,23 +73,23 @@
 
                 <template v-if="content.count > 0 && content.site_stock > 0">
                     <template v-if="content.discount">
-                        <div v-if="content.current_total_site_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.current_site_price" class="d-flex align-center justify-space-between">
                             <span class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new  number-font">
-                                {{ splitChar(Number(String(content.current_total_site_price).slice(0, -1))) }}
+                                {{ splitChar(Number(String(content.current_site_price).slice(0, -1))) }}
                                 <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                             </span>
                         </div>
 
-                        <span v-if="content.current_total_customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                            <span class="number-font">{{ splitChar(Number(String(content.current_total_customer_price).slice(0, -1))) }}</span>
+                        <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span class="number-font">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
                         </span>
                     </template>
 
                     <template v-else>
-                        <div v-if="content.current_total_site_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.current_site_price" class="d-flex align-center justify-space-between">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
-                                {{ splitChar(Number(String(content.current_total_customer_price).slice(0, -1))) }}
+                                {{ splitChar(Number(String(content.current_site_price).slice(0, -1))) }}
                             </span>
                             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                         </div>
@@ -106,6 +106,8 @@
             </div>
         </v-col>
     </v-row>
+
+    <generalModalsDelete ref="deleteProduct" title="حذف کالاها از سبد" text="آیا از حذف تمام کالاها از سبد خرید اطمینان دارید؟ " submitText="حذف" @removeProduct="removeProductFromBasket"/>
 </section>
 </template>
 
@@ -165,6 +167,9 @@ export default {
     methods: {
         splitChar,
 
+        /**
+         * Increase count of product
+         */
         increaseCount() {
             if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
               if (this.userToken){
@@ -187,14 +192,17 @@ export default {
             }
         },
 
-      createRandomNumber(){
-        let result = '';
-        for(let i = 0; i < 20; i++) {
-          result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
-        }
-        return result
-      },
+        createRandomNumber(){
+            let result = '';
+            for(let i = 0; i < 20; i++) {
+            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+            }
+            return result
+        },
 
+        /**
+         * Decrease count of product
+         */
         decreaseCount() {
             if (this.productCount > 1) {
               if (this.userToken){
@@ -214,9 +222,16 @@ export default {
                 }
               }
             } else {
-                this.deleteShpsBasket(this.content ?.shps ?.id)
+                this.$refs.deleteProduct.dialog = true;
             }
         },
+
+        /**
+         * Remove product from basket
+         */
+        removeProductFromBasket(){
+            this.deleteShpsBasket(this.content ?.shps ?.id)
+        }
     },
 
     mounted() {
