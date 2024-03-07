@@ -215,6 +215,8 @@
             </template>
         </v-card>
     </v-dialog>
+
+    <generalUserProfileModal ref="profileModal" :phoneNumber="userDetail ?.phone_number" @profileSubmitted="openAddressModal()"/>
 </div>
 </template>
 
@@ -436,6 +438,7 @@ export default {
                     this.getUserAddress()
                 });
         },
+
         /**
          * go 'step' to 2 for show address detail
          */
@@ -458,16 +461,23 @@ export default {
             return {
                 src: "https://img.icons8.com/fluency/344/find-clinic.png",
                 iconScale: 0.09
-            }
-        
+            }       
         },
 
         /**
          * Open modal
          */
         openModal() {
+            if((this.userDetail?.name === null || this.userDetail?.name === '') && this.userDetail?.family_name === null || this.userDetail?.family_name === ''){
+                this.$refs.profileModal.dialog = true
+            } else{
+                this.dialog = true;
+                this.editMode();
+            }
+        },
+
+        openAddressModal(){
             this.dialog = true;
-            this.editMode();
         },
 
         /**
@@ -476,16 +486,15 @@ export default {
         closeModal() {
             this.dialog = false;
             this.isDisable= true
-            },
+        },
 
         /**
          * back 'step' to 1 for show map
          */
         showMap() {
-
             this.step = '1';
-
         },
+
         /**
          * get cities after select province
          */
@@ -500,6 +509,7 @@ export default {
                 this.isDisable = false
             }
         },
+
         /**
          * set address detail on form after monut modal
          */

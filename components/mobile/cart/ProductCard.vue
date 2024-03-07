@@ -102,6 +102,8 @@
             </div>
         </div>
     </div>
+
+    <generalModalsDelete ref="deleteProduct" title="حذف کالاها از سبد" text="آیا از حذف تمام کالاها از سبد خرید اطمینان دارید؟ " submitText="حذف" @removeProduct="removeProductFromBasket"/>
 </section>
 </template>
 
@@ -161,6 +163,9 @@ export default {
     methods: {
         splitChar,
 
+        /**
+         * Increase count of product
+         */
         increaseCount() {
           if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
             if (this.userToken){
@@ -182,30 +187,36 @@ export default {
 
           }
         },
-
-        decreaseCount() {
-          if (this.productCount > 1) {
-            if (this.userToken){
+      /**
+       * Decrease count of product
+       */
+      decreaseCount() {
+        if (this.productCount > 1) {
+          if (this.userToken){
+            this.productCount--;
+            this.addToBasket(this.content ?.shps ?.id, this.productCount)
+          }
+          else{
+            if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
               this.productCount--;
-              this.addToBasket(this.content ?.shps ?.id, this.productCount)
+              this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
             }
             else{
-              if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                this.productCount--;
-                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
-              }
-              else{
-                const randomNumber = this.createRandomNumber()
-                this.randomNumberForBasket = randomNumber
-                this.productCount--;
-                this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
-              }
+              const randomNumber = this.createRandomNumber()
+              this.randomNumberForBasket = randomNumber
+              this.productCount--;
+              this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
             }
-          } else {
-            this.deleteShpsBasket(this.content ?.shps ?.id)
           }
+        } else {
+          this.$refs.deleteProduct.dialog = true;
+        }
+      },
 
-        },
+
+      removeProductFromBasket(){
+            this.deleteShpsBasket(this.content ?.shps ?.id)
+        }
     },
 
     mounted() {

@@ -43,7 +43,7 @@
                             hide-details
                             :value="address" />
 
-                        <generalUserAddressCardSimple
+                        <generalUserAddressCard
                             :userDetail="userDetail"
                             :provinces="provinces"
                             class="flex-grow-1 border-0"
@@ -132,6 +132,15 @@ export default {
     beforeMount() {
         this.getUserAddress()
         this.getProvince()
+    },
+
+    watch:{
+        userAddress(val){
+            if (val){
+                this.addressModal= val[0]
+                this.selectAddress()
+            }
+        }
     }
 }
 </script>

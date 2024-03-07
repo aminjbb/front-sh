@@ -21,7 +21,7 @@
     </a>
 
     <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`">
-        <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title mb-2">
+        <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title card-title mb-2">
             {{content.label}}
         </h3>
     </a>
