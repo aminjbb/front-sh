@@ -1,7 +1,7 @@
 <template lang="">
 <main class="v-ticket">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
+        <a href="/user/ticket" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14">ثبت تیکت جدید</span>

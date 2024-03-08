@@ -19,7 +19,8 @@
                     <header class="card__header">لیست علاقمندی‌ها</header>
                     <v-row v-if="wishList && wishList.data && wishList.data.length > 0" class="favorite-list ma-0">
                         <v-col
-                            v-for="item in wishList.data"
+                            v-for="(item, index) in wishList.data"
+                            :key="`favorite${index}`"
                             cols="12"
                             class="favorite-list__item"
                             lg="4"
@@ -57,6 +58,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
@@ -90,6 +93,8 @@ export default {
         const title = ref('فروشگاه اینترنتی شاواز | لیست علاقه‌ مندی‌ ها');
         const description = ref("لیست علاقه‌ مندی ها");
 
+        const runtimeConfig = useRuntimeConfig()
+
         const {
             getUserWhishList,
             wishList
@@ -106,7 +111,8 @@ export default {
         return {
             userToken,
             getUserWhishList,
-            wishList
+            wishList,
+            runtimeConfig
         };
     },
 
@@ -132,11 +138,13 @@ export default {
                     });
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                    if(err.response?.data?.message){
+                        useNuxtApp().$toast.error(err.response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                    }
                 }).finally(() => {
                     this.loading = false;
                 });
@@ -156,4 +164,9 @@ export default {
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 @import '~/assets/scss/views/user.scss';
+.v-user--favorite-list{
+    .btn--submit{
+        width: 100%;
+    }
+}
 </style>

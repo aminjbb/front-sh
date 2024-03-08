@@ -12,8 +12,7 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
-        fullscreen
-        min-height="100%">
+        fullscreen>
         <div class="header__search-box active bg-white">
             <div class="header__search-box__inner d-flex align-center w-100 px-2">
                 <v-icon
@@ -298,12 +297,8 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
-.v-dialog > .v-overlay__content{
-    margin-bottom: 0 !important;
-}
 
 .search-result {
-
     .swiper-button-prev,
     .swiper-button-next {
         background: var(--Shade-white, #FFF);

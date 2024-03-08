@@ -24,6 +24,22 @@
             height: 122px;
             background: url('~/assets/images/faq.jpg') no-repeat center center;
             background-size: 100% auto;
+            
+            @include gbp (0, 768) {
+                margin-bottom: 10px;
+            }
+        }
+
+        @include gbp (0, 768) {
+            flex-direction: column;
+        }
+
+        &__content{
+            @include gbp (0, 768) {
+                p,h2{
+                    text-align: center;
+                }
+            }
         }
     }
 

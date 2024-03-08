@@ -8,7 +8,7 @@
                 <div class="faq-box__image ml-10" />
                 <div class="faq-box__content">
                     <h2 class="t16 w400 text-grey-darken-3 mb-5">تماس با شاواز</h2>
-                    <p class="ma-0 t12 w400 text-grey-darken-1">لطفا پیش از ثبت تیکت، ابتدا بخش <a href="/faq" class="text-blue">سوالات متداول</a> را مطالعه نمایید.
+                    <p class="ma-0 t13 w400 text-grey-darken-1">لطفا پیش از ثبت تیکت، ابتدا بخش <a href="/faq" class="text-blue">سوالات متداول</a> را مطالعه نمایید.
                     </p>
                 </div>
             </div>
@@ -234,7 +234,7 @@ export default {
                     value: 'category2'
                 },
                 {
-                    label: 'ارتباط با واحد دیجیتال مارکتیمگ',
+                    label: 'ارتباط با واحد دیجیتال مارکتینگ',
                     value: 'category2'
                 },
                 {
