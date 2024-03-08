@@ -39,7 +39,7 @@
 
                     <template v-if="ticketList && ticketList.data && ticketList.data.length">
                         <div class="px-2 pb-5">
-                            <generalTicketTable :tableHeader="tableHeader" :items="ticketList.data"/>
+                            <generalTicketTable :tableHeader="tableHeader" :items="formatTransaction"/>
                         </div>
                     </template>
 
@@ -94,6 +94,15 @@ export default {
                 key: '',
             }],
         }
+    },
+
+    computed:{
+        formatTransaction() {
+            const transactionArray = this.ticketList?.data;
+
+            const finalArray = transactionArray.reverse();
+            return finalArray;
+        },
     },
 
     setup() {
