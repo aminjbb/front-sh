@@ -187,7 +187,7 @@ export default {
   async getUserHasPassword(token) {
     try {
 
-      const response = await axios.get(`${this.runtimeConfig.public.apiBase}/user/profile/password/has`, {
+      const response = await axios.get(`${this.runtimeConfig().public.apiBase}/user/profile/password/has`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
