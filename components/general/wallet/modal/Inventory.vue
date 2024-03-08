@@ -64,7 +64,7 @@
                             <v-icon icon="mdi-plus" color="grey-darken-1" />
                         </div>
                         <div class="flex-grow-1">
-                            <v-text-field :class={error} density="compact" variant="outlined" hide-details placeholder="مبلغ برداشت" v-model="mount" />
+                            <v-text-field :class={error} type="number" density="compact" variant="outlined" hide-details placeholder="مبلغ برداشت" v-model="mount" />
                         </div>
                         <div
                             class="mr-3"

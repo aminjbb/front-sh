@@ -90,14 +90,6 @@
             class="btn btn--submit">
             افزودن به سبد
         </v-btn>
-        <!-- <v-btn
-            :loading="loading"
-            @click="addToCard()"
-            height="44"
-            title="افزودن به سبد"
-            class="btn btn--submit">
-            افزودن به سبد
-        </v-btn> -->
     </div>
 </div>
 </template>

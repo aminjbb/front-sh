@@ -21,6 +21,7 @@
                 <v-text-field
                     v-model="mobile"
                     :rules="mobileRule"
+                    type="number"
                     class=""
                     variant="outlined"
                     placeholder="۰۹*********"/>
@@ -132,6 +133,7 @@
                 <v-text-field
                     v-model="otp"
                     :rules="otpRule"
+                    type="number"
                     class=""
                     variant="outlined"/>
 

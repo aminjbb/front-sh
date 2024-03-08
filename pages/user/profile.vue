@@ -59,8 +59,7 @@
                                     density="compact"
                                     variant="outlined"
                                     label="کد ملی"
-                                    v-model="form.national_code" 
-                                    :rules="[v => v.length === 11 || 'کد ملی باید 11 رقم باشد']"/>
+                                    v-model="form.national_code" />
                             </v-col>
 
                             <v-col cols="12" md="6" class="form-date">

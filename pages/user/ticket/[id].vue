@@ -208,6 +208,7 @@ export default {
 
                     this.images = [];
                     this.$refs.imageUploader.files = [];
+                    this.showAnswerBox = false;
                 })
                 .catch((err) => {
                     useNuxtApp().$toast.error(err.response.data.message, {
