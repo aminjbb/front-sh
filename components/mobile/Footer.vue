@@ -43,7 +43,7 @@
                 </a>
             </li>
             <li v-else class="footer__menu__item">
-                <a href="/login" :class="{ active: isActive('/login') }">
+                <a href="/login" @click="goLoginPage()">
                     <v-icon icon="mdi-login" />
                     <span class="t12 w-400">ورود | ثبت نام</span>
                 </a>
@@ -102,7 +102,15 @@ export default {
          */
         isActive(route) {
             return this.$route.path === route;
-        }
+        },
+
+        /**
+         * Login
+         */
+         goLoginPage(){
+            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
+            this.$router.push('/login')
+        },
     }
 }
 </script>

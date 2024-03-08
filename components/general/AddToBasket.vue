@@ -115,6 +115,10 @@ export default {
     },
 
     methods: {
+      /**
+       * Add to card
+       * @param {*} id 
+       */
         async addToCard(id) {
           if (this.userToken){
             this.count ++;
@@ -133,6 +137,7 @@ export default {
             }
           }
         },
+
         createRandomNumber(){
           let result = '';
           for(let i = 0; i < 20; i++) {
@@ -140,8 +145,12 @@ export default {
           }
           return result
         },
+
+        /**
+         * Increase count of product
+         */
         increaseCount() {
-            if (this.count < this.content.order_limit) {
+            if (this.count < this.content.order_limit && this.count < this.content.site_stock) {
               if (this.userToken){
                 this.count ++;
                 this.addToBasket(this.content.id  , this.count)
@@ -159,8 +168,18 @@ export default {
                 }
               }
 
+            }else{
+              useNuxtApp().$toast.error('تعداد کالای درخواستی از خد محاز موجود در سید،بیشتر است.', {
+                  rtl: true,
+                  position: 'top-center',
+                  theme: 'dark'
+              });
             }
         },
+
+        /**
+         * Decrease count of product
+         */
         decreaseCount() {
             if (this.count > 0) {
                 this.count--;
@@ -181,10 +200,6 @@ export default {
                   }
                 }
             }
-            else{
-
-            }
-            
         },
     },
 

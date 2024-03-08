@@ -189,6 +189,12 @@ export default {
                 }
               }
 
+            }else{
+              useNuxtApp().$toast.error('تعداد کالای درخواستی از خد محاز موجود در سید،بیشتر است.', {
+                  rtl: true,
+                  position: 'top-center',
+                  theme: 'dark'
+              });
             }
         },
 

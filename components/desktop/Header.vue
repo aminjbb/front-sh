@@ -88,7 +88,7 @@
                         </ul>
                     </nav>
                 </div>
-                <a v-else class="header__item header__item--btn t12 w400 text-grey" href="/login">
+                <a v-else class="header__item header__item--btn t12 w400 text-grey" @click="goLoginPage()">
                     <v-icon icon="mdi-login" color="grey" />
                     ورود | ثبت نام
                 </a>
@@ -313,20 +313,37 @@ export default {
             document.body.classList.add('active-basket');
         },
 
+        /**
+         * Open modal
+         */
         openModal() {
             this.dialog = true;
         },
 
+        /**
+         * Close modal
+         */
         closeModal() {
             this.dialog = false;
         },
 
+        /**
+         * Logout
+         */
         logout() {
             this.userToken = '';
             window.location = '/';
             this.closeModal();
             const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
             itemDropdown.classList.toggle('show');
+        },
+
+        /**
+         * Login
+         */
+        goLoginPage(){
+            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
+            this.$router.push('/login')
         },
 
         /**
