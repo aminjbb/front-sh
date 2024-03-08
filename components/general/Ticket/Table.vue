@@ -17,7 +17,7 @@
                     <span class="w600 text-black ml-10" v-if="isMobile">شماره تیکت: </span>
 
                     <template v-if="isMobile">
-                        <a class="text-blue number-font" :href="`/user/ticket/${id}`">
+                        <a class="text-blue number-font" :href="`/user/ticket/${item.raw.id}`">
                             {{ item.raw.id }}
                         </a>
                     </template>

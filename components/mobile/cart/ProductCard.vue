@@ -161,9 +161,15 @@ export default {
          * Increase count of product
          */
         increaseCount() {
-            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit)) {
+            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
                 this.productCount++;
                 this.addToBasket(this.content ?.shps ?.id, this.productCount)
+            }else{
+              useNuxtApp().$toast.error('تعداد کالای درخواستی از خد محاز موجود در سید،بیشتر است.', {
+                  rtl: true,
+                  position: 'top-center',
+                  theme: 'dark'
+              });
             }
         },
 

@@ -34,6 +34,9 @@
 
     <template v-if="activeStep === 2">
         <mobileCartSendingInformationAddress @selectedAddress="getAddress" :userDetail="userDetail" />
+
+        <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/24 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
+
         <mobileCartSendingInformationTime @selectedDate="getTime" @selectedWay="getWay" />
     </template>
 

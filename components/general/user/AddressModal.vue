@@ -34,7 +34,8 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
-        class="full full-button"
+        class="full-button"
+        :fullscreen="screenType === 'mobile'? true : false"
         width="856px">
         <v-card class="pt-3 px-6 pb-5">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1 border-0">
@@ -54,11 +55,11 @@
 
             <template v-if="step === '1'">
                 <p class="t12 w400 text-grey mb-5">موقعیت مکانی آدرس را در نقشه زیر مشخص کنید.</p>
-                <div class="map mb-5">
+                <div class="map mb-5 flex-grow-1">
                     <ClientOnly>
                         <NeshanMap
-                            height="420px"
                             ref="myMap"
+                            :viewType="screenType === 'mobile' ? 'mobile' : 'desktop'"
                             :mapKey="runtimeConfig.public.neshanMapKey"
                             :serviceKey="runtimeConfig.public.serviceKey"
                             :center="form.latLong"
@@ -252,6 +253,7 @@ export default {
             dialog: false,
             step: '1',
             isDisable : true,
+            screenType: null,
             form: {
                 address: '',
                 latLong: {
@@ -535,8 +537,9 @@ export default {
     },
 
     mounted() {
-        this.setAddressForm()
-    }
+        this.setAddressForm(),
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 }
 </script>
 
