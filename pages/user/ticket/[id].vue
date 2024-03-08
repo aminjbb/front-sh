@@ -19,6 +19,7 @@
                         <span>جزئیات تیکت</span>
 
                         <v-btn
+                            v-if="singleTicket.status !== 'resolved'"
                             @click="showAnswer()"
                             height="36"
                             title="ثبت پاسخ"
@@ -50,7 +51,7 @@
                     color="grey-lighten-1"
                     class="mb-3" />
 
-                <div v-if="!showAnswerBox" class="xs-show px-3">
+                <div v-if="!showAnswerBox && singleTicket.status !== 'resolved'" class="xs-show px-3">
                     <v-btn
                         @click="showAnswer()"
                         height="36"
@@ -60,7 +61,7 @@
                     </v-btn>
                 </div>
 
-                <v-card v-if="showAnswerBox" class="pa-8 mobile-pa-0 mobile-no-border">
+                <v-card v-if="showAnswerBox && singleTicket.status !== 'resolved'" class="pa-8 mobile-pa-0 mobile-no-border">
                     <div class="ticket__form px-3">
                         <v-form ref="ticket" v-model="valid">
                             <v-row>

@@ -75,14 +75,14 @@
         <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>
     </div>
 
-    <div v-if="functions" class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
-        <v-btn
-            :href="`/sku/${content.slug}`"
-            height="44"
-            title="مشاهده محصول"
-            class="btn btn--cancel">
-            مشاهده محصول
-        </v-btn>
+    <div v-if="functions" class="d-flex align-center justify-end mt-2 mobile-pa-0 w-100">
+<!--        <v-btn-->
+<!--            :href="`/sku/${content.slug}`"-->
+<!--            height="44"-->
+<!--            title="مشاهده محصول"-->
+<!--            class="btn btn&#45;&#45;cancel">-->
+<!--            مشاهده محصول-->
+<!--        </v-btn>-->
         <v-btn
             :href="`/sku/${content.slug}`"
             height="44"
