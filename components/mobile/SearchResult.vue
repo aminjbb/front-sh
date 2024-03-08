@@ -12,8 +12,7 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
-        transition="scroll-y-reverse-transition"
-        width:="100%"
+        fullscreen
         min-height="100%">
         <div class="header__search-box active bg-white">
             <div class="header__search-box__inner d-flex align-center w-100 px-2">

@@ -470,7 +470,7 @@ export default {
          * Open modal
          */
         openModal() {
-            if((this.userDetail?.name === null || this.userDetail?.name === '') && this.userDetail?.family_name === null || this.userDetail?.family_name === ''){
+            if((this.userDetail?.first_name === null || this.userDetail?.first_name === '') && (this.userDetail?.last_name === null || this.userDetail?.last_name === '')){
                 this.$refs.profileModal.dialog = true
             } else{
                 this.dialog = true;

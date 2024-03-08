@@ -22,7 +22,7 @@
                             id="mega-menu">
                             <v-container>
                                 <ul class="menu__items" @mouseleave="hideBodyCover">
-                                    <li v-for="child1 in menu.children" :key="child1.id">
+                                    <li v-for="(child1, index) in menu.children" :key="child1.id" :class="index === 0 ? {'firstOpen' : firstOpen} : ''" @mouseenter="removeFirstOpen">
                                         <a>
                                             <div>
                                                 <v-icon :icon="`mdi-${child1.icon}`" class="ml-1" />
@@ -156,7 +156,9 @@
 import Menu from '~/composables/Menu';
 export default {
     data() {
-        return {}
+        return {
+            firstOpen: false
+        }
     },
 
     setup() {
@@ -186,6 +188,7 @@ export default {
                 document.getElementById('mega-menu').style.display = "block";
                 document.getElementById('mega-menu').style.zIndex = "1000";
                 document.body.classList.add('active');
+                this.firstOpen = true;
             }
         },
 
@@ -194,6 +197,10 @@ export default {
             document.getElementById('mega-menu').style.display = "none";
             document.getElementById('mega-menu').style.zIndex = "10";
             document.body.classList.remove('active');
+        },
+
+        removeFirstOpen(){
+            this.firstOpen = false;
         }
     },
 }
@@ -339,6 +346,19 @@ $parent: 'menu';
                                 }
 
                                 &:hover {
+                                    background-color: #FCE4EC;
+
+                                    >span,
+                                    >.v-icon {
+                                        color: #811750;
+                                    }
+
+                                    >div.menu__items__image-child {
+                                        display: flex;
+                                    }
+                                }
+
+                                &.firstOpen{
                                     background-color: #FCE4EC;
 
                                     >span,
