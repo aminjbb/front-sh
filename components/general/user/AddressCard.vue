@@ -157,7 +157,8 @@ export default {
                         theme: 'dark'
                     });
                 }).finally(() => {
-                    this.$refs[`deleteAddress${address.id}`];
+                    this.$refs[`deleteAddress${address.id}`].loading = false;
+                    this.$refs[`deleteAddress${address.id}`].dialog = false;
                     this.getUserAddress()
                 });
         },

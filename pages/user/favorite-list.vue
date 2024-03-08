@@ -26,6 +26,7 @@
                             lg="4"
                             md="6">
                             <generalProductCard
+                                :ref="`product${item.id}`"
                                 hideInfo
                                 functions
                                 removeIcon
@@ -62,29 +63,7 @@ import axios from "axios";
 
 export default {
     data() {
-        return {
-            favoriteList: [{
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                }
-            ]
-        }
+        return {}
     },
 
     setup() {
@@ -122,6 +101,7 @@ export default {
          * @param {*} content 
          */
         removeProduct(content) {
+            console.log('wdw',content);
             axios
                 .delete(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/delete/${content.id}`, {
                     headers: {
@@ -147,6 +127,8 @@ export default {
                     }
                 }).finally(() => {
                     this.loading = false;
+                    this.$refs[`product${content.id}`].$refs.removeProduct.loading = false;
+                    this.$refs[`product${content.id}`].$refs.removeProduct.dialog = false;
                 });
         }
     },
