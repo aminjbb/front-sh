@@ -189,7 +189,11 @@ export default {
         async fetchUserProfile() {
             try {
                 const response = await auth.getUserProfile(this.userToken)
+              if (response.data.data)
+              {
                 this.userData = response.data.data
+              }
+
 
             } catch (error) {
                 // Handle errors

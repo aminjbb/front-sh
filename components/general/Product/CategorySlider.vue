@@ -37,7 +37,7 @@
             class="mySwiper">
             <swiper-slide v-for="(item, index) in items" :key="`brands-${index}`">
                 <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="`/product/${item?.page?.slug}`" :title="item.label">
-                    <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="116" height="116" />
+                    <img :src="item?.image?.image_url" :title="item.label" :alt="item.label" width="116" height="116" />
                     <h2 class="t16 w400 mt-2 text-grey-darken-2 text-center">{{item.label}}</h2>
                 </a>
             </swiper-slide>

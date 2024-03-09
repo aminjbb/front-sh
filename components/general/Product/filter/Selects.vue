@@ -70,18 +70,30 @@ export default {
          */
         filteredItems() {
             if (this.searchItem == null || this.searchItem == '') {
+
                 return this.items.sort((a, b) =>{
                  if (a.name)  a.name.localeCompare(b.name)
                   else  a.value.localeCompare(b.value)
                 });
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
-                return this.items
-                    .sort((a, b) => a.value.localeCompare(b.value))
-                    .filter(
-                        (brand) =>
-                        brand.value.toLowerCase().includes(lowerCaseSearch)
-                    );
+                if (this.param == 'brands'){
+                  return this.items
+                      .sort((a, b) => a.label.localeCompare(b.label))
+                      .filter(
+                          (brand) =>
+                              brand.label.toLowerCase().includes(lowerCaseSearch)
+                      );
+                }
+                else{
+                  return this.items
+                      .sort((a, b) => a.value.localeCompare(b.value))
+                      .filter(
+                          (brand) =>
+                              brand.value.toLowerCase().includes(lowerCaseSearch)
+                      );
+                }
+
             }
         },
     },

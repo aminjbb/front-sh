@@ -166,6 +166,8 @@
 
 <script>
 
+import login from "~/pages/auth/login/index.vue";
+
 export default {
     name: "Desktop Header",
 
@@ -176,7 +178,6 @@ export default {
             isFixed: true,
             isHidden: false,
             lastScrollTop: 0,
-            isLogin: false,
             dialog: false,
             hasBanner: false,
             isBanner: false,
@@ -186,6 +187,13 @@ export default {
     },
 
     computed: {
+      isLogin(){
+        if (this.userData.phone_number) {
+          return true
+        } else {
+          return false
+        };
+      },
         userBasket() {
             try {
                 const basket = this.$store.getters['get_basket']
@@ -216,7 +224,6 @@ export default {
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         window.addEventListener('click', this.closeDropDown);
-
         const banner = document.getElementById("top-banner");
         if (banner) {
             this.isBanner = true;
@@ -224,17 +231,12 @@ export default {
             document.getElementsByTagName('body')[0].classList.add('hasBanner');           
         }
 
-        if (this.userData) {
-            this.isLogin = true
-        } else {
-            this.isLogin = false
-        };
     },
 
     beforeDestroy() {
-        window.removeEventListener('scroll', this.handleScroll);
-        window.removeEventListener('click', this.closeDropDown);
-    },
+          window.removeEventListener('scroll', this.handleScroll);
+          window.removeEventListener('click', this.closeDropDown);
+      },
 
     methods: {
 
@@ -332,6 +334,7 @@ export default {
             this.userToken = '';
             window.location = '/';
             this.closeModal();
+            this.$store.commit('set_userData' , '')
             const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
             itemDropdown.classList.toggle('show');
         },
@@ -344,6 +347,8 @@ export default {
             this.$router.push('/login')
         },
     },
+
+
 };
 </script>
 
