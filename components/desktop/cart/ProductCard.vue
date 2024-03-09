@@ -58,17 +58,13 @@
         <v-col cols="3" class="d-flex product-card__price-info justify-end">
             <div>
                 <div class="product-card__product-count mb-3">
-                    <v-icon
-                        icon="mdi-plus"
-                        color="grey"
-                        @click="increaseCount()" />
-                    <span class="t16 w300 text-grey-darken-2 number-font">
-                        {{ productCount }}
-                    </span>
-                    <v-icon
-                        :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'"
-                        color="grey"
-                        @click="decreaseCount()" />
+                        <v-btn variant="plain" :loading="loadingAddBasket" class="pa-0 w-100">
+                            <v-icon icon="mdi-plus" color="grey" size="small" @click="increaseCount()" class="mx-3"/>
+                            <span class="t14 w300 text-grey-darken-2 number-font">
+                                {{ productCount }}
+                            </span>
+                            <v-icon class="mx-3" :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'" color="grey" size="small" @click="decreaseCount()" />
+                        </v-btn>
                 </div>
 
                 <template v-if="content.count > 0 && content.site_stock > 0">
@@ -87,7 +83,7 @@
                     </template>
 
                     <template v-else>
-                        <div v-if="content.current_site_price" class="d-flex align-center justify-space-between">
+                        <div v-if="content.current_site_price" class="d-flex align-center justify-end">
                             <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font">
                                 {{ splitChar(Number(String(content.current_site_price).slice(0, -1))) }}
                             </span>
@@ -124,14 +120,18 @@ export default {
         const {
             addToBasket,
             deleteShpsBasket,
-          beforeAuthAddToBasket
+            beforeAuthAddToBasket,
+            count,
+            loadingAddBasket
         } = new Basket()
         return {
             addToBasket,
             deleteShpsBasket,
-          beforeAuthAddToBasket,
-          randomNumberForBasket,
-          userToken
+            beforeAuthAddToBasket,
+            randomNumberForBasket,
+            userToken,
+            count,
+            loadingAddBasket
         }
     },
     data() {
@@ -167,37 +167,6 @@ export default {
     methods: {
         splitChar,
 
-        /**
-         * Increase count of product
-         */
-        increaseCount() {
-            if ((this.content?.shps?.order_limit !== null) && (this.productCount < this.content?.shps?.order_limit) && (this.productCount < this.content?.site_stock)) {
-              if (this.userToken){
-                this.productCount++;
-               this.addToBasket(this.content ?.shps ?.id, this.productCount)
-              }
-              else{
-                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                  this.productCount++;
-                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
-                }
-                else{
-                  const randomNumber = this.createRandomNumber()
-                  this.randomNumberForBasket = randomNumber
-                  this.productCount++;
-                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
-                }
-              }
-
-            }else{
-              useNuxtApp().$toast.error('تعداد کالای درخواستی از خد محاز موجود در سید،بیشتر است.', {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
-              });
-            }
-        },
-
         createRandomNumber(){
             let result = '';
             for(let i = 0; i < 20; i++) {
@@ -207,26 +176,46 @@ export default {
         },
 
         /**
+         * Increase count of product
+         */
+         increaseCount() {
+            if ((this.content ?.shps ?.order_limit !== null) && (this.productCount < this.content ?.shps ?.order_limit) && (this.productCount < this.content.site_stock)) {
+                if (this.userToken) {
+                    this.addToBasket(this.content ?.shps ?.id, this.productCount,'increase')
+                } else {
+                    if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket,'increase')
+                    } else {
+                        const randomNumber = this.createRandomNumber()
+                        this.randomNumberForBasket = randomNumber
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber,'increase')
+                    }
+                }
+            } else{
+                useNuxtApp().$toast.error('تعداد کالای درخواستی از حد مجاز موجود در سبد، بیشتر است.', {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            }
+        },
+
+        /**
          * Decrease count of product
          */
-        decreaseCount() {
+         decreaseCount() {
             if (this.productCount > 1) {
-              if (this.userToken){
-                this.productCount--;
-                this.addToBasket(this.content ?.shps ?.id, this.productCount)
-              }
-              else{
-                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                  this.productCount--;
-                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,this.randomNumberForBasket)
+                if (this.userToken) {
+                    this.addToBasket(this.content ?.shps ?.id, this.productCount, 'decrease')
+                } else {
+                    if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket, 'decrease')
+                    } else {
+                        const randomNumber = this.createRandomNumber()
+                        this.randomNumberForBasket = randomNumber
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber, 'decrease')
+                    }
                 }
-                else{
-                  const randomNumber = this.createRandomNumber()
-                  this.randomNumberForBasket = randomNumber
-                  this.productCount--;
-                  this.beforeAuthAddToBasket(this.content ?.shps ?.id  ,  this.productCount ,randomNumber)
-                }
-              }
             } else {
                 this.$refs.deleteProduct.dialog = true;
             }
@@ -237,6 +226,7 @@ export default {
          */
         removeProductFromBasket(){
             this.deleteShpsBasket(this.content ?.shps ?.id)
+            this.$refs.deleteProduct.dialog =false;
         }
     },
 

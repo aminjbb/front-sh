@@ -19,10 +19,26 @@ export default function setup() {
     const store = useStore()
     const voucher = ref({})
     const transactionData = ref({})
+    const loadingAddBasket = ref(false)
+    const count = ref(0)
+
+    /**
+     * Create random number
+     * @returns 
+     */
+    async function createRandomNumber(){
+        let result = '';
+        for(let i = 0; i < 20; i++) {
+            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+        }
+        return result
+
+    }
 
     /** get user basket and save on vuex **/
     async function getBasket() {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
+       
         if (userToken.value){
             axios
                 .get(runtimeConfig.public.apiBase + `/basket/crud/get`, {
@@ -32,6 +48,7 @@ export default function setup() {
                 })
                 .then((response) => {
                     store.commit('set_basket', response)
+                    loadingAddBasket.value = false;
                 })
                 .catch((err) => {
                    if ( err.response.status === 401 ||  err.response.status === 403) {
@@ -43,61 +60,94 @@ export default function setup() {
             if (randomNumberForBasket.value && randomNumberForBasket.value != "") getBasketBeforeLogin()
         }
     };
+
+    /**
+     * Get Basket before login
+     */
     async function getBasketBeforeLogin() {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
         axios
             .get(runtimeConfig.public.apiBase + `/basket/crud/get?identifier=${randomNumberForBasket.value}`, {
             })
             .then((response) => {
-                store.commit('set_basket', response)
+                store.commit('set_basket', response);
+                loadingAddBasket.value = false;
             })
             .catch((err) => {
                 //auth.checkAuthorization(err.response)
             });
     };
 
-    async function addToBasket(shps , count) {
+    /**
+     * Add Shps to basket
+     * @param {*} shps 
+     * @param {*} count 
+     * @param {*} method 
+     */
+    async function addToBasket(shps , countMain, method) {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
+        loadingAddBasket.value = true;
+
+        if(countMain !== 0){
+            count.value = countMain
+        }
+
+        if(method === 'increase'){
+            count.value = count.value + 1
+        }else if(method === 'decrease' && count.value !== 0){
+            count.value = count.value - 1
+        }
+
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
                 shps:shps,
-                count:count
+                count:count.value
             }, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
             })
             .then((response) => {
-                getBasket()
+                getBasket();
             })
             .catch((err) => {
                 if (err.response.status === 401){
                     if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
-                        beforeAuthAddToBasket(shps , count)
+                        beforeAuthAddToBasket(shps , countMain, randomNumberForBasket.value, method)
                     }
                     else{
                         const randomNumber = createRandomNumber()
                         randomNumberForBasket.value = randomNumber
-                        this.count ++;
-                        beforeAuthAddToBasket(shps , count)
+                        beforeAuthAddToBasket(shps , countMain, randomNumber, method)
                     }
                 }
                 // auth.checkAuthorization(err.response)
             });
     };
-    async function createRandomNumber(){
-        let result = '';
-        for(let i = 0; i < 20; i++) {
-            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
-        }
-        return result
 
-    }
-    async function beforeAuthAddToBasket(shps , count , number) {
+    /**
+     * Add shps to basket before login
+     * @param {*} shps 
+     * @param {*} count 
+     * @param {*} number 
+     */
+    async function beforeAuthAddToBasket(shps , countMain , number, method) {
+        loadingAddBasket.value = true;
+
+        if(countMain !== 0){
+            count.value = countMain
+        }
+
+        if(method === 'increase'){
+            count.value = count.value + 1
+        }else if(method === 'decrease' && count.value !== 0){
+            count.value = count.value - 1
+        } 
+        
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
                 shps:shps,
-                count:count,
+                count:count.value ,
                 identifier:number
             })
             .then((response) => {
@@ -112,7 +162,15 @@ export default function setup() {
             });
     };
 
+    /**
+     * Remove shps from basket
+     * @param {*} shps 
+     */
     async function deleteShpsBasket(shps ) {
+        loadingAddBasket.value = true;
+
+        count.value = 0;
+        
         const formData = new FormData()
         formData.append('shps' , shps)
         if (randomNumberForBasket.value && randomNumberForBasket.value != ""){
@@ -133,6 +191,11 @@ export default function setup() {
             });
     };
 
+    /**
+     * Calculate sending price
+     * @param {*} address_id 
+     * @param {*} sending_method 
+     */
     async function calculateSendingPrice(address_id , sending_method ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/calculate/sending/price`, {
@@ -151,6 +214,10 @@ export default function setup() {
             });
     };
 
+    /**
+     * Calculate voucher
+     * @param {*} code 
+     */
     async function calculateVoucher(code ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/calculate/voucher`, {
@@ -174,6 +241,9 @@ export default function setup() {
             });
     };
 
+    /**
+     * Delete voucher from basket
+     */
     async function deleteVoucherFromBasket() {
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/delete/voucher`, {}, {
@@ -196,6 +266,13 @@ export default function setup() {
             });
     };
 
+    /**
+     * Create order in Step4 in basket
+     * @param {*} sending_method 
+     * @param {*} invitation_code 
+     * @param {*} address_id 
+     * @param {*} payment_method 
+     */
     async function createOrder(sending_method , invitation_code , address_id , payment_method ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/crud/create`, {
@@ -231,6 +308,9 @@ export default function setup() {
             });
     };
 
+    /**
+     * Get transaction data
+     */
     async function getTransactionData() {
         axios
             .get(runtimeConfig.public.apiBase + `/finance/user/transaction/crud/get?token=${route.query.token}`, {
@@ -246,6 +326,10 @@ export default function setup() {
             });
     };
 
+    /**
+     * Create failed order
+     * @param {*} orderId 
+     */
     async function createFailedOrder(orderId) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/crud/pay/${orderId}`, {},{
@@ -269,6 +353,6 @@ export default function setup() {
 
     return {getBasket, loading ,addToBasket , deleteShpsBasket ,
         calculateSendingPrice , createOrder,calculateVoucher,voucher,
-        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket }
+        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket,loadingAddBasket, count }
 }
 
