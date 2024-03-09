@@ -22,6 +22,7 @@
 <script>
 import LoadingModal from "~/components/general/LoadingModal.vue";
 import Basket from '@/composables/Basket.js'
+import auth from '@/middleware/auth';
 
 export default {
     name: "layout",
@@ -43,11 +44,13 @@ export default {
     },
 
     setup() {
+        const userToken = useCookie('userToken')
         const {
             getBasket
         } = new Basket()
         return {
-            getBasket
+            getBasket,
+            userToken
         }
     },
 
@@ -59,6 +62,25 @@ export default {
         if (this.$route.name !== 'login' && this.$route.name !== 'forgotPassword') {
             this.getBasket();
         }
+    },
+
+    created(){
+        this.fetchUserProfile();
+    },
+
+    methods:{
+        /**
+         * fetch user data
+         */
+         async fetchUserProfile() {
+            try {
+                const response = await auth.getUserProfile(this.userToken)
+                this.$store.commit('set_userData', response.data.data)
+
+            } catch (error) {
+                // Handle errors
+            }
+        },
     }
 
 }

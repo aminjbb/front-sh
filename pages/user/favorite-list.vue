@@ -127,8 +127,8 @@ export default {
                     }
                 }).finally(() => {
                     this.loading = false;
-                    this.$refs[`product${content.id}`].$refs.removeProduct.loading = false;
-                    this.$refs[`product${content.id}`].$refs.removeProduct.dialog = false;
+                    this.$refs[`product${content.id}`][0].$refs.refRemoveProduct.loading = false;
+                    this.$refs[`product${content.id}`][0].$refs.refRemoveProduct.dialog = false;
                 });
         }
     },

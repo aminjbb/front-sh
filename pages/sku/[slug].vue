@@ -65,7 +65,8 @@
             :attrs="pdpSecondaryData?.specifics"
             :instructions="pdpSecondaryData?.how_to_use"
             :advantages="pdpSecondaryData?.advantage"
-            :disadvantages="pdpSecondaryData?.disadvantage" />
+            :disadvantages="pdpSecondaryData?.disadvantage"
+            :userUse = "pdpSecondaryData?.uses_case"/>
 
         <v-divider color="grey" class="mt-5" />
 
