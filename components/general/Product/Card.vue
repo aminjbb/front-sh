@@ -6,7 +6,7 @@
 
     <div v-if="deleteIcon" class="product-card__delete">
         <generalModalsDelete
-            ref="removeProduct"
+            ref="refRemoveProduct"
             title="حذف محصول"
             text="آیا از حذف این محصول از لیست علاقمندی ها اطمینان دارید؟"
             submitText="حذف کالا"

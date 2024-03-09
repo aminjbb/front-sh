@@ -12,7 +12,7 @@
                         color="grey"
                         class="ml-1" />
 
-                    <span class="t14 w500 text-grey-darken-1">توضیحات</span>
+                    <span class="t14 w500 text-grey-darken-1">نقد و بررسی</span>
                 </a>
             </li>
 
@@ -80,7 +80,7 @@
                     icon="mdi-note-text-outline"
                     color="grey"
                     class="ml-2 xs-show" />
-                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">توضیحات</h3>
+                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">نقد و بررسی</h3>
             </header>
 
             <p
@@ -101,7 +101,7 @@
             </header>
 
             <div v-if="attrs" class="complete-details__product-info__table mt-2 mb-7">
-                <div class="d-flex align-center w-100 pa-0" v-for="(attr, indx) in attrs">
+                <div class="d-flex align-center w-100 pa-0" v-for="(attr, index) in attrs" :key="`tab1${index}`">
                     <div class="text-grey t13 w400 pr-2 pl-10 py-3">{{attr.attribute}}</div>
                     <div class="text-grey-darken-2 t14 w400 number-font pr-3 py-3 flex-grow-1">{{attr.value}}</div>
                 </div>
@@ -122,8 +122,7 @@
             <template v-if="instructions">
                 <p
                     class="t14 w400 text-grey instructions l24"
-                    v-html="instructions"
-                    :class="show === true ? 'show' : ''" />
+                    v-html="instructions"/>
 
                 <span class="d-flex align-center t12 w400 text-primary cur-p" id="show-more" @click="showMore()">
                     <span id="show-more-span">مشاهده بیشتر</span>
@@ -136,6 +135,21 @@
                         color="primary" />
                 </span>
             </template>
+
+            <v-divider color="grey-lighten-1" class="my-2"/>
+
+            <header class="d-flex align-center">
+                <v-icon
+                    icon="mdi-face-man-shimmer-outline"
+                    color="grey"
+                    class="ml-2 xs-show" />
+                <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">توضیحات</h3>
+            </header>
+
+            <p
+                class="t14 w400 text-grey instructions l24"
+                v-html="userUse"/>
+
         </div>
 
         <v-divider color="grey" class="mt-5" />
@@ -193,6 +207,7 @@ export default {
         instructions: String,
         advantages: String,
         disadvantages: String,
+        userUse:String,
     },
 
     methods: {

@@ -62,6 +62,7 @@
                     :content="item"
                     class="mb-4 flex-grow-1"
                     :hideInfo="true"
+                    :isPLP="true"
                     :showColors="true" />
               </v-col>
             </v-row>

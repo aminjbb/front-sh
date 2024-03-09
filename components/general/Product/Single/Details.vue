@@ -63,7 +63,7 @@
                             color="white" />
                     </div>
 
-                    <span class="colors-pallet__item__label t12 w500 text-grey">
+                    <span class="colors-pallet__item__label t12 w500 text-grey number-font">
                         {{color.label}}
                     </span>
                 </div>
@@ -86,7 +86,7 @@
                 <span class="t13 w400 text-grey" :class="attr.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr.label}}: </span>
 
                 <template v-if="attr.attribute_values">
-                    <span class="t13 w400 text-grey-darken-1 mr-2">{{attr.attribute_values.label}}</span>
+                    <span class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attr.attribute_values.label}}</span>
                 </template>
                 <template v-else>
                     <div class="attr-select">
@@ -195,9 +195,6 @@ export default {
 
         },
 
-        selectAttr() {
-           // console.log("🚀 ~ selectAttr ~ selectedAttr:", this.selectedAttr)
-        }
     },
 
     mounted() {

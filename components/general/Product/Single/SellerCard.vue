@@ -30,7 +30,6 @@
                 <template v-else>
                     کالا نزد فروشنده
                 </template>
-                (ارسال از 3 روز آینده)
             </span>
         </div>
     </v-col>
