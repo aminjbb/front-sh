@@ -45,7 +45,7 @@
                         v-model="page"
                         :length="productListPageLength"
                         size="40"
-                        :total-visible="4"
+                        :total-visible="5"
                         prev-icon="mdi-chevron-right"
                         next-icon="mdi-chevron-left" />
                 </div>
