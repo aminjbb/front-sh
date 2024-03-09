@@ -27,7 +27,7 @@
 
                                 <v-text-field
                                     :rules="rule"
-                                    :append-inner-icon="visibleNow ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    :append-inner-icon="visibleNow ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
                                     :type="visibleNow ? 'text' : 'password'"
                                     density="compact"
                                     variant="outlined"
@@ -43,7 +43,7 @@
 
                                 <v-text-field
                                     :rules="rule"
-                                    :append-inner-icon="visibleNew ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    :append-inner-icon="visibleNew ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
                                     :type="visibleNew ? 'text' : 'password'"
                                     density="compact"
                                     variant="outlined"
@@ -64,7 +64,7 @@
                                 </label>
 
                                 <v-text-field
-                                    :append-inner-icon="visibleConfirm ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                                    :append-inner-icon="visibleConfirm ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
                                     :type="visibleConfirm ? 'text' : 'password'"
                                     density="compact"
                                     variant="outlined"

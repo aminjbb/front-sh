@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-user v-user--favorite-list">
     <h1 class="ov-h h-0">لیست علاقمندی‌ها</h1>
 
@@ -19,12 +19,14 @@
                     <header class="card__header">لیست علاقمندی‌ها</header>
                     <v-row v-if="wishList && wishList.data && wishList.data.length > 0" class="favorite-list ma-0">
                         <v-col
-                            v-for="item in wishList.data"
+                            v-for="(item, index) in wishList.data"
+                            :key="`favorite${index}`"
                             cols="12"
                             class="favorite-list__item"
                             lg="4"
                             md="6">
                             <generalProductCard
+                                :ref="`product${item.id}`"
                                 hideInfo
                                 functions
                                 removeIcon
@@ -57,31 +59,11 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
-        return {
-            favoriteList: [{
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                },
-                {
-                    label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-                    customer_price: '89,300',
-                }
-            ]
-        }
+        return {}
     },
 
     setup() {
@@ -89,6 +71,8 @@ export default {
 
         const title = ref('فروشگاه اینترنتی شاواز | لیست علاقه‌ مندی‌ ها');
         const description = ref("لیست علاقه‌ مندی ها");
+
+        const runtimeConfig = useRuntimeConfig()
 
         const {
             getUserWhishList,
@@ -106,7 +90,8 @@ export default {
         return {
             userToken,
             getUserWhishList,
-            wishList
+            wishList,
+            runtimeConfig
         };
     },
 
@@ -116,6 +101,7 @@ export default {
          * @param {*} content 
          */
         removeProduct(content) {
+            console.log('wdw',content);
             axios
                 .delete(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/delete/${content.id}`, {
                     headers: {
@@ -132,13 +118,17 @@ export default {
                     });
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                    if(err.response?.data?.message){
+                        useNuxtApp().$toast.error(err.response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                    }
                 }).finally(() => {
                     this.loading = false;
+                    this.$refs[`product${content.id}`].$refs.removeProduct.loading = false;
+                    this.$refs[`product${content.id}`].$refs.removeProduct.dialog = false;
                 });
         }
     },
@@ -156,4 +146,9 @@ export default {
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 @import '~/assets/scss/views/user.scss';
+.v-user--favorite-list{
+    .btn--submit{
+        width: 100%;
+    }
+}
 </style>

@@ -18,25 +18,25 @@
                 <v-card class="pa-5 mobile-pa-0 mobile-no-border">
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide">
                         <span>آدرس‌های شما</span>
-                        <generalUserAddressModal
-                            :getUserAddress="getUserAddress"
-                            :userDetail="userDetail"
-                            :provinces="provinces"
-                            title="ثبت آدرس جدید"
-                            buttonType="text" />
+                        <generalUserAddressModal v-if="userAddress && userAddress.length" :getUserAddress="getUserAddress" :userDetail="userDetail" :provinces="provinces" title="ثبت آدرس جدید" buttonType="text" />
                     </header>
-                    
-                    <generalUserAddressCard
-                        v-for="(address , index) in userAddress"
-                        :key="`address${index}`"
-                        :userDetail="userDetail"
-                        :provinces="provinces"
-                        :address="address"
-                        :class="index+1 == userAddress.length ? 'border-0' :''"
-                        :getUserAddress="getUserAddress"/>
+
+                    <template v-if="userAddress && userAddress.length">
+                        <generalUserAddressCard v-for="(address , index) in userAddress" :key="`address${index}`" :userDetail="userDetail" :provinces="provinces" :address="address" :class="index+1 == userAddress.length ? 'border-0' :''" :getUserAddress="getUserAddress" />
+                    </template>
+
+                    <template v-else>
+                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                            <SvgEmptyAddress class="mt-10" />
+
+                            <span class="t14 w400 text-grey-darken-1 mt-2">هنوز آدرسی ثبت نکرده‌اید.</span>
+
+                            <generalUserAddressModal v-if="screenType === 'desktop'" :getUserAddress="getUserAddress" :userDetail="userDetail" :provinces="provinces" title="ثبت آدرس جدید" buttonType="text" class="mt-5"/>
+                        </div>
+                    </template>
 
                     <div class="xs-show v-user--address__mobile-btn">
-                        <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" />
+                        <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" :userDetail="userData" :provinces="provinces" :getUserAddress="getUserAddress" />
                     </div>
                 </v-card>
             </div>
@@ -48,11 +48,13 @@
 <script>
 import User from '@/composables/User.js'
 import Public from '@/composables/Public.js'
+import auth from '@/middleware/auth';
 
 export default {
     data() {
         return {
-            userData:null,
+            userData: null,
+            screenType: null
         }
     },
 
@@ -89,16 +91,39 @@ export default {
         this.getProvince()
     },
 
-  computed:{
-      userDetail(){
-        try {
-          return this.$store.getters['get_userData']
+    computed: {
+        userDetail() {
+            try {
+                return this.$store.getters['get_userData']
+            } catch (e) {
+                return null
+            }
         }
-        catch (e) {
-          return null
-        }
-      }
-  }
+    },
+
+    methods: {
+        /**
+         * fetch user data
+         */
+        async fetchUserProfile() {
+            if (screenType = 'mobile') {
+                try {
+                    const response = await auth.getUserProfile(this.userToken)
+                    this.userData = response.data.data
+
+                } catch (error) {
+                    // Handle errors
+                }
+            }
+        },
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 }
 </script>
 

@@ -69,7 +69,7 @@
                 v-model="page"
                 :length="productListPageLength"
                 size="40"
-                :total-visible="4"
+                :total-visible="5"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left"/>
           </div>
@@ -222,13 +222,6 @@ export default {
   },
 
   methods: {
-
-    selectSort(obj) {
-      console.log("🚀 ~ selectSort:", obj);
-
-      //TODO: Sort items in mobile
-    },
-
     /**
      * Filter productList by select type items
      * @param {*} array
@@ -380,7 +373,6 @@ export default {
       let paramQuery = ''
       const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
       const brandObject = values.filter(filterValue => filterValue.param == "brands")
-      console.log(brandObject , 'brandObject')
       attributeObject.forEach(element => {
         param += `${element.value},`
       })

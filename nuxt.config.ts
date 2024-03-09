@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { dir: 'rtl', lang: 'fa' },
+      viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover',
     },
   },
 
@@ -26,6 +27,7 @@ export default defineNuxtConfig({
       )
     }
   },
+
   runtimeConfig: {
     // Keys within public, will be also exposed to the client-side
     public: {

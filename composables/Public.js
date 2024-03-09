@@ -10,6 +10,7 @@ export default function setup() {
     const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
+    
     async function getProvince() {
         axios
             .get(runtimeConfig.public.apiBase +`/system/state/crud/index?per_page=10000`)
@@ -20,6 +21,7 @@ export default function setup() {
 
             });
     };
+
     async function getCities(id) {
         axios
             .get(runtimeConfig.public.apiBase +`/system/state/crud/get/${id}`)

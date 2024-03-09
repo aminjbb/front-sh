@@ -72,7 +72,7 @@
                 v-model="page"
                 :length="pageLength"
                 size="40"
-                :total-visible="4"
+                :total-visible="5"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left" />
           </div>
@@ -434,11 +434,6 @@ export default {
   },
 
   methods: {
-    selectSort(obj) {
-      console.log("🚀 ~ selectSort:", obj);
-
-      //TODO: Sort items in mobile
-    },
     /**
      * Filter productList by list type items
      * @param {*} array
@@ -473,14 +468,6 @@ export default {
         this.createQueryForFilter()
       }
 
-    },
-    /**
-     * Filter productList by switch type items
-     * @param {*} status
-     */
-    switchFiltersModal(array) {
-      console.log("🚀 ~ switchFiltersModal:", array);
-      //TODO: filter by switch items like available
     },
 
     /**

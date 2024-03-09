@@ -43,7 +43,7 @@
                             hide-details
                             :value="address" />
 
-                        <generalUserAddressCardSimple
+                        <generalUserAddressCard
                             :userDetail="userDetail"
                             :provinces="provinces"
                             class="flex-grow-1 border-0"
@@ -57,7 +57,12 @@
                 </template>
 
                 <div class="xs-show v-user--address__mobile-btn mt-10">
-                    <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" />
+                    <generalUserAddressModal 
+                        title="ثبت آدرس جدید"
+                        buttonType="text"
+                        :userDetail="userDetail"
+                        :provinces="provinces"
+                        :getUserAddress="getUserAddress"/>
                 </div>
             </div>
         </v-card>
@@ -127,6 +132,15 @@ export default {
     beforeMount() {
         this.getUserAddress()
         this.getProvince()
+    },
+
+    watch:{
+        userAddress(val){
+            if (val){
+                this.addressModal= val[0]
+                this.selectAddress()
+            }
+        }
     }
 }
 </script>

@@ -6,6 +6,7 @@
 
     <div v-if="deleteIcon" class="product-card__delete">
         <generalModalsDelete
+            ref="removeProduct"
             title="حذف محصول"
             text="آیا از حذف این محصول از لیست علاقمندی ها اطمینان دارید؟"
             submitText="حذف کالا"
@@ -21,7 +22,7 @@
     </a>
 
     <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`">
-        <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title mb-2">
+        <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title card-title mb-2">
             {{content.label}}
         </h3>
     </a>
@@ -75,14 +76,14 @@
         <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>
     </div>
 
-    <div v-if="functions" class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
-        <v-btn
-            :href="`/sku/${content.slug}`"
-            height="44"
-            title="مشاهده محصول"
-            class="btn btn--cancel">
-            مشاهده محصول
-        </v-btn>
+    <div v-if="functions" class="d-flex align-center justify-end mt-2 mobile-pa-0 w-100">
+<!--        <v-btn-->
+<!--            :href="`/sku/${content.slug}`"-->
+<!--            height="44"-->
+<!--            title="مشاهده محصول"-->
+<!--            class="btn btn&#45;&#45;cancel">-->
+<!--            مشاهده محصول-->
+<!--        </v-btn>-->
         <v-btn
             :href="`/sku/${content.slug}`"
             height="44"
@@ -90,14 +91,6 @@
             class="btn btn--submit">
             افزودن به سبد
         </v-btn>
-        <!-- <v-btn
-            :loading="loading"
-            @click="addToCard()"
-            height="44"
-            title="افزودن به سبد"
-            class="btn btn--submit">
-            افزودن به سبد
-        </v-btn> -->
     </div>
 </div>
 </template>

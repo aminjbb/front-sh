@@ -208,7 +208,6 @@ export default {
          * @param {array} Arr 
          */
         selectFiltersModalEmit(arr) {
-          console.log(arr , 'selectFiltersModalEmit')
           this.$emit('selectFiltersModal', arr);
         },
 

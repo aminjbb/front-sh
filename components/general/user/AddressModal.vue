@@ -34,7 +34,8 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
-        class="full full-button"
+        class="full-button"
+        :fullscreen="screenType === 'mobile'? true : false"
         width="856px">
         <v-card class="pt-3 px-6 pb-5">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1 border-0">
@@ -54,11 +55,11 @@
 
             <template v-if="step === '1'">
                 <p class="t12 w400 text-grey mb-5">موقعیت مکانی آدرس را در نقشه زیر مشخص کنید.</p>
-                <div class="map mb-5">
+                <div class="map mb-5 flex-grow-1">
                     <ClientOnly>
                         <NeshanMap
-                            height="420px"
                             ref="myMap"
+                            :viewType="screenType === 'mobile' ? 'mobile' : 'desktop'"
                             :mapKey="runtimeConfig.public.neshanMapKey"
                             :serviceKey="runtimeConfig.public.serviceKey"
                             :center="form.latLong"
@@ -71,6 +72,8 @@
 
                 <div class="d-flex justify-end">
                     <v-btn
+                    :disabled="isDisable"
+            
                         class="btn btn--submit"
                         @click="getLocation()"
                         color="grey-darken-1">
@@ -82,7 +85,6 @@
             <template v-if="step === '2'">
                 <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
                 <v-form v-model="valid" ref="addAddress">
-
                     <div>
                         <v-text-field
                             density="compact"
@@ -214,6 +216,8 @@
             </template>
         </v-card>
     </v-dialog>
+
+    <generalUserProfileModal ref="profileModal" :phoneNumber="userDetail ?.phone_number" @profileSubmitted="openAddressModal()"/>
 </div>
 </template>
 
@@ -248,6 +252,8 @@ export default {
             valid: true,
             dialog: false,
             step: '1',
+            isDisable : true,
+            screenType: null,
             form: {
                 address: '',
                 latLong: {
@@ -290,8 +296,10 @@ export default {
         getUserAddress: {
             type: Function
         },
+
         /** User Detail */
         userDetail: Object,
+        
         /** Address */
         address: Object,
 
@@ -414,7 +422,7 @@ export default {
                     }
                     this.step = '1'
                     this.dialog = false;
-                    useNuxtApp().$toast.success('آدرس شما با موفقیت ایحاد شد.', {
+                    useNuxtApp().$toast.success('آدرس شما با موفقیت ایجاد شد.', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
@@ -432,6 +440,7 @@ export default {
                     this.getUserAddress()
                 });
         },
+
         /**
          * go 'step' to 2 for show address detail
          */
@@ -448,19 +457,29 @@ export default {
                 this.form.latLong.latitude = this.$refs.myMap.state.reverseResult.mapCoords[1]
                 this.form.latLong.longitude = this.$refs.myMap.state.reverseResult.mapCoords[0]
                 this.form.address = this.$refs.myMap.state.reverseResult.formatted_address
+                this.isDisable = false
             }, 1000)
+           
             return {
                 src: "https://img.icons8.com/fluency/344/find-clinic.png",
                 iconScale: 0.09
-            }
+            }       
         },
 
         /**
          * Open modal
          */
         openModal() {
+            if((this.userDetail?.first_name === null || this.userDetail?.first_name === '') && (this.userDetail?.last_name === null || this.userDetail?.last_name === '')){
+                this.$refs.profileModal.dialog = true
+            } else{
+                this.dialog = true;
+                this.editMode();
+            }
+        },
+
+        openAddressModal(){
             this.dialog = true;
-            this.editMode();
         },
 
         /**
@@ -468,33 +487,35 @@ export default {
          */
         closeModal() {
             this.dialog = false;
+            this.isDisable= true
         },
 
         /**
          * back 'step' to 1 for show map
          */
         showMap() {
-
             this.step = '1';
-
         },
+
         /**
          * get cities after select province
          */
         getCitiesList() {
+            this.form.city = null
             this.getCities(this.form.province)
         },
 
         editMode() {
             if (this.edit) {
                 this.step = '2'
+                this.isDisable = false
             }
         },
+
         /**
          * set address detail on form after monut modal
          */
         setAddressForm() {
-            console.log('address',this.address);
             try {
                 this.form.address = this.address ?.address
                 this.form.full_name = this.address ?.receiver_full_name
@@ -505,8 +526,8 @@ export default {
                 this.form.province = this.address ?.state ?.id
                 if (this.form.province) this.getCities(this.address ?.state ?.id)
                 this.form.city = this.address ?.city ?.id
-                if (this.address ?.am_i) this.newReceiver = false
-                else this.newReceiver = true
+                if (this.address ?.am_i) this.newReceiver = true
+                else this.newReceiver = false
 
             } catch (e) {
 
@@ -516,8 +537,9 @@ export default {
     },
 
     mounted() {
-        this.setAddressForm()
-    }
+        this.setAddressForm(),
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 }
 </script>
 

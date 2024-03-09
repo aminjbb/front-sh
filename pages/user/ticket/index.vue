@@ -4,7 +4,7 @@
         <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
-        <span class="grey-darken-3 t14">لیست سفارشات</span>
+        <span class="grey-darken-3 t14">لیست تیکت‌ها</span>
     </header>
 
     <v-container>
@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-9 pa-4 mobile-pa-0">
-                <v-card v-if="ticketList && ticketList.data" class="py-3 px-10 d-flex justify-space-around align-center v-ticket__info-card">
+                <v-card v-if="ticketList && ticketList.data && ticketList.data.length" class="py-3 px-10 d-flex justify-space-around align-center v-ticket__info-card">
                     <img src="~/assets/images/ticket.png" class="ml-10" alt="ticket image" width="65" height="65">
 
                     <div class="flex-grow-1">
@@ -39,7 +39,7 @@
 
                     <template v-if="ticketList && ticketList.data && ticketList.data.length">
                         <div class="px-2 pb-5">
-                            <generalTicketTable :tableHeader="tableHeader" :items="ticketList.data"/>
+                            <generalTicketTable :tableHeader="tableHeader" :items="formatTransaction"/>
                         </div>
                     </template>
 
@@ -49,7 +49,7 @@
                                 <svgEmptyTicket />
                                 <span class="t14 w400 text-grey-darken-1 mt-2">تا حالا تیکتی ثبت نکردی!</span>
                                 <v-btn
-                                    href="/"
+                                    href="/user/ticket/new"
                                     height="44"
                                     title="ثبت تیکت جدید"
                                     prepend-icon="mdi-plus"
@@ -94,6 +94,15 @@ export default {
                 key: '',
             }],
         }
+    },
+
+    computed:{
+        formatTransaction() {
+            const transactionArray = this.ticketList?.data;
+
+            const finalArray = transactionArray.reverse();
+            return finalArray;
+        },
     },
 
     setup() {

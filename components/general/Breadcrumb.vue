@@ -1,5 +1,5 @@
 <template lang="">
-<div v-if="items && items.length">
+<div v-if="(items && items.length) && screenType === 'desktop'">
     <v-breadcrumbs :items="items">
         <template v-slot:divider>
             <span>/</span>
@@ -10,9 +10,22 @@
 
 <script>
 export default {
+    data() {
+        return {
+            screenType: null
+        }
+    },
+    
     props:{
         items:Array
-    }
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 }
 </script>
 

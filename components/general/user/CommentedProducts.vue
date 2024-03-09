@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="product-comments">
     <v-row class="ma-0">
         <v-col
@@ -6,8 +6,8 @@
             md="3"
             lg="2"
             class="pa-0">
-            <div v-if="content.image && content.image.image_url" class="product-card__image d-flex justify-center align-center">
-                <img :src="/* content?.image?.image_url */imageAddress(content?.image?.image_url)" :title="content.label" :alt="content.label" width="136" height="136" />
+            <div v-if="content?.sku?.image && content?.sku.image.image_url" class="product-card__image d-flex justify-center align-center">
+                <img :src="content?.sku.image?.image_url " :title="content?.sku?.label" :alt="content?.sku.label" width="136" height="136" />
             </div>
         </v-col>
 
@@ -16,41 +16,41 @@
             md="9"
             lg="10"
             class="pa-0 pos-r">
-            <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5" :class="content.status === 'accept' ? 'product-comments__status--accept' : 'product-comments__status--reject'">{{getStatus(content.status)}}</div>
-            <h3 v-if="content.label" class="t12 w400 text-grey-darken-1 mb-2 xs-hide">
+            <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5" :class="content.status === 'approved' ? 'product-comments__status--accept' : 'product-comments__status--reject'">{{getStatus(content.status)}}</div>
+            <h3 v-if="content.comment" class="t12 w400 text-grey-darken-1 mb-2 xs-hide">
                 {{content.comment}}
             </h3>
 
             <div class="mobile-drop-down">
-                <v-icon
-                    icon="mdi-dots-vertical"
-                    color="grey-darken-1"
-                    @click="openDropDown(content.id)" />
+<!--                <v-icon-->
+<!--                    icon="mdi-dots-vertical"-->
+<!--                    color="grey-darken-1"-->
+<!--                    @click="openDropDown(content.id)" />-->
 
-                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${content.id}`">
-                    <ul class="ma-0">
-                        <li class="mb-2">
-                            <a class="text-grey t14 d-flex align-center py-1" :href="editLink">
-                                <v-icon
-                                    icon="mdi-pen"
-                                    class="ml-2"
-                                    size="small"
-                                    color="grey" />
-                                <span class="text-grey t14">ویرایش نظر</span>
-                            </a>
-                        </li>
+<!--                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${content.id}`">-->
+<!--                    <ul class="ma-0">-->
+<!--                        <li class="mb-2">-->
+<!--                            <a class="text-grey t14 d-flex align-center py-1" :href="editLink">-->
+<!--                                <v-icon-->
+<!--                                    icon="mdi-pen"-->
+<!--                                    class="ml-2"-->
+<!--                                    size="small"-->
+<!--                                    color="grey" />-->
+<!--                                <span class="text-grey t14">ویرایش نظر</span>-->
+<!--                            </a>-->
+<!--                        </li>-->
 
-                        <li class="d-flex align-center py-1">
-                            <generalModalsDelete
-                                :getUserAddress="getUserAddress"
-                                title="حذف نظر"
-                                text="آیا از حذف نظر خود مطمئن هستید؟"
-                                submitText="حذف نظر"
-                                buttonType="mobile"
-                                @removeProduct="removeComment(content)" />
-                        </li>
-                    </ul>
-                </nav>
+<!--                        <li class="d-flex align-center py-1">-->
+<!--                            <generalModalsDelete-->
+<!--                                :getUserAddress="getUserAddress"-->
+<!--                                title="حذف نظر"-->
+<!--                                text="آیا از حذف نظر خود مطمئن هستید؟"-->
+<!--                                submitText="حذف نظر"-->
+<!--                                buttonType="mobile"-->
+<!--                                @removeProduct="removeComment(content)" />-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
             </div>
         </v-col>
     </v-row>
@@ -82,22 +82,13 @@ export default {
     },
 
     methods: {
-        //TODO: Should delete after add endpoint
-        imageAddress(path) {
-            const assets =
-                import.meta.glob('~/assets/images/should-delete/*', {
-                    eager: true,
-                    import: 'default',
-                })
-            return assets['/assets/images/should-delete/' + path]
-        },
 
         /**
          * Get status persian 
          * @param {*} status 
          */
         getStatus(status) {
-            if (status === 'accept') return 'تایید شده';
+            if (status === 'approved') return 'تایید شده';
             else return 'رد شده';
         },
 

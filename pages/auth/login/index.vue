@@ -21,6 +21,7 @@
                 <v-text-field
                     v-model="mobile"
                     :rules="mobileRule"
+                    type="number"
                     class=""
                     variant="outlined"
                     placeholder="۰۹*********"/>
@@ -132,6 +133,7 @@
                 <v-text-field
                     v-model="otp"
                     :rules="otpRule"
+                    type="number"
                     class=""
                     variant="outlined"/>
 
@@ -378,7 +380,6 @@ export default {
         const response = await auth.verifyOTP(this.mobile, this.otp);
         if (response.status === 200) {
           this.userToken = response.data.data.token;
-          console.log(this.randomNumberForBasket , 'this.randomNumberForBasket')
           if (this.randomNumberForBasket) {
             await this.syncBasket()
           }
