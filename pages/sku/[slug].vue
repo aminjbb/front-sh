@@ -69,7 +69,7 @@
             :disadvantages="pdpSecondaryData?.disadvantage"
             :userUse = "pdpSecondaryData?.uses_case"/>
 
-        <v-divider color="grey" class="mt-5" />
+<!--        <v-divider color="grey" class="mt-5" />-->
 
         <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getSecondaryData" />
 
@@ -112,22 +112,22 @@ export default {
     data() {
         return {
             screenType: null,
-            BreadcrumbItems: [{
-                    title: 'لوازم آرایشی',
-                    /* Should be main category */
-                    href: '/'
-                },
-                {
-                    title: 'آرایش چشم',
-                    /* Should be sub category */
-                    href: '/products'
-                },
-                {
-                    title: 'سایه چشم',
-                    /* Should be sub category */
-                    href: '/products'
-                }
-            ],
+            // BreadcrumbItems: [{
+            //         title: 'لوازم آرایشی',
+            //         /* Should be main category */
+            //         href: '/'
+            //     },
+            //     {
+            //         title: 'آرایش چشم',
+            //         /* Should be sub category */
+            //         href: '/products'
+            //     },
+            //     {
+            //         title: 'سایه چشم',
+            //         /* Should be sub category */
+            //         href: '/products'
+            //     }
+            // ],
             content: null,
 
             selectedSeller: null,

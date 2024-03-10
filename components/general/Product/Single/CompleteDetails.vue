@@ -3,6 +3,7 @@
     <nav class="xs-hide">
         <ul class="complete-details__tabs d-flex pa-0 ma-0 w-100" ref="detailsRef">
             <li
+                v-if="description"
                 class="pos-r flex-grow-1 py-3 active"
                 @click="activeTab(1)"
                 id="complete-details__tab--1">
@@ -17,6 +18,7 @@
             </li>
 
             <li
+                v-if="instructions"
                 class="pos-r flex-grow-1 py-3"
                 @click="activeTab(2)"
                 id="complete-details__tab--2">
@@ -31,6 +33,7 @@
             </li>
 
             <li
+                v-if="userUse"
                 class="pos-r flex-grow-1 py-3"
                 @click="activeTab(3)"
                 id="complete-details__tab--3">
@@ -45,6 +48,7 @@
             </li>
 
             <li
+               v-if="advantages || disadvantages"
                 class="pos-r flex-grow-1 py-3"
                 @click="activeTab(4)"
                 id="complete-details__tab--4">
@@ -74,7 +78,7 @@
     </nav>
 
     <div>
-        <div class="complete-details__desc" id="product-desc">
+        <div class="complete-details__desc" id="product-desc" v-if="description" >
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-note-text-outline"
@@ -87,11 +91,22 @@
                 class="t14 w400 l25 text-grey"
                 v-if="description"
                 v-html="description"></p>
+          <span class="d-flex align-center t12 w400 text-primary cur-p" id="show-more" @click="showMore()">
+                    <span id="show-more-span">مشاهده بیشتر</span>
+
+                    <v-icon
+                        id="show-more-icon"
+                        class="mr-1"
+                        icon="mdi-plus"
+                        size="x-small"
+                        color="primary" />
+                </span>
+          <v-divider color="grey" class="mt-5" />
         </div>
 
-        <v-divider color="grey" class="mt-5" />
 
-        <div class="complete-details__product-info" id="product-info">
+
+        <div class="complete-details__product-info" id="product-info" v-if="instructions">
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-list-status"
@@ -106,11 +121,12 @@
                     <div class="text-grey-darken-2 t14 w400 number-font pr-3 py-3 flex-grow-1">{{attr.value}}</div>
                 </div>
             </div>
+          <v-divider color="grey" class="mt-5" />
         </div>
 
-        <v-divider color="grey" class="mt-5" />
 
-        <div class="complete-details__product-instructions" id="product-instructions">
+
+        <div class="complete-details__product-instructions" id="product-instructions" v-if="userUse">
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-face-man-shimmer-outline"
@@ -119,24 +135,15 @@
                 <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">روش استفاده</h3>
             </header>
 
-            <template v-if="instructions">
+            <template v-if="userUse">
                 <p
                     class="t14 w400 text-grey instructions l24"
                     v-html="instructions"/>
 
-                <span class="d-flex align-center t12 w400 text-primary cur-p" id="show-more" @click="showMore()">
-                    <span id="show-more-span">مشاهده بیشتر</span>
-
-                    <v-icon
-                        id="show-more-icon"
-                        class="mr-1"
-                        icon="mdi-plus"
-                        size="x-small"
-                        color="primary" />
-                </span>
+              <v-divider color="grey-lighten-1" class="my-2"/>
             </template>
 
-            <v-divider color="grey-lighten-1" class="my-2"/>
+
 
             <header class="d-flex align-center">
                 <v-icon
@@ -149,12 +156,12 @@
             <p
                 class="t14 w400 text-grey instructions l24"
                 v-html="userUse"/>
-
+          <v-divider color="grey" class="mt-5" />
         </div>
 
-        <v-divider color="grey" class="mt-5" />
 
-        <div class="complete-details__product-adv" id="product-adv">
+
+        <div class="complete-details__product-adv" id="product-adv"  v-if="advantages || disadvantages">
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-tag-check-outline"
@@ -188,6 +195,7 @@
                 </div>
 
                 <p class="t12 w400 l20 text-grey" v-html="disadvantages" />
+
             </div>
         </div>
     </div>
