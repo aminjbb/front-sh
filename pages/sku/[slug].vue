@@ -68,7 +68,7 @@
             :disadvantages="pdpSecondaryData?.disadvantage"
             :userUse = "pdpSecondaryData?.uses_case"/>
 
-        <v-divider color="grey" class="mt-5" />
+<!--        <v-divider color="grey" class="mt-5" />-->
 
         <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getSecondaryData" />
 
