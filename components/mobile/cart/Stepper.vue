@@ -1,7 +1,7 @@
 <template lang="">
 <header class="v-user__mobile-page-head xs-show justify-space-between">
     <div class="d-flex align-center">
-        <a href="/" class="ml-3">
+        <a @click="previousStep()" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14 number-font">
@@ -246,6 +246,10 @@ export default {
 
                 this.activeButton = false;
             }
+        },
+
+        previousStep(){
+            this.activeStep = this.activeStep -1
         },
 
         /**
