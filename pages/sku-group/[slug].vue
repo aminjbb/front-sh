@@ -29,7 +29,8 @@
                         v-model="page"
                         :length="productListPageLength"
                         size="40"
-                        :total-visible="5"
+                        :total-visible="6"
+                        @click="backToTop"
                         prev-icon="mdi-chevron-right"
                         next-icon="mdi-chevron-left" />
                 </div>
@@ -136,6 +137,7 @@ export default {
 
         return breadcrumb
       },
+
         /** return data product list  **/
         productListData() {
             try {
@@ -144,6 +146,7 @@ export default {
                 return []
             }
         },
+
         /** return PageLength product list for pagination **/
         productListPageLength() {
             try {
@@ -154,16 +157,28 @@ export default {
         },
     },
 
+    methods:{
+        /**
+         * Back to top on change pagination
+         */
+        backToTop(){
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+        }
+    },
+
     mounted() {
         /**
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
-  beforeMount() {
 
-    this.getBreadcrumb('sku-group')
-  },
+    beforeMount() {
+        this.getBreadcrumb('sku-group')
+    },
 
     watch: {
         page(val) {

@@ -71,7 +71,8 @@
                 v-model="page"
                 :length="productListPageLength"
                 size="40"
-                :total-visible="5"
+                :total-visible="6"
+                @click="backToTop"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left"/>
           </div>
@@ -243,6 +244,7 @@ export default {
       }
 
     },
+
     /**
      * Filter by amount
      * @param {*} amount
@@ -276,8 +278,8 @@ export default {
           }
         })
       }
-
     },
+
     sort(order, orderType) {
       let query = this.$route.query;
       if (order && orderType) {
@@ -291,6 +293,7 @@ export default {
       }
 
     },
+
     /**
      * Set max
      * @param {*} amount
@@ -305,7 +308,6 @@ export default {
           }
         })
       }
-
     },
 
     /**
@@ -365,6 +367,7 @@ export default {
         this.createRoute(finalFilterObject)
       }
     },
+
     /**
      * Create route after filter
      * @param {*} values
@@ -408,18 +411,29 @@ export default {
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
     },
+
     async createQueryForFilter(array) {
-
       await this.paramGenerator(array)
-
     },
+
+    /**
+     * Back to top on change pagination
+     */
+    backToTop(){
+      window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+      });
+    }
   },
+
   mounted() {
     /**
      * Check screen size
      */
     window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
   },
+
   beforeMount() {
     this.getSecondaryData()
     this.getBreadcrumb('category')

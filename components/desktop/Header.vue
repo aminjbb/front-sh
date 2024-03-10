@@ -116,7 +116,7 @@
     <desktopMenu />
 </header>
 
-<desktopHeaderBasket :userBasket="userBasket" />
+<desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
 
 <v-dialog
     v-if="dialog"
@@ -185,6 +185,10 @@ export default {
         };
     },
 
+    props:{
+        userData:null
+    },
+
     computed: {
         userBasket() {
             try {
@@ -195,14 +199,6 @@ export default {
             }
         },
 
-        userData(){
-            try {
-                const user = this.$store.getters['get_userData']
-                return user
-            } catch (e) {
-                return null
-            }
-        }
     },
 
     setup() {
@@ -211,7 +207,6 @@ export default {
             userToken,
         }
     },
-
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
@@ -223,12 +218,6 @@ export default {
             this.hasBanner = true;
             document.getElementsByTagName('body')[0].classList.add('hasBanner');           
         }
-
-        if (this.userData) {
-            this.isLogin = true
-        } else {
-            this.isLogin = false
-        };
     },
 
     beforeDestroy() {
@@ -236,8 +225,17 @@ export default {
         window.removeEventListener('click', this.closeDropDown);
     },
 
-    methods: {
+    watch:{
+        userData(newVal){
+            if (newVal && newVal.phone_number !== null) {
+                this.isLogin = true
+            } else {
+                this.isLogin = false
+            };
+        }
+    },
 
+    methods: {
         /**
          * Show and hide menu in scroll down and up
          */

@@ -45,7 +45,8 @@
                         v-model="page"
                         :length="productListPageLength"
                         size="40"
-                        :total-visible="5"
+                        :total-visible="6"
+                        @click="backToTop"
                         prev-icon="mdi-chevron-right"
                         next-icon="mdi-chevron-left" />
                 </div>
@@ -192,6 +193,16 @@ export default {
                 this.createRoute(finalFilterObject)
             }
         },
+
+        /**
+         * Back to top on change pagination
+         */
+        backToTop(){
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
     },
 
     mounted() {

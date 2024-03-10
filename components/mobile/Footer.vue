@@ -61,6 +61,10 @@ export default {
         }
     },
 
+    props:{
+        userData:null
+    },
+
     setup() {
         const userToken = useCookie('userToken')
         return {
@@ -76,15 +80,17 @@ export default {
             } catch (e) {
                 return []
             }
-        }
+        },
     },
 
-    created() {
-        if (this.userToken) {
-            this.isLogin = true
-        } else {
-            this.isLogin = false
-        };
+    watch:{
+        userData(newVal){
+            if (newVal && newVal.phone_number !== null) {
+                this.isLogin = true
+            } else {
+                this.isLogin = false
+            };
+        }
     },
 
     methods: {
@@ -111,6 +117,14 @@ export default {
             localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
             this.$router.push('/login')
         },
+    },
+
+    mounted(){
+        if (this.userData && this.userData.phone_number !== null) {
+            this.isLogin = true
+        } else {
+            this.isLogin = false
+        };
     }
 }
 </script>
