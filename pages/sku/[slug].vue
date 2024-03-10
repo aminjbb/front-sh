@@ -43,13 +43,14 @@
         </v-row>
 
         <template v-if="screenType !== null && screenType === 'desktop'">
-            <generalAboutOurValues class="v-product--single__values ma-0 mt-5" />
+            <generalAboutOurValues class="v-product--single__values ma-0 mt-5 mb-10" />
 
-            <div class="v-product--single__border mt-5" id="seller-list">
+            <!-- TODO: When we have seller should uncomment this part -->
+            <!-- <div class="v-product--single__border mt-5" id="seller-list">
                 <template v-for="(seller, index) in productSellers" :key="`seller${index}`">
                     <generalProductSingleSellerCard :seller="seller" />
                 </template>
-            </div>
+            </div> -->
         </template>
 
         <mobileHomeSection8Slider
