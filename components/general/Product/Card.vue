@@ -27,14 +27,15 @@
         </h3>
     </a>
 
-    <div class="product-card__info d-flex align-center justify-space-between mb-2" :class="hideInfo ? 'hideInfo' : ''">
-        <div class="product-card__info__send">
+    <div class="product-card__info d-flex align-center justify-end mb-2" :class="hideInfo ? 'hideInfo' : ''">
+        <!-- TODO: Uncomment after we have this -->
+        <!-- <div class="product-card__info__send">
             <v-icon icon="mdi-truck-outline" color="deep-purple" />
             <span class="t12 text-grey">ارسال فوری</span>
-        </div>
+        </div> -->
 
-        <div class="product-card__info__rate">
-            <span class="t12 text-grey">4.3</span>
+        <div v-if="content.score" class="product-card__info__rate">
+            <span class="t12 text-grey">{{content.score}}</span>
             <v-icon icon="mdi-star" color="orange-lighten-2" />
         </div>
     </div>
@@ -65,14 +66,16 @@
     </div>
 
     <div v-if="content.colors && showColors" class="product-card__colors d-flex align-center justify-center">
-        <div
-            class="product-card__colors__item"
-            v-for="(color,index) in content.colors.slice(0,6)"
-            :key="`product-color${index}`">
-            <span :style="{ backgroundColor: color.value }" :class="color.value === '#ffffff' || color.value === '#FF00FF00' ? 'border' : '' "></span>
-            
-            <v-tooltip activator="parent" location="top">{{color.label}}</v-tooltip>
-        </div>
+        <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
+            <div
+                class="product-card__colors__item"
+                v-for="(color,index) in content.colors.slice(0,6)"
+                :key="`product-color${index}`">
+                <span :style="{ backgroundColor: color.value }" :class="color.value === '#ffffff' || color.value === '#FF00FF00' ? 'border' : '' "></span>
+                
+                <v-tooltip activator="parent" location="top">{{color.label}}</v-tooltip>
+            </div>
+        </template>
         <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>
     </div>
 

@@ -19,7 +19,7 @@
     </header>
 
     <div>
-        <template v-for="(address , index) in userAddress" :key="`address${index}`">
+        <template v-for="(address , index) in addressRevers" :key="`address${index}`">
             <div class="d-flex align-center justify-space-between">
                 <v-checkbox
                     class="address-checkbox"
@@ -80,6 +80,12 @@ export default {
         }
     },
 
+    computed:{
+        addressRevers(){
+            return this.userAddress.reverse();
+        }
+    },
+
     methods:{
         /**
          * Selected Address 'AddressId' for send package to customer
@@ -95,24 +101,24 @@ export default {
     },
 
     computed:{
-    userDetail(){
-      try {
-        return this.$store.getters['get_userData']
-      }
-      catch (e) {
-        return null
-      }
-    }
-  },
+        userDetail(){
+        try {
+            return this.$store.getters['get_userData']
+        }
+        catch (e) {
+            return null
+        }
+        }
+    },
 
-  watch:{
-    userAddress(val){
-      if (val){
-        this.addressModal= val[0].id
-        this.selectAddress()
-      }
+    watch:{
+        userAddress(val){
+        if (val){
+            this.addressModal= val[0].id
+            this.selectAddress()
+        }
+        }
     }
-  }
 }
 </script>
 

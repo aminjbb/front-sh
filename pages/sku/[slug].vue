@@ -43,13 +43,14 @@
         </v-row>
 
         <template v-if="screenType !== null && screenType === 'desktop'">
-            <generalAboutOurValues class="v-product--single__values ma-0 mt-5" />
+            <generalAboutOurValues class="v-product--single__values ma-0 mt-5 mb-10" />
 
-            <div class="v-product--single__border mt-5" id="seller-list">
+            <!-- TODO: When we have seller should uncomment this part -->
+            <!-- <div class="v-product--single__border mt-5" id="seller-list">
                 <template v-for="(seller, index) in productSellers" :key="`seller${index}`">
                     <generalProductSingleSellerCard :seller="seller" />
                 </template>
-            </div>
+            </div> -->
         </template>
 
         <mobileHomeSection8Slider
@@ -68,7 +69,7 @@
             :disadvantages="pdpSecondaryData?.disadvantage"
             :userUse = "pdpSecondaryData?.uses_case"/>
 
-        <v-divider color="grey" class="mt-5" />
+<!--        <v-divider color="grey" class="mt-5" />-->
 
         <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getSecondaryData" />
 
@@ -111,22 +112,22 @@ export default {
     data() {
         return {
             screenType: null,
-            BreadcrumbItems: [{
-                    title: 'لوازم آرایشی',
-                    /* Should be main category */
-                    href: '/'
-                },
-                {
-                    title: 'آرایش چشم',
-                    /* Should be sub category */
-                    href: '/products'
-                },
-                {
-                    title: 'سایه چشم',
-                    /* Should be sub category */
-                    href: '/products'
-                }
-            ],
+            // BreadcrumbItems: [{
+            //         title: 'لوازم آرایشی',
+            //         /* Should be main category */
+            //         href: '/'
+            //     },
+            //     {
+            //         title: 'آرایش چشم',
+            //         /* Should be sub category */
+            //         href: '/products'
+            //     },
+            //     {
+            //         title: 'سایه چشم',
+            //         /* Should be sub category */
+            //         href: '/products'
+            //     }
+            // ],
             content: null,
 
             selectedSeller: null,
