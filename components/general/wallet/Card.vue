@@ -27,7 +27,7 @@
                             <span class="t12 w400 text-grey-darken-3">موجودی غیر قابل برداشت:</span>
 
                             <div class="d-flex align-center">
-                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 bold number-font">{{splitChar(0)}}</span>
+                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 bold number-font">{{splitChar(inaccessible_value)}}</span>
                                 <span class="t11 w300 text-grey-darken-3 mr-2">تومان</span>
                             </div>
                         </div>
@@ -104,7 +104,14 @@ export default {
             } catch (e) {
                 return null;
             }
+        },
+      inaccessible_value() {
+        try {
+          return Number(String(this.wallet.inaccessible_value).slice(0, -1))
+        } catch (e) {
+          return null;
         }
+      },
     },
     props: {
         wallet: Object,
