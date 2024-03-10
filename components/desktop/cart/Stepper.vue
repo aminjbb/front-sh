@@ -4,8 +4,8 @@
         <div
             v-for="(step, index) in steps"
             :key="`step${index}`"
-            class="d-flex align-center"
-            :class="index + 1 < steps.length ? 'flex-grow-1' : ''">
+            class="d-flex align-center cur-p"
+            :class="index + 1 < steps.length ? 'flex-grow-1' : ''" @click="previousStep(index+1)">
             <div class="stepper__header__content">
                 <v-badge
                     :color="active[index+1] ? 'primary': previousSteps[index+1] ? 'grey-darken-3' : 'grey'"
@@ -246,6 +246,29 @@ export default {
                     this.$router.push('/login')
                   }
 
+                }
+
+                this.activeButton = false;
+            }
+        },
+
+
+        previousStep(step) {
+            if (this.activeStep < 5) {
+                if (this.userToken){
+                    if(step === this.activeStep -1){
+                        this.active[this.activeStep] = false;
+                        this.previousSteps[this.activeStep] = false;
+                        this.activeStep--;
+                        this.active[this.activeStep] = true;
+                        this.previousSteps[this.activeStep - 1] = true;
+                    }else{
+                        useNuxtApp().$toast.error('کاربر گرامی شما مجاز به انجام این عملیات نمی باشید.', {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                    }
                 }
 
                 this.activeButton = false;
