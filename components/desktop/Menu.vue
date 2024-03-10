@@ -112,7 +112,7 @@
                                                         </li>
 
                                                         <li v-if="child1.children[5]" class="menu__item">
-                                                            <span>{{ child1.children[4].label }}</span>
+                                                            <span>{{ child1.children[5].label }}</span>
                                                             <ul class="menu__items">
                                                                 <li
                                                                     class="menu__item"

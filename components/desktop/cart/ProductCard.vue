@@ -103,7 +103,7 @@
         </v-col>
     </v-row>
 
-    <generalModalsDelete ref="deleteProduct" title="حذف کالاها از سبد" text="آیا از حذف تمام کالاها از سبد خرید اطمینان دارید؟ " submitText="حذف" @removeProduct="removeProductFromBasket"/>
+    <generalModalsDelete ref="deleteProduct" title="حذف کالا از سبد" text="آیا از حذف این کالا از سبد خرید اطمینان دارید؟ " submitText="حذف" @removeProduct="removeProductFromBasket"/>
 </section>
 </template>
 
