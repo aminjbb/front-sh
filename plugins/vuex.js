@@ -16,10 +16,26 @@ const store = createStore({
       orderAddress:null,
       orderPayMethod:null,
       orderSendingMethod:null,
+      orderErrorModal:{
+        dialog:false,
+        buttonType:'',
+        title:'',
+        text:'',
+        object:[],
+        submitText:''
+      }
     };
   },
 
   mutations: {
+    set_orderModalError(state, obj){
+      state.orderErrorModal.buttonType = obj.buttonType
+      state.orderErrorModal.text = obj.text
+      state.orderErrorModal.dialog = obj.dialog
+      state.orderErrorModal.submitText = obj.submitText
+      state.orderErrorModal.title = obj.title
+      state.orderErrorModal.object = obj.object
+    },
     set_orderSendingMethod(state , value){
       state.orderSendingMethod = value
     },
@@ -48,6 +64,9 @@ const store = createStore({
   },
 
   getters: {
+    get_orderModalError(state){
+      return state.orderErrorModal
+    },
     get_orderSendingMethod(state){
       return  state.orderSendingMethod
     },

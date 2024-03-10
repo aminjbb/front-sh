@@ -11,7 +11,7 @@
                 class="ml-2" />
             <p :class="content.site_price !== content.current_site_price  ? 'text-deep-purple' : content.site_stock === 0 ? 'text-danger' : 'text-grey'" class="t12 w400 l-28">
                 <template v-if="content.site_price !== content.current_site_price">
-                    کالا افزایش قیمت داشته است.
+                    کالا تغییر قیمت داشته است.
                 </template>
                 <template v-else-if=" content.site_stock === 0 ">
                     کالا به اتمام رسیده است.

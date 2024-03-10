@@ -62,6 +62,7 @@
                     item-title="label"
                     item-value="value"
                     suffix="تومان"
+                    ref="minAmount"
                     @blur="setAmount(filter.param)"
                     v-model="amount.min"
                     :custom-filter="customMinFilter"
@@ -102,6 +103,7 @@ export default {
   data() {
     return {
       availableItems: false,
+      searchInput:'',
       amount: {
         max: null,
         min: null
@@ -150,6 +152,7 @@ export default {
   computed: {},
 
   methods: {
+
     /**
      * Toggle card box
      * @param {*} index
@@ -188,9 +191,11 @@ export default {
      * Enter the desired value
      * @param {*} item
      * @param {*} queryText
+     * @param {*} itemText
      */
-    customMinFilter(queryText) {
-      this.amount.min = queryText
+    customMinFilter(item, queryText, itemText) {
+      if (itemText.props.value === queryText) this.amount.min = itemText.props.value
+      else  this.amount.min = queryText
 
     },
 
@@ -198,15 +203,18 @@ export default {
      * Enter the desired value
      * @param {*} item
      * @param {*} queryText
+     * @param {*} itemText
      */
-    customMaxFilter(queryText) {
-      this.amount.max = queryText
+    customMaxFilter(item, queryText, itemText) {
+      if (itemText.props.value === queryText) this.amount.min = itemText.props.value
+      else  this.amount.max = queryText
     },
 
     /**
      * Show available Items
      */
     setAmount(param) {
+      console.log(this.amount , 'this.amount')
       const form = {
         param: param,
         amount: this.amount

@@ -48,6 +48,7 @@
                         @setDiscountCode="getDiscountCode"
                         :paymentMount="data.paid_price"
                         @deleteBasketVoucher = "deleteBasketVoucher" />
+                    <generalModalsErrorOrder :orderSendingMethod="orderSendingMethod" :orderAddressId="orderAddressId" :orderPaymentMethod="orderPaymentMethod"/>
                 </template>
             </v-col>
             <v-col md="3">
