@@ -174,6 +174,10 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+
+        if(this.$route.query?.page){
+            this.page = parseInt(this.$route.query.page)
+        }
     },
 
     beforeMount() {
