@@ -3,7 +3,7 @@
     <LoadingModal v-if="loading" />
     <div v-if="screenType !== null">
         <template v-if="screenType === 'desktop'">
-            <desktopHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
+            <desktopHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" :userData="userData"/>
 
             <slot />
             <div id="body-cover" />
@@ -13,7 +13,7 @@
         <template v-else-if="screenType === 'mobile'">
             <mobileHeader v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
             <slot />
-            <mobileFooter v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'" />
+            <mobileFooter v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'"  :userData="userData"/>
         </template>
     </div>
 </v-app>
@@ -33,7 +33,8 @@ export default {
 
     data() {
         return {
-            screenType: null
+            screenType: null,
+            userData:null,
         }
     },
 
@@ -75,7 +76,10 @@ export default {
          async fetchUserProfile() {
             try {
                 const response = await auth.getUserProfile(this.userToken)
+              if (response.data.data)
+              {
                 this.$store.commit('set_userData', response.data.data)
+                this.userData = response.data.data
 
             } catch (error) {
                 // Handle errors

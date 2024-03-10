@@ -69,7 +69,8 @@
                 v-model="page"
                 :length="productListPageLength"
                 size="40"
-                :total-visible="5"
+                :total-visible="6"
+                @click="backToTop"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left"/>
           </div>
@@ -85,17 +86,6 @@ import PLP from '@/composables/PLP.js'
 export default {
   data() {
     return {
-      BreadcrumbItems: [{
-        title: 'لوازم آرایشی',
-        /* Should be main category */
-        href: '/'
-      },
-        {
-          title: 'آرایش صورت',
-          /* Should be sub category */
-          href: '/products'
-        }
-      ],
       productList: [],
       filters: [],
       screenType: null
@@ -137,7 +127,7 @@ export default {
   computed: {
     breadcrumbList(){
       let breadcrumb = []
-      if(this.breadcrumb?.category_l1){
+      if(this.breadcrumb?.category_l1?.name){
         const form = {
           type : "category_l1",
           href: `/category/${this.breadcrumb.category_l1.slug}`,
@@ -146,7 +136,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l2){
+      if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
           href: `/category/${this.breadcrumb.category_l2.slug}`,
@@ -155,7 +145,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l3){
+      if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
           href: `/category/${this.breadcrumb.category_l3.slug}`,
@@ -289,6 +279,7 @@ export default {
       }
 
     },
+
     /**
      * Set max
      * @param {*} amount
@@ -406,11 +397,21 @@ export default {
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
     },
-    async createQueryForFilter(array) {
 
+    async createQueryForFilter(array) {
       await this.paramGenerator(array)
 
     },
+
+    /**
+     * Back to top on change pagination
+     */
+     backToTop(){
+      window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+      });
+    }
   },
   mounted() {
     /**

@@ -116,7 +116,7 @@
     <desktopMenu />
 </header>
 
-<desktopHeaderBasket :userBasket="userBasket" />
+<desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
 
 <v-dialog
     v-if="dialog"
@@ -166,6 +166,8 @@
 
 <script>
 
+import login from "~/pages/auth/login/index.vue";
+
 export default {
     name: "Desktop Header",
 
@@ -176,7 +178,6 @@ export default {
             isFixed: true,
             isHidden: false,
             lastScrollTop: 0,
-            isLogin: false,
             dialog: false,
             hasBanner: false,
             isBanner: false,
@@ -185,7 +186,18 @@ export default {
         };
     },
 
+    props:{
+        userData:null
+    },
+
     computed: {
+      isLogin(){
+        if (this.userData.phone_number) {
+          return true
+        } else {
+          return false
+        };
+      },
         userBasket() {
             try {
                 const basket = this.$store.getters['get_basket']
@@ -195,14 +207,6 @@ export default {
             }
         },
 
-        userData(){
-            try {
-                const user = this.$store.getters['get_userData']
-                return user
-            } catch (e) {
-                return null
-            }
-        }
     },
 
     setup() {
@@ -212,32 +216,33 @@ export default {
         }
     },
 
-
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         window.addEventListener('click', this.closeDropDown);
-
         const banner = document.getElementById("top-banner");
         if (banner) {
             this.isBanner = true;
             this.hasBanner = true;
             document.getElementsByTagName('body')[0].classList.add('hasBanner');           
         }
-
-        if (this.userData) {
-            this.isLogin = true
-        } else {
-            this.isLogin = false
-        };
     },
 
     beforeDestroy() {
-        window.removeEventListener('scroll', this.handleScroll);
-        window.removeEventListener('click', this.closeDropDown);
+          window.removeEventListener('scroll', this.handleScroll);
+          window.removeEventListener('click', this.closeDropDown);
+      },
+
+    watch:{
+        userData(newVal){
+            if (newVal && newVal.phone_number !== null) {
+                this.isLogin = true
+            } else {
+                this.isLogin = false
+            };
+        }
     },
 
     methods: {
-
         /**
          * Show and hide menu in scroll down and up
          */
@@ -332,6 +337,7 @@ export default {
             this.userToken = '';
             window.location = '/';
             this.closeModal();
+            this.$store.commit('set_userData' , '')
             const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
             itemDropdown.classList.toggle('show');
         },
@@ -344,6 +350,8 @@ export default {
             this.$router.push('/login')
         },
     },
+
+
 };
 </script>
 
