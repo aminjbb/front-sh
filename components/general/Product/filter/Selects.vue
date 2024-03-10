@@ -10,7 +10,7 @@
         class="mb-3 filter-sidebar__card__search"
         v-model="searchItem" />
 
-    <div class="filter-sidebar__card__scroll pl-2 pt-1">
+    <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
             <div class="d-flex justify-space-between align-center">
                 <v-checkbox
