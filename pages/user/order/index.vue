@@ -13,183 +13,185 @@
                 <generalUserSidebar />
             </div>
             <div class="col-9 pa-4 mobile-pa-0">
-                <generalNotification class="mb-2" borderColorCode="673AB7" showButton color="deep-purple" icon="mdi-exclamation-thick" text="برای پیگیری سفارشات ثبت شده تا تاریخ 1402/12/24 به حساب کاربری قبلی خود مراجعه نمایید. " buttonText="مشاهده حساب کاربری قدیم" buttonLink="/"/>
+                <div>
+                    <generalNotification class="mb-2" borderColorCode="673AB7" showButton color="deep-purple" icon="mdi-exclamation-thick" text="برای پیگیری سفارشات ثبت شده تا تاریخ 1402/12/24 به حساب کاربری قبلی خود مراجعه نمایید. " buttonText="مشاهده حساب کاربری قدیم" buttonLink="/"/>
                 
-                <generalNotification class="mb-5" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/24 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
+                    <generalNotification class="mb-5" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/24 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
 
-                <v-card class="pa-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
-                    <header class="d-flex align-center justify-space-between mb-5 xs-hide">
-                        <span>لیست سفارشات</span>
-                    </header>
+                    <v-card class="pa-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
+                        <header class="d-flex align-center justify-space-between mb-5 xs-hide">
+                            <span>لیست سفارشات</span>
+                        </header>
 
-                    <div class="order-tab flex-grow-1 d-flex flex-column" ref="orderRef">
-                        <div class="order-tab__items-scroll">
-                            <div class="order-tab__items d-flex">
-                                <div
-                                    class="order-tab__item order-tab__item--one flex-grow-1 active"
-                                    @click="showTab(1)"
-                                    id="order-tab__item-1">
-                                    <span class="t13 w500 text-grey text-center d-block">همه سفارشات</span>
-                                </div>
-
-                                <div
-                                    class="order-tab__item order-tab__item--two flex-grow-1"
-                                    @click="showTab(2)"
-                                    id="order-tab__item-2">
-                                    <span class="t13 w500 text-grey text-center d-block">در حال پردازش</span>
-                                </div>
-
-                                <div
-                                    class="order-tab__item order-tab__item--three flex-grow-1"
-                                    @click="showTab(3)"
-                                    id="order-tab__item-3">
-                                    <span class="t13 w500 text-grey text-center d-block">در حال ارسال</span>
-                                </div>
-
-                                <div
-                                    class="order-tab__item order-tab__item--four flex-grow-1"
-                                    @click="showTab(4)"
-                                    id="order-tab__item-4">
-                                    <span class="t13 w500 text-grey text-center d-block">تحویل شده</span>
-                                </div>
-
-                                <div
-                                    class="order-tab__item order-tab__item--five flex-grow-1"
-                                    @click="showTab(5)"
-                                    id="order-tab__item-5">
-                                    <span class="t13 w500 text-grey text-center d-block">مرجوعی</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="order-tab__contents flex-grow-1" :class="screenType === 'mobile' ? 'px-2' : ''">
-                            <div class="order-tab__content active" id="order-tab__content-1">
-                                <template v-if="userOrders && userOrders.length">
-                                    <generalOrdersOrderRow
-                                        v-for="order in userOrders"
-                                        :key="`all-order${order.id}`"
-                                        :content="order" />
-                                </template>
-
-                                <template v-else>
-                                    <div class="d-flex flex-column justify-center align-center pt-15">
-                                        <svgEmptyOrder />
-
-                                        <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
-
-                                        <v-btn
-                                            href="/"
-                                            color="primary"
-                                            title="بازدید از سایت"
-                                            class="mt-5 order-tab__content__empty-button">
-                                            بازدید از سایت
-                                        </v-btn>
+                        <div class="order-tab flex-grow-1 d-flex flex-column" ref="orderRef">
+                            <div class="order-tab__items-scroll">
+                                <div class="order-tab__items d-flex">
+                                    <div
+                                        class="order-tab__item order-tab__item--one flex-grow-1 active"
+                                        @click="showTab(1)"
+                                        id="order-tab__item-1">
+                                        <span class="t13 w500 text-grey text-center d-block">همه سفارشات</span>
                                     </div>
-                                </template>
-                            </div>
 
-                            <div class="order-tab__content" id="order-tab__content-2">
-                                <template v-if="preProgressOrder && preProgressOrder.length">
-                                    <generalOrdersOrderRow
-                                        v-for="(item, index) in preProgressOrder"
-                                        :key="`all-order${index}`"
-                                        :content="item" />
-                                </template>
-
-                                <template v-else>
-                                    <div class="d-flex flex-column justify-center align-center pt-15">
-                                        <svgEmptyOrder />
-                                        <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
-                                        <v-btn
-                                            href="/"
-                                            color="primary"
-                                            title="بازدید از سایت"
-                                            class="mt-5 order-tab__content__empty-button">
-                                            بازدید از سایت
-                                        </v-btn>
+                                    <div
+                                        class="order-tab__item order-tab__item--two flex-grow-1"
+                                        @click="showTab(2)"
+                                        id="order-tab__item-2">
+                                        <span class="t13 w500 text-grey text-center d-block">در حال پردازش</span>
                                     </div>
-                                </template>
-                            </div>
 
-                            <div class="order-tab__content" id="order-tab__content-3">
-                                <template v-if="sendingOrder && sendingOrder.length">
-                                    <generalOrdersOrderRow
-                                        v-for="(item, index) in sendingOrder"
-                                        :key="`all-order${index}`"
-                                        :content="item" />
-                                </template>
-
-                                <template v-else>
-                                    <div class="d-flex flex-column justify-center align-center pt-15">
-                                        <svgEmptyOrder />
-
-                                        <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
-
-                                        <v-btn
-                                            href="/"
-                                            color="primary"
-                                            title="بازدید از سایت"
-                                            class="mt-5 order-tab__content__empty-button">
-                                            بازدید از سایت
-                                        </v-btn>
+                                    <div
+                                        class="order-tab__item order-tab__item--three flex-grow-1"
+                                        @click="showTab(3)"
+                                        id="order-tab__item-3">
+                                        <span class="t13 w500 text-grey text-center d-block">در حال ارسال</span>
                                     </div>
-                                </template>
-                            </div>
 
-                            <div class="order-tab__content" id="order-tab__content-4">
-                                <template v-if="receivedOrder && receivedOrder.length">
-                                    <generalOrdersOrderRow
-                                        v-for="order in receivedOrder"
-                                        :key="`all-order${order.id}`"
-                                        :content="order" />
-                                </template>
-
-                                <template v-else>
-                                    <div class="d-flex flex-column justify-center align-center pt-15">
-                                        <svgEmptyOrder />
-
-                                        <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
-
-                                        <v-btn
-                                            href="/"
-                                            color="primary"
-                                            title="بازدید از سایت"
-                                            class="mt-5 order-tab__content__empty-button">
-                                            بازدید از سایت
-                                        </v-btn>
+                                    <div
+                                        class="order-tab__item order-tab__item--four flex-grow-1"
+                                        @click="showTab(4)"
+                                        id="order-tab__item-4">
+                                        <span class="t13 w500 text-grey text-center d-block">تحویل شده</span>
                                     </div>
-                                </template>
+
+                                    <div
+                                        class="order-tab__item order-tab__item--five flex-grow-1"
+                                        @click="showTab(5)"
+                                        id="order-tab__item-5">
+                                        <span class="t13 w500 text-grey text-center d-block">مرجوعی</span>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="order-tab__content" id="order-tab__content-5">
-                                <template v-if="userReturnedOrderList && userReturnedOrderList.length">
-                                    <template v-for="(order, index) in userReturnedOrderList">
-                                        <generalOrdersReturnOrderRow 
-                                            v-if="order?.details.length"
-                                            :key="`all-order${index}`"
+                            <div class="order-tab__contents flex-grow-1" :class="screenType === 'mobile' ? 'px-2' : ''">
+                                <div class="order-tab__content active" id="order-tab__content-1">
+                                    <template v-if="userOrders && userOrders.length">
+                                        <generalOrdersOrderRow
+                                            v-for="order in userOrders"
+                                            :key="`all-order${order.id}`"
                                             :content="order" />
                                     </template>
-                                </template>
 
-                                <template v-else>
-                                    <div class="d-flex flex-column justify-center align-center pt-15">
-                                        <svgEmptyOrder />
+                                    <template v-else>
+                                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                                            <svgEmptyOrder />
 
-                                        <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
+                                            <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
 
-                                        <v-btn
-                                            href="/"
-                                            color="primary"
-                                            title="بازدید از سایت"
-                                            class="mt-5 order-tab__content__empty-button">
-                                            بازدید از سایت
-                                        </v-btn>
-                                    </div>
-                                </template>
+                                            <v-btn
+                                                href="/"
+                                                color="primary"
+                                                title="بازدید از سایت"
+                                                class="mt-5 order-tab__content__empty-button">
+                                                بازدید از سایت
+                                            </v-btn>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="order-tab__content" id="order-tab__content-2">
+                                    <template v-if="preProgressOrder && preProgressOrder.length">
+                                        <generalOrdersOrderRow
+                                            v-for="(item, index) in preProgressOrder"
+                                            :key="`all-order${index}`"
+                                            :content="item" />
+                                    </template>
+
+                                    <template v-else>
+                                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                                            <svgEmptyOrder />
+                                            <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
+                                            <v-btn
+                                                href="/"
+                                                color="primary"
+                                                title="بازدید از سایت"
+                                                class="mt-5 order-tab__content__empty-button">
+                                                بازدید از سایت
+                                            </v-btn>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="order-tab__content" id="order-tab__content-3">
+                                    <template v-if="sendingOrder && sendingOrder.length">
+                                        <generalOrdersOrderRow
+                                            v-for="(item, index) in sendingOrder"
+                                            :key="`all-order${index}`"
+                                            :content="item" />
+                                    </template>
+
+                                    <template v-else>
+                                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                                            <svgEmptyOrder />
+
+                                            <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
+
+                                            <v-btn
+                                                href="/"
+                                                color="primary"
+                                                title="بازدید از سایت"
+                                                class="mt-5 order-tab__content__empty-button">
+                                                بازدید از سایت
+                                            </v-btn>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="order-tab__content" id="order-tab__content-4">
+                                    <template v-if="receivedOrder && receivedOrder.length">
+                                        <generalOrdersOrderRow
+                                            v-for="order in receivedOrder"
+                                            :key="`all-order${order.id}`"
+                                            :content="order" />
+                                    </template>
+
+                                    <template v-else>
+                                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                                            <svgEmptyOrder />
+
+                                            <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
+
+                                            <v-btn
+                                                href="/"
+                                                color="primary"
+                                                title="بازدید از سایت"
+                                                class="mt-5 order-tab__content__empty-button">
+                                                بازدید از سایت
+                                            </v-btn>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="order-tab__content" id="order-tab__content-5">
+                                    <template v-if="userReturnedOrderList && userReturnedOrderList.length">
+                                        <template v-for="(order, index) in userReturnedOrderList">
+                                            <generalOrdersReturnOrderRow 
+                                                v-if="order?.details.length"
+                                                :key="`all-order${index}`"
+                                                :content="order" />
+                                        </template>
+                                    </template>
+
+                                    <template v-else>
+                                        <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                                            <svgEmptyOrder />
+
+                                            <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
+
+                                            <v-btn
+                                                href="/"
+                                                color="primary"
+                                                title="بازدید از سایت"
+                                                class="mt-5 order-tab__content__empty-button">
+                                                بازدید از سایت
+                                            </v-btn>
+                                        </div>
+                                    </template>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </v-card>
+                    </v-card>
+                </div>
             </div>
         </v-row>
     </v-container>
