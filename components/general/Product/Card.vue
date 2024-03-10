@@ -34,7 +34,7 @@
             <span class="t12 text-grey">ارسال فوری</span>
         </div> -->
 
-        <div class="product-card__info__rate">
+        <div v-if="content.score" class="product-card__info__rate">
             <span class="t12 text-grey">{{content.score}}</span>
             <v-icon icon="mdi-star" color="orange-lighten-2" />
         </div>
