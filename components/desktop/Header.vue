@@ -1,560 +1,559 @@
 <template>
-<div v-if="bannerItem" class="fixed-banner" id="top-banner"></div>
-
-<header
-    class="header header--desktop w-100"
-    id="header--desktop"
-    :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
-    <v-container>
-        <div class="header__inner d-flex align-center justify-space-between">
-            <div class="header__col1 d-flex algin-center">
-                <a href="/" class="header__logo" title="Shavaz logo">
-                    <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
-                </a>
-
-                <desktopSearchResult />
-            </div>
-            <div class="header__col2 d-flex align-center justify-end">
-                <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
-                    <div
-                        @click="openDropDown('dashboard')"
-                        class="cur-p"
-                        id="mobile-drop-down__show-dashboard">
-                        <v-icon icon="mdi-account-outline" />
-                        <v-icon icon="mdi-chevron-down" />
-                    </div>
-
-                    <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
-                        <ul class="ma-0 pa-0">
-                            <li class="mb-4 mt-1 user-data">
-                                <a href="/user/dashboard" class="d-flex align-center">
-                                    <v-icon
-                                        icon="mdi-account-circle-outline"
-                                        color="grey-darken-3"
-                                        size="large"
-                                        class="ml-2" />
-
-                                    <template v-if="userData && userData.first_name && userData.last_name">
-                                        <div class="d-flex flex-column">
-                                            <span class="user-phone t15 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
-                                            <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-                                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
-                                    </template>
-                                </a>
-                            </li>
-                            <li class="mb-2">
-                                <a class="text-grey t14 d-flex align-center py-1" href="/user/order">
-                                    <v-icon
-                                        icon="mdi-cart-outline"
-                                        class="ml-2"
-                                        color="grey" />
-                                    <span class="text-grey t14">لیست سفارشات</span>
-                                </a>
-                            </li>
-
-                            <li class="mb-2">
-                                <a class="text-grey t14 d-flex align-center py-1" href="/user/address">
-                                    <v-icon
-                                        icon="mdi-map-marker-outline"
-                                        class="ml-2"
-                                        color="grey" />
-                                    <span class="text-grey t14">آدرس‌ها</span>
-                                </a>
-                            </li>
-
-                            <li class="mb-2">
-                                <a class="text-grey t14 d-flex align-center py-1 cur-p" href="/user/favorite-list">
-                                    <v-icon
-                                        icon="mdi-heart-outline"
-                                        class="ml-2"
-                                        size="small"
-                                        color="grey" />
-                                    <span class="text-grey t14">علاقمندی‌ها</span>
-                                </a>
-                            </li>
-
-                            <li class="mb-2">
-                                <a class="text-grey t14 d-flex align-center py-1 cur-p" @click="openModal()">
-                                    <v-icon
-                                        icon="mdi-exit-to-app"
-                                        class="ml-2"
-                                        color="grey" />
-                                    <span class="text-grey t14">خروج</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+    <div v-if="bannerItem" class="fixed-banner" id="top-banner"></div>
+    
+    <header
+        class="header header--desktop w-100"
+        id="header--desktop"
+        :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
+        <v-container>
+            <div class="header__inner d-flex align-center justify-space-between">
+                <div class="header__col1 d-flex algin-center">
+                    <a href="/" class="header__logo" title="Shavaz logo">
+                        <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
+                    </a>
+    
+                    <desktopSearchResult />
                 </div>
-                <a v-else class="header__item header__item--btn t12 w400 text-grey" @click="goLoginPage()">
-                    <v-icon icon="mdi-login" color="grey" />
-                    ورود | ثبت نام
-                </a>
-
-                <span class="header__item__sp"></span>
-
-                <a class="header__item" href="/user/favorite-list">
-                    <v-icon icon="mdi-heart-outline" />
-                </a>
-
-                <span class="header__item__sp"></span>
-
-                <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
-                    <v-badge
-                        v-if="userBasket && userBasket.details && userBasket.details.length"
-                        color="primary"
-                        class="number-font"
-                        :content="userBasket.details.length"
-                        inline />
-                    <v-icon icon="mdi-cart-minus" />
-                </a>
+                <div class="header__col2 d-flex align-center justify-end">
+                    <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
+                        <div
+                            @click="openDropDown('dashboard')"
+                            class="cur-p"
+                            id="mobile-drop-down__show-dashboard">
+                            <v-icon icon="mdi-account-outline" />
+                            <v-icon icon="mdi-chevron-down" />
+                        </div>
+    
+                        <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
+                            <ul class="ma-0 pa-0">
+                                <li class="mb-4 mt-1 user-data">
+                                    <a href="/user/dashboard" class="d-flex align-center">
+                                        <v-icon
+                                            icon="mdi-account-circle-outline"
+                                            color="grey-darken-3"
+                                            size="large"
+                                            class="ml-2" />
+    
+                                        <template v-if="userData && userData.first_name && userData.last_name">
+                                            <div class="d-flex flex-column">
+                                                <span class="user-phone t15 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
+                                                <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span>
+                                            </div>
+                                        </template>
+                                        <template v-else>
+                                            <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
+                                        </template>
+                                    </a>
+                                </li>
+                                <li class="mb-2">
+                                    <a class="text-grey t14 d-flex align-center py-1" href="/user/order">
+                                        <v-icon
+                                            icon="mdi-cart-outline"
+                                            class="ml-2"
+                                            color="grey" />
+                                        <span class="text-grey t14">لیست سفارشات</span>
+                                    </a>
+                                </li>
+    
+                                <li class="mb-2">
+                                    <a class="text-grey t14 d-flex align-center py-1" href="/user/address">
+                                        <v-icon
+                                            icon="mdi-map-marker-outline"
+                                            class="ml-2"
+                                            color="grey" />
+                                        <span class="text-grey t14">آدرس‌ها</span>
+                                    </a>
+                                </li>
+    
+                                <li class="mb-2">
+                                    <a class="text-grey t14 d-flex align-center py-1 cur-p" href="/user/favorite-list">
+                                        <v-icon
+                                            icon="mdi-heart-outline"
+                                            class="ml-2"
+                                            size="small"
+                                            color="grey" />
+                                        <span class="text-grey t14">علاقمندی‌ها</span>
+                                    </a>
+                                </li>
+    
+                                <li class="mb-2">
+                                    <a class="text-grey t14 d-flex align-center py-1 cur-p" @click="openModal()">
+                                        <v-icon
+                                            icon="mdi-exit-to-app"
+                                            class="ml-2"
+                                            color="grey" />
+                                        <span class="text-grey t14">خروج</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <a v-else class="header__item header__item--btn t12 w400 text-grey" @click="goLoginPage()">
+                        <v-icon icon="mdi-login" color="grey" />
+                        ورود | ثبت نام
+                    </a>
+    
+                    <span class="header__item__sp"></span>
+    
+                    <a class="header__item" href="/user/favorite-list">
+                        <v-icon icon="mdi-heart-outline" />
+                    </a>
+    
+                    <span class="header__item__sp"></span>
+    
+                    <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
+                        <v-badge
+                            v-if="userBasket && userBasket.details && userBasket.details.length"
+                            color="primary"
+                            class="number-font"
+                            :content="userBasket.details.length"
+                            inline />
+                        <v-icon icon="mdi-cart-minus" />
+                    </a>
+                </div>
             </div>
-        </div>
-    </v-container>
-    <desktopMenu />
-</header>
-
-<desktopHeaderBasket :userBasket="userBasket" />
-
-<v-dialog
-    v-if="dialog"
-    v-model="dialog"
-    color="white"
-    width="470px">
-    <v-card class="pt-3 px-6 pb-5">
-        <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-            <span class="t15 w400">
-                خروج از حساب کاربری
-            </span>
-
-            <v-btn
-                class="c-modal__header__btn pa-0 text-none"
-                @click="closeModal()"
-                color="grey-darken-1"
-                size="large"
-                variant="icon">
-                <v-icon>mdi-close</v-icon>
-            </v-btn>
-        </header>
-
-        <div>
-            <p class="t14 w400 my-8 text-center text-grey-darken-2">آیا از خروج از حساب اطمینان دارید؟ </p>
-
-            <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
+        </v-container>
+        <desktopMenu />
+    </header>
+    
+    <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
+    
+    <v-dialog
+        v-if="dialog"
+        v-model="dialog"
+        color="white"
+        width="470px">
+        <v-card class="pt-3 px-6 pb-5">
+            <header class="c-modal__header d-flex justify-space-between align-center pb-1">
+                <span class="t15 w400">
+                    خروج از حساب کاربری
+                </span>
+    
                 <v-btn
+                    class="c-modal__header__btn pa-0 text-none"
                     @click="closeModal()"
-                    height="44"
-                    title="انصراف"
-                    class="btn btn--cancel ml-1">
-                    انصراف
+                    color="grey-darken-1"
+                    size="large"
+                    variant="icon">
+                    <v-icon>mdi-close</v-icon>
                 </v-btn>
-
-                <v-btn
-                    @click="logout()"
-                    height="44"
-                    title="خروج از حساب"
-                    class="btn btn--submit">
-                    خروج از حساب
-                </v-btn>
+            </header>
+    
+            <div>
+                <p class="t14 w400 my-8 text-center text-grey-darken-2">آیا از خروج از حساب اطمینان دارید؟ </p>
+    
+                <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
+                    <v-btn
+                        @click="closeModal()"
+                        height="44"
+                        title="انصراف"
+                        class="btn btn--cancel ml-1">
+                        انصراف
+                    </v-btn>
+    
+                    <v-btn
+                        @click="logout()"
+                        height="44"
+                        title="خروج از حساب"
+                        class="btn btn--submit">
+                        خروج از حساب
+                    </v-btn>
+                </div>
             </div>
-        </div>
-    </v-card>
-</v-dialog>
-</template>
-
-<script>
-
-export default {
-    name: "Desktop Header",
-
-    data() {
-        return {
-            isDropdownVisible: false,
-            selectedCategory: null,
-            isFixed: true,
-            isHidden: false,
-            lastScrollTop: 0,
-            isLogin: false,
-            dialog: false,
-            hasBanner: false,
-            isBanner: false,
-            isTop: false,
-            bannerItem:null,
-        };
-    },
-
-    computed: {
-        userBasket() {
-            try {
-                const basket = this.$store.getters['get_basket']
-                return basket ?.data ?.data
-            } catch (e) {
-                return []
+        </v-card>
+    </v-dialog>
+    </template>
+    
+    <script>
+    
+    export default {
+        name: "Desktop Header",
+    
+        data() {
+            return {
+                isDropdownVisible: false,
+                selectedCategory: null,
+                isFixed: true,
+                isHidden: false,
+                lastScrollTop: 0,
+                isLogin: false,
+                dialog: false,
+                hasBanner: false,
+                isBanner: false,
+                isTop: false,
+                bannerItem:null,
+            };
+        },
+    
+        props:{
+            userData:null
+        },
+    
+        computed: {
+            userBasket() {
+                try {
+                    const basket = this.$store.getters['get_basket']
+                    return basket ?.data ?.data
+                } catch (e) {
+                    return []
+                }
+            },
+    
+        },
+    
+        setup() {
+            const userToken = useCookie('userToken')
+            return {
+                userToken,
             }
         },
-
-        userData(){
-            try {
-                const user = this.$store.getters['get_userData']
-                return user
-            } catch (e) {
-                return null
+    
+        mounted() {
+            window.addEventListener('scroll', this.handleScroll);
+            window.addEventListener('click', this.closeDropDown);
+    
+            const banner = document.getElementById("top-banner");
+            if (banner) {
+                this.isBanner = true;
+                this.hasBanner = true;
+                document.getElementsByTagName('body')[0].classList.add('hasBanner');           
             }
-        }
-    },
-
-    setup() {
-        const userToken = useCookie('userToken')
-        return {
-            userToken,
-        }
-    },
-
-
-    mounted() {
-        window.addEventListener('scroll', this.handleScroll);
-        window.addEventListener('click', this.closeDropDown);
-
-        const banner = document.getElementById("top-banner");
-        if (banner) {
-            this.isBanner = true;
-            this.hasBanner = true;
-            document.getElementsByTagName('body')[0].classList.add('hasBanner');           
-        }
-
-        if (this.userData) {
-            this.isLogin = true
-        } else {
-            this.isLogin = false
-        };
-    },
-
-    beforeDestroy() {
-        window.removeEventListener('scroll', this.handleScroll);
-        window.removeEventListener('click', this.closeDropDown);
-    },
-
-    methods: {
-
-        /**
-         * Show and hide menu in scroll down and up
-         */
-        handleScroll() {
-            let currentScrollTop = window.scrollY;
-
-            if (this.isBanner) {
-                if (window.scrollY > 74) {
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    this.hasBanner = false;
-
-                    if (currentScrollTop > this.lastScrollTop) {
+        },
+    
+        beforeDestroy() {
+            window.removeEventListener('scroll', this.handleScroll);
+            window.removeEventListener('click', this.closeDropDown);
+        },
+    
+        watch:{
+            userData(newVal){
+                if (newVal && newVal.phone_number !== null) {
+                    this.isLogin = true
+                } else {
+                    this.isLogin = false
+                };
+            }
+        },
+    
+        methods: {
+            /**
+             * Show and hide menu in scroll down and up
+             */
+            handleScroll() {
+                let currentScrollTop = window.scrollY;
+    
+                if (this.isBanner) {
+                    if (window.scrollY > 74) {
                         this.isHidden = true;
                         this.isFixed = false;
-
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
+                        this.hasBanner = false;
+    
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+    
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+                        }
+    
+                        this.lastScrollTop = currentScrollTop;
                     }
-
-                    this.lastScrollTop = currentScrollTop;
-                }
-
-                if (window.scrollY <= 74) {
-                    this.hasBanner = true;
-                }
-            } else {
-                if (window.scrollY > 60) {
-                    this.isHidden = true;
-                    this.isFixed = false;
-
-                    if (currentScrollTop > this.lastScrollTop) {
+    
+                    if (window.scrollY <= 74) {
+                        this.hasBanner = true;
+                    }
+                } else {
+                    if (window.scrollY > 60) {
                         this.isHidden = true;
                         this.isFixed = false;
-
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
+    
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+    
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+                        }
+    
+                        this.lastScrollTop = currentScrollTop;
                     }
-
-                    this.lastScrollTop = currentScrollTop;
                 }
-            }
+            },
+    
+            /**
+             * Open menu
+             * @param {*} id 
+             */
+            openDropDown(id) {
+                const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
+                itemDropdown.classList.toggle('show');
+            },
+    
+            /**
+             * Close search box if I click in outside
+             * @param {*} event 
+             */
+            closeDropDown(event) {
+                if (!event.target.closest('#mobile-drop-down__show-dashboard')) {
+                    document.getElementById('mobile-drop-down__items-dashboard').classList.remove('show');
+                }
+            },
+    
+            /**
+             * show header basket modal
+             */
+            showHeaderBasket() {
+                document.getElementById('basket-header').classList.add('show');
+                document.body.classList.add('active-basket');
+            },
+    
+            /**
+             * Open modal
+             */
+            openModal() {
+                this.dialog = true;
+            },
+    
+            /**
+             * Close modal
+             */
+            closeModal() {
+                this.dialog = false;
+            },
+    
+            /**
+             * Logout
+             */
+            logout() {
+                this.userToken = '';
+                window.location = '/';
+                this.closeModal();
+                const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
+                itemDropdown.classList.toggle('show');
+            },
+    
+            /**
+             * Login
+             */
+            goLoginPage(){
+                localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
+                this.$router.push('/login')
+            },
         },
-
-        /**
-         * Open menu
-         * @param {*} id 
-         */
-        openDropDown(id) {
-            const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
-            itemDropdown.classList.toggle('show');
-        },
-
-        /**
-         * Close search box if I click in outside
-         * @param {*} event 
-         */
-        closeDropDown(event) {
-            if (!event.target.closest('#mobile-drop-down__show-dashboard')) {
-                document.getElementById('mobile-drop-down__items-dashboard').classList.remove('show');
-            }
-        },
-
-        /**
-         * show header basket modal
-         */
-        showHeaderBasket() {
-            document.getElementById('basket-header').classList.add('show');
-            document.body.classList.add('active-basket');
-        },
-
-        /**
-         * Open modal
-         */
-        openModal() {
-            this.dialog = true;
-        },
-
-        /**
-         * Close modal
-         */
-        closeModal() {
-            this.dialog = false;
-        },
-
-        /**
-         * Logout
-         */
-        logout() {
-            this.userToken = '';
-            window.location = '/';
-            this.closeModal();
-            const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
-            itemDropdown.classList.toggle('show');
-        },
-
-        /**
-         * Login
-         */
-        goLoginPage(){
-            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
-            this.$router.push('/login')
-        },
-    },
-};
-</script>
-
-<style lang="scss">
-@import "~/assets/scss/tools/bp";
-$parent: 'header';
-
-.fixed-banner {
-    width: 100%;
-    height: 64px;
-    background: red;
-    top: 0;
-    right: 0;
-    position: absolute;
-    z-index: 11;
-}
-
-.#{$parent} {
-    &--desktop {
-        &.show-mega-menu {
-            z-index: 1000;
-        }
-
-        z-index: 10;
-        padding: 4px;
-        padding-bottom: 0 !important;
-        border-bottom: 1px solid #DDDDDD;
-        box-shadow: 0px 4px 9px rgba(66, 66, 66, 0.1);
-        background: #fff;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+    };
+    </script>
+    
+    <style lang="scss">
+    @import "~/assets/scss/tools/bp";
+    $parent: 'header';
+    
+    .fixed-banner {
+        width: 100%;
+        height: 64px;
+        background: red;
         top: 0;
         right: 0;
-
-        .#{$parent} {
-            &__logo {
-
-                width: 107px;
-                height: 38px;
-                margin-left: 65px;
-
-                @include gbp(769, 1280) {
-                    margin-left: 12px;
-                }
+        position: absolute;
+        z-index: 11;
+    }
+    
+    .#{$parent} {
+        &--desktop {
+            &.show-mega-menu {
+                z-index: 1000;
             }
-
-            &__search-box {
-                width: 638px;
-                height: 40px;
-                border-radius: 4px !important;
-                overflow: hidden;
-                position: relative;
-
-                @include gbp(769, 1280) {
-                    width: 450px;
-                }
-
-                &__inner {
-                    background: #EEEEEE;
-                    border-radius: 2px;
-
-                    input {
-                        font-size: 13px !important;
-                        height: 40px;
-                        border: 0 !important;
-                        outline: 0 !important;
-
-                        &:focus {
-                            border: 0 !important;
-                        }
-                    }
-
-                }
-
-                .search-result {
-                    display: none;
-                    width: 100%;
-                    position: absolute;
-                    background: #fff;
-                    z-index: 5;
-                }
-
-                &.active {
-                    border-radius: 4px;
-                    border: 1px solid var(--grey-grey-lighten-3, #EEE);
-                    background: var(--Shade-white, #FFF);
-                    border-bottom: 0 !important;
-                    overflow: visible;
-
-                    .#{$parent}__search-box__inner {
-                        background-color: #fff !important;
-                    }
-
-                    .search-result {
-                        display: block;
-                        border: 1px solid var(--grey-grey-lighten-3, #EEE);
-                        border-top: 0 !important;
-                        top: 38px;
-                        right: 0;
-                        padding: 0 12px 12px;
-                        width: calc(100% + 2px);
-                        margin: -1px;
-
-                        hr {
-                            opacity: 1;
-                        }
-                    }
-                }
-
-                .v-input__control,
-                .v-field__prepend-inner,
-                .v-field__field {
-                    height: 40px;
-                }
-
-                .v-field {
-                    box-shadow: none;
-                    background: #EEEEEE;
-                    border-radius: 2px;
-                }
-
-                .v-field__input,
-                .v-field-label {
-                    font-size: 13px !important;
-                }
-            }
-
-            &__item {
-                &--profile {
-                    display: flex;
-                    align-items: flex-end;
-                }
-
-                .v-icon {
-                    color: #AEAEAE;
-                }
-
-                .v-icon.mdi-cart-minus,
-                .v-icon.mdi-heart-outline,
-                .v-icon.mdi-account-outline {
-                    font-size: 23px;
-                }
-
-                &--btn {
-                    border-radius: 4px;
-                    border: 1px solid var(--grey-grey-lighten-1, #BDBDBD);
-                    padding: 4px 8px
-                }
-
-                &__sp {
-                    display: block;
-                    width: 1px;
-                    height: 22px;
-                    margin: 0 10px;
-                    background: #DEDEDE;
-                }
-
-                .mdi-chevron-down {
-                    font-size: 16px;
-                }
-
-                &--basket{
-                    position: relative;
-                    .v-badge{
-                        position: absolute;
-                        z-index: 2;
-                        left: 5px;
-                        top: -5px;
-
-                        &__badge{
-                            font-family: 'IranSansFaNum' !important;
-                        }
-                    }
-                }
-            }
-        }
-
-        &.has-banner {
-            top: 64px;
-        }
-
-        &.hidden {
-            position: fixed;
+    
+            z-index: 10;
+            padding: 4px;
+            padding-bottom: 0 !important;
+            border-bottom: 1px solid #DDDDDD;
+            box-shadow: 0px 4px 9px rgba(66, 66, 66, 0.1);
+            background: #fff;
             opacity: 0;
-            transform: translateY(-100%);
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        &.fixed {
-            position: fixed;
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-    }
-}
-</style>
-
-<style lang="scss" scoped>
-.mobile-drop-down__items {
-    left: 0;
-    width: 172px;
-
-    li:not(.user-data) {
-        a:hover {
-
-            span,
-            .v-icon {
-                color: #D72685 !important;
+            transition: opacity 0.3s ease-in-out;
+            top: 0;
+            right: 0;
+    
+            .#{$parent} {
+                &__logo {
+    
+                    width: 107px;
+                    height: 38px;
+                    margin-left: 65px;
+    
+                    @include gbp(769, 1280) {
+                        margin-left: 12px;
+                    }
+                }
+    
+                &__search-box {
+                    width: 638px;
+                    height: 40px;
+                    border-radius: 4px !important;
+                    overflow: hidden;
+                    position: relative;
+    
+                    @include gbp(769, 1280) {
+                        width: 450px;
+                    }
+    
+                    &__inner {
+                        background: #EEEEEE;
+                        border-radius: 2px;
+    
+                        input {
+                            font-size: 13px !important;
+                            height: 40px;
+                            border: 0 !important;
+                            outline: 0 !important;
+    
+                            &:focus {
+                                border: 0 !important;
+                            }
+                        }
+    
+                    }
+    
+                    .search-result {
+                        display: none;
+                        width: 100%;
+                        position: absolute;
+                        background: #fff;
+                        z-index: 5;
+                    }
+    
+                    &.active {
+                        border-radius: 4px;
+                        border: 1px solid var(--grey-grey-lighten-3, #EEE);
+                        background: var(--Shade-white, #FFF);
+                        border-bottom: 0 !important;
+                        overflow: visible;
+    
+                        .#{$parent}__search-box__inner {
+                            background-color: #fff !important;
+                        }
+    
+                        .search-result {
+                            display: block;
+                            border: 1px solid var(--grey-grey-lighten-3, #EEE);
+                            border-top: 0 !important;
+                            top: 38px;
+                            right: 0;
+                            padding: 0 12px 12px;
+                            width: calc(100% + 2px);
+                            margin: -1px;
+    
+                            hr {
+                                opacity: 1;
+                            }
+                        }
+                    }
+    
+                    .v-input__control,
+                    .v-field__prepend-inner,
+                    .v-field__field {
+                        height: 40px;
+                    }
+    
+                    .v-field {
+                        box-shadow: none;
+                        background: #EEEEEE;
+                        border-radius: 2px;
+                    }
+    
+                    .v-field__input,
+                    .v-field-label {
+                        font-size: 13px !important;
+                    }
+                }
+    
+                &__item {
+                    &--profile {
+                        display: flex;
+                        align-items: flex-end;
+                    }
+    
+                    .v-icon {
+                        color: #AEAEAE;
+                    }
+    
+                    .v-icon.mdi-cart-minus,
+                    .v-icon.mdi-heart-outline,
+                    .v-icon.mdi-account-outline {
+                        font-size: 23px;
+                    }
+    
+                    &--btn {
+                        border-radius: 4px;
+                        border: 1px solid var(--grey-grey-lighten-1, #BDBDBD);
+                        padding: 4px 8px
+                    }
+    
+                    &__sp {
+                        display: block;
+                        width: 1px;
+                        height: 22px;
+                        margin: 0 10px;
+                        background: #DEDEDE;
+                    }
+    
+                    .mdi-chevron-down {
+                        font-size: 16px;
+                    }
+    
+                    &--basket{
+                        position: relative;
+                        .v-badge{
+                            position: absolute;
+                            z-index: 2;
+                            left: 5px;
+                            top: -5px;
+    
+                            &__badge{
+                                font-family: 'IranSansFaNum' !important;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            &.has-banner {
+                top: 64px;
+            }
+    
+            &.hidden {
+                position: fixed;
+                opacity: 0;
+                transform: translateY(-100%);
+                transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            }
+    
+            &.fixed {
+                position: fixed;
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             }
         }
     }
-}
-</style>
+    </style>
+    
+    <style lang="scss" scoped>
+    .mobile-drop-down__items {
+        left: 0;
+        width: 172px;
+    
+        li:not(.user-data) {
+            a:hover {
+    
+                span,
+                .v-icon {
+                    color: #D72685 !important;
+                }
+            }
+        }
+    }
+    </style>
+    

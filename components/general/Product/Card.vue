@@ -27,14 +27,15 @@
         </h3>
     </a>
 
-    <div class="product-card__info d-flex align-center justify-space-between mb-2" :class="hideInfo ? 'hideInfo' : ''">
-        <div class="product-card__info__send">
+    <div class="product-card__info d-flex align-center justify-end mb-2" :class="hideInfo ? 'hideInfo' : ''">
+        <!-- TODO: Uncomment after we have this -->
+        <!-- <div class="product-card__info__send">
             <v-icon icon="mdi-truck-outline" color="deep-purple" />
             <span class="t12 text-grey">ارسال فوری</span>
-        </div>
+        </div> -->
 
         <div class="product-card__info__rate">
-            <span class="t12 text-grey">4.3</span>
+            <span class="t12 text-grey">{{content.score}}</span>
             <v-icon icon="mdi-star" color="orange-lighten-2" />
         </div>
     </div>

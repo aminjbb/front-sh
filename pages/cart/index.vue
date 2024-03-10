@@ -3,7 +3,7 @@
     <h1 class="ov-h h-0">سبد خرید </h1>
     <v-container class="pt-0">
         <template v-if="!lastStep && userBasket.length < 1">
-            <generalCartEmpty :count="skuCount" :products="productUserHistory.slice(0,6)" />
+            <generalCartEmpty :count="skuCount" :products="randomProducts.slice(0,6)" />
         </template>
 
         <template v-else>
@@ -53,14 +53,14 @@ export default {
         })
 
         const {
-            getProductUserHistory,
-            productUserHistory
+            getRandomProducts,
+            randomProducts
         } = new User();
 
         return {
             title,
-            getProductUserHistory,
-            productUserHistory
+            getRandomProducts,
+            randomProducts
         }
     },
 
@@ -70,7 +70,7 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
         
-        this.getProductUserHistory();
+        this.getRandomProducts();
 
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');

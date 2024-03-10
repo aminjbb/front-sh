@@ -18,6 +18,7 @@ export default function setup() {
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
     const route = useRoute()
+    const randomProducts = ref([]);
 
     /**
      * Get user address
@@ -145,6 +146,20 @@ export default function setup() {
             });
     };
 
+     /**
+     * Get random products when user is not login
+     */
+     async function getRandomProducts() {
+        axios
+            .get(runtimeConfig.public.apiBase + `/product/random/sku/index`, {})
+            .then((response) => {
+                randomProducts.value = response.data.data.data
+            })
+            .catch((err) => {
+
+            });
+    };
+
     return {
         getUserAddress,
         userAddress,
@@ -160,6 +175,8 @@ export default function setup() {
         wishList,
         loading,
         getProductUserHistory,
-        productUserHistory
+        productUserHistory,
+        getRandomProducts,
+        randomProducts
     }
 }

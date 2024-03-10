@@ -71,19 +71,37 @@
             </v-btn>
         </div>
 
-        <div v-if="productUserHistory && productUserHistory.length" class="pa-3">
-            <v-divider color="grey"/>
-            <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخبر</h5>
-            <v-row>
-                <v-col
-                    v-for="(product, index) in productUserHistory.slice(0,6)"
-                    :key="`product${index}`"
-                    href=""
-                    sm="6">
-                    <generalProductSimpleCard :image="product?.image_url" :label="product?.label" :href="`/sku/${product.slug}`"/>
-                </v-col>
-            </v-row>
-        </div>
+        <template v-if="isLogin">
+            <div v-if="productUserHistory && productUserHistory.length" class="pa-3">
+                <v-divider color="grey"/>
+                <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخبر</h5>
+                <v-row>
+                    <v-col
+                        v-for="(product, index) in productUserHistory.slice(0,6)"
+                        :key="`product${index}`"
+                        href=""
+                        sm="6">
+                        <generalProductSimpleCard :image="product?.image_url" :label="product?.label" :href="`/sku/${product.slug}`"/>
+                    </v-col>
+                </v-row>
+            </div>
+        </template>
+
+        <template v-else>
+            <div v-if="randomProducts && randomProducts.length" class="pa-3">
+                <v-divider color="grey"/>
+                <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">پیشتهاد شاواز</h5>
+                <v-row>
+                    <v-col
+                        v-for="(product, index) in randomProducts.slice(0,6)"
+                        :key="`product${index}`"
+                        href=""
+                        sm="6">
+                        <generalProductSimpleCard :image="product?.image_url" :label="product?.label" :href="`/sku/${product.slug}`"/>
+                    </v-col>
+                </v-row>
+            </div>
+        </template>
     </div>
 </div>
 </template>
@@ -92,20 +110,31 @@
 import User from '@/composables/User.js'
 export default {
 
+    data() {
+        return {
+            isLogin :false,
+        }
+    },
+
     props: {
         /** user basket from vueX **/
-        userBasket: Object
+        userBasket: Object,
+        userData:Object,
     },
 
     setup() {
         const {
             getProductUserHistory,
-            productUserHistory
+            productUserHistory,
+            getRandomProducts,
+            randomProducts
         } = new User();
 
         return {
             getProductUserHistory,
-            productUserHistory
+            productUserHistory,
+            getRandomProducts,
+            randomProducts
         }
     },
 
@@ -120,7 +149,7 @@ export default {
          * @param {*} event 
          */
 
-         closeDropDown(event) {
+        closeDropDown(event) {
             const basketHeader = document.getElementById('basket-header');
             const toggleBasket = document.getElementById('toggle-basket');
 
@@ -138,15 +167,19 @@ export default {
                     document.body.classList.remove('active-basket');
                 }
             }
+        },
+
+        userData(newVal){
+            if(newVal && newVal?.phone_number !== null){
+                this.isLogin = true;
+            }
         }
     },
  
-    created() {
-        this.getProductUserHistory()
-    },
-
     mounted(){
         document.addEventListener('click', this.closeDropDown);
+        this.getProductUserHistory();
+        this.getRandomProducts();
     },
 
     beforeDestroy() {

@@ -124,7 +124,7 @@
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">سود شما:</span>
                                 <span v-if="userOrder && userOrder.paid_price" class="t13 w400 text-grey-darken-3 number-font">
-                                    {{ Number(String(calcProfit(userOrder.paid_price, userOrder.total_price)).slice(0, -1)) }}
+                                    {{splitChar( Number(String(calcProfit(userOrder.paid_price, userOrder.total_price)).slice(0, -1))) }}
                                     تومان</span>
                             </v-col>
 
@@ -214,7 +214,7 @@ export default {
         calcProfit(paid, totalPrice) {
             try {
                 const profit = parseInt(totalPrice) - parseInt(paid)
-                return this.splitChar(profit)
+                return profit
             } catch (e) {
 
             }

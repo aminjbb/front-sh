@@ -42,10 +42,10 @@
 
                 <ul class="v-product__filter__items d-flex align-center">
 <!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
-                  <li class="t14 w400 text-grey px-4" @click="sort('created_at', 'desc')">جدیدترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'desc')">گران‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                  <li class="t14 w400 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                  <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                  <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'desc')">گران‌ترین</li>
+                  <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                 </ul>
               </nav>
             </div>
@@ -73,7 +73,8 @@
                 v-model="page"
                 :length="pageLength"
                 size="40"
-                :total-visible="5"
+                :total-visible="6"
+                @click="backToTop"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left" />
           </div>
@@ -88,328 +89,12 @@ import PLP from '@/composables/PLP.js'
 export default {
   data() {
     return {
-      BreadcrumbItems: [{
-        title: 'لوازم آرایشی',
-        /* Should be main category */
-        href: '/'
-      },
-        {
-          title: 'آرایش صورت',
-          /* Should be sub category */
-          href: '/products'
-        }
-      ],
       productList: [],
-      productListMocket: [{
-        image: 'category.jpg',
-        label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-        customer_price: '269900',
-        site_price: '184030',
-        discount: '30%',
-        colors: [{
-          code: '#C90000',
-          label: 'قرمز',
-        },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#000000',
-            label: 'مشکی',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-          {
-            code: '#C90000',
-            label: 'قرمز',
-          },
-        ]
-      },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-          colors: [{
-            code: '#C90000',
-            label: 'قرمز',
-          },
-            {
-              code: '#C90000',
-              label: 'قرمز',
-            },
-            {
-              code: '#C90000',
-              label: 'قرمز',
-            },
-          ]
-        }, {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-        },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-          discount: '30%'
-        },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-        },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-        },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-          discount: '30%'
-        },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-        }, {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-        },
-        {
-          image: 'category.jpg',
-          label: 'ژل کرم آبرسان مناسب پوست چرب و مستعد آکنه ظرفیت ۷۰‌میلی‌لیتر',
-          customer_price: '269900',
-          site_price: '184030',
-          discount: '30%'
-        }
-      ],
       categoryList: [],
-      categoryListMocket: [{
-        title: 'کرم پودر',
-        image: {
-          image_url: 'category.jpg'
-        },
-        id: '1'
-      },
-        {
-          title: 'پرایمر',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'کانتور و هایلایتر',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'پنکیک',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'برنزکننده',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'رژگونه',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'کانسیلر',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'پنکیک',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'برنزکننده',
-          image: {
-            image_url: 'category.jpg'
-          }
-        },
-        {
-          title: 'رژگونه',
-          image: {
-            image_url: 'category.jpg'
-          }
-        }
-      ],
       filters: [],
-      filtersMocket: [{
-        id: 1,
-        type: 'list',
-        label: 'دسته‌بندی',
-        name: 'category',
-        values: [{
-          title: 'کرم پودر',
-          image: {
-            image_url: 'category.jpg'
-          },
-          id: '1'
-        },
-          {
-            title: 'پرایمر',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'کانتور و هایلایتر',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'پنکیک',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'برنزکننده',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'رژگونه',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'کانسیلر',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'پنکیک',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'برنزکننده',
-            image: {
-              image_url: 'category.jpg'
-            }
-          },
-          {
-            title: 'رژگونه',
-            image: {
-              image_url: 'category.jpg'
-            }
-          }
-        ]
-      },
-        {
-          id: 2,
-          label: 'فقط کالاهای موجود',
-          type: 'switch',
-          name: 'avalabel',
-          values: 'availabel_items'
-        },
-        {
-          id: 3,
-          label: 'برند',
-          type: 'select',
-          name: 'brands',
-          values: [{
-            label: 'آموتیا',
-            name: 'Amutiya',
-            id: '1'
-          },
-            {
-              label: 'استی لودر',
-              name: 'Estee lauder',
-              id: '2'
-            },
-            {
-              label: 'اسنس',
-              name: 'Essence',
-              id: '3'
-            },
-            {
-              label: 'بورژوا',
-              name: 'Bourjois',
-              id: '4'
-            },
-            {
-              label: 'پریم',
-              name: 'Prime',
-              id: '5'
-            },
-            {
-              label: 'دوسه',
-              name: 'Doucce',
-              id: '6'
-            },
-            {
-              label: 'سینره',
-              name: 'Cinere',
-              id: '7'
-            },
-            {
-              label: 'دیور',
-              name: 'dior',
-              id: '8'
-            },
-            {
-              label: 'فلورما',
-              name: 'flormar',
-              id: '9'
-            },
-          ]
-        },
-      ],
-      screenType: null
+      screenType: null,
+      sortType:'',
+      orderType: ''
     }
   },
 
@@ -629,7 +314,10 @@ export default {
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
     },
+
     sort(order, orderType) {
+      this.sortType = order
+      this.orderType = orderType
       let query = this.$route.query;
       if (order && orderType) {
         this.$router.push({
@@ -642,17 +330,27 @@ export default {
       }
 
     },
-    async createQueryForFilter(array) {
 
+    async createQueryForFilter(array) {
       await this.paramGenerator(array)
 
     },
+
+    /**
+     * Back to top on change pagination
+     */
+     backToTop(){
+      window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+      });
+    }
   },
 
   computed:{
     breadcrumbList(){
       let breadcrumb = []
-      if(this.breadcrumb?.category_l1){
+      if(this.breadcrumb?.category_l1?.name){
         const form = {
           type : "category_l1",
           href: `/category/${this.breadcrumb.category_l1.slug}`,
@@ -661,7 +359,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l2){
+      if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
           href: `/category/${this.breadcrumb.category_l2.slug}`,
@@ -670,7 +368,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l3){
+      if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
           href: `/category/${this.breadcrumb.category_l3.slug}`,

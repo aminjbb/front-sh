@@ -129,7 +129,7 @@
                         class="mySwiper mb-5">
                         <swiper-slide v-for="(item,index) in items" :key="index">
                             <article class="image-gallery-modal__item">
-                                <img :title="title" :src="imageAddress(item.image_url)" :alt="title" width="351" height="351" />
+                                <img :title="title" :src="item?.image_url" :alt="title" width="351" height="351" />
                             </article>
                         </swiper-slide>
                     </swiper>
@@ -148,7 +148,7 @@
                                 :key="`slider-thumbs-${index}`"
                                 :id="`slider-thumbs-${index}`"
                                 class="image-gallery-modal__thumbnail__item">
-                                <img :src="imageAddress(item.image_url)" :title="title" :alt="title" width="86" height="86" />
+                                <img :src="item?.image_url" :title="title" :alt="title" width="86" height="86" />
                             </div>
                         </v-row>
                     </div>

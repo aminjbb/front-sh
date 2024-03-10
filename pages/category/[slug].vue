@@ -40,10 +40,10 @@
 
                 <ul class="v-product__filter__items d-flex align-center">
 <!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
-                  <li class="t14 w400 text-grey px-4" @click="sort('created_at', 'desc')">جدیدترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'desc')">گران‌ترین</li>
-                  <li class="t14 w400 text-grey px-4" @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
+                  <li class="t14 w400  px-4"  :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                 </ul>
               </nav>
             </div>
@@ -71,7 +71,8 @@
                 v-model="page"
                 :length="productListPageLength"
                 size="40"
-                :total-visible="5"
+                :total-visible="6"
+                @click="backToTop"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left"/>
           </div>
@@ -100,7 +101,9 @@ export default {
       ],
       productList: [],
       filters: [],
-      screenType: null
+      screenType: null,
+      sortType:'',
+      orderType: ''
     }
   },
 
@@ -139,7 +142,7 @@ export default {
   computed: {
     breadcrumbList(){
       let breadcrumb = []
-      if(this.breadcrumb?.category_l1){
+      if(this.breadcrumb?.category_l1?.name){
         const form = {
           type : "category_l1",
           href: `/category/${this.breadcrumb.category_l1.slug}`,
@@ -148,7 +151,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l2){
+      if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
           href: `/category/${this.breadcrumb.category_l2.slug}`,
@@ -157,7 +160,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l3){
+      if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
           href: `/category/${this.breadcrumb.category_l3.slug}`,
@@ -243,6 +246,7 @@ export default {
       }
 
     },
+
     /**
      * Filter by amount
      * @param {*} amount
@@ -276,9 +280,11 @@ export default {
           }
         })
       }
-
     },
+
     sort(order, orderType) {
+      this.sortType = order
+      this.orderType = orderType
       let query = this.$route.query;
       if (order && orderType) {
         this.$router.push({
@@ -291,6 +297,7 @@ export default {
       }
 
     },
+
     /**
      * Set max
      * @param {*} amount
@@ -305,7 +312,6 @@ export default {
           }
         })
       }
-
     },
 
     /**
@@ -365,6 +371,7 @@ export default {
         this.createRoute(finalFilterObject)
       }
     },
+
     /**
      * Create route after filter
      * @param {*} values
@@ -408,18 +415,29 @@ export default {
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
     },
+
     async createQueryForFilter(array) {
-
       await this.paramGenerator(array)
-
     },
+
+    /**
+     * Back to top on change pagination
+     */
+    backToTop(){
+      window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+      });
+    }
   },
+
   mounted() {
     /**
      * Check screen size
      */
     window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
   },
+
   beforeMount() {
     this.getSecondaryData()
     this.getBreadcrumb('category')
