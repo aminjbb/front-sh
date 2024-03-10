@@ -55,7 +55,9 @@
                                                         </div>
                                                         <div>
                                                             <li v-if="child1.children && child1.children[1]" class="menu__item">
-                                                                <span>{{ child1.children[1].label }}</span>
+                                                                <a :href="child1.children[1].url">
+                                                                    <span>{{ child1.children[1].label }}</span>
+                                                                </a>
                                                                 <ul class="menu-items">
                                                                     <li
                                                                         class="menu__item"
@@ -69,7 +71,9 @@
                                                             </li>
 
                                                             <li v-if="child1.children && child1.children[2]" class="menu__item">
-                                                                <span>{{ child1.children[2].label }}</span>
+                                                                <a :href="child1.children[2].url">
+                                                                    <span>{{ child1.children[2].label }}</span>
+                                                                </a>
                                                                 <ul class="menu__items">
                                                                     <li
                                                                         class="menu__item"
@@ -84,7 +88,9 @@
                                                         </div>
                                                         <div>
                                                             <li v-if="child1.children[3]" class="menu__item">
-                                                                <span>{{ child1.children[3].label }}</span>
+                                                                <a :href="child1.children[3].url">
+                                                                    <span>{{ child1.children[3].label }}</span>
+                                                                </a>
                                                                 <ul class="menu__items">
                                                                     <li
                                                                         class="menu__item"
@@ -99,7 +105,9 @@
                                                         </div>
                                                         <div>
                                                             <li v-if="child1.children[4]" class="menu__item">
-                                                                <span>{{ child1.children[4].label }}</span>
+                                                                <a :href="child1.children[4].url">
+                                                                    <span>{{ child1.children[4].label }}</span>
+                                                                </a>
                                                                 <ul class="menu__items">
                                                                     <li
                                                                         class="menu__item"
@@ -113,7 +121,9 @@
                                                             </li>
 
                                                             <li v-if="child1.children[5]" class="menu__item">
-                                                                <span>{{ child1.children[5].label }}</span>
+                                                                <a :href="child1.children[5].url">
+                                                                    <span>{{ child1.children[5].label }}</span>
+                                                                </a>
                                                                 <ul class="menu__items">
                                                                     <li
                                                                         class="menu__item"

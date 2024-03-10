@@ -43,6 +43,7 @@
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
             <generalProductCard
                 :content="item"
+                :isPLP="isPLP"
                 :index="hideIndex !== true ? `${index + 1}` : ''"
                 class="mb-4" />
         </swiper-slide>
@@ -90,7 +91,12 @@ export default {
         /**
          * Show navigation
          */
-         navigation:Boolean
+         navigation:Boolean,
+
+         /**
+          * is plp for product card
+          */
+         isPLP:Boolean
     },
 
     setup() {
