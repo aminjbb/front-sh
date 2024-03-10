@@ -254,7 +254,9 @@ export default {
         async fetchUserProfile() {
             try {
                 const response = await auth.getUserProfile(this.userToken)
-                this.userDetail = response.data;
+              {
+                this.userDetail = response.data.data
+              }
             } catch (error) {
                 // Handle errors
             }

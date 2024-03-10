@@ -140,7 +140,7 @@ export default {
   computed: {
     breadcrumbList(){
       let breadcrumb = []
-      if(this.breadcrumb?.category_l1){
+      if(this.breadcrumb?.category_l1?.name){
         const form = {
           type : "category_l1",
           href: `/category/${this.breadcrumb.category_l1.slug}`,
@@ -149,7 +149,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l2){
+      if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
           href: `/category/${this.breadcrumb.category_l2.slug}`,
@@ -158,7 +158,7 @@ export default {
         breadcrumb.push(form)
 
       }
-      if(this.breadcrumb?.category_l3){
+      if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
           href: `/category/${this.breadcrumb.category_l3.slug}`,

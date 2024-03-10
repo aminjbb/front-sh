@@ -23,7 +23,7 @@
 
         <v-col cols="9" class="d-flex align-center product-card__details">
             <div v-if="content.shps && content.shps?.sku?.image_url" class="product-card__image ml-5">
-                <a :href="`/sku/${content.shps?.slug}`" class="d-block">
+                <a :href="`/sku/${content.shps?.sku?.slug}`" class="d-block">
                     <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
                 </a>
             </div>

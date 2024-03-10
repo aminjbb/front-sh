@@ -35,6 +35,7 @@
 
 <script>
 import axios from "axios";
+import auth from '@/middleware/auth';
 export default {
     data() {
         return {
@@ -116,7 +117,10 @@ export default {
          async fetchUserProfile() {
             try {
                 const response = await auth.getUserProfile(this.userToken)
+              if (response.data.data)
+              {
                 this.$store.commit('set_userData', response.data.data)
+              }
 
             } catch (error) {
                 // Handle errors
