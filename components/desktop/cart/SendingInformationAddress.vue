@@ -19,7 +19,7 @@
     </header>
 
     <div>
-        <template v-for="(address , index) in addressRevers" :key="`address${index}`">
+        <template v-for="(address , index) in userAddress" :key="`address${index}`">
             <div class="d-flex align-center justify-space-between">
                 <v-checkbox
                     class="address-checkbox"
