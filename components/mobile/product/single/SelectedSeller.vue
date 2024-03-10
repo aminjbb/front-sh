@@ -12,17 +12,16 @@
         </span>
     </div>
 
-    <div class="d-flex align-center mb-3">
+    <div v-if="content.stock" class="d-flex align-center mb-3">
         <span class="t12 w400 text-grey-darken-1 ml-1">ارسال از: </span>
 
-        <span v-if="content.stock" class="t12 w400 text-grey-darken-1 number-font">
+        <span class="t12 w400 text-grey-darken-1 number-font">
             <template v-if="content.stock === true">
                 موجود در انبار شاواز
             </template>
             <template v-else>
                 کالا نزد فروشنده
             </template>
-            (ارسال از 3 روز آینده)
         </span>
     </div>
 

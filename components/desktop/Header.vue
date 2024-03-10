@@ -165,7 +165,6 @@
 </template>
 
 <script>
-import auth from '@/middleware/auth';
 
 export default {
     name: "Desktop Header",
@@ -179,7 +178,6 @@ export default {
             lastScrollTop: 0,
             isLogin: false,
             dialog: false,
-            userData: null,
             hasBanner: false,
             isBanner: false,
             isTop: false,
@@ -195,6 +193,15 @@ export default {
             } catch (e) {
                 return []
             }
+        },
+
+        userData(){
+            try {
+                const user = this.$store.getters['get_userData']
+                return user
+            } catch (e) {
+                return null
+            }
         }
     },
 
@@ -205,37 +212,28 @@ export default {
         }
     },
 
-    created() {
-      this.fetchUserProfile();
-        if (this.userToken) {
-            this.isLogin = true
-            this.fetchUserProfile();
-        } else {
-            this.isLogin = false
-        };
-    },
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
-        if( document.getElementById('mobile-drop-down__items-dashboard')){
-            document.addEventListener('click', this.closeDropDown);
-        }
+        window.addEventListener('click', this.closeDropDown);
 
         const banner = document.getElementById("top-banner");
         if (banner) {
             this.isBanner = true;
             this.hasBanner = true;
-            document.getElementsByTagName('body')[0].classList.add('hasBanner');
-            
+            document.getElementsByTagName('body')[0].classList.add('hasBanner');           
         }
+
+        if (this.userData) {
+            this.isLogin = true
+        } else {
+            this.isLogin = false
+        };
     },
 
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
-        if( document.getElementById('mobile-drop-down__items-dashboard')){
-            document.removeEventListener('click', this.closeDropDown);
-        }
-        
+        window.removeEventListener('click', this.closeDropDown);
     },
 
     methods: {
@@ -344,20 +342,6 @@ export default {
         goLoginPage(){
             localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
             this.$router.push('/login')
-        },
-
-        /**
-         * fetch user data
-         */
-        async fetchUserProfile() {
-            try {
-                const response = await auth.getUserProfile(this.userToken)
-                this.userData = response.data.data
-                this.$store.commit('set_userData', this.userData)
-
-            } catch (error) {
-                // Handle errors
-            }
         },
     },
 };

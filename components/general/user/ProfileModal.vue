@@ -101,12 +101,26 @@ export default {
                     theme: 'dark'
                 });
                 this.dialog = false;
+                this.fetchUserProfile();
                 this.$emit('profileSubmitted')
             }).catch((error) => {
 
             }).finally((response) => {
                 this.loading = false
             })
+        },
+
+        /**
+         * fetch user data
+         */
+         async fetchUserProfile() {
+            try {
+                const response = await auth.getUserProfile(this.userToken)
+                this.$store.commit('set_userData', response.data.data)
+
+            } catch (error) {
+                // Handle errors
+            }
         },
 
         /**

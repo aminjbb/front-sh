@@ -48,11 +48,15 @@
 
     <div class="d-flex product-card__price-info align-center justify-space-between w-100">
         <div class="product-card__product-count">
-            <v-icon icon="mdi-plus" color="grey" size="small" @click="increaseCount()" />
-            <span class="t12 w300 text-grey-darken-2 number-font">
-                {{ productCount }}
-            </span>
-            <v-icon :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'" color="grey" size="small" @click="decreaseCount()" />
+                
+            <v-btn variant="plain" :loading="loadingAddBasket" class="pa-0 w-100">
+                <v-icon icon="mdi-plus" color="grey" size="small" @click="increaseCount()" class="mx-3"/>
+                <span class="t12 w300 text-grey-darken-2 number-font">
+                    {{ productCount }}
+                </span>
+                <v-icon class="mx-3" :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'" color="grey" size="small" @click="decreaseCount()" />
+            </v-btn>
+                
         </div>
 
         <div v-if="content.site_stock > 0">
@@ -106,14 +110,18 @@ export default {
         const {
             addToBasket,
             deleteShpsBasket,
-            beforeAuthAddToBasket
+            beforeAuthAddToBasket,
+            count,
+            loadingAddBasket
         } = new Basket()
         return {
             addToBasket,
             deleteShpsBasket,
             beforeAuthAddToBasket,
             randomNumberForBasket,
-            userToken
+            userToken,
+            count,
+            loadingAddBasket
         }
     },
     data() {
@@ -149,23 +157,28 @@ export default {
     methods: {
         splitChar,
 
+        createRandomNumber(){
+            let result = '';
+            for(let i = 0; i < 20; i++) {
+            result += Math.floor(Math.random() * 10); // generates a random integer between 0 and 9
+            }
+            return result
+        },
+
         /**
          * Increase count of product
          */
         increaseCount() {
-            if ((this.content ?.shps ?.order_limit !== null) && (this.productCount < this.content ?.shps ?.order_limit) && (this.productCount < this.content ?.site_stock)) {
+            if ((this.content ?.shps ?.order_limit !== null) && (this.productCount < this.content ?.shps ?.order_limit) && (this.productCount < this.content.site_stock)) {
                 if (this.userToken) {
-                    this.productCount++;
-                    this.addToBasket(this.content ?.shps ?.id, this.productCount)
+                    this.addToBasket(this.content ?.shps ?.id, this.productCount,'increase')
                 } else {
                     if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                        this.productCount++;
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket)
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket,'increase')
                     } else {
                         const randomNumber = this.createRandomNumber()
                         this.randomNumberForBasket = randomNumber
-                        this.productCount++;
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber)
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber,'increase')
                     }
                 }
             } else{
@@ -183,17 +196,14 @@ export default {
         decreaseCount() {
             if (this.productCount > 1) {
                 if (this.userToken) {
-                    this.productCount--;
-                    this.addToBasket(this.content ?.shps ?.id, this.productCount)
+                    this.addToBasket(this.content ?.shps ?.id, this.productCount, 'decrease')
                 } else {
                     if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                        this.productCount--;
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket)
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket, 'decrease')
                     } else {
                         const randomNumber = this.createRandomNumber()
                         this.randomNumberForBasket = randomNumber
-                        this.productCount--;
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber)
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber, 'decrease')
                     }
                 }
             } else {
@@ -203,6 +213,7 @@ export default {
 
         removeProductFromBasket() {
             this.deleteShpsBasket(this.content ?.shps ?.id)
+            this.$refs.deleteProduct.dialog =false;
         }
     },
 
