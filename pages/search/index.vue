@@ -14,10 +14,10 @@
                             </div>
 
                             <ul class="v-product__filter__items d-flex align-center">
-                                <li class="t14 w400 text-grey px-4" @click="sort('created_at', 'desc')">جدیدترین</li>
-                                <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                                <li class="t14 w400 text-grey px-4" @click="sort('site_price', 'desc')">گران‌ترین</li>
-                                <li class="t14 w400 text-grey px-4" @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                                <li class="t14 w400 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                                <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                                <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'desc')">گران‌ترین</li>
+                                <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                             </ul>
                         </nav>
                     </div>
@@ -63,7 +63,9 @@ export default {
     data() {
         return {
             filters: [],
-            screenType: null
+            screenType: null,
+            sortType:'',
+            orderType: ''
         }
     },
 
@@ -122,6 +124,8 @@ export default {
        * @param {*} orderType 
        */
         sort(order, orderType) {
+            this.sortType = order
+            this.orderType = orderType
             let query = this.$route.query;
             if (order && orderType) {
                 this.$router.push({
