@@ -526,8 +526,12 @@ export default {
                 this.form.province = this.address ?.state ?.id
                 if (this.form.province) this.getCities(this.address ?.state ?.id)
                 this.form.city = this.address ?.city ?.id
-                if (this.address ?.am_i) this.newReceiver = true
-                else this.newReceiver = false
+                if (this.address ?.am_i) this.newReceiver = false
+                else {
+                    this.newReceiver = true;
+                    this.form.first_name = this.address ?.first_name
+                    this.form.last_name = this.address ?.last_name
+                }
 
             } catch (e) {
 
