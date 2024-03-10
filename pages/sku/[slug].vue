@@ -179,6 +179,7 @@ export default {
           const form = {
             type : "sku_group",
             href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
+            disabled: false,
             title: this.breadcrumb.sku_group.name
           }
           breadcrumb.push(form)

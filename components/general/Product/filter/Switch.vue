@@ -55,6 +55,15 @@ export default {
 
       this.$emit('changeStatus', obj);
     },
+  },
+
+  mounted() {
+    if (this.$route.query.stock == 1){
+      this.availableItems= true
+    }
+    else {
+      this.availableItems= false
+    }
   }
 }
 </script>

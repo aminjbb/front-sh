@@ -80,11 +80,7 @@ export default {
         }
     },
 
-    computed:{
-        addressRevers(){
-            return this.userAddress.reverse();
-        }
-    },
+
 
     methods:{
         /**
@@ -102,13 +98,16 @@ export default {
 
     computed:{
         userDetail(){
-        try {
-            return this.$store.getters['get_userData']
-        }
-        catch (e) {
-            return null
-        }
-        }
+          try {
+              return this.$store.getters['get_userData']
+          }
+          catch (e) {
+              return null
+          }
+        },
+      addressRevers(){
+        return this.userAddress.reverse();
+      }
     },
 
     watch:{
