@@ -24,7 +24,7 @@
                                 <v-container>
                                     <ul class="menu__items" @mouseleave="hideBodyCover">
                                         <li v-for="(child1, index) in menu.children" :key="child1.id" :class="index === 0 ? {'firstOpen' : firstOpen} : ''" @mouseenter="removeFirstOpen">
-                                            <a>
+                                            <a :href="child1.url">
                                                 <div>
                                                     <v-icon :icon="`mdi-${child1.icon}`" class="ml-1" />
                                                     <span>{{ child1.label }}</span>

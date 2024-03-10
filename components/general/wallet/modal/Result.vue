@@ -54,10 +54,10 @@
                     <div class="t14 w400 text-grey-darken-3 number-font ltr">{{content.created_at_fa}}</div>
                 </div> -->
 
-                <div class="d-flex align-center justify-space-between">
+                <!-- <div class="d-flex align-center justify-space-between">
                     <div class="t12 w400 text-grey">کد رهگیری: </div>
                     <div class="t14 w400 text-grey-darken-3 number-font ltr">{{content.refid}}</div>
-                </div>
+                </div> -->
 
                <!--  <div class="d-flex align-center justify-space-between">
                     <div class="t12 w400 text-grey">شماره مرجع: </div>

@@ -101,7 +101,6 @@ export default {
          * @param {*} content 
          */
         removeProduct(content) {
-            console.log('wdw',content);
             axios
                 .delete(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/delete/${content.id}`, {
                     headers: {
@@ -116,6 +115,7 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
+
                 })
                 .catch((err) => {
                     if(err.response?.data?.message){
@@ -129,6 +129,7 @@ export default {
                     this.loading = false;
                     this.$refs[`product${content.id}`][0].$refs.refRemoveProduct.loading = false;
                     this.$refs[`product${content.id}`][0].$refs.refRemoveProduct.dialog = false;
+                    this.getUserWhishList();
                 });
         }
     },
