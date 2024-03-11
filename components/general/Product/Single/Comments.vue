@@ -99,7 +99,7 @@ export default {
         showAllComment() {
             document.getElementById('show-more-comments').classList.add('hide');
             const commentsLength =  this.comments?.length;
-            this.sliceLength = commentsLength - 1
+            this.sliceLength = commentsLength 
         }
     },
 

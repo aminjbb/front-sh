@@ -137,7 +137,7 @@
 
             <template v-if="userUse">
                 <p
-                    class="t14 w400 text-grey instructions l24"
+                    class="t14 w400 text-grey l24"
                     v-html="instructions"/>
 
               <v-divider color="grey-lighten-1" class="my-2"/>
@@ -154,7 +154,7 @@
             </header>
 
             <p
-                class="t14 w400 text-grey instructions l24"
+                class="t14 w400 text-grey l24"
                 v-html="userUse"/>
           <v-divider color="grey" class="mt-5" />
         </div>

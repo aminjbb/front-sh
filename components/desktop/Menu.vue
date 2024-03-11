@@ -415,6 +415,7 @@ $parent: 'menu';
                                             width: 100%;
                                             border-radius: 6px;
                                             max-height: 100%;
+                                             height: auto;
                                         }
                                     }
 
