@@ -10,17 +10,21 @@
             <template v-if="content.stock">
                 <template v-if="content.discount">
                     <div class="d-flex align-center justify-space-between">
-                        <span class="product-card__price-info__discount t11 w500 ml-2">{{content.discount_percent}} %</span>
+                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-hide">{{content.discount_percent}} %</span>
                         <span v-if="content.site_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
                             {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
                             <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                         </span>
                     </div>
 
-                    <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                        <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
-                        <span class="t10 w300 text-grey currency">تومان</span>
-                    </span>
+                    <div class="d-flex align-center">
+                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content.discount_percent}} %</span>
+                        <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                            <span class="t10 w300 text-grey currency">تومان</span>
+                        </span>
+                    </div>
+                    
                 </template>
 
                 <template v-else>
