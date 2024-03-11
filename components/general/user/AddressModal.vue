@@ -474,6 +474,7 @@ export default {
                 this.$refs.profileModal.dialog = true
             } else{
                 this.dialog = true;
+                this.setAddressForm();
                 this.editMode();
             }
         },
@@ -487,7 +488,22 @@ export default {
          */
         closeModal() {
             this.dialog = false;
-            this.isDisable= true
+            this.isDisable= true;
+            this.form= {
+                address: '',
+                latLong: {
+                    latitude: 35.745669792668494,
+                    longitude: 51.35438114404677
+                },
+                postal_code: '',
+                number: '',
+                room_number: '',
+                first_name: '',
+                last_name: '',
+                phone_number: '',
+                province: null,
+                city: null
+            }
         },
 
         /**
@@ -526,11 +542,13 @@ export default {
                 this.form.province = this.address ?.state ?.id
                 if (this.form.province) this.getCities(this.address ?.state ?.id)
                 this.form.city = this.address ?.city ?.id
-                if (this.address ?.am_i) this.newReceiver = false
-                else {
-                    this.newReceiver = true;
-                    this.form.first_name = this.address ?.first_name
-                    this.form.last_name = this.address ?.last_name
+                if(this.edit){
+                    if (this.address ?.am_i === 1 ) this.newReceiver = false
+                    else {
+                        this.newReceiver = true;
+                        this.form.first_name = this.address ?.first_name
+                        this.form.last_name = this.address ?.last_name
+                    }
                 }
 
             } catch (e) {

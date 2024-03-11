@@ -17,6 +17,33 @@
     }
     
     .colors-pallet {
+        .swiper-slide {
+            width: auto !important;
+        }
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            background: var(--Shade-white, #FFF);
+            border: 1px solid #9E9E9E;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            top: 22px;
+
+            &::after {
+                color: #D72685;
+                font-size: 15px !important;
+            }
+        }
+
+        .swiper-button-next{
+            left: 0;
+        }
+
+        .swiper-button-prev{
+            right: 0;
+        }
+
         &__item {
             flex: none !important;
             &__code {
@@ -28,6 +55,7 @@
                 overflow: hidden;
                 position: relative;
                 cursor: pointer;
+                box-sizing: border-box;
 
                 &:hover{
                     border-color:#9E9E9E;
