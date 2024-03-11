@@ -9,7 +9,7 @@
             <div class="flex-grow-1 d-flex align-center justify-space-between pa-2 transactions__details__item">
                 <span class="t12 w400 text-grey-darken-3">جمع شارژها:</span>
                 <div class="d-flex align-center">
-                    <span v-if="details && details.all" class="t14 number-font bold text-grey-darken-3 ml-1">{{splitChar(details.all)}}</span>
+                    <span v-if="details && details.charges" class="t14 number-font bold text-grey-darken-3 ml-1">{{ splitChar(Number(String(details.charges).slice(0, -1))) }}</span>
                     <span class="t10 w400 text-grey-darken-3">تومان</span>
                 </div>
             </div>
@@ -17,7 +17,7 @@
             <div class="flex-grow-1 d-flex align-center justify-space-between pa-2 transactions__details__item">
                 <span class="t12 w400 text-grey-darken-3">جمع خریدها:</span>
                 <div class="d-flex align-center">
-                    <span v-if="details && details.bought" class="t14 number-font bold text-grey-darken-3 ml-1">{{splitChar(details.bought)}}</span>
+                    <span v-if="details && details.orders" class="t14 number-font bold text-grey-darken-3 ml-1">{{ splitChar(Number(String(details.orders).slice(0, -1))) }}</span>
                     <span class="t10 w400 text-grey-darken-3">تومان</span>
                 </div>
             </div>
@@ -25,7 +25,7 @@
             <div class="flex-grow-1 d-flex align-center justify-space-between pa-2 transactions__details__item">
                 <span class="t12 w400 text-grey-darken-3">جمع برگشت ها:</span>
                 <div class="d-flex align-center">
-                    <span v-if="details && details.receive" class="t14 number-font bold text-grey-darken-3 ml-1">{{splitChar(details.receive)}}</span>
+                    <span v-if="details && details.withdraw" class="t14 number-font bold text-grey-darken-3 ml-1">{{ splitChar(Number(String(details.withdraw).slice(0, -1))) }}</span>
                     <span class="t10 w400 text-grey-darken-3">تومان</span>
                 </div>
             </div>

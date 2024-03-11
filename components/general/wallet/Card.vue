@@ -44,20 +44,12 @@
             <div class="col-6 tablet-show py-5 px-3">
                 <div class="wallet-rules">
                     <div class="d-flex align-top">
-                        <v-icon
-                            icon="mdi-credit-card-check-outline"
-                            size="small"
-                            color="deep-purple"
-                            class="ml-1" />
+                        <v-icon icon="mdi-credit-card-check-outline" size="small" color="deep-purple" class="ml-1" />
                         <span class="text-deep-purple t12 w400 l20"> موجودی قابل برداشت شامل شارژ کیف پول از طریق مرجوع یا لغو سفارش می‌باشد.</span>
                     </div>
 
                     <div class="d-flex align-top mt-5">
-                        <v-icon
-                            icon="mdi-credit-card-remove-outline"
-                            size="small"
-                            color="deep-purple"
-                            class="ml-1" />
+                        <v-icon icon="mdi-credit-card-remove-outline" size="small" color="deep-purple" class="ml-1" />
                         <span class="text-deep-purple t12 w400 l20"> موجودی غیر قابل برداشت شامل شارژ کیف پول از طریق معرفی به دوستان، کارت هدیه، کدهای تبلیغاتی و ... می‌باشد. این موجودی تنها قابل استفاده برای ثبت سفارش از شاواز می‌باشد </span>
                     </div>
                 </div>
@@ -74,20 +66,12 @@
 
         <div class="wallet-rules tablet-hide">
             <div class="d-flex align-top">
-                <v-icon
-                    icon="mdi-credit-card-check-outline"
-                    size="small"
-                    color="deep-purple"
-                    class="ml-1" />
+                <v-icon icon="mdi-credit-card-check-outline" size="small" color="deep-purple" class="ml-1" />
                 <span class="text-deep-purple t12 w400 l20"> موجودی قابل برداشت شامل شارژ کیف پول از طریق مرجوع یا لغو سفارش می‌باشد.</span>
             </div>
 
             <div class="d-flex align-top mt-5">
-                <v-icon
-                    icon="mdi-credit-card-remove-outline"
-                    size="small"
-                    color="deep-purple"
-                    class="ml-1" />
+                <v-icon icon="mdi-credit-card-remove-outline" size="small" color="deep-purple" class="ml-1" />
                 <span class="text-deep-purple t12 w400 l20"> موجودی غیر قابل برداشت شامل شارژ کیف پول از طریق معرفی به دوستان، کارت هدیه، کدهای تبلیغاتی و ... می‌باشد. این موجودی تنها قابل استفاده برای ثبت سفارش از شاواز می‌باشد </span>
             </div>
         </div>
@@ -105,13 +89,13 @@ export default {
                 return null;
             }
         },
-      inaccessible_value() {
-        try {
-          return Number(String(this.wallet.inaccessible_value).slice(0, -1))
-        } catch (e) {
-          return null;
-        }
-      },
+        inaccessible_value() {
+            try {
+                return Number(String(this.wallet.inaccessible_value).slice(0, -1))
+            } catch (e) {
+                return null;
+            }
+        },
     },
     props: {
         wallet: Object,
