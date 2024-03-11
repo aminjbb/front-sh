@@ -347,14 +347,16 @@ export default {
         addToFavorite() {
             axios.post(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/create/`, {
                     sku_id: this.productSelectedSeller.sku_id
-                }, {
+                },
+                {
                     headers: {
                         Authorization: `Bearer ${this.userToken}`,
                     },
 
-                }, )
+                })
                 .then((response) => {
                     this.getPdpData();
+                    console.log('1223');
                     useNuxtApp().$toast.success('محصول با موفقت به لیست علاقه مندی ها اضافه شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -371,13 +373,13 @@ export default {
          * deleteToFavorite
          */
         deleteFavorite() {
-            axios.delete(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/delete/${this.wishlist.id}`, {
+            axios.delete(this.runtimeConfig.public.apiBase + `/product/wishlist/crud/delete/${this.productSelectedSeller.sku_id}`, {
                     headers: {
                         Authorization: `Bearer ${this.userToken}`,
                     },
-
-                }, )
+                })
                 .then((response) => {
+                    console.log('4455');
                     useNuxtApp().$toast.success('محصول با موفقت از لیست علاقه مندی ها حذف شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -391,6 +393,7 @@ export default {
                 })
         }
     },
+    
     watch: {
         items() {
             if (this.items ?.length) this.selectImage(this.items[0].image_url)
