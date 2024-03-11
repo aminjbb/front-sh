@@ -55,7 +55,7 @@
     </v-row>
 
     <div class="xs-show">
-        <div class="image-gallery__selected-image">
+        <div class="image-gallery__selected-image pb-2">
             <div class="image-gallery__selected-image__icons d-flex align-center">
                 <v-icon
                     icon="mdi-share-variant-outline"
@@ -83,7 +83,7 @@
                     :key="index"
                     class="h-100">
                     <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
-                        <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="351" height="351" />
+                        <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="300" height="300" />
                     </div>
                 </swiper-slide>
             </swiper>
@@ -99,7 +99,7 @@
         width="850px">
         <v-card class="pt-3 px-6 pb-5 image-gallery-modal">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                <div class="d-flex flex-column c-modal__header__title">
+                <div class="d-flex flex-column c-modal__header__title mt-4">
                     <span class="t16 w400 mb-3">
                         آلبوم تصاویر
                     </span>

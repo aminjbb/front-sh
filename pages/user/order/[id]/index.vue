@@ -38,7 +38,7 @@
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">کد سفارش:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
                                 <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.id }}</span>
                             </v-col>
                             <v-col
@@ -47,7 +47,7 @@
                                 lg="5"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">تاریخ تحویل:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
                                 <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
                             </v-col>
 
@@ -59,7 +59,7 @@
                                 <a 
                                   v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress' || userOrder.status == 'received')" 
                                   :href="`/user/order/${userOrder.id}/${userOrder.status == 'pre_progress' ? 'cancel' :(userOrder.status == 'received') ? 'return' : ''}`"
-                                  class="d-flex align-center">
+                                  class="d-flex align-center mobile-button">
                                     <span class="text-grey-darken-1 t13 w400">
                                         <template v-if="userOrder.status == 'pre_progress'">
                                             درخواست لغو
@@ -82,7 +82,7 @@
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">شماره تماس:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">شماره تماس:</span>
                                 <span v-if="userOrder && userOrder.receiver_mobile" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receiver_mobile }}</span>
                             </v-col>
 
@@ -92,13 +92,13 @@
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">تحویل‌گیرنده:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">تحویل‌گیرنده:</span>
                                 <span v-if="userOrder && userOrder.receiver_name" class="t13 w400 text-grey-darken-3">{{ userOrder.receiver_name }}</span>
                             </v-col>
 
                             <v-col cols="12" class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">آدرس:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">آدرس:</span>
                                 <span v-if="userOrder && userOrder.receiver_address" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.receiver_address }}</span>
                             </v-col>
                         </v-row>
@@ -112,7 +112,7 @@
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">مبلغ:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">مبلغ:</span>
                                 <span v-if="userOrder && userOrder.total_price" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(userOrder.total_price).slice(0, -1))) }} تومان</span>
                             </v-col>
 
@@ -122,7 +122,7 @@
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">سود شما:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">سود شما:</span>
                                 <span v-if="userOrder && userOrder.paid_price" class="t13 w400 text-grey-darken-3 number-font">
                                     {{splitChar( Number(String(calcProfit(userOrder.total_price,userOrder.sending_price, userOrder.paid_price)).slice(0, -1))) }}
                                     تومان</span>
@@ -134,7 +134,7 @@
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1">هزینه ارسال:</span>
+                                <span class="t13 w400 text-grey-darken-1 ml-1">هزینه ارسال:</span>
                                 <span v-if="userOrder && userOrder.sending_price" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(userOrder.sending_price).slice(0, -1))) }}  تومان</span>
                             </v-col>
 
