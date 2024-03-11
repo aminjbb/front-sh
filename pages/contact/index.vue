@@ -113,11 +113,9 @@
                                 <label class="d-block t14 text-grey-darken-3 mb-4">نام و نام خانوادگی:</label>
 
                                 <v-text-field
-                                    :rules="persianRule"
                                     density="compact"
                                     variant="outlined"
                                     single-line
-                                    hide-details
                                     v-model="form.full_name" />
                             </v-col>
 
@@ -128,17 +126,15 @@
                                 <label class="d-block t14 text-grey-darken-3 mb-4">موضوع <span class="text-red-accent-4">*</span> </label>
 
                                 <v-select
+                                    ref="subjectSelect"
                                     density="compact"
                                     variant="outlined"
-                                    single-line
                                     :rules="rule"
                                     item-title="label"
-                                    item-value="label"
-                                    hide-details
+                                    item-value="value"
                                     :items="categoryTypes"
-                                    v-model="form.category" />
+                                    v-model="form.subject" />
                             </v-col>
-
                             <v-col
                                 cols="12"
                                 md="6"
@@ -147,10 +143,11 @@
 
                                 <v-text-field
                                     density="compact"
+                                    :rules="mobileRule"
                                     variant="outlined"
+                                    type="number"
                                     single-line
-                                    hide-details
-                                    v-model="form.phone" />
+                                    v-model="form.phone_number" />
                             </v-col>
 
                             <v-col
@@ -162,8 +159,8 @@
                                 <v-text-field
                                     density="compact"
                                     variant="outlined"
+                                    type="email"
                                     single-line
-                                    hide-details
                                     v-model="form.email" />
                             </v-col>
 
@@ -172,6 +169,7 @@
 
                                 <v-textarea
                                     variant="outlined"
+                                    :rules="rule"
                                     v-model="form.description"
                                     placeholder="توضیحات را اینجا بنویسید"
                                     rows="3" />
@@ -181,7 +179,7 @@
                     <div class="d-flex justify-end">
                         <v-btn
                             :loading="loading"
-                            @click="submitForm()"
+                            @click="sendContactMassage()"
                             height="44"
                             color="primary"
                             class="px-8 mt-3"
@@ -201,9 +199,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return {
+            loading: false,
+            valid: true,
             rule: [v => !!v || 'این فیلد الزامی است'],
             BreadcrumbItems: [{
                     title: 'خانه',
@@ -216,34 +218,40 @@ export default {
             ],
             form: {
                 full_name: null,
-                phone: null,
+                phone_number: null,
                 email: null,
-                category: null,
+                subject: null,
                 description: null,
             },
+            mobileRule: [
+                (v) =>
+                /^(?:(\u0660\u0669[\u0660-\u0669][\u0660-\u0669]{8})|(\u06F0\u06F9[\u06F0-\u06F9][\u06F0-\u06F9]{8})|(09[0-9][0-9]{8}))$/.test(
+                    v
+                ) || "شماره موبایل معتبر نیست",
+            ],
             categoryTypes: [{
                     label: 'پیشنهادات',
-                    value: 'category1'
+                    value: 'suggestion'
                 },
                 {
                     label: 'انتقاد و شکایات',
-                    value: 'category2'
+                    value: 'criticism'
                 },
                 {
                     label: 'ارتباط با واحد بازرگانی',
-                    value: 'category2'
+                    value: 'commercial'
                 },
                 {
                     label: 'ارتباط با واحد دیجیتال مارکتینگ',
-                    value: 'category2'
+                    value: 'digital_marketing'
                 },
                 {
                     label: 'ارتباط با واحد پشتیبانی',
-                    value: 'category2'
+                    value: 'support'
                 },
                 {
                     label: 'سایر موضوعات',
-                    value: 'category2'
+                    value: 'other'
                 }
             ],
         }
@@ -251,6 +259,9 @@ export default {
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | تماس با ما')
         const description = ref("آنچه باید درباره شاواز بدانید")
+
+        const runtimeConfig = useRuntimeConfig()
+
 
         useHead({
             title,
@@ -261,7 +272,8 @@ export default {
         })
 
         return {
-            title
+            title,
+            runtimeConfig
         }
     },
 
@@ -278,7 +290,36 @@ export default {
             num = String(num).replace('-', '');
             return `tel:+98${num}`;
         },
+
+
+        /**
+         * Send contact massage
+         */
+         async sendContactMassage() {
+            this.loading = true
+            await axios.post(`${this.runtimeConfig.public.apiBase}/user/contact-us/create`, {
+                phone_number: this.form.mobile,
+                email: this.form.email,
+                full_name: this.form.full_name ? this.form.full_name : 'ناشناس',
+                subject: this.form.subject,
+                description: this.form.description,
+            }).then((response) => {
+                useNuxtApp().$toast.success('پیام شما با موفقیت ثبت شد', {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            }).catch((error) => {
+
+            }).finally((response) => {
+                this.loading = false
+            })
+        },
     },
+
+    mounted(){
+        this.$refs.subjectSelect.menu = false;
+    }
 }
 </script>
 

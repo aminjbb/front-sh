@@ -15,7 +15,7 @@
     <div v-if="comments && comments.length" class="product-comment__list">
         <div
             class="product-comment__card"
-            v-for="(comment, index) in comments"
+            v-for="(comment, index) in comments.slice(0, sliceLength)"
             :key="`comment${index}`">
             <header class="product-comment__card__header mb-3">
                 <div class="d-flex align-center ml-8">
@@ -38,7 +38,7 @@
                 class="my-4" />
         </div>
 
-        <span class="d-flex align-center t12 w400 text-primary cur-p" id="show-more-comments" @click="showAllComment()">
+        <span class="d-flex align-center t12 w400 text-primary cur-p mt-5" id="show-more-comments" @click="showAllComment()">
             <span>مشاهده نظرات بیشتر</span>
 
             <v-icon
@@ -55,16 +55,29 @@
 export default {
     data() {
         return {
+            sliceLength: 3,
         }
     },
 
     props: {
-        comments: [],
-        /** productSelectedSeller for add comment **/
+        /**
+         * Comment list
+         */
+        comments: Array,
+
+        /*
+        * Product Selected Seller for add comment 
+        **/
         productSelectedSeller:Object,
-      /** method for get SecondaryData after add comment **/
+
+        /*
+        * Method for get SecondaryData after add comment 
+        **/
         getSecondaryData:Function
     },
+
+
+    
 
     methods: {
         addCommentsToCommentList() {
@@ -85,8 +98,8 @@ export default {
 
         showAllComment() {
             document.getElementById('show-more-comments').classList.add('hide');
-            this.commentList = [];
-            this.commentList = this.comments
+            const commentsLength =  this.comments?.length;
+            this.sliceLength = commentsLength - 1
         }
     },
 
