@@ -21,9 +21,12 @@
         </div>
 
         <div>
-            <h3 v-if="content.shps?.sku" class="t12 w400 text-grey-darken-1 product-card__title mb-5">
-                {{ content.shps?.sku?.label }}
-            </h3>
+            
+            <a v-if="content.shps?.sku" :href="`/sku/${content.shps?.sku?.slug}`" class="d-block">
+                <h3 class="t12 w400 text-grey-darken-1 product-card__title mb-5">
+                    {{ content.shps?.sku?.label }}
+                </h3>
+            </a>
 
             <div class="d-flex align-center t13 w400 text-grey mb-2">
                 <div class="color-pick ml-2">

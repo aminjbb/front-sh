@@ -13,7 +13,7 @@
                 <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${address.id}`">
                     <ul class="ma-0">
                         <li class="mb-2 cur-p">
-                            <generalUserAddressModal title="ویرایش آدرس" buttonType="mobile" :userDetail="userDetail" :getUserAddress="getUserAddress" edit :address="address" :provinces="provinces" />
+                            <generalUserAddressModal title="ویرایش آدرس" buttonType="mobile" :userDetail="userDetail" :getUserAddress="getUserAddress" edit :address="address" :provinces="provinces"/>
                         </li>
 
                         <li class="d-flex align-center py-1 cur-p">
