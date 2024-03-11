@@ -32,7 +32,7 @@
 
                     <div class="filter-sidebar__card" :id="`filter-sidebar__card--${index}`">
                         <header
-                            v-if="filter.type !== 'switch'"
+                            v-if="filter.type !== 'switch' && filter.type !== 'period' "
                             class="d-flex align-center justify-space-between filter-sidebar__card__header my-4"
                             @click="slideToggleCard(index)">
                             <span class="t16 w400 text-grey-darken-2">{{filter.name}}</span>
@@ -67,56 +67,61 @@
                                 :clear="clearAll"
                                 @selectItems="selectFiltersModalEmit" />
                         </template>
+                      <template v-else-if="filter.type === 'period'">
+                        <div  class="filter-sidebar__card mt-3" :id="`filter-sidebar__card--${filterList.length}`">
+                          <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard(filterList.length)">
+                            <span class="t16 w400 text-grey-darken-2">محدوده قیمت</span>
+
+                            <v-icon icon="mdi-chevron-down" color="grey" />
+                          </header>
+
+                          <div class="filter-sidebar__card__box">
+                            <div class="d-flex align-center justify-space-between">
+                              <span class="t14 w400 ml-5">حداقل</span>
+
+                              <v-autocomplete
+                                  density="compact"
+                                  variant="outlined"
+                                  placeholder="مثلا 10,000"
+                                  :items="amounts"
+                                  item-title="label"
+                                  item-value="value"
+                                  suffix="تومان"
+                                  @keydown.enter="setAmount(filter.param)"
+                                  v-model="amount.min"
+                                  :custom-filter="customMinFilter"
+                                  height="40px"
+                                  class="mb-3 filter-sidebar__card__search" />
+                            </div>
+
+                            <div class="d-flex align-center justify-space-between">
+                              <span class="t14 w400 ml-5">حداکثر</span>
+
+                              <v-autocomplete
+                                  density="compact"
+                                  variant="outlined"
+                                  placeholder="مثلا 10,000"
+                                  :items="amounts"
+                                  item-title="label"
+                                  item-value="value"
+                                  suffix="تومان"
+                                  @keydown.enter="setAmount(filter.param)"
+                                  v-model="amount.max"
+                                  :custom-filter="customMaxFilter"
+                                  height="40px"
+                                  class="mb-3 filter-sidebar__card__search" />
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+
+
                     </div>
 
                     <v-divider color="grey" />
                 </template>
 
-                <div class="filter-sidebar__card mt-3" :id="`filter-sidebar__card--${filterList.length}`">
-                    <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard(filterList.length)">
-                        <span class="t16 w400 text-grey-darken-2">محدوده قیمت</span>
 
-                        <v-icon icon="mdi-chevron-down" color="grey" />
-                    </header>
-
-                    <div class="filter-sidebar__card__box">
-                        <div class="d-flex align-center justify-space-between">
-                            <span class="t14 w400 ml-5">حداقل</span>
-
-                            <v-autocomplete
-                                density="compact"
-                                variant="outlined"
-                                placeholder="مثلا 10,000"
-                                :items="amounts"
-                                item-title="label"
-                                item-value="value"
-                                suffix="تومان"
-                                @keydown.enter="setAmount"
-                                v-model="amount.min"
-                                :custom-filter="customMinFilter"
-                                height="40px"
-                                class="mb-3 filter-sidebar__card__search" />
-                        </div>
-
-                        <div class="d-flex align-center justify-space-between">
-                            <span class="t14 w400 ml-5">حداکثر</span>
-
-                            <v-autocomplete
-                                density="compact"
-                                variant="outlined"
-                                placeholder="مثلا 10,000"
-                                :items="amounts"
-                                item-title="label"
-                                item-value="value"
-                                suffix="تومان"
-                                @keydown.enter="setAmount"
-                                v-model="amount.max"
-                                :custom-filter="customMaxFilter"
-                                height="40px"
-                                class="mb-3 filter-sidebar__card__search" />
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="filter-mobile-btn pa-3">
@@ -224,33 +229,38 @@ export default {
          * @param {*} item 
          * @param {*} queryText 
          */
-        customMinFilter(queryText) {
-            this.amount.min = queryText
+        customMinFilter(item, queryText, itemText) {
+          if (itemText.props.value === queryText) this.amount.min = itemText.props.value
+          else  this.amount.min = queryText
 
         },
 
-        /**
-         * Enter the desired value
-         * @param {*} item 
-         * @param {*} queryText 
-         */
-        customMaxFilter(queryText) {
-            this.amount.max = queryText
-
-        },
-
-        /**
+      /**
+       * Enter the desired value
+       * @param {*} item
+       * @param {*} queryText
+       * @param {*} itemText
+       */
+      customMaxFilter(item, queryText, itemText) {
+        if (itemText.props.value === queryText) this.amount.min = itemText.props.value
+        else  this.amount.max = queryText
+      },
+      /**
          * Show available Items
          */
-        setAmount() {
-            this.$emit('setAmount', this.amount);
+        setAmount(param) {
+        const form = {
+          param: param,
+          amount: this.amount
+        }
+        this.$emit('setAmount', form);
         },
 
         /**
          * Delete All filter
          */
         deleteAllFilter(){
-            this.$emit('deleteAllFilter');
+          this.$router.push(`${this.$route.path}`)
             this.closeModal();
         },
 

@@ -8,10 +8,10 @@
             </div>
 
             <div class="surprise-slider__info__image mb-4">
-                <img :src="mainBannerImage" title="سپوپرایز" alt="سپوپرایز" width="111" height="118" />
+                <img :src="mainBannerImage" :title="mainBanner.label" :alt="mainBanner.label" width="111" height="118" />
             </div>
           <div class="surprise-slider__info__title mb-4">
-            <span class="t14 ml-2">  {{content.label}}</span>
+            <span class="t14 ml-2">  {{mainBanner.label}}</span>
           </div>
 
             <v-btn
@@ -63,6 +63,7 @@
                         :content="item"
                         hideInfo
                         hideLabel
+                        :shps="item?.pivot?.shps"
                         class="mb-4" />
                 </swiper-slide>
             </swiper>

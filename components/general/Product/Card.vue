@@ -14,10 +14,10 @@
             @removeProduct="removeProduct(content)" />
     </div>
 
-    <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href="`/sku/${content.slug}`">
+    <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
         <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
     </a>
-    <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href="`/sku/${content.slug}`">
+    <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
         <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
     </a>
 
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="product-card__price-info mb-2" v-if="content.stock || (content.seller_s_k_us && content?.seller_s_k_us[0] && content?.seller_s_k_us[0]?.site_stock > 0)">
+    <div class="product-card__price-info mb-2" v-if="content.stock ||  skusObjectStock || relatedObjectStock ">
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
                 <span class="product-card__price-info__discount t11 w500">{{content.discount_percent}}%</span>
@@ -57,6 +57,7 @@
         </template>
         <template v-else>
             <span v-if="content.customer_price/*  && !isPLP */" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+            <span v-else-if="content.site_price/*  && !isPLP */" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
             <!-- <span v-if="content.site_price && isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span> -->
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
@@ -130,6 +131,10 @@ export default {
          */
         showColors: Boolean,
         /**
+         * Shps id for go to pdp
+         */
+        shps: String,
+        /**
          * user this card in plp page for image_url and price
          */
         isPLP: {
@@ -157,6 +162,25 @@ export default {
             this.$emit('removeProduct', content);
         },
     },
+
+  computed:{
+      skusObjectStock(){
+        try {
+          return this.content?.seller_s_k_us[0]?.site_stock
+        }catch (e) {
+          return  0
+        }
+
+      },
+    relatedObjectStock(){
+      try {
+        return this.content?.site_stock
+      }catch (e) {
+        return  0
+      }
+
+    },
+  }
 }
 </script>
 

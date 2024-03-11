@@ -3,6 +3,7 @@
     <h1 class="v-hide">{{ productLabel }}</h1>
     <v-container>
         <generalBreadcrumb :items="breadcrumbList" />
+
         <v-row>
             <v-col
                 class="pa-3"
@@ -92,42 +93,39 @@ import PDP from '@/composables/PDP.js'
 
 export default {
     setup() {
+
         const {
             product,
             color,
             getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb , breadcrumb
+            getBreadcrumb , breadcrumb , title , description
         } = new PDP()
+        useHead({
+        title,
+        meta: [{
+          name: 'description',
+          content: description
+        },
+          {
+            name: 'title',
+            content: title
+          }]
+      });
         return {
             product,
             color,
             getSecondaryData,
             secondaryData,
             getPdpData,
-          getBreadcrumb , breadcrumb
+          getBreadcrumb , breadcrumb , title , description
         }
+
     },
     data() {
         return {
             screenType: null,
-            // BreadcrumbItems: [{
-            //         title: 'لوازم آرایشی',
-            //         /* Should be main category */
-            //         href: '/'
-            //     },
-            //     {
-            //         title: 'آرایش چشم',
-            //         /* Should be sub category */
-            //         href: '/products'
-            //     },
-            //     {
-            //         title: 'سایه چشم',
-            //         /* Should be sub category */
-            //         href: '/products'
-            //     }
-            // ],
             content: null,
 
             selectedSeller: null,
@@ -206,7 +204,11 @@ export default {
 
         productSelectedSeller() {
             try {
-                return this.productDetail.shps_list[0]
+              if (this.$route.query.shps){
+                const findShps =  this.productDetail.shps_list.find(shps=> shps.id == this.$route.query.shps)
+                return findShps
+              }
+              return this.productDetail.shps_list[0]
             } catch (e) {
                 return ''
             }

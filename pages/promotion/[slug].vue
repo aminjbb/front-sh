@@ -1,9 +1,8 @@
 <template>
 <main class="v-product v-product--list">
     <h1 class="v-hide">{{ title }}</h1>
-
     <v-container>
-        <v-row class="mt-10">
+        <v-row class="mt-1">
             <v-col cols="12">
                 <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
                     <v-row class="ma-0">
@@ -15,6 +14,7 @@
                             class="v-product__content d-flex">
                             <generalProductCard
                                 :content="item"
+                                :shps="item.id"
                                 class="mb-4 flex-grow-1"
                                 :hideInfo="true"
                                 :isPLP="true"
@@ -76,7 +76,7 @@ export default {
         /** return data product list  **/
         productListData() {
             try {
-                return this.productList.data.data.data
+                return this.productList.data.data.shps.data
             } catch (e) {
                 return []
             }

@@ -41,14 +41,20 @@
         </header>
 
         <div>
+
           <p class="t14 w400 my-8 text-center text-grey-darken-2">{{text}}</p>
-          <div class="t14 w400 my-8 text-center text-grey-darken-2" v-for="(sku , index) in object">
+          <p  v-if="type == 3">سبد شما ناموجود شده است</p>
+          <div class="t14 w400 my-8 text-center text-grey-darken-2" v-for="(object , index) in object?.data?.data">
             <p>
-                {{sku?.sku.label}}
+                {{object?.sku?.label}}
             </p>
-            <div class="d-flex justify-center">
-              <span class="dir-ltr mx-5 number-font">تعداد قدیم : {{sku.old}}</span>
-              <span class="dir-ltr mx-5 number-font">تعداد جدید : {{sku.new}}</span>
+            <div class="d-flex justify-center" v-if="object?.type == 1">
+              <span class="dir-ltr mx-5 number-font">تعداد قدیم : {{object?.old}}</span>
+              <span class="dir-ltr mx-5 number-font">تعداد جدید : {{object?.new}}</span>
+            </div>
+            <div class="d-flex justify-center" v-if="object?.type == 2">
+              <span class="dir-ltr mx-5 number-font">قیمت قدیم : {{object?.old}}</span>
+              <span class="dir-ltr mx-5 number-font">قیمت جدید : {{object?.new}}</span>
             </div>
           </div>
 
@@ -62,6 +68,7 @@
             </v-btn>
 
             <v-btn
+                v-if="!emptyBasket"
                 :loading="loading"
                 @click="createOrderAgain()"
                 height="44"
@@ -109,11 +116,24 @@ export default {
       this.createOrder(this.orderSendingMethod ,  '' ,this.orderAddressId  , this.orderPaymentMethod)
     },
     openModal() {
-      this.dialog = true;
+
     },
 
     closeModal() {
-      this.dialog = false;
+      const form = {
+        dialog:false,
+        buttonType:'desktop',
+        title:'',
+        text:``,
+        object:null,
+        submitText:'',
+        type:''
+      }
+      this.$store.commit('set_orderModalError', form)
+      if (this.emptyBasket){
+        window.location.reload()
+      }
+
     },
 
     async removeProduct() {
@@ -130,6 +150,9 @@ export default {
     dialog(){
       return this.orderErrorModal.dialog
     },
+    type(){
+      return this.orderErrorModal.type
+    },
     title(){
       return this.orderErrorModal.title
     },
@@ -144,6 +167,9 @@ export default {
     },
     object(){
       return this.orderErrorModal.object
+    },
+    emptyBasket(){
+      return this.orderErrorModal.emptyBasket
     },
 
   }

@@ -110,8 +110,6 @@ export default {
   },
 
   setup(props) {
-    const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-    const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
     const {
       productList,
       filterQuery,
@@ -120,14 +118,18 @@ export default {
       secondaryData,
       filterForFilter,
       getBreadcrumb , breadcrumb,
-      query
+      query , description , title
     } = new PLP()
     useHead({
       title,
       meta: [{
         name: 'description',
         content: description
-      }]
+      },
+        {
+          name: 'title',
+          content: title
+        }]
     });
     return {
       productList,
@@ -137,7 +139,7 @@ export default {
       secondaryData,
       filterForFilter,
       query,
-      getBreadcrumb , breadcrumb,
+      getBreadcrumb , breadcrumb, description , title
     }
   },
 
@@ -365,7 +367,6 @@ export default {
 
           }
           else {
-            console.log('hala injam ')
             this.$router.replace({
               query: {
                 ...query,
