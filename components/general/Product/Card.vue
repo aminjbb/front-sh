@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <div class="product-card__price-info mb-2" v-if="content.stock">
+    <div class="product-card__price-info mb-2" v-if="content.stock || content?.seller_s_k_us[0]?.site_stock ">
         <template v-if="content.discount">
             <div class="d-flex align-center justify-space-between">
                 <span class="product-card__price-info__discount t11 w500">{{content.discount_percent}}%</span>
