@@ -4,7 +4,7 @@
         <li
             v-for="(value, index) in items"
             :key="`cat${index}`"
-            @click="chooseItem(value.id)"
+            @click="chooseItem(value.slug)"
             class="t14 w400 text-grey pa-1 mb-1">
             {{value.label}}
         </li>
@@ -46,13 +46,8 @@ export default {
         /**
          * Emit selected items to parent
          */
-         chooseItem(id) {
-            const obj = {
-                name: this.name,
-                values: id
-            }
-
-            this.$emit('listItems', obj);
+         chooseItem(slug) {
+          this.$router.push(`/category/${slug}`)
         },
 
         /**

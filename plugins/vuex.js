@@ -22,7 +22,8 @@ const store = createStore({
         title:'',
         text:'',
         object:[],
-        submitText:''
+        submitText:'',
+        type:null
       }
     };
   },
@@ -35,6 +36,7 @@ const store = createStore({
       state.orderErrorModal.submitText = obj.submitText
       state.orderErrorModal.title = obj.title
       state.orderErrorModal.object = obj.object
+      state.orderErrorModal.type = obj.type
     },
     set_orderSendingMethod(state , value){
       state.orderSendingMethod = value

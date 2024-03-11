@@ -312,7 +312,8 @@ export default function setup() {
                         title:err.response.data.message,
                         text:`در این سفارش آیتم(های) زیر تغییر پیدا کرده است`,
                         object:err.response.data.data,
-                        submitText:'تایید'
+                        submitText:'تایید',
+                        type:err.response.data.type
                     }
                     store.commit('set_orderModalError', form)
                 }
