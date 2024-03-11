@@ -46,9 +46,13 @@
             <p>
                 {{sku?.sku.label}}
             </p>
-            <div class="d-flex justify-center">
+            <div class="d-flex justify-center" v-if="type == 1">
               <span class="dir-ltr mx-5 number-font">تعداد قدیم : {{sku.old}}</span>
               <span class="dir-ltr mx-5 number-font">تعداد جدید : {{sku.new}}</span>
+            </div>
+            <div class="d-flex justify-center" v-if="type == 2">
+              <span class="dir-ltr mx-5 number-font">قیمت قدیم : {{sku.old}}</span>
+              <span class="dir-ltr mx-5 number-font">قیمت جدید : {{sku.new}}</span>
             </div>
           </div>
 
@@ -129,6 +133,9 @@ export default {
     },
     dialog(){
       return this.orderErrorModal.dialog
+    },
+    type(){
+      return this.orderErrorModal.type
     },
     title(){
       return this.orderErrorModal.title

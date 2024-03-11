@@ -214,7 +214,7 @@ export default {
      * Show available Items
      */
     setAmount(param) {
-      console.log(this.amount , 'this.amount')
+
       const form = {
         param: param,
         amount: this.amount

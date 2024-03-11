@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div>
     <div class="d-flex align-start flex-column">
         <div class="d-flex align-center mb-5">

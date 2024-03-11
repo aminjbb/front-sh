@@ -43,7 +43,7 @@
     <template v-if="activeStep === 3">
         <desktopCartPaymentStep ref="paymentStep" @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="data.paid_price" @deleteBasketVoucher="deleteBasketVoucher" />
 
-        <generalModalsErrorOrder :orderSendingMethod="orderSendingMethod" :orderAddressId="orderAddressId" :orderPaymentMethod="orderPaymentMethod"/>
+        <generalModalsErrorOrder :orderSendingMethod="orderSendingMethod" :orderAddressId="orderAddressId.id" :orderPaymentMethod="orderPaymentMethod"/>
 
     </template>
 
