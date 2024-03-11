@@ -1,7 +1,7 @@
 <template>
 <main class="v-order v-order--single">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
+        <a href="/user/order" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14">جزئیات سفارش</span>
@@ -124,7 +124,7 @@
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1">سود شما:</span>
                                 <span v-if="userOrder && userOrder.paid_price" class="t13 w400 text-grey-darken-3 number-font">
-                                    {{splitChar( Number(String(calcProfit(userOrder.paid_price, userOrder.total_price)).slice(0, -1))) }}
+                                    {{splitChar( Number(String(calcProfit(userOrder.total_price,userOrder.sending_price, userOrder.paid_price)).slice(0, -1))) }}
                                     تومان</span>
                             </v-col>
 
@@ -211,9 +211,9 @@ export default {
         splitChar,
 
         /** calculate user profit **/
-        calcProfit(paid, totalPrice) {
+        calcProfit(totalPrice,delivery, paid) {
             try {
-                const profit = parseInt(totalPrice) - parseInt(paid)
+                const profit = (parseInt(totalPrice) + parseInt(delivery)) - parseInt(paid)
                 return profit
             } catch (e) {
 

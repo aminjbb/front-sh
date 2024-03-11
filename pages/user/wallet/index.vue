@@ -15,12 +15,12 @@
             <div class="col-9">
                 <v-row class="ma-0 pa-0">
                     <div class="col-5 pa-3">
-                        <generalWalletCard :wallet="userWallet.wallet" />
+                        <generalWalletCard :wallet="userWallet.wallet?.wallet" />
                     </div>
 
                     <div class="col-7 pa-3">
                         <generalWalletTransaction
-                            :details="detailsMac"
+                            :details="this.userWallet?.total"
                             :tableHeader="tableHeader"
                             :items="formatTransaction" />
                     </div>
@@ -28,7 +28,7 @@
             </div>
         </v-row>
     </v-container>
-    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="getLastTransaction" :phoneNumber="userWallet.phone_number"/>
+    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="getLastTransaction" :phoneNumber="userWallet?.transactions?.phone_number"/>
 </main>
 </template>
 
@@ -39,11 +39,6 @@ export default {
 
     data() {
         return {
-            detailsMac: {
-                all: '1250000',
-                bought: '1105000',
-                receive: '98000',
-            },
             tableHeader: [{
                 title: 'ردیف',
                 key: 'index',
@@ -93,9 +88,9 @@ export default {
     computed: {
         formatTransaction() {
             const transactionArray = [];
-            if (this.userWallet.transactions && this.userWallet.transactions.length > 0) {
+            if (this.userWallet.transactions && this.userWallet.transactions.success_transactions && this.userWallet.transactions.success_transactions.length > 0) {
 
-                this.userWallet.transactions.forEach(element => {
+                this.userWallet.transactions.success_transactions.forEach(element => {
                     const obj = {
                         type: element.type,
                         price: element.amount,
@@ -111,8 +106,8 @@ export default {
         },
 
         getLastTransaction(){
-            if(this.userWallet.transactions && this.userWallet.transactions.length > 0){
-                return this.userWallet.transactions[this.userWallet.transactions.length -1];
+            if(this.userWallet && this.userWallet.transactions && this.userWallet.transactions.success_transactions && this.userWallet.transactions.success_transactions.length > 0){
+                return this.userWallet.transactions.success_transactions[this.userWallet.transactions.success_transactions.length -1];
             }
             return '';
         }

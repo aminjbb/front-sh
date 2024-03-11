@@ -1,7 +1,7 @@
 <template>
 <main class="v-order v-order--canceling">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
+        <a href="/user/order" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
         <span class="grey-darken-3 t14">درخواست لغو</span>

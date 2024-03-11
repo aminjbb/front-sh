@@ -140,7 +140,9 @@
                                                 </div>
 
                                                 <div class="menu__items__image">
-                                                    <img v-if="child1?.image_url && child1?.image_url !== null" :src="child1.image_url" :title="child1.label" :alt="child1.label" width="184" height="388" />
+                                                    <a class="d-block w-100" :href="child1?.image_url">
+                                                        <img v-if="child1?.image?.image_url && child1?.image?.image_url !== null" :src="child1?.image?.image_url" :title="child1.label" :alt="child1.label" width="184" height="388" />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </li>
