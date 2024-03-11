@@ -55,7 +55,7 @@
 export default {
     data() {
         return {
-            sliceLength: 2,
+            sliceLength: 3,
         }
     },
 
@@ -99,7 +99,7 @@ export default {
         showAllComment() {
             document.getElementById('show-more-comments').classList.add('hide');
             const commentsLength =  this.comments?.length;
-            this.sliceLength = sliceLength - 1
+            this.sliceLength = commentsLength - 1
         }
     },
 
