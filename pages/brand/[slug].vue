@@ -320,16 +320,19 @@ export default {
         if (routeSplit[1]) {
           if (this.$route.query?.stock) {
             if (query) {
-              this.$router.push({
+              this.$router.replace({
                 query: {
                   ...query,
-                  stock: param
+                  stock: param,
+                  page:1
                 }
               })
-            } else {
+            }
+            else {
               this.$router.push({
                 query: {
-                  stock: param
+                  stock: param,
+                  page:1
                 }
               })
             }

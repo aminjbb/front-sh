@@ -365,7 +365,6 @@ export default {
 
           }
           else {
-            console.log('hala injam ')
             this.$router.replace({
               query: {
                 ...query,
