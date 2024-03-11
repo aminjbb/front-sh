@@ -5,7 +5,7 @@
 .v-home {
     padding-bottom: 60px;
     padding-top: 170px;
-
+    min-height: 800px;
     @include gbp (0, 768) {
         padding-bottom: 60px;
         padding-top: 75px;
