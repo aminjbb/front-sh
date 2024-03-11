@@ -19,7 +19,8 @@ export default function setup() {
     const router = useRouter()
     const error = useError();
     const store = useStore()
-
+    const title = ref('')
+    const description = ref('')
     async function getSecondaryData(query) {
         axios
             .get(runtimeConfig.public.apiBase + `/product/pdp/details/${route.params.slug}`, {
@@ -47,6 +48,7 @@ export default function setup() {
             })
             .then((response) => {
                 breadcrumb.value = response.data.data
+
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
@@ -84,6 +86,8 @@ export default function setup() {
             })
             .then((response) => {
                 product.value = response
+                title.value = response.data.data.page.meta_title
+                description.value = response.data.data.page.meta_description
             })
             .catch((err) => {
                 if (err.response.status){
@@ -99,6 +103,7 @@ export default function setup() {
         }
     )
 
-    return {product, color, getSecondaryData, secondaryData , getPdpData,  getBreadcrumb, breadcrumb}
+    return {product, color, getSecondaryData, secondaryData ,
+        getPdpData,  getBreadcrumb, breadcrumb ,title , description}
 }
 

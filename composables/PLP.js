@@ -24,6 +24,9 @@ export default function setup() {
     const error = useError();
     const store = useStore()
     const query = ref('')
+    const title = ref('')
+    const description = ref('')
+
 
     function checkRouteForSlug() {
         if (route.name != 'search') {
@@ -41,6 +44,8 @@ export default function setup() {
             })
             .then((response) => {
                 secondaryData.value = response
+                title.value = response.data.data.page.meta_title
+                description.value = response.data.data.page.meta_description
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
@@ -106,7 +111,7 @@ export default function setup() {
 
     return {
         productList, filterQuery, getSecondaryData, secondaryData, page, filterForFilter, query,
-        getBreadcrumb, breadcrumb
+        getBreadcrumb, breadcrumb , description , title
     }
 }
 

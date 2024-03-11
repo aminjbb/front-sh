@@ -304,16 +304,17 @@ export default function setup() {
 
             })
             .catch((err) => {
-                console.log(err.response)
                 if (err.response.status === 409){
+
                     const form = {
                         dialog:true,
                         buttonType:'desktop',
-                        title:err.response.data.message,
+                        title:'تغییراتی در سفارش ایجاد شد.',
                         text:`در این سفارش آیتم(های) زیر تغییر پیدا کرده است`,
-                        object:err.response.data.data,
+                        object:err.response.data,
                         submitText:'تایید',
-                        type:err.response.data.type
+                        type:'',
+                        emptyBasket:err.response.data.data.is_basket_empty
                     }
                     store.commit('set_orderModalError', form)
                 }
