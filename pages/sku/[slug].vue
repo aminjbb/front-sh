@@ -93,42 +93,39 @@ import PDP from '@/composables/PDP.js'
 
 export default {
     setup() {
+
         const {
             product,
             color,
             getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb , breadcrumb
+            getBreadcrumb , breadcrumb , title , description
         } = new PDP()
+        useHead({
+        title,
+        meta: [{
+          name: 'description',
+          content: description
+        },
+          {
+            name: 'title',
+            content: title
+          }]
+      });
         return {
             product,
             color,
             getSecondaryData,
             secondaryData,
             getPdpData,
-          getBreadcrumb , breadcrumb
+          getBreadcrumb , breadcrumb , title , description
         }
+
     },
     data() {
         return {
             screenType: null,
-            // BreadcrumbItems: [{
-            //         title: 'لوازم آرایشی',
-            //         /* Should be main category */
-            //         href: '/'
-            //     },
-            //     {
-            //         title: 'آرایش چشم',
-            //         /* Should be sub category */
-            //         href: '/products'
-            //     },
-            //     {
-            //         title: 'سایه چشم',
-            //         /* Should be sub category */
-            //         href: '/products'
-            //     }
-            // ],
             content: null,
 
             selectedSeller: null,

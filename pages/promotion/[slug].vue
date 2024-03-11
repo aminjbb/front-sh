@@ -76,7 +76,7 @@ export default {
         /** return data product list  **/
         productListData() {
             try {
-                return this.productList.data.data.data
+                return this.productList.data.data.shps.data
             } catch (e) {
                 return []
             }
