@@ -46,28 +46,34 @@
     <div class="colors-pallet mb-2">
         <h4 class="t16 w400 text-grey-darken-3 mb-3">رنگ:</h4>
 
-        <div class="scroll--x pb-3">
-            <div class="d-flex align-center">
+        <div>
+            <swiper
+                v-if="content.colors"
+                dir="rtl"
+                :slidesPerView="'auto'"
+                :spaceBetween="8"
+                :modules="modules"
+                :navigation="true"
+                class="mySwiper px-6">
+                <swiper-slide v-for="(color, index) in content.colors" :key="`product-single-color${index}`">
+                    <div
+                        class="d-inline-flex align-center colors-pallet__item ml-5"
+                        :id="`color--${color.id}`"
+                        @click="selectColor(color.slug)">
+                        <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color.slug) === true ? 'colors-pallet__item__code--selected' : ''">
+                            <span :style="{backgroundColor: color.value}" />
+                            <v-icon
+                                icon="mdi-check"
+                                size="x-small"
+                                color="white" />
+                        </div>
 
-                <div
-                    class="d-flex align-center colors-pallet__item ml-5"
-                    v-for="(color,index) in content.colors"
-                    :key="`product-single-color${index}`"
-                    :id="`color--${color.id}`"
-                    @click="selectColor(color.slug)">
-                    <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color.slug) === true ? 'colors-pallet__item__code--selected' : ''">
-                        <span :style="{backgroundColor: color.value}" />
-                        <v-icon
-                            icon="mdi-check"
-                            size="x-small"
-                            color="white" />
+                        <span class="colors-pallet__item__label t12 w500 text-grey number-font">
+                            {{color.label}}
+                        </span>
                     </div>
-
-                    <span class="colors-pallet__item__label t12 w500 text-grey number-font">
-                        {{color.label}}
-                    </span>
-                </div>
-            </div>
+                </swiper-slide>
+        </swiper>
         </div>
     </div>
 
@@ -77,7 +83,6 @@
 
     <nav class="attribute-list">
         <ul class="ma-0 pa-0 pr-5">
-
             <li
                 v-for="(attr, index) in content.attributes"
                 class="d-flex align-center"
@@ -108,11 +113,25 @@
             </li>
         </ul>
     </nav>
-
 </div>
 </template>
 
 <script>
+// Import Swiper Vue.js components
+import {
+    Swiper,
+    SwiperSlide
+} from 'swiper/vue';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+// import required modules
+import {
+    Navigation
+} from 'swiper/modules';
+
 export default {
     data() {
         return {
@@ -122,6 +141,18 @@ export default {
             emptyStar:0,
         }
     },
+    
+    components: {
+        Swiper,
+        SwiperSlide,
+    },
+
+    setup() {
+        return {
+            modules: [Navigation],
+        };
+    },
+
     props: {
         /**
          * Content
