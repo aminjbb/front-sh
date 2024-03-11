@@ -73,6 +73,8 @@
                 size="40"
                 :total-visible="6"
                 @click="backToTop"
+                @next="changePagination()"
+                @prev="changePagination()"
                 prev-icon="mdi-chevron-right"
                 next-icon="mdi-chevron-left"/>
           </div>
@@ -228,10 +230,26 @@ export default {
 
   methods: {
     /**
+     * Filter productList by list type items
+     * @param {*} array
+     */
+    listFiltersModal(array) {
+      let query = this.$route.query;
+      if (array?.values) {
+        this.$router.push({
+          query: {
+            ...query,
+            categories: `[${array?.values}]`
+          }
+        })
+      }
+    },
+    /**
      * Filter productList by select type items
      * @param {*} array
      */
     selectFiltersModal(array) {
+
       if (array.param === "stock") {
         this.createQueryForFilter(array)
       } else {
@@ -261,24 +279,33 @@ export default {
         if (amount.amount?.min) {
           site_price_from = amount.amount?.min
         }
+        let query = this.$route.query;
+        if (site_price_from && site_price_to === ''){
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+            }
+          })
+        }
+        else if (site_price_from === '' && site_price_to ){
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_to: site_price_to
+            }
+          })
+        }
+        else if (site_price_from && site_price_to ){
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+              site_price_to: site_price_to
+            }
+          })
+        }
 
-        await this.setMinAmount(amount)
-        await this.setMaxAmount(amount)
-      }
-    },
-
-    /**
-     * Set min
-     */
-    setMinAmount(amount) {
-      let query = this.$route.query;
-      if (amount.amount?.min) {
-        this.$router.push({
-          query: {
-            ...query,
-            site_price_from: amount.amount?.min
-          }
-        })
       }
     },
 
@@ -298,21 +325,7 @@ export default {
 
     },
 
-    /**
-     * Set max
-     * @param {*} amount
-     */
-    setMaxAmount(amount) {
-      let query = this.$route.query;
-      if (amount.amount?.max) {
-        this.$router.push({
-          query: {
-            ...query,
-            site_price_to: amount.amount?.max
-          }
-        })
-      }
-    },
+
 
     /**
      * Params generator
@@ -333,32 +346,40 @@ export default {
         if (routeSplit[1]) {
           if (this.$route.query?.stock) {
             if (query) {
-              this.$router.push({
+              this.$router.replace({
                 query: {
                   ...query,
-                  stock: param
+                  stock: param,
+                  page:1
                 }
               })
-            } else {
+            }
+            else {
               this.$router.push({
                 query: {
-                  stock: param
+                  stock: param,
+                  page:1
                 }
               })
             }
 
-          } else {
-            this.$router.push({
+          }
+          else {
+            console.log('hala injam ')
+            this.$router.replace({
               query: {
                 ...query,
-                stock: param
+                stock: param,
+                page:1
               }
             })
           }
-        } else {
+        }
+        else {
           this.$router.push(`${this.$route.path}?stock=${param}`)
         }
-      } else {
+      }
+      else {
         await newObject.forEach((query, index) => {
           query.values.forEach(value => {
             const form = {
@@ -411,9 +432,9 @@ export default {
         if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
         else paramQuery += `&stock=${this.$route.query.stock}`
       }
-
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
+      this.page =1
     },
 
     async createQueryForFilter(array) {
@@ -424,10 +445,21 @@ export default {
      * Back to top on change pagination
      */
     backToTop(){
+      this.changePagination()
       window.scrollTo({
           top: 0,
           behavior: "smooth",
       });
+    },
+
+    changePagination(){
+      let query = this.$route.query;
+      this.$router.push({
+        query: {
+          ...query,
+          page: this.page
+        }
+      })
     }
   },
 
@@ -447,17 +479,7 @@ export default {
   },
 
   watch:{
-    page(val){
-      let query = this.$route.query;
-      if (val) {
-        this.$router.push({
-          query: {
-            ...query,
-            page: val
-          }
-        })
-      }
-    }
+
   }
 }
 </script>

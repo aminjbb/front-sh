@@ -128,5 +128,27 @@ export default {
         }
     },
 
+  mounted() {
+      if(this.param === 'brands'){
+        if(this.$route.query.brands){
+          let selectedBrands = []
+          const FilteredBrands = JSON.parse(this.$route.query.brands)
+          FilteredBrands.forEach(brand=>{
+            const findBrand =  this.items.find(searchBrand=>searchBrand.id === brand)
+            if (findBrand) this.itemsModel.push(findBrand.id)
+          })
+        }
+      }
+      else if (this.param === 'attributes'){
+        if(this.$route.query.attribute){
+          const FilteredAttribute = JSON.parse(this.$route.query.attribute)
+          FilteredAttribute.forEach(attribute=>{
+            const findAttribute =  this.items.find(findAttribute=>findAttribute.id === attribute)
+            if (findAttribute) this.itemsModel.push(findAttribute.id)
+          })
+        }
+      }
+  }
+
 }
 </script>

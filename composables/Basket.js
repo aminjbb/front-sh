@@ -111,6 +111,12 @@ export default function setup() {
                 getBasket();
             })
             .catch((err) => {
+                loadingAddBasket.value = false;
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
                 if (err.response.status === 401){
                     if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
                         beforeAuthAddToBasket(shps , countMain, randomNumberForBasket.value, method)
@@ -298,6 +304,18 @@ export default function setup() {
 
             })
             .catch((err) => {
+                console.log(err.response)
+                if (err.response.status === 409){
+                    const form = {
+                        dialog:true,
+                        buttonType:'desktop',
+                        title:err.response.data.message,
+                        text:`در این سفارش آیتم(های) زیر تغییر پیدا کرده است`,
+                        object:err.response.data.data,
+                        submitText:'تایید'
+                    }
+                    store.commit('set_orderModalError', form)
+                }
                 if(err.response.data.data === null){
                     useNuxtApp().$toast.error(err.response.data.message, {
                         rtl: true,
