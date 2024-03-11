@@ -14,10 +14,10 @@
             @removeProduct="removeProduct(content)" />
     </div>
 
-    <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href="`/sku/${content.slug}`">
+    <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
         <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
     </a>
-    <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href="`/sku/${content.slug}`">
+    <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
         <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
     </a>
 
@@ -129,6 +129,10 @@ export default {
          * Show colors in card
          */
         showColors: Boolean,
+        /**
+         * Shps id for go to pdp
+         */
+        shps: String,
         /**
          * user this card in plp page for image_url and price
          */

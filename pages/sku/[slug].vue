@@ -3,6 +3,7 @@
     <h1 class="v-hide">{{ productLabel }}</h1>
     <v-container>
         <generalBreadcrumb :items="breadcrumbList" />
+
         <v-row>
             <v-col
                 class="pa-3"
@@ -206,7 +207,11 @@ export default {
 
         productSelectedSeller() {
             try {
-                return this.productDetail.shps_list[0]
+              if (this.$route.query.shps){
+                const findShps =  this.productDetail.shps_list.find(shps=> shps.id == this.$route.query.shps)
+                return findShps
+              }
+              return this.productDetail.shps_list[0]
             } catch (e) {
                 return ''
             }

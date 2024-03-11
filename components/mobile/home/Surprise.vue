@@ -63,6 +63,7 @@
                         :content="item"
                         hideInfo
                         hideLabel
+                        :shps="item?.pivot?.shps"
                         class="mb-4" />
                 </swiper-slide>
             </swiper>
