@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="header__search-box" id="header__search-box">
     <div class="header__search-box__inner d-flex align-center w-100 px-2">
         <v-icon
@@ -32,7 +32,7 @@
             <swiper-slide v-for="(item, index) in searchResult.skus.slice(0,10)" :key="`sku-search-${index}`">
                 <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3 w-100" :href="`/sku/${item.slug}`">
                     <div v-if="item.image" class="search-result__sku__image">
-                        <img :src="item.image" :title="item.label" :alt="item.label" width="48" height="48" />
+                        <img :src="item.image?.image_url" :title="item.label" :alt="item.label" width="48" height="48" />
                     </div>
 
                     <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
