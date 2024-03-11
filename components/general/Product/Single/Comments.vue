@@ -38,7 +38,7 @@
                 class="my-4" />
         </div>
 
-        <span class="d-flex align-center t12 w400 text-primary cur-p" id="show-more-comments" @click="showAllComment()">
+        <span class="d-flex align-center t12 w400 text-primary cur-p mt-5" id="show-more-comments" @click="showAllComment()">
             <span>مشاهده نظرات بیشتر</span>
 
             <v-icon

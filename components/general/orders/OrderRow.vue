@@ -31,7 +31,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     مبلغ:
                 </span>
-                <span v-if="content.paid_price !== null" class="t12 w400 text-pink-darken-2 number-font">{{splitChar(content.paid_price)}} تومان</span>
+                <span v-if="content.paid_price !== null" class="t12 w400 text-pink-darken-2 number-font">{{ splitChar(Number(String(content.paid_price).slice(0, -1))) }} تومان</span>
             </div>
         </div>
         <div class="order-row__show-details mr-10">

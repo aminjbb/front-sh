@@ -5,14 +5,16 @@
             cols="12"
             md="9"
             class="d-flex align-center product-card__details">
-            <div v-if="content.shps?.sku?.image_url && content.shps?.sku?.image_url" class="product-card__image ml-5">
-                <img :src="content.shps?.sku?.image_url" :title="content.shps?.sku?.brand?.label" :alt="content.shps?.sku?.brand?.label" width="100" height="100" />
-            </div>
+            <a v-if="content.shps && content.shps?.sku?.image_url" :href="`/sku/${content.shps?.sku?.slug}`" class="product-card__image ml-5">
+                <img :src="content.shps?.sku?.image_url" :title="content.shps?.sku?.brand?.label" :alt="content.shps?.sku?.label" width="100" height="100" />
+            </a>
 
             <div>
-                <h3 v-if="content.shps" class="t14 w400 text-grey-darken-1 product-card__title mb-5">
-                    {{content.shps?.sku?.label}}
-                </h3>
+                <a v-if="content.shps && content.shps?.sku?.label" :href="`/sku/${content.shps?.sku?.slug}`" class="product-card__image ml-5">
+                    <h3 class="t14 w400 text-grey-darken-1 product-card__title mb-5">
+                        {{content.shps?.sku?.label}}
+                    </h3>
+                </a>
 
                 <div class="d-flex align-center t13 w400 text-grey mb-2">
                     <v-icon
