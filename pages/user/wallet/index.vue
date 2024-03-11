@@ -28,7 +28,7 @@
             </div>
         </v-row>
     </v-container>
-    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="getLastTransaction" :phoneNumber="userWallet.phone_number"/>
+    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="getLastTransaction" :phoneNumber="userWallet?.transactions?.phone_number"/>
 </main>
 </template>
 
@@ -106,8 +106,8 @@ export default {
         },
 
         getLastTransaction(){
-            if(this.userWallet.transactions && this.userWallet.transactions.length > 0){
-                return this.userWallet.transactions[this.userWallet.transactions.length -1];
+            if(this.userWallet && this.userWallet.transactions && this.userWallet.transactions.success_transactions && this.userWallet.transactions.success_transactions.length > 0){
+                return this.userWallet.transactions.success_transactions[this.userWallet.transactions.success_transactions.length -1];
             }
             return '';
         }

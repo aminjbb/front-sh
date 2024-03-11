@@ -36,7 +36,7 @@
                     </template>
 
                     <div class="xs-show v-user--address__mobile-btn">
-                        <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" :userDetail="userData" :provinces="provinces" :getUserAddress="getUserAddress" />
+                        <generalUserAddressModal title="ثبت آدرس جدید" buttonType="text" :userDetail="userDetail" :provinces="provinces" :getUserAddress="getUserAddress" />
                     </div>
                 </v-card>
             </div>
