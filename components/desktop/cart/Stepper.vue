@@ -48,7 +48,7 @@
                 ref="paymentStep"
                 @selectedPayment="getPayment"
                 @setDiscountCode="getDiscountCode"
-                :paymentMount="data.paid_price"
+                :paymentMount="voucher && voucher?.paid_price ? voucher.paid_price + voucher.sending_price : data.paid_price + data.sending_price"
                 @deleteBasketVoucher="deleteBasketVoucher"/>
             <generalModalsErrorOrder :orderSendingMethod="orderSendingMethod" :orderAddressId="orderAddressId"
                                      :orderPaymentMethod="orderPaymentMethod"/>
