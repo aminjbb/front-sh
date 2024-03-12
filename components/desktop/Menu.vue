@@ -11,7 +11,12 @@
                     @mouseleave="hideBodyCover"
                     :class="{'has-child' : menu.children, 'has-mega-menu': index === 0}">
                     <template v-if="menu.name !== 'promotion'">
-                        <a :href="menu.name !== 'categories' ? menu.url : ''" class="menu__item__link">
+                        <div v-if="menu.name === 'categories'" class="menu__item__link">
+                            <v-icon :icon="`mdi-${menu.icon}`" />
+                            <span>{{menu.label}}</span>
+                        </div>
+
+                        <a v-else :href="menu.url" class="menu__item__link">
                             <v-icon :icon="`mdi-${menu.icon}`" />
                             <span>{{menu.label}}</span>
                         </a>
@@ -261,7 +266,7 @@ $parent: 'menu';
                     margin-left: 2px;
                 }
 
-                >a.menu__item__link {
+                >.menu__item__link {
                     .v-icon {
                         color: #616161;
                         font-size: 21px;

@@ -70,6 +70,7 @@
                                         hide-details
                                         return-object
                                         :items="cancelReasonItems"
+                                        @update:menu="onUpdateMenu"
                                         v-model="cancelReasonValueTitle[index]" />
                                 </div>
 
@@ -99,6 +100,7 @@
                                     hide-details
                                     return-object
                                     :items="cancelReasonItems"
+                                    @update:menu="onUpdateMenu"
                                     v-model="cancelReasonValueTitleAll" />
                             </div>
 
@@ -406,6 +408,16 @@ export default {
         selectProducts() {
             this.createFormDataAndSendToServer(0)
         },
+
+        /**
+         * Fix bug for select in c-select
+         */
+         onUpdateMenu(open) {
+            if (open) {
+                // WORKAROUND: fixes dialog menu popup position
+                setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+            }
+        }
     },
 
     watch: {

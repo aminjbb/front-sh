@@ -6,7 +6,7 @@
             md="3"
             lg="2"
             class="pa-0">
-            <div v-if="content?.sku?.image && content?.sku.image.image_url" class="product-card__image d-flex justify-center align-center">
+            <div v-if="content?.sku?.image && content?.sku.image.image_url" class="product-card__image d-flex justify-center align-center ml-10">
                 <img :src="content?.sku.image?.image_url " :title="content?.sku?.label" :alt="content?.sku.label" width="136" height="136" />
             </div>
         </v-col>
