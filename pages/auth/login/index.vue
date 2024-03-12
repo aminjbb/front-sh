@@ -100,7 +100,7 @@
                                 </span>
                             </div>
 
-                            <v-text-field v-model="otp" :rules="otpRule" type="number" class="" variant="outlined"/>
+                            <v-text-field v-model="otp" :rules="otpRule" class="" variant="outlined"/>
 
                             <div class="mb-2">
                                 <span class="p-auth__text number-font">
@@ -295,7 +295,7 @@ export default {
         async sendOTP() {
             try {
                 this.loading = true;
-                const response = await auth.sendOTP(this.mobile);
+                const response = await auth.sendOTP( digits(this.mobile, 'en'));
 
                 if (response.data && response.status === 200) {
                     this.loginStep = 2;
@@ -307,6 +307,7 @@ export default {
                 this.loading = false;
             }
         },
+
         /**
          *  Assign Basket After Login
          */
@@ -321,13 +322,14 @@ export default {
                 this.randomNumberForBasket = ''
             });
         },
+
         /**
          * Verify OTP
          */
         async verifyOTP() {
             try {
                 this.loading = true;
-                const response = await auth.verifyOTP(this.mobile, this.otp);
+                const response = await auth.verifyOTP(digits(this.mobile, 'en'), digits(this.otp, 'en'));
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;
                     if (this.randomNumberForBasket) {
@@ -370,7 +372,7 @@ export default {
             try {
                 this.loading = true;
 
-                const response = await auth.verifyPassword(this.mobile, this.password);
+                const response = await auth.verifyPassword(digits(this.mobile, 'en'), this.password);
 
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;

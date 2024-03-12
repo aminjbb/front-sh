@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div>
     <div class="d-flex align-center" @click="openModal()">
         <v-icon
@@ -65,7 +65,7 @@
                     <v-icon icon="mdi-plus" color="grey-darken-1" />
                 </div>
                 <div class="flex-grow-1">
-                    <v-text-field type="number" :class={error} density="compact" variant="outlined" hide-details placeholder="مبالغ دیگر" v-model="mount" />
+                    <v-text-field :class={error} density="compact" variant="outlined" hide-details placeholder="مبالغ دیگر" v-model="mount" />
                 </div>
                 <div
                     class="mr-3 cur-p"
@@ -118,7 +118,7 @@ export default {
 
     watch: {
         mount(newValue) {
-            if (newValue < 10000 || newValue > 200000) {
+            if (digits(newValue, 'en') < 10000 || digits(newValue, 'en') > 200000) {
                 this.error = true;
             } else {
                 this.error = false;
@@ -164,7 +164,7 @@ export default {
             });
 
             document.getElementById(`select-mount--${id}`).classList.add('selected')
-            this.mount = mount;
+            this.mount = digits(mount, 'en');
         },
 
         /**
@@ -204,7 +204,8 @@ export default {
          */
         increase() {
             this.error = false;
-            this.mount+=10000;
+            this.mount = digits(this.mount, 'en');
+            this.mount= parseInt(this.mount) + 10000;
             this.activeIncrease = true; // Set to active
             setTimeout(() => {
                 this.activeIncrease = false; // Reset after 1 second
@@ -217,7 +218,8 @@ export default {
         decrease() {
             if (this.mount > 10000) {
                 this.error = false;
-                this.mount-= 10000;
+                this.mount = digits(this.mount, 'en');
+                this.mount= parseInt(this.mount) - 10000;
                 this.activeDecrease = true; // Set to active
                 setTimeout(() => {
                     this.activeDecrease = false; // Reset after 1 second

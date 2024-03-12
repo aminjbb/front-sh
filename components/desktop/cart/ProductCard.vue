@@ -63,9 +63,9 @@
                         <v-btn variant="plain" :loading="loadingAddBasket" class="pa-0 w-100">
                             <v-icon icon="mdi-plus" color="grey" size="small" @click="increaseCount()" class="mx-3"/>
                             <span class="t14 w300 text-grey-darken-2 number-font">
-                                {{ productCount }}
+                                {{ count }}
                             </span>
-                            <v-icon class="mx-3" :icon="productCount === 1 ? 'mdi-trash-can-outline' :'mdi-minus'" color="grey" size="small" @click="decreaseCount()" />
+                            <v-icon class="mx-3" :icon="count === 1 ? 'mdi-trash-can-outline' :'mdi-minus'" color="grey" size="small" @click="decreaseCount()" />
                         </v-btn>
                 </div>
 
@@ -136,22 +136,12 @@ export default {
             loadingAddBasket
         }
     },
-    data() {
-        return {
-            productCount: 1,
-        }
-    },
+    
     props: {
         /**
          * Content
          */
         content: Object,
-
-        /**
-         * Product count
-         * If isn't in 'Content'
-         */
-        count: String,
 
         /**
          * Product status
@@ -181,24 +171,16 @@ export default {
          * Increase count of product
          */
          increaseCount() {
-            if ((this.content ?.shps ?.order_limit !== null) && (this.productCount < this.content ?.shps ?.order_limit) && (this.productCount < this.content.site_stock)) {
-                if (this.userToken) {
-                    this.addToBasket(this.content ?.shps ?.id, this.productCount,'increase')
+            if (this.userToken) {
+                this.addToBasket(this.content ?.shps ?.id, this.count,'increase', true)
+            } else {
+                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                    this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, this.randomNumberForBasket,'increase')
                 } else {
-                    if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket,'increase')
-                    } else {
-                        const randomNumber = this.createRandomNumber()
-                        this.randomNumberForBasket = randomNumber
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber,'increase')
-                    }
+                    const randomNumber = this.createRandomNumber()
+                    this.randomNumberForBasket = randomNumber
+                    this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, randomNumber,'increase')
                 }
-            } else{
-                useNuxtApp().$toast.error('تعداد کالای درخواستی از حد مجاز موجود در سبد، بیشتر است.', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
             }
         },
 
@@ -206,16 +188,16 @@ export default {
          * Decrease count of product
          */
          decreaseCount() {
-            if (this.productCount > 1) {
+            if (this.count > 1) {
                 if (this.userToken) {
-                    this.addToBasket(this.content ?.shps ?.id, this.productCount, 'decrease')
+                    this.addToBasket(this.content ?.shps ?.id, this.count, 'decrease', true)
                 } else {
                     if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, this.randomNumberForBasket, 'decrease')
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, this.randomNumberForBasket, 'decrease')
                     } else {
                         const randomNumber = this.createRandomNumber()
                         this.randomNumberForBasket = randomNumber
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.productCount, randomNumber, 'decrease')
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, randomNumber, 'decrease')
                     }
                 }
             } else {
@@ -233,12 +215,12 @@ export default {
     },
 
     mounted() {
-        this.productCount = this.content ?.count;
+        this.count = this.content ?.count;
     },
 
     watch: {
         content(newValue) {
-            this.productCount = newValue.count
+            this.count = newValue.count
         }
     }
 }

@@ -183,12 +183,12 @@ export default {
         async updateUser() {
             this.loading = true
             await axios.post(`${this.runtimeConfig.public.apiBase}/user/profile/profile/update`, {
-                phone_number: this.form.mobile,
+                phone_number: digits(this.form.mobile, 'en'),
                 email: this.form.email,
                 birth_date: this.form.birth_date,
                 first_name: this.form.name,
                 last_name: this.form.family_name,
-                national_code: this.form.national_code,
+                national_code: digits(this.form.national_code, 'en'),
             }, {
                 headers: {
                     Authorization: `Bearer ${this.userToken}`,

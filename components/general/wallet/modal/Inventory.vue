@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div>
     <div class="d-flex align-center justify-end" @click="openModal()">
         <div class="d-flex align-center">
@@ -64,7 +64,7 @@
                             <v-icon icon="mdi-plus" color="grey-darken-1" />
                         </div>
                         <div class="flex-grow-1">
-                            <v-text-field :class={error} type="number" density="compact" variant="outlined" hide-details placeholder="مبلغ برداشت" v-model="mount" />
+                            <v-text-field :class={error} density="compact" variant="outlined" hide-details placeholder="مبلغ برداشت" v-model="mount" />
                         </div>
                         <div
                             class="mr-3"
@@ -281,7 +281,8 @@ export default {
          * @param {*} mount
          */
         selectMount(mount) {
-            this.mount = mount;
+            this.mount = digits(mount, 'en');
+
         },
 
         /**
@@ -289,7 +290,8 @@ export default {
          */
         increase() {
             this.error = false;
-            this.mount++;
+            this.mount= parseInt(this.mount) + 10000;
+            this.mount = digits(this.mount, 'en');
             this.activeIncrease = true; // Set to active
             setTimeout(() => {
                 this.activeIncrease = false; // Reset after 1 second
@@ -300,9 +302,10 @@ export default {
          * Decrease mount by `-` button
          */
         decrease() {
+            this.mount = digits(this.mount, 'en');
             if (this.mount > 10000) {
                 this.error = false;
-                this.mount--;
+                this.mount=parseInt(this.mount) - 10000 ;
                 this.activeDecrease = true; // Set to active
                 setTimeout(() => {
                     this.activeDecrease = false; // Reset after 1 second
@@ -316,6 +319,9 @@ export default {
          * Go to cart number step
          */
         getCartNumber() {
+            this.mount = digits(this.mount, 'en');
+            this.walletInventory = digits(this.walletInventory, 'en');
+
             if (this.mount > this.walletInventory) {
                 this.error = true;
             } else {
@@ -334,8 +340,8 @@ export default {
             this.loading = true
             const formData = new FormData()
 
-            formData.append('amount', this.mount + '0')
-            formData.append('card_number', this.cartNumber)
+            formData.append('amount',  digits(this.mount, 'en') + '0')
+            formData.append('card_number', digits(this.cartNumber, 'en'))
 
             axios
                 .post(this.runtimeConfig.public.apiBase + '/finance/user/wallet/withdraw', formData, {

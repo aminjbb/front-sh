@@ -20,6 +20,7 @@ export default function setup() {
     const voucher = ref({})
     const transactionData = ref({})
     const loadingAddBasket = ref(false)
+    const loadingFirstAddBasket = ref(false)
     const count = ref(0)
 
     /**
@@ -49,6 +50,9 @@ export default function setup() {
                 .then((response) => {
                     store.commit('set_basket', response)
                     loadingAddBasket.value = false;
+                    loadingAddBasket.value = false;
+                    loadingFirstAddBasket.value = false;
+                    
                 })
                 .catch((err) => {
                    if ( err.response.status === 401 ||  err.response.status === 403) {
@@ -84,39 +88,54 @@ export default function setup() {
      * @param {*} count 
      * @param {*} method 
      */
-    async function addToBasket(shps , countMain, method) {
+    async function addToBasket(shps , countMain, method,wayBasket= false) {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
-        loadingAddBasket.value = true;
 
-        if(countMain !== 0){
-            count.value = countMain
+        if(countMain === 0){
+            loadingFirstAddBasket.value = true
+        }else{
+            loadingAddBasket.value = true;
         }
 
         if(method === 'increase'){
-            count.value = count.value + 1
+            countMain = countMain + 1
         }else if(method === 'decrease' && count.value !== 0){
-            count.value = count.value - 1
+            countMain = countMain - 1
         }
 
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
-                shps:shps,
-                count:count.value
+                shps: shps,
+                count: countMain
             }, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
             })
             .then((response) => {
+                const getResponseCount = response.data.data.details.find(item => item.shps.id === shps )
+                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 getBasket();
+                if(wayBasket === false){
+                    loadingAddBasket.value = false;
+                    loadingFirstAddBasket.value = false;
+                }
+
+                console.log('wayBasket',wayBasket)
             })
             .catch((err) => {
+                const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
+                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
+                
                 loadingAddBasket.value = false;
+                loadingFirstAddBasket.value = false;
+                
                 useNuxtApp().$toast.error(err.response.data.message, {
                     rtl: true,
                     position: 'top-center',
                     theme: 'dark'
                 });
+
                 if (err.response.status === 401){
                     if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
                         beforeAuthAddToBasket(shps , countMain, randomNumberForBasket.value, method)
@@ -137,34 +156,49 @@ export default function setup() {
      * @param {*} count 
      * @param {*} number 
      */
-    async function beforeAuthAddToBasket(shps , countMain , number, method) {
-        loadingAddBasket.value = true;
-
-        if(countMain !== 0){
-            count.value = countMain
+    async function beforeAuthAddToBasket(shps , countMain , number, method, wayBasket = false) {
+        if(countMain === 0){
+            loadingFirstAddBasket.value = true
+        }else{
+            loadingAddBasket.value = true;
         }
 
         if(method === 'increase'){
-            count.value = count.value + 1
+            countMain = countMain + 1
         }else if(method === 'decrease' && count.value !== 0){
-            count.value = count.value - 1
-        } 
+            countMain = countMain - 1
+        }
         
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/create`, {
-                shps:shps,
-                count:count.value ,
-                identifier:number
+                shps: shps,
+                count: countMain ,
+                identifier: number
             })
             .then((response) => {
+                const getResponseCount = response.data.data.details.find(item => item.shps.id === shps )
+                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
+
                 getBasket()
+
+                loadingAddBasket.value = false;
+                loadingFirstAddBasket.value = false;
+
             })
             .catch((err) => {
-                if (err.response.status === 401){
-                    localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
-                    router.push('/login')
+                const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
+                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
+                
+                if(wayBasket === false){
+                    loadingAddBasket.value = false;
+                    loadingFirstAddBasket.value = false;
                 }
-                // auth.checkAuthorization(err.response)
+                
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 
@@ -174,14 +208,14 @@ export default function setup() {
      */
     async function deleteShpsBasket(shps ) {
         loadingAddBasket.value = true;
-
-        count.value = 0;
         
         const formData = new FormData()
         formData.append('shps' , shps)
+
         if (randomNumberForBasket.value && randomNumberForBasket.value != ""){
             formData.append('identifier' , randomNumberForBasket.value )
         }
+
         axios
             .post(runtimeConfig.public.apiBase + `/basket/crud/delete/shps`, formData, {
                 headers: {
@@ -189,7 +223,9 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                getBasket()
+                count.value = 0;
+                console.log('count', count);
+                getBasket();
                 randomNumberForBasket.value = ''
             })
             .catch((err) => {

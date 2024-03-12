@@ -291,7 +291,7 @@ export default {
         async sendOTP() {
             try {
                 this.loading = true;
-                const response = await auth.sendForgotPasswordOTP(this.mobile);
+                const response = await auth.sendForgotPasswordOTP(digits(this.mobile, 'en'));
 
                 if (response.data && response.status === 200) {
                     this.forgotPasswordStep = 2;
@@ -325,7 +325,7 @@ export default {
                 await this.$refs.resetPasswordForm.validate
                 if (this.resetPasswordValid) {
                     this.loading = true;
-                    const response = await auth.resetPassword(this.mobile, this.newPassword, this.passwordConfirmation, this.otp);
+                    const response = await auth.resetPassword(digits(this.mobile, 'en'), this.newPassword, this.passwordConfirmation, digits(this.otp, 'en'));
                     if (response.status === 200) {
                         this.userToken = response.data.data.token;
                         useNuxtApp().$toast.success(response.data.message, {

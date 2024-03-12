@@ -192,3 +192,11 @@ input[type=number] {
         border: 1px solid var(--grey-grey-lighten-1, #BDBDBD);
     }
 }
+
+.z-infinite{
+    z-index: 99999999;
+}
+
+.w-checkbox{
+    width: 80px;
+}
