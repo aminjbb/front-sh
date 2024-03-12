@@ -12,6 +12,7 @@
         v-if="dialog"
         v-model="dialog"
         color="white"
+        class="z-infinite"
         fullscreen>
         <div class="header__search-box active bg-white">
             <div class="header__search-box__inner d-flex align-center w-100 px-2">

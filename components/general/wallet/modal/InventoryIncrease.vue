@@ -118,7 +118,7 @@ export default {
 
     watch: {
         mount(newValue) {
-            if (newValue < 10000 || newValue > 200000) {
+            if (digits(newValue, 'en') < 10000 || digits(newValue, 'en') > 200000) {
                 this.error = true;
             } else {
                 this.error = false;
@@ -164,7 +164,7 @@ export default {
             });
 
             document.getElementById(`select-mount--${id}`).classList.add('selected')
-            this.mount = mount;
+            this.mount = digits(mount, 'en');
         },
 
         /**
@@ -204,6 +204,7 @@ export default {
          */
         increase() {
             this.error = false;
+            this.mount = digits(mount, 'en');
             this.mount+=10000;
             this.activeIncrease = true; // Set to active
             setTimeout(() => {
@@ -217,6 +218,7 @@ export default {
         decrease() {
             if (this.mount > 10000) {
                 this.error = false;
+                this.mount = digits(mount, 'en');
                 this.mount-= 10000;
                 this.activeDecrease = true; // Set to active
                 setTimeout(() => {
