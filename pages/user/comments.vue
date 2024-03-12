@@ -58,7 +58,7 @@
                             <div class="user-commenting__content" id="user-commenting__content--2">
                                 <v-row>
                                   <template v-for="(product, index) in waitingComment" :key="`product-${index}`">
-                                    <v-col cols="12" md="6" :class="screenType === 'desktop' ? 'px-10' : ''">
+                                    <v-col cols="12" :class="screenType === 'desktop' ? 'px-10' : ''">
                                     <generalUserCommentedProducts :content="product" @refreshProducts="refreshProducts" />
                                     </v-col>
                                     <v-divider color="grey" class="my-2" />
