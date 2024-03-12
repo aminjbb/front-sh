@@ -59,6 +59,7 @@
                                         hide-details
                                         return-object
                                         :items="returnReasonItems"
+                                        @update:menu="onUpdateMenu"
                                         v-model="returnReasonValueTitle[index]" />
                                 </div>
 
@@ -88,6 +89,7 @@
                                         hide-details
                                         return-object
                                         :items="catchItems"
+                                        @update:menu="onUpdateMenu"
                                         v-model="returnReasonValueCatch[index]" />
                                 </div>
                             </div>
@@ -426,6 +428,16 @@ export default {
             }
             
             return Number(String(sum).slice(0, -1))
+        },
+
+        /**
+         * Fix bug for select in c-select
+         */
+         onUpdateMenu(open) {
+            if (open) {
+                // WORKAROUND: fixes dialog menu popup position
+                setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+            }
         }
     },
 
