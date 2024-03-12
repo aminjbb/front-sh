@@ -16,7 +16,9 @@
             md="9"
             lg="10"
             class="pa-0 pos-r">
-            <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5" :class="content.status === 'approved' ? 'product-comments__status--accept' : 'product-comments__status--reject'">{{getStatus(content.status)}}</div>
+<!--             <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5" :class="content.status === 'approved' ? 'product-comments__status--accept' : 'product-comments__status--reject'">{{getStatus(content.status)}}</div>
+ -->            <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5 product-comments__status--accept">تایید شده</div>
+            
             <h3 v-if="content.comment" class="t12 w400 text-grey-darken-1 mb-2 xs-hide">
                 {{content.comment}}
             </h3>
