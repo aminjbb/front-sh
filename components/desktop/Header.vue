@@ -11,9 +11,10 @@
                     <a href="/" class="header__logo" title="Shavaz logo">
                         <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
                     </a>
-    
+                    
                     <desktopSearchResult />
                 </div>
+
                 <div class="header__col2 d-flex align-center justify-end">
                     <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
                         <div
@@ -36,7 +37,7 @@
     
                                         <template v-if="userData && userData.first_name && userData.last_name">
                                             <div class="d-flex flex-column">
-                                                <span class="user-phone t15 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
+                                                <span class="user-phone t14 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
                                                 <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span>
                                             </div>
                                         </template>
@@ -88,7 +89,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <a v-else class="header__item header__item--btn t12 w400 text-grey" @click="goLoginPage()">
+                    <a v-else class="header__item header__item--btn t12 w400 text-grey cur-p" @click="goLoginPage()">
                         <v-icon icon="mdi-login" color="grey" />
                         ورود | ثبت نام
                     </a>
@@ -287,8 +288,10 @@
              * @param {*} id 
              */
             openDropDown(id) {
-                const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
-                itemDropdown.classList.toggle('show');
+                if(document.getElementById(`mobile-drop-down__items-${id}`)){
+                    const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
+                    itemDropdown.classList.toggle('show');
+                }
             },
     
             /**
@@ -296,8 +299,10 @@
              * @param {*} event 
              */
             closeDropDown(event) {
-                if (!event.target.closest('#mobile-drop-down__show-dashboard')) {
-                    document.getElementById('mobile-drop-down__items-dashboard').classList.remove('show');
+                if(document.getElementById('mobile-drop-down__show-dashboard')){
+                    if (!event.target.closest('#mobile-drop-down__show-dashboard')) {
+                        document.getElementById('mobile-drop-down__items-dashboard').classList.remove('show');
+                    }
                 }
             },
     

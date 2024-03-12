@@ -281,7 +281,8 @@ export default {
          * @param {*} mount
          */
         selectMount(mount) {
-            this.mount = mount;
+            this.mount = digits(mount, 'en');
+
         },
 
         /**
@@ -289,6 +290,7 @@ export default {
          */
         increase() {
             this.error = false;
+            this.mount = digits(this.mount, 'en');
             this.mount++;
             this.activeIncrease = true; // Set to active
             setTimeout(() => {
@@ -300,6 +302,7 @@ export default {
          * Decrease mount by `-` button
          */
         decrease() {
+            this.mount = digits(this.mount, 'en');
             if (this.mount > 10000) {
                 this.error = false;
                 this.mount--;
@@ -316,6 +319,9 @@ export default {
          * Go to cart number step
          */
         getCartNumber() {
+            this.mount = digits(this.mount, 'en');
+            this.walletInventory = digits(this.walletInventory, 'en');
+
             if (this.mount > this.walletInventory) {
                 this.error = true;
             } else {
@@ -334,8 +340,8 @@ export default {
             this.loading = true
             const formData = new FormData()
 
-            formData.append('amount', this.mount + '0')
-            formData.append('card_number', this.cartNumber)
+            formData.append('amount',  digits(this.mount, 'en') + '0')
+            formData.append('card_number', digits(this.cartNumber, 'en'))
 
             axios
                 .post(this.runtimeConfig.public.apiBase + '/finance/user/wallet/withdraw', formData, {
