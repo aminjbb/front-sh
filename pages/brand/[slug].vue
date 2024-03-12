@@ -23,7 +23,7 @@
                   @switchFiltersModal="switchFiltersModal"
                   @setAmount="selectByAmount"/>
 
-              <generalProductSortModal @selectSort="selectSort"/>
+              <generalProductSortModal @sort="sort" />
             </div>
           </template>
         </v-col>
