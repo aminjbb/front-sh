@@ -100,7 +100,7 @@
                                 </span>
                             </div>
 
-                            <v-text-field v-model="otp" :rules="otpRule" type="number" class="" variant="outlined"/>
+                            <v-text-field v-model="otp" :rules="otpRule" class="" variant="outlined"/>
 
                             <div class="mb-2">
                                 <span class="p-auth__text number-font">

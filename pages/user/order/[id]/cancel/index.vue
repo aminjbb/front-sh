@@ -38,7 +38,7 @@
 
                         <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
                             <div v-if="order.count && order.count !== 0 " class="d-flex align-center justify-start">
-                                <div>
+                                <div class="w-checkbox">
                                     <v-checkbox
                                         hide-details
                                         @click="addToSelectedProduct(index,order)"
