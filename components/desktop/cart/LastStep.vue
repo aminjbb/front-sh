@@ -65,7 +65,7 @@
 
             <img src="~/assets/images/basket-failed.jpg" alt="payment-image" width="217" height="163">
 
-            <div class="d-flex align-center justify-center mt-2 mb-10 w-100 mt-10">
+            <div class="d-flex align-center justify-center mt-2 mb-10 w-100 mt-10 px-5">
                 <v-btn
                     @click="createFailedOrder(transactionData.order_id)"
                     height="44"

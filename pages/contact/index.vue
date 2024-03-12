@@ -133,6 +133,7 @@
                                     item-title="label"
                                     item-value="value"
                                     :items="categoryTypes"
+                                    @update:menu="onUpdateMenu"
                                     v-model="form.subject" />
                             </v-col>
                             <v-col
@@ -315,6 +316,16 @@ export default {
                 this.loading = false
             })
         },
+
+        /**
+         * Fix bug for select in c-select
+         */
+        onUpdateMenu(open) {
+            if (open) {
+                // WORKAROUND: fixes dialog menu popup position
+                setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+            }
+        }
     },
 
     mounted(){

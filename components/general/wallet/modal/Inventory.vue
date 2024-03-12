@@ -320,7 +320,6 @@ export default {
          */
         getCartNumber() {
             this.mount = digits(this.mount, 'en');
-            this.walletInventory = digits(this.walletInventory, 'en');
 
             if (this.mount > this.walletInventory) {
                 this.error = true;

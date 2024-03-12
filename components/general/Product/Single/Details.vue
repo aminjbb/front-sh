@@ -226,6 +226,16 @@ export default {
 
         },
 
+        /**
+         * Fix bug for select in c-select
+         */
+         onUpdateMenu(open) {
+            if (open) {
+                // WORKAROUND: fixes dialog menu popup position
+                setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+            }
+        }
+
     },
 
     mounted() {

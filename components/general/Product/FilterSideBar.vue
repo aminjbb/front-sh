@@ -66,6 +66,7 @@
                     @blur="setAmount(filter.param)"
                     v-model="amount.min"
                     :custom-filter="customMinFilter"
+                    @update:menu="onUpdateMenu"
                     height="40px"
                     class="mb-3 filter-sidebar__card__search"/>
               </div>
@@ -83,6 +84,7 @@
                     @blur="setAmount(filter.param)"
                     v-model="amount.max"
                     :custom-filter="customMaxFilter"
+                    @update:menu="onUpdateMenu"
                     height="40px"
                     class="mb-3 filter-sidebar__card__search"/>
               </div>
@@ -226,6 +228,16 @@ export default {
      */
     removeAllFilter() {
       this.$router.push(`${this.$route.path}`)
+    },
+
+    /**
+     * Fix bug for select in c-select
+     */
+      onUpdateMenu(open) {
+        if (open) {
+            // WORKAROUND: fixes dialog menu popup position
+            setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+        }
     }
   }
 }
