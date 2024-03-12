@@ -65,7 +65,7 @@ const store = createStore({
       state.userData.first_name = user.first_name,
       state.userData.last_name = user.last_name,
       state.userData.phone_number = user.phone_number
-      state.userData.wallet_mount= user?.wallet?.inaccessible_value
+      state.userData.wallet_mount= user?.wallet?.value
     }
   },
 
