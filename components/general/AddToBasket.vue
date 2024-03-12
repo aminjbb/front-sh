@@ -200,21 +200,21 @@ export default {
         },
     },
 
-  watch:{
-      content(val){
-        if (this.userToken){
-            if (val.in_basket > 0) {
-                this.count = val.in_basket
-            }
-        }else{
-            const pageSlug = this.$route.params.slug;
-            const productInBasket = this.userBasket?.details.find(element => element?.shps?.sku?.page_slug === pageSlug)
-            if (productInBasket) {
-                this.count = productInBasket.count
-            }
-        }
-      },
-  },
+    watch:{
+        content(val){
+          if (this.userToken){
+              if (val.in_basket > 0) {
+                  this.count = val.in_basket
+              }
+          }else{
+              const pageSlug = this.$route.params.slug;
+              const productInBasket = this.userBasket?.details.find(element => element?.shps?.sku?.slug === pageSlug)
+              if (productInBasket) {
+                  this.count = productInBasket.count
+              }
+          }
+        },
+    },
 
   computed: {
         userBasket() {
