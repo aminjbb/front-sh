@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div>
     <div class="d-flex align-center justify-end" @click="openModal()">
         <div class="d-flex align-center">
@@ -289,7 +289,7 @@ export default {
          */
         increase() {
             this.error = false;
-            this.mount++;
+            this.mount+=10000;
             this.activeIncrease = true; // Set to active
             setTimeout(() => {
                 this.activeIncrease = false; // Reset after 1 second
@@ -302,7 +302,7 @@ export default {
         decrease() {
             if (this.mount > 10000) {
                 this.error = false;
-                this.mount--;
+                this.mount-=10000 ;
                 this.activeDecrease = true; // Set to active
                 setTimeout(() => {
                     this.activeDecrease = false; // Reset after 1 second
