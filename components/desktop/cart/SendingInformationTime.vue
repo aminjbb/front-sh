@@ -10,22 +10,22 @@
     </header>
 
     <div>
-        <template v-for="(way , index) in waysMoc" :key="`way${index}`">
+        <template v-for="(way , index) in sendingMethods" :key="`way${index}`">
             <div class="d-flex align-center">
                 <v-checkbox
                     class="way-checkbox"
                     v-model="waysModal"
                     @change="selectedWay()"
                     hide-details
-                    :value="way.type" />
+                    :value="way.name" />
 
-                <h3 class="t16 w400 text-grey-darken-1">{{way.title}}</h3>
+                <h3 class="t16 w400 text-grey-darken-1">{{way?.title}}</h3>
             </div>
 
-            <div class="d-flex align-center justify-space-between">
-                <p class="t12 w400 text-grey number-font">{{way.desc}}</p>
+            <div class="d-flex align-center justify-end">
+                <p class="t12 w400 text-grey number-font">{{way?.description}}</p>
 
-                <div class="t14 w400 text-grey-darken-1 number-font">{{ splitChar(Number(String(way.price).slice(0, -1))) }} <span class="t12">تومان</span></div>
+                <div class="t14 w400 text-grey-darken-1 number-font">{{ splitChar(Number(String(way?.sending_price).slice(0, -1))) }} <span class="t12">تومان</span></div>
             </div>
 
             <template v-if="waysModal === 'nafis' && index === 0">
@@ -33,7 +33,7 @@
             </template>
 
             <v-divider
-                v-if="index+1 < waysMoc.length"
+                v-if="index+1 < sendingMethods.length"
                 color="grey-lighten-1"
                 class="my-3" />
         </template>
@@ -44,38 +44,14 @@
 <script>
 import User from '@/composables/User.js'
 import Public from '@/composables/Public.js'
-
 export default {
+    props:{
+      sendingMethods :Array
+    },
     data() {
         return {
             waysModal: null,
             ways: [],
-            waysMoc: [
-                // {
-                //     title: 'نفیس اکسپرس',
-                //     type: 'nafis',
-                //     desc: 'انتخاب زمان ارسال. بازه زمانی صبح ساعت ۹ الی ۱۵ و بازه زمانی عصر ۱۵ الی  ۲۱ می‌باشد. ',
-                //     price: 35000
-                // },
-                // {
-                //     title: 'پست پیشتاز',
-                //     type: 'fast-post',
-                //     desc: 'زمان تقریبی تحویل سفارش ۲ الی ۳ روز کاری می‌باشد. (تحویل در بازه ساعات کاری)',
-                //     price: 51000
-                // },
-                {
-                    title: 'پست',
-                    type: 'post',
-                    desc: 'تمامی سفارش ها از 15 فروردین ارسال خواهد شد',
-                    price: 350000
-                },
-                {
-                    title: 'تیپاکس',
-                    type: 'tipax',
-                  desc: 'تمامی سفارش ها از 15 فروردین ارسال خواهد شد',
-                    price: 350000
-                }
-            ],
             calendar: [],
             calendarMoc: [{
                     day: 'پنج‌شنبه',
