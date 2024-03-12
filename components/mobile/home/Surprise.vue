@@ -58,7 +58,7 @@
                     }
                 }"
                 class="mySwiper">
-                <swiper-slide v-for="(item, index) in mainBanner.skus.slice(0, 10)" :key="`skus-${index}`">
+                <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
                     <generalProductCard
                         :content="item"
                         hideInfo
@@ -167,6 +167,16 @@ export default {
             } catch (e) {
                 return ''
             }
+        },
+        mainBannerSkus(){
+          try {
+            const skus = this.mainBanner.skus.slice(0, 10)
+            const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length && sku?.seller_s_k_us[0]?.site_stock > 0)
+            return findSkus
+          }
+          catch (e) {
+            return  []
+          }
         },
         mainBannerImage() {
             try {

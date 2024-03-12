@@ -36,7 +36,7 @@
                 :style="{ width: `${contentWidth}`, flex:`0 0 ${contentWidth}`}">
 
                 <component
-                    v-for="sku in item.skus.slice(0,limit)"
+                    v-for="sku in getSkuList(item ,limit)"
                     :key="`tab-skus-${sku.id}`"
                     :is="component"
                     v-bind=componentProps
@@ -171,6 +171,11 @@ export default {
     },
 
     methods: {
+      getSkuList(item , limit){
+        const skus = item.skus.slice(0,limit)
+        const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length && sku?.seller_s_k_us[0]?.site_stock > 0)
+        return findSkus
+      },
         /**
          * Active tabs by click
          */
