@@ -203,7 +203,6 @@ export default {
          * Increase mount bu `+` button
          */
         increase() {
-          console.log('inc')
             this.error = false;
             this.mount = digits(this.mount, 'en');
             this.mount= parseInt(this.mount) + 10000;
