@@ -18,7 +18,7 @@
                 color="primary500"
                 height="40"
                 variant="outlined"
-                href="/"
+                :href="mainBanner.link"
                 class="px-8 mt-1 surprise-slider__info__btn">
                 مشاهده همه
                 <template v-slot:append>

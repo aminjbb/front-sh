@@ -5,7 +5,7 @@
             icon="mdi-magnify"
             color="grey-darken-1"
             class="ml-2" />
-        <input placeholder="جستجو در شاواز " />
+        <input placeholder="جستجو در شاواز " id="inputSearchMobile"/>
     </div>
 
     <v-dialog
@@ -230,6 +230,7 @@ export default {
     methods: {
         openModal() {
             this.dialog = true;
+            document.getElementById('inputSearchMobile').blur();
         },
 
         closeModal() {
