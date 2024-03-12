@@ -84,7 +84,7 @@ export default {
         /** return PageLength product list for pagination **/
         productListPageLength() {
             try {
-                return this.productList.data.data.last_page
+              return this.productList.data.data?.shps?.last_page
             } catch (e) {
                 return 1
             }
