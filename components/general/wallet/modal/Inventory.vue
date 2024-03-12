@@ -64,7 +64,7 @@
                             <v-icon icon="mdi-plus" color="grey-darken-1" />
                         </div>
                         <div class="flex-grow-1">
-                            <v-text-field :class={error} type="number" density="compact" variant="outlined" hide-details placeholder="مبلغ برداشت" v-model="mount" />
+                            <v-text-field :class={error} density="compact" variant="outlined" hide-details placeholder="مبلغ برداشت" v-model="mount" />
                         </div>
                         <div
                             class="mr-3"
@@ -290,7 +290,7 @@ export default {
          */
         increase() {
             this.error = false;
-            this.mount+=10000;
+            this.mount= parseInt(this.mount) + 10000;
             this.mount = digits(this.mount, 'en');
             this.activeIncrease = true; // Set to active
             setTimeout(() => {
@@ -305,7 +305,7 @@ export default {
             this.mount = digits(this.mount, 'en');
             if (this.mount > 10000) {
                 this.error = false;
-                this.mount-=10000 ;
+                this.mount=parseInt(this.mount) - 10000 ;
                 this.activeDecrease = true; // Set to active
                 setTimeout(() => {
                     this.activeDecrease = false; // Reset after 1 second
