@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <header class="v-user__mobile-page-head xs-show justify-space-between">
     <div class="d-flex align-center">
         <a @click="previousStep()" class="ml-3">
@@ -226,7 +226,7 @@ export default {
         nextStep() {
             if (this.activeStep < 5) {
                 if (this.activeStep === 2 || this.activeStep === 3) {
-                    const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
+                    const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده یا روش ارسال انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
 
                     if (!this.activeButton) {
                         useNuxtApp().$toast.error(text, {
@@ -280,7 +280,7 @@ export default {
         getAddress(address) {
             if (address && address !== false) {
                 this.$store.commit('set_orderAddress', address)
-                this.activeButton = true;
+
                 this.getSendingMethods(address.id)
             } else {
                 this.$store.commit('set_orderAddress', null)
@@ -295,6 +295,7 @@ export default {
             if (way) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId.id, way)
+                this.activeButton = true;
             } else {
                 this.$store.commit('set_orderSendingMethod', null)
             }
