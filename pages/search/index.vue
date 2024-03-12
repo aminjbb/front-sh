@@ -64,8 +64,8 @@ export default {
         return {
             filters: [],
             screenType: null,
-            sortType:'',
-            orderType: ''
+            sortType:'site_price',
+            orderType: 'asc'
         }
     },
 
