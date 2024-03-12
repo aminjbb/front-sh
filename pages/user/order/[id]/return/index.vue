@@ -28,7 +28,7 @@
                     <div v-if="returnStep === 1" class="px-5">
                         <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
                             <div class="d-flex align-center justify-start">
-                                <div>
+                                <div class="w-checkbox">
                                     <v-checkbox
                                         hide-details
                                         @click="addToSelectedProduct(index,order)"
