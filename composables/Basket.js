@@ -14,6 +14,7 @@ export default function setup() {
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
     const randomNumberForBasket = useCookie('randomNumberForBasket')
+    const sendingMethods = ref([]);
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
@@ -407,8 +408,26 @@ export default function setup() {
             });
     };
 
+    async function getSendingMethods(addressId) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/sending-methods`, {
+                address_id:addressId
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                sendingMethods.value = response.data.data
+            })
+            .catch((err) => {
+
+            });
+    };
+
     return {getBasket, loading ,addToBasket , deleteShpsBasket ,
         calculateSendingPrice , createOrder,calculateVoucher,voucher,
-        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket,loadingAddBasket, count }
+        getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket,
+        loadingAddBasket, count ,  getSendingMethods ,sendingMethods  }
 }
 

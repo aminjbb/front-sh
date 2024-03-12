@@ -37,7 +37,7 @@
 
         <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/24 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
 
-        <mobileCartSendingInformationTime @selectedDate="getTime" @selectedWay="getWay" />
+        <mobileCartSendingInformationTime :sendingMethods="sendingMethods" @selectedDate="getTime" @selectedWay="getWay" />
     </template>
 
     <template v-if="activeStep === 3">
@@ -205,7 +205,9 @@ export default {
             calculateSendingPrice,
             calculateVoucher,
             createOrder,
-            voucher
+            voucher,
+            getSendingMethods,
+            sendingMethods
         } = new Basket()
         return {
             deleteVoucherFromBasket,
@@ -214,7 +216,9 @@ export default {
             createOrder,
             voucher,
             userToken,
-          runtimeConfig
+          runtimeConfig,
+          getSendingMethods,
+          sendingMethods
         }
     },
 
@@ -277,6 +281,7 @@ export default {
             if (address && address !== false) {
                 this.$store.commit('set_orderAddress', address)
                 this.activeButton = true;
+                this.getSendingMethods(address.id)
             } else {
                 this.$store.commit('set_orderAddress', null)
             }
