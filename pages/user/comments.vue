@@ -38,29 +38,31 @@
                         <div class="user-commenting__contents">
                             <div class="user-commenting__content active" id="user-commenting__content--1">
                                 <template v-if="approvedRejectedComment && approvedRejectedComment.length">
-                                    <template v-for="(product, index) in approvedRejectedComment" :key="`product-${index}`">
-                                        <generalUserCommentedProducts :content="product" @refreshProducts="refreshProducts" />
-
-                                        <v-divider color="grey" class="my-2" />
-                                    </template>
+                                  <template v-for="(product, index) in approvedRejectedComment" :key="`product${index}`">
+                                    <v-col cols="12" md="6" :class="screenType === 'desktop' ? 'px-10' : ''">
+                                      <generalUserAwaitingProductComments :content="product" />
+                                      <v-divider color="grey" class="my-2" />
+                                    </v-col>
+                                  </template>
                                 </template>
 
                                 <template v-else>
                                     <div class="d-flex align-center justify-center flex-column py-15 px-2">
                                         <img src="~/assets/images/no-comment.jpg" class="ml-2 mt-10" alt="shavaz" width="168" height="86" title="shavaz" />
 
-                                        <span class="t14 w500 text-grey-darken-1 mt-8 mb-10">نظر دز انتظار ثبتی وحود ندارد!</span>
+                                        <span class="t14 w500 text-grey-darken-1 mt-8 mb-10">نظر در انتظار ثبتی وجود ندارد!</span>
                                     </div>
                                 </template>
                             </div>
 
                             <div class="user-commenting__content" id="user-commenting__content--2">
                                 <v-row>
-                                    <template v-for="(product, index) in waitingComment" :key="`product${index}`">
-                                        <v-col cols="12" md="6" :class="screenType === 'desktop' ? 'px-10' : ''">
-                                            <generalUserAwaitingProductComments :content="product" />
-                                        </v-col>
-                                    </template>
+                                  <template v-for="(product, index) in waitingComment" :key="`product-${index}`">
+                                    <v-col cols="12" md="6" :class="screenType === 'desktop' ? 'px-10' : ''">
+                                    <generalUserCommentedProducts :content="product" @refreshProducts="refreshProducts" />
+                                    </v-col>
+                                    <v-divider color="grey" class="my-2" />
+                                  </template>
                                 </v-row>
                             </div>
                         </div>

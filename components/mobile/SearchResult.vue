@@ -127,13 +127,13 @@
                             class="mb-2"
                             v-for="(item, index) in filteredWords.slice(0,5)"
                             :key="`category-search-${index}`">
-                            <a class="d-flex align-center" :href="`/sku/${item.slug}`">
+                            <a class="d-flex align-center cur-p pos-r" @click="setModel(item)">
                                 <v-icon
                                     icon="mdi-magnify"
                                     size="x-small"
                                     color="grey-lighten-1"
                                     class="ml-2" />
-                                <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item.label)"></span>
+                                <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item)"></span>
                             </a>
                         </li>
                     </ul>
@@ -198,7 +198,7 @@ export default {
     computed: {
         filteredWords() {
             if(this.searchResult && this.searchResult.last_searches && this.searchResult.last_searches.length){
-                return this.searchResult.last_searches.filter(word => word.label.includes(this.search));
+                return this.searchResult.last_searches.filter(word => word.includes(this.search));
             }else{
                 return '';
             }
@@ -275,6 +275,15 @@ export default {
                 .catch((err) => {
                 }).finally(() => {
                 });
+        },
+
+         /**
+         * Search by clicking data
+         */
+         setModel(word){
+            this.search = word;
+
+            this.searchInSite()
         },
 
         /**
@@ -376,6 +385,14 @@ export default {
         &__item {
             border-radius: 4px;
         }
+    }
+
+    .search-cover{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 2;
+        background: transparent;
     }
 }
 </style>
