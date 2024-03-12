@@ -22,7 +22,7 @@
                 <h3 class="t16 w400 text-grey-darken-1">{{way?.title}}</h3>
             </div>
 
-            <div class="d-flex align-center justify-end">
+            <div class="d-flex align-center justify-space-between">
                 <p class="t12 w400 text-grey number-font">{{way?.description}}</p>
 
                 <div class="t14 w400 text-grey-darken-1 number-font">{{ splitChar(Number(String(way?.sending_price).slice(0, -1))) }} <span class="t12">تومان</span></div>
