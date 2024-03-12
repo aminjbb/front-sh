@@ -14,7 +14,7 @@
             </div>
             <div class="col-9 pa-4 mobile-pa-0">
                 <div>
-                    <generalNotification class="mb-2" borderColorCode="673AB7" showButton color="deep-purple" icon="mdi-exclamation-thick" text="برای پیگیری سفارشات ثبت شده تا تاریخ 1402/12/24 به حساب کاربری قبلی خود مراجعه نمایید. " buttonText="مشاهده حساب کاربری قدیم" buttonLink="/"/>
+                    <generalNotification class="mb-2" borderColorCode="673AB7" showButton color="deep-purple" icon="mdi-exclamation-thick" text="برای پیگیری سفارشات ثبت شده تا تاریخ 1402/12/24 به حساب کاربری قبلی خود مراجعه نمایید. " buttonText="مشاهده حساب کاربری قدیم" :buttonLink="buttonLink"/>
                 
                     <generalNotification class="mb-5" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/24 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
 
@@ -204,7 +204,8 @@ import Order from '@/composables/Order.js'
 export default {
     data() {
         return {
-            screenType: null
+            screenType: null,
+            buttonLink:'https://old.shavaz.com/profile/my-orders'
         }
     },
 
