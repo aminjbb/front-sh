@@ -238,8 +238,6 @@ export default {
         const route = useRoute()
         const userToken = useCookie('userToken')
         const runtimeConfig = useRuntimeConfig()
-        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-        const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
 
         let swiperRef = null;
 
@@ -278,14 +276,6 @@ export default {
                 }
             })
         }
-
-        useHead({
-            title,
-            meta: [{
-                name: 'description',
-                content: description
-            }]
-        });
 
         return {
             swiperRef: null,

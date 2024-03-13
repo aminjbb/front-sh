@@ -94,32 +94,32 @@ import PDP from '@/composables/PDP.js'
 export default {
     setup() {
 
+        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
+
         const {
             product,
             color,
             getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb , breadcrumb , title , description
+            getBreadcrumb , breadcrumb , skuTitle , description
         } = new PDP()
+
         useHead({
-        title,
-        meta: [{
-          name: 'description',
-          content: description
-        },
-          {
-            name: 'title',
-            content: title
-          }]
-      });
+            title,
+            meta: [{
+            name: 'description',
+            content: description
+            }]
+        });
+
         return {
             product,
             color,
             getSecondaryData,
             secondaryData,
             getPdpData,
-          getBreadcrumb , breadcrumb , title , description
+            getBreadcrumb , breadcrumb , title , description,skuTitle
         }
 
     },
@@ -259,6 +259,12 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
+
+    watch:{
+        skuTitle(newVal){
+            this.title = newVal
+        }
     },
 
     beforeMount() {

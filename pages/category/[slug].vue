@@ -90,17 +90,6 @@
   export default {
     data() {
       return {
-        BreadcrumbItems: [{
-          title: 'لوازم آرایشی',
-          /* Should be main category */
-          href: '/'
-        },
-          {
-            title: 'آرایش صورت',
-            /* Should be sub category */
-            href: '/products'
-          }
-        ],
         productList: [],
         filters: [],
         screenType: null,
@@ -111,7 +100,7 @@
   
     setup(props) {
       const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-      const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
+      
       const {
         productList,
         filterQuery,
@@ -119,9 +108,13 @@
         getSecondaryData,
         secondaryData,
         filterForFilter,
-        getBreadcrumb , breadcrumb,
-        query
+        getBreadcrumb ,
+        breadcrumb,
+        query,
+        plpTitle,
+        description
       } = new PLP()
+
       useHead({
         title,
         meta: [{
@@ -137,7 +130,10 @@
         secondaryData,
         filterForFilter,
         query,
-        getBreadcrumb , breadcrumb,
+        getBreadcrumb ,
+        breadcrumb,
+        plpTitle,
+        title
       }
     },
   
@@ -478,7 +474,9 @@
     },
   
     watch:{
-  
+      plpTitle(newVal){
+          this.title = newVal
+      }
     }
   }
   </script>
