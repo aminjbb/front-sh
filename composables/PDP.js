@@ -19,7 +19,7 @@ export default function setup() {
     const router = useRouter()
     const error = useError();
     const store = useStore()
-    const title = ref('')
+    const skuTitle = ref('')
     const description = ref('')
     async function getSecondaryData(query) {
         axios
@@ -86,7 +86,7 @@ export default function setup() {
             })
             .then((response) => {
                 product.value = response
-                title.value = response.data.data.page.meta_title
+                skuTitle.value = response.data.data.page.meta_title
                 description.value = response.data.data.page.meta_description
             })
             .catch((err) => {
@@ -104,6 +104,6 @@ export default function setup() {
     )
 
     return {product, color, getSecondaryData, secondaryData ,
-        getPdpData,  getBreadcrumb, breadcrumb ,title , description}
+        getPdpData,  getBreadcrumb, breadcrumb ,skuTitle , description}
 }
 

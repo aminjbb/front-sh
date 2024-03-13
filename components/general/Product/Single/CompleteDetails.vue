@@ -88,7 +88,8 @@
             </header>
 
             <p
-                class="t14 w400 l25 text-grey"
+                class="t14 w400 l25 text-grey instructions"
+                :class="{'show': show}"
                 v-if="description"
                 v-html="description"></p>
           <span class="d-flex align-center t12 w400 text-primary cur-p" id="show-more" @click="showMore()">
@@ -104,8 +105,6 @@
           <v-divider color="grey" class="mt-5" />
         </div>
 
-
-
         <div class="complete-details__product-info" id="product-info" v-if="instructions">
             <header class="d-flex align-center">
                 <v-icon
@@ -116,15 +115,13 @@
             </header>
 
             <div v-if="attrs" class="complete-details__product-info__table mt-2 mb-7">
-                <div class="d-flex align-center w-100 pa-0" v-for="(attr, index) in attrs" :key="`tab1${index}`">
+                <div class="d-flex w-100 pa-0" v-for="(attr, index) in attrs" :key="`tab1${index}`">
                     <div class="text-grey t13 w400 pr-2 pl-10 py-3">{{attr.attribute}}</div>
-                    <div class="text-grey-darken-2 t14 w400 number-font pr-3 py-3 flex-grow-1">{{attr.value}}</div>
+                    <div class="text-grey-darken-2 t14 w400 number-font pr-3 py-3 flex-grow-1 d-flex align-center">{{attr.value}}</div>
                 </div>
             </div>
           <v-divider color="grey" class="mt-5" />
         </div>
-
-
 
         <div class="complete-details__product-instructions" id="product-instructions" v-if="userUse">
             <header class="d-flex align-center">
@@ -143,8 +140,6 @@
               <v-divider color="grey-lighten-1" class="my-2"/>
             </template>
 
-
-
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-face-man-shimmer-outline"
@@ -158,8 +153,6 @@
                 v-html="userUse"/>
           <v-divider color="grey" class="mt-5" />
         </div>
-
-
 
         <div class="complete-details__product-adv" id="product-adv"  v-if="advantages || disadvantages">
             <header class="d-flex align-center">

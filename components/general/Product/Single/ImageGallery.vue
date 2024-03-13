@@ -238,8 +238,6 @@ export default {
         const route = useRoute()
         const userToken = useCookie('userToken')
         const runtimeConfig = useRuntimeConfig()
-        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-        const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
 
         let swiperRef = null;
 
@@ -278,14 +276,6 @@ export default {
                 }
             })
         }
-
-        useHead({
-            title,
-            meta: [{
-                name: 'description',
-                content: description
-            }]
-        });
 
         return {
             swiperRef: null,
@@ -356,7 +346,6 @@ export default {
                 })
                 .then((response) => {
                     this.getPdpData();
-                    console.log('1223');
                     useNuxtApp().$toast.success('محصول با موفقت به لیست علاقه مندی ها اضافه شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -379,7 +368,6 @@ export default {
                     },
                 })
                 .then((response) => {
-                    console.log('4455');
                     useNuxtApp().$toast.success('محصول با موفقت از لیست علاقه مندی ها حذف شد.', {
                         rtl: true,
                         position: 'top-center',

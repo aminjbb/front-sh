@@ -100,14 +100,16 @@ export default {
 
   setup() {
     const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-    const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
     const {
       productList,
       filterQuery,
       page,
       getSecondaryData,
       secondaryData,
-      getBreadcrumb , breadcrumb,
+      getBreadcrumb ,
+      breadcrumb,
+      plpTitle,
+      description
     } = new PLP()
     useHead({
       title,
@@ -116,7 +118,8 @@ export default {
         content: description
       }]
     });
-    return {productList, filterQuery, page , getSecondaryData , secondaryData, getBreadcrumb , breadcrumb,}
+    return {productList, filterQuery, page , getSecondaryData , secondaryData, getBreadcrumb , breadcrumb,plpTitle,
+      title}
   },
 
   methods: {
@@ -463,6 +466,12 @@ export default {
   beforeMount() {
     this.getSecondaryData()
     this.getBreadcrumb('product')
+  },
+
+  watch:{
+    plpTitle(newVal){
+        this.title = newVal
+    }
   }
 }
 </script>

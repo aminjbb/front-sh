@@ -63,12 +63,14 @@ export default {
 
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-        const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
         const {
             productList,
             page,
             query,
-            getBreadcrumb , breadcrumb
+            getBreadcrumb ,
+            breadcrumb,
+            plpTitle,
+            description
         } = new PLP()
         useHead({
             title,
@@ -81,7 +83,10 @@ export default {
             productList,
             page,
             query,
-            getBreadcrumb , breadcrumb
+            getBreadcrumb ,
+            breadcrumb,
+            plpTitle,
+            title
         }
     },
 
@@ -195,6 +200,10 @@ export default {
                     }
                 })
             }
+        },
+
+        plpTitle(newVal){
+            this.title = newVal
         }
     }
 }
