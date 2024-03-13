@@ -71,7 +71,7 @@
           <div class="v-product__pagination d-flex justify-center mt-8">
             <v-pagination
                 v-model="page"
-                :length="pageLength"
+                :length="productListPageLength"
                 size="40"
                 :total-visible="6"
                 @click="backToTop"
@@ -345,11 +345,22 @@ export default {
     /**
      * Back to top on change pagination
      */
-     backToTop(){
+    backToTop(){
+      this.changePagination()
       window.scrollTo({
-          top: 0,
-          behavior: "smooth",
+        top: 0,
+        behavior: "smooth",
       });
+    },
+
+    changePagination(){
+      let query = this.$route.query;
+      this.$router.push({
+        query: {
+          ...query,
+          page: this.page
+        }
+      })
     }
   },
 
