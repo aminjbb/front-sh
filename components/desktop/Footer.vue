@@ -46,10 +46,10 @@
                             <h4 class="t16">راهنمای خرید</h4>
                         </header>
                         <ul>
-                            <li><a href="/" class="t13 text-grey">نحوه ثبت سفارش</a></li>
-                            <li><a href="/" class="t13 text-grey">روش‌های پرداخت</a></li>
-                            <li><a href="/" class="t13 text-grey">شیوه‌های ارسال</a></li>
-                            <li><a href="/" class="t13 text-grey">شرایط مرجوعی</a></li>
+                            <li><a href="/faq" class="t13 text-grey">نحوه ثبت سفارش</a></li>
+                            <li><a href="/faq" class="t13 text-grey">روش‌های پرداخت</a></li>
+                            <li><a href="/faq" class="t13 text-grey">شیوه‌های ارسال</a></li>
+                            <li><a href="/faq" class="t13 text-grey">شرایط مرجوعی</a></li>
                         </ul>
                     </div>
                 </div>
