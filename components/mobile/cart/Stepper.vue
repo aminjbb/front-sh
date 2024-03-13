@@ -35,7 +35,7 @@
     <template v-if="activeStep === 2">
         <mobileCartSendingInformationAddress @selectedAddress="getAddress" :userDetail="userDetail" />
 
-        <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/24 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
+        <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/23 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
 
         <mobileCartSendingInformationTime :sendingMethods="sendingMethods" @selectedDate="getTime" @selectedWay="getWay" />
     </template>
@@ -164,7 +164,6 @@ export default {
                 'پرداخت'
             ],
             activeButton: false,
-            userDetail: null,
         }
     },
 
@@ -176,6 +175,17 @@ export default {
     },
 
     computed: {
+      /**
+       * Get user details
+       */
+      userDetail(){
+        try {
+          return this.$store.getters['get_userData']
+        }
+        catch (e) {
+          return null
+        }
+      },
         orderSendingMethod() {
             return this.$store.getters['get_orderSendingMethod']
         },
