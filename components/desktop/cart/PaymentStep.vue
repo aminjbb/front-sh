@@ -109,12 +109,13 @@ export default {
     data() {
         return {
             paymentModal: null,
-            paymentTypeList: [{
-                    id: 1,
-                    label: 'پرداخت اقساطی اسنپ پی',
-                    type: 'snap_pay',
-                    payment_mount: '102157'
-                },
+            paymentTypeList: [
+              // {
+              //       id: 1,
+              //       label: 'پرداخت اقساطی اسنپ پی',
+              //       type: 'snap_pay',
+              //       payment_mount: '102157'
+              //   },
                 {
                     id: 2,
                     label: 'پرداخت اینترنتی',
