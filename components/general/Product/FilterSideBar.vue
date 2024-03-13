@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-sidebar">
+  <div class="filter-sidebar" ref="refSidebar">
     <header class="d-flex align-center justify-space-between mb-5">
       <span class="t20 w400 text-grey-darken-3">فیلتر</span>
       <v-btn variant="text" @click="removeAllFilter()">
@@ -160,9 +160,24 @@ export default {
      * @param {*} index
      */
     slideToggleCard(id) {
-      const specificElement = document.getElementById(`filter-sidebar__card--${id}`);
-      specificElement.querySelector('.v-icon.mdi-chevron-down').classList.toggle('mdi-chevron-up')
-      specificElement.querySelector('.filter-sidebar__card__box').classList.toggle('open-card');
+      const sidebarTab = this.$refs['refSidebar'];
+
+        const divItems = sidebarTab.querySelectorAll('div.filter-sidebar__card');
+
+        divItems.forEach(item => {
+          if(item.id !== `filter-sidebar__card--${id}`){
+            if(item.querySelector('.filter-sidebar__card__box')){
+              if(item.querySelector('.filter-sidebar__card__box').classList.contains('open-card')){
+                item.querySelector('.filter-sidebar__card__box').classList.remove('open-card');
+                item.querySelector('.v-icon.mdi-chevron-down').classList.remove('mdi-chevron-up')
+              }
+            }
+          }
+        });
+
+        const specificElement = document.getElementById(`filter-sidebar__card--${id}`);
+        specificElement.querySelector('.v-icon.mdi-chevron-down').classList.toggle('mdi-chevron-up')
+        specificElement.querySelector('.filter-sidebar__card__box').classList.toggle('open-card');
     },
 
     /**
