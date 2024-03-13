@@ -200,6 +200,7 @@ export default {
         removeProductFromBasket() {
             this.deleteShpsBasket(this.content ?.shps ?.id)
             this.$refs.deleteProduct.dialog =false;
+            this.$refs.deleteProduct.loading =false;
         }
     },
 

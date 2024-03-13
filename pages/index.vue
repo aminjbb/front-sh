@@ -110,7 +110,7 @@
                 setRef="tab2"
                 :items="responseDot(11)"
                 class="tab-slider2"
-                title="جدید‌ترین محصولات"
+                :title="titleSection11"
                 componentName="generalProductMinimalCard"
                 contentWidth="1160px"
                 wrapContent

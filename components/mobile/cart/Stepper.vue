@@ -164,7 +164,6 @@ export default {
                 'پرداخت'
             ],
             activeButton: false,
-            userDetail: null,
         }
     },
 
@@ -176,6 +175,17 @@ export default {
     },
 
     computed: {
+      /**
+       * Get user details
+       */
+      userDetail(){
+        try {
+          return this.$store.getters['get_userData']
+        }
+        catch (e) {
+          return null
+        }
+      },
         orderSendingMethod() {
             return this.$store.getters['get_orderSendingMethod']
         },
