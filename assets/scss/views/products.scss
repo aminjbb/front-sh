@@ -143,7 +143,8 @@ $parent : 'v-product';
                 }
             }
 
-            &__product-instructions {
+            &__product-instructions,
+            &__desc {
                 .instructions {
                     overflow: hidden;
                     height: 145px;

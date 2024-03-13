@@ -356,7 +356,6 @@ export default {
                 })
                 .then((response) => {
                     this.getPdpData();
-                    console.log('1223');
                     useNuxtApp().$toast.success('محصول با موفقت به لیست علاقه مندی ها اضافه شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -379,7 +378,6 @@ export default {
                     },
                 })
                 .then((response) => {
-                    console.log('4455');
                     useNuxtApp().$toast.success('محصول با موفقت از لیست علاقه مندی ها حذف شد.', {
                         rtl: true,
                         position: 'top-center',

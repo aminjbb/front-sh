@@ -121,8 +121,6 @@ export default function setup() {
                     loadingAddBasket.value = false;
                     loadingFirstAddBasket.value = false;
                 }
-
-                console.log('wayBasket',wayBasket)
             })
             .catch((err) => {
                 const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
@@ -225,7 +223,6 @@ export default function setup() {
             })
             .then((response) => {
                 count.value = 0;
-                console.log('count', count);
                 getBasket();
                 randomNumberForBasket.value = ''
             })
