@@ -20,11 +20,11 @@
                     <div>
                         <header class="t16 mb-4">دسترسی سریع</header>
                         <ul>
-                            <li><a href="/" class="t13 text-grey">لوازم آرایشی</a></li>
-                            <li><a href="/" class="t13 text-grey">مراقبت از پوست</a></li>
-                            <li><a href="/" class="t13 text-grey">بهداشت خانگی</a></li>
-                            <li><a href="/" class="t13 text-grey">مراقبت از کودکان</a></li>
-                            <li><a href="/" class="t13 text-grey">لوازم بهداشتی</a></li>
+                            <li><a href="/category/category-cosmetic/" class="t13 text-grey">لوازم آرایشی</a></li>
+                            <li><a href="/category/category-skin-care" class="t13 text-grey">مراقبت از پوست</a></li>
+                            <li><a href="/category/category-detergents" class="t13 text-grey">بهداشت خانگی</a></li>
+                            <li><a href="/category/category-baby-care" class="t13 text-grey">مراقبت از کودکان</a></li>
+                            <li><a href="/category/category-personal-care" class="t13 text-grey">لوازم بهداشتی</a></li>
                         </ul>
                     </div>
 
