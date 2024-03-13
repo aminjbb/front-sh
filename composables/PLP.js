@@ -24,7 +24,7 @@ export default function setup() {
     const error = useError();
     const store = useStore()
     const query = ref('')
-    const title = ref('')
+    const plpTitle = ref('')
     const description = ref('')
 
 
@@ -44,7 +44,7 @@ export default function setup() {
             })
             .then((response) => {
                 secondaryData.value = response
-                title.value = response.data.data.page.meta_title
+                plpTitle.value = response.data.data.page.meta_title
                 description.value = response.data.data.page.meta_description
             })
             .catch((err) => {
@@ -92,6 +92,9 @@ export default function setup() {
                 })
                     .then(response => {
                         productList.value = response
+                        if(route.name == 'promotion-slug'){
+                            plpTitle.value = response.data.data.page.meta_title
+                        }
                     })
                     .catch(err => {
                         if (err.response.status) {
@@ -111,7 +114,7 @@ export default function setup() {
 
     return {
         productList, filterQuery, getSecondaryData, secondaryData, page, filterForFilter, query,
-        getBreadcrumb, breadcrumb , description , title
+        getBreadcrumb, breadcrumb , description , plpTitle
     }
 }
 
