@@ -18,7 +18,7 @@ export default function setup() {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const voucher = ref({})
+    const voucher = ref(null)
     const transactionData = ref({})
     const loadingAddBasket = ref(false)
     const loadingFirstAddBasket = ref(false)
@@ -260,7 +260,7 @@ export default function setup() {
      */
     async function calculateVoucher(code ) {
         axios
-            .post(runtimeConfig.public.apiBase + `/order/calculate/voucher`, {
+                .post(runtimeConfig.public.apiBase + `/order/calculate/voucher`, {
                 code:code,
             }, {
                 headers: {
