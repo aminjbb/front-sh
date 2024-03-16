@@ -124,7 +124,7 @@
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1 ml-1">سود شما:</span>
                                 <span v-if="userOrder && userOrder.paid_price" class="t13 w400 text-grey-darken-3 number-font">
-                                    {{splitChar( Number(String(calcProfit(userOrder.total_price,userOrder.sending_price, userOrder.paid_price)).slice(0, -1))) }}
+                                    {{splitChar( Number(String(userOrder.total_discount).slice(0, -1))) }}
                                     تومان</span>
                             </v-col>
 
