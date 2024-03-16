@@ -56,8 +56,8 @@
 
 <v-card v-if="activeStep !== 4" class="px-3 mobile-pa-0 mobile-no-border pb-10 cart-payment-details">
     <div class="d-flex align-center justify-space-between mb-3">
-        <span class="t12 w400 text-grey-darken-1">مبلغ قابل پرداخت:</span>
-        <span class="t16 w400 text-grey-darken-3 number-font">
+        <span class="t12 w500 text-grey-darken-2">مبلغ قابل پرداخت:</span>
+        <span class="t22 w500 text-grey-darken-4 number-font">
             <template v-if="voucher && voucher.total_price && voucher.paid_price">
                 {{ splitChar(Number(String(voucher.paid_price + voucher.sending_price).slice(0, -1))) }}
             </template>
@@ -65,9 +65,11 @@
             <template v-else>
                 {{ splitChar(Number(String(data.paid_price + data.sending_price).slice(0, -1))) }}
             </template>
-            <span class="t12 w400 text-grey-darken-3">تومان</span>
+            <span class="t12 w400 text-grey-darken-4">تومان</span>
         </span>
     </div>
+
+    <v-divider color="grey-lighten-1" class="my-3 cart-hr"/>
 
     <div v-if="data.sending_price || voucher.sending_price" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
@@ -416,6 +418,12 @@ export default {
 
 .cart-payment-details {
     padding-bottom: 100px !important;
+
+    .cart-hr{
+        opacity: 1 !important;
+        height: 1px !important;
+        max-height: 1px !important;
+    }
 }
 
 .cart-mobile-stepper {
