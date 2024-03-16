@@ -245,7 +245,7 @@
        * @param {*} array
        */
       selectFiltersModal(array) {
-  
+
         if (array.param === "stock") {
           this.createQueryForFilter(array)
         } else {
