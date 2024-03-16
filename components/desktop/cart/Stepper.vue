@@ -339,10 +339,8 @@ export default {
         this.$store.commit('set_orderAddress', null);
         this.$store.commit('set_orderSendingMethod', null);
         this.$store.commit('set_orderPayMethod', null);
-
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
-
         if (token) {
             this.activeStep = 4;
             this.active[1] = false;

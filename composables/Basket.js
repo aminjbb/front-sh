@@ -376,7 +376,11 @@ export default function setup() {
                 transactionData.value = response.data.data
             })
             .catch((err) => {
-                // auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <v-card class="pa-8 mobile-pa-0 mobile-no-border has-header">
     <header class="card__header">
         <h2 class="t16">تراکنش‌ها</h2>
