@@ -19,6 +19,7 @@ logs
 .idea
 
 # Local env files
+nuxt.config.ts
 .env
 .env.*
 !.env.example
