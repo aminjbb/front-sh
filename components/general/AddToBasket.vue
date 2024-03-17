@@ -44,7 +44,7 @@
         :sm="smCols[1]"
         :md="mdCols[1]"
         class="d-flex justify-end pa-1">
-        <template v-if="count === 0">
+        <template v-if="count === 0 || notSelected">
             <v-btn
                 @click="addToCard(content.id)"
                 height="44"
@@ -96,6 +96,7 @@ export default {
     data() {
         return {
             loading: false,
+            notSelected: false,
         }
     },
 
@@ -214,9 +215,25 @@ export default {
               }
           }
         },
+
+        userBasket(newVal){
+            if(newVal && newVal.details && newVal.details.length){
+                const data = newVal.details.find(item => item?.shps?.id === this.content.id)
+                if(!data){
+                    this.notSelected = true;
+                    this.count = 0;
+                }else{
+                    this.notSelected = false
+                    this.count = data.count;
+                }
+            }else{
+                this.notSelected = true;
+                this.count = 0;
+            }
+        }
     },
 
-  computed: {
+    computed: {
         userBasket() {
             try {
                 const basket = this.$store.getters['get_basket']
@@ -226,7 +243,6 @@ export default {
             }
         }
     },
-
 }
 </script>
 

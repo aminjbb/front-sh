@@ -69,20 +69,29 @@
         </span>
     </div>
 
-    <v-divider color="grey-lighten-1" class="my-3 cart-hr"/>
+    <v-divider color="grey-li.ghten-1" class="my-3 cart-hr"/>
 
-    <div v-if="data.sending_price || voucher.sending_price" class="d-flex align-center justify-space-between mb-3">
+    <div v-if="!freeDelivery && (data && data.sending_price) || (voucher && voucher.sending_price)" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
         <span class="t16 w400 text-grey-darken-3 number-font">
-            <template v-if="voucher && voucher.sending_price">
-                {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
+            <template v-if="voucher">
+              <span v-if="voucher.sending_price == 0"> رایگان</span>
+                <span v-else class="number-font">
+                  {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
+                </span>
+                <span v-if="voucher.sending_price != 0" class="t12 w400 text-grey-darken-3">تومان</span>
             </template>
 
             <template v-else>
                 {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }}
+                <span class="t12 w400 text-grey-darken-3">تومان</span>
             </template>
-            <span class="t12 w400 text-grey-darken-3">تومان</span>
+
         </span>
+    </div>
+    <div v-if="freeDelivery" class="d-flex align-center justify-space-between mb-4">
+        <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
+        <span class="t16 w400 text-grey-darken-3 number-font">رایگان</span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
@@ -219,7 +228,8 @@ export default {
             createOrder,
             voucher,
             getSendingMethods,
-            sendingMethods
+            sendingMethods,
+            freeDelivery
         } = new Basket()
         return {
             deleteVoucherFromBasket,
@@ -230,7 +240,8 @@ export default {
             userToken,
           runtimeConfig,
           getSendingMethods,
-          sendingMethods
+          sendingMethods,
+          freeDelivery
         }
     },
 
@@ -287,7 +298,7 @@ export default {
 
         /**
          * Selected address from SendingInformationAddress component
-         * @param {*} address 
+         * @param {*} address
          */
         getAddress(address) {
             if (address && address !== false) {
@@ -301,7 +312,7 @@ export default {
 
         /**
          * Selected way from SendingInformationTime component
-         * @param {*} way 
+         * @param {*} way
          */
         getWay(way) {
             if (way) {
@@ -315,7 +326,7 @@ export default {
 
         /**
          * Selected time from SendingInformationTime component
-         * @param {*} arr 
+         * @param {*} arr
          */
         getTime(arr) {
             //TODO: Add set time to cart
@@ -324,7 +335,7 @@ export default {
 
         /**
          * Selected address from SendingInformationAddress component
-         * @param {*} id 
+         * @param {*} id
          */
         getPayment(id) {
             this.$store.commit('set_orderPayMethod', id)
@@ -363,7 +374,7 @@ export default {
 
         /**
          * Get discount code
-         * @param {*} id 
+         * @param {*} id
          */
         getDiscountCode(code) {
             this.calculateVoucher(code);
