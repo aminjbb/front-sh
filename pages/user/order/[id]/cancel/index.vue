@@ -46,8 +46,6 @@
                                         :value="order.id" />
                                 </div>
 
-                                {{ index }}
-                                {{ value}}
 
                                 <generalProductOrderCard
                                     :ref="`orderCancelCard${order.id}`"
@@ -308,7 +306,6 @@ export default {
 
     methods: {
         splitChar,
-
         /**
          * Check checkbox and select item
          * @param {*} productIndex
@@ -318,9 +315,9 @@ export default {
             if (this.checkAllProducts == true) {
                 this.checkAllProducts = false;
                 this.chooseAll = false;
-                this.value = [];
-                //this.selectedValue =[]
-                this.selectedProducts = [];
+                // this.value = [];
+                // //this.selectedValue =[]
+                // this.selectedProducts = [];
             }
 
             const valuesIndex = this.value.findIndex(element => element == item.id);
@@ -364,7 +361,6 @@ export default {
                 })
             }
         },
-
         /**
          * Change product count
          * @param {*} item
