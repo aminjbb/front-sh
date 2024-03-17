@@ -71,7 +71,7 @@
 
     <v-divider color="grey-li.ghten-1" class="my-3 cart-hr"/>
 
-    <div v-if="data.sending_price || voucher.sending_price" class="d-flex align-center justify-space-between mb-3">
+    <div v-if="!freeDelivery && (data && data.sending_price) || (voucher && voucher.sending_price)" class="d-flex align-center justify-space-between mb-3">
         <span class="t12 w400 text-grey-darken-1">هزینه ارسال:</span>
         <span class="t16 w400 text-grey-darken-3 number-font">
             <template v-if="voucher">
@@ -88,6 +88,10 @@
             </template>
 
         </span>
+    </div>
+    <div v-if="freeDelivery" class="d-flex align-center justify-space-between mb-4">
+        <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
+        <span class="t16 w400 text-grey-darken-3 number-font">رایگان</span>
     </div>
 
     <div class="d-flex align-center justify-space-between mb-3">
@@ -224,7 +228,8 @@ export default {
             createOrder,
             voucher,
             getSendingMethods,
-            sendingMethods
+            sendingMethods,
+            freeDelivery
         } = new Basket()
         return {
             deleteVoucherFromBasket,
@@ -235,7 +240,8 @@ export default {
             userToken,
           runtimeConfig,
           getSendingMethods,
-          sendingMethods
+          sendingMethods,
+          freeDelivery
         }
     },
 

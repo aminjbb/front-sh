@@ -299,7 +299,7 @@ export default {
          async sendContactMassage() {
             this.loading = true
             await axios.post(`${this.runtimeConfig.public.apiBase}/user/contact-us/create`, {
-                phone_number: this.form.mobile,
+                phone_number: digits(this.form.mobile, 'en'),
                 email: this.form.email,
                 full_name: this.form.full_name ? this.form.full_name : 'ناشناس',
                 subject: this.form.subject,
