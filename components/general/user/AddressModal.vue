@@ -517,6 +517,7 @@ export default {
          * get cities after select province
          */
         getCitiesList() {
+          console.log('injaaam')
             this.form.city = null
             this.getCities(this.form.province)
         },
@@ -540,7 +541,6 @@ export default {
                 this.form.postal_code = digits(this.address ?.postal_code, 'en')
                 this.form.room_number =  digits(this.address ?.unit, 'en')
                 this.form.province = this.address ?.state ?.id
-                if (this.form.province) this.getCities(this.address ?.state ?.id)
                 this.form.city = this.address ?.city ?.id
                 if(this.edit){
                     if (this.address ?.am_i === 1 ) this.newReceiver = false
@@ -562,6 +562,14 @@ export default {
         this.setAddressForm(),
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+
+  watch:{
+    dialog(val){
+      if (val){
+        this.getCities(this.form.province)
+      }
+    }
+  }
 }
 </script>
     
