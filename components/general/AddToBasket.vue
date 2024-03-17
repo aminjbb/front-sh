@@ -219,6 +219,7 @@ export default {
         userBasket(newVal){
             if(newVal && newVal.details && newVal.details.length){
                 const data = newVal.details.find(item => item?.shps?.id === this.content.id)
+                
                 if(!data){
                     this.notSelected = true;
                     this.count = 0;
@@ -237,6 +238,17 @@ export default {
         userBasket() {
             try {
                 const basket = this.$store.getters['get_basket']
+                
+                const data = basket?.data?.data?.details.find(item => item?.shps?.id === this.content.id)
+
+                if(!data){
+                    this.notSelected = true;
+                    this.count = 0;
+                }else{
+                    this.notSelected = false
+                    this.count = data.count;
+                }
+
                 return basket ?.data ?.data
             } catch (e) {
                 return []
