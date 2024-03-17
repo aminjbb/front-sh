@@ -23,6 +23,7 @@ export default function setup() {
     const loadingAddBasket = ref(false)
     const loadingFirstAddBasket = ref(false)
     const count = ref(0)
+    const freeDelivery = ref(false)
 
     /**
      * Create random number
@@ -247,7 +248,10 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                getBasket()
+                getBasket();
+                if(response.data.data.sending_price === 0){
+                    freeDelivery.value = true
+                }
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)
@@ -429,6 +433,6 @@ export default function setup() {
     return {getBasket, loading ,addToBasket , deleteShpsBasket ,
         calculateSendingPrice , createOrder,calculateVoucher,voucher,
         getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket,
-        loadingAddBasket, count ,  getSendingMethods ,sendingMethods  }
+        loadingAddBasket, count ,  getSendingMethods ,sendingMethods, freeDelivery  }
 }
 
