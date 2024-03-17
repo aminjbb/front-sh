@@ -27,7 +27,7 @@
                             4 قسط ماهیانه {{ splitChar(Math.round(Number(String(paymentMount ).slice(0, -1))/ 4)) }}تومان (بدون کارمزد)
                         </template>
                         <template v-else-if="payment.type === 'online'">پرداخت آنلاین با تمام کارت های بانکی</template>
-                        <template v-else-if="payment.type === 'wallet'">پرداخت از طریق کیف پول - موجودی کیف پول شما {{ splitChar(Number(String(userDetail?.wallet_mount).slice(0, -1))) }} می باشد.</template>
+                        <template v-else-if="payment.type === 'wallet'">پرداخت از طریق کیف پول - موجودی کیف پول شما {{ splitChar(Number(String(userDetail?.wallet_mount).slice(0, -1))) }} تومان می باشد.</template>
                     </p>
                 </div>
                 <template v-if="payment.type === 'snap_pay'">
