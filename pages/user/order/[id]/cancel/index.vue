@@ -41,22 +41,27 @@
                                 <div class="w-checkbox">
                                     <v-checkbox
                                         hide-details
+                                        v-model ="selectedValue"
                                         @click="addToSelectedProduct(index,order)"
                                         :value="order.id" />
                                 </div>
 
+                                {{ index }}
+                                {{ value}}
+
                                 <generalProductOrderCard
+                                    :ref="`orderCancelCard${order.id}`"
                                     class="flex-grow-1"
                                     :content="order"
                                     cancel
                                     hideButtons
                                     :index="index"
-                                    :showCount="value[index] !== false && value[index] && chooseAll !== true ? true : false"
-                                    :showAllCount="value[index] !== false && value[index] && chooseAll === true ? true : false"
-                                    @productCount="changeProductCount" />
+                                    :showCount="value[index] !== false && value[index] === order.id && chooseAll !== true ? true : false"
+                                    :showAllCount="value[index] !== false && value[index]=== order.id && chooseAll === true ? true : false"
+                                    @changeProductCount="changeProductCount" />
                             </div>
 
-                            <div v-if="value[index] !== false && value[index] && chooseAll !== true" class="v-order--canceling__accordion">
+                            <div v-if="value[index] !== false && value[index] === order.id && chooseAll !== true" class="v-order--canceling__accordion">
                                 <div class="mb-5">
                                     <label class="d-block t13 text-grey-darken-1 mb-2">علت لغو<span class="text-red-accent-4">*</span>
                                     </label>
@@ -190,7 +195,7 @@
 
                         <div class="d-flex align-center justify-end mt-5">
                             <v-btn
-                                @click="cancelingStep = 1"
+                                @click="backToFirstStep()"
                                 height="44"
                                 title="بازگشت"
                                 class="btn btn--cancel ml-3">
@@ -245,6 +250,7 @@ export default {
                 }
             ],
             value: [],
+            selectedValue:[],
             cancelReasonValueTitle: [],
             cancelReasonValueDesc: [],
             cancelReasonValueTitleAll: null,
@@ -313,6 +319,7 @@ export default {
                 this.checkAllProducts = false;
                 this.chooseAll = false;
                 this.value = [];
+                //this.selectedValue =[]
                 this.selectedProducts = [];
             }
 
@@ -326,8 +333,10 @@ export default {
                 }
                 this.selectedProducts.push(obj);
             } else {
-                this.value.splice(valuesIndex, 1);
+                //this.value.splice(valuesIndex, 1);
+                this.value[valuesIndex]=null;
                 this.selectedProducts.splice(valuesIndex, 1);
+                this.$refs[`orderCancelCard${item.id}`][0].productCount = 1;
             }
         },
 
@@ -336,6 +345,7 @@ export default {
          */
         chooseAllProducts() {
             this.chooseAll = !this.chooseAll;
+            this.selectedValue = [];
             this.value = [];
             this.selectedProducts = [];
 
@@ -343,6 +353,7 @@ export default {
 
                 this.userOrder ?.details.forEach((product, index) => {
                     this.value[index] = product.id;
+                    this.selectedValue[index]= product.id;
 
                     const obj = {
                         count: product.count,
@@ -417,6 +428,17 @@ export default {
                 // WORKAROUND: fixes dialog menu popup position
                 setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
             }
+        },
+
+        backToFirstStep(){
+            this.cancelingStep = 1;
+            console.log("🚀 ~ addToSelectedProduct ~ this.selectedProducts:", this.selectedProducts)
+            setTimeout(()=>{
+                this.selectedProducts.forEach((product) => {
+                    this.$refs[`orderCancelCard${product.id}`][0].productCount = product.count;
+                })
+            },1000)
+
         }
     },
 

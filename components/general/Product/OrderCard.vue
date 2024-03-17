@@ -284,7 +284,7 @@ export default {
                 item: this.content,
                 id: this.content.id
             }
-            this.$emit('productCount', item);
+            this.$emit('changeProductCount', item);
         },
 
         decreaseCount() {
@@ -296,7 +296,7 @@ export default {
                 item: this.content,
                 id: this.content.id
             }
-            this.$emit('productCount', item);
+            this.$emit('changeProductCount', item);
         },
     },
 }
