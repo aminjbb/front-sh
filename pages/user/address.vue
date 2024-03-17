@@ -106,7 +106,7 @@ export default {
          * fetch user data
          */
         async fetchUserProfile() {
-            if (screenType = 'mobile') {
+            if (this.screenType = 'mobile') {
                 try {
                     const response = await auth.getUserProfile(this.userToken)
                     this.userData = response.data.data

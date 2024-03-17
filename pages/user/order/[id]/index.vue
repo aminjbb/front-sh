@@ -136,6 +136,7 @@
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1 ml-1">هزینه ارسال:</span>
                                 <span v-if="userOrder && userOrder.sending_price" class="t13 w400 text-grey-darken-3 number-font">{{ splitChar(Number(String(userOrder.sending_price).slice(0, -1))) }}  تومان</span>
+                                <span v-else-if="userOrder?.sending_price == 0" class="t13 w400 text-grey-darken-3 number-font">رایگان</span>
                             </v-col>
 
                             <v-col
