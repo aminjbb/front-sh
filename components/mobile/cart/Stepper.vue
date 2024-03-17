@@ -305,6 +305,9 @@ export default {
                 this.$store.commit('set_orderAddress', address)
 
                 this.getSendingMethods(address.id)
+              if (this.$store.getters['get_orderSendingMethod']){
+                this.calculateSendingPrice(address.id, this.$store.getters['get_orderSendingMethod'])
+              }
             } else {
                 this.$store.commit('set_orderAddress', null)
             }

@@ -270,10 +270,11 @@ export default {
          */
         getAddress(address) {
             if (address !== false) {
-
                 this.$store.commit('set_orderAddress', address)
                 this.getSendingMethods(address)
-
+                if (this.$store.getters['get_orderSendingMethod']){
+                  this.calculateSendingPrice(address, this.$store.getters['get_orderSendingMethod'])
+                }
             } else {
                 this.$store.commit('set_orderAddress', null)
             }
