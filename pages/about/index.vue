@@ -2,7 +2,7 @@
 <main class="v-about">
     <v-container>
         <div class="v-about__banner">
-            <img src="~/assets/images/about-banner.jpg" class="" alt="Shavaz Logo" width="1296" height="310" title="Shavaz about us banner" />
+            <img src="~/assets/images/about-us2.jpg" class="" alt="Shavaz Logo" :width="screenType === 'desktop' ? '1296' : '736'" :height="screenType === 'desktop' ? '531' : '302'" title="Shavaz about us banner" />
         </div>
         <div class="v-about__info">
             <header class="t20 text-right text-grey-darken-2 pa-3 pb-3 mt-3 pr-0">
@@ -43,6 +43,11 @@
 
 <script>
 export default {
+    data() {
+        return {
+            screenType:null,
+        }
+    },
     setup(props) {
         const title = ref('فروشگاه اینترنتی شاواز | درباره ما')
         const description = ref("آنچه باید درباره شاواز بدانید | فروشگاه اینترنتی شاواز (شرکت سلامت آوران یزدان نفیس) با معرفی و عرضه بهترین محصولات لوازم آرایشی و بهداشتی، عطر و ادکلن، بهداشت شخصی وبا 7 روز ضمانت بازگشت کالا، ارسال سریع و تضمین اصل بودن کالا تجربه‌ای متفاوت از خرید اینترنتی را برای شما ایجاد خواهد کرد.")
@@ -54,6 +59,13 @@ export default {
                 content: description
             }]
         })
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
 }
 </script>
