@@ -50,24 +50,26 @@
 
                     <v-divider color="grey-lighten-1" class="my-3 cart-hr"/>
 
-                    <div v-if="data.sending_price !== 0 && data.sending_price !== null" class="d-flex align-center justify-space-between mb-4">
+                    <div v-if="!freeDelivery && data.sending_price !== 0 && data.sending_price !== null" class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
-                        <span class="t19 w400 text-grey-darken-3 number-font">
+                        <span class="t16 w400 text-grey-darken-3 number-font">
                             <template v-if="voucher">
                               <span v-if="voucher.sending_price == 0"> رایگان</span>
-                               <span v-else class="number-font">
-                                  {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
-                               </span>
-                               <span v-if="voucher.sending_price != 0" class="t12 w400 text-grey-darken-3">تومان</span>
+                                <span v-else class="number-font">
+                                    {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
+                                </span>
+                                <span v-if="voucher.sending_price != 0" class="t12 w400 text-grey-darken-3">تومان</span>
                             </template>
 
                             <template v-else>
                                 {{ splitChar(Number(String(data.sending_price).slice(0, -1))) }}
                                <span class="t12 w400 text-grey-darken-3">تومان</span>
                             </template>
-
-
                         </span>
+                    </div>
+                    <div v-if="freeDelivery" class="d-flex align-center justify-space-between mb-4">
+                        <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
+                        <span class="t16 w400 text-grey-darken-3 number-font">رایگان</span>
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
@@ -181,7 +183,8 @@ export default {
             createOrder,
             voucher,
             getSendingMethods,
-            sendingMethods
+            sendingMethods,
+            freeDelivery
         } = new Basket()
 
         return {
@@ -192,7 +195,8 @@ export default {
             voucher,
             userToken,
             getSendingMethods,
-            sendingMethods
+            sendingMethods,
+            freeDelivery
         }
     },
 
