@@ -3,7 +3,7 @@
     <nav class="xs-hide">
         <ul class="complete-details__tabs d-flex pa-0 ma-0 w-100" ref="detailsRef">
             <li
-                v-if="description"
+                v-if="description && description !== null && description !== 'null'"
                 class="pos-r flex-grow-1 py-3 active"
                 @click="activeTab(1)"
                 id="complete-details__tab--1">
@@ -33,7 +33,7 @@
             </li>
 
             <li
-                v-if="userUse"
+                v-if="userUse && userUse !== 'null' && userUse !== null"
                 class="pos-r flex-grow-1 py-3"
                 @click="activeTab(3)"
                 id="complete-details__tab--3">
@@ -48,7 +48,7 @@
             </li>
 
             <li
-               v-if="advantages || disadvantages"
+               v-if="(advantages && advantages !== 'null' && advantages !== null) || (disadvantages && disadvantages!== null && disadvantages !== 'null')"
                 class="pos-r flex-grow-1 py-3"
                 @click="activeTab(4)"
                 id="complete-details__tab--4">
@@ -78,7 +78,7 @@
     </nav>
 
     <div>
-        <div class="complete-details__desc" id="product-desc" v-if="description" >
+        <div class="complete-details__desc" id="product-desc" v-if="description && description !== null && description !== 'null'" >
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-note-text-outline"
@@ -105,7 +105,7 @@
           <v-divider color="grey" class="mt-5" />
         </div>
 
-        <div class="complete-details__product-info" id="product-info" v-if="instructions">
+        <div class="complete-details__product-info" id="product-info" v-if="attrs?.length">
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-list-status"
@@ -123,7 +123,7 @@
           <v-divider color="grey" class="mt-5" />
         </div>
 
-        <div class="complete-details__product-instructions" id="product-instructions" v-if="userUse">
+        <div class="complete-details__product-instructions" id="product-instructions" v-if="userUse && userUse !== 'null' && userUse !== null">
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-face-man-shimmer-outline"
@@ -154,7 +154,9 @@
           <v-divider color="grey" class="mt-5" />
         </div>
 
-        <div class="complete-details__product-adv" id="product-adv"  v-if="advantages || disadvantages">
+        <div
+            class="complete-details__product-adv" id="product-adv"
+            v-if="(advantages && advantages !== 'null' && advantages !== null) || (disadvantages && disadvantages!== null && disadvantages !== 'null')">
             <header class="d-flex align-center">
                 <v-icon
                     icon="mdi-tag-check-outline"
@@ -164,7 +166,7 @@
                 <h3 class="t20 w400 text-grey-darken-1 product-section-header my-5">مزایا و معایب</h3>
             </header>
 
-            <div v-if="advantages">
+            <div v-if="advantages && advantages !== 'null' && advantages !== null">
                 <div class="d-flex align-center my-3">
                     <v-icon
                         color="success"
@@ -177,7 +179,7 @@
                 <p class="t12 w400 l20 text-grey" v-html="advantages" />
             </div>
 
-            <div v-if="disadvantages">
+            <div v-if="disadvantages && disadvantages !== 'null' && disadvantages !== null">
                 <div class="d-flex align-center my-3">
                     <v-icon
                         color="danger"
