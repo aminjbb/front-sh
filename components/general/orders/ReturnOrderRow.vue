@@ -43,7 +43,7 @@
     </header>
 
     <div>
-        <template v-for="(order, index) in content.details" :key="`order${order.id}`">
+        <template v-for="(order, index) in content.order.details" :key="`order${order.id}`">
             <generalProductOrderCard
                 :content="order"
                 orderStatus="return"

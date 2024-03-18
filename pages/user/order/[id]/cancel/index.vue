@@ -174,7 +174,7 @@
                     cols="4"
                     md="3"
                     class="d-flex flex-column">
-                  <div class="t13 w400 text-grey mb-2">هزینه مرجوعی:</div>
+                  <div class="t13 w400 text-grey mb-2">هزینه مرجوعی کل سفارش:</div>
                   <div class="d-flex align-center">
                                     <span
                                         class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">

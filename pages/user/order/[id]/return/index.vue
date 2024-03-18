@@ -30,23 +30,25 @@
                             <div class="d-flex align-center justify-start">
                                 <div class="w-checkbox">
                                     <v-checkbox
+                                        v-model="selectedValue"
                                         hide-details
-                                        @click="addToSelectedProduct(index,order)"
+                                        @change="addToSelectedProduct(index,order)"
                                         :value="order.id" />
                                 </div>
 
                                 <generalProductOrderCard
+                                    :ref="`orderCancelCard${order.id}`"
                                     class="flex-grow-1"
                                     :content="order"
                                     cancel
                                     hideButtons
                                     :index="index"
-                                    :showCount="value[index] !== false && value[index] && chooseAll !== true ? true : false"
-                                    :showAllCount="value[index] !== false && value[index] && chooseAll === true ? true : false"
-                                    @productCount="changeProductCount" />
+                                    :showCount="value[index] !== false && value[index]=== order.id && chooseAll !== true ? true : false"
+                                    :showAllCount="value[index] !== false && value[index]=== order.id && chooseAll === true ? true : false"
+                                    @changeProductCount="changeProductCount" />
                             </div>
 
-                            <div v-if="value[index] !== false && value[index] && chooseAll !== true" class="v-order--return__accordion">
+                            <div v-if="value[index] !== false && value[index] === order.id && chooseAll !== true" class="v-order--return__accordion">
                                 <div class="mb-5">
                                     <label class="d-block t13 text-grey-darken-1 mb-2">علت مرجوعی<span class="text-red-accent-4">*</span> </label>
                                     <v-select
@@ -159,7 +161,7 @@
 
                         <div class="d-flex align-center justify-end mt-5">
                             <v-btn
-                                @click="returnStep = 1"
+                                @click="backToFirstStep()"
                                 height="44"
                                 title="بازگشت"
                                 class="btn btn--cancel ml-3">
@@ -189,7 +191,6 @@
 
                         <div class="d-flex align-center justify-end mt-5">
                             <v-btn
-                                href="/user/order"
                                 height="44"
                                 title="بازگشت به صفحه اصلی"
                                 class="btn btn--cancel ml-3">
@@ -197,6 +198,7 @@
                             </v-btn>
 
                             <v-btn
+                                :href="`/user/order/${orderReturnOrRejectObject.data.data.id}/return/details`"
                                 height="44"
                                 title="پیگیری درخواست"
                                 class="btn btn--submit">
@@ -251,6 +253,7 @@ export default {
                 }
             ],
             value: [],
+            selectedValue: [],
             returnReasonValueTitle: [],
             returnReasonValueDesc: [],
             returnReasonValueCatch: [],
@@ -323,6 +326,8 @@ export default {
          */
         addToSelectedProduct(productIndex, item) {
             const valuesIndex = this.value.findIndex(element => element == item.id);
+             const selectedProductIndex = this.selectedProducts.findIndex(element => element.id == item.id);
+
             if (valuesIndex == -1) {
                 this.value[productIndex] = item.id;
                 const obj = {
@@ -332,8 +337,13 @@ export default {
                 }
                 this.selectedProducts.push(obj);
             } else {
-                this.value.splice(valuesIndex, 1);
-                this.selectedProducts.splice(valuesIndex, 1);
+                if (selectedProductIndex !== -1) {
+                    this.selectedProducts.splice(selectedProductIndex, 1);
+                }
+                //this.value.splice(valuesIndex, 1);
+                this.value[valuesIndex] = null;
+                //this.selectedProducts.splice(valuesIndex, 1);
+                this.$refs[`orderCancelCard${item.id}`][0].productCount = 1;
             }
         },
 
@@ -373,6 +383,10 @@ export default {
          * create formData and send to api
          */
         createFormDataAndSendToServer(accept) {
+            this.returnReasonValueTitleStep2 = [];
+            this.returnReasonValueDescStep2 = [];
+            this.returnReasonValueCatchStep2 = [];
+
             if(accept === 0){
                 this.loadingStep1 = true;
             }else{
@@ -400,7 +414,13 @@ export default {
                 this.returnReasonValueTitleStep2.push(this.returnReasonValueTitle[findIndex].label);
                 this.returnReasonValueDescStep2.push(this.returnReasonValueDesc[findIndex]);
                 this.returnReasonValueCatchStep2.push(this.returnReasonValueCatch[findIndex].value);
+
+                
             })
+            console.log('this.returnReasonValueTitleStep2',this.returnReasonValueTitleStep2)
+            console.log('this.returnReasonValueDescStep2',this.returnReasonValueDescStep2)
+
+            console.log('this.returnReasonValueCatchStep2',this.returnReasonValueCatchStep2)
             formData.append(`order_id`, this.$route.params.id)
             formData.append(`accept`, accept)
             this.accept = accept;
@@ -438,6 +458,16 @@ export default {
                 // WORKAROUND: fixes dialog menu popup position
                 setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
             }
+        },
+
+        backToFirstStep() {
+            this.returnStep = 1;
+            setTimeout(() => {
+                this.selectedProducts.forEach((product) => {
+                this.$refs[`orderCancelCard${product.id}`][0].productCount = product.count;
+                })
+            }, 1000)
+
         }
     },
 
