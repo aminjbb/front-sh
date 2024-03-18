@@ -131,9 +131,9 @@ export default function setup() {
             loading.value = false
         });
     };
-    async function cancelReturnedOrder() {
+    async function cancelReturnedOrder(id) {
         axios
-            .post(runtimeConfig.public.apiBase + `/order/returned/detail/cancel/${route.params.id}`, {
+            .post(runtimeConfig.public.apiBase + `/order/returned/detail/cancel/${id}`, {
 
             }, {
                 headers: {
@@ -141,7 +141,7 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                getReturnedOrderList()
+                window.location.reload();
             })
             .catch((err) => {
 
