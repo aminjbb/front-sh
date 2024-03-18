@@ -281,10 +281,11 @@ export default {
         this.$router.push({
           query: {
             ...query,
-            order: order, order_type: orderType
-
+            order: order, order_type: orderType,
+            page:1
           }
         })
+        this.page = 1
       }
 
     },
