@@ -517,7 +517,7 @@ export default {
          * get cities after select province
          */
         getCitiesList() {
-          console.log('injaaam')
+
             this.form.city = null
             this.getCities(this.form.province)
         },
