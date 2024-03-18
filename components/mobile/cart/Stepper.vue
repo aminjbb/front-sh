@@ -41,7 +41,7 @@
     </template>
 
     <template v-if="activeStep === 3">
-        <desktopCartPaymentStep ref="paymentStep" @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="voucher && voucher?.paid_price ? voucher.paid_price + voucher.sending_price : data.paid_price + data.sending_price" @deleteBasketVoucher="deleteBasketVoucher" />
+        <desktopCartPaymentStep :voucherBasket="data.voucher" ref="paymentStep" @selectedPayment="getPayment" @setDiscountCode="getDiscountCode" :paymentMount="voucher && voucher?.paid_price ? voucher.paid_price + voucher.sending_price : data.paid_price + data.sending_price" @deleteBasketVoucher="deleteBasketVoucher" />
 
         <generalModalsErrorOrder :orderSendingMethod="orderSendingMethod" :orderAddressId="orderAddressId.id" :orderPaymentMethod="orderPaymentMethod"/>
 
