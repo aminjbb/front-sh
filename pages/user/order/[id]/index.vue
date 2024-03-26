@@ -39,7 +39,7 @@
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
-                                <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.id }}</span>
+                                <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.order_number }}</span>
                             </v-col>
                             <v-col
                                 cols="12"
