@@ -16,7 +16,7 @@
             </h2>
 
             <span class="t14 text-grey-darken-2 mb-10 number-font">
-                سفارش شما با شماره {{transactionData.order_id}} با موفقیت ثبت کردید.
+                سفارش شما با شماره {{transactionData.order_number}} با موفقیت ثبت کردید.
             </span>
 
             <img src="~/assets/images/2basket.jpg" alt="payment-image" width="249" height="210">
