@@ -68,8 +68,22 @@
                         </span>
                     </div>
                     <div v-if="freeDelivery" class="d-flex align-center justify-space-between mb-4">
-                        <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
+                      <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
+                      <span>
+                         <template v-if="voucher">
+                        <span v-if="voucher.sending_price == 0"> رایگان</span>
+                        <span v-else class="number-font">
+                                    {{ splitChar(Number(String(voucher.sending_price).slice(0, -1))) }}
+                                </span>
+                        <span v-if="voucher.sending_price != 0" class="t12 w400 text-grey-darken-3">تومان</span>
+                      </template>
+                          <template v-else>
+
                         <span class="t16 w400 text-grey-darken-3 number-font">رایگان</span>
+                      </template>
+                      </span>
+
+
                     </div>
 
                     <div class="d-flex align-center justify-space-between mb-4">
