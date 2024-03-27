@@ -417,10 +417,7 @@ export default {
 
                 
             })
-            console.log('this.returnReasonValueTitleStep2',this.returnReasonValueTitleStep2)
-            console.log('this.returnReasonValueDescStep2',this.returnReasonValueDescStep2)
 
-            console.log('this.returnReasonValueCatchStep2',this.returnReasonValueCatchStep2)
             formData.append(`order_id`, this.$route.params.id)
             formData.append(`accept`, accept)
             this.accept = accept;
