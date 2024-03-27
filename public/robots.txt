@@ -1,0 +1,8 @@
+User-agent: * 
+Sitemap: https://shavaz.com/sitemap.xml 
+disallow: /blog/wp-admin/ 
+allow: /blog/wp-admin/admin-ajax.php 
+allow: /blog/wp-content/uploads 
+Disallow: /cart 
+Disallow: /search* 
+Disallow: /blog/?s*
