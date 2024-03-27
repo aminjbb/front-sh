@@ -370,7 +370,6 @@ export default {
 
         backToFirstStep() {
             this.cancelingStep = 1;
-            console.log("🚀 ~ addToSelectedProduct ~ this.selectedProducts:", this.selectedProducts)
             setTimeout(() => {
                 this.selectedProducts.forEach((product) => {
                     this.$refs[`orderCancelCard${product.id}`][0].productCount = product.count;
