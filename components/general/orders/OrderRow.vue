@@ -23,7 +23,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     کد سفارش:
                 </span>
-                <span v-if="content.id" class="t12 w400 text-pink-darken-2 number-font">{{content.id}}</span>
+                <span v-if="content.order_number" class="t12 w400 text-pink-darken-2 number-font">{{content.order_number}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
