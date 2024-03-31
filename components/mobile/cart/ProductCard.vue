@@ -108,6 +108,11 @@ import {
 import Basket from '@/composables/Basket.js'
 
 export default {
+    data() {
+        return {
+            reloadingPage: false,
+        }
+    },
     setup() {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
         const userToken = useCookie('userToken');
@@ -201,6 +206,56 @@ export default {
             this.deleteShpsBasket(this.content ?.shps ?.id)
             this.$refs.deleteProduct.dialog =false;
             this.$refs.deleteProduct.loading =false;
+        },
+
+        /**
+         * Enhance E-commerce for Seo
+         * @param {*} product 
+         * @param {*} price 
+         */
+         enhanceECommerceAddToCart(product){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.addToCart',
+            'ecommerce': {
+                'currencyCode': 'RIL',
+                'add': {
+                'products': [{
+                    'name': product.shps?.sku?.label,
+                    'id': product.shps?.sku?.id,
+                    'price': Number(String(product.current_total_site_price).slice(0, -1)),
+                    'brand': product.shps?.sku?.brand?.label,
+                    'category': null,
+                    'quantity': this.count
+                }]
+                }
+            }
+            });
+        },
+
+        /**
+         * Enhance E-commerce for Seo
+         * @param {*} product 
+         * @param {*} price 
+         */
+         enhanceECommerceRemoveFromCart(product){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.removeFromCart',
+            'ecommerce': {
+                'currencyCode': 'RIL',
+                'add': {
+                'products': [{
+                    'name': product.shps?.sku?.label,
+                    'id': product.shps?.sku?.id,
+                    'price': Number(String(product.current_total_site_price).slice(0, -1)),
+                    'brand': product.shps?.sku?.brand?.label,
+                    'category': null,
+                    'quantity': this.count
+                }]
+                }
+            }
+            });
         }
     },
 
@@ -211,6 +266,17 @@ export default {
     watch: {
         content(val) {
             this.count = val.count
+        },
+
+        count(newVal,oldVal){
+            if (this.reloadingPage === true){
+                if(newVal > oldVal){
+                    this.enhanceECommerceAddToCart(this.content)
+                } else if(newVal < oldVal){
+                    this.enhanceECommerceRemoveFromCart(this.content)
+                }
+            }
+            this.reloadingPage = true
         }
     }
 }

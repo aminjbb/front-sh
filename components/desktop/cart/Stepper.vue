@@ -229,12 +229,17 @@ export default {
                     } else {
                         if (this.activeStep === 3) {
                             this.createOrder(this.orderSendingMethod, '', this.orderAddressId, this.orderPaymentMethod)
+                            this.enhanceECommerceGetPayment();
                         } else {
                             this.active[this.activeStep] = false;
                             this.previousSteps[this.activeStep] = false;
                             this.activeStep++;
                             this.active[this.activeStep] = true;
                             this.previousSteps[this.activeStep - 1] = true;
+
+                            if(this.activeStep === 3){
+                                this.enhanceECommerceGetWay();
+                            }
                         }
 
                     }
@@ -245,6 +250,10 @@ export default {
                         this.activeStep++;
                         this.active[this.activeStep] = true;
                         this.previousSteps[this.activeStep - 1] = true;
+
+                        if(this.activeStep === 2){
+                            this.enhanceECommerceSkuList()
+                        }
                     } else {
                         localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
                         this.$router.push('/login')
@@ -276,6 +285,36 @@ export default {
 
                 this.activeButton = false;
             }
+        },
+
+        /**
+         * Enhance E-commerce for Seo in Checkout Step 1 for Sku list
+         * @param {*} products
+         */
+        enhanceECommerceSkuList(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    'name': item.shps?.sku?.label,
+                    'id': item.shps?.sku?.id, 
+                    'price': Number(String(item.current_site_price).slice(0, -1)),  
+                    'brand': item?.shps?.sku?.brand?.name,   
+                    'category': null, 
+                    'quantity': item.count 
+                }
+                productArr.push(obj);
+            })
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.checkout',
+            'ecommerce': {
+                'checkout': {
+                    'actionField': {'step': 1}, 
+                    'products': productArr
+                }
+            }
+            });
         },
 
         /**
@@ -313,6 +352,22 @@ export default {
         },
 
         /**
+         * Enhance E-commerce for Seo in Checkout Step 2 when ways selected
+         */
+        enhanceECommerceGetWay(){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.checkoutOption',
+            'ecommerce': {
+                'checkout_option': {
+                    'actionField': {'step': 2}, 
+                    'option':  this.$store.getters['get_orderSendingMethod'],
+                }
+            }
+            });
+        },
+
+        /**
          * Selected time from SendingInformationTime component
          * @param {*} arr
          */
@@ -338,6 +393,22 @@ export default {
             this.calculateVoucher(code);
         },
 
+         /**
+         * Enhance E-commerce for Seo in Checkout Step 3 when payment way selected
+         */
+         enhanceECommerceGetPayment(){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.checkout',
+            'ecommerce': {
+                'checkout_option': {
+                    'actionField': {'step': 3}, 
+                    'option':  this.$store.getters['get_orderPayMethod'],
+                }
+            }
+            });
+        },
+
         /**
          * Delete voucher from basket
          */
@@ -345,7 +416,7 @@ export default {
             if (active) {
                 this.deleteVoucherFromBasket();
             }
-        }
+        },
     },
 
     watch: {

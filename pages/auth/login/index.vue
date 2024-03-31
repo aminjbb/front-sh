@@ -335,13 +335,22 @@ export default {
                     if (this.randomNumberForBasket) {
                         await this.syncBasket()
                     }
+
+                    if(response.data.data.user?.is_signed_up === 0){
+                        this.enhanceEcommereRegister();
+                    }
+
+                    if(response.data.data?.user.is_signed_up === 1){
+                        this.enhanceEcommereLogin();
+                    }
+
                     const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
                         headers: {
                             Authorization: `Bearer ${this.userToken}`,
                         },
                     });
 
-                    if (completeResponse.data == false) {
+                    if (completeResponse.data.data === false) {
                         this.loginStep = 3;
 
                     } else {
@@ -407,6 +416,20 @@ export default {
                 this.loading = false;
             }
         },
+
+        enhanceEcommereRegister(){
+            dataLayer.push(
+            {
+                'event': 'Register',  //  اسم ایونت دقیقا همین مقدار وارد شود
+            });
+        },
+
+        enhanceEcommereLogin(){
+            dataLayer.push(
+            {
+                'event': 'login',  //  اسم ایونت دقیقا همین مقدار وارد شود
+            });
+        }
     },
 };
 </script>

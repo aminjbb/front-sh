@@ -97,6 +97,7 @@ export default {
         return {
             loading: false,
             notSelected: false,
+            reloadingPage: false,
         }
     },
 
@@ -122,7 +123,41 @@ export default {
         /**
          * Revers column
          */
-        revers: Boolean
+        revers: Boolean,
+
+        /**
+         * Product details
+         * For Seo
+         */
+        productDetails: Object,
+
+        /**
+         * Product Category
+         * For seo
+         */
+        productCategory: String
+    },
+
+    computed: {
+        userBasket() {
+            try {
+                const basket = this.$store.getters['get_basket']
+                
+                const data = basket?.data?.data?.details.find(item => item?.shps?.id === this.content.id)
+
+                if(!data){
+                    this.notSelected = true;
+                    this.count = 0;
+                }else{
+                    this.notSelected = false
+                    this.count = data.count;
+                }
+
+                return basket ?.data ?.data
+            } catch (e) {
+                return []
+            }
+        }
     },
 
     methods: {
@@ -131,20 +166,22 @@ export default {
          * @param {*} id 
          */
         async addToCard(id) {
-          if (this.userToken){
-              this.addToBasket(id , this.count, 'increase')
-          }
+            if (this.userToken){
+                this.addToBasket(id , this.count, 'increase')
+            }
 
-          else{
-              if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                  this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket, 'increase')
-              }
-              else{
-                  const randomNumber = this.createRandomNumber()
-                  this.randomNumberForBasket = randomNumber
-                  this.beforeAuthAddToBasket(id , this.count , randomNumber.toString(), 'increase')
-              }
-          }
+            else{
+                if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
+                    this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket, 'increase')
+                }
+                else{
+                    const randomNumber = this.createRandomNumber()
+                    this.randomNumberForBasket = randomNumber
+                    this.beforeAuthAddToBasket(id , this.count , randomNumber.toString(), 'increase')
+                }
+            }
+
+            this.reloadingPage = true
         },
 
         createRandomNumber(){
@@ -199,21 +236,72 @@ export default {
                 }
             }
         },
+
+        /**
+         * Enhance E-commerce for Seo
+         * @param {*} product 
+         * @param {*} price 
+         */
+        enhanceECommerceAddToCart(product,price){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.addToCart',
+            'ecommerce': {
+                'currencyCode': 'RIL',
+                'add': {
+                'products': [{
+                    'name': product.label,
+                    'id': product.id,
+                    'price': Number(String(price.customer_price).slice(0, -1)),
+                    //'brand': 'GoldenRose',
+                    'category': this.productCategory,
+                    'quantity': this.count
+                }]
+                }
+            }
+            });
+        },
+
+        /**
+         * Enhance E-commerce for Seo
+         * @param {*} product 
+         * @param {*} price 
+         */
+         enhanceECommerceRemoveFromCart(product,price){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.removeFromCart',
+            'ecommerce': {
+                'currencyCode': 'RIL',
+                'add': {
+                'products': [{
+                    'name': product.label,
+                    'id': product.id,
+                    'price': Number(String(price.customer_price).slice(0, -1)),
+                    //'brand': 'GoldenRose',
+                    'category': this.productCategory,
+                    'quantity': this.count
+                }]
+                }
+            }
+            });
+        }
     },
 
     watch:{
         content(val){
-          if (this.userToken){
-              if (val.in_basket > 0) {
-                  this.count = val.in_basket
-              }
-          }else{
-              const pageSlug = this.$route.params.slug;
-              const productInBasket = this.userBasket?.details.find(element => element?.shps?.sku?.slug === pageSlug)
-              if (productInBasket) {
-                  this.count = productInBasket.count
-              }
-          }
+            if (this.userToken){
+                if (val.in_basket > 0) {
+                    this.count = val.in_basket
+                }
+            }else{
+                const pageSlug = this.$route.params.slug;
+                const productInBasket = this.userBasket?.details.find(element => element?.shps?.sku?.slug === pageSlug)
+                if (productInBasket) {
+                    this.count = productInBasket.count
+                }
+            }
+
         },
 
         userBasket(newVal){
@@ -231,28 +319,17 @@ export default {
                 this.notSelected = true;
                 this.count = 0;
             }
-        }
-    },
+        },
 
-    computed: {
-        userBasket() {
-            try {
-                const basket = this.$store.getters['get_basket']
-                
-                const data = basket?.data?.data?.details.find(item => item?.shps?.id === this.content.id)
-
-                if(!data){
-                    this.notSelected = true;
-                    this.count = 0;
-                }else{
-                    this.notSelected = false
-                    this.count = data.count;
+        count(newVal,oldVal){
+            if (this.reloadingPage === true){
+                if(newVal > oldVal){
+                    this.enhanceECommerceAddToCart(this.productDetails,this.content)
+                } else if(newVal < oldVal){
+                    this.enhanceECommerceRemoveFromCart(this.productDetails,this.content)
                 }
-
-                return basket ?.data ?.data
-            } catch (e) {
-                return []
             }
+            this.reloadingPage = true
         }
     },
 }

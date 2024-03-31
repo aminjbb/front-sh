@@ -142,7 +142,7 @@ export default {
         selectedWay(){
             this.$emit('selectedWay', this.waysModal);
 
-        }
+        },
     },
 
     beforeMount() {
