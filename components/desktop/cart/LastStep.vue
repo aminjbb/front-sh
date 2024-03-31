@@ -56,7 +56,7 @@
 
         <div class="d-flex flex-column align-center justify-center mt-10">
             <h2 class="t22 w500 text-grey-darken-3 mb-5 number-font pt-10">
-                سفارش شما به شماره {{transactionData.order_id}} به مبلغ {{ splitChar(Number(String(transactionData.amount ).slice(0, -1))) }} تومان در انتظار پرداخت است
+                سفارش شما به شماره {{transactionData.order_number}} به مبلغ {{ splitChar(Number(String(transactionData.amount ).slice(0, -1))) }} تومان در انتظار پرداخت است
             </h2>
             
             <span class="t14 text-grey-darken-2 mb-10 number-font">
@@ -127,10 +127,43 @@ export default {
     },
 
     methods: {
+        /**
+         * Enhance E-commerce for Seo in Checkout Step 4 after payment
+         * @param {*} products
+         */
+         enhanceECommerceLastStep(){
+            if(transactionData.status=== 'success'){
+                let productArr = [];
+                this.data.details.forEach(item =>{
+                    const obj={
+                        'name': item.shps?.sku?.label,
+                        'id': item.shps?.sku?.id, 
+                        'price': Number(String(item.current_site_price).slice(0, -1)),  
+                        'brand': item?.shps?.sku?.brand?.name,   
+                        'category': null, 
+                        'quantity': item.count 
+                    }
+                    productArr.push(obj);
+                })
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                'event': 'eec.purchase',
+                'ecommerce': {
+                    'purchase': {
+                        'actionField': {
+                            'id': this.transactionData?.id,
+                        },
+                    }
+                }
+                });
+            }
+        },
     },
 
     mounted() {
         this.getTransactionData();
+        this.enhanceECommerceLastStep();
     }
 }
 </script>

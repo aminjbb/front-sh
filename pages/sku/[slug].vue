@@ -28,7 +28,12 @@
                             <desktopProductSingleSelectedSeller :content="productSelectedSeller" />
                         </v-col>
                         <v-col md="5" lg="4">
-                            <generalAddToBasket :content="productSelectedSeller" />
+                   
+                            <generalAddToBasket 
+                                :content="productSelectedSeller" 
+                                :productDetails="productDetail"  
+                                :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                                />
                         </v-col>
                     </v-row>
                 </template>
@@ -78,6 +83,8 @@
             <div class="mobile-basket">
                 <generalAddToBasket
                     :content="productSelectedSeller"
+                    :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                    :productDetails="productDetail"
                     revers="revers"
                     :mdCols="['6','6']"
                     :smCols="['4','8']" />
@@ -188,6 +195,7 @@ export default {
       },
         productDetail() {
             try {
+                
                 return this.product.data.data
             } catch (e) {
                 return ''
@@ -259,11 +267,43 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+       // this.enhanceECommerce(this.product)
     },
 
     watch:{
         skuTitle(newVal){
             this.title = newVal
+        },
+
+        productDetail(newVal){
+            if(newVal && newVal !==null){
+                this.enhanceECommerce(newVal,this.productSelectedSeller)
+            }
+        }
+    },
+
+    methods:{
+        /**
+         * Enhance E-commerce for Seo
+         * @param {*} product 
+         * @param {*} price 
+         */
+        enhanceECommerce(product,price){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            'event': 'eec.productDetail',
+            'ecommerce': {
+                'detail': {
+                'products': [{
+                    'name': product.label,
+                    'id': product.id,
+                    'price': Number(String(price.customer_price).slice(0, -1)),
+                    //'brand': 'GoldenRose',
+                    'category': this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug
+                }]
+                }
+            }
+            });
         }
     },
 
