@@ -16,6 +16,7 @@
                     :key="`tab-slider__${index}`"
                     @click="activeTab(tab.id,setRef)"
                     :id="`tab-header-${tab.id}`"
+                    class="tab-slider__header__item"
                     :class="index == 0 ? 'active' : ''">
                     <span>{{tab.label}}</span>
 
