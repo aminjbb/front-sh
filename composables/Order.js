@@ -111,7 +111,7 @@ export default function setup() {
             })
             .then((response) => {
                 if (accept === 1) {
-                    useNuxtApp().$toast.success('درخواست شما با موقیت ثبت شد', {
+                    useNuxtApp().$toast.success('درخواست شما با موفقیت ثبت شد', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
