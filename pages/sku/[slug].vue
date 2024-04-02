@@ -32,7 +32,7 @@
                             <generalAddToBasket 
                                 :content="productSelectedSeller" 
                                 :productDetails="productDetail"  
-                                :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                                :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
                                 />
                         </v-col>
                     </v-row>
@@ -83,7 +83,7 @@
             <div class="mobile-basket">
                 <generalAddToBasket
                     :content="productSelectedSeller"
-                    :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                    :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
                     :productDetails="productDetail"
                     revers="revers"
                     :mdCols="['6','6']"
@@ -109,7 +109,10 @@ export default {
             getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb , breadcrumb , skuTitle , description
+            getBreadcrumb,
+            breadcrumb,
+            skuTitle,
+            description,
         } = new PDP()
 
         useHead({
@@ -126,73 +129,77 @@ export default {
             getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb , breadcrumb , title , description,skuTitle
+            getBreadcrumb,
+            breadcrumb,
+            title,
+            description,
+            skuTitle,
         }
 
     },
+    
     data() {
         return {
             screenType: null,
             content: null,
-
             selectedSeller: null,
-            /** cheaper seller or selected seller*/
+            called :false
         }
     },
 
     computed: {
-      breadcrumbList(){
-        let breadcrumb = []
-        if(this.breadcrumb?.category_l1.name){
-          const form = {
-            type : "category_l1",
-            href: `/category/${this.breadcrumb.category_l1.slug}`,
-            title: this.breadcrumb.category_l1.name
-          }
-          breadcrumb.push(form)
+        breadcrumbList(){
+            let breadcrumb = []
+            if(this.breadcrumb?.category_l1.name){
+            const form = {
+                type : "category_l1",
+                href: `/category/${this.breadcrumb.category_l1.slug}`,
+                title: this.breadcrumb.category_l1.name
+            }
+            breadcrumb.push(form)
 
-        }
-        if(this.breadcrumb?.category_l2.name){
-          const form = {
-            type : "category_l2",
-            href: `/category/${this.breadcrumb.category_l2.slug}`,
-            title: this.breadcrumb.category_l2.name
-          }
-          breadcrumb.push(form)
+            }
+            if(this.breadcrumb?.category_l2.name){
+            const form = {
+                type : "category_l2",
+                href: `/category/${this.breadcrumb.category_l2.slug}`,
+                title: this.breadcrumb.category_l2.name
+            }
+            breadcrumb.push(form)
 
-        }
-        if(this.breadcrumb?.category_l3.name){
-          const form = {
-            type : "category_l3",
-            href: `/category/${this.breadcrumb.category_l3.slug}`,
-            title: this.breadcrumb.category_l3.name
-          }
-          breadcrumb.push(form)
+            }
+            if(this.breadcrumb?.category_l3.name){
+            const form = {
+                type : "category_l3",
+                href: `/category/${this.breadcrumb.category_l3.slug}`,
+                title: this.breadcrumb.category_l3.name
+            }
+            breadcrumb.push(form)
 
-        }
+            }
 
-        if(this.breadcrumb?.product.name){
-          const form = {
-            type : "product",
-            href: `/product/${this.breadcrumb.product.slug}`,
-            title: this.breadcrumb.product.name
-          }
-          breadcrumb.push(form)
+            if(this.breadcrumb?.product.name){
+            const form = {
+                type : "product",
+                href: `/product/${this.breadcrumb.product.slug}`,
+                title: this.breadcrumb.product.name
+            }
+            breadcrumb.push(form)
 
-        }
-        if(this.breadcrumb?.sku_group.name){
-          const form = {
-            type : "sku_group",
-            href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
-            disabled: false,
-            title: this.breadcrumb.sku_group.name
-          }
-          breadcrumb.push(form)
+            }
+            if(this.breadcrumb?.sku_group.name){
+            const form = {
+                type : "sku_group",
+                href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
+                disabled: false,
+                title: this.breadcrumb.sku_group.name
+            }
+            breadcrumb.push(form)
 
-        }
+            }
 
-        return breadcrumb
-      },
+            return breadcrumb
+        },
         productDetail() {
             try {
                 
@@ -245,6 +252,7 @@ export default {
                 return []
             }
         },
+
         skuComments() {
             try {
                 return this.pdpSecondaryData.comments.data
@@ -267,7 +275,6 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
-       // this.enhanceECommerce(this.product)
     },
 
     watch:{
@@ -275,14 +282,26 @@ export default {
             this.title = newVal
         },
 
-        productDetail(newVal){
-            if(newVal && newVal !==null){
-                this.enhanceECommerce(newVal,this.productSelectedSeller)
+        productDetail(newValue, oldValue) {
+            if(newValue && newValue !== null && this.breadcrumb !== null){
+                this.handleWatchChange();
+                this.called = true;
             }
-        }
+        },
+
+        breadcrumb(newValue, oldValue) {
+            if(newValue && newValue !== null && this.productDetail !== null && this.called === false){
+                this.handleWatchChange();
+                this.called = true;
+            }
+        },
     },
 
     methods:{
+        handleWatchChange() {
+            this.enhanceECommerce(this.productDetail,this.productSelectedSeller)
+        },
+
         /**
          * Enhance E-commerce for Seo
          * @param {*} product 
@@ -298,7 +317,7 @@ export default {
                     'name': product.label,
                     'id': product.id,
                     'price': Number(String(price.customer_price).slice(0, -1)),
-                    //'brand': 'GoldenRose',
+                    'brand': null,
                     'category': this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug
                 }]
                 }
