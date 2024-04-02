@@ -92,16 +92,6 @@
                             </v-col>
 
                             <v-col cols="4" md="3" class="d-flex flex-column">
-                                <div class="t13 w400 text-grey mb-2">هزینه ارسال:</div>
-                                <div class="d-flex align-center">
-                                    <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar(Number(String(orderReturnOrReject?.sending_price).slice(0, -1))) }}
-                                    </span>
-                                    <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
-                                </div>
-                            </v-col>
-
-                            <v-col cols="4" md="3" class="d-flex flex-column">
                                 <div class="t13 w400 text-grey mb-2">هزینه مرجوعی کل سفارش:</div>
                                 <div class="d-flex align-center">
                                     <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
