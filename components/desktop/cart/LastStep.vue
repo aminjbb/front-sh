@@ -161,9 +161,16 @@ export default {
         },
     },
 
+    watch:{
+        transactionData(newVal){
+            if(newVal && newVal!==null){
+                this.enhanceECommerceLastStep();
+            }
+        }
+    },
+
     mounted() {
         this.getTransactionData();
-        this.enhanceECommerceLastStep();
     }
 }
 </script>

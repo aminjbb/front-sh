@@ -337,11 +337,11 @@ export default {
                     }
 
                     if(response.data.data.user?.is_signed_up === 0){
-                        this.enhanceEcommereRegister();
+                        this.enhanceEcommereLogin();
                     }
 
                     if(response.data.data?.user.is_signed_up === 1){
-                        this.enhanceEcommereLogin();
+                        this.enhanceEcommereRegister();
                     }
 
                     const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
@@ -420,14 +420,14 @@ export default {
         enhanceEcommereRegister(){
             dataLayer.push(
             {
-                'event': 'Register',  //  اسم ایونت دقیقا همین مقدار وارد شود
+                'event': 'Register',
             });
         },
 
         enhanceEcommereLogin(){
             dataLayer.push(
             {
-                'event': 'login',  //  اسم ایونت دقیقا همین مقدار وارد شود
+                'event': 'login',
             });
         }
     },
