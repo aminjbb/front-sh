@@ -7,6 +7,21 @@
 </template>
 
 <script setup>
+
+useSeoMeta({
+  themeColor:'#D72685',
+  ogType:'',
+  ogTitle: 'فروشگاه اینترنتی شاواز',
+  ogSite_name: 'شاواز',
+  ogDescription: ' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com - خرید اینترنتی لوازم آرایشی و بهداشتی با ضمانت اصالت کالا -  برای خرید کلیک کنید!',
+  ogLocale: 'fa_IR',
+  twitterCard: 'summary_large_image',
+  twitterSite: '@ShavazCom',
+  twitterCreator: 'شاواز',
+  twitterTitle: 'فروشگاه اینترنتی شاواز',
+  twitterDescription: ' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com - خرید اینترنتی لوازم آرایشی و بهداشتی با ضمانت اصالت کالا -  برای خرید کلیک کنید!',
+})
+
 const runtimeConfig = useRuntimeConfig()
 
 useHead({
