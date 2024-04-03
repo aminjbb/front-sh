@@ -92,7 +92,7 @@ export default {
             ]
         }
     },
-    setup(props) {
+    setup() {
         const title = ref('فروشگاه اینترنتی شاواز | سوالات متداول')
         const description = ref("سوالات متداول و پرسش های پرتکرار از فروشگاه اینترنتی شاواز")
 
