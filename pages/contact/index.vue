@@ -257,7 +257,7 @@ export default {
             ],
         }
     },
-    setup(props) {
+    setup() {
         const title = ref('فروشگاه اینترنتی شاواز | تماس با ما')
         const description = ref("آنچه باید درباره شاواز بدانید")
 

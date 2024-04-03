@@ -200,7 +200,6 @@ export default {
 
     mounted() {
         document.addEventListener('click', this.closeSearchBox);
-
         this.getMostSearch();
     },
 
@@ -221,8 +220,10 @@ export default {
          * @param {*} event 
          */
         closeSearchBox(event) {
-            if (!event.target.closest('.header__search-box')) {
-                document.getElementById('header__search-box').classList.remove('active');
+            if(this.$route.name !== 'login' && this.$route.name !== 'forgotPassword'){
+                if (!event.target.closest('.header__search-box')) {
+                    document.getElementById('header__search-box').classList.remove('active');
+                }
             }
         },
 
