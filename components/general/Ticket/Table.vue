@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="ticket-table">
     <v-data-table
         class="table mt-5"

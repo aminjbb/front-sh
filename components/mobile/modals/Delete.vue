@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="text-center">
     <template v-if="buttonType == 'icon'">
         <v-icon

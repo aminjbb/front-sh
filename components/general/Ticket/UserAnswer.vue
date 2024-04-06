@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div v-if="content" class="ticket-answer ticket-answer--user d-flex align-start mt-5 l23">
     <v-icon
         icon="mdi-account-circle-outline"

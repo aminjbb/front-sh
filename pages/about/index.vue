@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-about">
     <v-container>
         <div class="v-about__banner">

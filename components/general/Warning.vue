@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="warning d-flex align-center">
     <v-icon :icon="icon" :color="color" class="ml-1"/>
     <span :class="`text-${color}`" class="t13 w400 mt-1">{{ text }}</span>
