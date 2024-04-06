@@ -132,11 +132,7 @@ export default {
     },
 
     mounted() {
-        if (!this.userToken) {
-            window.location = '/login';
-        } else {
-            this.getUserTicketList();
-        }
+        this.getUserTicketList();
     },
     
 }

@@ -5,6 +5,7 @@ import {
     ref
 } from 'vue';
 import axios from 'axios'
+import auth from "~/middleware/auth.js";
 
 export default function setup() {
     const userAddress = ref([]);
@@ -34,7 +35,12 @@ export default function setup() {
                 userAddress.value = response.data.data
             })
             .catch((err) => {
-
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 
@@ -70,7 +76,12 @@ export default function setup() {
                 userWallet.value = response.data.data
             })
             .catch((err) => {
-
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 
@@ -88,7 +99,12 @@ export default function setup() {
                 ticketList.value = response.data.data
             })
             .catch((err) => {
-
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 
@@ -106,7 +122,12 @@ export default function setup() {
                 singleTicket.value = response.data.data
             })
             .catch((err) => {
-
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 
@@ -124,7 +145,12 @@ export default function setup() {
                 wishList.value = response.data.data
             })
             .catch((err) => {
-
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             });
     };
 
@@ -142,7 +168,7 @@ export default function setup() {
                 productUserHistory.value = response.data.data
             })
             .catch((err) => {
-
+                
             });
     };
 
