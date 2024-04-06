@@ -62,42 +62,42 @@
 
             &.active {
                 &.order-tab__item--one {
-                    background: #FBE9F3 url('~/assets/images/order-tab5.png') no-repeat top center;
+                    background: #FBE9F3 url('~/assets/images/order-tab5-active.png') no-repeat top center !important;
 
                     @include gbp (0, 768) {
-                        background: transparent url('~/assets/images/order-tab5.png') no-repeat top center;
+                        background: transparent url('~/assets/images/order-tab5-active.png') no-repeat top center !important;
                     }
                 }
 
                 &.order-tab__item--two {
-                    background: #FBE9F3 url('~/assets/images/order-tab3.png') no-repeat top center;
+                    background: #FBE9F3 url('~/assets/images/order-tab3-active.png') no-repeat top center !important;
 
                     @include gbp (0, 768) {
-                        background: transparent url('~/assets/images/order-tab3.png') no-repeat top center;
+                        background: transparent url('~/assets/images/order-tab3-active.png') no-repeat top center !important;
                     }
                 }
 
                 &.order-tab__item--three {
-                    background: #FBE9F3 url('~/assets/images/order-tab4.png') no-repeat top center;
+                    background: #FBE9F3 url('~/assets/images/order-tab4-active.png') no-repeat top center !important;
 
                     @include gbp (0, 768) {
-                        background: transparent url('~/assets/images/order-tab4.png') no-repeat top center;
+                        background: transparent url('~/assets/images/order-tab4-active.png') no-repeat top center !important;
                     }
                 }
 
                 &.order-tab__item--four {
-                    background: #FBE9F3 url('~/assets/images/order-tab2.png') no-repeat top center;
+                    background: #FBE9F3 url('~/assets/images/order-tab2-active.png') no-repeat top center !important;
 
                     @include gbp (0, 768) {
-                        background: transparent url('~/assets/images/order-tab2.png') no-repeat top center;
+                        background: transparent url('~/assets/images/order-tab2-active.png') no-repeat top center !important;
                     }
                 }
 
                 &.order-tab__item--five {
-                    background: #FBE9F3 url('~/assets/images/order-tab1.png') no-repeat top center;
+                    background: #FBE9F3 url('~/assets/images/order-tab1-active.png') no-repeat top center;
 
                     @include gbp (0, 768) {
-                        background: transparent url('~/assets/images/order-tab1.png') no-repeat top center;
+                        background: transparent url('~/assets/images/order-tab1-active.png') no-repeat top center;
                     }
                 }
 
