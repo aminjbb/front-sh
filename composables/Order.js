@@ -14,10 +14,11 @@ export default function setup() {
     const order = ref(null);
     const orderReturnOrRejectObject = ref(null);
     const loading = ref(false)
-    const runtimeConfig = useRuntimeConfig()
-    const userToken = useCookie('userToken')
-    const route = useRoute()
-    const router = useRouter()
+    const runtimeConfig = useRuntimeConfig();
+    const userToken = useCookie('userToken');
+    const route = useRoute();
+    const router = useRouter();
+    const trackingDetails = ref([]);
 
     /**
      * Get user order list
@@ -131,6 +132,11 @@ export default function setup() {
             loading.value = false
         });
     };
+
+    /**
+     * Cancel return order
+     * @param {*} id 
+     */
     async function cancelReturnedOrder(id) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/returned/detail/cancel/${id}`, {
@@ -144,11 +150,35 @@ export default function setup() {
                 window.location.reload();
             })
             .catch((err) => {
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            });
+    };
+
+    /**
+     * Get order tracking
+     * @param {*} id 
+     */
+    async function trackingOrder(id) {
+        axios
+            .get(runtimeConfig.public.apiBase + `/order/tracking/${route.params.id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                trackingDetails.value = response.data.data
+            })
+            .catch((err) => {
 
             });
     };
 
     return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
-            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder}
+            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder, trackingOrder, trackingDetails}
 }
 

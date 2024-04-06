@@ -28,17 +28,18 @@
 
             <div class="interception-modal">
                 <v-data-table
+                    v-if="trackingDetails && trackingDetails.length"
                     class="table mt-5"
                     :headers="tableHeader"
-                    :items="itemsMoc"
+                    :items="trackingDetails"
                     :height="isMobile ? 'auto' : 358"
                     item-value="id">
                     <template v-slot:item="{ item }">
                         <tr class="v-data-table__tr">
                             <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font" :style="isMobile === true ? { backgroundColor: '#F5F5F5 !important'} : ''">
                                 <span class="w600 text-black ml-10" v-if="isMobile">کد مرسوله : </span>
-                                <template v-if="item.raw.id">
-                                    {{ item.raw.id }}
+                                <template v-if="item.raw.tracking_code">
+                                    {{ item.raw.tracking_code }}
                                 </template>
                                 <template v-else> ------- </template>
                             </td>
@@ -58,6 +59,7 @@
                         </tr>
                     </template>
                 </v-data-table>
+                <h4 class="w600 text-black text-center my-5 t16">در حال حاضر داده ای برای نمایش وجود ندارد.</h4>
             </div>
         </v-card>
     </v-dialog>
@@ -68,6 +70,7 @@
 import {
     VDataTable
 } from 'vuetify/labs/VDataTable'
+import Order from '@/composables/Order.js'
 
 export default {
 
@@ -77,29 +80,6 @@ export default {
             loading: false,
             screenType: null,
             isMobile: false,
-            items: [],
-            itemsMoc: [{
-                    id: null,
-                    status: 'پردازش انبار',
-                    created_at: '1402/06/12 - 11:24:52'
-                },
-                {
-                    id: 20020240118082397501,
-                    status: 'تحویل به پست',
-                    created_at: '1402/06/12 - 11:24:51'
-                },
-                {
-                    id: 20020240118082397501,
-                    status: 'ارسال به شهر مقصد',
-                    created_at: '1402/06/12 - 11:24:52'
-                },
-                {
-                    id: 20020240118082397501,
-                    status: 'تحویل گیرنده',
-                    created_at: null
-                }
-            ],
-
             tableHeader: [{
                     title: 'کد مرسوله',
                     key: 'id',
@@ -118,6 +98,17 @@ export default {
 
     components: {
         VDataTable
+    },
+
+    setup() {
+        const {
+            trackingOrder,
+            trackingDetails
+        } = new Order()
+        return {
+            trackingOrder,
+            trackingDetails
+        }
     },
 
     computed: {
@@ -140,6 +131,7 @@ export default {
     methods: {
         openModal() {
             this.dialog = true;
+            this.trackingOrder();
         },
 
         closeModal() {

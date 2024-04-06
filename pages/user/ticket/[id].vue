@@ -223,11 +223,7 @@ export default {
     },
 
     mounted() {
-        if (!this.userToken) {
-            window.location = '/login';
-        } else {
-            this.getUserTicketById();
-        }
+        this.getUserTicketById();
 
         /**
          * Check screen size
