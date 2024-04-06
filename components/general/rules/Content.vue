@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <section class="rules-content">
     <header class="rules-content__title" v-if="title">
         <h1 class="t20 w500 text-grey-darken-2 mb-5">

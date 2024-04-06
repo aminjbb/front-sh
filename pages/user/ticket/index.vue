@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-ticket">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/dashboard" class="ml-3">

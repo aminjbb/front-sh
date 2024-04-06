@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="filter-sidebar">
     <header class="d-flex align-center justify-space-between mb-5">
         <span class="t20 w400 text-grey-darken-3">فیلتر</span>

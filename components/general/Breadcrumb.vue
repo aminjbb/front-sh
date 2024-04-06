@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div v-if="(items && items.length) && screenType === 'desktop'">
     <v-breadcrumbs :items="items">
         <template v-slot:divider>

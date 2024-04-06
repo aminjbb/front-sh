@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="notification d-flex align-center justify-space-between px-3 py-2" :class='`bg-${color}-lighten-5`' :style="{border: `1px solid #${borderColorCode}`}">
     <div class="d-flex align-center flex-grow-1">
         <v-icon :icon="icon" :color="color" class="ml-1" />

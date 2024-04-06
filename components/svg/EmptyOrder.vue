@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150" fill="none">
     <g style="mix-blend-mode:multiply" opacity="0.17">
         <path d="M141.23 84.13C141.23 60.1719 121.808 40.75 97.85 40.75C73.8919 40.75 54.47 60.1719 54.47 84.13V102.74C54.47 126.698 73.8919 146.12 97.85 146.12C121.808 146.12 141.23 126.698 141.23 102.74V84.13Z" fill="#F5F5F5" />

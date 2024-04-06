@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-contact">
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />

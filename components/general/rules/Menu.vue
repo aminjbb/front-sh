@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <nav class="rules-menu card">
     <div class="xs-show" @click="openMenu()">
         <v-icon

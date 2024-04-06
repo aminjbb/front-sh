@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <svg xmlns="http://www.w3.org/2000/svg" width="131" height="137" viewBox="0 0 131 137" fill="none">
     <g clip-path="url(#clip0_922_5542)">
         <g opacity="0.17">

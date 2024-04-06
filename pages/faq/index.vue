@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-faq">
     <h1 class="ov-h h-0">سوالات متداول</h1>
 

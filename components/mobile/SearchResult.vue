@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="header__search-box" id="header__search-box">
     <div class="header__search-box__inner d-flex align-center w-100 px-2" @click="openModal()">
         <v-icon

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden }">
     <div class="d-flex align-center">
         <a href="/" class="d-flex align-center header__logo" title="Shavaz logo" id="mobile-logo">
