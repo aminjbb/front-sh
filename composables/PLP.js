@@ -6,7 +6,6 @@ import axios from 'axios'
 import {useRoute, useRouter} from "vue-router";
 import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
-import qs, {stringify} from "qs";
 
 export default function setup() {
     const productList = ref([]);

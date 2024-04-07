@@ -16,20 +16,16 @@ export default function setup() {
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
     const route = useRoute()
-    const router = useRouter()
-    const error = useError();
     const store = useStore()
     const skuTitle = ref('')
     const description = ref('')
-    async function getSecondaryData(query) {
+
+    async function getSecondaryData() {
         axios
             .get(runtimeConfig.public.apiBase + `/product/pdp/details/${route.params.slug}`, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
-                // params: {
-                //     comment_per_page: 20
-                // }
             })
             .then((response) => {
                 secondaryData.value = response
@@ -38,6 +34,7 @@ export default function setup() {
                 auth.checkAuthorization(err.response)
             });
     };
+
     async function getBreadcrumb(type) {
         axios
             .get(runtimeConfig.public.apiBase + `/product/breadcrumb/index?type=${type}&slug=${route.params.slug}`, {
@@ -54,7 +51,8 @@ export default function setup() {
                 auth.checkAuthorization(err.response)
             });
     };
-    async function getPdpData(query) {
+
+    async function getPdpData() {
         axios.get(runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
             {
                 headers: {

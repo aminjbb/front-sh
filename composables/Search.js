@@ -2,7 +2,6 @@
  * Order composable
  */
 import {ref} from 'vue';
-import {AxiosCall} from '~/utils/axios_call.js'
 import axios from 'axios'
 
 export default function setup() {

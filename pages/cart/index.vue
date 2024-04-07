@@ -7,12 +7,8 @@
         </template>
 
         <template v-else>
-            <template v-if="screenType === 'desktop'">
-                <desktopCartStepper :data="userBasket" />
-            </template>
-            <template v-if="screenType === 'mobile'">
-                <mobileCartStepper :data="userBasket" />
-            </template>
+            <desktopCartStepper v-if="screenType === 'desktop'" :data="userBasket" />
+            <mobileCartStepper v-if="screenType === 'mobile'" :data="userBasket" />
         </template>
     </v-container>
 </main>
