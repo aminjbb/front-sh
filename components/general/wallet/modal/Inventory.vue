@@ -105,14 +105,14 @@
 
                     <v-divider color="grey" class="mt-3 mb-5" />
                     <div class="pb-5">
-                        <span class="t12 w400 text-grey-darken-1 mb-2 d-block">شماره کارت <span class="text-red">*</span></span>
+                        <span class="t12 w400 text-grey-darken-1 mb-2 d-block">شماره شبا <span class="text-red">*</span></span>
 
                         <v-text-field
                             :rules="NumberCardCodeRule"
                             class="w-100 mb-10"
                             density="compact"
                             variant="outlined"
-                            hint="اطلاعات کارت داده شده باید متعلق به صاحب حساب باشد."
+                            hint="اطلاعات شبا داده شده باید متعلق به صاحب حساب باشد."
                             append-inner-icon="mdi-credit-card-outline"
                             v-model="cartNumber" />
 
@@ -209,7 +209,7 @@ export default {
             cartNumber: null,
             NumberCardCodeRule: [
                 (v) => !!v || "این فیلد الزامی است",
-                (v) => /^[0-9]{16}$/.test(v) || "شماره کارت معتبر وارد کنید",
+                (v) => /^[0-9]{24}$/.test(v) || "شماره شبا معتبر وارد کنید",
             ],
         }
     },
