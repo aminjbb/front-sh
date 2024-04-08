@@ -143,49 +143,49 @@ export default {
     computed: {
       breadcrumbList(){
         let breadcrumb = []
-        if(this.breadcrumb?.category_l1.name){
+        if(this.breadcrumb?.category_l1?.name){
           const form = {
             type : "category_l1",
-            href: `/category/${this.breadcrumb.category_l1.slug}`,
-            title: this.breadcrumb.category_l1.name
+            href: `/category/${this.breadcrumb.category_l1?.slug}`,
+            title: this.breadcrumb.category_l1?.name
           }
           breadcrumb.push(form)
 
         }
-        if(this.breadcrumb?.category_l2.name){
+        if(this.breadcrumb?.category_l2?.name){
           const form = {
             type : "category_l2",
-            href: `/category/${this.breadcrumb.category_l2.slug}`,
-            title: this.breadcrumb.category_l2.name
+            href: `/category/${this.breadcrumb.category_l2?.slug}`,
+            title: this.breadcrumb.category_l2?.name
           }
           breadcrumb.push(form)
 
         }
-        if(this.breadcrumb?.category_l3.name){
+        if(this.breadcrumb?.category_l3?.name){
           const form = {
             type : "category_l3",
-            href: `/category/${this.breadcrumb.category_l3.slug}`,
-            title: this.breadcrumb.category_l3.name
+            href: `/category/${this.breadcrumb.category_l3?.slug}`,
+            title: this.breadcrumb.category_l3?.name
           }
           breadcrumb.push(form)
 
         }
 
-        if(this.breadcrumb?.product.name){
+        if(this.breadcrumb?.product?.name){
           const form = {
             type : "product",
-            href: `/product/${this.breadcrumb.product.slug}`,
-            title: this.breadcrumb.product.name
+            href: `/product/${this.breadcrumb?.product?.slug}`,
+            title: this.breadcrumb?.product?.name
           }
           breadcrumb.push(form)
 
         }
-        if(this.breadcrumb?.sku_group.name){
+        if(this.breadcrumb?.sku_group?.name){
           const form = {
             type : "sku_group",
-            href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
+            href: `/sku-group/${this.breadcrumb?.sku_group?.slug}`,
             disabled: false,
-            title: this.breadcrumb.sku_group.name
+            title: this.breadcrumb?.sku_group?.name
           }
           breadcrumb.push(form)
 
