@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <v-card class="wallet pa-8 mobile-pa-0 mobile-no-border has-header">
     <header class="card__header xs-hide">
         <h1 class="t16">کیف پول</h1>

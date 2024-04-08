@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <v-main class="v-rules">
         <v-container>
             <v-row>

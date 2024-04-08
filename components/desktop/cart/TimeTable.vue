@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="cart-way-calendar d-flex align-center w-100 mt-3" :ref="`nafisRef-${index}`">
     <template v-for="(item, index) in calendar.slice(0,6)" :key="`day${index}`">
         <div class="flex-grow-1 cart-way-calendar__item" :id="`cart-way-calendar__item-${index}`">

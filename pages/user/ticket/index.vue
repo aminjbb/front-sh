@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-ticket">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/dashboard" class="ml-3">
@@ -46,7 +46,8 @@
                     <template v-else>
                         <div class="flex-grow-1 d-flex flex-column mb-8">
                             <div class="d-flex flex-column justify-center align-center pt-15">
-                                <svgEmptyTicket />
+                                <img src="~/assets/images/empty-ticket.png" class="ml-10" alt="ticket image" width="171" height="162">
+
                                 <span class="t14 w400 text-grey-darken-1 mt-2">تا حالا تیکتی ثبت نکردی!</span>
                                 <v-btn
                                     href="/user/ticket/new"
@@ -132,11 +133,7 @@ export default {
     },
 
     mounted() {
-        if (!this.userToken) {
-            window.location = '/login';
-        } else {
-            this.getUserTicketList();
-        }
+        this.getUserTicketList();
     },
     
 }

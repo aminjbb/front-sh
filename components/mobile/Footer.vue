@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <footer class="footer footer--mobile">
     <nav class="footer__menu h-100 w-100">
         <ul class="ma-0 pa-0 d-flex justify-space-between align-center h-100">

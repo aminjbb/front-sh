@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-ticket v-ticket--single">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/ticket" class="ml-3">
@@ -223,11 +223,7 @@ export default {
     },
 
     mounted() {
-        if (!this.userToken) {
-            window.location = '/login';
-        } else {
-            this.getUserTicketById();
-        }
+        this.getUserTicketById();
 
         /**
          * Check screen size

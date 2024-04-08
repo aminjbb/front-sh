@@ -57,6 +57,7 @@
                     v-for="(product, index) in productUserHistory"
                     class="v-col-sm-4 v-col-lg-2 v-col-12 mb-3"
                     :key="`product${index}`"
+                    :href="`/sku/${product?.slug}`"
                     :image="product?.image_url"
                     :label="product?.label"/>
               </template>

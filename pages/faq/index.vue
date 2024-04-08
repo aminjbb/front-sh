@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-faq">
     <h1 class="ov-h h-0">سوالات متداول</h1>
 
@@ -92,7 +92,7 @@ export default {
             ]
         }
     },
-    setup(props) {
+    setup() {
         const title = ref('فروشگاه اینترنتی شاواز | سوالات متداول')
         const description = ref("سوالات متداول و پرسش های پرتکرار از فروشگاه اینترنتی شاواز")
 

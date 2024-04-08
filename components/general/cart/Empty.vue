@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div>
     <v-card class="pa-5 mobile-pa-0 mobile-no-border">
         <header class="d-flex align-center mb-5 xs-hide">

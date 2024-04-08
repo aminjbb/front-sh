@@ -40,7 +40,7 @@ export default {
         }
     },
 
-    setup(props) {
+    setup() {
         const title = ref('فروشگاه اینترنتی شاواز | سبد خرید')
         const description = ref("سبد خرید شاواز ")
 

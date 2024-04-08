@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <header v-if="content" class="ticket-info-card d-flex justify-space-between align-center bg-grey-lighten-4 pa-5">
     <div>
         <div class="mb-2">

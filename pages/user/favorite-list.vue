@@ -135,11 +135,7 @@ export default {
     },
 
     mounted() {
-        if (!this.userToken) {
-            window.location = '/login';
-        } else {
-            this.getUserWhishList();
-        }
+        this.getUserWhishList();
     },
 }
 </script>

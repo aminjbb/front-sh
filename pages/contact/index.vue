@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <main class="v-contact">
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
@@ -257,7 +257,7 @@ export default {
             ],
         }
     },
-    setup(props) {
+    setup() {
         const title = ref('فروشگاه اینترنتی شاواز | تماس با ما')
         const description = ref("آنچه باید درباره شاواز بدانید")
 

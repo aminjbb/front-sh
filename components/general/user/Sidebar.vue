@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <div class="v-user__sidebar">
     <v-card class="pa-5">
         <div class="d-flex align-center justify-space-between">

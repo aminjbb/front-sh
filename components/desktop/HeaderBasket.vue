@@ -148,14 +148,15 @@ export default {
          * Close Header basket if I click in outside
          * @param {*} event 
          */
-
         closeDropDown(event) {
-            const basketHeader = document.getElementById('basket-header');
-            const toggleBasket = document.getElementById('toggle-basket');
+            if(this.$route.name !== 'login' && this.$route.name !== 'forgotPassword'){
+                const basketHeader = document.getElementById('basket-header');
+                const toggleBasket = document.getElementById('toggle-basket');
 
-            if (!basketHeader.contains(event.target) && !event.target.closest('#toggle-basket')) {
-                basketHeader.classList.remove('show');
-                document.body.classList.remove('active-basket');
+                if (!basketHeader.contains(event.target) && !event.target.closest('#toggle-basket')) {
+                    basketHeader.classList.remove('show');
+                    document.body.classList.remove('active-basket');
+                }
             }
         }
 },

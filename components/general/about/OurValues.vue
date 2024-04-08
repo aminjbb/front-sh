@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <v-row>
     <v-col cols="6" sm="3" class="d-flex justify-center">
         <div class="d-inline-flex align-center flex-column">
