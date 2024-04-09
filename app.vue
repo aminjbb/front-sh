@@ -24,6 +24,40 @@ useSeoMeta({
 
 const runtimeConfig = useRuntimeConfig()
 
+const structureData = {
+    "@context": "http://schema.org/",
+    "@type": "Organization",
+    "name": "shavaz",
+    "url": "https://shavaz.com/",
+    "telephone":"02191032343",
+    "keywords":"فروشگاه اینترنتی شاواز , شاواز , لوازم آرایش و بهداشتی",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "بزرگراه باکری جنوب کوی ارم خیابان شهیدمحسن یعقوبی(بهار جنوبی) نبش کوچه شهید اکبر اصغر زاده پلاک 18",
+        "addressLocality": "Tehran",
+        "addressRegion": "Tehran",
+        "postalCode": "1484633439",
+        "addressCountry": "Iran, Islamic Republic of",
+        "countryCode":"IR"
+    },
+    "sameAs":[
+        "https://twitter.com/ShavazCom",
+        "https://www.linkedin.com/company/shavaz/about",
+        "https://t.me/shavazcomm",
+        "https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4",
+        "https://www.instagram.com/shavazcom"
+    ],
+    "logo":{
+        "@type":"ImageObject",
+        "inLanguage":"fa-IR",
+        "url":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+        "contentUrl":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+        "width":192,
+        "height":192,
+        "caption":"فروشگاه اینترنتی شاواز"
+    }
+}
+
 useHead({
   noscript: [{ children: `<iframe src="https://www.googletagmanager.com/ns.html?id=${runtimeConfig.public.gtagId}"
   height="0" width="0" style="display:none;visibility:hidden"></iframe>
@@ -33,5 +67,9 @@ useHead({
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','${runtimeConfig.public.gtagId}');` }],
+  script: [{
+      type: 'application/ld+json',
+      children: JSON.stringify(structureData)
+  }]
   });
 </script>

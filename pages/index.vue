@@ -158,27 +158,6 @@ export default {
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | خرید لوازم آرایشی، بهداشتی، عطر')
         const description = ref(' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com - خرید اینترنتی لوازم آرایشی و بهداشتی با ضمانت اصالت کالا -  برای خرید کلیک کنید!')
-        const structureData = {
-            "@context": "http://schema.org/",
-            "@type": "Organization",
-            "name": "shavaz",
-            "url": "https://shavaz.com/",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "بزرگراه باکری جنوب کوی ارم خیابان شهیدمحسن یعقوبی(بهار جنوبی) نبش کوچه شهید اکبر اصغر زاده پلاک 18",
-                "addressLocality": "Tehran",
-                "addressRegion": "Tehran",
-                "postalCode": "1484633439",
-                "addressCountry": "Iran, Islamic Republic of"
-            },
-            "sameAs":[
-                "https://twitter.com/ShavazCom",
-                "https://www.linkedin.com/company/shavaz/about",
-                "https://t.me/shavazcomm",
-                "https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4",
-                "https://www.instagram.com/shavazcom"
-            ],
-        }
         
         useHead({
             title,
@@ -186,10 +165,6 @@ export default {
                 name: 'description',
                 content: description
             }],
-            script: [{
-                type: 'application/ld+json',
-                children: JSON.stringify(structureData)
-            }]
         });
 
         const {

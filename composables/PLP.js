@@ -3,7 +3,7 @@
  */
 import {ref} from 'vue';
 import axios from 'axios'
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
 
@@ -15,16 +15,14 @@ export default function setup() {
     const filterQuery = ref([]);
     const filterForFilter = ref('');
     const endPoint = ref(null);
-    const loading = ref(false)
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
     const route = useRoute()
-    const router = useRouter()
-    const error = useError();
     const store = useStore()
     const query = ref('')
     const plpTitle = ref('')
     const description = ref('')
+    const structuredDataBreadcrumb = ref(null)
 
 
     function checkRouteForSlug() {
@@ -34,7 +32,7 @@ export default function setup() {
         return  ''
     };
 
-    async function getSecondaryData(query) {
+    async function getSecondaryData() {
         axios
             .get(runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`, {
                 headers: {
@@ -61,6 +59,31 @@ export default function setup() {
             })
             .then((response) => {
                 breadcrumb.value = response.data.data
+
+                /** create schema object from breadcrumb.value*/
+                const schemaBreadcrumbList = []
+
+                const sortBreadcrumb = Object.entries(breadcrumb.value).reverse();
+
+                sortBreadcrumb.forEach(([key, value], index) => {
+                    const schemaObj = {
+                        "@type": "ListItem",
+                        "position": index+1,
+                        "name": value.name,
+                        "item": key.includes('category') ? `${runtimeConfig.public.siteUrl}/category/${value.slug}` : key.includes('product') ? `${runtimeConfig.public.siteUrl}/product/${value.slug}`: key.includes('sku_group') ? `${runtimeConfig.public.siteUrl}/sku-group/${value.slug}`: ''
+                    }
+                    schemaBreadcrumbList.push(schemaObj);
+                });
+                /** breadcrumb schema structure */
+                structuredDataBreadcrumb.value = {
+                    "@context": "http://schema.org/",
+	                "@type": "BreadcrumbList",
+                    itemListElement : schemaBreadcrumbList
+                }
+                /** Set useHead for schema */
+                useHead({
+                    script: [{ type: 'application/ld+json', children: JSON.stringify(structuredDataBreadcrumb.value) }]
+                })
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)

@@ -39,6 +39,7 @@ export default {
     },
 
     setup() {
+        const runtimeConfig = useRuntimeConfig()
         const title = ref('فروشگاه اینترنتی شاواز | سوالات متداول')
         const description = ref("سوالات متداول و پرسش های پرتکرار از فروشگاه اینترنتی شاواز")
 
@@ -107,7 +108,7 @@ export default {
             }
             faqArray.push(obj);
         });
-
+        /**Schema - structured data */
         const structureData = {
             "@context": "http://schema.org/",
             "@graph": [{
@@ -121,7 +122,8 @@ export default {
                         "addressLocality": "Tehran",
                         "addressRegion": "Tehran",
                         "postalCode": "1484633439",
-                        "addressCountry": "Iran, Islamic Republic of"
+                        "addressCountry": "Iran, Islamic Republic of",
+                        "countryCode":"IR"
                     },
                     "sameAs": [
                         "https://twitter.com/ShavazCom",
@@ -130,7 +132,15 @@ export default {
                         "https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4",
                         "https://www.instagram.com/shavazcom"
                     ],
-
+                    "logo":{
+                        "@type":"ImageObject",
+                        "inLanguage":"fa-IR",
+                        "url":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+                        "contentUrl":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+                        "width":192,
+                        "height":192,
+                        "caption":"فروشگاه اینترنتی شاواز"
+                    }
                 },
                 {
                     "@type": "FAQPage",
