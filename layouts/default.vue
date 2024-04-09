@@ -1,8 +1,8 @@
 <template>
 <v-app>
     <LoadingModal v-if="loading" />
-    <div v-if="screenType !== null">
-        <template v-if="screenType === 'desktop'">
+    <div >
+        <div v-if="screenType === 'desktop'">
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <desktopHeader :userData="userData" />
             </template>
@@ -13,9 +13,9 @@
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <desktopFooter />
             </template>
-        </template>
+        </div>
 
-        <template v-else-if="screenType === 'mobile'">
+        <div v-else-if="screenType === 'mobile'">
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <mobileHeader />
             </template>
@@ -23,7 +23,7 @@
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <mobileFooter :userData="userData" />
             </template>
-        </template>
+        </div>
     </div>
 </v-app>
 </template>
@@ -42,7 +42,7 @@ export default {
 
     data() {
         return {
-            screenType: null,
+            screenType: 'desktop',
             userData: null,
         }
     },

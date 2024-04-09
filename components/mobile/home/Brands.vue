@@ -1,7 +1,7 @@
 <template>
-<section v-if="brands && brands.length" class="brands brands--mobile mb-8">
-    <header v-if="items.label" class="brands__header text-center t20 text-secondary">
-        {{items.label}}
+<section class="brands brands--mobile mb-8">
+    <header v-if="items?.label" class="brands__header text-center t20 text-secondary">
+        {{items?.label}}
     </header>
 
     <div class="brands__swiper">
@@ -35,8 +35,8 @@
                 }"
             class="mySwiper">
             <swiper-slide v-for="(item, index) in brands.slice(0, 7)" :key="`brands-${index}`">
-                <a class="brands__item" :href="item.link" :title="item.label">
-                    <img :src="item.image?.image_url" :title="item.label" :alt="item.label" width="72" height="72" />
+                <a class="brands__item" :href="item?.link" :title="item?.label">
+                    <img :src="item.image?.image_url" :title="item?.label" :alt="item?.label" width="72" height="72" />
                 </a>
             </swiper-slide>
         </swiper>

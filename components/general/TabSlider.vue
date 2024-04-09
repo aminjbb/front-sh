@@ -1,6 +1,6 @@
 <template>
+
 <section
-    v-if="categories && categories.length"
     class="tab-slider mb-4"
     :class="getDynamicClasses"
     :ref="setRef">
@@ -9,6 +9,7 @@
     </header>
 
     <div>
+
         <nav class="tab-slider__header">
             <ul class="ma-0 pa-0">
                 <li

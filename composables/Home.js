@@ -2,23 +2,30 @@
  * Home composable
  */
 import { ref} from 'vue';
-import { AxiosCall } from '~/utils/axios_call.js'
+import axios from "axios";
+import {useLazyFetch} from "#app";
 
 export default function setup() {
     const homeSectionList = ref([]);
     const loading = ref(false)
+    const runtimeConfig = useRuntimeConfig()
+    useAsyncData(
+       async () =>
+           await   axios.get(runtimeConfig.public.apiBase + `/homepage/index/`)
+                .then((response) => {
+                    homeSectionList.value = response.data.data
+                })
+                .catch((err) => {
+                    if (err.response.status){
+                        showError({
+                            statusCode: 404,
+                            statusMessage: "Page Not Found"
+                        })
+                    }
+                }).finally(() => {})
+    )
 
-    async function getHomeSections(query) {
-        loading.value = true
-        const AxiosMethod = new AxiosCall()
-        AxiosMethod.end_point = 'homepage/index'
-        let data = await AxiosMethod.axios_get()
-        if (data) {
-            homeSectionList.value = data.data
-            loading.value = false
-        }
-    };
 
-    return {getHomeSections, homeSectionList, loading  }
+    return { homeSectionList, loading  }
 }
 

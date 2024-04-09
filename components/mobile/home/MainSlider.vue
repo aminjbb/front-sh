@@ -1,5 +1,5 @@
 <template>
-<section v-if="mobileBanners && mobileBanners.length" class="main-slider main-slider--mobile">
+<section class="main-slider main-slider--mobile">
     <swiper
         :pagination="true"
         :modules="modules"
@@ -10,9 +10,9 @@
             }"
         class="mySwiper">
         <swiper-slide v-for="(item,index) in mobileBanners" :key="index">
-            <a class="main-slider__item" :href="item.link">
+            <a class="main-slider__item" :href="item?.link">
                 <div class="main-slider__image">
-                    <img :src="item?.image.image_url" :title="item.title" :alt="item.title" width="768" height="268" />
+                    <img :src="item?.image?.image_url" :title="item?.title" :alt="item?.title" width="768" height="268" />
                 </div>
             </a>
         </swiper-slide>

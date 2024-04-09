@@ -1,5 +1,5 @@
 <template>
-<section v-if="categories && categories.length" class="category-list category-list--desktop">
+<section class="category-list category-list--desktop">
     <header v-if="sectionLabel" class="pa-6 mt-6">
         <h2 class="t24 w500 text-center text-grey-darken-2 ma-0">
             {{ sectionLabel }}

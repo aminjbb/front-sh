@@ -1,5 +1,5 @@
 <template>
-<section v-if="desktopBanners && desktopBanners.length" class="main-slider main-slider--desktop">
+<div class="main-slider main-slider--desktop">
     <swiper
         :pagination="{
         clickable: true,
@@ -12,14 +12,14 @@
             }"
         class="mySwiper">
         <swiper-slide v-for="(item,index) in desktopBanners" :key="index">
-            <a class="main-slider__item" :href="item.link">
+            <a class="main-slider__item" :href="item?.link">
                 <div class="main-slider__image">
-                    <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="768" height="268" />
+                    <img :src="item?.image?.image_url" :title="item?.label" :alt="item?.label" width="768" height="268" />
                 </div>
             </a>
         </swiper-slide>
     </swiper>
-</section>
+</div>
 </template>
 
 <script>
