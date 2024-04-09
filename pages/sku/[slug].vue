@@ -119,8 +119,8 @@ export default {
             title,
             meta: [{
             name: 'description',
-            content: description
-            }]
+            content: description,
+            }],
         });
 
         return {
@@ -143,7 +143,7 @@ export default {
             screenType: null,
             content: null,
             selectedSeller: null,
-            called :false
+            called :false,
         }
     },
 
@@ -282,14 +282,14 @@ export default {
             this.title = newVal
         },
 
-        productDetail(newValue, oldValue) {
+        productDetail(newValue) {
             if(newValue && newValue !== null && this.breadcrumb !== null){
                 this.handleWatchChange();
                 this.called = true;
             }
         },
 
-        breadcrumb(newValue, oldValue) {
+        breadcrumb(newValue) {
             if(newValue && newValue !== null && this.productDetail !== null && this.called === false){
                 this.handleWatchChange();
                 this.called = true;

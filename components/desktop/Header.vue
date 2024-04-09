@@ -9,7 +9,7 @@
             <div class="header__inner d-flex align-center justify-space-between">
                 <div class="header__col1 d-flex algin-center">
                     <a href="/" class="header__logo" title="Shavaz logo">
-                        <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
+                        <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
                     </a>
                     
                     <desktopSearchResult />

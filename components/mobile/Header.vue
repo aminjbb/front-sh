@@ -2,7 +2,7 @@
 <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden }">
     <div class="d-flex align-center">
         <a href="/" class="d-flex align-center header__logo" title="Shavaz logo" id="mobile-logo">
-            <img src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
+            <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
         </a>
         <mobileSearchResult />
     </div>
