@@ -111,13 +111,14 @@ export default function setup() {
                 product.value = response
                 skuTitle.value = response.data.data.page.meta_title
                 description.value = response.data.data.page.meta_description
-
+                /**Schema - structured data */
                 structuredData.value = {
                     "@context": "http://schema.org/",
                     "@type": "Product",
                     "name": response.data.data.label,
                     "image": response.data.data.primary_image_url,
                     "description": response.data.data.label,
+                    "url":`${runtimeConfig.public.siteUrl}/sku/${response.data.data.slug}`,
                     "brand": {
                         "@type": "Brand",
                         "name": response.data.data.brand_name
@@ -125,7 +126,28 @@ export default function setup() {
                     "offers": {
                         "@type": "Offer",
                         "priceCurrency": "IRR",
+                        "availability":"http://schema.org/InStock",
                         "price": response.data.data?.shps_list[0].customer_price,
+                    },
+                    "aggregateRating":{
+                        "@type":"AggregateRating",
+                        "ratingValue":response.data.data.score                        ,
+                    },
+                    "seller":{
+                        "@context": "http://schema.org/",
+                        "@type": "Organization",
+                        "name": "shavaz",
+                        "url": "https://shavaz.com/",
+                        "countryCode":"IR",
+                        "logo":{
+                            "@type":"ImageObject",
+                            "inLanguage":"fa-IR",
+                            "url":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+                            "contentUrl":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+                            "width":192,
+                            "height":192,
+                            "caption":"فروشگاه اینترنتی شاواز"
+                        }
                     }
                 }
 
