@@ -11,7 +11,7 @@ export default {
    * @param {number} errorStatus
    */
   async checkAuthorization(errorStatus) {
-    if (errorStatus.status === 401 || errorStatus.status === 403) window.location = '/login'
+    if (errorStatus?.status === 401 || errorStatus?.status === 403) window.location = '/login'
   },
   /**
    * Send OTP

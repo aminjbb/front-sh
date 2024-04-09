@@ -101,7 +101,29 @@ import PDP from '@/composables/PDP.js'
 export default {
     setup() {
 
-        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
+        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز');
+
+        const structureData = {
+            "@context": "http://schema.org/",
+            "@type": "Organization",
+            "name": "shavaz",
+            "url": "https://shavaz.com/",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "بزرگراه باکری جنوب کوی ارم خیابان شهیدمحسن یعقوبی(بهار جنوبی) نبش کوچه شهید اکبر اصغر زاده پلاک 18",
+                "addressLocality": "Tehran",
+                "addressRegion": "Tehran",
+                "postalCode": "1484633439",
+                "addressCountry": "Iran, Islamic Republic of"
+            },
+            "sameAs": [
+                "https://twitter.com/ShavazCom",
+                "https://www.linkedin.com/company/shavaz/about",
+                "https://t.me/shavazcomm",
+                "https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4",
+                "https://www.instagram.com/shavazcom"
+            ],
+        }
 
         const {
             product,
@@ -116,7 +138,11 @@ export default {
             title,
             meta: [{
             name: 'description',
-            content: description
+            content: description,
+            }],
+            script: [{
+                type: 'application/ld+json',
+                children: JSON.stringify(structureData)
             }]
         });
 
@@ -136,7 +162,7 @@ export default {
             content: null,
 
             selectedSeller: null,
-            /** cheaper seller or selected seller*/
+            called :false
         }
     },
 
@@ -267,7 +293,6 @@ export default {
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
-       // this.enhanceECommerce(this.product)
     },
 
     watch:{
@@ -275,14 +300,26 @@ export default {
             this.title = newVal
         },
 
-        productDetail(newVal){
-            if(newVal && newVal !==null){
-                this.enhanceECommerce(newVal,this.productSelectedSeller)
+        productDetail(newValue, oldValue) {
+            if(newValue && newValue !== null && this.breadcrumb !== null){
+                this.handleWatchChange();
+                this.called = true;
+            }
+        },
+
+        breadcrumb(newValue, oldValue) {
+            if(newValue && newValue !== null && this.productDetail !== null && this.called === false){
+                this.handleWatchChange();
+                this.called = true;
             }
         }
     },
 
     methods:{
+        handleWatchChange() {
+            this.enhanceECommerce(this.productDetail,this.productSelectedSeller)
+        },
+
         /**
          * Enhance E-commerce for Seo
          * @param {*} product 
@@ -298,7 +335,7 @@ export default {
                     'name': product.label,
                     'id': product.id,
                     'price': Number(String(price.customer_price).slice(0, -1)),
-                    //'brand': 'GoldenRose',
+                    'brand': null,
                     'category': this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug
                 }]
                 }

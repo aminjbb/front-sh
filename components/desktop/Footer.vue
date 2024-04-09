@@ -3,7 +3,7 @@
     <v-container>
         <div class="footer__logo">
             <a href="/" title="Shavaz logo">
-                <img src="~/assets/images/shavaz-logo.svg" class="logo-shz" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
+                <img data-not-lazy src="~/assets/images/shavaz-logo.svg" class="logo-shz" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
             </a>
 
             <button @click="scrollToTop">
@@ -121,19 +121,19 @@
             <v-col cols="12" lg="6">
                 <div class="footer__logo-hologram">
                     <a href="/" title="Shavaz hologram">
-                        <img src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
+                        <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
                     </a>
 
                     <a href="/" title="Shavaz hologram">
-                        <img src="~/assets/images/should-delete/1d2ab0.png" class="" alt="hologram" width="52" height="61" title="" />
+                        <img data-not-lazy src="~/assets/images/should-delete/1d2ab0.png" class="" alt="hologram" width="52" height="61" title="" />
                     </a>
 
                     <a href="/" title="Shavaz hologram">
-                        <img src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="52" height="61" title="" />
+                        <img data-not-lazy src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="52" height="61" title="" />
                     </a>
 
                     <a href="/" title="Shavaz hologram">
-                        <img src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="61" title="" />
+                        <img data-not-lazy src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="61" title="" />
                     </a>
                 </div>
             </v-col>
