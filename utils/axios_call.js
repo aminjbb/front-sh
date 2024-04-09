@@ -1,7 +1,6 @@
 import axios from "axios";
 import qs from "qs";
 import { useRouter, useRoute } from 'vue-router'
-// var FormData = require('form-data');
 
 
 export class AxiosCall {
@@ -62,7 +61,11 @@ export class AxiosCall {
                 .then((response) => {
 
                     if (this.toast_success) {
-                        openToast(this.store, response.data.message, "success")
+                        useNuxtApp().$toast.success(this.store, response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme:'dark'
+                        });
                     }
                     data = response.data;
                 })

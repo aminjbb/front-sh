@@ -8,7 +8,7 @@ export default function setup() {
     const menuList = ref([]);
     const loading = ref(false)
 
-    async function getMenuList(query) {
+    async function getMenuList() {
         loading.value = true
         const AxiosMethod = new AxiosCall()
         AxiosMethod.end_point = 'system/menu/crud/index?group=1'

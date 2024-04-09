@@ -182,10 +182,6 @@
 </template>
 
 <script>
-import {
-    splitChar
-} from "~/utils/functions.js";
-
 export default {
     data() {
         return {
@@ -273,8 +269,6 @@ export default {
     },
 
     methods: {
-        splitChar,
-
         increaseCount() {
             if (this.productCount < this.content.count) {
                 this.productCount++;

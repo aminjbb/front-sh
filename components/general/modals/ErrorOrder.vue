@@ -44,7 +44,7 @@
 
           <p class="t14 w400 my-8 text-center text-grey-darken-2">{{text}}</p>
           <p  v-if="type == 3">سبد شما ناموجود شده است</p>
-          <div class="t14 w400 my-8 text-center text-grey-darken-2" v-for="(object , index) in object?.data?.data">
+          <div class="t14 w400 my-8 text-center text-grey-darken-2" v-for="(object , index) in object?.data?.data" :key="`object${index}`">
             <p>
                 {{object?.sku?.label}}
             </p>

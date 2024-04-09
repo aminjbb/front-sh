@@ -126,9 +126,6 @@
 </template>
 
 <script>
-import {
-    splitChar
-} from "~/utils/functions.js";
 import Order from '@/composables/Order.js'
 
 export default {
@@ -210,7 +207,6 @@ export default {
     },
 
     methods: {
-        splitChar,
         /**
          * Check checkbox and select item
          * @param {*} productIndex

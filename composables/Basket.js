@@ -2,10 +2,8 @@
  * Order composable
  */
 import {ref} from 'vue';
-import {AxiosCall} from '~/utils/axios_call.js'
 import axios from 'axios'
-import {useRoute, useRouter} from "vue-router";
-import auth from '@/middleware/auth';
+import {useRoute} from "vue-router";
 import {useStore} from "vuex";
 
 export default function setup() {
@@ -16,7 +14,6 @@ export default function setup() {
     const randomNumberForBasket = useCookie('randomNumberForBasket')
     const sendingMethods = ref([]);
     const route = useRoute()
-    const router = useRouter()
     const store = useStore()
     const voucher = ref(null)
     const transactionData = ref({})
@@ -80,7 +77,6 @@ export default function setup() {
                 loadingAddBasket.value = false;
             })
             .catch((err) => {
-                //auth.checkAuthorization(err.response)
             });
     };
 
@@ -146,7 +142,6 @@ export default function setup() {
                         beforeAuthAddToBasket(shps , countMain, randomNumber, method)
                     }
                 }
-                // auth.checkAuthorization(err.response)
             });
     };
 
