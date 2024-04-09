@@ -110,9 +110,6 @@
 </template>
 
 <script>
-import {
-    splitChar
-} from "~/utils/functions.js";
 import Basket from '@/composables/Basket.js'
 
 export default {
@@ -163,8 +160,6 @@ export default {
     },
 
     methods: {
-        splitChar,
-
         createRandomNumber(){
             let result = '';
             for(let i = 0; i < 20; i++) {

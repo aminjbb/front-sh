@@ -57,9 +57,6 @@
 </template>
 
 <script>
-import {
-    splitChar
-} from "~/utils/functions.js";
 
 export default {
     props: {
@@ -120,8 +117,6 @@ export default {
     },
 
     methods: {
-        splitChar,
-
         /**
          * find order status
          */

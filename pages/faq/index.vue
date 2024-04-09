@@ -5,21 +5,19 @@
     <v-container>
         <generalBreadcrumb :items="BreadcrumbItems" />
 
-        <div>
-            <v-expansion-panels class="accordion" variant="inset">
-                <v-expansion-panel v-for="faq in faqList" :key="faq.id">
-                    <v-expansion-panel-title class="accordion__header">
-                        <h2 class="pa-a ma-0 t13 w500 text-grey-darken-2"> {{faq.title}}</h2>
-                    </v-expansion-panel-title>
+        <v-expansion-panels class="accordion" variant="inset">
+            <v-expansion-panel v-for="faq in faqList" :key="faq.id">
+                <v-expansion-panel-title class="accordion__header">
+                    <h2 class="pa-a ma-0 t13 w500 text-grey-darken-2"> {{faq.title}}</h2>
+                </v-expansion-panel-title>
 
-                    <v-expansion-panel-text class="accordion__items__content">
-                        <p class="pa-a ma-0 t14 w400 l27 text-grey-darken-3">
-                            {{faq.text}}
-                        </p>
-                    </v-expansion-panel-text>
-                </v-expansion-panel>
-            </v-expansion-panels>
-        </div>
+                <v-expansion-panel-text class="accordion__items__content">
+                    <p class="pa-a ma-0 t14 w400 l27 text-grey-darken-3">
+                        {{faq.text}}
+                    </p>
+                </v-expansion-panel-text>
+            </v-expansion-panel>
+        </v-expansion-panels>
     </v-container>
 </main>
 </template>

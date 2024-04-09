@@ -2,7 +2,6 @@
  * Order composable
  */
 import {ref} from 'vue';
-import {AxiosCall} from '~/utils/axios_call.js'
 import axios from 'axios'
 import {useRoute , useRouter} from "vue-router";
 import auth from '@/middleware/auth';
@@ -22,9 +21,8 @@ export default function setup() {
 
     /**
      * Get user order list
-     * @param {*} query 
      */
-    async function getOrderList(query) {
+    async function getOrderList() {
         axios
             .get(runtimeConfig.public.apiBase + `/order/crud/index?per_page=100000`, {
                 headers: {
@@ -59,9 +57,8 @@ export default function setup() {
 
     /**
      * Get return order details by id
-     * @param {*} query 
      */
-    async function getReturnedOrderDetails(orderId) {
+    async function getReturnedOrderDetails() {
         axios
             .get(runtimeConfig.public.apiBase + `/order/returned/detail/${route.params.id}`, {
                 headers: {
@@ -79,9 +76,8 @@ export default function setup() {
 
     /**
      * Get user one order
-     * @param {*} query 
      */
-    async function getOrder(query) {
+    async function getOrder() {
         axios
             .get(runtimeConfig.public.apiBase + `/order/crud/get/${route.params.id}`, {
                 headers: {
@@ -161,9 +157,8 @@ export default function setup() {
 
     /**
      * Get order tracking
-     * @param {*} id 
      */
-    async function trackingOrder(id) {
+    async function trackingOrder() {
         axios
             .get(runtimeConfig.public.apiBase + `/order/tracking/${route.params.id}`, {
                 headers: {

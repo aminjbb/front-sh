@@ -3,24 +3,24 @@
     <LoadingModal v-if="loading" />
     <div v-if="screenType !== null">
         <template v-if="screenType === 'desktop'">
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <desktopHeader :userData="userData" />
             </template>
 
             <slot />
             <div id="body-cover" />
 
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <desktopFooter />
             </template>
         </template>
 
         <template v-else-if="screenType === 'mobile'">
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <mobileFooter :userData="userData" />
             </template>
         </template>
