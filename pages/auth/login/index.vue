@@ -336,11 +336,11 @@ export default {
                         await this.syncBasket()
                     }
 
-                    if(response.data.data.user?.is_signed_up === 0){
+                    if(response.data.data.user?.is_signed_up === 1){
                         this.enhanceEcommereLogin();
                     }
 
-                    if(response.data.data?.user.is_signed_up === 1){
+                    if(response.data.data?.user.is_signed_up === 0){
                         this.enhanceEcommereRegister();
                     }
 
@@ -418,14 +418,16 @@ export default {
         },
 
         enhanceEcommereRegister(){
-            dataLayer.push(
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
             {
                 'event': 'Register',
             });
         },
 
         enhanceEcommereLogin(){
-            dataLayer.push(
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
             {
                 'event': 'login',
             });
