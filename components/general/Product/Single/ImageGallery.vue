@@ -224,6 +224,11 @@ export default {
         productSelectedSeller: Object,
 
         /**
+         * productSelectedSeller for add datalayer
+         */
+        productDetail: Object,
+
+        /**
          * wishlist for sku-item
          */
         wishlist: Object,
@@ -319,8 +324,13 @@ export default {
         checkFavorite() {
             if (this.userToken) {
                 this.isFavorite = !this.isFavorite
-                if (this.isFavorite) this.addToFavorite()
-                else this.deleteFavorite()
+                if (this.isFavorite){
+                  this.addToFavorite()
+                  this.enhanceECommerceAddWishList(this.productDetail)
+                }
+                else{
+                  this.deleteFavorite()
+                }
             } else {
                 useNuxtApp().$toast.error('کاربر محترم ابتدا لاگین کنید.', {
                     rtl: true,
@@ -379,7 +389,26 @@ export default {
                 }).finally(() => {
 
                 })
-        }
+        },
+
+
+      /**
+       * Enhance E-commerce for Seo
+       * @param {*} product
+       */
+      enhanceECommerceAddWishList(product){
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'add_to_wishlist',
+          'ecommerce': {
+            'items': [{							// an array where all currently viewed products must be included
+              'item_id': `shps${this.productSelectedSeller?.id}`,	// insert an actual product ID
+              'price': this.productSelectedSeller?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+              'item_brand': product?.brand_label,	// insert an actual product price
+            }]
+          }
+        });
+      }
     },
     
     watch: {
