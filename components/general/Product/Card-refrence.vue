@@ -28,6 +28,12 @@
     </a>
 
     <div class="product-card__info d-flex align-center justify-end mb-2" :class="hideInfo ? 'hideInfo' : ''">
+        <!-- TODO: Uncomment after we have this -->
+        <!-- <div class="product-card__info__send">
+            <v-icon icon="mdi-truck-outline" color="deep-purple" />
+            <span class="t12 text-grey">ارسال فوری</span>
+        </div> -->
+
         <div v-if="content.score" class="product-card__info__rate">
             <span class="t12 text-grey">{{content.score}}</span>
             <v-icon icon="mdi-star" color="orange-lighten-2" />
@@ -50,8 +56,9 @@
             </span>
         </template>
         <template v-else>
-            <span v-if="content.customer_price" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
-            <span v-else-if="content.site_price" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
+            <span v-if="content.customer_price/*  && !isPLP */" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+            <span v-else-if="content.site_price/*  && !isPLP */" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
+            <!-- <span v-if="content.site_price && isPLP" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span> -->
             <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
         </template>
     </div>
@@ -74,6 +81,13 @@
     </div>
 
     <div v-if="functions" class="d-flex align-center justify-end mt-2 mobile-pa-0 w-100">
+<!--        <v-btn-->
+<!--            :href="`/sku/${content.slug}`"-->
+<!--            height="44"-->
+<!--            title="مشاهده محصول"-->
+<!--            class="btn btn&#45;&#45;cancel">-->
+<!--            مشاهده محصول-->
+<!--        </v-btn>-->
         <v-btn
             :href="`/sku/${content.slug}`"
             height="44"

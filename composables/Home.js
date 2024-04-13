@@ -3,7 +3,6 @@
  */
 import { ref} from 'vue';
 import axios from "axios";
-import {useLazyFetch} from "#app";
 
 export default function setup() {
     const homeSectionList = ref([]);

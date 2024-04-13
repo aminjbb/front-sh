@@ -53,9 +53,6 @@
 import {
     resolveComponent
 } from 'vue';
-import {
-    tr
-} from "vuetify/locale";
 export default {
     data() {
         return {
@@ -68,7 +65,7 @@ export default {
         /**
          * List of item
          */
-        items: Array,
+        items: Object,
 
         /**
          * section title
@@ -119,8 +116,8 @@ export default {
          * Set limit for max of show content
          */
         limit: {
-            type: Number,
-            default: 5
+            type: String,
+            default: "5"
         },
 
         setRef: {
@@ -141,20 +138,6 @@ export default {
     },
 
     computed: {
-        /**
-         * Header for tab
-         */
-        tabHeader() {
-            this.items.forEach(item => {
-                const headerItem = {
-                    label: item.title,
-                    id: item.id
-                }
-                this.headerItems.push(headerItem)
-            })
-            return this.headerItems;
-        },
-
         /**
          * Set dynamic class based my props
          */

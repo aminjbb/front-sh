@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Basket from '@/composables/Basket.js'
 export default {
     setup(){

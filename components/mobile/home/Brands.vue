@@ -70,7 +70,7 @@ export default {
         /**
          * Item list
          */
-        items: Array,
+        items: Object,
 
         /**
          * Title of section

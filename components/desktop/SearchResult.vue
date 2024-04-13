@@ -155,6 +155,8 @@ import Search from '@/composables/Search.js';
 
 import axios from "axios";
 
+import { debounce } from 'vue-debounce'
+
 export default {
     data() {
         return {
@@ -162,6 +164,10 @@ export default {
             searchNew: null,
             searchResult:[],
         }
+    },
+
+    directives: {
+       debounce
     },
 
     computed: {
