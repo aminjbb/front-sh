@@ -418,14 +418,16 @@ export default {
         },
 
         enhanceEcommereRegister(){
-            dataLayer.push(
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
             {
                 'event': 'Register',
             });
         },
 
         enhanceEcommereLogin(){
-            dataLayer.push(
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
             {
                 'event': 'login',
             });
