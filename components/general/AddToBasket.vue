@@ -7,20 +7,20 @@
         :class="revers === true ? 'revers' : ''"
         class="d-flex justify-end pa-1 align-center">
         <div class="add-to-basket__price-info">
-            <template v-if="content.stock">
-                <template v-if="content.discount">
+            <template v-if="content?.stock">
+                <template v-if="content?.discount">
                     <div class="d-flex align-center justify-space-between">
-                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-hide">{{content.discount_percent}} %</span>
-                        <span v-if="content.site_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
-                            {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
+                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-hide">{{content?.discount_percent}} %</span>
+                        <span v-if="content?.site_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
+                            {{ splitChar(Number(String(content?.site_price).slice(0, -1))) }}
                             <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                         </span>
                     </div>
 
                     <div class="d-flex align-center">
-                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content.discount_percent}} %</span>
-                        <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                            <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content?.discount_percent}} %</span>
+                        <span v-if="content?.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
+                            <span>{{ splitChar(Number(String(content?.customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
                         </span>
                     </div>
@@ -28,7 +28,7 @@
                 </template>
 
                 <template v-else>
-                    <span v-if="content.customer_price" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                    <span v-if="content?.customer_price" class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content?.customer_price).slice(0, -1))) }}</span>
                     <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
                 </template>
             </template>
@@ -39,14 +39,14 @@
         </div>
     </v-col>
     <v-col
-        v-if="content.stock"
+        v-if="content?.stock"
         xs="8"
         :sm="smCols[1]"
         :md="mdCols[1]"
         class="d-flex justify-end pa-1">
         <template v-if="count === 0 || notSelected">
             <v-btn
-                @click="addToCard(content.id)"
+                @click="addToCard(content?.id)"
                 height="44"
                 :loading="loadingFirstAddBasket"
                 title="افزودن به سبد"
@@ -142,14 +142,14 @@ export default {
             try {
                 const basket = this.$store.getters['get_basket']
                 
-                const data = basket?.data?.data?.details.find(item => item?.shps?.id === this.content.id)
+                const data = basket?.data?.data?.details.find(item => item?.shps?.id === this.content?.id)
 
                 if(!data){
                     this.notSelected = true;
                     this.count = 0;
                 }else{
                     this.notSelected = false
-                    this.count = data.count;
+                    this.count = data?.count;
                 }
 
                 return basket ?.data ?.data
@@ -196,7 +196,7 @@ export default {
          */
         increaseCount() {
             if (this.userToken){
-                this.addToBasket(this.content.id  , this.count, 'increase')
+                this.addToBasket(this.content?.id  , this.count, 'increase')
             }
             else{
                 if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
@@ -205,7 +205,7 @@ export default {
                 else{
                     const randomNumber = this.createRandomNumber()
                     this.randomNumberForBasket = randomNumber
-                    this.beforeAuthAddToBasket(this.content.id  , this.count , randomNumber.toString(), 'increase')
+                    this.beforeAuthAddToBasket(this.content?.id  , this.count , randomNumber.toString(), 'increase')
                 }
             }
         },
@@ -216,20 +216,20 @@ export default {
         decreaseCount() {
             if (this.count > 0) {
                 if (this.count === 1) {
-                    this.deleteShpsBasket(this.content.id)
+                    this.deleteShpsBasket(this.content?.id)
                 }
                 else{
                   if (this.userToken){
-                    this.addToBasket(this.content.id  , this.count, 'decrease')
+                    this.addToBasket(this.content?.id  , this.count, 'decrease')
                   }
                   else{
                     if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                      this.beforeAuthAddToBasket(this.content.id  , this.count ,this.randomNumberForBasket, 'decrease')
+                      this.beforeAuthAddToBasket(this.content?.id  , this.count ,this.randomNumberForBasket, 'decrease')
                     }
                     else{
                       const randomNumber = this.createRandomNumber()
                       this.randomNumberForBasket = randomNumber
-                      this.beforeAuthAddToBasket(this.content.id  , this.count , randomNumber.toString(), 'decrease')
+                      this.beforeAuthAddToBasket(this.content?.id  , this.count , randomNumber.toString(), 'decrease')
                     }
                   }
                 }
