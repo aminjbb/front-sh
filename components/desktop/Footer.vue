@@ -96,7 +96,6 @@
                 <div class="footer__search-box">
                     <p class="t12 text-grey-darken-1 mb-3">برای اطلاع از آخرین تخفیف‌ها، ایمیل خود را ثبت نمایید.</p>
                     <v-text-field
-                        :loading="loading"
                         color="grey-lighten-3"
                         density="compact"
                         variant="solo"
