@@ -1,7 +1,7 @@
 <template>
 <v-app>
     <LoadingModal v-if="loading" />
-    <div >
+    <div v-show="show">
         <div v-if="screenType === 'desktop'">
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
                 <desktopHeader :userData="userData" />
@@ -44,6 +44,7 @@ export default {
         return {
             screenType: 'desktop',
             userData: null,
+            show: false
         }
     },
 
@@ -72,6 +73,8 @@ export default {
         if (this.$route.name !== 'login' && this.$route.name !== 'forgotPassword') {
             this.getBasket();
         }
+
+        this.show = true;
     },
 
     created() {
