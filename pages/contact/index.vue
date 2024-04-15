@@ -62,7 +62,7 @@
                         class="ml-2" />
 
                     <div class="d-flex align-center">
-                        <span class="t14 w400 text-grey-darken-2 ml-1 number-font">ساعت کاری: شنبه تا پنجشنبه - 09:00 الی 21:00 </span>
+                        <span class="t14 w400 text-grey-darken-2 ml-1 number-font">ساعت کاری: شنبه تا چهارشنبه از ساعت 9 الی 24 و پنجشنبه ها از 9 الی 22 </span>
                     </div>
                 </div>
 
