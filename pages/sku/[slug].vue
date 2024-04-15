@@ -60,6 +60,7 @@
         </template>
 
         <mobileHomeSection8Slider
+            v-if="relatedProducts?.length"
             class="mt-5 pb-3"
             :items="relatedProducts"
             title="محصولات مشابه"
