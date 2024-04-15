@@ -113,7 +113,7 @@
                 <div class="footer__contact-us d-flex align-center">
                     <v-icon color="grey-darken-1" icon="mdi-phone-in-talk-outline" />
                     <span class="t14 text-grey-darken-1 ml-2 d-block"> پشتیبانی شاواز:۹۱۰۳۲۳۴۳-۰۲۱</span>
-                    <span class="t14 text-grey-darken-1">| ۲۴ ساعته در ۷ روز هفته پاسخگوی شما هستیم.</span>
+                    <span class="t14 text-grey-darken-1">| شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲.</span>
                 </div>
             </v-col>
 
