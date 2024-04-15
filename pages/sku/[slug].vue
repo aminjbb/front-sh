@@ -1,6 +1,6 @@
 <template>
 <main class="v-product v-product--single">
-    <h1 class="v-hide">{{ productLabel }}</h1>
+    <h1 class="v-hide">{{ title }}</h1>
     <v-container>
         <generalBreadcrumb :items="breadcrumbList" />
 
@@ -318,7 +318,6 @@ export default {
     },
 
     beforeMount() {
-      this.getSecondaryData()
       this.getBreadcrumb('sku')
     },
 }

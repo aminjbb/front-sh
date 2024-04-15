@@ -98,76 +98,100 @@ export default function setup() {
             store.commit('set_loadingModal', false)
         })
     };
+    
     store.commit('set_loadingModal', true),
+
     useAsyncData(
-        () =>
-        axios.get(runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userToken.value}`,
-                },
-            })
-            .then((response) => {
-                product.value = response
-                skuTitle.value = response.data.data.page.meta_title
-                description.value = response.data.data.page.meta_description
-                /**Schema - structured data */
-                structuredData.value = {
-                    "@context": "http://schema.org/",
-                    "@type": "Product",
-                    "name": response.data.data.label,
-                    "image": response.data.data.primary_image_url,
-                    "description": response.data.data.label,
-                    "url":`${runtimeConfig.public.siteUrl}/sku/${response.data.data.slug}`,
-                    "brand": {
-                        "@type": "Brand",
-                        "name": response.data.data.brand_name
+        async () => {
+            try {
+                // First API - product
+                const response1 = await axios({
+                    method: 'get',
+                    url: runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
                     },
-                    "offers": {
-                        "@type": "Offer",
-                        "priceCurrency": "IRR",
-                        "availability":"http://schema.org/InStock",
-                        "price": response.data.data?.shps_list[0].customer_price,
-                    },
-                    "aggregateRating":{
-                        "@type":"AggregateRating",
-                        "ratingValue":response.data.data.score                        ,
-                    },
-                    "seller":{
-                        "@context": "http://schema.org/",
-                        "@type": "Organization",
-                        "name": "shavaz",
-                        "url": "https://shavaz.com/",
-                        "countryCode":"IR",
-                        "logo":{
-                            "@type":"ImageObject",
-                            "inLanguage":"fa-IR",
-                            "url":`${runtimeConfig.public.siteUrl}/Sign192.png`,
-                            "contentUrl":`${runtimeConfig.public.siteUrl}/Sign192.png`,
-                            "width":192,
-                            "height":192,
-                            "caption":"فروشگاه اینترنتی شاواز"
+                });
+                
+                    // Second API - secondaryData
+                    const response2 = await axios({
+                        method: 'get',
+                        url: runtimeConfig.public.apiBase + `/product/pdp/details/${route.params.slug}`,
+                        headers: {
+                            Authorization: `Bearer ${userToken.value}`,
+                        },
+                    });
+
+                    if(response1 && response2){
+                        secondaryData.value = response2;
+
+                        product.value = response1
+                        skuTitle.value = response1.data.data.page.meta_title
+                        description.value = response1.data.data.page.meta_description
+                        /**Schema - structured data */
+                        structuredData.value = {
+                            "@context": "http://schema.org/",
+                            "@type": "Product",
+                            "name": response1.data.data.label,
+                            "image": response1.data.data.primary_image_url,
+                            "description": response1.data.data.label,
+                            "url":`${runtimeConfig.public.siteUrl}/sku/${response.data.data.slug}`,
+                            "brand": {
+                                "@type": "Brand",
+                                "name": response1.data.data.brand_name
+                            },
+                            "offers": {
+                                "@type": "Offer",
+                                "priceCurrency": "IRR",
+                                "availability":"http://schema.org/InStock",
+                                "price": response1.data.data?.shps_list[0].customer_price,
+                            },
+                            "aggregateRating":{
+                                "@type":"AggregateRating",
+                                "ratingValue":response1.data.data.score                        ,
+                            },
+                            "seller":{
+                                "@context": "http://schema.org/",
+                                "@type": "Organization",
+                                "name": "shavaz",
+                                "url": "https://shavaz.com/",
+                                "countryCode":"IR",
+                                "logo":{
+                                    "@type":"ImageObject",
+                                    "inLanguage":"fa-IR",
+                                    "url":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+                                    "contentUrl":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+                                    "width":192,
+                                    "height":192,
+                                    "caption":"فروشگاه اینترنتی شاواز"
+                                }
+                            }
                         }
+
+                        useHead({
+                            script: [{ type: 'application/ld+json', children: JSON.stringify(structuredData.value) }]
+                        })
+                    }
+
+
+            } catch (error) {
+                if (error.response) {
+                    if (err.response?.status){
+                        showError({
+                            statusCode: 404,
+                            statusMessage: "Page Not Found"
+                        })
                     }
                 }
-
-                useHead({
-                    script: [{ type: 'application/ld+json', children: JSON.stringify(structuredData.value) }]
-                })
-            })
-            .catch((err) => {
-                if (err.response.status){
-                    showError({
-                        statusCode: 404,
-                        statusMessage: "Page Not Found"
-                    })
-                }
-            }).finally(() => {
-            store.commit('set_loadingModal', false)
-        }), {
+            }
+            finally{
+                store.commit('set_loadingModal', false);
+            }
+        },
+        {
             watch: [color]
         }
-    )
+    );
 
     return {product, color, getSecondaryData, secondaryData ,
         getPdpData,  getBreadcrumb, breadcrumb ,skuTitle , description}
