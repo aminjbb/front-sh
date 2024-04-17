@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product-card--simple {
     border-left: 1px solid #eee;
     padding: 0 16px;
