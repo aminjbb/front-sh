@@ -8,36 +8,28 @@
             </template>
         </div>
 
-        <generalProductSingleReportModal class="xs-hide" :title="content.label" />
+        <generalProductSingleReportModal class="xs-hide" :title="content?.label" />
     </div>
 
-    <h1 v-if="content.label" class="t20 w400 text-grey-darken-4 mb-3 mt-2">{{content.label}}</h1>
+    <h1 v-if="content?.label" class="t20 w400 text-grey-darken-4 mb-3 mt-2">{{content?.label}}</h1>
 
-    <h2 v-if="content.name" class="t12 w400 text-grey">{{content.name}}</h2>
+    <h2 v-if="content?.name" class="t12 w400 text-grey">{{content?.name}}</h2>
 
     <div class="product-details__rate d-flex align-center mt-3">
         <div class="product-details__rate__star d-flex align-center ltr ml-2">
-            
-            <template v-for="(icon, index) in generateStarIcons" :key="`icon${index}`">
-                <v-icon
-                    v-if="icon === 'mdi-star'"
-                    :icon="icon"
-                    color="orange-lighten-2" />
-                <v-icon
-                    v-else
-                    :icon="icon"
-                    color="orange-lighten-2" />
-            </template>
-            <template v-if="emptyStar !== 0" >
-                <template v-for="(icon, index) in emptyStar" :key="`icon${index}`">
-                    <v-icon
-                    icon="mdi-star"
-                    color="grey-lighten-2" />
-                </template>
-            </template>
+            <v-rating
+                v-model="content.score"
+                class="ltr ml-0" 
+                :length="5"
+                :size="32"
+                half-increments 
+                readonly
+                color="grey-lighten-2"
+                active-color="orange-lighten-2"
+                ></v-rating>
         </div>
 
-        <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{Math.floor(content.score)}})</span>
+        <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{Math.floor(content?.score)}})</span>
     </div>
 
     <v-divider color="grey" class="my-3" />
@@ -48,20 +40,20 @@
 
         <div>
             <swiper
-                v-if="content.colors"
+                v-if="content?.colors"
                 dir="rtl"
                 :slidesPerView="'auto'"
                 :spaceBetween="8"
                 :modules="modules"
                 :navigation="true"
                 class="mySwiper px-6">
-                <swiper-slide v-for="(color, index) in content.colors" :key="`product-single-color${index}`">
+                <swiper-slide v-for="(color, index) in content?.colors" :key="`product-single-color${index}`">
                     <div
                         class="d-inline-flex align-center colors-pallet__item ml-5"
                         :id="`color--${color.id}`"
-                        @click="selectColor(color.slug)">
-                        <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color.slug) === true ? 'colors-pallet__item__code--selected' : ''">
-                            <span :style="{backgroundColor: color.value}" />
+                        @click="selectColor(color?.slug)">
+                        <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color?.slug) === true ? 'colors-pallet__item__code--selected' : ''">
+                            <span :style="{backgroundColor: color?.value}" />
                             <v-icon
                                 icon="mdi-check"
                                 size="x-small"
@@ -69,7 +61,7 @@
                         </div>
 
                         <span class="colors-pallet__item__label t12 w500 text-grey number-font">
-                            {{color.label}}
+                            {{color?.label}}
                         </span>
                     </div>
                 </swiper-slide>
@@ -84,14 +76,14 @@
     <nav class="attribute-list">
         <ul class="ma-0 pa-0 pr-5">
             <li
-                v-for="(attr, index) in content.attributes"
+                v-for="(attr, index) in content?.attributes"
                 class="d-flex align-center"
                 :key="`attr${index}`"
-                :class="attr.attribute_values.length >1 ? 'mb-2' : ''">
-                <span class="t13 w400 text-grey" :class="attr.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr.label}}: </span>
+                :class="attr?.attribute_values.length >1 ? 'mb-2' : ''">
+                <span class="t13 w400 text-grey" :class="attr?.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr?.label}}: </span>
 
-                <template v-if="attr.attribute_values">
-                    <span class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attr.attribute_values.label}}</span>
+                <template v-if="attr?.attribute_values">
+                    <span class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attr?.attribute_values.label}}</span>
                 </template>
                 <template v-else>
                     <div class="attr-select">
@@ -104,7 +96,7 @@
                                 item-title="label"
                                 item-value="id"
                                 hide-details
-                                :items="attr.attribute_values"
+                                :items="attr?.attribute_values"
                                 v-model="selectedAttr"
                                 @update:modelValue="selectAttr()" />
                         </ClientOnly>
@@ -166,28 +158,6 @@ export default {
          * Sku group
          */
         skuGroup: Object,
-    },
-
-    computed: {
-        generateStarIcons() {
-            const fullStars = Math.floor(this.content.score);
-            const hasHalfStar = this.content.score % 1 !== 0;
-
-            const stars = [];
-            for (let i = 0; i < fullStars; i++) {
-                stars.push('mdi-star');
-            }
-
-            if (hasHalfStar) {
-                stars.push('mdi-star-half-full');
-            }
-
-            if(stars.length < 6){
-                this.emptyStar = 5 - (stars.length);
-            }
-
-            return stars;
-        },
     },
 
     methods: {

@@ -1,6 +1,6 @@
 <template>
 <main class="v-product v-product--single">
-    <h1 class="v-hide">{{ productLabel }}</h1>
+    <h1 class="v-hide">{{ title }}</h1>
     <v-container>
         <generalBreadcrumb :items="breadcrumbList" />
 
@@ -61,6 +61,7 @@
         </template>
 
         <mobileHomeSection8Slider
+            v-if="relatedProducts?.length"
             class="mt-5 pb-3"
             :items="relatedProducts"
             title="محصولات مشابه"
@@ -320,7 +321,6 @@ export default {
     },
 
     beforeMount() {
-      this.getSecondaryData()
       this.getBreadcrumb('sku')
     },
 }

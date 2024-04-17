@@ -1,31 +1,31 @@
 <template>
-<main v-if="screenType !== null" class="v-home">
+
+  <main v-show="homeSectionList?.length" class="v-home">
 
     <h1 class="ov-h h-0">{{ title }}</h1>
     <!--  desktop size -->
-    <template v-if="screenType === 'desktop'">
-        <desktopHomeMainSlider :items="responseDot(1)" />
+    <div v-if="screenType === 'desktop'">
+      <desktopHomeMainSlider :items="responseDot(1)" />
         <v-container>
-            <mobileHomeSurprise class="mt-4" :content="responseDot(2)" />
+          <mobileHomeSurprise class="mt-4" :content="responseDot(2)" />
 
-            <desktopHomeCategoryList :items="responseDot(3)" />
+          <desktopHomeCategoryList :items="responseDot(3)" />
 
             <desktopHomeBanner
                 :items="desktopBanner1"
                 col="6"
                 class="pt-3 mb-4" />
+          <MobileHomeSection5Slider :content="responseDot(5)" />
 
-            <MobileHomeSection5Slider :content="responseDot(5)" />
+          <generalTabSlider
+              :items="responseDot(6)"
+              class="tab-slider1 mb-8"
+              contentWidth="1080px"
+              title="پیشنهاد شاواز"
+              :componentProps="tabSlider1ComponentProps"
+              columnHeader />
 
-            <generalTabSlider
-                :items="responseDot(6)"
-                class="tab-slider1 mb-8"
-                contentWidth="1080px"
-                title="پیشنهاد شاواز"
-                :componentProps=tabSlider1ComponentProps
-                columnHeader />
-
-            <mobileHomeBrands :items="responseDot(7)" />
+          <mobileHomeBrands :items="responseDot(7)" />
 
             <desktopHomeBanner
                 class="mt-3"
@@ -70,10 +70,10 @@
                 </v-row>
             </template>
         </v-container>
-    </template>
+    </div>
 
     <!--  mobile size -->
-    <template v-else-if="screenType === 'mobile'">
+    <div v-if="screenType === 'mobile'">
         <mobileHomeMainSlider :items="responseDot(1)" />
 
         <v-container class="mobile-no-padd mt-4">
@@ -96,7 +96,7 @@
                 class="tab-slider1"
                 contentWidth="1080px"
                 title="پیشنهاد شاواز"
-                :componentProps=tabSlider1ComponentProps />
+                :componentProps="tabSlider1ComponentProps" />
 
             <mobileHomeBrands :items="responseDot(7)" />
 
@@ -138,7 +138,7 @@
                 </v-row>
             </template>
         </v-container>
-    </template>
+    </div>
 </main>
 </template>
 
@@ -151,14 +151,14 @@ export default {
             tabSlider1ComponentProps: {
                 hideInfo: true
             },
-            screenType: null,
+            screenType: 'desktop',
         }
     },
 
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | خرید لوازم آرایشی، بهداشتی، عطر')
         const description = ref(' مقایسه و خرید آنلاین انواع لوازم آرایشی، بهداشتی، عطر | برندهای متنوع با پایین ترین قیمت | فروشگاه اینترنتی شاواز Shavaz.com - خرید اینترنتی لوازم آرایشی و بهداشتی با ضمانت اصالت کالا -  برای خرید کلیک کنید!')
-        
+
         useHead({
             title,
             meta: [{
@@ -168,14 +168,10 @@ export default {
         });
 
         const {
-            getHomeSections,
             homeSectionList,
-            loading
         } = Home();
         return {
-            getHomeSections,
             homeSectionList,
-            loading,
             title
         };
     },
@@ -343,21 +339,17 @@ export default {
          * @return {*}
          */
         responseDot(id) {
-            if (id) return this.homeSectionList ?.find(item => item.id === id);
+            if (id) return this.homeSectionList?.find(item => item.id === id);
             return '';
         },
     },
 
-    mounted() {
+    beforeMount() {
         /**
          * Check screen size
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
 
-        /**
-         * Call getHomeSections in setup 
-         */
-        this.getHomeSections();
     },
 }
 </script>

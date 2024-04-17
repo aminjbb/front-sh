@@ -8,12 +8,12 @@ $parent: 'banner';
     &--desktop {
         .#{$parent} {
             &__image{
-                display: flex;
+                display: flex !important;
                 
                 img{
-                    border-radius: 8px;
-                    width: 100%;
-                    height: auto;
+                    border-radius: 8px !important;
+                    width: 100% !important;
+                    height: auto !important;
                 }
             }
         }
