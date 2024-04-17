@@ -12,7 +12,7 @@
         <swiper-slide v-for="(item,index) in mobileBanners" :key="index">
             <a class="main-slider__item" :href="item?.link">
                 <div class="main-slider__image">
-                    <img :src="item?.image?.image_url" :title="item?.title" :alt="item?.title" width="768" height="268" />
+                    <img data-not-lazy :src="item?.image?.image_url" :title="item?.title" :alt="item?.title" width="768" height="268" />
                 </div>
             </a>
         </swiper-slide>
