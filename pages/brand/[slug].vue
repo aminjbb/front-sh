@@ -56,6 +56,7 @@
                   class="v-product__content d-flex">
                 <generalProductCard
                     :content="item"
+                    :lazy=false
                     class="mb-4 flex-grow-1"
                     :hideInfo="true"
                     :isPLP="true"

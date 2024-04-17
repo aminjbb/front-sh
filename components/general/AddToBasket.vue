@@ -244,15 +244,16 @@ export default {
         enhanceECommerceAddToCart(product,price){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.addToCart',
+            'event': 'add_to_cart',
             'ecommerce': {
                 'currencyCode': 'RIL',
                 'add': {
                 'products': [{
-                    'name': product.label,
-                    'id': product.id,
-                    'price': Number(String(price.customer_price).slice(0, -1)),
-                    //'brand': 'GoldenRose',
+                    'name': product?.label,
+                    'id': product?.id,
+                    'price': Number(String(price?.customer_price).slice(0, -1)),
+                    'commercial_price':Number(String(price?.site_price).slice(0, -1)),
+                    'item_brand':product?.brand_label,
                     'category': this.productCategory,
                     'quantity': this.count
                 }]
@@ -269,17 +270,18 @@ export default {
          enhanceECommerceRemoveFromCart(product,price){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.removeFromCart',
+            'event': 'remove_from_cart',
             'ecommerce': {
                 'currencyCode': 'RIL',
                 'add': {
                 'products': [{
-                    'name': product.label,
-                    'id': product.id,
-                    'price': Number(String(price.customer_price).slice(0, -1)),
-                    //'brand': 'GoldenRose',
-                    'category': this.productCategory,
-                    'quantity': this.count
+                  'name': product?.label,
+                  'id': product?.id,
+                  'price': Number(String(price?.customer_price).slice(0, -1)),
+                  'commercial_price':Number(String(price?.site_price).slice(0, -1)),
+                  'item_brand':product?.brand_label,
+                  'category': this.productCategory,
+                  'quantity': this.count
                 }]
                 }
             }

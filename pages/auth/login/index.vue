@@ -201,7 +201,7 @@ export default {
             seconds: null,
             showRetry: true,
             counter: '',
-            startTime: 2,
+            startTime: null,
             passwordWay: false,
             passwordType: 'password'
         };
@@ -246,7 +246,7 @@ export default {
             this.passwordWay = false;
             this.minutes = null;
             this.seconds = null;
-            this.startTime = 2;
+            this.startTime = null;
             this.counter = '';
         },
 
@@ -263,8 +263,7 @@ export default {
          */
         runCountdown() {
             this.showRetry = false;
-            this.counter = `0${this.startTime}:00`;
-            const duration = (this.startTime * 60) - 1;
+            const duration = this.startTime - 1; // Convert seconds to countdown duration
             let timer = duration;
 
             const myCountdown = setInterval(() => {
@@ -280,29 +279,37 @@ export default {
 
                 if (this.counter === '00:00') {
                     this.showRetry = true;
-                    learInterval(myCountdown);
+                    clearInterval(myCountdown);
                 }
 
                 if (this.loginStep === 1) {
-                    learInterval(myCountdown);
+                    clearInterval(myCountdown);
                 }
             }, 1000);
-        },
+},
 
         /**
          * Send OTP
          */
         async sendOTP() {
             try {
+                this.startTime = null;
                 this.loading = true;
                 const response = await auth.sendOTP( digits(this.mobile, 'en'));
 
                 if (response.data && response.status === 200) {
+                    this.startTime = response.data?.data?.time
                     this.loginStep = 2;
                     this.runCountdown();
+                }else{
                 }
             } catch (error) {
                 console.error('Send OTP error:', error);
+                useNuxtApp().$toast.error(error?.response?.data?.message,  {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
             } finally {
                 this.loading = false;
             }
@@ -336,11 +343,11 @@ export default {
                         await this.syncBasket()
                     }
 
-                    if(response.data.data.user?.is_signed_up === 0){
+                    if(response.data.data.user?.is_signed_up === 1){
                         this.enhanceEcommereLogin();
                     }
 
-                    if(response.data.data?.user.is_signed_up === 1){
+                    if(response.data.data?.user.is_signed_up === 0){
                         this.enhanceEcommereRegister();
                     }
 
@@ -418,14 +425,16 @@ export default {
         },
 
         enhanceEcommereRegister(){
-            dataLayer.push(
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
             {
                 'event': 'Register',
             });
         },
 
         enhanceEcommereLogin(){
-            dataLayer.push(
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(
             {
                 'event': 'login',
             });

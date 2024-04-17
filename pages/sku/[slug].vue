@@ -13,7 +13,8 @@
                     :getPdpData="getPdpData"
                     :wishlist="wishlist"
                     :productSelectedSeller="productSelectedSeller"
-                    :items="skuImageGallery" />
+                    :items="skuImageGallery"
+                    :productDetail="productDetail"/>
             </v-col>
 
             <v-col
@@ -309,7 +310,8 @@ export default {
                     'name': product.label,
                     'id': product.id,
                     'price': Number(String(price.customer_price).slice(0, -1)),
-                    'brand': null,
+                    'commercial_price':Number(String(price.site_price).slice(0, -1)),
+                    'item_brand':product?.brand_label,
                     'category': this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug
                 }]
                 }
