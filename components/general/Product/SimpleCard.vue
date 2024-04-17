@@ -53,17 +53,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .product-card--simple {
     border-left: 1px solid #eee;
     padding: 0 16px;
 
     h3:hover{
         color:#333 !important
-    }
-
-    img{
-        height: 80px !important;
     }
 }
 </style>
