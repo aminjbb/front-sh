@@ -74,7 +74,7 @@
         <template v-if="isLogin">
             <div v-if="productUserHistory && productUserHistory.length" class="pa-3">
                 <v-divider color="grey"/>
-                <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخبر</h5>
+                <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">بازدیدهای اخیر</h5>
                 <v-row>
                     <v-col
                         v-for="(product, index) in productUserHistory.slice(0,6)"
@@ -90,7 +90,7 @@
         <template v-else>
             <div v-if="randomProducts && randomProducts.length" class="pa-3">
                 <v-divider color="grey"/>
-                <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">پیشتهاد شاواز</h5>
+                <h5 class="t13 w500 text-grey-darken-1 mb-3 mt-4">پیشنهاد شاواز</h5>
                 <v-row>
                     <v-col
                         v-for="(product, index) in randomProducts.slice(0,6)"
