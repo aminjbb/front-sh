@@ -61,5 +61,9 @@ export default {
     h3:hover{
         color:#333 !important
     }
+
+    img{
+        height: 80px !important;
+    }
 }
 </style>

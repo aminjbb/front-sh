@@ -24,7 +24,7 @@
 
     <v-divider color="grey-lighten-1" class="xs-show"/>
 
-    <div v-if="products">
+    <div v-if="products?.length">
         <header class="pa-3 pr-0 pb-5">
            <h3 class="t20 text-right text-grey-darken-2">
             پیشنهاد شاواز
