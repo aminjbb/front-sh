@@ -80,6 +80,14 @@ export default {
                     value: 'pre_progress'
                 },
                 {
+                    text: 'در حال بسته بندی',
+                    value: 'boxing'
+                },
+                {
+                    text: 'انقضا سفارش',
+                    value: 'payment_out_date'
+                },
+                {
                     text: 'در حال ارسال',
                     value: 'sending'
                 },
