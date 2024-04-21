@@ -38,7 +38,6 @@ export default function setup() {
     /** get user basket and save on vuex **/
     async function getBasket() {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
-        console.log("🚀 ~ getBasket ~ randomNumberForBasket:", randomNumberForBasket)
        
         if (userToken.value){
             axios
