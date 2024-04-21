@@ -218,9 +218,12 @@ export default function setup() {
                 },
             })
             .then((response) => {
+                if(!response.data.data.details){
+                    randomNumberForBasket.value = ''
+                }
                 count.value = 0;
                 getBasket();
-                randomNumberForBasket.value = ''
+               
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)
