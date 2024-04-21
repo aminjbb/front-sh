@@ -38,6 +38,7 @@ export default function setup() {
     /** get user basket and save on vuex **/
     async function getBasket() {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
+        console.log("🚀 ~ getBasket ~ randomNumberForBasket:", randomNumberForBasket)
        
         if (userToken.value){
             axios
@@ -218,9 +219,12 @@ export default function setup() {
                 },
             })
             .then((response) => {
+                if(!response.data.data.details){
+                    randomNumberForBasket.value = ''
+                }
                 count.value = 0;
                 getBasket();
-                randomNumberForBasket.value = ''
+               
             })
             .catch((err) => {
                 // auth.checkAuthorization(err.response)
