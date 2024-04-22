@@ -155,7 +155,7 @@ export default {
 
                 return basket ?.data ?.data
             } catch (e) {
-                return []
+                return null
             }
         }
     },
@@ -298,9 +298,11 @@ export default {
                 }
             }else{
                 const pageSlug = this.$route.params.slug;
-                const productInBasket = this.userBasket?.details.find(element => element?.shps?.sku?.slug === pageSlug)
-                if (productInBasket) {
-                    this.count = productInBasket.count
+                if(this.userBasket !== null){
+                    const productInBasket = this.userBasket?.details.find(element => element?.shps?.sku?.slug === pageSlug)
+                    if (productInBasket) {
+                        this.count = productInBasket.count
+                    }
                 }
             }
 
