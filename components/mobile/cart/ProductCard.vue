@@ -206,50 +206,44 @@ export default {
         /**
          * Enhance E-commerce for Seo
          * @param {*} product 
-         * @param {*} price 
          */
          enhanceECommerceAddToCart(product){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.addToCart',
-            'ecommerce': {
-                'currencyCode': 'RIL',
-                'add': {
-                'products': [{
-                    'name': product.shps?.sku?.label,
-                    'id': product.shps?.sku?.id,
-                    'price': Number(String(product.current_total_site_price).slice(0, -1)),
-                    'brand': product.shps?.sku?.brand?.label,
-                    'category': null,
-                    'quantity': this.count
-                }]
-                }
-            }
+                event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
+                    ecommerce: {							
+                        items: [{	// an array where all currently viewed products must be included
+                            item_id: product.shps?.sku?.id,	// insert an actual product ID
+                            price: product?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                            comercial_price: product?.site_price, // insert an actual product price after comercial discount
+                            item_brand: product.shps?.sku?.brand?.label,// insert an actual product price
+                            item_category: null,	// insert an actual product top-level category ** TODO: We don't have this
+                            item_color: null,  // insert the color of product select ** TODO: We don't have this
+                            quantity: this.count,	// product quantity. In case of add to cart
+                        }]
+                    }
             });
         },
 
         /**
          * Enhance E-commerce for Seo
          * @param {*} product 
-         * @param {*} price 
          */
          enhanceECommerceRemoveFromCart(product){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.removeFromCart',
-            'ecommerce': {
-                'currencyCode': 'RIL',
-                'add': {
-                'products': [{
-                    'name': product.shps?.sku?.label,
-                    'id': product.shps?.sku?.id,
-                    'price': Number(String(product.current_total_site_price).slice(0, -1)),
-                    'brand': product.shps?.sku?.brand?.label,
-                    'category': null,
-                    'quantity': this.count
-                }]
+            event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
+                ecommerce: {							
+                    items: [{// an array where all currently viewed products must be included
+                        item_id: product.shps?.sku?.id,	// insert an actual product ID
+                        price: product?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                        comercial_price: product?.site_price, // insert an actual product price after comercial discount
+                        item_brand: product.shps?.sku?.brand?.label,// insert an actual product price
+                        item_category: null,	// insert an actual product top-level category  ** TODO: We don't have this
+                        item_color: null,  // insert the color of product select ** TODO: We don't have this
+                        quantity:  this.count,	// product quantity. In case of add to cart
+                    }]
                 }
-            }
             });
         }
     },

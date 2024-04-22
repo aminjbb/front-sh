@@ -14,7 +14,7 @@
                 <li
                     v-for="(tab, index) in categories"
                     :key="`tab-slider__${index}`"
-                    @click="activeTab(tab.id,setRef)"
+                    @click="activeTab(tab.id,tab.label)"
                     :id="`tab-header-${tab.id}`"
                     class="tab-slider__header__item"
                     :class="index == 0 ? 'active' : ''">
@@ -40,6 +40,8 @@
                     v-for="sku in getSkuList(item ,limit)"
                     :key="`tab-skus-${sku.id}`"
                     :is="component"
+                    :index = "index+1"
+                    :sectionName= "`${title} - ${selectedTab}`"
                     v-bind=componentProps
                     :content="sku" />
             </div>
@@ -52,14 +54,12 @@
 import {
     resolveComponent
 } from 'vue';
-import {
-    tr
-} from "vuetify/locale";
 export default {
     data() {
         return {
             headerItems: [],
             tabContents: null,
+            selectedTab: null,
         }
     },
 
@@ -141,20 +141,6 @@ export default {
 
     computed: {
         /**
-         * Header for tab
-         */
-        tabHeader() {
-            this.items.forEach(item => {
-                const headerItem = {
-                    label: item.title,
-                    id: item.id
-                }
-                this.headerItems.push(headerItem)
-            })
-            return this.headerItems;
-        },
-
-        /**
          * Set dynamic class based my props
          */
         getDynamicClasses() {
@@ -162,8 +148,10 @@ export default {
                 'column-header': this.columnHeader,
             };
         },
+
         categories() {
             try {
+                this.selectedTab = this.items.categories[0]?.label
                 return this.items.categories.slice(0, 6)
             } catch (e) {
                 return []
@@ -172,17 +160,18 @@ export default {
     },
 
     methods: {
-      getSkuList(item , limit){
-        const skus = item.skus.slice(0,limit)
-        const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length && sku?.seller_s_k_us[0]?.site_stock > 0)
-        return findSkus
-      },
+        getSkuList(item , limit){
+            const skus = item.skus.slice(0,limit)
+            const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length && sku?.seller_s_k_us[0]?.site_stock > 0)
+            return findSkus
+        },
         /**
          * Active tabs by click
          */
-        activeTab(id) {
+        activeTab(id, label) {
             //**out of your component should set ref**
             const slider = this.$refs[this.setRef];
+            this.selectedTab = label
 
             const liItems = slider.querySelectorAll('li');
             const tabContents = slider.querySelectorAll('div.tab-slider__content');

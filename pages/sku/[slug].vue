@@ -291,7 +291,9 @@ export default {
 
     methods:{
         handleWatchChange() {
-            this.enhanceECommerce(this.productDetail,this.productSelectedSeller)
+            if(this.productDetail){
+                this.enhanceECommerce(this.productDetail,this.productSelectedSeller)
+            }
         },
 
         /**
@@ -302,19 +304,18 @@ export default {
         enhanceECommerce(product,price){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.productDetail',
-            'ecommerce': {
-                'detail': {
-                'products': [{
-                    'name': product.label,
-                    'id': product.id,
-                    'price': Number(String(price.customer_price).slice(0, -1)),
-                    'commercial_price':Number(String(price.site_price).slice(0, -1)),
-                    'item_brand':product?.brand_label,
-                    'category': this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug
-                }]
+                event: 'view_item',  // name of the event. In this case, it always must be view_item_list
+                ecommerce: {							
+                    items: [{		// an array where all currently viewed products must be included
+                    item_id: product.id,	// insert an actual product ID
+                    price: price.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                    comercial_price: price.site_price, // insert an actual product price after comercial discount
+                    item_brand: product?.brand_label,	// insert an actual product price
+                    item_category: this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug,			// insert an actual product top-level category
+                    section_name: product?.label, // insert the name of the list where the product is currently displayed
+                    item_color: null,  // insert the color of product select
+                    }]
                 }
-            }
             });
         }
     },

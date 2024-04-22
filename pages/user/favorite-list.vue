@@ -33,6 +33,8 @@
                                 deleteIcon
                                 isPLP
                                 @removeProduct="removeProduct"
+                                :index = "index + 1"
+                                sectionName = "لیست علاقه منده ها"
                                 :content="item" />
                         </v-col>
                     </v-row>

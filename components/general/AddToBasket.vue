@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Basket from '@/composables/Basket.js'
 export default {
     setup(){
@@ -209,6 +208,10 @@ export default {
                     this.beforeAuthAddToBasket(this.content.id  , this.count , randomNumber.toString(), 'increase')
                 }
             }
+
+            /* if( this.count < this.content.order_limit){
+                this.enhanceECommerceAddToCart(this.productDetails,this.content)
+            } */
         },
 
         /**
@@ -234,6 +237,8 @@ export default {
                     }
                   }
                 }
+
+               // this.enhanceECommerceRemoveFromCart(this.productDetails,this.content)
             }
         },
 
@@ -245,21 +250,18 @@ export default {
         enhanceECommerceAddToCart(product,price){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'add_to_cart',
-            'ecommerce': {
-                'currencyCode': 'RIL',
-                'add': {
-                'products': [{
-                    'name': product?.label,
-                    'id': product?.id,
-                    'price': Number(String(price?.customer_price).slice(0, -1)),
-                    'commercial_price':Number(String(price?.site_price).slice(0, -1)),
-                    'item_brand':product?.brand_label,
-                    'category': this.productCategory,
-                    'quantity': this.count
-                }]
-                }
-            }
+                event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
+                    ecommerce: {							
+                        items: [{	// an array where all currently viewed products must be included
+                            item_id: product?.id,	// insert an actual product ID
+                            price: price?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                            comercial_price: price?.site_price, // insert an actual product price after comercial discount
+                            item_brand: product?.brand_label,	// insert an actual product price
+                            item_category: this.productCategory,	// insert an actual product top-level category
+                            item_color: null,  // insert the color of product select ** TODO: We don't have this
+                            quantity: this.count,	// product quantity. In case of add to cart
+                        }]
+                    }
             });
         },
 
@@ -271,21 +273,18 @@ export default {
          enhanceECommerceRemoveFromCart(product,price){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'remove_from_cart',
-            'ecommerce': {
-                'currencyCode': 'RIL',
-                'add': {
-                'products': [{
-                  'name': product?.label,
-                  'id': product?.id,
-                  'price': Number(String(price?.customer_price).slice(0, -1)),
-                  'commercial_price':Number(String(price?.site_price).slice(0, -1)),
-                  'item_brand':product?.brand_label,
-                  'category': this.productCategory,
-                  'quantity': this.count
-                }]
+            event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
+                ecommerce: {							
+                    items: [{// an array where all currently viewed products must be included
+                        item_id: product?.id,	// insert an actual product ID
+                        price: price?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                        comercial_price: price?.site_price, // insert an actual product price after comercial discount
+                        item_brand: product?.brand_label,// insert an actual product price
+                        item_category: this.productCategory,	// insert an actual product top-level category
+                        item_color: null,  // insert the color of product select ** TODO: We don't have this
+                        quantity:  this.count,	// product quantity. In case of add to cart
+                    }]
                 }
-            }
             });
         }
     },

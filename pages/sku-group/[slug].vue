@@ -20,6 +20,8 @@
                                 class="mb-4 flex-grow-1"
                                 :hideInfo="true"
                                 :isPLP="true"
+                                :index = "index + 1"
+                                :sectionName = "`${plpTitle}لیست کالاهای`"
                                 :showColors="true" />
                         </v-col>
                     </v-row>

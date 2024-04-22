@@ -58,6 +58,8 @@
                     :content="item"
                     :lazy=false
                     class="mb-4 flex-grow-1"
+                    :index = "index + 1"
+                    :sectionName = "`${plpTitle}لیست کالاهای برند`"
                     :hideInfo="true"
                     :isPLP="true"
                     :showColors="true"/>

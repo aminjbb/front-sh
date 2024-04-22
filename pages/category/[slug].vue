@@ -62,6 +62,8 @@
                       class="mb-4 flex-grow-1"
                       :hideInfo="true"
                       :isPLP="true"
+                      :index = "index + 1"
+                      :sectionName = "`${plpTitle}لیست کالاهای دسته بندی `"
                       :showColors="true"/>
                 </v-col>
               </v-row>
