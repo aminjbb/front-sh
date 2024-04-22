@@ -7,9 +7,11 @@
             color="grey-darken-1"
             class="ml-2" />
 
-        <form @submit.prevent="showResultPlp" class="flex-grow-1">
-          <input placeholder="جستجو در شاواز" class="w-100" @click="openSearchbox()" v-model="search" v-debounce:1s.unlock="searchInSite()" />
-        </form>
+        <client-only>
+          <form @submit.prevent="showResultPlp" class="flex-grow-1">
+            <input placeholder="جستجو در شاواز" class="w-100" @click="openSearchbox()" v-model="search" @keyup="searchInSite()" />
+          </form>
+        </client-only>
       </div>
 
       <div class="search-result search-result--desktop" id="search-result">
@@ -155,7 +157,6 @@ import Search from '@/composables/Search.js';
 
 import axios from "axios";
 
-import { debounce } from 'vue-debounce'
 
 export default {
     data() {
@@ -163,12 +164,11 @@ export default {
             search: null,
             searchNew: null,
             searchResult:[],
+            timeDebounce: null
         }
     },
 
-    directives: {
-       debounce
-    },
+
 
     computed: {
         filteredWords() {
@@ -226,7 +226,7 @@ export default {
 
         /**
          * Close search box if I click in outside
-         * @param {*} event 
+         * @param {*} event
          */
         closeSearchBox(event) {
             if(this.$route.name !== 'login' && this.$route.name !== 'forgotPassword'){
@@ -247,19 +247,23 @@ export default {
          * Search
          */
         searchInSite(){
+          clearTimeout(this.timeDebounce)
+          this.timeDebounce = setTimeout(()=>{
             if(this.search !== null && this.search !== this.searchNew){
-                this.searchNew = this.search;
-                axios
-                    .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
-                    .then((response) => {
-                        this.searchResult = response?.data?.data;
-                    })
-                    .catch((err) => {
+              this.searchNew = this.search;
+              axios
+                  .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
+                  .then((response) => {
+                    this.searchResult = response?.data?.data;
+                  })
+                  .catch((err) => {
 
-                    }).finally(() => {
+                  }).finally(() => {
 
-                    });
+              });
             }
+          }, 1000)
+
         },
 
         /**

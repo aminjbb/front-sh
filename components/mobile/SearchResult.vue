@@ -23,9 +23,11 @@
                 @click="closeModal"
                 class="ml-2" />
 
-            <form @submit.prevent="showResultPlp" class="flex-grow-1">
-              <input placeholder="جستجو در شاواز " class="w-100" v-model="search" v-debounce:1s.unlock="searchInSite()" >
-            </form>
+           <client-only>
+             <form @submit.prevent="showResultPlp" class="flex-grow-1">
+               <input placeholder="جستجو در شاواز " class="w-100" v-model="search" @keyup="searchInSite()" >
+             </form>
+           </client-only>
           </div>
 
           <div class="search-result" id="search-result">
@@ -195,6 +197,7 @@ export default {
             dialog: false,
             searchResult:[],
             searchNew: null,
+            timeDebounce:null,
         }
     },
 
@@ -250,19 +253,26 @@ export default {
         /**
          * Search
          */
-         searchInSite(){
+        searchInSite(){
+          clearTimeout(this.timeDebounce)
+          this.timeDebounce = setTimeout(()=>{
             if(this.search !== null && this.search !== this.searchNew){
-                this.searchNew = this.search;
-                axios
-                    .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
-                    .then((response) => {
-                        this.searchResult = response?.data?.data;
-                    })
-                    .catch((err) => {
-                    }).finally(() => {
-                    });
+              this.searchNew = this.search;
+              axios
+                  .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
+                  .then((response) => {
+                    this.searchResult = response?.data?.data;
+                  })
+                  .catch((err) => {
+
+                  }).finally(() => {
+
+              });
             }
+          }, 1000)
+
         },
+
 
         /**
          * Search By most search label
