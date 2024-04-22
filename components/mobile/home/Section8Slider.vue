@@ -42,9 +42,11 @@
         class="mySwiper">
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
             <generalProductCard
-                :content="item"
-                :isPLP="isPLP"
-                :index="hideIndex !== true ? `${index + 1}` : ''"
+                :sectionName = "title"
+                :content= "item"
+                :isPLP= "isPLP"
+                :index = "index + 1"
+                :showIndex= "hideIndex !== true ? true : false"
                 class="mb-4" />
         </swiper-slide>
     </swiper>

@@ -63,6 +63,8 @@
                         :content="item"
                         hideInfo
                         hideLabel
+                        :index = "index + 1"
+                        sectionName = "سورپرایز"
                         :shps="item?.pivot?.shps"
                         class="mb-4" />
                 </swiper-slide>

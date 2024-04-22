@@ -59,7 +59,7 @@
                         </tr>
                     </template>
                 </v-data-table>
-                <h4 class="w600 text-black text-center my-5 t16">در حال حاضر داده ای برای نمایش وجود ندارد.</h4>
+                <h4 v-else class="w600 text-black text-center my-5 t16">در حال حاضر داده ای برای نمایش وجود ندارد.</h4>
             </div>
         </v-card>
     </v-dialog>

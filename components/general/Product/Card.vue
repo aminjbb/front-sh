@@ -1,6 +1,6 @@
 <template>
-<div v-if="content" class="product-card pa-2">
-    <div v-if="index" class="product-card__index">
+<div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
+    <div v-if="index && showIndex" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>
 
@@ -15,22 +15,22 @@
     </div>
 
     <template v-if="lazy">
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
     <template v-else>
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img data-not-lazy :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
-    <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`">
+    <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`" @click="enhanceEcommerce()">
         <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title card-title mb-2">
             {{content.label}}
         </h3>
@@ -102,9 +102,13 @@ export default {
          */
         content: Object,
         /**
-         * Show index
+         *  Product index in list
          */
         index: String,
+        /**
+         * Show index
+         */
+         showIndex: Boolean,
         /**
          * Hide card info
          */
@@ -148,6 +152,11 @@ export default {
             type: Boolean,
             default: true
         },
+
+        /**
+         * Section name
+         */
+        sectionName: String,
     },
 
     methods: {
@@ -158,6 +167,25 @@ export default {
         removeProduct(content) {
             this.$emit('removeProduct', content);
         },
+
+        enhanceEcommerce(){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'select_item',  	// name of the event. In this case, it always must be select_item
+                ecommerce: {							
+                    items: [{   // an array where all currently viewed products must be included
+                        item_id: this.content?.id,	// insert an actual product ID
+                        price: this.content?.customer_price,    // insert an actual product price. Number or a string. Don't include currency code
+                        comercial_price: this.content?.site_price, // insert an actual product price after comercial discount
+                        item_brand: null,	// insert an actual product price ** TODO: We don't have this in API
+                        item_category:  null,   // insert an actual product top-level category ** TODO: We don't have this in API
+                        section_name: this.sectionName, // insert the name of the list where the product is currently displayed
+                        item_color: null,  // insert the color of product select ** TODO: We don't have this
+                        index: this.index 	// insert product's position in that list
+                    }]
+                }
+            });
+        }
     },
 
   computed:{

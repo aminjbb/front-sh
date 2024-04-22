@@ -28,9 +28,9 @@
                 <div class="t14 w400 text-grey-darken-1 number-font">{{ splitChar(Number(String(way?.sending_price).slice(0, -1))) }} <span class="t12">تومان</span></div>
             </div>
 
-            <template v-if="waysModal === 'nafis' && index === 0">
-                <desktopCartTimeTable :calendar="calendarMoc" :index="index" @selectedDate="selectedDate"/>
-            </template>
+<!--            <template v-if="waysModal === 'nafis' && index === 0">-->
+<!--                <desktopCartTimeTable :calendar="calendarMoc" :index="index" @selectedDate="selectedDate"/>-->
+<!--            </template>-->
 
             <v-divider
                 v-if="index+1 < sendingMethods.length"
@@ -146,6 +146,7 @@ export default {
     },
 
     beforeMount() {
+        // todo: add get time table after backend fixed
         this.getUserAddress()
         this.getProvince()
     }
