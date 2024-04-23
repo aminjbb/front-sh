@@ -208,10 +208,6 @@ export default {
                     this.beforeAuthAddToBasket(this.content.id  , this.count , randomNumber.toString(), 'increase')
                 }
             }
-
-            /* if( this.count < this.content.order_limit){
-                this.enhanceECommerceAddToCart(this.productDetails,this.content)
-            } */
         },
 
         /**

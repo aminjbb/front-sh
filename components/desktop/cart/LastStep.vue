@@ -129,9 +129,8 @@ export default {
     methods: {
         /**
          * Enhance E-commerce for Seo in Checkout Step 4 after payment
-         * @param {*} products
          */
-         enhanceECommerceLastStep(){
+         /* enhanceECommerceLastStep(){
             if(transactionData.status=== 'success'){
                 let productArr = [];
                 this.data.details.forEach(item =>{
@@ -158,7 +157,7 @@ export default {
                 }
                 });
             }
-        },
+        }, */
     },
 
     watch:{

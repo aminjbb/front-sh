@@ -14,6 +14,7 @@
                     :wishlist="wishlist"
                     :productSelectedSeller="productSelectedSeller"
                     :items="skuImageGallery"
+                    :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
                     :productDetail="productDetail"/>
             </v-col>
 
