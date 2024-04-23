@@ -29,8 +29,13 @@
                             class="menu__item"
                             :class="child1.children ? 'has-child' :''"
                             :id="`menu__item--${child1.id}`"
-                            @click="openSubMenu2(child1.id)">
-                            <a class="menu__item__link d-flex align-center justify-space-between">
+                            @click="child1.children && child1.children.length ? openSubMenu2(child1.id) : ''">
+                            <a v-if="child1.children && child1.children.length" class="menu__item__link d-flex align-center justify-space-between">
+                                <span class="t13">{{child1.label}}</span>
+                                <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-down" />
+                            </a>
+
+                            <a v-else class="menu__item__link d-flex align-center justify-space-between" :href="child1.url">
                                 <span class="t13">{{child1.label}}</span>
                                 <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-down" />
                             </a>
