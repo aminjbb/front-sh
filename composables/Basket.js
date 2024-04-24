@@ -328,15 +328,7 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                if(payment_method === 'online' || payment_method === 'wallet'){
-                    window.location = response.data.data.payment_link
-                } else{
-                    useNuxtApp().$toast.error('روش انتخابی در حال حاضر فعال نیست.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }
+                window.location = response.data.data.payment_link
 
             })
             .catch((err) => {
