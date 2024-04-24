@@ -91,6 +91,8 @@
 
 <script>
 import Basket from '@/composables/Basket.js'
+import Order from '@/composables/Order.js'
+
 export default {
     data() {
         return {
@@ -118,11 +120,18 @@ export default {
             createFailedOrder,
         } = new Basket()
 
+        const {
+            getOrderById,
+            order
+        } = new Order()
+
         return {
             userToken,
             getTransactionData,
             transactionData,
-            createFailedOrder
+            createFailedOrder,
+            getOrderById,
+            order
         }
     },
 
@@ -130,7 +139,7 @@ export default {
         /**
          * Enhance E-commerce for Seo in Checkout Step 4 after payment
          */
-         /* enhanceECommerceLastStep(){
+         enhanceECommerceLastStep(){
             if(transactionData.status=== 'success'){
                 let productArr = [];
                 this.data.details.forEach(item =>{
@@ -156,13 +165,37 @@ export default {
                     }
                 }
                 });
+
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                event: 'purchase',  	// name of the event. In this case, it always must be purchase
+                ecommerce: {
+                    currency: 'USD',
+                    value: this.order.data.data.total_price,	// order total (price of all products + shipping) based Toman. 
+                    shipping: this.order.data.data.sending_price,		// shipping costs
+                    order_id: this.order.data.data.id,			// order id
+                    coupon: 'ENDOFSUMMER',			// if coupon was applied to the order, include it here
+
+                    couponvalue: 10000,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                    items: [{			// an array where all currently viewed products must be included
+                    item_id: 'shps10717225',	// insert an actual product ID
+                    price: '197900',	// insert an actual product price. Number or a string. Don't include currency code
+                    item_brand: 'دبورا',	// insert an actual product price
+                    item_category: 'لوازم آرایشی',			// insert an actual product top-level category
+                    item_color: '01',  // insert the color of product select
+                    quantity: '1',		// product quantity. In case of view_item_list, it will usually be equal to 1		
+                    }]
+                }
+                });
             }
-        }, */
+        },
     },
 
     watch:{
         transactionData(newVal){
             if(newVal && newVal!==null){
+                this.getOrderById(newVal.order_id)
                 this.enhanceECommerceLastStep();
             }
         }
