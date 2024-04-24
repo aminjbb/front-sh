@@ -331,16 +331,15 @@ export default {
                 this.isFavorite = !this.isFavorite
                 if (this.isFavorite){
                     this.addToFavorite()
-                    this.enhanceECommerceAddWishList(this.productDetail)
 
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                         event: 'add_to_wishlist', // name of the event. In this case, it always must be add_to_wishlist
                         ecommerce: {							
                             items: [{// an array where all currently viewed products must be included
-                                item_id: productDetail.id,// insert an actual product ID
-                                price: productSelectedSeller?.customer_price,// insert an actual product price. Number or a string. Don't include currency code
-                                item_brand: product?.brand_label,// insert an actual product price
+                                item_id: this.productDetail.id,// insert an actual product ID
+                                price: this.productSelectedSeller?.customer_price,// insert an actual product price. Number or a string. Don't include currency code
+                                item_brand: this.productDetail?.brand_label,// insert an actual product price
                                 item_category: this.productCategory,	// insert an actual product top-level category
                                 item_color: null,  // insert the color of product select
                             }]
@@ -410,25 +409,6 @@ export default {
 
                 })
         },
-
-
-      /**
-       * Enhance E-commerce for Seo
-       * @param {*} product
-       */
-      enhanceECommerceAddWishList(product){
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          'event': 'add_to_wishlist',
-          'ecommerce': {
-            'items': [{							// an array where all currently viewed products must be included
-              'item_id': `shps${this.productSelectedSeller?.id}`,	// insert an actual product ID
-              'price': this.productSelectedSeller?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
-              'item_brand': product?.brand_label,	// insert an actual product price
-            }]
-          }
-        });
-      }
     },
     
     watch: {

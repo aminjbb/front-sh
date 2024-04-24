@@ -394,7 +394,7 @@ export default {
             window.dataLayer.push({
             event: 'add_shipping_info',// name of the event.
             ecommerce: {
-                value: splitChar(Number(String(this.data.total_price).slice(0, -1))),	// order total (price of all products) based Toman. 
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
                 shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis						
                 items: productArr
             }
@@ -448,8 +448,8 @@ export default {
             window.dataLayer.push({
             event: 'add_payment_info',// name of the event.
             ecommerce: {
-                value: splitChar(Number(String(this.data.total_price).slice(0, -1))),	// order total (price of all products) based Toman. 
-                coupon: data.voucher.code,						
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                coupon: this.data.voucher.code,						
                 items: productArr
             }
             });
