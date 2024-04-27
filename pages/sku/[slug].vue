@@ -14,7 +14,7 @@
                     :wishlist="wishlist"
                     :productSelectedSeller="productSelectedSeller"
                     :items="skuImageGallery"
-                    :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                    :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
                     :productDetail="productDetail"/>
             </v-col>
 
@@ -34,7 +34,7 @@
                             <generalAddToBasket 
                                 :content="productSelectedSeller" 
                                 :productDetails="productDetail"  
-                                :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                                :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
                                 />
                         </v-col>
                     </v-row>
@@ -86,7 +86,7 @@
             <div class="mobile-basket">
                 <generalAddToBasket
                     :content="productSelectedSeller"
-                    :productCategory="this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug"
+                    :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
                     :productDetails="productDetail"
                     revers="revers"
                     :mdCols="['6','6']"
