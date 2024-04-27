@@ -1,6 +1,6 @@
 <template>
 <v-card class="pa-5 mobile-pa-0 mobile-no-border pb-10">
-    <template v-if="transactionData.status=== 'success'">
+    <template v-if="transactionData.status=== 'successful'">
         <header class="d-flex align-center mb-5 xs-hide">
             <v-icon
                 icon="mdi-credit-card-outline"
@@ -16,7 +16,7 @@
             </h2>
 
             <span class="t14 text-grey-darken-2 mb-10 number-font">
-                سفارش شما با شماره {{transactionData.order_number}} با موفقیت ثبت کردید.
+                سفارش شما با شماره {{transactionData?.transaction?.order_number}} با موفقیت ثبت کردید.
             </span>
 
             <img src="~/assets/images/2basket.jpg" alt="payment-image" width="249" height="210">
@@ -33,7 +33,7 @@
 
                 <v-btn
                     v-if="result=== 'success'"
-                    :href="`/user/order/${transactionData.order_id}`"
+                    :href="`/user/order/${transactionData?.transaction?.order_id}`"
                     height="44"
                     width="180"
                     title="مشاهده فاکتور"
@@ -160,9 +160,9 @@ export default {
                     event: 'purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
                         currency: 'IRR',
-                        value: Number(String(this.order.data.data.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman. 
-                        shipping: Number(String(this.order.data.data.sending_price).slice(0, -1)),	// shipping costs
-                        order_id: this.order.data.data.id,	// order id
+                        value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
+                        order_id: this.order?.data?.data?.id,	// order id
                         coupon: null,	// if coupon was applied to the order, include it here
                         couponvalue: null,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
@@ -189,9 +189,9 @@ export default {
                     event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
                         currency: 'IRR',
-                        value: Number(String(this.order.data.data.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman. 
-                        shipping: Number(String(this.order.data.data.sending_price).slice(0, -1)),	// shipping costs
-                        order_id: this.order.data.data.id,	// order id
+                        value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
+                        order_id: this.order?.data?.data?.id,	// order id
                         coupon: null,	// if coupon was applied to the order, include it here
                         couponvalue: null,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
@@ -205,11 +205,12 @@ export default {
     watch:{
         transactionData(newVal){
             if(newVal && newVal !== null){
-                this.getOrderById(newVal.order_id)
+                this.getOrderById(newVal?.transaction?.order_id)
             }
         },
 
         order(newVal){
+          console.log(newVal , 'newVal Order')
             if(newVal && newVal!==null){
                 this.enhanceECommerceLastStep();
             }

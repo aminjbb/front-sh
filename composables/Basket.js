@@ -360,6 +360,7 @@ export default function setup() {
      * Get transaction data
      */
     async function getTransactionData() {
+
         axios
             .get(runtimeConfig.public.apiBase + `/finance/user/transaction/crud/get?token=${route.query.token}`, {
                 headers: {
