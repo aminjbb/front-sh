@@ -35,14 +35,14 @@
 
     <div class="d-flex align-center mt-3">
       <span class="t14 w400 text-grey">برند:</span>
-      <span class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</span>
+      <a :href="`/brand/${content?.brand_slug}`" class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</a>
     </div>
   </div>
 
     <div v-if="screenType !== null && screenType === 'mobile'">
       <div class="d-flex justify-space-between align-center mt-3">
         <span class="t14 w400 text-grey">برند:</span>
-        <span class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</span>
+        <a :href="`/brand/${content?.brand_slug}`" class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</a>
       </div>
       <div class="product-details__rate d-flex align-center mt-3">
       <div class="product-details__rate__star d-flex align-center ltr ml-2">
@@ -196,6 +196,7 @@ export default {
           if (colorSlug === this.$route.params.slug) return true
           return false
         },
+        
         /**
          * Counter for time
          * @param {*} targetDate
@@ -224,7 +225,6 @@ export default {
 
         selectColor(slug) {
             this.$router.push(`/sku/${slug}`)
-
         },
 
         /**
@@ -236,7 +236,6 @@ export default {
                 setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
             }
         }
-
     },
 
     mounted() {

@@ -312,7 +312,7 @@ export default {
                     item_id: product.id,	// insert an actual product ID
                     price: price.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
                     comercial_price: price.site_price, // insert an actual product price after comercial discount
-                    item_brand: product?.brand_label,	// insert an actual product price
+                    item_brand: product?.brand_name,	// insert an actual product price
                     item_category: this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug,			// insert an actual product top-level category
                     section_name: product?.label, // insert the name of the list where the product is currently displayed
                     item_color: null,  // insert the color of product select

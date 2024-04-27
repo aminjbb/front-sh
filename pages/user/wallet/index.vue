@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="col-7 pa-3">
-                        <generalWalletTransaction :details="this.userWallet?.total" :tableHeader="tableHeader" :items="formatTransaction" />
+                        <generalWalletTransaction :details="userWallet?.total" :tableHeader="tableHeader" :items="formatTransaction" />
                     </div>
                 </v-row>
             </div>
@@ -89,8 +89,16 @@ export default {
     },
 
     watch: {
-        transactionData() {
-            this.$refs.resultModal.openModal();
+        transactionData(newVal) {
+            if(newVal.status === 'successful'){
+                this.$refs.resultModal.openModal();
+            }else{
+                useNuxtApp().$toast.error('شارژ کیف پول با خطا مواجه شد.', {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            }
         }
     },
     
@@ -130,7 +138,6 @@ export default {
 
         if (token) {
             this.getTransactionData()
-            //
         }
     },
 }
