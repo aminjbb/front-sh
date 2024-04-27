@@ -54,7 +54,7 @@ export default function setup() {
                     
                 })
                 .catch((err) => {
-                   if ( err.response.status === 401 ||  err.response.status === 403) {
+                   if ( err.response?.status === 401 ||  err.response?.status === 403) {
                        if (randomNumberForBasket.value && randomNumberForBasket.value != "") getBasketBeforeLogin()
                    }
                 });
@@ -132,7 +132,7 @@ export default function setup() {
                     theme: 'dark'
                 });
 
-                if (err.response.status === 401){
+                if (err.response?.status === 401){
                     if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
                         beforeAuthAddToBasket(shps , countMain, randomNumberForBasket.value, method)
                     }
@@ -332,7 +332,7 @@ export default function setup() {
 
             })
             .catch((err) => {
-                if (err.response.status === 409){
+                if (err.response?.status === 409){
 
                     const form = {
                         dialog:true,
