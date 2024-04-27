@@ -1,42 +1,45 @@
 <template>
-<div class="header__search-box" id="header__search-box">
-    <div class="header__search-box__inner d-flex align-center w-100 px-2" @click="openModal()">
+  <client-only>
+    <div class="header__search-box" id="header__search-box">
+      <div class="header__search-box__inner d-flex align-center w-100 px-2" @click="openModal()">
         <v-icon
             icon="mdi-magnify"
             color="grey-darken-1"
             class="ml-2" />
         <input placeholder="جستجو در شاواز " id="inputSearchMobile"/>
-    </div>
+      </div>
 
-    <v-dialog
-        v-if="dialog"
-        v-model="dialog"
-        color="white"
-        class="z-infinite"
-        fullscreen>
+      <v-dialog
+          v-if="dialog"
+          v-model="dialog"
+          color="white"
+          class="z-infinite"
+          fullscreen>
         <div class="header__search-box active bg-white">
-            <div class="header__search-box__inner d-flex align-center w-100 px-2">
-                <v-icon
-                    icon="mdi-arrow-right"
-                    color="grey-darken-1"
-                    @click="closeModal"
-                    class="ml-2" />
+          <div class="header__search-box__inner d-flex align-center w-100 px-2">
+            <v-icon
+                icon="mdi-arrow-right"
+                color="grey-darken-1"
+                @click="closeModal"
+                class="ml-2" />
 
-                <form @submit.prevent="showResultPlp" class="flex-grow-1">
-                    <input placeholder="جستجو در شاواز " class="w-100" v-model="search" v-debounce:1s.unlock="searchInSite()" >
-                </form>
-            </div>
+           <client-only>
+             <form @submit.prevent="showResultPlp" class="flex-grow-1">
+               <input placeholder="جستجو در شاواز " class="w-100" v-model="search" @keyup="searchInSite()" >
+             </form>
+           </client-only>
+          </div>
 
-            <div class="search-result" id="search-result">
-                <v-divider color="primary" />
-                <swiper
-                    v-if="searchResult && searchResult.skus && searchResult.skus.length"
-                    dir="rtl"
-                    :slidesPerView="3.2"
-                    :spaceBetween="8"
-                    :modules="modules"
-                    :navigation="true"
-                    :breakpoints="{
+          <div class="search-result" id="search-result">
+            <v-divider color="primary" />
+            <swiper
+                v-if="searchResult && searchResult.skus && searchResult.skus.length"
+                dir="rtl"
+                :slidesPerView="3.2"
+                :spaceBetween="8"
+                :modules="modules"
+                :navigation="true"
+                :breakpoints="{
                         '0': {
                             slidesPerView: 1.3,
                         },
@@ -50,119 +53,121 @@
                             slidesPerView: 3.2,
                         }
                     }"
-                    class="mySwiper search-result__sku">
-                    <swiper-slide v-for="(item, index) in searchResult.skus.slice(0,10)" :key="`sku-search-${index}`">
-                        <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3" :href="`/sku/${item.slug}`">
-                            <div v-if="item.image" class="search-result__sku__image">
-                                <img :src="item.image?.image_url" :title="item.label" :alt="item.label" width="48" height="48" />
-                            </div>
+                class="mySwiper search-result__sku">
+              <swiper-slide v-for="(item, index) in searchResult.skus.slice(0,10)" :key="`sku-search-${index}`">
+                <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3" :href="`/sku/${item.slug}`">
+                  <div v-if="item.image" class="search-result__sku__image">
+                    <img :src="item.image?.image_url" :title="item.label" :alt="item.label" width="48" height="48" />
+                  </div>
 
-                            <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
-                                {{item.label}}
-                            </h3>
-                        </a>
-                    </swiper-slide>
-                </swiper>
+                  <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
+                    {{item.label}}
+                  </h3>
+                </a>
+              </swiper-slide>
+            </swiper>
 
-                <v-divider v-if="(searchResult && searchResult.categories && searchResult.categories.length) || (searchResult && searchResult.brands && searchResult.brands.length)" color="grey-lighten-3" />
+            <v-divider v-if="(searchResult && searchResult.categories && searchResult.categories.length) || (searchResult && searchResult.brands && searchResult.brands.length)" color="grey-lighten-3" />
 
-                <v-row class="ma-0">
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        class="pa-0">
-                        <div 
-                            v-if="searchResult && searchResult.categories && searchResult.categories.length"
-                            class="search-result__list search-result__list--border pa-3 pb-1">
-                            <header>
-                                <h2 class="t14 w400 text-grey-darken-4 mb-2">دسته‌بندی‌های مرتبط</h2>
-                            </header>
+            <v-row class="ma-0">
+              <v-col
+                  cols="12"
+                  sm="6"
+                  class="pa-0">
+                <div
+                    v-if="searchResult && searchResult.categories && searchResult.categories.length"
+                    class="search-result__list search-result__list--border pa-3 pb-1">
+                  <header>
+                    <h2 class="t14 w400 text-grey-darken-4 mb-2">دسته‌بندی‌های مرتبط</h2>
+                  </header>
 
-                            <nav>
-                                <ul class="ma-0">
-                                    <li
-                                        class="mb-2"
-                                        v-for="(item, index) in searchResult.categories.slice(0,5)"
-                                        :key="`category-search-${index}`">
-                                        <a class="t13 w400 text-grey-darken-2" :href="`/category/${item.slug}`">
-                                            {{item.label}}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        class="pa-0">
-                        <div
-                            v-if="searchResult && searchResult.brands && searchResult.brands.length"
-                            class="search-result__list pa-3 pb-1">
-                            <header>
-                                <h2 class="t14 w400 text-grey-darken-4 mb-2">برندهای مرتبط</h2>
-                            </header>
-
-                            <nav>
-                                <ul class="ma-0">
-                                    <li
-                                        class="mb-2"
-                                        v-for="(item, index) in searchResult.brands.slice(0,5)"
-                                        :key="`category-search-${index}`">
-                                        <a class="t13 w400 text-grey-darken-2" :href="`/brand/${item.slug}`">
-                                            {{item.label}}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </v-col>
-                </v-row>
-
-                <v-divider v-if="filteredWords && filteredWords.length" color="grey-lighten-3" />
-
-                <nav v-if="filteredWords && filteredWords.length" class="search-result__list py-3">
+                  <nav>
                     <ul class="ma-0">
-                        <li
-                            class="mb-2"
-                            v-for="(item, index) in filteredWords.slice(0,5)"
-                            :key="`category-search-${index}`">
-                            <a class="d-flex align-center cur-p pos-r" @click="setModel(item)">
-                                <v-icon
-                                    icon="mdi-magnify"
-                                    size="x-small"
-                                    color="grey-lighten-1"
-                                    class="ml-2" />
-                                <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item)"></span>
-                            </a>
-                        </li>
+                      <li
+                          class="mb-2"
+                          v-for="(item, index) in searchResult.categories.slice(0,5)"
+                          :key="`category-search-${index}`">
+                        <a class="t13 w400 text-grey-darken-2" :href="`/category/${item.slug}`">
+                          {{item.label}}
+                        </a>
+                      </li>
                     </ul>
-                </nav>
-
-                <v-divider color="grey-lighten-3" />
-
-                <div class="search-result__most-search">
-                    <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
-
-                    <swiper
-                        v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"
-                        dir="rtl"
-                        :slidesPerView="'auto'"
-                        :spaceBetween="8"
-                        :modules="modules"
-                        :navigation="true"
-                        class="mySwiper">
-                        <swiper-slide v-for="(item, index) in mostSearchItems.data.slice(0,15)" :key="`most-search-${index}`">
-                            <a class="search-result__most-search__item t12 w400 px-3 py-1 bg-grey-lighten-3 text-grey-darken-2 cur-p" @click="SearchMostSearchItem(item.needle)">
-                                {{item.needle}}
-                            </a>
-                        </swiper-slide>
-                    </swiper>
+                  </nav>
                 </div>
+              </v-col>
+              <v-col
+                  cols="12"
+                  sm="6"
+                  class="pa-0">
+                <div
+                    v-if="searchResult && searchResult.brands && searchResult.brands.length"
+                    class="search-result__list pa-3 pb-1">
+                  <header>
+                    <h2 class="t14 w400 text-grey-darken-4 mb-2">برندهای مرتبط</h2>
+                  </header>
+
+                  <nav>
+                    <ul class="ma-0">
+                      <li
+                          class="mb-2"
+                          v-for="(item, index) in searchResult.brands.slice(0,5)"
+                          :key="`category-search-${index}`">
+                        <a class="t13 w400 text-grey-darken-2" :href="`/brand/${item.slug}`">
+                          {{item.label}}
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </v-col>
+            </v-row>
+
+            <v-divider v-if="filteredWords && filteredWords.length" color="grey-lighten-3" />
+
+            <nav v-if="filteredWords && filteredWords.length" class="search-result__list py-3">
+              <ul class="ma-0">
+                <li
+                    class="mb-2"
+                    v-for="(item, index) in filteredWords.slice(0,5)"
+                    :key="`category-search-${index}`">
+                  <a class="d-flex align-center cur-p pos-r" @click="setModel(item)">
+                    <v-icon
+                        icon="mdi-magnify"
+                        size="x-small"
+                        color="grey-lighten-1"
+                        class="ml-2" />
+                    <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item)"></span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            <v-divider color="grey-lighten-3" />
+
+            <div class="search-result__most-search">
+              <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
+
+              <swiper
+                  v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"
+                  dir="rtl"
+                  :slidesPerView="'auto'"
+                  :spaceBetween="8"
+                  :modules="modules"
+                  :navigation="true"
+                  class="mySwiper">
+                <swiper-slide v-for="(item, index) in mostSearchItems.data.slice(0,15)" :key="`most-search-${index}`">
+                  <a class="search-result__most-search__item t12 w400 px-3 py-1 bg-grey-lighten-3 text-grey-darken-2 cur-p" @click="SearchMostSearchItem(item.needle)">
+                    {{item.needle}}
+                  </a>
+                </swiper-slide>
+              </swiper>
             </div>
+          </div>
         </div>
-    </v-dialog>
-</div>
+      </v-dialog>
+    </div>
+
+  </client-only>
 </template>
 
 <script>
@@ -192,6 +197,7 @@ export default {
             dialog: false,
             searchResult:[],
             searchNew: null,
+            timeDebounce:null,
         }
     },
 
@@ -247,19 +253,26 @@ export default {
         /**
          * Search
          */
-         searchInSite(){
+        searchInSite(){
+          clearTimeout(this.timeDebounce)
+          this.timeDebounce = setTimeout(()=>{
             if(this.search !== null && this.search !== this.searchNew){
-                this.searchNew = this.search;
-                axios
-                    .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
-                    .then((response) => {
-                        this.searchResult = response?.data?.data;
-                    })
-                    .catch((err) => {
-                    }).finally(() => {
-                    });
+              this.searchNew = this.search;
+              axios
+                  .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
+                  .then((response) => {
+                    this.searchResult = response?.data?.data;
+                  })
+                  .catch((err) => {
+
+                  }).finally(() => {
+
+              });
             }
+          }, 1000)
+
         },
+
 
         /**
          * Search By most search label

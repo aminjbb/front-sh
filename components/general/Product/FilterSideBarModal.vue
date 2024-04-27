@@ -114,14 +114,10 @@
                           </div>
                         </div>
                       </template>
-
-
                     </div>
 
                     <v-divider color="grey" />
                 </template>
-
-
             </div>
 
             <div class="filter-mobile-btn pa-3">

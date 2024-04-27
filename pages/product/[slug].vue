@@ -48,7 +48,7 @@
             </div>
           </template>
           <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
-            <v-row class="ma-0">
+            <v-row v-if="productListData?.length" class="ma-0">
               <v-col
                   cols="12"
                   md="3"
@@ -104,7 +104,6 @@ export default {
       productList,
       filterQuery,
       page,
-      getSecondaryData,
       secondaryData,
       getBreadcrumb ,
       breadcrumb,
@@ -118,7 +117,7 @@ export default {
         content: description
       }]
     });
-    return {productList, filterQuery, page , getSecondaryData , secondaryData, getBreadcrumb , breadcrumb,plpTitle,
+    return {productList, filterQuery, page , secondaryData, getBreadcrumb , breadcrumb,plpTitle,
       title}
   },
 
@@ -465,7 +464,6 @@ export default {
   },
 
   beforeMount() {
-    this.getSecondaryData()
     this.getBreadcrumb('product')
   },
 

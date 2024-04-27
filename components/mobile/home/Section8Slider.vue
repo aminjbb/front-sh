@@ -1,5 +1,5 @@
 <template>
-<section class="section8-slider section8-slider--mobile" v-if="items && items.length">
+<section class="section8-slider section8-slider--mobile" >
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{ title }}
     </header>

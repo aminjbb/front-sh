@@ -1,5 +1,5 @@
 <template >
-<div v-if="items && items.length" class="banner banner--desktop">
+<div class="banner banner--desktop">
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{title}}
     </header>

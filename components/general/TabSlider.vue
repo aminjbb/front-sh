@@ -1,6 +1,6 @@
 <template>
+
 <section
-    v-if="categories && categories.length"
     class="tab-slider mb-4"
     :class="getDynamicClasses"
     :ref="setRef">
@@ -9,6 +9,7 @@
     </header>
 
     <div>
+
         <nav class="tab-slider__header">
             <ul class="ma-0 pa-0">
                 <li
@@ -67,7 +68,7 @@ export default {
         /**
          * List of item
          */
-        items: Array,
+        items: Object,
 
         /**
          * section title
@@ -118,8 +119,8 @@ export default {
          * Set limit for max of show content
          */
         limit: {
-            type: Number,
-            default: 5
+            type: String,
+            default: "5"
         },
 
         setRef: {

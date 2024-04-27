@@ -9,11 +9,10 @@
         </div>
 
         <v-btn
-            class="pa-0 text-none"
+            class="pa-0 text-none close-btn"
             @click="close()"
             color="grey-darken-1"
-            width="50"
-            variant="icon">
+            width="50">
             <v-icon>mdi-close</v-icon>
         </v-btn>
     </header>
@@ -212,6 +211,15 @@ export default {
     &.show {
         transition: all 0.5s ease;
         left:0;
+    }
+
+    .close-btn{
+        background: transparent !important;
+        box-shadow: none !important;
+
+        i{
+            color:#424242 !important
+        }
     }
 
     &__header {

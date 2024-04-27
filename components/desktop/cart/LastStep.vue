@@ -204,7 +204,6 @@ export default {
 
     watch:{
         transactionData(newVal){
-            console.log("🚀 ~ transactionData ~ newVal:", newVal)
             if(newVal && newVal !== null){
                 this.getOrderById(newVal.order_id)
             }
