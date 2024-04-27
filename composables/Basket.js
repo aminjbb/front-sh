@@ -111,7 +111,7 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                const getResponseCount = response.data.data.details.find(item => item.shps.id === shps )
+                const getResponseCount = response?.data?.data?.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 getBasket();
                 if(wayBasket === false){
@@ -120,7 +120,7 @@ export default function setup() {
                 }
             })
             .catch((err) => {
-                const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
+                const getResponseCount = err.response?.data?.data?.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 
                 loadingAddBasket.value = false;

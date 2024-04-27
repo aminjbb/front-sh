@@ -91,6 +91,8 @@
 
 <script>
 import Basket from '@/composables/Basket.js'
+import Order from '@/composables/Order.js'
+
 export default {
     data() {
         return {
@@ -118,44 +120,83 @@ export default {
             createFailedOrder,
         } = new Basket()
 
+        const {
+            getOrderById,
+            order
+        } = new Order()
+
         return {
             userToken,
             getTransactionData,
             transactionData,
-            createFailedOrder
+            createFailedOrder,
+            getOrderById,
+            order
         }
     },
 
     methods: {
         /**
          * Enhance E-commerce for Seo in Checkout Step 4 after payment
-         * @param {*} products
          */
          enhanceECommerceLastStep(){
-            if(transactionData.status=== 'success'){
+            if(this.transactionData.status=== 'success'){
                 let productArr = [];
-                this.data.details.forEach(item =>{
+                this.order.data.data.details.forEach(item =>{
                     const obj={
-                        'name': item.shps?.sku?.label,
-                        'id': item.shps?.sku?.id, 
-                        'price': Number(String(item.current_site_price).slice(0, -1)),  
-                        'brand': item?.shps?.sku?.brand?.name,   
-                        'category': null, 
-                        'quantity': item.count 
+                        item_id: item.id,	// insert an actual product ID
+                        price: item.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                        item_brand: null,	// insert an actual product price
+                        item_category: null,// insert an actual product top-level category
+                        item_color: null,  // insert the color of product select
+                        quantity: item.count,	
                     }
                     productArr.push(obj);
                 })
 
+
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
-                'event': 'eec.purchase',
-                'ecommerce': {
-                    'purchase': {
-                        'actionField': {
-                            'id': this.transactionData?.id,
-                        },
+                    event: 'purchase',  // name of the event. In this case, it always must be purchase
+                    ecommerce: {
+                        currency: 'IRR',
+                        value: Number(String(this.order.data.data.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman. 
+                        shipping: Number(String(this.order.data.data.sending_price).slice(0, -1)),	// shipping costs
+                        order_id: this.order.data.data.id,	// order id
+                        coupon: null,	// if coupon was applied to the order, include it here
+                        couponvalue: null,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        
+                        items: productArr
                     }
-                }
+                });
+
+            }  else{
+                let productArr = [];
+                this.order.data.data.details.forEach(item =>{
+                    const obj={
+                        item_id: item.id,	// insert an actual product ID
+                        price: item.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                        item_brand: null,	// insert an actual product price
+                        item_category: null,// insert an actual product top-level category
+                        item_color: null,  // insert the color of product select
+                        quantity: item.count,	
+                    }
+                    productArr.push(obj);
+                })
+                
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
+                    ecommerce: {
+                        currency: 'IRR',
+                        value: Number(String(this.order.data.data.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman. 
+                        shipping: Number(String(this.order.data.data.sending_price).slice(0, -1)),	// shipping costs
+                        order_id: this.order.data.data.id,	// order id
+                        coupon: null,	// if coupon was applied to the order, include it here
+                        couponvalue: null,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        
+                        items: productArr
+                    }
                 });
             }
         },
@@ -163,6 +204,12 @@ export default {
 
     watch:{
         transactionData(newVal){
+            if(newVal && newVal !== null){
+                this.getOrderById(newVal.order_id)
+            }
+        },
+
+        order(newVal){
             if(newVal && newVal!==null){
                 this.enhanceECommerceLastStep();
             }

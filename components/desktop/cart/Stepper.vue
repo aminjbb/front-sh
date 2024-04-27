@@ -252,7 +252,7 @@ export default {
                         this.previousSteps[this.activeStep - 1] = true;
 
                         if(this.activeStep === 2){
-                            this.enhanceECommerceSkuList()
+                           this.enhanceECommerceStartCart()
                         }
                     } else {
                         localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
@@ -288,32 +288,54 @@ export default {
         },
 
         /**
-         * Enhance E-commerce for Seo in Checkout Step 1 for Sku list
-         * @param {*} products
+         * Enhance E-commerce for Seo - when user visit cart page
          */
         enhanceECommerceSkuList(){
             let productArr = [];
             this.data.details.forEach(item =>{
                 const obj={
-                    'name': item.shps?.sku?.label,
-                    'id': item.shps?.sku?.id, 
-                    'price': Number(String(item.current_site_price).slice(0, -1)),  
-                    'brand': item?.shps?.sku?.brand?.name,   
-                    'category': null, 
-                    'quantity': item.count 
+                    item_id: item.shps?.sku?.id, 
+                    price: item.current_total_customer_price,  
+                    comercial_price: item.current_total_site_price,
+                    brand: item?.shps?.sku?.brand?.name,   
+                    category: null, 
+                    quantity: item.count 
                 }
                 productArr.push(obj);
-            })
+            });
 
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.checkout',
-            'ecommerce': {
-                'checkout': {
-                    'actionField': {'step': 1}, 
-                    'products': productArr
+                event: 'view_cart',  // name of the event. In this case, it always must be view_cart
+                ecommerce: {							
+                    items: productArr
                 }
-            }
+            });
+        },
+
+        /**
+         * Enhance E-commerce for Seo - when user visit cart page
+         */
+         enhanceECommerceStartCart(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: item.current_total_site_price,  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'begin_checkout',  // name of the event. In this case, it always must be begin_checkout
+                ecommerce: {							
+                    items: productArr
+                }
             });
         },
 
@@ -355,14 +377,26 @@ export default {
          * Enhance E-commerce for Seo in Checkout Step 2 when ways selected
          */
         enhanceECommerceGetWay(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: item.current_total_site_price,  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.checkoutOption',
-            'ecommerce': {
-                'checkout_option': {
-                    'actionField': {'step': 2}, 
-                    'option':  this.$store.getters['get_orderSendingMethod'],
-                }
+            event: 'add_shipping_info',// name of the event.
+            ecommerce: {
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis						
+                items: productArr
             }
             });
         },
@@ -397,14 +431,26 @@ export default {
          * Enhance E-commerce for Seo in Checkout Step 3 when payment way selected
          */
          enhanceECommerceGetPayment(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: item.current_total_site_price,  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            'event': 'eec.checkout',
-            'ecommerce': {
-                'checkout_option': {
-                    'actionField': {'step': 3}, 
-                    'option':  this.$store.getters['get_orderPayMethod'],
-                }
+            event: 'add_payment_info',// name of the event.
+            ecommerce: {
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                coupon: this.data.voucher.code,						
+                items: productArr
             }
             });
         },
@@ -440,6 +486,10 @@ export default {
             this.activeStep = 4;
             this.active[1] = false;
             this.active[4] = true;
+        }
+        
+        if(this.activeStep === 1){
+            this.enhanceECommerceSkuList();
         }
     }
 }
