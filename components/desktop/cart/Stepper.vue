@@ -487,8 +487,10 @@ export default {
             this.active[1] = false;
             this.active[4] = true;
         }
-
-        this.enhanceECommerceSkuList();
+        
+        if(this.activeStep === 1){
+            this.enhanceECommerceSkuList();
+        }
     }
 }
 </script>

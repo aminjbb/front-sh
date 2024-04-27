@@ -541,8 +541,10 @@ export default {
         if (token) {
             this.activeStep = 4;
         }
-
-        this.enhanceECommerceSkuList();
+        
+        if(this.activeStep === 1){
+            this.enhanceECommerceSkuList();
+        }
     },
 }
 </script>
