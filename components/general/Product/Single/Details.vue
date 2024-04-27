@@ -33,34 +33,35 @@
       <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{Math.floor(content?.score)}})</span>
     </div>
 
-    <div class="d-flex align-center mt-3">
-      <span class="t14 w400 text-grey">برند:</span>
-      <a :href="`/brand/${content?.brand_slug}`" class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</a>
+    <div v-if="content?.brand_name && content?.brand_slug" class="d-flex align-center mt-3">
+        <span class="t14 w400 text-grey">برند:</span>
+        <a :href="`/brand/${content?.brand_slug}`" class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</a>
     </div>
   </div>
 
     <div v-if="screenType !== null && screenType === 'mobile'">
-      <div class="d-flex justify-space-between align-center mt-3">
-        <span class="t14 w400 text-grey">برند:</span>
-        <a :href="`/brand/${content?.brand_slug}`" class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</a>
-      </div>
-      <div class="product-details__rate d-flex align-center mt-3">
-      <div class="product-details__rate__star d-flex align-center ltr ml-2">
-        <v-rating
-            v-model="content.score"
-            class="ltr ml-0"
-            :length="5"
-            :size="32"
-            half-increments
-            readonly
-            color="grey-lighten-2"
-            active-color="orange-lighten-2"
-        ></v-rating>
-      </div>
+        <div v-if="content?.brand_name && content?.brand_slug" class="d-flex justify-space-between align-center mt-3">
+            <span class="t14 w400 text-grey">برند:</span>
+            <a :href="`/brand/${content?.brand_slug}`" class="w400 text-grey-darken-3 mr-1">{{ content?.brand_name }}</a>
+        </div>
 
-      <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{Math.floor(content?.score)}})</span>
+        <div class="product-details__rate d-flex align-center mt-3">
+            <div class="product-details__rate__star d-flex align-center ltr ml-2">
+                <v-rating
+                    v-model="content.score"
+                    class="ltr ml-0"
+                    :length="5"
+                    :size="32"
+                    half-increments
+                    readonly
+                    color="grey-lighten-2"
+                    active-color="orange-lighten-2"
+                />
+            </div>
+
+            <span v-if="content.score" class="t12 w400 text-grey-lighten-1 number-font">({{Math.floor(content?.score)}})</span>
+        </div>
     </div>
-  </div>
 
     <v-divider color="grey" class="my-3" />
 
@@ -161,7 +162,7 @@ export default {
             targetDate: '2024-01-23 23:59:00',
             selectedAttr: null,
             emptyStar:0,
-            screenType: null,
+            screenType: 'desktop',
         }
     },
     

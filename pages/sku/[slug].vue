@@ -134,7 +134,7 @@ export default {
     },
     data() {
         return {
-            screenType: null,
+            screenType: 'desktop',
             content: null,
 
             selectedSeller: null,
