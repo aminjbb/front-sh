@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 <footer class="footer footer--desktop">
     <v-container>
         <div class="footer__logo">
@@ -123,11 +123,10 @@
                         <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
                     </a>
 
-                    <a href="/" title="Shavaz hologram">
-                        <img data-not-lazy src="~/assets/images/should-delete/1d2ab0.png" class="" alt="hologram" width="52" height="61" title="" />
-                    </a>
+                  <a title="Shavaz Enamad" referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF'><img width="52" height="61" referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF' alt='' style='cursor:pointer' Code='NdHOlUV0i4UFPJJJ5LXF'></a>
 
-                    <a href="/" title="Shavaz hologram">
+
+                  <a href="/" >
                         <img data-not-lazy src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="52" height="61" title="" />
                     </a>
 
