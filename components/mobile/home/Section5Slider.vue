@@ -1,20 +1,20 @@
 <template>
-<section v-if="content" class="section5-slider section5-slider--mobile mb-4">
-    <div class="d-flex align-center flex-wrap" :style="{ background: `${slider.background_hex_code}` }">
+<section v-show="content?.is_active == 1" class="section5-slider section5-slider--mobile mb-4">
+    <div class="d-flex align-center flex-wrap" :style="{ background: `${slider?.background_hex_code}` }">
         <div class="section5-slider__info">
-            <header v-if="content.label" class="section5-slider__info__title text-white mb-2">
-                {{slider.label}}
+            <header v-if="content?.label" class="section5-slider__info__title text-white mb-2">
+                {{slider?.label}}
             </header>
 
-            <div v-if="slider.image && slider.image.image_url && slider.image.image_url !== null" class="section5-slider__info__image">
-                <img :src="slider.image?.image_url" :title="slider.label" :alt="slider.label" width="111" height="118" />
+            <div v-if="slider?.image && slider?.image.image_url && slider?.image?.image_url !== null" class="section5-slider__info__image">
+                <img :src="slider.image?.image_url" :title="slider?.label" :alt="slider?.label" width="111" height="118" />
             </div>
         </div>
 
         <div v-if="sliderPartitions && sliderPartitions.length" class="section5-slider__items">
             <div>
                 <div
-                    v-for="(groups, index) in sliderPartitions.slice(0, 3)"
+                    v-for="(groups, index) in sliderPartitions?.slice(0, 3)"
                     :key="`skus-groups-${index}`"
                     class="section5-slider__sku-groups pa-2">
                     <div class="section5-slider__sku-groups__inner">
@@ -23,7 +23,7 @@
                         </h2>
 
                         <div class="d-flex flex-wrap">
-                            <a v-for="(item, index) in groups.skus.slice(0, 4)" :key="`sku-${index}`" class="section5-slider__item" :href="`sku/${item.slug}`">
+                            <a v-for="(item, index) in groups.skus?.slice(0, 4)" :key="`sku-${index}`" class="section5-slider__item" :href="`sku/${item.slug}`">
                                 <img :src="item.image?.image_url" :item="item.label" :alt="item.label" width="90" height="90" />
                             </a>
                         </div>

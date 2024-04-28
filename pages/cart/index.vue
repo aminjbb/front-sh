@@ -25,38 +25,6 @@ export default {
         }
     },
 
-    methods:{
-      /**
-       * Enhance E-commerce for Seo
-       * @param {*} basket
-       */
-      enhanceECommerceViewCart(basket){
-        window.dataLayer = window.dataLayer || [];
-        let detailItems= []
-        basket?.details.forEach(element=>{
-          const object = {
-            item_id :`shps${element?.shps?.id}`,
-            price: element?.customer_price,
-            item_brand:element?.shps?.sku?.brand?.label,
-            quantity:element?.count
-          }
-          detailItems.push(object)
-        })
-        window.dataLayer.push({
-          'event': 'view_cart',
-          'ecommerce': {
-            'items':detailItems
-          }
-        });
-      }
-    },
-
-    watch:{
-      userBasket(val){
-        this.enhanceECommerceViewCart(val)
-      }
-    },
-
     computed: {
         userBasket() {
             try {

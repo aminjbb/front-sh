@@ -1,5 +1,5 @@
 <template>
-<section class="section8-slider section8-slider--mobile" v-if="items && items.length">
+<section class="section8-slider section8-slider--mobile" >
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{ title }}
     </header>
@@ -42,9 +42,11 @@
         class="mySwiper">
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
             <generalProductCard
-                :content="item"
-                :isPLP="isPLP"
-                :index="hideIndex !== true ? `${index + 1}` : ''"
+                :sectionName = "title"
+                :content= "item"
+                :isPLP= "isPLP"
+                :index = "index + 1"
+                :showIndex= "hideIndex !== true ? true : false"
                 class="mb-4" />
         </swiper-slide>
     </swiper>

@@ -1,5 +1,5 @@
 /**
- * User composable
+ * PLP composable
  */
 import {ref} from 'vue';
 import axios from 'axios'
@@ -30,23 +30,6 @@ export default function setup() {
              return route.params.slug
         }
         return  ''
-    };
-
-    async function getSecondaryData() {
-        axios
-            .get(runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`, {
-                headers: {
-                    Authorization: `Bearer ${userToken.value}`,
-                },
-            })
-            .then((response) => {
-                secondaryData.value = response
-                plpTitle.value = response.data.data.page.meta_title
-                description.value = response.data.data.page.meta_description
-            })
-            .catch((err) => {
-                auth.checkAuthorization(err.response)
-            });
     };
 
     async function getBreadcrumb(type) {
@@ -89,6 +72,7 @@ export default function setup() {
                 auth.checkAuthorization(err.response)
             });
     };
+
     if (route.name == 'product-slug') endPoint.value = '/product/plp/product/'
     else if (route.name == 'sku-group-slug') endPoint.value = '/product/plp/skugroup/'
     else if (route.name == 'brand-slug') endPoint.value = '/product/plp/brand/'
@@ -96,46 +80,74 @@ export default function setup() {
     else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
     else if (route.name == 'search') endPoint.value = `/product/plp/search/`
     store.commit('set_loadingModal', true),
+
         useAsyncData(
-            () => {
+            async () => {
                 let url = "".concat(
                     runtimeConfig.public.apiBase,
                     endPoint.value,
                     checkRouteForSlug()
                 );
 
-                axios({
-                    method: 'get',
-                    url: url,
-                    headers: {
-                        Authorization: `Bearer ${userToken.value}`,
-                    },
-                    params: {...route.query}
-                })
-                    .then(response => {
-                        productList.value = response
+                try {
+                    // First API
+                    const response1 = await axios({
+                        method: 'get',
+                        url: url,
+                        headers: {
+                            Authorization: `Bearer ${userToken.value}`,
+                        },
+                        params: {...route.query}
+                    });
+                    
+                    if(route.name !== 'promotion-slug' && route.name !=='search' && route.name !=='sku-group-slug'){
+                        // Second API
+                        const response2 = await axios({
+                            method: 'get',
+                            url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
+                            headers: {
+                                Authorization: `Bearer ${userToken.value}`,
+                            },
+                        });
+
+                        if(response1 && response2){
+                            productList.value = response1;
+    
+                            secondaryData.value = response2;
+                            plpTitle.value = response2.data.data.page.meta_title;
+                            description.value = response2.data.data.page.meta_description;
+                        }
+                    }
+
+                    if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                        productList.value = response1;
+
                         if(route.name == 'promotion-slug'){
-                            plpTitle.value = response.data.data.page.meta_title
+                            plpTitle.value = response1.data.data.page.meta_title
+                            description.value = response1.data.data.page.meta_description;
                         }
-                    })
-                    .catch(err => {
-                        if (err.response.status) {
-                            showError({
-                                statusCode: 404,
-                                statusMessage: "Page Not Found"
-                            })
-                        }
-                    }).finally(() => {
-                    store.commit('set_loadingModal', false)
-                })
+                    }
+
+                } catch (error) {
+                    if (error.response) {
+                        showError({
+                            statusCode: error.response.status,
+                            statusMessage: error.response.statusText
+                        });
+                    }
+                }
+                finally{
+                    store.commit('set_loadingModal', false);
+                }
             },
             {
                 watch: [route]
             }
-        )
+        );
+        
 
     return {
-        productList, filterQuery, getSecondaryData, secondaryData, page, filterForFilter, query,
+        productList, filterQuery, secondaryData, page, filterForFilter, query,
         getBreadcrumb, breadcrumb , description , plpTitle
     }
 }

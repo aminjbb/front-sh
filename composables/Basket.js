@@ -54,7 +54,7 @@ export default function setup() {
                     
                 })
                 .catch((err) => {
-                   if ( err.response.status === 401 ||  err.response.status === 403) {
+                   if ( err.response?.status === 401 ||  err.response?.status === 403) {
                        if (randomNumberForBasket.value && randomNumberForBasket.value != "") getBasketBeforeLogin()
                    }
                 });
@@ -111,7 +111,7 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                const getResponseCount = response.data.data.details.find(item => item.shps.id === shps )
+                const getResponseCount = response?.data?.data?.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 getBasket();
                 if(wayBasket === false){
@@ -120,7 +120,7 @@ export default function setup() {
                 }
             })
             .catch((err) => {
-                const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
+                const getResponseCount = err.response?.data?.data?.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 
                 loadingAddBasket.value = false;
@@ -132,7 +132,7 @@ export default function setup() {
                     theme: 'dark'
                 });
 
-                if (err.response.status === 401){
+                if (err.response?.status === 401){
                     if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
                         beforeAuthAddToBasket(shps , countMain, randomNumberForBasket.value, method)
                     }
@@ -329,15 +329,7 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                if(payment_method === 'online' || payment_method === 'wallet'){
-                    window.location = response.data.data.payment_link
-                } else{
-                    useNuxtApp().$toast.error('روش انتخابی در حال حاضر فعال نیست.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }
+                window.location = response.data.data.payment_link
 
             })
             .catch((err) => {
@@ -367,6 +359,7 @@ export default function setup() {
      * Get transaction data
      */
     async function getTransactionData() {
+
         axios
             .get(runtimeConfig.public.apiBase + `/finance/user/transaction/crud/get?token=${route.query.token}`, {
                 headers: {

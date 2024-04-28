@@ -1,5 +1,5 @@
 <template>
-<section v-if="mainBanner" class="surprise-slider surprise-slider--mobile">
+<section  class="surprise-slider surprise-slider--mobile">
     <div class="d-flex align-center flex-wrap" :style="{ background: `${mainBanner?.background_hex_code}` }">
         <div class=" surprise-slider__info">
             <div class="surprise-slider__info__counter mb-4">
@@ -8,17 +8,17 @@
             </div>
 
             <div class="surprise-slider__info__image mb-4">
-                <img :src="mainBannerImage" :title="mainBanner.label" :alt="mainBanner.label" width="111" height="118" />
+                <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
             </div>
           <div class="surprise-slider__info__title mb-4">
-            <span class="t14 ml-2">  {{mainBanner.label}}</span>
+            <span class="t14 ml-2">  {{mainBanner?.label}}</span>
           </div>
 
             <v-btn
                 color="primary500"
                 height="40"
                 variant="outlined"
-                :href="mainBanner.link"
+                :href="mainBanner?.link"
                 class="px-8 mt-1 surprise-slider__info__btn">
                 مشاهده همه
                 <template v-slot:append>
@@ -27,7 +27,7 @@
             </v-btn>
         </div>
 
-        <div class="surprise-slider__swiper" v-if="mainBanner.skus && mainBanner.skus.length">
+        <div class="surprise-slider__swiper" v-if="mainBanner?.skus && mainBanner?.skus?.length">
             <swiper
                 dir="rtl"
                 :slidesPerView="6"
@@ -63,6 +63,8 @@
                         :content="item"
                         hideInfo
                         hideLabel
+                        :index = "index + 1"
+                        sectionName = "سورپرایز"
                         :shps="item?.pivot?.shps"
                         class="mb-4" />
                 </swiper-slide>

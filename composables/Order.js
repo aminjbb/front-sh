@@ -93,6 +93,24 @@ export default function setup() {
     };
 
     /**
+     * Get user one order
+     */
+    async function getOrderById(id) {
+        axios
+            .get(runtimeConfig.public.apiBase + `/order/crud/get/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                order.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+    };
+
+    /**
      * returnOrRejectOrder
      * @param {*} form 
      * @param {*} endPoint 
@@ -174,6 +192,6 @@ export default function setup() {
     };
 
     return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
-            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder, trackingOrder, trackingDetails}
+            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder, trackingOrder, trackingDetails, getOrderById}
 }
 
