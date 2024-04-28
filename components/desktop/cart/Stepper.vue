@@ -262,7 +262,7 @@ export default {
 
                 }
 
-                this.activeButton = false;
+                // this.activeButton = false;
             }
         },
 
