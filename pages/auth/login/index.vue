@@ -301,7 +301,6 @@ export default {
                     this.startTime = response.data?.data?.time
                     this.loginStep = 2;
                     this.runCountdown();
-                }else{
                 }
             } catch (error) {
                 console.error('Send OTP error:', error);
@@ -352,7 +351,7 @@ export default {
                             items: [{ // This array will contain objects for each authentication event.
                             event_type: response.data?.data?.user?.is_signed_up === 0 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
                             authentication_method: 'Mobile + OTP', // The method used for authentication.
-                            isNewUser: true, // Boolean value to determine if the user is new or returning.
+                            isNewUser: response.data?.data?.user?.is_signed_up === 0 ? true : false, // Boolean value to determine if the user is new or returning.
                             }]
                         }
                     });

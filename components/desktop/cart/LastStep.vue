@@ -145,7 +145,7 @@ export default {
                 this.order.data.data.details.forEach(item =>{
                     const obj={
                         item_id: item.id,	// insert an actual product ID
-                        price: item.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                        price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         item_brand: null,	// insert an actual product price
                         item_category: null,// insert an actual product top-level category
                         item_color: null,  // insert the color of product select
@@ -175,7 +175,7 @@ export default {
                 this.order.data.data.details.forEach(item =>{
                     const obj={
                         item_id: item.id,	// insert an actual product ID
-                        price: item.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
+                        price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         item_brand: null,	// insert an actual product price
                         item_category: null,// insert an actual product top-level category
                         item_color: null,  // insert the color of product select

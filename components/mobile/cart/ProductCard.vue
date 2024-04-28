@@ -214,8 +214,7 @@ export default {
                     ecommerce: {							
                         items: [{	// an array where all currently viewed products must be included
                             item_id: product.shps?.sku?.id,	// insert an actual product ID
-                            price: product?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
-                            comercial_price: product?.site_price, // insert an actual product price after comercial discount
+                            price: Number(String(product?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                             item_brand: product.shps?.sku?.brand?.label,// insert an actual product price
                             item_category: null,	// insert an actual product top-level category ** TODO: We don't have this
                             item_color: null,  // insert the color of product select ** TODO: We don't have this
@@ -236,8 +235,7 @@ export default {
                 ecommerce: {							
                     items: [{// an array where all currently viewed products must be included
                         item_id: product.shps?.sku?.id,	// insert an actual product ID
-                        price: product?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
-                        comercial_price: product?.site_price, // insert an actual product price after comercial discount
+                        price: Number(String(product?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         item_brand: product.shps?.sku?.brand?.label,// insert an actual product price
                         item_category: null,	// insert an actual product top-level category  ** TODO: We don't have this
                         item_color: null,  // insert the color of product select ** TODO: We don't have this
