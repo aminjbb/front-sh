@@ -352,6 +352,7 @@ export default {
                 }
             } else {
                 this.$store.commit('set_orderAddress', null)
+                this.activeButton = false;
             }
         },
 
@@ -415,8 +416,14 @@ export default {
          * @param {*} id
          */
         getPayment(id) {
+          if (id !== false){
             this.$store.commit('set_orderPayMethod', id)
             this.activeButton = true;
+          }
+          else{
+            this.activeButton = false;
+          }
+
         },
 
         /**
