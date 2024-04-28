@@ -181,6 +181,11 @@ export default function setup() {
 
             })
             .catch((err) => {
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
                 const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 
@@ -189,11 +194,7 @@ export default function setup() {
                     loadingFirstAddBasket.value = false;
                 }
                 
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+
             });
     };
 
@@ -340,6 +341,11 @@ export default function setup() {
 
             })
             .catch((err) => {
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
                 if (err.response.status === 409){
 
                     const form = {
@@ -353,13 +359,6 @@ export default function setup() {
                         emptyBasket:err.response.data.data.is_basket_empty
                     }
                     store.commit('set_orderModalError', form)
-                }
-                if(err.response.data.data === null){
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
                 }
             });
     };
