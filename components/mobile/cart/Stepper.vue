@@ -270,7 +270,8 @@ export default {
                             }
                         }
                     }
-                } else {
+                }
+                else {
                     if (this.userToken){
                         this.activeStep++;
 
@@ -284,7 +285,7 @@ export default {
                     }
                 }
 
-                this.activeButton = false;
+                // this.activeButton = false;
             }
         },
 
@@ -320,6 +321,7 @@ export default {
               }
             } else {
                 this.$store.commit('set_orderAddress', null)
+              this.activeButton = false;
             }
         },
 
@@ -334,6 +336,7 @@ export default {
                 this.activeButton = true;
             } else {
                 this.$store.commit('set_orderSendingMethod', null)
+              this.activeButton = false;
             }
         },
 
