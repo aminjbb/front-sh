@@ -30,10 +30,10 @@
             <p class="t12 w400 text-grey">{{way.desc}}</p>
 
             <template v-if="waysModal === 'nafis' && index === 0">
-                <mobileCartTimeTableModal
-                    :calendar="calendarMoc"
-                    :index="index"
-                    @selectedDate="selectedDate" />
+<!--                <mobileCartTimeTableModal-->
+<!--                    :calendar="calendarMoc"-->
+<!--                    :index="index"-->
+<!--                    @selectedDate="selectedDate" />-->
 
                 <div v-if="showSelectedTime" class="mt-3">
                     <p class="number-font t12 w400 text-grey-darken-1">زمان ارسال {{showSelectedTime[0].day}} {{showSelectedTime[0].date}} ماه -

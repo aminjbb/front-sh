@@ -32,11 +32,11 @@
                 }
             }"
             class="mySwiper search-result__sku">
-          <swiper-slide v-for="(item, index) in searchResult.skus.slice(0,10)" :key="`sku-search-${index}`">
-            <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3 w-100" :href="`/sku/${item.slug}`">
-              <div v-if="item.image" class="search-result__sku__image">
-                <img :src="item.image?.image_url" :title="item.label" :alt="item.label" width="48" height="48" />
-              </div>
+            <swiper-slide v-for="(item, index) in searchResult.skus.slice(0,10)" :key="`sku-search-${index}`">
+                <a class="d-flex align-center search-result__sku__item pa-2 py-1 bg-grey-lighten-3 w-100" :href="`/sku/${item.slug}`">
+                    <div v-if="item.image" class="search-result__sku__image">
+                        <img data-not-lazy :src="item.image?.image_url" :title="item.label" :alt="item.label" width="48" height="48" />
+                    </div>
 
               <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
                 {{item.label}}
@@ -262,7 +262,7 @@ export default {
 
               });
             }
-          }, 1000)
+          }, 500)
 
         },
 

@@ -189,7 +189,7 @@ export default {
     },
 
     beforeMount() {
-        this.getBreadcrumb('sku-group')
+        this.getBreadcrumb('skugroup')
     },
 
     watch: {
