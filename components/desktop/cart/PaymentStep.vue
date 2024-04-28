@@ -117,6 +117,7 @@ export default {
               //       type: 'snap_pay',
               //       payment_mount: '102157'
               //   },
+
                 {
                     id: 2,
                     label: 'پرداخت اینترنتی',
