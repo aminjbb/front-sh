@@ -210,7 +210,6 @@ export default {
         },
 
         order(newVal){
-          console.log(newVal , 'newVal Order')
             if(newVal && newVal!==null){
                 this.enhanceECommerceLastStep();
             }
