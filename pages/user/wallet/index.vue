@@ -64,6 +64,7 @@ export default {
         const {
             getTransactionData,
             transactionData,
+          transactionErrorMassage
         } = new Basket()
         const {
             getUserWallet,
@@ -85,6 +86,7 @@ export default {
             userWallet,
             getTransactionData,
             transactionData,
+          transactionErrorMassage
         };
     },
 
@@ -93,7 +95,7 @@ export default {
             if(newVal.status === 'successful'){
                 this.$refs.resultModal.openModal();
             }else{
-                useNuxtApp().$toast.error('شارژ کیف پول با خطا مواجه شد.', {
+                useNuxtApp().$toast.error(this.transactionErrorMassage, {
                     rtl: true,
                     position: 'top-center',
                     theme: 'dark'

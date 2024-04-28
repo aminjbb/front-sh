@@ -33,7 +33,7 @@
                     </template>
 
                 </span>
-                <span class="t20 w400 text-grey-darken-3 number-font">{{splitChar(Number(String(content.amount).slice(0, -1)))}} <span class="t14 w400 text-grey-darken-1">تومان</span></span>
+                <span class="t20 w400 text-grey-darken-3 number-font">{{splitChar(Number(String(content?.transaction?.amount).slice(0, -1)))}} <span class="t14 w400 text-grey-darken-1">تومان</span></span>
             </div>
 
             <v-divider color="grey" />
@@ -46,7 +46,7 @@
 
                 <div class="d-flex align-center justify-space-between">
                     <div class="t12 w400 text-grey">زمان تراکنش: </div>
-                    <div class="t14 w400 text-grey-darken-3 number-font ltr">{{content.created_at_fa}}</div>
+                    <div class="t14 w400 text-grey-darken-3 number-font ltr">{{content?.transaction?.created_at_fa}}</div>
                 </div>
 
                <!--  <div class="d-flex align-center justify-space-between">
