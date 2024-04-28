@@ -312,7 +312,6 @@ export default {
          * @param {*} address
          */
         getAddress(address) {
-          console.log(address)
             if (address && address !== false) {
                 this.$store.commit('set_orderAddress', address)
 
