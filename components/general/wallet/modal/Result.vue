@@ -85,7 +85,6 @@ export default {
         return {
             screenType: null,
             dialog: false,
-            
         }
     },
 
@@ -121,6 +120,21 @@ export default {
          */
         openModal() {
             this.dialog = true;
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'walletCharge', // The event name for tracking wallet charge actions.
+                ecommerce: {
+                    charge: { // Object to hold the wallet charge details.
+                    transactionID: null, // A unique identifier for the transaction.
+                    amount: splitChar(Number(String(content.amount).slice(0, -1))), // The amount charged to the wallet base Toman.
+                    userID: this.$store.getters['get_userData'].id, // The user's unique identifier.
+                    userStatus: null, // or 'new' depending on the user's status.
+                    userMobileNumber: this.phoneNumber, // The user's mobile number.
+                    // Additional properties related to the wallet charge can be added here.
+                    }
+                }
+            });
         },
 
         /**

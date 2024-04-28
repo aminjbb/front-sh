@@ -175,6 +175,7 @@ export default {
                 'پرداخت'
             ],
             activeButton: false,
+            discountCode: null,
         }
     },
 
@@ -260,18 +261,27 @@ export default {
                     } else {
                         if (this.activeStep === 3) {
                             this.createOrder(this.orderSendingMethod, '', this.orderAddressId.id, this.orderPaymentMethod)
+                            this.enhanceECommerceGetPayment();
                         } else {
                             this.activeStep++;
+
+                            if(this.activeStep === 3){
+                                this.enhanceECommerceGetWay();
+                            }
                         }
                     }
                 } else {
-                  if (this.userToken){
-                    this.activeStep++;
-                  }
-                  else{
-                    localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
-                    this.$router.push('/login')
-                  }
+                    if (this.userToken){
+                        this.activeStep++;
+
+                        if(this.activeStep === 2){
+                           this.enhanceECommerceStartCart()
+                        }
+                    }
+                    else{
+                        localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
+                        this.$router.push('/login')
+                    }
                 }
 
                 this.activeButton = false;
@@ -345,42 +355,44 @@ export default {
             this.activeButton = true;
         },
 
-      /**
-       * Delete all orders from vuex
-       */
-      deleteAllOrders() {
-        let endpoint = ''
-        if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
-          endpoint = `/basket/crud/delete?identifier=${this.randomNumberForBasket}`
-        }
-        else{
-          endpoint = `/basket/crud/delete`
-        }
-        axios.delete(this.runtimeConfig.public.apiBase + endpoint, {
-          headers: {
-            Authorization: `Bearer ${this.userToken}`,
-          },
+        /**
+         * Delete all orders from vuex
+         */
+        deleteAllOrders() {
+            let endpoint = ''
+            if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
+            endpoint = `/basket/crud/delete?identifier=${this.randomNumberForBasket}`
+            }
+            else{
+            endpoint = `/basket/crud/delete`
+            }
+            axios.delete(this.runtimeConfig.public.apiBase + endpoint, {
+            headers: {
+                Authorization: `Bearer ${this.userToken}`,
+            },
 
-        }, )
-            .then((response) => {
-              this.$store.commit('set_basket' , '')
-              if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
-                this.randomNumberForBasket = ''
-              }
+            }, )
+                .then((response) => {
+                this.$store.commit('set_basket' , '')
+                if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
+                    this.randomNumberForBasket = ''
+                }
+                })
+                .catch((err) => {
+
+                }).finally(() => {
+
             })
-            .catch((err) => {
-
-            }).finally(() => {
-
-        })
-      },
+        },
 
         /**
          * Get discount code
          * @param {*} id
          */
         getDiscountCode(code) {
+            this.discountCode = null;
             this.calculateVoucher(code);
+            this.discountCode = code;
         },
 
         /**
@@ -390,7 +402,115 @@ export default {
             if(active){
                 this.deleteVoucherFromBasket();
             }
-        }
+        },
+
+        /**
+         * Enhance E-commerce for Seo - when user visit cart page
+         */
+        enhanceECommerceSkuList(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
+                    brand: item?.shps?.sku?.brand?.name,   
+                    category: null, 
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'view_cart',  // name of the event. In this case, it always must be view_cart
+                ecommerce: {							
+                    items: productArr
+                }
+            });
+        },
+
+        /**
+         * Enhance E-commerce for Seo - when user visit cart page
+         */
+         enhanceECommerceStartCart(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'begin_checkout',  // name of the event. In this case, it always must be begin_checkout
+                ecommerce: {							
+                    items: productArr
+                }
+            });
+        },
+
+        /**
+         * Enhance E-commerce for Seo in Checkout Step 2 when ways selected
+         */
+         enhanceECommerceGetWay(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            event: 'add_shipping_info',// name of the event.
+            ecommerce: {
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis						
+                items: productArr
+            }
+            });
+        },
+
+         /**
+         * Enhance E-commerce for Seo in Checkout Step 3 when payment way selected
+         */
+         enhanceECommerceGetPayment(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            event: 'add_payment_info',// name of the event.
+            ecommerce: {
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                coupon: this.discountCode,						
+                items: productArr
+            }
+            });
+        },
+
     },
 
     beforeMount() {
@@ -423,6 +543,8 @@ export default {
         if (token) {
             this.activeStep = 4;
         }
+
+        this.enhanceECommerceSkuList();
     },
 }
 </script>

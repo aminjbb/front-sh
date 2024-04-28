@@ -197,7 +197,20 @@ export default {
                     },
                 })
                 .then((response) => {
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'submitTicket', // The event name for tracking ticket submissions.
+                        userInteraction: {
+                            userID: this.$store.getters['get_userData'].id, // The user's unique identifier.
+                            ticketpriority: this.form.priority, // The priority of the ticket.
+                            ticketSubject: this.form.title, // The subject of the ticket.
+                            ticketDescription: this.form.content, // The detailed description of the issue.
+                            userMobileNumber: this.$store.getters['get_userData'].phone_number, // The user's mobile number used for login/signup.
+                        }
+                    });
+
                     this.$router.push(`/user/ticket/${response?.data?.data?.id}`);
+
                     useNuxtApp().$toast.success('تیکت شما با موفقیت ایجاد شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -205,7 +218,7 @@ export default {
                     });
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
+                    useNuxtApp().$toast.error(err.response?.data?.message, {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'

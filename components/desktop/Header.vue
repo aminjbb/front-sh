@@ -312,6 +312,27 @@
             showHeaderBasket() {
                 document.getElementById('basket-header').classList.add('show');
                 document.body.classList.add('active-basket');
+
+                let productArr = [];
+                this.userBasket.details.forEach(item =>{
+                    const obj={
+                        item_id: item.shps?.sku?.id, 
+                        price: Number(String(item.current_total_customer_price).slice(0, -1)),  
+                        item_brand: item?.shps?.sku?.brand?.name,   
+                        item_category: null, 
+                        item_color:null,
+                        quantity: item.count 
+                    }
+                    productArr.push(obj);
+                });
+
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'view_cart_popup',  // name of the event. In this case, it always must be view_cart_popup
+                    ecommerce: {							
+                        items: productArr
+                    }
+                });
             },
     
             /**

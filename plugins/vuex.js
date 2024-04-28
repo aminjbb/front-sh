@@ -66,6 +66,7 @@ const store = createStore({
       state.userData.last_name = user.last_name,
       state.userData.phone_number = user.phone_number
       state.userData.wallet_mount= user?.wallet?.value
+      state.userData.id= user?.id
     }
   },
 

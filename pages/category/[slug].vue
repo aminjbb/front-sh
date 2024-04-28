@@ -5,7 +5,7 @@
       <v-container>
         <generalBreadcrumb :items="breadcrumbList"/>
   
-        <generalProductCategorySlider :items="productsSecondaryData" class="mt-5" :loop="false"/>
+        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>
         <v-row class="mt-10">
           <v-col cols="12" md="3">
             <template v-if="screenType === 'desktop'">
@@ -39,7 +39,6 @@
                   </div>
   
                   <ul class="v-product__filter__items d-flex align-center">
-  <!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
                     <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
                     <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
                     <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
@@ -49,7 +48,7 @@
               </div>
             </template>
             <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
-              <v-row class="ma-0">
+              <v-row v-if="productListData?.length" class="ma-0">
                 <v-col
                     cols="12"
                     md="3"
@@ -62,6 +61,8 @@
                       class="mb-4 flex-grow-1"
                       :hideInfo="true"
                       :isPLP="true"
+                      :index = "index + 1"
+                      :sectionName = "`${plpTitle}لیست کالاهای دسته بندی `"
                       :showColors="true"/>
                 </v-col>
               </v-row>
@@ -106,7 +107,6 @@
         productList,
         filterQuery,
         page,
-        getSecondaryData,
         secondaryData,
         filterForFilter,
         getBreadcrumb ,
@@ -127,7 +127,6 @@
         productList,
         filterQuery,
         page,
-        getSecondaryData,
         secondaryData,
         filterForFilter,
         query,
@@ -462,6 +461,10 @@
         })
       }
     },
+
+    beforeCreate(){
+        this.$store.commit('set_loadingModal', true);
+    },
   
     mounted() {
       /**
@@ -474,7 +477,6 @@
     },
   
     beforeMount() {
-      this.getSecondaryData()
       this.getBreadcrumb('category')
     },
   

@@ -301,7 +301,6 @@ export default {
                     this.startTime = response.data?.data?.time
                     this.loginStep = 2;
                     this.runCountdown();
-                }else{
                 }
             } catch (error) {
                 console.error('Send OTP error:', error);
@@ -343,13 +342,19 @@ export default {
                         await this.syncBasket()
                     }
 
-                    if(response.data.data.user?.is_signed_up === 1){
-                        this.enhanceEcommereLogin();
-                    }
-
-                    if(response.data.data?.user.is_signed_up === 0){
-                        this.enhanceEcommereRegister();
-                    }
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'userAuthentication', // The event name for tracking user authentication.
+                        userStatus: response.data?.data?.user?.is_signed_up === 0 ? 'new' : 'returning', // or 'returning' depending on the user's status.
+                        userMobileNumber: this.mobile, // The user's mobile number used for login/signup.
+                        ecommerce: {
+                            items: [{ // This array will contain objects for each authentication event.
+                            event_type: response.data?.data?.user?.is_signed_up === 0 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
+                            authentication_method: 'Mobile + OTP', // The method used for authentication.
+                            isNewUser: response.data?.data?.user?.is_signed_up === 0 ? true : false, // Boolean value to determine if the user is new or returning.
+                            }]
+                        }
+                    });
 
                     const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
                         headers: {
@@ -424,21 +429,6 @@ export default {
             }
         },
 
-        enhanceEcommereRegister(){
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push(
-            {
-                'event': 'Register',
-            });
-        },
-
-        enhanceEcommereLogin(){
-          window.dataLayer = window.dataLayer || [];
-          window.dataLayer.push(
-            {
-                'event': 'login',
-            });
-        }
     },
 };
 </script>

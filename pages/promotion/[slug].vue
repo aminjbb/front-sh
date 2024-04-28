@@ -5,7 +5,7 @@
         <v-row class="mt-1">
             <v-col cols="12">
                 <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
-                    <v-row class="ma-0">
+                    <v-row v-if="productListData?.length" class="ma-0">
                         <v-col
                             cols="12"
                             md="3"
@@ -19,6 +19,8 @@
                                 class="mb-4 flex-grow-1"
                                 :hideInfo="true"
                                 :isPLP="true"
+                                :index = "index + 1"
+                                :sectionName = "`${plpTitle}لیست کالاهای`"
                                 :showColors="true" />
                         </v-col>
                     </v-row>

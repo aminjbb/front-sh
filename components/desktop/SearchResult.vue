@@ -1,17 +1,20 @@
 <template>
-<div class="header__search-box" id="header__search-box">
-    <div class="header__search-box__inner d-flex align-center w-100 px-2">
+  <client-only>
+    <div class="header__search-box" id="header__search-box">
+      <div class="header__search-box__inner d-flex align-center w-100 px-2">
         <v-icon
             icon="mdi-magnify"
             color="grey-darken-1"
             class="ml-2" />
 
-        <form @submit.prevent="showResultPlp" class="flex-grow-1">
-            <input placeholder="جستجو در شاواز" class="w-100" @click="openSearchbox()" v-model="search" v-debounce:1s.unlock="searchInSite()" />
-        </form>
-    </div>
+        <client-only>
+          <form @submit.prevent="showResultPlp" class="flex-grow-1">
+            <input placeholder="جستجو در شاواز" class="w-100" @click="openSearchbox()" v-model="search" @keyup="searchInSite()" />
+          </form>
+        </client-only>
+      </div>
 
-    <div class="search-result search-result--desktop" id="search-result">
+      <div class="search-result search-result--desktop" id="search-result">
         <v-divider color="primary" />
         <swiper
             v-if="searchResult && searchResult.skus && searchResult.skus.length"
@@ -35,101 +38,103 @@
                         <img data-not-lazy :src="item.image?.image_url" :title="item.label" :alt="item.label" width="48" height="48" />
                     </div>
 
-                    <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
-                        {{item.label}}
-                    </h3>
-                </a>
-            </swiper-slide>
+              <h3 v-if="item.label" class="t11 w400 text-grey-darken-1">
+                {{item.label}}
+              </h3>
+            </a>
+          </swiper-slide>
         </swiper>
 
         <v-divider v-if="(searchResult && searchResult.categories && searchResult.categories.length) || (searchResult && searchResult.brands && searchResult.brands.length)" color="grey-lighten-3" />
 
         <v-row class="ma-0">
-            <v-col cols="6" class="pa-0">
-                <div v-if="searchResult && searchResult.categories && searchResult.categories.length" class="search-result__list search-result__list--border pa-3 pb-1">
-                    <header>
-                        <h2 class="t14 w400 text-grey-darken-4 mb-2">دسته‌بندی‌های مرتبط</h2>
-                    </header>
+          <v-col cols="6" class="pa-0">
+            <div v-if="searchResult && searchResult.categories && searchResult.categories.length" class="search-result__list search-result__list--border pa-3 pb-1">
+              <header>
+                <h2 class="t14 w400 text-grey-darken-4 mb-2">دسته‌بندی‌های مرتبط</h2>
+              </header>
 
-                    <nav>
-                        <ul class="ma-0">
-                            <li
-                                class="mb-2"
-                                v-for="(item, index) in searchResult.categories.slice(0,5)"
-                                :key="`category-search-${index}`">
-                                <a class="t13 w400 text-grey-darken-2" :href="`/category/${item.slug}`">
-                                    {{item.label}}
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </v-col>
-            <v-col cols="6" class="pa-0">
-                <div v-if="searchResult && searchResult.brands && searchResult.brands.length" class="search-result__list pa-3 pb-1">
-                    <header>
-                        <h2 class="t14 w400 text-grey-darken-4 mb-2">برندهای مرتبط</h2>
-                    </header>
+              <nav>
+                <ul class="ma-0">
+                  <li
+                      class="mb-2"
+                      v-for="(item, index) in searchResult.categories.slice(0,5)"
+                      :key="`category-search-${index}`">
+                    <a class="t13 w400 text-grey-darken-2" :href="`/category/${item.slug}`">
+                      {{item.label}}
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </v-col>
+          <v-col cols="6" class="pa-0">
+            <div v-if="searchResult && searchResult.brands && searchResult.brands.length" class="search-result__list pa-3 pb-1">
+              <header>
+                <h2 class="t14 w400 text-grey-darken-4 mb-2">برندهای مرتبط</h2>
+              </header>
 
-                    <nav>
-                        <ul class="ma-0">
-                            <li
-                                class="mb-2"
-                                v-for="(item, index) in searchResult.brands.slice(0,5)"
-                                :key="`category-search-${index}`">
-                                <a class="t13 w400 text-grey-darken-2" :href="`/brand/${item.slug}`">
-                                    {{item.label}}
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </v-col>
+              <nav>
+                <ul class="ma-0">
+                  <li
+                      class="mb-2"
+                      v-for="(item, index) in searchResult.brands.slice(0,5)"
+                      :key="`category-search-${index}`">
+                    <a class="t13 w400 text-grey-darken-2" :href="`/brand/${item.slug}`">
+                      {{item.label}}
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </v-col>
         </v-row>
 
         <v-divider v-if="filteredWords && filteredWords.length" color="grey-lighten-3" />
 
         <nav v-if="filteredWords && filteredWords.length" class="search-result__list py-3">
-            <ul class="ma-0">
-                <li
-                    class="mb-2"
-                    v-for="(item, index) in filteredWords.slice(0,5)"
-                    :key="`category-search-${index}`">
-                    <div class="d-flex align-center cur-p pos-r" @click="setModel(item)">
-                        <v-icon
-                            icon="mdi-magnify"
-                            size="x-small"
-                            color="grey-lighten-1"
-                            class="ml-2" />
-                        <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item)"></span>
+          <ul class="ma-0">
+            <li
+                class="mb-2"
+                v-for="(item, index) in filteredWords.slice(0,5)"
+                :key="`category-search-${index}`">
+              <div class="d-flex align-center cur-p pos-r" @click="setModel(item)">
+                <v-icon
+                    icon="mdi-magnify"
+                    size="x-small"
+                    color="grey-lighten-1"
+                    class="ml-2" />
+                <span class="t13 w400 text-grey-darken-2" v-html="highlightWord(item)"></span>
 
-                        <div class="search-cover"></div>
-                    </div>
-                </li>
-            </ul>
+                <div class="search-cover"></div>
+              </div>
+            </li>
+          </ul>
         </nav>
 
         <v-divider color="grey-lighten-3" />
 
         <div class="search-result__most-search">
-            <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
-            <swiper
-                v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"
-                dir="rtl"
-                :slidesPerView="'auto'"
-                :spaceBetween="8"
-                :modules="modules"
-                :navigation="true"
-                class="mySwiper">
-                <swiper-slide v-for="(item, index) in mostSearchItems.data.slice(0,15)" :key="`most-search-${index}`">
-                    <a class="search-result__most-search__item t12 w400 px-3 py-1 bg-grey-lighten-3 text-grey-darken-2 cur-p" @click="SearchMostSearchItem(item.needle)">
-                        {{item.needle}}
-                    </a>
-                </swiper-slide>
-            </swiper>
+          <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
+          <swiper
+              v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"
+              dir="rtl"
+              :slidesPerView="'auto'"
+              :spaceBetween="8"
+              :modules="modules"
+              :navigation="true"
+              class="mySwiper">
+            <swiper-slide v-for="(item, index) in mostSearchItems.data.slice(0,15)" :key="`most-search-${index}`">
+              <a class="search-result__most-search__item t12 w400 px-3 py-1 bg-grey-lighten-3 text-grey-darken-2 cur-p" @click="SearchMostSearchItem(item.needle)">
+                {{item.needle}}
+              </a>
+            </swiper-slide>
+          </swiper>
         </div>
+      </div>
     </div>
-</div>
+
+  </client-only>
 </template>
 
 <script>
@@ -152,14 +157,18 @@ import Search from '@/composables/Search.js';
 
 import axios from "axios";
 
+
 export default {
     data() {
         return {
             search: null,
             searchNew: null,
             searchResult:[],
+            timeDebounce: null
         }
     },
+
+
 
     computed: {
         filteredWords() {
@@ -217,7 +226,7 @@ export default {
 
         /**
          * Close search box if I click in outside
-         * @param {*} event 
+         * @param {*} event
          */
         closeSearchBox(event) {
             if(this.$route.name !== 'login' && this.$route.name !== 'forgotPassword'){
@@ -238,19 +247,18 @@ export default {
          * Search
          */
         searchInSite(){
+          clearTimeout(this.timeDebounce)
+          this.timeDebounce = setTimeout(()=>{
             if(this.search !== null && this.search !== this.searchNew){
-                this.searchNew = this.search;
-                axios
-                    .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
-                    .then((response) => {
-                        this.searchResult = response?.data?.data;
-                    })
-                    .catch((err) => {
-
-                    }).finally(() => {
-
-                    });
+              this.searchNew = this.search;
+              axios
+                  .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
+                  .then((response) => {
+                    this.searchResult = response?.data?.data;
+                  });
             }
+          }, 200)
+
         },
 
         /**
