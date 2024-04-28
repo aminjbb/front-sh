@@ -49,7 +49,7 @@
                         @click="checkFavorite()"
                         size="small" />
                 </div>
-                <img :src="selectedImage" :alt="imageAlt" width="351" height="351">
+                <img  data-not-lazy :src="selectedImage" :alt="imageAlt" width="351" height="351">
             </div>
         </div>
     </v-row>
@@ -83,7 +83,7 @@
                     :key="index"
                     class="h-100">
                     <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
-                        <img data-not-lazy :src="item.image_url" :title="item.alt" :alt="item.alt" width="300" height="300" />
+                        <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="300" height="300" />
                     </div>
                 </swiper-slide>
             </swiper>
