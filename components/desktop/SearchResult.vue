@@ -255,14 +255,9 @@ export default {
                   .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
                   .then((response) => {
                     this.searchResult = response?.data?.data;
-                  })
-                  .catch((err) => {
-
-                  }).finally(() => {
-
-              });
+                  });
             }
-          }, 500)
+          }, 200)
 
         },
 
