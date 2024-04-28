@@ -310,8 +310,7 @@ export default {
                 ecommerce: {							
                     items: [{		// an array where all currently viewed products must be included
                     item_id: product.id,	// insert an actual product ID
-                    price: price.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
-                    comercial_price: price.site_price, // insert an actual product price after comercial discount
+                    price: Number(String(price.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                     item_brand: product?.brand_name,	// insert an actual product price
                     item_category: this.breadcrumb?.category_l2?.slug ? this.breadcrumb.category_l2.slug : this.breadcrumb?.category_l1?.slug,			// insert an actual product top-level category
                     section_name: product?.label, // insert the name of the list where the product is currently displayed

@@ -218,7 +218,7 @@ export default {
                     });
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
+                    useNuxtApp().$toast.error(err.response?.data?.message, {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
