@@ -250,8 +250,7 @@ export default {
                     ecommerce: {							
                         items: [{	// an array where all currently viewed products must be included
                             item_id: product?.id,	// insert an actual product ID
-                            price: price?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
-                            comercial_price: price?.site_price, // insert an actual product price after comercial discount
+                            price: Number(String(price?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                             item_brand: product?.brand_label,	// insert an actual product price
                             item_category: this.productCategory,	// insert an actual product top-level category
                             item_color: null,  // insert the color of product select ** TODO: We don't have this
@@ -273,8 +272,7 @@ export default {
                 ecommerce: {							
                     items: [{// an array where all currently viewed products must be included
                         item_id: product?.id,	// insert an actual product ID
-                        price: price?.customer_price,	// insert an actual product price. Number or a string. Don't include currency code
-                        comercial_price: price?.site_price, // insert an actual product price after comercial discount
+                        price: Number(String(price?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         item_brand: product?.brand_label,// insert an actual product price
                         item_category: this.productCategory,	// insert an actual product top-level category
                         item_color: null,  // insert the color of product select ** TODO: We don't have this

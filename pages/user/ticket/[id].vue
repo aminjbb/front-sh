@@ -19,7 +19,7 @@
                         <span>جزئیات تیکت</span>
 
                         <v-btn
-                            v-if="singleTicket.status !== 'resolved'"
+                            v-if="singleTicket?.status !== 'resolved'"
                             @click="showAnswer()"
                             height="36"
                             title="ثبت پاسخ"
@@ -34,12 +34,14 @@
                         <div v-if="singleTicket" class="single-ticket__list">
                             <generalTicketUserAnswer :content="singleTicket.content" :fileList="singleTicket.files"/>
 
-                            <template v-if="singleTicket.threads" v-for="ticket in singleTicket.threads" :key="ticket.id">
-                                <template v-if="ticket.creator === 'user'">
-                                    <generalTicketUserAnswer :content="ticket.content" :fileList="ticket.files"/>
-                                </template>
-                                <template v-if="ticket.creator === 'admin'">
-                                    <generalTicketAdminAnswer :content="ticket.content" :fileList="ticket.files"/>
+                            <template v-if="singleTicket.threads">
+                                <template v-for="ticket in singleTicket.threads" :key="ticket.id">
+                                    <template v-if="ticket.creator === 'user'">
+                                        <generalTicketUserAnswer :content="ticket.content" :fileList="ticket.files"/>
+                                    </template>
+                                    <template v-if="ticket.creator === 'admin'">
+                                        <generalTicketAdminAnswer :content="ticket.content" :fileList="ticket.files"/>
+                                    </template>
                                 </template>
                             </template>
                         </div>
@@ -51,7 +53,7 @@
                     color="grey-lighten-1"
                     class="mb-3" />
 
-                <div v-if="!showAnswerBox && singleTicket.status !== 'resolved'" class="xs-show px-3">
+                <div v-if="!showAnswerBox && singleTicket?.status !== 'resolved'" class="xs-show px-3">
                     <v-btn
                         @click="showAnswer()"
                         height="36"
@@ -61,7 +63,7 @@
                     </v-btn>
                 </div>
 
-                <v-card v-if="showAnswerBox && singleTicket.status !== 'resolved'" class="pa-8 mobile-pa-0 mobile-no-border">
+                <v-card v-if="showAnswerBox && singleTicket?.status !== 'resolved'" class="pa-8 mobile-pa-0 mobile-no-border">
                     <div class="ticket__form px-3">
                         <v-form ref="ticket" v-model="valid">
                             <v-row>

@@ -175,8 +175,7 @@ export default {
                 ecommerce: {							
                     items: [{   // an array where all currently viewed products must be included
                         item_id: this.content?.id,	// insert an actual product ID
-                        price: this.content?.customer_price,    // insert an actual product price. Number or a string. Don't include currency code
-                        comercial_price: this.content?.site_price, // insert an actual product price after comercial discount
+                        price:  Number(String(this.content?.site_price).slice(0, -1)),    // insert an actual product price. Number or a string. Don't include currency code
                         item_brand: null,	// insert an actual product price ** TODO: We don't have this in API
                         item_category:  null,   // insert an actual product top-level category ** TODO: We don't have this in API
                         section_name: this.sectionName, // insert the name of the list where the product is currently displayed

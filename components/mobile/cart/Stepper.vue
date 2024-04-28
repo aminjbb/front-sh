@@ -175,6 +175,7 @@ export default {
                 'پرداخت'
             ],
             activeButton: false,
+            discountCode: null,
         }
     },
 
@@ -389,7 +390,9 @@ export default {
          * @param {*} id
          */
         getDiscountCode(code) {
+            this.discountCode = null;
             this.calculateVoucher(code);
+            this.discountCode = code;
         },
 
         /**
@@ -409,8 +412,7 @@ export default {
             this.data.details.forEach(item =>{
                 const obj={
                     item_id: item.shps?.sku?.id, 
-                    price: item.current_total_customer_price,  
-                    comercial_price: item.current_total_site_price,
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
                     brand: item?.shps?.sku?.brand?.name,   
                     category: null, 
                     quantity: item.count 
@@ -435,7 +437,7 @@ export default {
             this.data.details.forEach(item =>{
                 const obj={
                     item_id: item.shps?.sku?.id, 
-                    price: item.current_total_site_price,  
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
                     item_brand: item?.shps?.sku?.brand?.name,   
                     item_category: null, 
                     item_color: null,
@@ -461,7 +463,7 @@ export default {
             this.data.details.forEach(item =>{
                 const obj={
                     item_id: item.shps?.sku?.id, 
-                    price: item.current_total_site_price,  
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
                     item_brand: item?.shps?.sku?.brand?.name,   
                     item_category: null, 
                     item_color: null,
@@ -489,7 +491,7 @@ export default {
             this.data.details.forEach(item =>{
                 const obj={
                     item_id: item.shps?.sku?.id, 
-                    price: item.current_total_site_price,  
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
                     item_brand: item?.shps?.sku?.brand?.name,   
                     item_category: null, 
                     item_color: null,
@@ -503,7 +505,7 @@ export default {
             event: 'add_payment_info',// name of the event.
             ecommerce: {
                 value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
-                coupon: data.voucher.code,						
+                coupon: this.discountCode,						
                 items: productArr
             }
             });
@@ -541,10 +543,8 @@ export default {
         if (token) {
             this.activeStep = 4;
         }
-        
-        if(this.activeStep === 1){
-            this.enhanceECommerceSkuList();
-        }
+
+        this.enhanceECommerceSkuList();
     },
 }
 </script>

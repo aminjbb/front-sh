@@ -317,7 +317,7 @@
                 this.userBasket.details.forEach(item =>{
                     const obj={
                         item_id: item.shps?.sku?.id, 
-                        price: item.current_total_customer_price,  
+                        price: Number(String(item.current_total_customer_price).slice(0, -1)),  
                         item_brand: item?.shps?.sku?.brand?.name,   
                         item_category: null, 
                         item_color:null,
