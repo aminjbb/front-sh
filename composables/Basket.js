@@ -21,6 +21,7 @@ export default function setup() {
     const loadingFirstAddBasket = ref(false)
     const count = ref(0)
     const freeDelivery = ref(false)
+    const transactionErrorMassage =ref(null)
 
     /**
      * Create random number
@@ -368,6 +369,7 @@ export default function setup() {
             })
             .then((response) => {
                 transactionData.value = response.data.data
+                transactionErrorMassage.value = response.data.message
             })
             .catch((err) => {
                 useNuxtApp().$toast.error(err.response.data.message, {
@@ -423,6 +425,6 @@ export default function setup() {
     return {getBasket, loading ,addToBasket , deleteShpsBasket ,
         calculateSendingPrice , createOrder,calculateVoucher,voucher,
         getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket,
-        loadingAddBasket, count ,  getSendingMethods ,sendingMethods, freeDelivery  }
+        loadingAddBasket, count ,  getSendingMethods ,sendingMethods, freeDelivery ,transactionErrorMassage  }
 }
 
