@@ -312,6 +312,7 @@ export default {
          * @param {*} address
          */
         getAddress(address) {
+          console.log(address)
             if (address && address !== false) {
                 this.$store.commit('set_orderAddress', address)
 
@@ -319,6 +320,7 @@ export default {
               if (this.$store.getters['get_orderSendingMethod']){
                 this.calculateSendingPrice(address.id, this.$store.getters['get_orderSendingMethod'])
               }
+              // this.activeButton = true;
             } else {
                 this.$store.commit('set_orderAddress', null)
               this.activeButton = false;
