@@ -206,7 +206,7 @@ export default {
         /**
          * index of card
          */
-        index: String,
+        index: String | Number,
 
         /**
          * show add count box

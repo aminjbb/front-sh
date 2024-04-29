@@ -44,17 +44,17 @@
                     <tr class="v-data-table__tr">
                         <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                             <span class="w600 text-black ml-10" v-if="isMobile">ردیف : </span>
-                            {{ item.raw.index }}
+                            {{ item.index }}
                         </td>
                         <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                             <span class="w600 text-black ml-10" v-if="isMobile">نوع تراکنش : </span>
                             <v-icon
-                                :icon="item.raw.type == 'deposit' ? 'mdi-plus-circle-outline' : 'mdi-arrow-top-left-thin-circle-outline'"
-                                :color="item.raw.type == 'deposit' ? 'success' : 'red-lighten-1'"
+                                :icon="item.type == 'deposit' ? 'mdi-plus-circle-outline' : 'mdi-arrow-top-left-thin-circle-outline'"
+                                :color="item.type == 'deposit' ? 'success' : 'red-lighten-1'"
                                 size="small"
                                 class="ml-1" />
-                            <span :class="item.raw.type == 'deposit' ? 'text-success' : 'text-red-lighten-1'" class="t12 w500">
-                                <template v-if="item.raw.type == 'deposit'">
+                            <span :class="item.type == 'deposit' ? 'text-success' : 'text-red-lighten-1'" class="t12 w500">
+                                <template v-if="item.type == 'deposit'">
                                     شارژ کیف پول
                                 </template>
                                 <template v-else>
@@ -64,15 +64,15 @@
                         </td>
                         <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                             <span class="w600 text-black ml-10" v-if="isMobile">مبلغ : </span>
-                            {{ splitChar(Number(String(item.raw.price).slice(0, -1))) }}
+                            {{ splitChar(Number(String(item.price).slice(0, -1))) }}
                         </td>
                         <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                             <span class="w600 text-black ml-10" v-if="isMobile">کد سفارش : </span>
-                            {{ item.raw.code }}
+                            {{ item.code }}
                         </td>
                         <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                             <span class="w600 text-black ml-10" v-if="isMobile">تاریخ تراکنش : </span>
-                            {{ item.raw.date_fa }}
+                            {{ item.date_fa }}
                         </td>
                     </tr>
                 </template>
@@ -87,19 +87,11 @@
 </template>
 
 <script>
-import {
-    VDataTable
-} from 'vuetify/labs/VDataTable'
-
 export default {
     data() {
         return {
             isMobile: false
         }
-    },
-
-    components: {
-        VDataTable
     },
 
     props: {
