@@ -67,8 +67,8 @@
                                 <div class="order-tab__content active" id="order-tab__content-1">
                                     <template v-if="userOrders && userOrders.length">
                                         <generalOrdersOrderRow
-                                            v-for="order in userOrders"
-                                            :key="`all-order${order.id}`"
+                                            v-for="(order, index) in userOrders"
+                                            :key="`all-order${index}`"
                                             :content="order" />
                                     </template>
 
@@ -93,7 +93,7 @@
                                     <template v-if="preProgressOrder && preProgressOrder.length">
                                         <generalOrdersOrderRow
                                             v-for="(item, index) in preProgressOrder"
-                                            :key="`all-order${index}`"
+                                            :key="`all-order1${index}`"
                                             :content="item" />
                                     </template>
 
@@ -116,7 +116,7 @@
                                     <template v-if="sendingOrder && sendingOrder.length">
                                         <generalOrdersOrderRow
                                             v-for="(item, index) in sendingOrder"
-                                            :key="`all-order${index}`"
+                                            :key="`all-order2${index}`"
                                             :content="item" />
                                     </template>
 
@@ -140,8 +140,8 @@
                                 <div class="order-tab__content" id="order-tab__content-4">
                                     <template v-if="receivedOrder && receivedOrder.length">
                                         <generalOrdersOrderRow
-                                            v-for="order in receivedOrder"
-                                            :key="`all-order${order.id}`"
+                                            v-for="(order, index) in receivedOrder"
+                                            :key="`all-order3${index}`"
                                             :content="order" />
                                     </template>
 
@@ -167,7 +167,7 @@
                                         <template v-for="(order, index) in userReturnedOrderList">
                                             <generalOrdersReturnOrderRow 
                                                 v-if="order?.details.length"
-                                                :key="`all-order${index}`"
+                                                :key="`all-order4${index}`"
                                                 :content="order" />
                                         </template>
                                     </template>
@@ -237,7 +237,7 @@ export default {
         /** user returned Order list **/
         userReturnedOrderList() {
             try {
-                return this.returnedOrderList ?.data ?.data ?.data.reverse()
+                return this.returnedOrderList ?.data ?.data ?.data
             } catch (e) {
                 return []
             }
@@ -245,7 +245,9 @@ export default {
         /** user order list **/
         userOrders() {
             try {
-                return this.orderList ?.data ?.data ?.data.reverse()
+                if(this.orderList && this.orderList ?.data ?.data ?.data){
+                    return this.orderList ?.data ?.data ?.data
+                }
             } catch (e) {
                 return []
             }
@@ -254,8 +256,8 @@ export default {
         /** Pre progress order list **/
         preProgressOrder() {
             try {
-                const preProgress = this.userOrders.filter(order => order.status === 'processing')
-                if (preProgress.length) return preProgress.reverse()
+                const preProgress = this.userOrders.filter(order => order?.status === 'processing')
+                if (preProgress.length) return preProgress
             } catch (e) {
                 return []
             }
@@ -263,8 +265,8 @@ export default {
         /** Sending order list **/
         sendingOrder() {
             try {
-                const sendingOrder = this.userOrders.filter(order => order.status === 'sending')
-                if (sendingOrder.length) return sendingOrder.reverse()
+                const sendingOrder = this.userOrders.filter(order => order?.status === 'sending')
+                if (sendingOrder.length) return sendingOrder
             } catch (e) {
                 return []
             }
@@ -273,7 +275,7 @@ export default {
         receivedOrder() {
             try {
                 const receivedOrder = this.userOrders.filter(order => order.status === 'received')
-                if (receivedOrder.length) return receivedOrder.reverse()
+                if (receivedOrder.length) return receivedOrder
             } catch (e) {
                 return []
             }
