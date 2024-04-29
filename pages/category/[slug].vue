@@ -13,7 +13,6 @@
                   :filterList="productFilterSecondaryData"
                   @listFiltersModal="listFiltersModal"
                   @selectFiltersModal="selectFiltersModal"
-                  @switchFiltersModal="switchFiltersModal"
                   @setAmount="selectByAmount"/>
             </template>
             <template v-if="screenType === 'mobile'">
@@ -22,7 +21,6 @@
                     :filterList="productFilterSecondaryData"
                     @listFiltersModal="listFiltersModal"
                     @selectFiltersModal="selectFiltersModal"
-                    @switchFiltersModal="switchFiltersModal"
                     @setAmount="selectByAmount"/>
   
                   <generalProductSortModal @sort="sort"/>

@@ -109,7 +109,7 @@ export default {
         /**
          * Show index
          */
-        index: String,
+        index: String | Number,
         /**
          * Hide card info
          */
