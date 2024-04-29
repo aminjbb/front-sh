@@ -23,7 +23,7 @@ export default {
         /**
          * Product index in list
          */
-         index: String,
+         index: String | Number,
 
          /**
          * Section name

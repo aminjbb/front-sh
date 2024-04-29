@@ -12,7 +12,6 @@
                 :filterList="productFilterSecondaryData"
                 @listFiltersModal="listFiltersModal"
                 @selectFiltersModal="selectFiltersModal"
-                @switchFiltersModal="switchFiltersModal"
                 @setAmount="selectByAmount" />
           </template>
 
@@ -22,7 +21,6 @@
                   :filterList="filtersMocket"
                   @listFiltersModal="listFiltersModal"
                   @selectFiltersModal="selectFiltersModal"
-                  @switchFiltersModal="switchFiltersModal"
                   @setAmount="selectByAmount" />
 
               <generalProductSortModal @sort="sort"  />

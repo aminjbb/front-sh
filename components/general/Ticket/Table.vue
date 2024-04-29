@@ -10,43 +10,43 @@
             <tr class="v-data-table__tr">
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font" :style="isMobile === true ? { backgroundColor: '#FBE9F3 !important'} : ''">
                     <span class="w600 text-black ml-10" v-if="isMobile">ردیف : </span>
-                    {{ item.raw.index }}
+                    {{ item.index }}
                 </td>
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                     <span class="w600 text-black ml-10" v-if="isMobile">شماره تیکت: </span>
 
                     <template v-if="isMobile">
-                        <a class="text-blue number-font" :href="`/user/ticket/${item.raw.id}`">
-                            {{ item.raw.id }}
+                        <a class="text-blue number-font" :href="`/user/ticket/${item.id}`">
+                            {{ item.id }}
                         </a>
                     </template>
-                    <template v-else>{{ item.raw.id }} </template>
+                    <template v-else>{{ item.id }} </template>
                 </td>
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey">
                     <span class="w600 text-black ml-10" v-if="isMobile">موضوع : </span>
-                    {{ item.raw.title }}
+                    {{ item.title }}
                 </td>
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey">
                     <span class="w600 text-black ml-10" v-if="isMobile">اولویت : </span>
-                    {{ getPriorityText(item.raw.priority) }}
+                    {{ getPriorityText(item.priority) }}
                 </td>
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                     <span class="w600 text-black ml-10" v-if="isMobile">تاریخ ارسال : </span>
-                    {{ item.raw.created_at }}
+                    {{ item.created_at }}
                 </td>
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey">
                     <span class="w600 text-black ml-10" v-if="isMobile">وضعیت : </span>
-                    {{ getStatusText(item.raw.status) }}
+                    {{ getStatusText(item.status) }}
                 </td>
 
                 <td class="v-data-table__td v-data-table-column--align-start t12 text-grey" :style="isMobile === true ? { display: 'none !important'} : ''">
                     <span class="w600 text-black ml-10" v-if="isMobile">عملیات : </span>
-                    <a :href="`/user/ticket/${item.raw.id}`">
+                    <a :href="`/user/ticket/${item.id}`">
                         <v-icon
                             icon="mdi-eye-outline"
                             size="x-small"
@@ -60,19 +60,11 @@
 </template>
 
 <script>
-import {
-    VDataTable
-} from 'vuetify/labs/VDataTable'
-
 export default {
     data() {
         return {
             isMobile: false
         }
-    },
-
-    components: {
-        VDataTable
     },
 
     props: {
