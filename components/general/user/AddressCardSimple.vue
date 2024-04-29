@@ -100,7 +100,9 @@ export default {
          * @param {*} event 
          */
         closeDropDown(event) {
-            if (document.getElementById(`mobile-drop-down__${this.address.id}`).classList.contains('show')) {
+            const dropdownId = `mobile-drop-down__${this.address.id}`;
+            const dropdownElement = document.getElementById(dropdownId);
+            if (dropdownElement && dropdownElement.classList.contains('show')) {
                 const dropMenu = document.getElementById(`mobile-drop-down__${this.address.id}`);
                 if (!dropMenu.contains(event.target)) {
                     document.getElementById(`mobile-drop-down__items-${this.address.id}`).classList.remove('show');
@@ -114,7 +116,7 @@ export default {
         document.addEventListener('click', this.closeDropDown);
     },
 
-    beforeDestroy() {
+    destroy() {
         document.removeEventListener('click', this.closeDropDown);
     },
 
