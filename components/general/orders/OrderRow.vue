@@ -7,7 +7,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     وضعیت:
                 </span>
-                <span v-if="content.status" class="t12 w400 text-pink-darken-2 mr-1">{{findOrderStatus(content.status)}}</span>
+                <span v-if="content?.status" class="t12 w400 text-pink-darken-2 mr-1">{{findOrderStatus(content?.status)}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -15,7 +15,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     تاریخ:
                 </span>
-                <span v-if="content.submit_date_fa" class="t12 w400 text-pink-darken-2 number-font">{{content.submit_date_fa}}</span>
+                <span v-if="content?.submit_date_fa" class="t12 w400 text-pink-darken-2 number-font">{{content?.submit_date_fa}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -23,7 +23,7 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     کد سفارش:
                 </span>
-                <span v-if="content.order_number" class="t12 w400 text-pink-darken-2 number-font">{{content.order_number}}</span>
+                <span v-if="content?.order_number" class="t12 w400 text-pink-darken-2 number-font">{{content?.order_number}}</span>
             </div>
 
             <div class="d-flex align-center flex-grow-1">
@@ -31,11 +31,11 @@
                     <v-icon icon="mdi-circle ml-1" color="pink-darken-2" />
                     مبلغ:
                 </span>
-                <span v-if="content.paid_price !== null" class="t12 w400 text-pink-darken-2 number-font">{{ splitChar(Number(String(content.paid_price).slice(0, -1))) }} تومان</span>
+                <span v-if="content?.paid_price !== null" class="t12 w400 text-pink-darken-2 number-font">{{ splitChar(Number(String(content?.paid_price).slice(0, -1))) }} تومان</span>
             </div>
         </div>
         <div class="order-row__show-details mr-10">
-            <a class="d-flex align-center" :href="`/user/order/${content.id}`">
+            <a class="d-flex align-center" :href="`/user/order/${content?.id}`">
                 <span class="text-grey-darken-1 t12 w400 xs-hide">مشاهده جزئیات</span>
                 <v-icon icon="mdi-chevron-left mr-2" color="grey-darken-1" />
             </a>
@@ -44,13 +44,13 @@
 
     <div class="scroll--x">
         <div class="order-row__items d-flex flex-nowrap pb-5">
-            <template v-if="content.details && content.details.length">
+            <template v-if="content?.details && content?.details.length">
                 <generalProductSimpleCard
-                    v-for="(sku, index) in content.details"
+                    v-for="(sku, index) in content?.details"
                     :key="`sku${index}`"
                     tag="div"
-                    :image="sku.shps?.sku?.image_url"
-                    :label="sku.shps?.sku?.label" />
+                    :image="sku?.shps?.sku?.image_url"
+                    :label="sku?.shps?.sku?.label" />
             </template>
         </div>
     </div>
