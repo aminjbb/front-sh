@@ -83,6 +83,7 @@ export default function setup() {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
+                params: {...route.query}
             })
             .then((response) => {
                 product.value = response
@@ -110,7 +111,9 @@ export default function setup() {
                     url: runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
                     headers: {
                         Authorization: `Bearer ${userToken.value}`,
+
                     },
+                    params: {...route.query}
                 });
                 
                     // Second API - secondaryData
@@ -120,6 +123,8 @@ export default function setup() {
                         headers: {
                             Authorization: `Bearer ${userToken.value}`,
                         },
+                        params: {...route.query}
+
                     });
 
                     if(response1 && response2){
