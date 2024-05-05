@@ -140,7 +140,7 @@ export default {
          * Enhance E-commerce for Seo in Checkout Step 4 after payment
          */
          enhanceECommerceLastStep(){
-            if(this.transactionData.status=== 'success'){
+            if(this.transactionData.status=== 'successful'){
                 let productArr = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
