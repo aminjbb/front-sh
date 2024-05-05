@@ -357,7 +357,6 @@ export default {
                     event_type: response.data?.data?.user?.is_signed_up === 0 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
                     userStatus: response.data?.data?.user?.is_signed_up === 0 ? 'new' : 'returning', // or 'returning' depending on the user's status.
                     });
-                    console.log("🚀 ~ verifyOTP ~ window.dataLayer:", window.dataLayer)
 
                     const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
                         headers: {
@@ -365,22 +364,22 @@ export default {
                         },
                     });
 
-                    // if (completeResponse.data.data === false) {
-                    //     this.loginStep = 3;
+                    if (completeResponse.data.data === false) {
+                        this.loginStep = 3;
 
-                    // } else {
-                    //     useNuxtApp().$toast.success(response.data.message, {
-                    //         rtl: true,
-                    //         position: 'top-center',
-                    //         theme: 'dark'
-                    //     });
-                    //     if (localStorage.getItem('returnPathAfterLogin')) {
-                    //         window.location = localStorage.getItem('returnPathAfterLogin')
-                    //         localStorage.removeItem('returnPathAfterLogin')
-                    //     } else {
-                    //         window.location = '/'
-                    //     }
-                    // }
+                    } else {
+                        useNuxtApp().$toast.success(response.data.message, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                        if (localStorage.getItem('returnPathAfterLogin')) {
+                            window.location = localStorage.getItem('returnPathAfterLogin')
+                            localStorage.removeItem('returnPathAfterLogin')
+                        } else {
+                            window.location = '/'
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Verify OTP error:', error);
