@@ -480,7 +480,7 @@ export default {
             window.dataLayer.push({
             event: 'add_shipping_info',// name of the event.
             ecommerce: {
-                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                value: Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),	// order total (price of all products) based Toman. 
                 shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis						
                 items: productArr
             }
