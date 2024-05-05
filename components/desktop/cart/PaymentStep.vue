@@ -10,7 +10,7 @@
     </header>
 
     <div>
-        <template v-for="(payment , index) in paymentTypeList" :key="`payment${index}`">
+        <template v-for="(payment , index) in paymentMethods" :key="`payment${index}`">
             <div class="d-flex align-center justify-space-between flex-grow-1">
                 <div>
                     <div class="d-flex align-center">
@@ -19,32 +19,19 @@
                             v-model="paymentModal"
                             @change="selectPayment()"
                             hide-details
-                            :value="payment.type" />
-                        <h3 class="t15 w400 text-grey-darken-2">{{payment.label}}</h3>
+                            :value="payment.name" />
+                        <h3 class="t15 w400 text-grey-darken-2">{{payment.title}}</h3>
                     </div>
                     <p class="number-font t12 w400 text-grey">
-                        <template v-if="payment.type === 'snap_pay'">
-                            4 قسط ماهیانه {{ splitChar(Math.round(Number(String(paymentMount ).slice(0, -1))/ 4)) }}تومان (بدون کارمزد)
-                        </template>
-                        <template v-else-if="payment.type === 'online'">پرداخت آنلاین با تمام کارت های بانکی</template>
-                        <template v-else-if="payment.type === 'wallet'">پرداخت از طریق کیف پول - موجودی کیف پول شما {{ splitChar(Number(String(userDetail?.wallet_mount).slice(0, -1))) }} تومان می باشد.</template>
+                      {{payment.subtitle}}
                     </p>
                 </div>
-                <template v-if="payment.type === 'snap_pay'">
-                    <img src="~/assets/images/payment-snap.jpg" alt="payment-image" width="85" height="54">
-                </template>
 
-                <template v-else-if="payment.type === 'online'">
-                    <img src="~/assets/images/payment-bank.jpg" alt="payment-image" width="85" height="54">
-                </template>
-
-                <template v-else-if="payment.type === 'wallet'">
-                    <img src="~/assets/images/payment-wallet.jpg" alt="payment-image" width="85" height="54">
-                </template>
+                <img :src="payment.logo" alt="payment-image" width="85" height="54">
 
             </div>
             <v-divider
-                v-if="index+1 < paymentTypeList.length"
+                v-if="index+1 < paymentMethods.length"
                 color="grey-lighten-1"
                 class="my-3" />
         </template>
@@ -107,29 +94,25 @@
 
 <script>
 export default {
-    data() {
+    setup() {
+    const title = ref('فروشگاه اینترنتی شاواز | روشهای پرداخت ')
+    const description = ref("انتخا روش پرداخت برای خرید از فروشگاه لوازم آرایشی و بهداشتی شاواز")
+    const userToken = useCookie('userToken');
+    useHead({
+      title,
+      meta: [{
+        name: 'description',
+        content: description
+      }]
+    })
+    return {
+      userToken,
+    }
+  },
+
+  data() {
         return {
             paymentModal: null,
-            paymentTypeList: [
-              {
-                    id: 1,
-                    label: 'پرداخت اقساطی اسنپ پی',
-                    type: 'snap_pay',
-                    payment_mount: '102157'
-                },
-                {
-                    id: 2,
-                    label: 'پرداخت اینترنتی',
-                    type: 'online',
-                    payment_mount: ''
-                },
-                {
-                    id: 3,
-                    label: 'کیف پول',
-                    type: 'wallet',
-                    payment_mount: ''
-                }
-            ],
             discountCode: null,
             discountCodeShow: null,
             discountError: null,
@@ -150,22 +133,7 @@ export default {
     props: {
         paymentMount: String,
         voucherBasket: null,
-    },
-
-    setup() {
-        const title = ref('فروشگاه اینترنتی شاواز | روشهای پرداخت ')
-        const description = ref("انتخا روش پرداخت برای خرید از فروشگاه لوازم آرایشی و بهداشتی شاواز")
-        const userToken = useCookie('userToken');
-        useHead({
-            title,
-            meta: [{
-                name: 'description',
-                content: description
-            }]
-        })
-        return {
-            userToken
-        }
+        paymentMethods: []
     },
 
     watch: {
