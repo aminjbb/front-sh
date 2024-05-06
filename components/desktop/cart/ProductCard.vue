@@ -268,7 +268,7 @@ export default {
         },
 
         count(newVal,oldVal){
-            if (this.reloadingPage === true){
+            if (this.reloadingPage === true && this.$route.name !== 'sku-slug'){
                 if(newVal > oldVal){
                     this.enhanceECommerceAddToCart(this.content)
                 } else if(newVal < oldVal){

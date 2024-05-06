@@ -152,25 +152,368 @@ import Basket from '@/composables/Basket.js'
 import Order from "~/composables/Order.js";
 
 export default {
-  data() {
-    return {
-      steps: [
-        'مشاهده سبد خرید',
-        'تکمیل اطلاعات ارسال',
-        'انتخاب روش پرداخت',
-        'اتمام خرید'
-      ],
-      active: [],
-      previousSteps: [],
-      activeStep: 1,
-      profit: 0,
-      buttonText: [
-        'تایید و تکمیل سفارش',
-        'تایید اطلاعات ارسال',
-        'پرداخت'
-      ],
-      activeButton: false,
-      discountCode: null,
+    data() {
+        return {
+            steps: [
+                'مشاهده سبد خرید',
+                'تکمیل اطلاعات ارسال',
+                'انتخاب روش پرداخت',
+                'اتمام خرید'
+            ],
+            active: [],
+            previousSteps: [],
+            activeStep: 1,
+            profit: 0,
+            buttonText: [
+                'تایید و تکمیل سفارش',
+                'تایید اطلاعات ارسال',
+                'پرداخت'
+            ],
+            activeButton: false,
+            discountCode: null,
+        }
+    },
+
+    props: {
+        /**
+         * Basket data
+         */
+        data: Object
+    },
+
+    computed: {
+        orderSendingMethod() {
+            return this.$store.getters['get_orderSendingMethod']
+        },
+
+        orderPaymentMethod() {
+            return this.$store.getters['get_orderPayMethod']
+        },
+
+        orderAddressId() {
+            return this.$store.getters['get_orderAddress']
+        },
+
+        dataCount() {
+            try {
+                return this.data.details.length
+            } catch (e) {
+                return 0
+            }
+        }
+    },
+
+    setup() {
+        const userToken = useCookie('userToken')
+        const {
+            deleteVoucherFromBasket,
+            calculateSendingPrice,
+            calculateVoucher,
+            createOrder,
+            voucher,
+            getSendingMethods,
+            sendingMethods,
+            freeDelivery
+        } = new Basket()
+
+        return {
+            deleteVoucherFromBasket,
+            calculateSendingPrice,
+            calculateVoucher,
+            createOrder,
+            voucher,
+            userToken,
+            getSendingMethods,
+            sendingMethods,
+            freeDelivery
+        }
+    },
+
+    methods: {
+        nextStep() {
+            if (this.activeStep < 5) {
+                if (this.activeStep === 2 || this.activeStep === 3) {
+                    const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده یا روش ارسال انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
+
+                    if (!this.activeButton) {
+                        useNuxtApp().$toast.error(text, {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                    } else {
+                        if (this.activeStep === 3) {
+                            this.createOrder(this.orderSendingMethod, '', this.orderAddressId, this.orderPaymentMethod)
+                            this.enhanceECommerceGetPayment();
+                        } else {
+                            this.active[this.activeStep] = false;
+                            this.previousSteps[this.activeStep] = false;
+                            this.activeStep++;
+                            this.active[this.activeStep] = true;
+                            this.previousSteps[this.activeStep - 1] = true;
+
+                            if(this.activeStep === 3){
+                                this.enhanceECommerceGetWay();
+                            }
+                        }
+
+                    }
+                } else {
+                    if (this.userToken) {
+                        this.active[this.activeStep] = false;
+                        this.previousSteps[this.activeStep] = false;
+                        this.activeStep++;
+                        this.active[this.activeStep] = true;
+                        this.previousSteps[this.activeStep - 1] = true;
+
+                        if(this.activeStep === 2){
+                           this.enhanceECommerceStartCart()
+                        }
+                    } else {
+                        localStorage.setItem('returnPathAfterLogin', this.$route.fullPath)
+                        this.$router.push('/login')
+                    }
+
+                }
+
+                // this.activeButton = false;
+            }
+        },
+
+        previousStep(step) {
+            if (this.activeStep < 5) {
+                if (this.userToken) {
+                    if (step === this.activeStep - 1) {
+                        this.active[this.activeStep] = false;
+                        this.previousSteps[this.activeStep] = false;
+                        this.activeStep--;
+                        this.active[this.activeStep] = true;
+                        this.previousSteps[this.activeStep - 1] = true;
+                    } else {
+                        useNuxtApp().$toast.error('کاربر گرامی شما مجاز به انجام این عملیات نمی باشید.', {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+                    }
+                }
+
+                this.activeButton = false;
+            }
+        },
+
+        /**
+         * Enhance E-commerce for Seo - when user visit cart page
+         */
+        enhanceECommerceSkuList(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
+                    brand: item?.shps?.sku?.brand?.name,   
+                    category: null, 
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'view_cart',  // name of the event. In this case, it always must be view_cart
+                ecommerce: {							
+                    items: productArr
+                }
+            });
+        },
+
+        /**
+         * Enhance E-commerce for Seo - when user visit cart page
+         */
+         enhanceECommerceStartCart(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price:  Number(String(item.current_total_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'begin_checkout',  // name of the event. In this case, it always must be begin_checkout
+                ecommerce: {							
+                    items: productArr
+                }
+            });
+        },
+
+        /**
+         * Selected address from SendingInformationAddress component
+         * @param {*} address
+         */
+        getAddress(address) {
+            if (address !== false) {
+                this.$store.commit('set_orderAddress', address)
+                this.getSendingMethods(address)
+                if (this.$store.getters['get_orderSendingMethod']){
+                  this.calculateSendingPrice(address, this.$store.getters['get_orderSendingMethod'])
+                }
+            } else {
+                this.$store.commit('set_orderAddress', null)
+                this.activeButton = false;
+            }
+        },
+
+        /**
+         * Selected way from SendingInformationTime component
+         * @param {*} way
+         */
+        getWay(way) {
+            if (way !== false) {
+                this.$store.commit('set_orderSendingMethod', way)
+                this.calculateSendingPrice(this.orderAddressId, way)
+
+                this.activeButton = true;
+
+            } else {
+                this.$store.commit('set_orderSendingMethod', null);
+                this.activeButton = false;
+            }
+
+        },
+
+        /**
+         * Enhance E-commerce for Seo in Checkout Step 2 when ways selected
+         */
+        enhanceECommerceGetWay(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_total_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            event: 'add_shipping_info',// name of the event.
+            ecommerce: {
+                value: Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis						
+                items: productArr
+            }
+            });
+        },
+
+        /**
+         * Selected time from SendingInformationTime component
+         * @param {*} arr
+         */
+        getTime(arr) {
+            //TODO: Add set time to cart
+            this.activeButton = true;
+        },
+
+        /**
+         * Selected address from SendingInformationAddress component
+         * @param {*} id
+         */
+        getPayment(id) {
+          if (id !== false){
+            this.$store.commit('set_orderPayMethod', id)
+            this.activeButton = true;
+          }
+          else{
+            this.activeButton = false;
+          }
+
+        },
+
+        /**
+         * Get discount code
+         * @param {*} id
+         */
+        getDiscountCode(code) {
+            this.discountCode = null;
+            this.calculateVoucher(code);
+            this.discountCode = code;
+        },
+
+         /**
+         * Enhance E-commerce for Seo in Checkout Step 3 when payment way selected
+         */
+         enhanceECommerceGetPayment(){
+            let productArr = [];
+            this.data.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price:  Number(String(item.current_total_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    item_category: null, 
+                    item_color: null,
+                    quantity: item.count 
+                }
+                productArr.push(obj);
+            });
+
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            event: 'add_payment_info',// name of the event.
+            ecommerce: {
+                value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman. 
+                coupon: this.discountCode,						
+                items: productArr
+            }
+            });
+        },
+
+        /**
+         * Delete voucher from basket
+         */
+        deleteBasketVoucher(active) {
+            if (active) {
+                this.deleteVoucherFromBasket();
+            }
+        },
+    },
+
+    watch: {
+        voucher(newVal) {
+            if (newVal && newVal.paid_price) {
+                this.$refs.paymentStep.deleteVoucher = true;
+            } else {
+                this.$refs.paymentStep.deleteVoucher = false;
+            }
+        }
+    },
+
+    mounted() {
+        this.active[this.activeStep] = true;
+        this.$store.commit('set_orderAddress', null);
+        this.$store.commit('set_orderSendingMethod', null);
+        this.$store.commit('set_orderPayMethod', null);
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            this.activeStep = 4;
+            this.active[1] = false;
+            this.active[4] = true;
+        }
+        
+        if(this.activeStep === 1){
+            this.enhanceECommerceSkuList();
+        }
     }
   },
 

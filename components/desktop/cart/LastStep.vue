@@ -140,7 +140,7 @@ export default {
          * Enhance E-commerce for Seo in Checkout Step 4 after payment
          */
          enhanceECommerceLastStep(){
-            if(this.transactionData.status=== 'success'){
+            if(this.transactionData.status=== 'successful'){
                 let productArr = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
@@ -163,8 +163,8 @@ export default {
                         value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
-                        coupon: null,	// if coupon was applied to the order, include it here
-                        couponvalue: null,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
+                        couponvalue: this.order?.data?.data?.voucher_amount,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
                         items: productArr
                     }
@@ -192,8 +192,8 @@ export default {
                         value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
-                        coupon: null,	// if coupon was applied to the order, include it here
-                        couponvalue: null,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
+                        couponvalue: this.order?.data?.data?.voucher_amount,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
                         items: productArr
                     }

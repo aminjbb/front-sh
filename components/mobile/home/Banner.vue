@@ -8,6 +8,7 @@
             v-for="item in items"
             :key="item.id"
             :cols="generalCol"
+            @click="enhanceECommerce(item)"
             :sm="col">
             <a class="banner__image d-block" :href="item.link">
                 <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
@@ -46,6 +47,24 @@ export default {
          */
         title: String
     },
+
+    methods:{
+         /**
+         * Enhance E-commerce for Seo in Checkout Step 4 after payment
+         */
+         enhanceECommerce(banner){
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+            event: 'select_banner',
+            ecommerce: {
+                items: [{
+                banner_name: banner.image_alt,		// name of the promo campaign
+                banner_location: banner.homepage_section_id				// location of the banner
+                }]
+            }
+            });
+        },
+    }
 }
 </script>
 
