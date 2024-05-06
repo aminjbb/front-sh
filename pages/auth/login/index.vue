@@ -343,17 +343,24 @@ export default {
                     }
 
                     const characters = 'abcdefghijklmnopqrstuvwxyz';
+                    const numbers = '0123456789';
                     let randomWord = '';
+                    let randomNum = '';
                     
                     for (let i = 0; i < 3; i++) {
                         const randomIndex = Math.floor(Math.random() * characters.length);
                         randomWord += characters[randomIndex];
                     }
+
+                    for (let i = 0; i < 2; i++) {
+                        const randomIndexNum = Math.floor(Math.random() * numbers.length);
+                        randomNum += numbers[randomIndexNum];
+                    }
   
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                     event: 'userAuthentication', // The event name for tracking user authentication.
-                    number: randomWord + this.mobile.slice(1),
+                    number: randomWord + randomNum + this.mobile.slice(1),
                     event_type: response.data?.data?.user?.is_signed_up === 0 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
                     userStatus: response.data?.data?.user?.is_signed_up === 0 ? 'new' : 'returning', // or 'returning' depending on the user's status.
                     });
