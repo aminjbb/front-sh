@@ -36,8 +36,7 @@
         <mobileCartSendingInformationAddress @selectedAddress="getAddress" :userDetail="userDetail" />
 
         <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/23 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
-
-        <mobileCartSendingInformationTime :sendingMethods="sendingMethods" @selectedDate="getTime" @selectedWay="getWay" />
+        <mobileCartSendingInformationTime v-if="orderAddressId" :sendingMethods="sendingMethods" @selectedDate="getTime" @selectedWay="getWay" />
     </template>
 
     <template v-if="activeStep === 3">
@@ -176,6 +175,8 @@ export default {
             ],
             activeButton: false,
             discountCode: null,
+            emitWay:false,
+            emitAddress:false
         }
     },
 
@@ -317,17 +318,25 @@ export default {
          * Selected address from SendingInformationAddress component
          * @param {*} address
          */
-        getAddress(address) {
+         getAddress(address) {
+          console.log('address', address)
             if (address && address !== false) {
                 this.$store.commit('set_orderAddress', address)
 
                 this.getSendingMethods(address.id)
+                this.emitAddress = true;
+
               if (this.$store.getters['get_orderSendingMethod']){
                 this.calculateSendingPrice(address.id, this.$store.getters['get_orderSendingMethod'])
               }
-              this.activeButton = true;
             } else {
                 this.$store.commit('set_orderAddress', null)
+                this.activeButton = false;
+            }
+
+            if (address && address !== false && this.emitWay) {
+              this.activeButton = true;
+            } else{
               this.activeButton = false;
             }
         },
@@ -337,12 +346,17 @@ export default {
          * @param {*} way
          */
         getWay(way) {
-            if (way) {
+            if (way && way !== false) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId.id, way)
-                this.activeButton = true;
+                this.emitWay = true
             } else {
                 this.$store.commit('set_orderSendingMethod', null)
+            }
+
+            if (way && way !== false && this.emitAddress) {
+                this.activeButton = true;
+            }else{
               this.activeButton = false;
             }
         },
