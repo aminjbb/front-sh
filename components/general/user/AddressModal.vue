@@ -2,6 +2,7 @@
     <div class="c-modal c-modal--address">
         <template v-if="buttonType == 'icon'">
             <v-icon
+                class="cur-p"
                 @click="openModal()"
                 icon="mdi-square-edit-outline"
                 size="small"
@@ -14,13 +15,13 @@
                 height="41"
                 title="ثبت آدرس جدید"
                 prepend-icon="mdi-plus"
-                class="btn btn--cancel ml-1">
+                class="btn btn--cancel ml-1 cur-p">
                 ثبت آدرس جدید
             </v-btn>
         </template>
     
         <template v-if="buttonType == 'mobile'">
-            <div @click="openModal()" class="text-grey t14 d-flex align-center py-1">
+            <div @click="openModal()" class="text-grey t14 d-flex align-center py-1 cur-p">
                 <v-icon
                     icon="mdi-square-edit-outline"
                     size="small"

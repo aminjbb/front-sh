@@ -3,13 +3,14 @@
     <template v-if="buttonType == 'icon'">
         <v-icon
             @click="openModal()"
+            class="cur-p"
             icon="mdi-delete-outline"
             size="small"
             color="red" />
     </template>
 
     <template v-if="buttonType == 'mobile'">
-        <div @click="openModal()" class="text-grey t14 d-flex align-center py-1">
+        <div @click="openModal()" class="text-grey t14 d-flex align-center py-1 cur-p">
             <v-icon
                 icon="mdi-delete-outline"
                 class="ml-2"

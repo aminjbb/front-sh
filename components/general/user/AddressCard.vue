@@ -51,7 +51,7 @@
                     :provinces="provinces" />
 
                 <generalModalsDelete
-                    ref="deleteAddress"
+                    :ref="`deleteAddress${address.id}`"
                     :getUserAddress="getUserAddress"
                     title="حذف آدرس"
                     text="آیا از حذف این آدرس اطمینان دارید؟"
@@ -61,25 +61,29 @@
             </div>
 
             <div class="mobile-drop-down xs-show pos-r">
-                <v-icon
-                    icon="mdi-dots-vertical"
-                    color="grey"
-                    @click="openDropDown(address.id)" />
+                <v-menu :close-on-content-click="false">
+                    <template v-slot:activator="{ props }">
+                        <v-icon
+                            icon="mdi-dots-vertical"
+                            color="grey"
+                            v-bind="props" />
+                    </template>
 
-                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${address.id}`">
-                    <ul class="ma-0">
-                        <li class="mb-2">
+                    <v-list>
+                        <v-list-item>
                             <generalUserAddressModal
                                 title="ویرایش آدرس"
+                                :ref="`editAddress${address.id}`"
                                 buttonType="mobile"
                                 :userDetail="userDetail"
                                 :getUserAddress="getUserAddress"
                                 edit
                                 :address="address"
+                                hideAction
                                 :provinces="provinces" />
-                        </li>
+                        </v-list-item>
 
-                        <li class="d-flex align-center py-1">
+                        <v-list-item>
                             <generalModalsDelete
                                 :ref="`deleteAddress${address.id}`"
                                 :getUserAddress="getUserAddress"
@@ -88,9 +92,9 @@
                                 submitText="حذف آدرس"
                                 buttonType="mobile"
                                 @removeProduct="removeAddress(address)" />
-                        </li>
-                    </ul>
-                </nav>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
             </div>
         </div>
     </div>
@@ -161,15 +165,6 @@ export default {
                     this.$refs[`deleteAddress${address.id}`].dialog = false;
                     this.getUserAddress()
                 });
-        },
-
-        /**
-         * Open drop down
-         * @param {*} id 
-         */
-        openDropDown(id) {
-            const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
-            itemDropdown.classList.toggle('show');
         },
     },
 }
