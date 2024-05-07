@@ -17,7 +17,7 @@
                         </li>
 
                         <li class="d-flex align-center py-1 cur-p">
-                            <generalModalsDelete :getUserAddress="getUserAddress" title="حذف آدرس" text="آیا از حذف این آدرس اطمینان دارید؟" submitText="حذف آدرس" buttonType="mobile" @removeProduct="removeAddress(address)" />
+                            <generalModalsDelete ref="generalModalsDelete" :getUserAddress="getUserAddress" title="حذف آدرس" text="آیا از حذف این آدرس اطمینان دارید؟" submitText="حذف آدرس" buttonType="mobile" @removeProduct="removeAddress(address)" />
                         </li>
                     </ul>
                 </nav>
@@ -69,9 +69,10 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.dialog = false
+
                 })
                 .catch((err) => {
+
                     auth.checkAuthorization(err.response)
                     useNuxtApp().$toast.error(err.response.data.message, {
                         rtl: true,
@@ -79,6 +80,8 @@ export default {
                         theme: 'dark'
                     });
                 }).finally(() => {
+                    this.$refs.generalModalsDelete.dialog = false
+                    this.$refs.generalModalsDelete.loading = false
                     this.loading = false
                     this.getUserAddress()
                 });

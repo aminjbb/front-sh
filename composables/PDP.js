@@ -114,6 +114,11 @@ export default function setup() {
 
                     },
                     params: {...route.query}
+                }).catch((err) => {
+                    showError({
+                        statusCode: 404,
+                        statusMessage: "Page Not Found"
+                    })
                 });
                 
                     // Second API - secondaryData
@@ -125,6 +130,11 @@ export default function setup() {
                         },
                         params: {...route.query}
 
+                    }).catch((err) => {
+                        showError({
+                            statusCode: 404,
+                            statusMessage: "Page Not Found"
+                        })
                     });
 
                     if(response1 && response2){
@@ -181,7 +191,7 @@ export default function setup() {
 
             } catch (error) {
                 if (error.response) {
-                    if (err.response?.status){
+                    if (error.response?.status){
                         showError({
                             statusCode: 404,
                             statusMessage: "Page Not Found"
@@ -192,9 +202,6 @@ export default function setup() {
             finally{
                 store.commit('set_loadingModal', false);
             }
-        },
-        {
-            watch: [color]
         }
     );
 

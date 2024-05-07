@@ -149,6 +149,7 @@
 
 <script>
 import Basket from '@/composables/Basket.js'
+import Order from "~/composables/Order.js";
 
 export default {
   data() {
@@ -214,7 +215,7 @@ export default {
       sendingMethods,
       freeDelivery
     } = new Basket()
-
+    const {paymentMethods, getPaymentMethods} = new Order()
     return {
       deleteVoucherFromBasket,
       calculateSendingPrice,
@@ -224,7 +225,9 @@ export default {
       userToken,
       getSendingMethods,
       sendingMethods,
-      freeDelivery
+      freeDelivery,
+      paymentMethods,
+      getPaymentMethods
     }
   },
 
@@ -498,6 +501,7 @@ export default {
   },
 
   mounted() {
+    this.getPaymentMethods()
     this.active[this.activeStep] = true;
     this.$store.commit('set_orderAddress', null);
     this.$store.commit('set_orderSendingMethod', null);
