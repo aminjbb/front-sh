@@ -23,37 +23,43 @@
                 {{content.comment}}
             </h3>
 
-            <div class="mobile-drop-down">
-<!--                <v-icon-->
-<!--                    icon="mdi-dots-vertical"-->
-<!--                    color="grey-darken-1"-->
-<!--                    @click="openDropDown(content.id)" />-->
+            <!-- <div class="mobile-drop-down">
+                <v-menu :close-on-content-click="false">
+                    <template v-slot:activator="{ props }">
+                        <v-icon
+                            icon="mdi-dots-vertical"
+                            color="grey"
+                            v-bind="props" />
+                        <v-icon
+                            icon="mdi-dots-vertical"
+                            color="grey-darken-1"
+                            v-bind="props" />
+                    </template>
 
-<!--                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${content.id}`">-->
-<!--                    <ul class="ma-0">-->
-<!--                        <li class="mb-2">-->
-<!--                            <a class="text-grey t14 d-flex align-center py-1" :href="editLink">-->
-<!--                                <v-icon-->
-<!--                                    icon="mdi-pen"-->
-<!--                                    class="ml-2"-->
-<!--                                    size="small"-->
-<!--                                    color="grey" />-->
-<!--                                <span class="text-grey t14">ویرایش نظر</span>-->
-<!--                            </a>-->
-<!--                        </li>-->
+                    <v-list>
+                        <v-list-item>
+                            <a class="text-grey t14 d-flex align-center py-1" :href="editLink">
+                                <v-icon
+                                    icon="mdi-pen"
+                                    class="ml-2"
+                                    size="small"
+                                    color="grey" />
+                                <span class="text-grey t14">ویرایش نظر</span>
+                            </a>
+                        </v-list-item>
 
-<!--                        <li class="d-flex align-center py-1">-->
-<!--                            <generalModalsDelete-->
-<!--                                :getUserAddress="getUserAddress"-->
-<!--                                title="حذف نظر"-->
-<!--                                text="آیا از حذف نظر خود مطمئن هستید؟"-->
-<!--                                submitText="حذف نظر"-->
-<!--                                buttonType="mobile"-->
-<!--                                @removeProduct="removeComment(content)" />-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </nav>-->
-            </div>
+                        <v-list-item>
+                            <generalModalsDelete
+                                :getUserAddress="getUserAddress"
+                                title="حذف نظر"
+                                text="آیا از حذف نظر خود مطمئن هستید؟"
+                                submitText="حذف نظر"
+                                buttonType="mobile"
+                                @removeProduct="removeComment(content)" />
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </div> -->
         </v-col>
     </v-row>
 
@@ -92,15 +98,6 @@ export default {
         getStatus(status) {
             if (status === 'approved') return 'تایید شده';
             else return 'رد شده';
-        },
-
-        /**
-         * Open menu
-         * @param {*} id 
-         */
-        openDropDown(id) {
-            const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
-            itemDropdown.classList.toggle('show');
         },
 
         /**
