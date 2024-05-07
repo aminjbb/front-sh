@@ -290,7 +290,13 @@ export default {
         },
 
         previousStep(){
+          if (this.activeStep === 1){
+            this.$router.go(-1)
+          }
+          else{
             this.activeStep = this.activeStep -1
+
+          }
         },
 
         /**

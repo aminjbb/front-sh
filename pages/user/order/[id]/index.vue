@@ -58,15 +58,15 @@
                                 class="d-flex align-center order-details__item py-5 justify-end">
                                 <a 
                                   v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress' || userOrder.status == 'received')" 
-                                  :href="`/user/order/${userOrder.id}/${userOrder.status == 'pre_progress' ? 'cancel' :(userOrder.status == 'received') ? 'return' : ''}`"
+                                  :href="`/user/order/${userOrder.id}/cancel`"
                                   class="d-flex align-center mobile-button">
                                     <span class="text-grey-darken-1 t13 w400">
                                         <template v-if="userOrder.status == 'pre_progress'">
                                             درخواست لغو
                                         </template>
-                                        <template v-if="userOrder.status == 'received'">
-                                            درخواست مرجوعی
-                                        </template>
+<!--                                        <template v-if="userOrder.status == 'received'">-->
+<!--                                            درخواست مرجوعی-->
+<!--                                        </template>-->
                                     </span>
                                     <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
                                 </a>
