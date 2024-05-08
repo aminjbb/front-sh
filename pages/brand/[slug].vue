@@ -9,7 +9,6 @@
           <template v-if="screenType === 'desktop'">
             <generalProductFilterSideBar
                 :filterList="productFilterSecondaryData"
-                @listFiltersModal="listFiltersModal"
                 @selectFiltersModal="selectFiltersModal"
                 @setAmount="selectByAmount"/>
           </template>
@@ -17,7 +16,6 @@
             <div class="d-flex align-center justify-space-between">
               <generalProductFilterSideBarModal
                   :filterList="productFilterSecondaryData"
-                  @listFiltersModal="listFiltersModal"
                   @selectFiltersModal="selectFiltersModal"
                   @setAmount="selectByAmount"/>
 
