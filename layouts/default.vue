@@ -1,6 +1,5 @@
 <template>
 <v-app>
-    <LoadingModal v-if="loading" />
     <div v-show="show">
         <div v-if="screenType === 'desktop'">
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">

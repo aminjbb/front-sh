@@ -20,6 +20,7 @@ export default function setup() {
     const description = ref('')
     const structuredData = ref(null)
     const structuredDataBreadcrumb = ref(null)
+    const loading =ref(true)
 
     async function getSecondaryData() {
         axios
@@ -200,12 +201,12 @@ export default function setup() {
                 }
             }
             finally{
-                store.commit('set_loadingModal', false);
+                loading.value= false
             }
         }
     );
 
-    return {product, color, getSecondaryData, secondaryData ,
+    return {product, color, getSecondaryData, secondaryData ,loading,
         getPdpData,  getBreadcrumb, breadcrumb ,skuTitle , description}
 }
 

@@ -23,7 +23,7 @@ export default function setup() {
     const plpTitle = ref('')
     const description = ref('')
     const structuredDataBreadcrumb = ref(null)
-
+    const loading =ref(true)
 
     function checkRouteForSlug() {
         if (route.name != 'search') {
@@ -79,7 +79,6 @@ export default function setup() {
     else if (route.name == 'category-slug') endPoint.value = '/product/plp/category/'
     else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
     else if (route.name == 'search') endPoint.value = `/product/plp/search/`
-    store.commit('set_loadingModal', true),
 
         useAsyncData(
             async () => {
@@ -137,7 +136,7 @@ export default function setup() {
                     }
                 }
                 finally{
-                    store.commit('set_loadingModal', false);
+                    loading.value= false
                 }
             },
             {
@@ -148,7 +147,7 @@ export default function setup() {
 
     return {
         productList, filterQuery, secondaryData, page, filterForFilter, query,
-        getBreadcrumb, breadcrumb , description , plpTitle
+        getBreadcrumb, breadcrumb , description , plpTitle , loading
     }
 }
 
