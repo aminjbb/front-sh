@@ -1,44 +1,94 @@
 <template>
 <main class="v-product v-product--list">
     <h1 class="v-hide">{{ title }}</h1>
-    <v-container>
-        <v-row class="mt-1">
-            <v-col cols="12">
-                <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
-                    <v-row v-if="productListData?.length" class="ma-0">
-                        <v-col
-                            cols="12"
-                            md="3"
-                            v-for="(item, index) in productListData"
-                            :key="`card-${index}`"
-                            class="v-product__content d-flex">
-                            <generalProductCard
-                                :content="item"
-                                :lazy=false
-                                :shps="item.id"
-                                class="mb-4 flex-grow-1"
-                                :hideInfo="true"
-                                :isPLP="true"
-                                :index = "index + 1"
-                                :sectionName = "`${plpTitle}لیست کالاهای`"
-                                :showColors="true" />
-                        </v-col>
-                    </v-row>
-                </div>
 
-                <div class="v-product__pagination d-flex justify-center mt-8">
-                    <v-pagination
-                        v-model="page"
-                        :length="productListPageLength"
-                        size="40"
-                        :total-visible="6"
-                        @click="backToTop"
-                        prev-icon="mdi-chevron-right"
-                        next-icon="mdi-chevron-left" />
-                </div>
+  <v-container v-show="loading">
+    <v-row justify="center">
+      <v-col cols="12">
+        <div class="v-product__contents">
+          <div class="px-2">
+            <v-row>
+              <v-col
+                  v-for="card in 12"
+                  :key="card"
+                  cols="12"
+                  lg="3">
+                <v-skeleton-loader
+                    :loading="loading"
+                    height="240"
+                    type="image, list-item-two-line"
+                >
+                  <v-responsive>
+                    <v-img
+                        src="src"
+                        class="rounded-lg mb-2"
+                        height="184"
+                        cover/>
+                    <v-list-item
+                        subtitle="subtitle"
+                        title="title"
+                        class="px-0"/>
+                  </v-responsive>
+                </v-skeleton-loader>
+              </v-col>
+            </v-row>
+          </div>
+        </div>
+
+        <div class="v-product__pagination d-flex justify-center mt-8">
+          <v-row justify="center">
+            <v-col v-for="num in 6" :key="num" cols="1">
+              <v-skeleton-loader
+                  class="mx-auto"
+                  max-width="100"
+                  type="button"/>
             </v-col>
-        </v-row>
-    </v-container>
+          </v-row>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
+
+  <v-container v-show="!loading">
+    <v-row class="mt-1">
+      <v-col cols="12">
+        <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+          <v-row v-if="productListData?.length" class="ma-0">
+            <v-col
+                cols="12"
+                md="3"
+                v-for="(item, index) in productListData"
+                :key="`card-${index}`"
+                class="v-product__content d-flex">
+              <generalProductCard
+                  :content="item"
+                  :lazy=false
+                  :shps="item.id"
+                  class="mb-4 flex-grow-1"
+                  :hideInfo="true"
+                  :isPLP="true"
+                  :index = "index + 1"
+                  :sectionName = "`${plpTitle}لیست کالاهای`"
+                  :showColors="true" />
+            </v-col>
+          </v-row>
+        </div>
+
+        <div class="v-product__pagination d-flex justify-center mt-8">
+          <v-pagination
+              v-model="page"
+              :length="productListPageLength"
+              size="40"
+              :total-visible="6"
+              @click="backToTop"
+              prev-icon="mdi-chevron-right"
+              next-icon="mdi-chevron-left" />
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
+
+
 </main>
 </template>
 
@@ -60,7 +110,8 @@ export default {
             page,
             query,
             plpTitle,
-            description
+            description,
+            loading
         } = new PLP()
         useHead({
             title,
@@ -74,7 +125,8 @@ export default {
             page,
             query,
             plpTitle,
-            title
+            title,
+            loading
         }
     },
 
