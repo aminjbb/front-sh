@@ -57,10 +57,5 @@ export default defineNuxtConfig({
     define: {
       'process.env.DEBUG': false,
     },
-  },
-  modules: ['nuxt-lazy-load', "@nuxtjs/seo"],
-
-  seo: {
-    redirectToCanonicalSiteUrl: true
   }
 })
