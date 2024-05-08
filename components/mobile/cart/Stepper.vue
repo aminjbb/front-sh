@@ -296,7 +296,8 @@ export default {
           }
           else{
             this.activeStep = this.activeStep -1
-
+            this.$store.commit('set_orderSendingMethod', null);
+            this.emitWay = false
           }
         },
 
