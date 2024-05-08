@@ -291,7 +291,6 @@ export default {
           else{
             localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
             this.$router.push('/login')
-
           }
         }
 
