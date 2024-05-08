@@ -60,9 +60,9 @@
                                 sm="3"
                                 lg="6"
                                 class="d-flex align-center order-details__item py-5 justify-end">
-                                <a 
-                                  v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress' || userOrder.status == 'received-dd')" 
-                                  :href="`/user/order/${userOrder.id}/${userOrder.status == 'pre_progress' ? 'cancel' :(userOrder.status == 'received-dd') ? 'return' : ''}`"
+                                <a
+                                  v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress')"
+                                  :href="`/user/order/${userOrder.id}/cancel`"
                                   class="d-flex align-center mobile-button">
                                     <span class="text-grey-darken-1 t13 w400">
                                         <template v-if="userOrder.status == 'pre_progress'">

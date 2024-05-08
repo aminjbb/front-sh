@@ -26,11 +26,9 @@
           <template v-if="activeStep === 2">
             <desktopCartSendingInformationAddress @selectedAddress="getAddress"/>
 
-            <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline"
-                                 text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/23 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد."/>
-            <desktopCartSendingInformationTime v-if="orderAddressId" :sendingMethods="sendingMethods"
-                                               @selectedDate="getTime" @selectedWay="getWay"/>
-          </template>
+<!--                    <generalNotification class="mb-3" borderColorCode="E91E63" color="pink" icon="mdi-alert-outline" text="کاربران عزیز، تمام سفارشات ثبت شده در بازه 1402/12/23 الی 1403/01/14، به ترتیب اولویت از 15 فروردین ارسال خواهد شد." />-->
+                    <desktopCartSendingInformationTime v-if="orderAddressId" :sendingMethods="sendingMethods" @selectedDate="getTime" @selectedWay="getWay" />
+                </template>
 
           <template v-if="activeStep === 3">
             <desktopCartPaymentStep :paymentMethods="paymentMethods" :voucherBasket="data.voucher" ref="paymentStep" @selectedPayment="getPayment"
