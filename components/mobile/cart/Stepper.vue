@@ -301,7 +301,13 @@ export default {
     },
 
     previousStep(){
-      this.activeStep = this.activeStep -1
+      if (this.activeStep === 1){
+        this.$router.go(-1)
+      }
+      else{
+        this.activeStep = this.activeStep -1
+
+      }
     },
 
     /**
@@ -327,12 +333,19 @@ export default {
         this.$store.commit('set_orderAddress', address)
 
         this.getSendingMethods(address.id)
+        this.emitAddress = true;
+
         if (this.$store.getters['get_orderSendingMethod']){
           this.calculateSendingPrice(address.id, this.$store.getters['get_orderSendingMethod'])
         }
-        this.activeButton = true;
       } else {
         this.$store.commit('set_orderAddress', null)
+        this.activeButton = false;
+      }
+
+      if (address && address !== false && this.emitWay) {
+        this.activeButton = true;
+      } else{
         this.activeButton = false;
       }
     },
@@ -342,12 +355,17 @@ export default {
      * @param {*} way
      */
     getWay(way) {
-      if (way) {
+      if (way && way !== false) {
         this.$store.commit('set_orderSendingMethod', way)
         this.calculateSendingPrice(this.orderAddressId.id, way)
-        this.activeButton = true;
+        this.emitWay = true
       } else {
         this.$store.commit('set_orderSendingMethod', null)
+      }
+
+      if (way && way !== false && this.emitAddress) {
+        this.activeButton = true;
+      }else{
         this.activeButton = false;
       }
     },
