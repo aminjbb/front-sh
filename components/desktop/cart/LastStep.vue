@@ -44,7 +44,7 @@
         </div>
     </template>
 
-    <template v-else-if="transactionData.status=== 'failed'">
+    <template v-else-if="transactionData.status=== 'unsuccessful'">
         <header class="d-flex align-center mb-5 xs-hide">
             <v-icon
                 icon="mdi-timer-sand-complete"
