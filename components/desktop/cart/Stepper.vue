@@ -442,12 +442,12 @@ export default {
 
     /**
      * Get discount code
-     * @param {*} id
+     * @param {*} code
      */
-    getDiscountCode(code) {
-      this.discountCode = null;
-      this.calculateVoucher(code);
-      this.discountCode = code;
+    async  getDiscountCode(code) {
+        this.discountCode = null;
+        this.calculateVoucher(code);
+        this.discountCode = code;
     },
 
     /**
@@ -490,6 +490,7 @@ export default {
 
   watch: {
     voucher(newVal) {
+      this.getPaymentMethods();
       if (newVal && newVal.paid_price) {
         this.$refs.paymentStep.deleteVoucher = true;
       } else {

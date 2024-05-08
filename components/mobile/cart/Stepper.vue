@@ -549,6 +549,7 @@ export default {
 
   watch: {
     voucher(newVal) {
+      this.getPaymentMethods()
       if (newVal && newVal.paid_price) {
         this.$refs.paymentStep.deleteVoucher = true;
       } else {
