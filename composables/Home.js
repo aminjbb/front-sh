@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default function setup() {
     const homeSectionList = ref([]);
-    const loading = ref(false)
+    const loading = ref(true)
     const runtimeConfig = useRuntimeConfig()
     useAsyncData(
        async () =>
@@ -21,7 +21,9 @@ export default function setup() {
                             statusMessage: "Page Not Found"
                         })
                     }
-                }).finally(() => {})
+                }).finally(() => {
+                    loading.value = false
+               })
     )
 
 

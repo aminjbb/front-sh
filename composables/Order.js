@@ -10,6 +10,7 @@ export default function setup() {
     const orderList = ref([]);
     const returnedOrderList = ref([]);
     const returnedOrderDetail = ref([]);
+    const paymentMethods = ref([]);
     const order = ref(null);
     const orderReturnOrRejectObject = ref(null);
     const loading = ref(false)
@@ -58,7 +59,7 @@ export default function setup() {
     /**
      * Get return order details by id
      */
-    async function getReturnedOrderDetails() {
+        async function getReturnedOrderDetails() {
         axios
             .get(runtimeConfig.public.apiBase + `/order/returned/detail/${route.params.id}`, {
                 headers: {
@@ -190,8 +191,26 @@ export default function setup() {
 
             });
     };
+    /**
+     * Get payment Methods for create order
+     */
+    async function getPaymentMethods() {
+        axios
+            .get(runtimeConfig.public.apiBase + `/order/payment-methods`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                paymentMethods.value = response.data.data
+            })
+            .catch((err) => {
+
+            });
+    };
 
     return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
-            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder, trackingOrder, trackingDetails, getOrderById}
+            getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder,
+        trackingOrder, trackingDetails, getOrderById ,paymentMethods , getPaymentMethods}
 }
 

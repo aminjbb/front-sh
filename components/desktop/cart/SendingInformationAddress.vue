@@ -113,16 +113,16 @@ export default {
          * Reverse address
          */
         addressRevers(){
-            return this.userAddress.reverse();
+            return this.userAddress
         }
     },
 
     watch:{
         addressRevers(val){
-        if (val){
-            this.addressModal= val[0].id
-            this.selectAddress()
-        }
+          if (val){
+              this.addressModal= val[0].id
+              this.selectAddress()
+          }
         }
     }
 }

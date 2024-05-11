@@ -38,21 +38,21 @@
                         <tr class="v-data-table__tr">
                             <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font" :style="isMobile === true ? { backgroundColor: '#F5F5F5 !important'} : ''">
                                 <span class="w600 text-black ml-10" v-if="isMobile">کد مرسوله : </span>
-                                <template v-if="item.raw.tracking_code">
-                                    {{ item.raw.tracking_code }}
+                                <template v-if="item.tracking_code">
+                                    {{ item.tracking_code }}
                                 </template>
                                 <template v-else> ------- </template>
                             </td>
 
                             <td class="v-data-table__td v-data-table-column--align-start t12 text-grey">
                                 <span class="w600 text-black ml-10" v-if="isMobile">وضعیت : </span>
-                                {{ item.raw.status }}
+                                {{ item.status }}
                             </td>
 
                             <td class="v-data-table__td v-data-table-column--align-start t12 text-grey number-font">
                                 <span class="w600 text-black ml-10" v-if="isMobile">تاریخ : </span>
-                                <template v-if="item.raw.created_at">
-                                    {{ item.raw.created_at }}
+                                <template v-if="item.created_at">
+                                    {{ item.created_at }}
                                 </template>
                                 <template v-else> ------- </template>
                             </td>
@@ -67,9 +67,6 @@
 </template>
 
 <script>
-import {
-    VDataTable
-} from 'vuetify/labs/VDataTable'
 import Order from '@/composables/Order.js'
 
 export default {
@@ -94,10 +91,6 @@ export default {
                 }
             ]
         }
-    },
-
-    components: {
-        VDataTable
     },
 
     setup() {

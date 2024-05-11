@@ -17,17 +17,20 @@
 
                 <div class="header__col2 d-flex align-center justify-end">
                     <div v-if="isLogin" class="mobile-drop-down header__item header__item--profile pos-r">
-                        <div
-                            @click="openDropDown('dashboard')"
-                            class="cur-p"
-                            id="mobile-drop-down__show-dashboard">
-                            <v-icon icon="mdi-account-outline" />
-                            <v-icon icon="mdi-chevron-down" />
-                        </div>
-    
-                        <nav class="mobile-drop-down__items pos-a" id="mobile-drop-down__items-dashboard">
-                            <ul class="ma-0 pa-0">
-                                <li class="mb-4 mt-1 user-data">
+
+                        <v-menu :close-on-content-click="false" v-model="menu">
+                            <template v-slot:activator="{ props }">
+                                <div
+                                    v-bind="props"
+                                    class="cur-p"
+                                    id="mobile-drop-down__show-dashboard">
+                                    <v-icon icon="mdi-account-outline" />
+                                    <v-icon icon="mdi-chevron-down" />
+                                </div>
+                            </template>
+
+                            <v-list width="172px" class="mt-1 profile-drop-down">
+                                <v-list-item class="mt-2 user-data py-0">
                                     <a href="/user/dashboard" class="d-flex align-center">
                                         <v-icon
                                             icon="mdi-account-circle-outline"
@@ -45,29 +48,30 @@
                                             <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
                                         </template>
                                     </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a class="text-grey t14 d-flex align-center py-1" href="/user/order">
+                                </v-list-item>
+
+                                <v-list-item class="py-0 mt-2">
+                                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/order">
                                         <v-icon
                                             icon="mdi-cart-outline"
                                             class="ml-2"
                                             color="grey" />
                                         <span class="text-grey t14">لیست سفارشات</span>
                                     </a>
-                                </li>
-    
-                                <li class="mb-2">
-                                    <a class="text-grey t14 d-flex align-center py-1" href="/user/address">
+                                </v-list-item>
+
+                                <v-list-item class="py-0">
+                                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/address">
                                         <v-icon
                                             icon="mdi-map-marker-outline"
                                             class="ml-2"
                                             color="grey" />
                                         <span class="text-grey t14">آدرس‌ها</span>
                                     </a>
-                                </li>
-    
-                                <li class="mb-2">
-                                    <a class="text-grey t14 d-flex align-center py-1 cur-p" href="/user/favorite-list">
+                                </v-list-item>
+
+                                <v-list-item class="py-0">
+                                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/favorite-list">
                                         <v-icon
                                             icon="mdi-heart-outline"
                                             class="ml-2"
@@ -75,19 +79,19 @@
                                             color="grey" />
                                         <span class="text-grey t14">علاقمندی‌ها</span>
                                     </a>
-                                </li>
-    
-                                <li class="mb-2">
-                                    <a class="text-grey t14 d-flex align-center py-1 cur-p" @click="openModal()">
+                                </v-list-item>
+
+                                <v-list-item class="py-0">
+                                    <a class="text-grey t14 d-flex align-center cur-p" @click="openModal()">
                                         <v-icon
                                             icon="mdi-exit-to-app"
                                             class="ml-2"
                                             color="grey" />
                                         <span class="text-grey t14">خروج</span>
                                     </a>
-                                </li>
-                            </ul>
-                        </nav>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
                     </div>
                     <a v-else class="header__item header__item--btn t12 w400 text-grey cur-p" @click="goLoginPage()">
                         <v-icon icon="mdi-login" color="grey" />
@@ -183,6 +187,7 @@
                 isBanner: false,
                 isTop: false,
                 bannerItem:null,
+                menu: false,
             };
         },
     
@@ -211,7 +216,6 @@
     
         mounted() {
             window.addEventListener('scroll', this.handleScroll);
-            window.addEventListener('click', this.closeDropDown);
     
             const banner = document.getElementById("top-banner");
             if (banner) {
@@ -223,7 +227,6 @@
     
         beforeDestroy() {
             window.removeEventListener('scroll', this.handleScroll);
-            window.removeEventListener('click', this.closeDropDown);
         },
     
         watch:{
@@ -241,6 +244,7 @@
              * Show and hide menu in scroll down and up
              */
             handleScroll() {
+                this.menu = false
                 let currentScrollTop = window.scrollY;
     
                 if (this.isBanner) {
@@ -279,29 +283,6 @@
                         }
     
                         this.lastScrollTop = currentScrollTop;
-                    }
-                }
-            },
-    
-            /**
-             * Open menu
-             * @param {*} id 
-             */
-            openDropDown(id) {
-                if(document.getElementById(`mobile-drop-down__items-${id}`)){
-                    const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
-                    itemDropdown.classList.toggle('show');
-                }
-            },
-    
-            /**
-             * Close search box if I click in outside
-             * @param {*} event 
-             */
-            closeDropDown(event) {
-                if(document.getElementById('mobile-drop-down__show-dashboard')){
-                    if (!event.target.closest('#mobile-drop-down__show-dashboard')) {
-                        document.getElementById('mobile-drop-down__items-dashboard').classList.remove('show');
                     }
                 }
             },
@@ -562,6 +543,11 @@
                 transform: translateY(0);
                 transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
             }
+        }
+    }
+    .profile-drop-down{
+        .v-list-item{
+            min-height: 40px !important;
         }
     }
     </style>

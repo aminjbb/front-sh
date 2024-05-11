@@ -6,23 +6,24 @@
             {{address?.address}}
         </p>
 
-        <div class="address-card__actions mr-10" :id="`mobile-drop-down__${address.id}`">
-            <div class="mobile-drop-down pos-r">
-                <v-icon icon="mdi-dots-vertical" color="grey" @click="openDropDown(address.id)" />
+        <v-menu :close-on-content-click="false">
+            <template v-slot:activator="{ props }">
+                <v-icon
+                    icon="mdi-dots-vertical"
+                    color="grey"
+                    v-bind="props" />
+            </template>
 
-                <nav class="mobile-drop-down__items pos-a" :id="`mobile-drop-down__items-${address.id}`">
-                    <ul class="ma-0">
-                        <li class="mb-2 cur-p">
-                            <generalUserAddressModal title="ویرایش آدرس" buttonType="mobile" :userDetail="userDetail" :getUserAddress="getUserAddress" edit :address="address" :provinces="provinces"/>
-                        </li>
+            <v-list>
+                <v-list-item>
+                    <generalUserAddressModal title="ویرایش آدرس" buttonType="mobile" :userDetail="userDetail" :getUserAddress="getUserAddress" edit :address="address" :provinces="provinces"/>
+                </v-list-item>
 
-                        <li class="d-flex align-center py-1 cur-p">
-                            <generalModalsDelete :getUserAddress="getUserAddress" title="حذف آدرس" text="آیا از حذف این آدرس اطمینان دارید؟" submitText="حذف آدرس" buttonType="mobile" @removeProduct="removeAddress(address)" />
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+                <v-list-item>
+                    <generalModalsDelete :getUserAddress="getUserAddress" title="حذف آدرس" text="آیا از حذف این آدرس اطمینان دارید؟" submitText="حذف آدرس" buttonType="mobile" @removeProduct="removeAddress(address)" />
+                </v-list-item>
+            </v-list>
+        </v-menu>
     </div>
 </section>
 </template>
@@ -69,9 +70,10 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.dialog = false
+
                 })
                 .catch((err) => {
+
                     auth.checkAuthorization(err.response)
                     useNuxtApp().$toast.error(err.response.data.message, {
                         rtl: true,
@@ -79,47 +81,13 @@ export default {
                         theme: 'dark'
                     });
                 }).finally(() => {
+                    this.$refs.generalModalsDelete.dialog = false
+                    this.$refs.generalModalsDelete.loading = false
                     this.loading = false
                     this.getUserAddress()
                 });
         },
-
-        /**
-         * Open drop down
-         * @param {*} id 
-         */
-        openDropDown(id) {
-            const itemDropdown = document.getElementById(`mobile-drop-down__items-${id}`);
-            const itemDropdownParent = document.getElementById(`mobile-drop-down__${id}`);
-            itemDropdown.classList.toggle('show');
-            itemDropdownParent.classList.toggle('show');
-        },
-
-        /**
-         * Close dropdown
-         * @param {*} event 
-         */
-        closeDropDown(event) {
-            const dropdownId = `mobile-drop-down__${this.address.id}`;
-            const dropdownElement = document.getElementById(dropdownId);
-            if (dropdownElement && dropdownElement.classList.contains('show')) {
-                const dropMenu = document.getElementById(`mobile-drop-down__${this.address.id}`);
-                if (!dropMenu.contains(event.target)) {
-                    document.getElementById(`mobile-drop-down__items-${this.address.id}`).classList.remove('show');
-                    document.getElementById(`mobile-drop-down__${this.address.id}`).classList.remove('show');
-                }
-            }
-        },
     },
-
-    mounted() {
-        document.addEventListener('click', this.closeDropDown);
-    },
-
-    destroy() {
-        document.removeEventListener('click', this.closeDropDown);
-    },
-
 }
 </script>
 

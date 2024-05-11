@@ -20,6 +20,7 @@ export default function setup() {
     const description = ref('')
     const structuredData = ref(null)
     const structuredDataBreadcrumb = ref(null)
+    const loading =ref(true)
 
     async function getSecondaryData() {
         axios
@@ -83,6 +84,7 @@ export default function setup() {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
+                params: {...route.query}
             })
             .then((response) => {
                 product.value = response
@@ -110,7 +112,14 @@ export default function setup() {
                     url: runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
                     headers: {
                         Authorization: `Bearer ${userToken.value}`,
+
                     },
+                    params: {...route.query}
+                }).catch((err) => {
+                    showError({
+                        statusCode: 404,
+                        statusMessage: "Page Not Found"
+                    })
                 });
                 
                     // Second API - secondaryData
@@ -120,6 +129,13 @@ export default function setup() {
                         headers: {
                             Authorization: `Bearer ${userToken.value}`,
                         },
+                        params: {...route.query}
+
+                    }).catch((err) => {
+                        showError({
+                            statusCode: 404,
+                            statusMessage: "Page Not Found"
+                        })
                     });
 
                     if(response1 && response2){
@@ -176,7 +192,7 @@ export default function setup() {
 
             } catch (error) {
                 if (error.response) {
-                    if (err.response?.status){
+                    if (error.response?.status){
                         showError({
                             statusCode: 404,
                             statusMessage: "Page Not Found"
@@ -185,15 +201,12 @@ export default function setup() {
                 }
             }
             finally{
-                store.commit('set_loadingModal', false);
+                loading.value= false
             }
-        },
-        {
-            watch: [color]
         }
     );
 
-    return {product, color, getSecondaryData, secondaryData ,
+    return {product, color, getSecondaryData, secondaryData ,loading,
         getPdpData,  getBreadcrumb, breadcrumb ,skuTitle , description}
 }
 

@@ -41,20 +41,24 @@
                                 <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
                                 <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.order_number }}</span>
                             </v-col>
-                            <v-col
-                                cols="12"
-                                sm="5"
-                                lg="5"
-                                class="d-flex align-center order-details__item py-5">
-                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
-                                <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
-                            </v-col>
+                          <v-col
+
+                              cols="12"
+                              sm="4"
+                              lg="3"
+                              class="d-flex align-center order-details__item py-5">
+                            <div v-if="userOrder && userOrder.snapp_transaction_id">
+                              <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                              <span class="t13 w400 text-grey-darken-1 ml-1">کد اسنپ پی:</span>
+                              <span  class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.snapp_transaction_id }}</span>
+                            </div>
+                          </v-col>
+
 
                             <v-col
                                 cols="12"
                                 sm="3"
-                                lg="4"
+                                lg="6"
                                 class="d-flex align-center order-details__item py-5 justify-end">
                                 <a
                                   v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress')"
@@ -64,13 +68,23 @@
                                         <template v-if="userOrder.status == 'pre_progress'">
                                             درخواست لغو
                                         </template>
-<!--                                        <template v-if="userOrder.status == 'received'">-->
-<!--                                            درخواست مرجوعی-->
-<!--                                        </template>-->
+                                        <template v-if="userOrder.status == 'received-dd'">
+                                            درخواست مرجوعی
+                                        </template>
                                     </span>
                                     <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
                                 </a>
                             </v-col>
+                          <v-col
+                              cols="12"
+                              sm="5"
+                              lg="5"
+                              class="d-flex align-center order-details__item py-5">
+                            <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                            <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
+                            <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
+                          </v-col>
+
                         </v-row>
 
                         <v-divider color="grey" />
