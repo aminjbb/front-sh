@@ -498,21 +498,21 @@ export default {
       }
     }
   },
+  created() {
+    const token = this.$route.query.token
 
+    if (token) {
+      this.activeStep = 4;
+      this.active[1] = false;
+      this.active[4] = true;
+    }
+  },
   mounted() {
     this.getPaymentMethods()
     this.active[this.activeStep] = true;
     this.$store.commit('set_orderAddress', null);
     this.$store.commit('set_orderSendingMethod', null);
     this.$store.commit('set_orderPayMethod', null);
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    if (token) {
-      this.activeStep = 4;
-      this.active[1] = false;
-      this.active[4] = true;
-    }
-
     if(this.activeStep === 1){
       this.enhanceECommerceSkuList();
     }
