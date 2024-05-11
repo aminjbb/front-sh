@@ -123,25 +123,27 @@
 
       <v-row class="mt-10">
         <v-col cols="12" md="3">
-          <template v-if="screenType === 'desktop'">
-            <generalProductFilterSideBar
-                :filterList="productFilterSecondaryData"
-                @listFiltersModal="listFiltersModal"
-                @selectFiltersModal="selectFiltersModal"
-                @setAmount="selectByAmount" />
-          </template>
-
-          <template v-if="screenType === 'mobile'">
-            <div class="d-flex align-center justify-space-between">
-              <generalProductFilterSideBarModal
-                  :filterList="filtersMocket"
+          <client-only>
+            <template v-if="screenType === 'desktop'">
+              <generalProductFilterSideBar
+                  :filterList="productFilterSecondaryData"
                   @listFiltersModal="listFiltersModal"
                   @selectFiltersModal="selectFiltersModal"
                   @setAmount="selectByAmount" />
+            </template>
 
-              <generalProductSortModal @sort="sort"  />
-            </div>
-          </template>
+            <template v-if="screenType === 'mobile'">
+              <div class="d-flex align-center justify-space-between">
+                <generalProductFilterSideBarModal
+                    :filterList="filtersMocket"
+                    @listFiltersModal="listFiltersModal"
+                    @selectFiltersModal="selectFiltersModal"
+                    @setAmount="selectByAmount" />
+
+                <generalProductSortModal @sort="sort"  />
+              </div>
+            </template>
+          </client-only>
         </v-col>
         <v-col cols="12" md="9">
           <template v-if="screenType === 'desktop'">

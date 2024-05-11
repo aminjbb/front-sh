@@ -1,5 +1,6 @@
 <template>
-<footer class="footer footer--desktop">
+<client-only>
+    <footer class="footer footer--desktop">
     <v-container>
         <div class="footer__logo">
             <a href="/" title="Shavaz logo">
@@ -138,10 +139,11 @@
         </v-row>
 
         <div class="footer__copy-right-text">
-            <p>استفاده از مطالب <h5 class="d-inline t12">فروشگاه اینترنتی شاواز</h5> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد.</p>
+            <p>استفاده از مطالب <h5 class="d-inline t12">فروشگاه اینترنتی شاواز</h5> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
         </div>
     </v-container>
 </footer>
+</client-only>
 </template>
 
 <script>

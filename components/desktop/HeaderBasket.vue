@@ -1,5 +1,6 @@
 <template>
-<div class="header-basket" id="basket-header" :class="userBasket?.details && userBasket?.details.length ? 'header-basket--no-empty' : ''">
+<client-only>
+    <div class="header-basket" id="basket-header" :class="userBasket?.details && userBasket?.details.length ? 'header-basket--no-empty' : ''">
     <header class="header-basket__header d-flex align-center justify-space-between pr-4 py-2">
         <div class="d-flex align-center ">
             <a href="/user/dashboard" class="ml-3">
@@ -103,6 +104,7 @@
         </template>
     </div>
 </div>
+</client-only>
 </template>
 
 <script>

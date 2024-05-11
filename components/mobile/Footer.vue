@@ -1,68 +1,60 @@
 <template>
-<footer class="footer footer--mobile">
-    <nav class="footer__menu h-100 w-100">
-        <ul class="ma-0 pa-0 d-flex justify-space-between align-center h-100">
-            <li class="footer__menu__item">
-                <a href="/" :class="{ active: isActive('/') }">
-                    <v-icon icon="mdi-home-outline" />
-                    <span class="t12 w-400">خانه</span>
-                </a>
-            </li>
+<client-only>
+    <footer class="footer footer--mobile">
+        <nav class="footer__menu h-100 w-100">
+            <ul class="ma-0 pa-0 d-flex justify-space-between align-center h-100">
+                <li class="footer__menu__item">
+                    <a href="/" :class="{ active: isActive('/') }">
+                        <v-icon icon="mdi-home-outline" />
+                        <span class="t12 w-400">خانه</span>
+                    </a>
+                </li>
 
-            <li class="footer__menu__item">
-                <a @click="openCategoryMenu()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 17C14 17.7956 14.3161 18.5587 14.8787 19.1213C15.4413 19.6839 16.2044 20 17 20C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17C20 16.2044 19.6839 15.4413 19.1213 14.8787C18.5587 14.3161 17.7956 14 17 14C16.2044 14 15.4413 14.3161 14.8787 14.8787C14.3161 15.4413 14 16.2044 14 17Z"
-                            stroke="#757575"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    <span class="t12 w-400">دسته‌بندی</span>
-                </a>
-            </li>
+                <li class="footer__menu__item">
+                    <a @click="openCategoryMenu()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 17C14 17.7956 14.3161 18.5587 14.8787 19.1213C15.4413 19.6839 16.2044 20 17 20C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17C20 16.2044 19.6839 15.4413 19.1213 14.8787C18.5587 14.3161 17.7956 14 17 14C16.2044 14 15.4413 14.3161 14.8787 14.8787C14.3161 15.4413 14 16.2044 14 17Z" stroke="#757575" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span class="t12 w-400">دسته‌بندی</span>
+                    </a>
+                </li>
 
-            <li class="footer__menu__item">
-                <a href="/cart" :class="{ active: isActive('/cart') }" class="pos-r footer__menu__item--basket">
-                    <v-icon icon="mdi-cart-outline" />
-                    <v-badge
-                        v-if="userBasket && userBasket.details && userBasket.details.length"
-                        color="primary"
-                        class="number-font"
-                        :content="userBasket.details.length"
-                        inline />
-                    <span class="t12 w-400">سبد خرید</span>
-                </a>
-            </li>
+                <li class="footer__menu__item">
+                    <a href="/cart" :class="{ active: isActive('/cart') }" class="pos-r footer__menu__item--basket">
+                        <v-icon icon="mdi-cart-outline" />
+                        <v-badge v-if="userBasket && userBasket.details && userBasket.details.length" color="primary" class="number-font" :content="userBasket.details.length" inline />
+                        <span class="t12 w-400">سبد خرید</span>
+                    </a>
+                </li>
 
-            <li v-if="isLogin" class="footer__menu__item">
-                <a href="/user/dashboard" :class="{ active: isActive('/user/dashboard') }">
-                    <v-icon icon="mdi-account-outline" />
-                    <span class="t12 w-400">حساب کاربری</span>
-                </a>
-            </li>
-            <li v-else class="footer__menu__item">
-                <a href="/login" @click="goLoginPage()">
-                    <v-icon icon="mdi-login" />
-                    <span class="t12 w-400">ورود | ثبت نام</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</footer>
+                <li v-if="isLogin" class="footer__menu__item">
+                    <a href="/user/dashboard" :class="{ active: isActive('/user/dashboard') }">
+                        <v-icon icon="mdi-account-outline" />
+                        <span class="t12 w-400">حساب کاربری</span>
+                    </a>
+                </li>
+                <li v-else class="footer__menu__item">
+                    <a href="/login" @click="goLoginPage()">
+                        <v-icon icon="mdi-login" />
+                        <span class="t12 w-400">ورود | ثبت نام</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+</client-only>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            isLogin:false
+            isLogin: false
         }
     },
 
-    props:{
-        userData:null
+    props: {
+        userData: null
     },
 
     setup() {
@@ -83,8 +75,8 @@ export default {
         },
     },
 
-    watch:{
-        userData(newVal){
+    watch: {
+        userData(newVal) {
             if (newVal && newVal.phone_number !== null) {
                 this.isLogin = true
             } else {
@@ -113,13 +105,13 @@ export default {
         /**
          * Login
          */
-         goLoginPage(){
-            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
+        goLoginPage() {
+            localStorage.setItem('returnPathAfterLogin', this.$route.fullPath);
             this.$router.push('/login')
         },
     },
 
-    mounted(){
+    mounted() {
         if (this.userData && this.userData.phone_number !== null) {
             this.isLogin = true
         } else {
@@ -159,38 +151,39 @@ $parent: 'footer';
 
                         &:hover {
 
-                            > span,
-                            > .v-icon {
+                            >span,
+                            >.v-icon {
                                 color: #D72685 !important;
                             }
 
-                            > svg path {
+                            >svg path {
                                 stroke: #D72685
                             }
                         }
 
                         &.active {
-                            > span,
-                            > .v-icon {
+
+                            >span,
+                            >.v-icon {
                                 color: #D72685 !important;
                             }
 
-                            > svg path {
+                            >svg path {
                                 stroke: #D72685
                             }
                         }
                     }
 
-                    &--basket{
-                        .v-badge{
+                    &--basket {
+                        .v-badge {
                             position: absolute;
                             z-index: 2;
                             left: 50%;
                             top: 3px;
 
-                            &__badge{
+                            &__badge {
                                 font-family: 'IranSansFaNum' !important;
-                                color:#fff !important;
+                                color: #fff !important;
                             }
                         }
                     }
