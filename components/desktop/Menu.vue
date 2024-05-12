@@ -1,5 +1,6 @@
 <template>
-<div class="c-menu">
+<client-only>
+    <div class="c-menu">
     <v-container class="pb-0">
         <nav class="menu menu--desktop d-flex justify-space-between align-center">
             <ul class="menu__items flex-grow-1 ml-3">
@@ -169,6 +170,7 @@
         </nav>
     </v-container>
 </div>
+</client-only>
 </template>
 
 <script>
