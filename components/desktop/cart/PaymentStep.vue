@@ -137,9 +137,6 @@ export default {
     },
 
     watch: {
-      voucherBasket(newVal){
-        console.log(newVal , 'voucherBasket')
-      },
         deleteVoucher(newVal) {
             if (newVal === true) {
                 this.discountCodeShow = this.discountCode
