@@ -164,14 +164,14 @@ export default {
          */
         increaseCount() {
             if (this.userToken) {
-                this.addToBasket(this.content ?.shps ?.id, this.count,'increase', true)
+                this.addToBasket(this.content ?.shps ?.id, this.count,'increase', true, this.content)
             } else {
                 if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                    this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, this.randomNumberForBasket,'increase')
+                    this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, this.randomNumberForBasket,'increase', false, this.content)
                 } else {
                     const randomNumber = this.createRandomNumber()
                     this.randomNumberForBasket = randomNumber
-                    this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, randomNumber,'increase')
+                    this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, randomNumber,'increase',false, this.content)
                 }
             }
         },
@@ -182,14 +182,14 @@ export default {
         decreaseCount() {
             if (this.count > 1) {
                 if (this.userToken) {
-                    this.addToBasket(this.content ?.shps ?.id, this.count, 'decrease', true)
+                    this.addToBasket(this.content ?.shps ?.id, this.count, 'decrease', true, this.content)
                 } else {
                     if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, this.randomNumberForBasket, 'decrease')
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, this.randomNumberForBasket, 'decrease', false, this.content)
                     } else {
                         const randomNumber = this.createRandomNumber()
                         this.randomNumberForBasket = randomNumber
-                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, randomNumber, 'decrease')
+                        this.beforeAuthAddToBasket(this.content ?.shps ?.id, this.count, randomNumber, 'decrease', false, this.content)
                     }
                 }
             } else {
@@ -198,52 +198,10 @@ export default {
         },
 
         removeProductFromBasket() {
-            this.deleteShpsBasket(this.content ?.shps ?.id)
+            this.deleteShpsBasket(this.content ?.shps ?.id, this.content)
             this.$refs.deleteProduct.dialog =false;
             this.$refs.deleteProduct.loading =false;
         },
-
-        /**
-         * Enhance E-commerce for Seo
-         * @param {*} product 
-         */
-         enhanceECommerceAddToCart(product){
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
-                    ecommerce: {							
-                        items: [{	// an array where all currently viewed products must be included
-                            item_id: product.shps?.sku?.id,	// insert an actual product ID
-                            price: Number(String(product?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                            item_brand: product.shps?.sku?.brand?.label,// insert an actual product price
-                            item_category: null,	// insert an actual product top-level category ** TODO: We don't have this
-                            item_color: null,  // insert the color of product select ** TODO: We don't have this
-                            quantity: this.count,	// product quantity. In case of add to cart
-                        }]
-                    }
-            });
-        },
-
-        /**
-         * Enhance E-commerce for Seo
-         * @param {*} product 
-         */
-         enhanceECommerceRemoveFromCart(product){
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-            event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
-                ecommerce: {							
-                    items: [{// an array where all currently viewed products must be included
-                        item_id: product.shps?.sku?.id,	// insert an actual product ID
-                        price: Number(String(product?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                        item_brand: product.shps?.sku?.brand?.label,// insert an actual product price
-                        item_category: null,	// insert an actual product top-level category  ** TODO: We don't have this
-                        item_color: null,  // insert the color of product select ** TODO: We don't have this
-                        quantity:  this.count,	// product quantity. In case of add to cart
-                    }]
-                }
-            });
-        }
     },
 
     mounted() {
@@ -256,13 +214,6 @@ export default {
         },
 
         count(newVal,oldVal){
-            if (this.reloadingPage === true && this.$route.name !== 'sku-slug'){
-                if(newVal > oldVal){
-                    this.enhanceECommerceAddToCart(this.content)
-                } else if(newVal < oldVal){
-                    this.enhanceECommerceRemoveFromCart(this.content)
-                }
-            }
             this.reloadingPage = true
         }
     }

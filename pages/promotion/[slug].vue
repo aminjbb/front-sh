@@ -186,7 +186,7 @@ export default {
         },
 
         plpTitle(newVal){
-            this.title = newVal
+            this.title = 'فروشگاه اینترنتی شاواز | ' + newVal
         }
     }
 }

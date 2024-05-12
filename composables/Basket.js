@@ -87,7 +87,7 @@ export default function setup() {
      * @param {*} count 
      * @param {*} method 
      */
-    async function addToBasket(shps , countMain, method,wayBasket= false) {
+    async function addToBasket(shps , countMain, method,wayBasket= false, productDetails, price = null) {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
 
         if(countMain === 0){
@@ -113,7 +113,38 @@ export default function setup() {
             })
             .then((response) => {
                 const getResponseCount = response?.data?.data?.details.find(item => item.shps.id === shps )
-                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
+                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count;
+
+                if(method === 'increase'){
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
+                            ecommerce: {							
+                                items: [{	// an array where all currently viewed products must be included
+                                    item_id: shps,	// insert an actual product ID
+                                    price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                                    item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
+                                    quantity: count.value,	// product quantity. In case of add to cart
+                                    name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                                }]
+                            }
+                    });
+                }else if(method === 'decrease' && count.value !== 0){
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                    event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
+                        ecommerce: {							
+                            items: [{// an array where all currently viewed products must be included
+                                item_id: shps,	// insert an actual product ID
+                                price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                                item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
+                                quantity:  count.value,	// product quantity. In case of add to cart
+                                name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                            }]
+                        }
+                    });
+                }
+
                 getBasket();
                 if(wayBasket === false){
                     loadingAddBasket.value = false;
@@ -152,7 +183,7 @@ export default function setup() {
      * @param {*} count 
      * @param {*} number 
      */
-    async function beforeAuthAddToBasket(shps , countMain , number, method, wayBasket = false) {
+    async function beforeAuthAddToBasket(shps , countMain , number, method, wayBasket = false, productDetails, price = null) {
         if(countMain === 0){
             loadingFirstAddBasket.value = true
         }else{
@@ -173,7 +204,37 @@ export default function setup() {
             })
             .then((response) => {
                 const getResponseCount = response.data.data.details.find(item => item.shps.id === shps )
-                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
+                if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count;
+
+                if(method === 'increase'){
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
+                            ecommerce: {							
+                                items: [{	// an array where all currently viewed products must be included
+                                    item_id: shps,	// insert an actual product ID
+                                    price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                                    item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
+                                    quantity: count.value,	// product quantity. In case of add to cart
+                                    name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                                }]
+                            }
+                    });
+                }else if(method === 'decrease'){
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                    event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
+                        ecommerce: {							
+                            items: [{// an array where all currently viewed products must be included
+                                item_id: shps,	// insert an actual product ID
+                                price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                                item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
+                                quantity:  count.value,	// product quantity. In case of add to cart
+                                name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                            }]
+                        }
+                    });
+                }
 
                 getBasket()
 
@@ -203,7 +264,7 @@ export default function setup() {
      * Remove shps from basket
      * @param {*} shps 
      */
-    async function deleteShpsBasket(shps ) {
+    async function deleteShpsBasket(shps, productDetails, price = null) {
         loadingAddBasket.value = true;
         
         const formData = new FormData()
@@ -224,6 +285,22 @@ export default function setup() {
                     randomNumberForBasket.value = ''
                 }
                 count.value = 0;
+                
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
+                    ecommerce: {							
+                        items: [{// an array where all currently viewed products must be included
+                            item_id: shps,	// insert an actual product ID
+                            price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                            item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
+                            quantity:  count.value,	// product quantity. In case of add to cart
+                            name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                        }]
+                    }
+                });
+                
+
                 getBasket();
                
             })

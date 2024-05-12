@@ -359,10 +359,10 @@ export default {
   
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
-                    event: 'userAuthentication', // The event name for tracking user authentication.
-                    number: randomWord + randomNum + this.mobile.slice(1),
-                    event_type: response.data?.data?.user?.is_signed_up === 0 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
-                    userStatus: response.data?.data?.user?.is_signed_up === 0 ? 'new' : 'returning', // or 'returning' depending on the user's status.
+                        event: 'userAuthentication', // The event name for tracking user authentication.
+                        number: randomWord + randomNum + this.mobile.slice(1),
+                        event_type: response.data?.data?.user?.is_signed_up === 0 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
+                        userStatus: response.data?.data?.user?.is_signed_up === 0 ? 'new' : 'returning', // or 'returning' depending on the user's status.
                     });
 
                     const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {

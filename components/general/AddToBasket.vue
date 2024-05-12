@@ -166,17 +166,17 @@ export default {
          */
         async addToCard(id) {
             if (this.userToken){
-                this.addToBasket(id , this.count, 'increase')
+                this.addToBasket(id , this.count, 'increase', false, this.productDetails, this.content)
             }
 
             else{
                 if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                    this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket, 'increase')
+                    this.beforeAuthAddToBasket(id , this.count ,this.randomNumberForBasket, 'increase',false, this.productDetails, this.content)
                 }
                 else{
                     const randomNumber = this.createRandomNumber()
                     this.randomNumberForBasket = randomNumber
-                    this.beforeAuthAddToBasket(id , this.count , randomNumber.toString(), 'increase')
+                    this.beforeAuthAddToBasket(id , this.count , randomNumber.toString(), 'increase',false, this.productDetails, this.content)
                 }
             }
 
@@ -196,16 +196,16 @@ export default {
          */
         increaseCount() {
             if (this.userToken){
-                this.addToBasket(this.content?.id  , this.count, 'increase')
+                this.addToBasket(this.content?.id  , this.count, 'increase', false, this.productDetails, this.content)
             }
             else{
                 if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                    this.beforeAuthAddToBasket(this.content.id  , this.count ,this.randomNumberForBasket, 'increase')
+                    this.beforeAuthAddToBasket(this.content.id  , this.count ,this.randomNumberForBasket, 'increase',false, this.productDetails, this.content)
                 }
                 else{
                     const randomNumber = this.createRandomNumber()
                     this.randomNumberForBasket = randomNumber
-                    this.beforeAuthAddToBasket(this.content?.id  , this.count , randomNumber.toString(), 'increase')
+                    this.beforeAuthAddToBasket(this.content?.id  , this.count , randomNumber.toString(), 'increase',false, this.productDetails, this.content)
                 }
             }
         },
@@ -216,71 +216,26 @@ export default {
         decreaseCount() {
             if (this.count > 0) {
                 if (this.count === 1) {
-                    this.deleteShpsBasket(this.content?.id)
+                    this.deleteShpsBasket(this.content?.id, this.productDetails, this.content)
                 }
                 else{
                   if (this.userToken){
-                    this.addToBasket(this.content?.id  , this.count, 'decrease')
+                    this.addToBasket(this.content?.id  , this.count, 'decrease',false, this.productDetails, this.content)
                   }
                   else{
                     if (this.randomNumberForBasket && this.randomNumberForBasket != "") {
-                      this.beforeAuthAddToBasket(this.content?.id  , this.count ,this.randomNumberForBasket, 'decrease')
+                      this.beforeAuthAddToBasket(this.content?.id  , this.count ,this.randomNumberForBasket, 'decrease',false, this.productDetails, this.content)
                     }
                     else{
                       const randomNumber = this.createRandomNumber()
                       this.randomNumberForBasket = randomNumber
-                      this.beforeAuthAddToBasket(this.content?.id  , this.count , randomNumber.toString(), 'decrease')
+                      this.beforeAuthAddToBasket(this.content?.id  , this.count , randomNumber.toString(), 'decrease',false, this.productDetails, this.content)
                     }
                   }
                 }
 
-               // this.enhanceECommerceRemoveFromCart(this.productDetails,this.content)
             }
         },
-
-        /**
-         * Enhance E-commerce for Seo
-         * @param {*} product 
-         * @param {*} price 
-         */
-        enhanceECommerceAddToCart(product,price){
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
-                    ecommerce: {							
-                        items: [{	// an array where all currently viewed products must be included
-                            item_id: product?.id,	// insert an actual product ID
-                            price: Number(String(price?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                            item_brand: product?.brand_label,	// insert an actual product price
-                            item_category: this.productCategory,	// insert an actual product top-level category
-                            item_color: null,  // insert the color of product select ** TODO: We don't have this
-                            quantity: this.count,	// product quantity. In case of add to cart
-                        }]
-                    }
-            });
-        },
-
-        /**
-         * Enhance E-commerce for Seo
-         * @param {*} product 
-         * @param {*} price 
-         */
-         enhanceECommerceRemoveFromCart(product,price){
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-            event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
-                ecommerce: {							
-                    items: [{// an array where all currently viewed products must be included
-                        item_id: product?.id,	// insert an actual product ID
-                        price: Number(String(price?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                        item_brand: product?.brand_label,// insert an actual product price
-                        item_category: this.productCategory,	// insert an actual product top-level category
-                        item_color: null,  // insert the color of product select ** TODO: We don't have this
-                        quantity:  this.count,	// product quantity. In case of add to cart
-                    }]
-                }
-            });
-        }
     },
 
     watch:{
@@ -303,7 +258,7 @@ export default {
 
         userBasket(newVal){
             if(newVal && newVal.details && newVal.details.length){
-                const data = newVal.details.find(item => item?.shps?.id === this.content.id)
+                const data = newVal.details.find(item => item?.shps?.id === this.content?.id)
                 
                 if(!data){
                     this.notSelected = true;
@@ -319,13 +274,6 @@ export default {
         },
 
         count(newVal,oldVal){
-            if (this.reloadingPage === true && this.$route.name !== 'sku-slug'){
-                if(newVal > oldVal){
-                    this.enhanceECommerceAddToCart(this.productDetails,this.content)
-                } else if(newVal < oldVal){
-                    this.enhanceECommerceRemoveFromCart(this.productDetails,this.content)
-                }
-            }
             this.reloadingPage = true
         }
     },
