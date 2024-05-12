@@ -265,7 +265,8 @@
                       :hideInfo="true"
                       :isPLP="true"
                       :index = "index + 1"
-                      :sectionName = "`${plpTitle}لیست کالاهای دسته بندی `"
+                      :categoryName = "category"
+                      :sectionName = "` لیست کالاهای دسته بندی ${plpTitle}`"
                       :showColors="true"/>
                 </v-col>
               </v-row>
@@ -299,7 +300,8 @@
         filters: [],
         screenType: null,
         sortType:'site_price',
-        orderType: 'asc'
+        orderType: 'asc',
+        category:null
       }
     },
   
@@ -688,6 +690,16 @@
     watch:{
       plpTitle(newVal){
           this.title = newVal
+      },
+
+      breadcrumb(newVal){
+        if(newVal?.category_l3?.name){
+          this.category = newVal?.category_l3?.name
+        }else if(newVal?.category_l2?.name){
+          this.category = newVal?.category_l2?.name
+        }else if(newVal?.category_l1?.name){
+          this.category = newVal.category_l1.name
+        }
       }
     }
   }

@@ -178,7 +178,8 @@
                     :hideInfo="true"
                     :isPLP="true"
                     :index = "index + 1"
-                    :sectionName = "`${plpTitle}لیست کالاهای محصول  `"
+                    :sectionName = "`لیست کالاهای محصول ${plpTitle}`"
+                    :categoryName = "category"
                     :showColors="true" />
               </v-col>
             </v-row>
@@ -210,7 +211,8 @@ export default {
       filters: [],
       screenType: null,
       sortType:'site_price',
-      orderType: 'asc'
+      orderType: 'asc',
+      category:null
     }
   },
 
@@ -490,8 +492,9 @@ export default {
           title: this.breadcrumb.category_l1.name
         }
         breadcrumb.push(form)
-
+        this.category = this.breadcrumb.category_l1.name
       }
+      
       if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
@@ -499,8 +502,8 @@ export default {
           title: this.breadcrumb.category_l2.name
         }
         breadcrumb.push(form)
-
       }
+
       if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
@@ -508,7 +511,6 @@ export default {
           title: this.breadcrumb.category_l3.name
         }
         breadcrumb.push(form)
-
       }
 
       if(this.breadcrumb?.product){
@@ -586,6 +588,16 @@ export default {
   watch:{
     plpTitle(newVal){
         this.title = newVal
+    },
+
+    breadcrumb(newVal){
+      if(newVal?.category_l3?.name){
+        this.category = newVal?.category_l3?.name
+      }else if(newVal?.category_l2?.name){
+        this.category = newVal?.category_l2?.name
+      }else if(newVal?.category_l1?.name){
+        this.category = newVal.category_l1.name
+      }
     }
   }
 }

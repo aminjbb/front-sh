@@ -174,9 +174,10 @@
                     :lazy=false
                     class="mb-4 flex-grow-1"
                     :index = "index + 1"
-                    :sectionName = "`${plpTitle}لیست کالاهای برند`"
+                    :sectionName = "`لیست کالاهای برند ${plpTitle} `"
                     :hideInfo="true"
                     :isPLP="true"
+                    :categoryName = "category"
                     :showColors="true"/>
               </v-col>
             </v-row>
@@ -208,7 +209,8 @@ export default {
       filters: [],
       screenType: null,
       sortType:'site_price',
-      orderType: 'asc'
+      orderType: 'asc',
+      category:null
     }
   },
 
@@ -261,6 +263,7 @@ export default {
         breadcrumb.push(form)
 
       }
+      
       if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
@@ -270,6 +273,7 @@ export default {
         breadcrumb.push(form)
 
       }
+
       if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
@@ -277,8 +281,8 @@ export default {
           title: this.breadcrumb.category_l3.name
         }
         breadcrumb.push(form)
-
       }
+
       if(this.breadcrumb?.product){
         const form = {
           type : "product",
@@ -573,7 +577,17 @@ export default {
 
     plpTitle(newVal){
         this.title = newVal
-    }
+    },
+
+    breadcrumb(newVal){
+        if(newVal?.category_l3?.name){
+          this.category = newVal?.category_l3?.name
+        }else if(newVal?.category_l2?.name){
+          this.category = newVal?.category_l2?.name
+        }else if(newVal?.category_l1?.name){
+          this.category = newVal.category_l1.name
+        }
+      }
   }
 }
 </script>

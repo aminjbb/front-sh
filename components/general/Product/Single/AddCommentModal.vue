@@ -160,13 +160,8 @@ export default {
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                         event: 'commentSubmission', // The event name for tracking comment submissions.
-                        userStatus: null, // or 'returning' depending on the user's status.
-                        userMobileNumber: userDetail?.phone_number, // The user's mobile number used for login.
-                        ecommerce: {
-                            comment: { // Object to hold the comment details.
-                                item_id: this.productSelectedSeller.id, // The product ID related to the comment.
-                            }
-                        }
+                        userID: userDetail?.id, // The user's mobile number used for login.
+                        item_id: this.productSelectedSeller.id, // The product ID related to the comment.
                     }); 
 
                     this.getSecondaryData()

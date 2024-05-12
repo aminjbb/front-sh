@@ -25,7 +25,7 @@
             </div>
         </v-row>
     </v-container>
-    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="transactionData" :phoneNumber="userWallet?.transactions?.phone_number" />
+    <generalWalletModalResult ref="resultModal" type="increase" title="پرداخت موفق" :content="transactionData" :userId="userWallet?.transactions?.id" />
 </main>
 </template>
 

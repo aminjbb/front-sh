@@ -471,9 +471,8 @@ export default {
           item_id: item.shps?.sku?.id,
           price: Number(String(item.current_total_site_price).slice(0, -1)),
           item_brand: item?.shps?.sku?.brand?.name,
-          item_category: null,
-          item_color: null,
-          quantity: item.count
+          quantity: item.count,
+          name: item?.shps?.sku?.label
         }
         productArr.push(obj);
       });
@@ -497,9 +496,8 @@ export default {
           item_id: item.shps?.sku?.id,
           price: Number(String(item.current_total_site_price).slice(0, -1)),
           item_brand: item?.shps?.sku?.brand?.name,
-          item_category: null,
-          item_color: null,
-          quantity: item.count
+          quantity: item.count,
+          name: item?.shps?.sku?.label
         }
         productArr.push(obj);
       });
@@ -525,9 +523,8 @@ export default {
           item_id: item.shps?.sku?.id,
           price: Number(String(item.current_total_site_price).slice(0, -1)),
           item_brand: item?.shps?.sku?.brand?.name,
-          item_category: null,
-          item_color: null,
-          quantity: item.count
+          quantity: item.count,
+          name: item?.shps?.sku?.label
         }
         productArr.push(obj);
       });
@@ -538,6 +535,7 @@ export default {
         ecommerce: {
           value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman.
           coupon: this.discountCode,
+          payment_type: this.orderPaymentMethod,
           items: productArr
         }
       });
