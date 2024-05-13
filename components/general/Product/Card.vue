@@ -1,5 +1,5 @@
 <template>
-<div v-if="content" class="product-card pa-2">
+<div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
     <div v-if="index && showIndex" class="product-card__index">
         <span class="t16">#{{index}}</span>
     </div>
@@ -15,23 +15,22 @@
     </div>
 
     <template v-if="lazy">
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4 cur-p" @click = "goToLink()">
+        <a v-if="content.image && content.image.image_url && !isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4 cur-p" @click = "goToLink()">
+        <a v-else-if="content.image_url && isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
     <template v-else>
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4 cur-p" @click = "goToLink()">
+        <a v-if="content.image && content.image.image_url && !isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img data-not-lazy :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4 cur-p" @click = "goToLink()">
+        <a v-else-if="content.image_url && isPLP" @click="enhanceEcommerce()" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
-    
-    <a class="flex-grow-1 w-100 cur-p" @click = "goToLink()">
+    <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`" @click="enhanceEcommerce()">
         <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title card-title mb-2">
             {{content.label}}
         </h3>
@@ -85,7 +84,7 @@
 
     <div v-if="functions" class="d-flex align-center justify-end mt-2 mobile-pa-0 w-100">
         <v-btn
-            @click = "goToLink()"
+            :href="`/sku/${content.slug}`"
             height="44"
             title="افزودن به سبد"
             class="btn btn--submit">
@@ -162,7 +161,10 @@ export default {
         /**
          * Category name
          */
-        categoryName:String,
+         categoryName:{
+            type: String,
+            default: null
+        },
     },
 
     methods: {
@@ -174,7 +176,7 @@ export default {
             this.$emit('removeProduct', content);
         },
 
-        goToLink(){
+        enhanceEcommerce(){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: 'select_item',  	// name of the event. In this case, it always must be select_item
@@ -188,31 +190,27 @@ export default {
                     }]
                 }
             });
-
-            const link1 =`/sku/${this.content?.slug}?shps=${this.shps}`;
-            const link2 = `/sku/${this.content?.slug}`
-            window.location = this.shps ? link1 : link2
         }
     },
 
-    computed:{
-        skusObjectStock(){
-            try {
-            return this.content?.seller_s_k_us[0]?.site_stock
-            }catch (e) {
-            return  0
-            }
+  computed:{
+      skusObjectStock(){
+        try {
+          return this.content?.seller_s_k_us[0]?.site_stock
+        }catch (e) {
+          return  0
+        }
 
-        },
-        relatedObjectStock(){
-            try {
-                return this.content?.site_stock
-            }catch (e) {
-                return  0
-            }
+      },
+    relatedObjectStock(){
+      try {
+        return this.content?.site_stock
+      }catch (e) {
+        return  0
+      }
 
-        },
-    }
+    },
+  }
 }
 </script>
 
