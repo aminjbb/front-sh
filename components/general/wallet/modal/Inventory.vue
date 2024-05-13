@@ -130,7 +130,7 @@
                 <template v-if="step === 3">
                     <div class="d-flex flex-column align-center justify-center py-5">
                         <span class="t14 w400 text-grey-darken-1">
-                            شماره کارت:
+                            شماره شبا:
                         </span>
 
                         <span class="t16 w500 text-black number-font my-2 bold ltr" style="letter-spacing: 2px;">{{cartNumber}}</span>
@@ -149,16 +149,6 @@
                         <div class="d-flex align-center justify-space-between">
                             <div class="t12 w400 text-grey">مبلغ برداشت:</div>
                             <div class="t14 w400 text-grey-darken-3 number-font">{{splitChar(mount)}} تومان</div>
-                        </div>
-
-                        <div class="d-flex align-center justify-space-between">
-                            <div class="t12 w400 text-grey">کارمزد بانکی: </div>
-                            <div class="t14 w400 text-grey-darken-3 number-font">{{splitChar(600)}} تومان</div>
-                        </div>
-
-                        <div class="d-flex align-center justify-space-between">
-                            <div class="t12 w400 text-grey">دریافتی شما: </div>
-                            <div class="t14 w400 text-grey-darken-3 number-font">{{splitChar(mount - 600)}} تومان</div>
                         </div>
                     </div>
 
