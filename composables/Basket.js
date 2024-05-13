@@ -114,14 +114,13 @@ export default function setup() {
             .then((response) => {
                 const getResponseCount = response?.data?.data?.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count;
-
                 if(method === 'increase'){
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
                         event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
                             ecommerce: {							
                                 items: [{	// an array where all currently viewed products must be included
-                                    item_id: shps,	// insert an actual product ID
+                                    item_id: productDetails?.id,	// insert an actual product ID
                                     price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                                     item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
                                     quantity: count.value,	// product quantity. In case of add to cart
@@ -135,7 +134,7 @@ export default function setup() {
                     event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
                         ecommerce: {							
                             items: [{// an array where all currently viewed products must be included
-                                item_id: shps,	// insert an actual product ID
+                                item_id: productDetails?.id,	// insert an actual product ID
                                 price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                                 item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
                                 quantity:  count.value,	// product quantity. In case of add to cart
@@ -212,7 +211,7 @@ export default function setup() {
                         event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
                             ecommerce: {							
                                 items: [{	// an array where all currently viewed products must be included
-                                    item_id: shps,	// insert an actual product ID
+                                    item_id: productDetails?.id,	// insert an actual product ID
                                     price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                                     item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
                                     quantity: count.value,	// product quantity. In case of add to cart
@@ -226,7 +225,7 @@ export default function setup() {
                     event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
                         ecommerce: {							
                             items: [{// an array where all currently viewed products must be included
-                                item_id: shps,	// insert an actual product ID
+                                item_id: productDetails?.id,	// insert an actual product ID
                                 price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                                 item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
                                 quantity:  count.value,	// product quantity. In case of add to cart
@@ -291,7 +290,7 @@ export default function setup() {
                 event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
                     ecommerce: {							
                         items: [{// an array where all currently viewed products must be included
-                            item_id: shps,	// insert an actual product ID
+                            item_id: productDetails?.id,	// insert an actual product ID
                             price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                             item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.label,// insert an actual product price
                             quantity:  count.value,	// product quantity. In case of add to cart
