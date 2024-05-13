@@ -156,12 +156,12 @@ export default {
                 window.dataLayer.push({
                     event: 'purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
-                        currency: 'IRR',
-                        value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        currency: 'USD',
+                        value: this.order?.data?.data?.voucher_amount && this.order?.data?.data?.voucher_amount!== null ? Number(String(this.order?.data?.data?.total_price).slice(0, -1)) - Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)) : Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
-                        couponvalue: this.order?.data?.data?.voucher_amount,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
                         items: productArr
                     }
@@ -182,12 +182,12 @@ export default {
                 window.dataLayer.push({
                     event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
-                        currency: 'IRR',
-                        value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        currency: 'USD',
+                        value: this.order?.data?.data?.voucher_amount && this.order?.data?.data?.voucher_amount!== null ? Number(String(this.order?.data?.data?.total_price).slice(0, -1)) - Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)) : Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
-                        couponvalue: this.order?.data?.data?.voucher_amount,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
                         items: productArr
                     }
