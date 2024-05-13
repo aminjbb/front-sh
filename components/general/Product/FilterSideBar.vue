@@ -211,7 +211,6 @@ export default {
         param: param,
         amount: this.amount
       }
-      console.log("🚀 ~ setAmount ~ form:", form)
       this.$emit('setAmount', form);
     },
     /**
