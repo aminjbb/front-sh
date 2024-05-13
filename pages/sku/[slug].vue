@@ -200,7 +200,7 @@
                     :wishlist="wishlist"
                     :productSelectedSeller="productSelectedSeller"
                     :items="skuImageGallery"
-                    :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
+                    :productCategory="breadcrumb?.category_l2?.name ? breadcrumb.category_l2.name : breadcrumb?.category_l1?.name"
                     :productDetail="productDetail"/>
             </v-col>
 
@@ -220,7 +220,7 @@
                             <generalAddToBasket
                                 :content="productSelectedSeller"
                                 :productDetails="productDetail"
-                                :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
+                                :productCategory="breadcrumb?.category_l2?.name ? breadcrumb.category_l2.name : breadcrumb?.category_l1?.name"
                                 />
                         </v-col>
                     </v-row>
@@ -272,7 +272,7 @@
             <div class="mobile-basket" v-if="productSelectedSeller">
                 <generalAddToBasket
                     :content="productSelectedSeller"
-                    :productCategory="breadcrumb?.category_l2?.slug ? breadcrumb.category_l2.slug : breadcrumb?.category_l1?.slug"
+                    :productCategory="breadcrumb?.category_l2?.name ? breadcrumb.category_l2.name : breadcrumb?.category_l1?.name"
                     :productDetails="productDetail"
                     revers="revers"
                     :mdCols="['6','6']"
@@ -334,6 +334,7 @@ export default {
 
             selectedSeller: null,
             called :false,
+            ecc: false
         }
     },
 
@@ -472,14 +473,15 @@ export default {
             this.title = newVal
         },
 
-        productDetail(newValue, oldValue) {
-            if(newValue && newValue !== null && this.breadcrumb !== null){
+        productDetail(newValue) {
+            if(newValue && newValue !== null && this.breadcrumb !== null && this.ecc !== true){
                 this.handleWatchChange();
                 this.called = true;
+                this.ecc = true;
             }
         },
 
-        breadcrumb(newValue, oldValue) {
+        breadcrumb(newValue) {
             if(newValue && newValue !== null && this.productDetail !== null && this.called === false){
                 this.handleWatchChange();
                 this.called = true;

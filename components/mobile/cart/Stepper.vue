@@ -446,7 +446,6 @@ export default {
           item_id: item.shps?.sku?.id,
           price: Number(String(item.current_total_site_price).slice(0, -1)),
           brand: item?.shps?.sku?.brand?.name,
-          category: null,
           quantity: item.count
         }
         productArr.push(obj);
