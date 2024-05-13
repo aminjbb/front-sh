@@ -9,9 +9,9 @@
             v-for="item in items"
             :key="item.id"
             cols="12"
-            @click="enhanceECommerce(item)"
+            @click="goToLink(item)"
             :sm="col">
-            <a class="banner__image mb-3 d-block" :href="item.link">
+            <a class="banner__image mb-3 d-block cur-p">
                 <img :src="item.image?.image_url" title="بنرهای تبلیغاتی سایت شاواز" alt="بنرهای تبلیغاتی سایت شاواز" width="600" height="400" />
             </a>
         </v-col>
@@ -45,13 +45,14 @@ export default {
          /**
          * Enhance E-commerce for Seo in Checkout Step 4 after payment
          */
-         enhanceECommerce(banner){
+         goToLink(banner){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: 'select_banner',
                 banner_name: banner.image_alt,		// name of the promo campaign
                 banner_location: banner.homepage_section_id	
             });
+            window.location = banner.link;
         },
     }
 }

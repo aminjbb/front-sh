@@ -79,7 +79,7 @@
                             مبلغ انتخابی، بیش از موجودی قابل برداشت شما میباشد.
                         </template>
                         <template v-else>
-                            مبلغ مجار برای برداشت از ۱۰,۰۰۰ تومان تا ۲۰۰,۰۰۰ تومان در روز می‌باشد
+                            مبلغ مجار برای برداشت از ۱۰,۰۰۰ تومان تا ۵۰۰,۰۰۰ تومان در روز می‌باشد
                         </template>
                     </div>
 
@@ -220,7 +220,7 @@ export default {
 
     watch: {
         mount(newValue) {
-            if (newValue < 10000 || newValue > 200000) {
+            if (newValue < 10000 || newValue > 500000) {
                 if (newValue > this.walletInventory) {
                     this.walletInventoryMsg = true;
                 } else {

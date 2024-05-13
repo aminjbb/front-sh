@@ -65,7 +65,6 @@
                     ref="minAmount"
                     @blur="setAmount(filter.param)"
                     v-model="amount.min"
-                    :custom-filter="customMinFilter"
                     @update:menu="onUpdateMenu"
                     height="40px"
                     class="mb-3 filter-sidebar__card__search"/>
@@ -83,7 +82,6 @@
                     suffix="تومان"
                     @blur="setAmount(filter.param)"
                     v-model="amount.max"
-                    :custom-filter="customMaxFilter"
                     @update:menu="onUpdateMenu"
                     height="40px"
                     class="mb-3 filter-sidebar__card__search"/>
@@ -202,29 +200,6 @@ export default {
      */
     switchFiltersModalEmit(arr) {
       this.$emit('switchFiltersModal', arr);
-    },
-
-    /**
-     * Enter the desired value
-     * @param {*} item
-     * @param {*} queryText
-     * @param {*} itemText
-     */
-    customMinFilter(item, queryText, itemText) {
-      if (itemText.props.value === queryText) this.amount.min = itemText.props.value
-      else  this.amount.min = queryText
-
-    },
-
-    /**
-     * Enter the desired value
-     * @param {*} item
-     * @param {*} queryText
-     * @param {*} itemText
-     */
-    customMaxFilter(item, queryText, itemText) {
-      if (itemText.props.value === queryText) this.amount.min = itemText.props.value
-      else  this.amount.max = queryText
     },
 
     /**
