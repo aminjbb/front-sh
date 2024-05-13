@@ -123,25 +123,27 @@
 
       <v-row class="mt-10">
         <v-col cols="12" md="3">
-          <template v-if="screenType === 'desktop'">
-            <generalProductFilterSideBar
-                :filterList="productFilterSecondaryData"
-                @listFiltersModal="listFiltersModal"
-                @selectFiltersModal="selectFiltersModal"
-                @setAmount="selectByAmount" />
-          </template>
-
-          <template v-if="screenType === 'mobile'">
-            <div class="d-flex align-center justify-space-between">
-              <generalProductFilterSideBarModal
-                  :filterList="filtersMocket"
+          <client-only>
+            <template v-if="screenType === 'desktop'">
+              <generalProductFilterSideBar
+                  :filterList="productFilterSecondaryData"
                   @listFiltersModal="listFiltersModal"
                   @selectFiltersModal="selectFiltersModal"
                   @setAmount="selectByAmount" />
+            </template>
 
-              <generalProductSortModal @sort="sort"  />
-            </div>
-          </template>
+            <template v-if="screenType === 'mobile'">
+              <div class="d-flex align-center justify-space-between">
+                <generalProductFilterSideBarModal
+                    :filterList="filtersMocket"
+                    @listFiltersModal="listFiltersModal"
+                    @selectFiltersModal="selectFiltersModal"
+                    @setAmount="selectByAmount" />
+
+                <generalProductSortModal @sort="sort"  />
+              </div>
+            </template>
+          </client-only>
         </v-col>
         <v-col cols="12" md="9">
           <template v-if="screenType === 'desktop'">
@@ -176,7 +178,8 @@
                     :hideInfo="true"
                     :isPLP="true"
                     :index = "index + 1"
-                    :sectionName = "`${plpTitle}لیست کالاهای محصول  `"
+                    :sectionName = "`لیست کالاهای محصول ${plpTitle}`"
+                    :categoryName = "category"
                     :showColors="true" />
               </v-col>
             </v-row>
@@ -208,7 +211,8 @@ export default {
       filters: [],
       screenType: null,
       sortType:'site_price',
-      orderType: 'asc'
+      orderType: 'asc',
+      category:null
     }
   },
 
@@ -488,8 +492,9 @@ export default {
           title: this.breadcrumb.category_l1.name
         }
         breadcrumb.push(form)
-
+        this.category = this.breadcrumb.category_l1.name
       }
+      
       if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
@@ -497,8 +502,8 @@ export default {
           title: this.breadcrumb.category_l2.name
         }
         breadcrumb.push(form)
-
       }
+
       if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
@@ -506,7 +511,6 @@ export default {
           title: this.breadcrumb.category_l3.name
         }
         breadcrumb.push(form)
-
       }
 
       if(this.breadcrumb?.product){
@@ -584,6 +588,16 @@ export default {
   watch:{
     plpTitle(newVal){
         this.title = newVal
+    },
+
+    breadcrumb(newVal){
+      if(newVal?.category_l3?.name){
+        this.category = newVal?.category_l3?.name
+      }else if(newVal?.category_l2?.name){
+        this.category = newVal?.category_l2?.name
+      }else if(newVal?.category_l1?.name){
+        this.category = newVal.category_l1.name
+      }
     }
   }
 }

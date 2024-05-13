@@ -74,7 +74,8 @@
                   :hideInfo="true"
                   :isPLP="true"
                   :index = "index + 1"
-                  :sectionName = "`${plpTitle}لیست کالاهای`"
+                  :sectionName = "`لیست کالاهای ${plpTitle}`"
+                  :categoryName = "category"
                   :showColors="true" />
             </v-col>
           </v-row>
@@ -113,7 +114,8 @@ export default {
             ],
             productList: [],
             filters: [],
-            screenType: null
+            screenType: null,
+            category:null
         }
     },
 
@@ -262,6 +264,16 @@ export default {
 
         plpTitle(newVal){
             this.title = newVal
+        },
+
+        breadcrumb(newVal){
+          if(newVal?.category_l3?.name){
+            this.category = newVal?.category_l3?.name
+          }else if(newVal?.category_l2?.name){
+            this.category = newVal?.category_l2?.name
+          }else if(newVal?.category_l1?.name){
+            this.category = newVal.category_l1.name
+          }
         }
     }
 }

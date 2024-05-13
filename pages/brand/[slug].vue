@@ -121,41 +121,45 @@
       <generalBreadcrumb :items="breadcrumbList"/>
       <v-row class="mt-10">
         <v-col cols="12" md="3">
-          <template v-if="screenType === 'desktop'">
-            <generalProductFilterSideBar
-                :filterList="productFilterSecondaryData"
-                @selectFiltersModal="selectFiltersModal"
-                @setAmount="selectByAmount"/>
-          </template>
-          <template v-if="screenType === 'mobile'">
-            <div class="d-flex align-center justify-space-between">
-              <generalProductFilterSideBarModal
+          <client-only>
+            <template v-if="screenType === 'desktop'">
+              <generalProductFilterSideBar
                   :filterList="productFilterSecondaryData"
                   @selectFiltersModal="selectFiltersModal"
                   @setAmount="selectByAmount"/>
+            </template>
+            <template v-if="screenType === 'mobile'">
+              <div class="d-flex align-center justify-space-between">
+                <generalProductFilterSideBarModal
+                    :filterList="productFilterSecondaryData"
+                    @selectFiltersModal="selectFiltersModal"
+                    @setAmount="selectByAmount"/>
 
-              <generalProductSortModal @sort="sort" />
-            </div>
-          </template>
+                <generalProductSortModal @sort="sort" />
+              </div>
+            </template>
+          </client-only>
         </v-col>
         <v-col cols="12" md="9">
           <template v-if="screenType === 'desktop'">
-            <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
-              <nav class="d-flex align-center flex-grow-1">
-                <div class="pl-4">
-                  <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
-                  <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
-                </div>
+            <client-only>
+              <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
+                <nav class="d-flex align-center flex-grow-1">
+                  <div class="pl-4">
+                    <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
+                    <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
+                  </div>
 
-                <ul class="v-product__filter__items d-flex align-center">
-                  <!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
-                  <li class="t14 w400 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
-                  <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                  <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
-                  <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
-                </ul>
-              </nav>
-            </div>
+                  <ul class="v-product__filter__items d-flex align-center">
+                    <!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
+                    <li class="t14 w400 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                    <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                    <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
+                    <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                  </ul>
+                </nav>
+              </div>
+            </client-only>
           </template>
           <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
             <v-row v-if="productListData?.length" class="ma-0">
@@ -170,9 +174,10 @@
                     :lazy=false
                     class="mb-4 flex-grow-1"
                     :index = "index + 1"
-                    :sectionName = "`${plpTitle}لیست کالاهای برند`"
+                    :sectionName = "`لیست کالاهای برند ${plpTitle} `"
                     :hideInfo="true"
                     :isPLP="true"
+                    :categoryName = "category"
                     :showColors="true"/>
               </v-col>
             </v-row>
@@ -204,7 +209,8 @@ export default {
       filters: [],
       screenType: null,
       sortType:'site_price',
-      orderType: 'asc'
+      orderType: 'asc',
+      category:null
     }
   },
 
@@ -257,6 +263,7 @@ export default {
         breadcrumb.push(form)
 
       }
+      
       if(this.breadcrumb?.category_l2?.name){
         const form = {
           type : "category_l2",
@@ -266,6 +273,7 @@ export default {
         breadcrumb.push(form)
 
       }
+
       if(this.breadcrumb?.category_l3?.name){
         const form = {
           type : "category_l3",
@@ -273,8 +281,8 @@ export default {
           title: this.breadcrumb.category_l3.name
         }
         breadcrumb.push(form)
-
       }
+
       if(this.breadcrumb?.product){
         const form = {
           type : "product",
@@ -569,7 +577,17 @@ export default {
 
     plpTitle(newVal){
         this.title = newVal
-    }
+    },
+
+    breadcrumb(newVal){
+        if(newVal?.category_l3?.name){
+          this.category = newVal?.category_l3?.name
+        }else if(newVal?.category_l2?.name){
+          this.category = newVal?.category_l2?.name
+        }else if(newVal?.category_l1?.name){
+          this.category = newVal.category_l1.name
+        }
+      }
   }
 }
 </script>

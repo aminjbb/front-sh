@@ -341,7 +341,7 @@ export default {
                                 price: Number(String(this.productSelectedSeller?.site_price).slice(0, -1)),// insert an actual product price. Number or a string. Don't include currency code
                                 item_brand: this.productDetail?.brand_label,// insert an actual product price
                                 item_category: this.productCategory,	// insert an actual product top-level category
-                                item_color: null,  // insert the color of product select
+                                name: this.productDetail?.label
                             }]
                         }
                     });

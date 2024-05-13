@@ -40,10 +40,7 @@ export default {
                     items: [{		// an array where all currently viewed products must be included
                         item_id: this.content?.id,	// insert an actual product ID
                         price: Number(String(this.content?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                        item_brand: null,	// insert an actual product price ** TODO: We don't have this in API
-                        item_category:  null,			// insert an actual product top-level category ** TODO: We don't have this in API
                         section_name: this.sectionName, // insert the name of the list where the product is currently displayed
-                        item_color: null,  // insert the color of product select ** TODO: We don't have this
                         index: this.index 		// insert product's position in that list
                     }]
                 }

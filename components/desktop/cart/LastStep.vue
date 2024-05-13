@@ -1,6 +1,6 @@
 <template>
 <v-card class="pa-5 mobile-pa-0 mobile-no-border pb-10">
-    <template v-if="transactionData.status=== 'successful'">
+    <template v-if="transactionData?.status=== 'successful'">
         <header class="d-flex align-center mb-5 xs-hide">
             <v-icon
                 icon="mdi-credit-card-outline"
@@ -16,7 +16,7 @@
             </h2>
 
             <span class="t14 text-grey-darken-2 mb-10 number-font">
-                سفارش شما با شماره {{transactionData?.transaction?.order_number}} با موفقیت ثبت کردید.
+                سفارش شما با شماره {{order?.data?.data?.order_number}} با موفقیت ثبت کردید.
             </span>
 
             <img src="~/assets/images/2basket.jpg" alt="payment-image" width="249" height="210">
@@ -33,7 +33,7 @@
 
                 <v-btn
                     v-if="result=== 'success'"
-                    :href="`/user/order/${transactionData?.transaction?.order_id}`"
+                    :href="`/user/order/${order.data?.data?.id}`"
                     height="44"
                     width="180"
                     title="مشاهده فاکتور"
@@ -44,7 +44,7 @@
         </div>
     </template>
 
-    <template v-else-if="transactionData.status=== 'unsuccessful'">
+    <template v-else-if="transactionData?.status=== 'unsuccessful'">
         <header class="d-flex align-center mb-5 xs-hide">
             <v-icon
                 icon="mdi-timer-sand-complete"
@@ -56,9 +56,9 @@
 
         <div class="d-flex flex-column align-center justify-center mt-10">
             <h2 class="t22 w500 text-grey-darken-3 mb-5 number-font pt-10">
-                سفارش شما به شماره {{transactionData.order_number}} به مبلغ {{ splitChar(Number(String(transactionData.amount ).slice(0, -1))) }} تومان در انتظار پرداخت است
+                سفارش شما به شماره {{order?.data?.data?.order_number}} به مبلغ {{ splitChar(Number(String(order?.data?.data?.total_price ).slice(0, -1))) }} تومان در انتظار پرداخت است
             </h2>
-            
+
             <span class="t14 text-grey-darken-2 mb-10 number-font">
                 در صورت عدم پرداخت، سفارش شما تا 1 ساعت آینده به صورت خودکار لغو خواهد شد
             </span>
@@ -67,7 +67,7 @@
 
             <div class="d-flex align-center justify-center mt-2 mb-10 w-100 mt-10 px-5">
                 <v-btn
-                    @click="createFailedOrder(transactionData.order_id)"
+                    @click="createFailedOrder(order?.data?.data.id)"
                     height="44"
                     width="180"
                     title="پرداخت"
@@ -76,7 +76,7 @@
                 </v-btn>
 
                 <v-btn
-                    :href="`/user/order/${transactionData.order_id}`"
+                    :href="`/user/order/${order?.data?.data.id}`"
                     height="44"
                     width="180"
                     title="جزئیات سفارش"
@@ -146,9 +146,6 @@ export default {
                     const obj={
                         item_id: item.id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                        item_brand: null,	// insert an actual product price
-                        item_category: null,// insert an actual product top-level category
-                        item_color: null,  // insert the color of product select
                         quantity: item.count,	
                     }
                     productArr.push(obj);
@@ -176,9 +173,6 @@ export default {
                     const obj={
                         item_id: item.id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                        item_brand: null,	// insert an actual product price
-                        item_category: null,// insert an actual product top-level category
-                        item_color: null,  // insert the color of product select
                         quantity: item.count,	
                     }
                     productArr.push(obj);

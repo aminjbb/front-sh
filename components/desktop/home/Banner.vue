@@ -48,13 +48,9 @@ export default {
          enhanceECommerce(banner){
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
-            event: 'select_banner',
-            ecommerce: {
-                items: [{
+                event: 'select_banner',
                 banner_name: banner.image_alt,		// name of the promo campaign
-                banner_location: banner.homepage_section_id				// location of the banner
-                }]
-            }
+                banner_location: banner.homepage_section_id	
             });
         },
     }
