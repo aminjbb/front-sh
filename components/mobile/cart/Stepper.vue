@@ -557,6 +557,14 @@ export default {
     }
   },
 
+  created() {
+    const token = this.$route.query.token
+
+    if (token) {
+      this.activeStep = 4;
+    }
+  },
+
   mounted() {
     /**
      * Check screen size
@@ -567,15 +575,10 @@ export default {
     this.$store.commit('set_orderAddress', null);
     this.$store.commit('set_orderSendingMethod', null);
     this.$store.commit('set_orderPayMethod', null);
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-
-    if (token) {
-      this.activeStep = 4;
+    if(this.activeStep === 1){
+      this.enhanceECommerceSkuList();
     }
 
-    this.enhanceECommerceSkuList();
   },
 }
 </script>

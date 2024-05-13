@@ -430,6 +430,13 @@ export default function setup() {
                     }
                     store.commit('set_orderModalError', form)
                 }
+                if (err.response.status === 410){
+
+                    setTimeout(()=>{
+                        voucher.value = null
+                        getBasket();
+                    }, 2000)
+                }
             });
     };
 
