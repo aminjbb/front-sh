@@ -31,21 +31,20 @@
                     <v-divider color="grey" class="xs-hide"/>
 
                     <div class="px-5">
-                        <v-row class="order-details my-0">
+                        <v-row v-if="userOrder?.snapp_transaction_id && userOrder?.snapp_transaction_id !== null" class="order-details my-0">
                             <v-col
                                 cols="12"
-                                :sm="userOrder?.snapp_transaction_id && userOrder?.snapp_transaction_id !== null ? '6' : '4'"
-                                :lg="userOrder?.snapp_transaction_id && userOrder?.snapp_transaction_id !== null ? '6' : '3'"
+                                sm="6"
+                                lg="3"
                                 class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
                                 <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.order_number }}</span>
                             </v-col>
-                          <v-col
-
+                            <v-col
                               cols="12"
-                              :sm="userOrder?.snapp_transaction_id && userOrder?.snapp_transaction_id !== null ? '6' : '4'"
-                              :lg="userOrder?.snapp_transaction_id && userOrder?.snapp_transaction_id !== null ? '6' : '3'"
+                              sm="6"
+                              lg="4"
                               class="d-flex align-center order-details__item py-5">
                             <div v-if="userOrder && userOrder.snapp_transaction_id">
                               <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
@@ -54,16 +53,24 @@
                             </div>
                           </v-col>
 
-
                             <v-col
-                                cols="12"
-                                :sm="userOrder?.snapp_transaction_id && userOrder?.snapp_transaction_id !== null ? '6' : '4'"
-                                lg="6"
-                                class="d-flex align-center order-details__item py-5 justify-end">
-                                <a
-                                  v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress')"
-                                  :href="`/user/order/${userOrder.id}/cancel`"
-                                  class="d-flex align-center mobile-button">
+                                    cols="12"
+                                    sm="6"
+                                    lg="8"
+                                    class="d-flex align-center order-details__item py-5">
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
+                                <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              lg="4"
+                              class="d-flex align-center order-details__item py-5 justify-end">
+                            <a
+                                v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress')"
+                                :href="`/user/order/${userOrder.id}/cancel`"
+                                class="d-flex align-center mobile-button">
                                     <span class="text-grey-darken-1 t13 w400">
                                         <template v-if="userOrder.status == 'pre_progress'">
                                             درخواست لغو
@@ -72,20 +79,53 @@
                                             درخواست مرجوعی
                                         </template>
                                     </span>
-                                    <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
-                                </a>
-                            </v-col>
-                            <v-col
-                                    cols="12"
-                                    sm="6"
-                                    lg="6"
-                                    class="d-flex align-center order-details__item py-5">
-                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                                <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
-                                <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
-                            </v-col>
+                              <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
+                            </a>
+                          </v-col>
 
                         </v-row>
+
+                        <v-row v-else class="order-details my-0">
+                            <v-col
+                                cols="12"
+                                sm="4"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5">
+                              <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                              <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
+                              <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.order_number }}</span>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              lg="6"
+                              class="d-flex align-center order-details__item py-5">
+                            <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                            <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
+                            <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
+                          </v-col>
+                            <v-col
+                                cols="12"
+                                sm="4"
+                                lg="3"
+                                class="d-flex align-center order-details__item py-5 justify-end">
+                              <a
+                                  v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress')"
+                                  :href="`/user/order/${userOrder.id}/cancel`"
+                                  class="d-flex align-center mobile-button">
+                                        <span class="text-grey-darken-1 t13 w400">
+                                            <template v-if="userOrder.status == 'pre_progress'">
+                                                درخواست لغو
+                                            </template>
+                                            <template v-if="userOrder.status == 'received-dd'">
+                                                درخواست مرجوعی
+                                            </template>
+                                        </span>
+                                <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
+                              </a>
+                            </v-col>
+                        </v-row>
+
 
                         <v-divider color="grey" />
 
