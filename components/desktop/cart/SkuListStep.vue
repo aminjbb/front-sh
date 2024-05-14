@@ -11,7 +11,7 @@
 
     <div v-if="productList && productList.length">
         <template v-for="(product, index) in productList" :key="`product${index}`">
-            <desktopCartProductCard :content="product" />
+            <desktopCartProductCard noLazy :content="product" />
 
             <v-divider v-if="index + 1 < productList.length" color="grey" />
         </template>

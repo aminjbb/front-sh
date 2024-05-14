@@ -128,7 +128,7 @@ export default {
          * Product details
          * For Seo
          */
-        productDetails: Object,
+        productDetails: Object | String,
 
         /**
          * Product Category

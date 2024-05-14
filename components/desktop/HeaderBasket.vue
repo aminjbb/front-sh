@@ -22,7 +22,7 @@
         <div class="header-basket__content header-basket__content--no-empty">
             <div>
                 <template v-for="(item, index) in userBasket.details" :key="`header-product${index}`">
-                    <mobileCartProductCard :content="item" noSeller />
+                    <mobileCartProductCard noLazy :content="item" noSeller />
 
                     <v-divider v-if="index + 1 < userBasket.details.length" color="grey" />
                 </template>

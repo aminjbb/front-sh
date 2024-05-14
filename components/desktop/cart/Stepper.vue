@@ -330,7 +330,8 @@ export default {
      * Enhance E-commerce for Seo - when user visit cart page
      */
     enhanceECommerceStartCart(){
-      let productArr = [];
+      let productArrBeginCheckout = [];
+
       this.data.details.forEach(item =>{
         const obj={
           item_id: item.shps?.sku?.id,
@@ -339,14 +340,14 @@ export default {
           quantity: item.count,
           name: item?.shps?.sku?.label
         }
-        productArr.push(obj);
+        productArrBeginCheckout.push(obj);
       });
 
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'begin_checkout',  // name of the event. In this case, it always must be begin_checkout
         ecommerce: {
-          items: productArr
+          items: productArrBeginCheckout
         }
       });
     },
@@ -390,7 +391,7 @@ export default {
      * Enhance E-commerce for Seo in Checkout Step 2 when ways selected
      */
     enhanceECommerceGetWay(){
-      let productArr = [];
+      let productArrAddShipping = [];
       this.data.details.forEach(item =>{
         const obj={
           item_id: item.shps?.sku?.id,
@@ -399,16 +400,16 @@ export default {
           quantity: item.count,
           name: item?.shps?.sku?.label
         }
-        productArr.push(obj);
+        productArrAddShipping.push(obj);
       });
 
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
         event: 'add_shipping_info',// name of the event.
         ecommerce: {
-          value: Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),	// order total (price of all products) based Toman.
+          value: this.voucher && this.voucher.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
           shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis
-          items: productArr
+          items: productArrAddShipping
         }
       });
     },
