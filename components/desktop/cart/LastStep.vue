@@ -181,16 +181,15 @@ export default {
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
-                    ecommerce: {
-                        currency: 'USD',
-                        value: this.order?.data?.data?.voucher_amount && this.order?.data?.data?.voucher_amount!== null ? Number(String(this.order?.data?.data?.total_price).slice(0, -1)) - Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)) : Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
-                        shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
-                        order_id: this.order?.data?.data?.id,	// order id
-                        coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
-                        couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
-                        
-                        items: productArr
-                    }
+                    currency: 'USD',
+                    userID: this.$store.getters['get_userData'].id,
+                    value: this.order?.data?.data?.voucher_amount && this.order?.data?.data?.voucher_amount!== null ? Number(String(this.order?.data?.data?.total_price).slice(0, -1)) - Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)) : Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                    shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
+                    order_id: this.order?.data?.data?.id,	// order id
+                    coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
+                    couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                    
+                    items: productArr
                 });
             }
         },
