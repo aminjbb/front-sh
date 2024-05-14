@@ -144,7 +144,7 @@ export default {
                 let productArr = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
-                        item_id: item.id,	// insert an actual product ID
+                        item_id: item.sku_id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
                     }
@@ -157,7 +157,7 @@ export default {
                     event: 'purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
                         currency: 'USD',
-                        value: this.order?.data?.data?.voucher_amount && this.order?.data?.data?.voucher_amount!== null ? Number(String(this.order?.data?.data?.total_price).slice(0, -1)) - Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)) : Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        value: Number(String(this.order?.data?.data?.sending_price + this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
@@ -171,7 +171,7 @@ export default {
                 let productArr = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
-                        item_id: item.id,	// insert an actual product ID
+                        item_id: item.sku_id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
                     }
@@ -183,7 +183,7 @@ export default {
                     event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
                     currency: 'USD',
                     userID: this.$store.getters['get_userData'].id,
-                    value: this.order?.data?.data?.voucher_amount && this.order?.data?.data?.voucher_amount!== null ? Number(String(this.order?.data?.data?.total_price).slice(0, -1)) - Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)) : Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                    value: Number(String(this.order?.data?.data?.sending_price + this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                     shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                     order_id: this.order?.data?.data?.id,	// order id
                     coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
