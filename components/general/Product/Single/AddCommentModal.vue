@@ -161,7 +161,7 @@ export default {
                     window.dataLayer.push({
                         event: 'commentSubmission', // The event name for tracking comment submissions.
                         userID: userDetail?.id, // The user's mobile number used for login.
-                        item_id: this.productSelectedSeller.id, // The product ID related to the comment.
+                        item_id: this.productSelectedSeller.sku_id, // The product ID related to the comment.
                     }); 
 
                     this.getSecondaryData()
