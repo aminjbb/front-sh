@@ -141,14 +141,14 @@ export default {
          */
          enhanceECommerceLastStep(){
             if(this.transactionData.status=== 'successful'){
-                let productArr = [];
+                let productArrLastTrue = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
                         item_id: item.sku_id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
                     }
-                    productArr.push(obj);
+                    productArrLastTrue.push(obj);
                 })
 
 
@@ -163,19 +163,20 @@ export default {
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
                         couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
-                        items: productArr
+                        items: productArrLastTrue
                     }
                 });
 
             }  else{
-                let productArr = [];
+                let productArrLast = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
                         item_id: item.sku_id,	// insert an actual product ID
+                        havij:"porteghal",
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
                     }
-                    productArr.push(obj);
+                    productArrLast.push(obj);
                 })
                 
                 window.dataLayer = window.dataLayer || [];
@@ -189,7 +190,7 @@ export default {
                     coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
                     couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                     
-                    items: productArr
+                    items: productArrLast
                 });
             }
         },

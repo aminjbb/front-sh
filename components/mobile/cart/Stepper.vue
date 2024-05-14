@@ -444,8 +444,8 @@ export default {
       this.data.details.forEach(item =>{
         const obj={
           item_id: item.shps?.sku?.id,
-          price: Number(String(item.current_total_site_price).slice(0, -1)),
-          brand: item?.shps?.sku?.brand?.name,
+          price: Number(String(item.current_site_price).slice(0, -1)),
+          item_brand: item?.shps?.sku?.brand?.name,
           quantity: item.count
         }
         productArr.push(obj);
@@ -469,7 +469,7 @@ export default {
       this.data.details.forEach(item =>{
         const obj={
           item_id: item.shps?.sku?.id,
-          price: Number(String(item.current_total_site_price).slice(0, -1)),
+          price: Number(String(item.current_site_price).slice(0, -1)),
           item_brand: item?.shps?.sku?.brand?.name,
           quantity: item.count,
           name: item?.shps?.sku?.label
@@ -494,7 +494,7 @@ export default {
       this.data.details.forEach(item =>{
         const obj={
           item_id: item.shps?.sku?.id,
-          price: Number(String(item.current_total_site_price).slice(0, -1)),
+          price: Number(String(item.current_site_price).slice(0, -1)),
           item_brand: item?.shps?.sku?.brand?.name,
           quantity: item.count,
           name: item?.shps?.sku?.label
@@ -521,7 +521,7 @@ export default {
       this.data.details.forEach(item =>{
         const obj={
           item_id: item.shps?.sku?.id,
-          price: Number(String(item.current_total_site_price).slice(0, -1)),
+          price: Number(String(item.current_site_price).slice(0, -1)),
           item_brand: item?.shps?.sku?.brand?.name,
           quantity: item.count,
           name: item?.shps?.sku?.label
@@ -533,7 +533,7 @@ export default {
       window.dataLayer.push({
         event: 'add_payment_info',// name of the event.
         ecommerce: {
-          value: Number(String(this.data.total_price).slice(0, -1)),	// order total (price of all products) based Toman.
+          value: this.voucher && this.voucher?.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
           coupon: this.discountCode,
           payment_type: this.orderPaymentMethod,
           items: productArr
