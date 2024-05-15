@@ -393,7 +393,6 @@ export default {
           }
         })
       }
-
     },
     sort(order, orderType) {
       this.sortType = order

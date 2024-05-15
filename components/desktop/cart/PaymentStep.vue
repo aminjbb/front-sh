@@ -142,7 +142,7 @@ export default {
                 this.discountCodeShow = this.discountCode
                 this.discountCode = null
             }
-        }
+        },
     },
 
     methods: {
@@ -175,6 +175,13 @@ export default {
         }
 
     },
+
+    mounted(){
+        if(this.paymentMethods && this.paymentMethods.length > 0){
+            this.paymentModal= this.paymentMethods[0].name;
+            this.selectPayment();
+        }
+    }
 }
 </script>
 
