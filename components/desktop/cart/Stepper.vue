@@ -240,7 +240,7 @@ export default {
                         });
                     } else {
                         if (this.activeStep === 3) {
-                            //this.createOrder(this.orderSendingMethod, '', this.orderAddressId, this.orderPaymentMethod)
+                            this.createOrder(this.orderSendingMethod, '', this.orderAddressId, this.orderPaymentMethod)
                             this.enhanceECommerceGetPayment();
                         } else {
                             this.active[this.activeStep] = false;
