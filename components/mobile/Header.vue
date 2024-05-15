@@ -41,19 +41,19 @@ export default {
                 this.isHidden = true;
                 this.isFixed = false;
                 const menu = document.getElementById('menu--mobile');
+                if(menu){
+                    if (currentScrollTop > this.lastScrollTop) {
+                        this.isHidden = true;
+                        this.isFixed = false;
 
-                if (currentScrollTop > this.lastScrollTop) {
-                    this.isHidden = true;
-                    this.isFixed = false;
+                        menu.classList.add('change-height');
+                    } else {
+                        this.isFixed = true;
+                        this.isHidden = false;
 
-                    menu.classList.add('change-height');
-                } else {
-                    this.isFixed = true;
-                    this.isHidden = false;
-
-                    menu.classList.remove('change-height');
+                        menu.classList.remove('change-height');
+                    }
                 }
-
                 this.lastScrollTop = currentScrollTop;
             }
         },

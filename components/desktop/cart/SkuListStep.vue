@@ -39,7 +39,7 @@ export default {
         /**
          * Sku count
          */
-        count: String,
+        count: String | Number,
 
         /**
          * Product list

@@ -144,9 +144,9 @@ export default {
                 let productArrLastTrue = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
-                        item_id: item.sku_id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
+                        item_id: item?.sku_id,
                     }
                     productArrLastTrue.push(obj);
                 })
@@ -171,9 +171,8 @@ export default {
                 let productArrLast = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
-                        item_id: item.sku_id,	// insert an actual product ID
-                        havij:"porteghal",
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                        item_id: item?.sku_id,
                         quantity: item.count,	
                     }
                     productArrLast.push(obj);

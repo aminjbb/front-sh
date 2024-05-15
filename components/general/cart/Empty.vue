@@ -53,7 +53,7 @@ export default {
          * Product count
          */
 
-        count: String,
+        count: String | Number,
         /**
          * Suggestion product list
          */
