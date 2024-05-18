@@ -7,7 +7,6 @@
       </v-btn>
     </header>
     <template v-for="(filter, index) in filterList" :key="`filter${index}`">
-
       <div class="filter-sidebar__card" :id="`filter-sidebar__card--${index}`">
         <header
             v-if="filter.type !== 'switch'"
@@ -47,11 +46,12 @@
               :clear="clearAll"
               @selectItems="selectFiltersModalEmit"/>
         </template>
+        
         <template v-else-if="filter.type === 'period'">
-          <div class="filter-sidebar__card mt-3" :id="`filter-sidebar__card--${filterList.length}`">
+          <div>
 
             <div class="filter-sidebar__card__box">
-              <div class="d-flex align-center justify-space-between">
+              <div class="d-flex align-center justify-space-between mb-3">
                 <span class="t14 w400 ml-5">حداقل</span>
 
                 <v-autocomplete
@@ -63,10 +63,11 @@
                     item-value="value"
                     suffix="تومان"
                     ref="minAmount"
-                    @blur="setAmount(filter.param)"
+                    @update:modelValue="updateAmount('min', $event, filter.param)"
                     v-model="amount.min"
                     @update:menu="onUpdateMenu"
                     height="40px"
+                    hide-details
                     class="mb-3 filter-sidebar__card__search"/>
               </div>
 
@@ -80,10 +81,11 @@
                     item-title="label"
                     item-value="value"
                     suffix="تومان"
-                    @blur="setAmount(filter.param)"
+                    @update:modelValue="updateAmount('max', $event, filter.param)"
                     v-model="amount.max"
                     @update:menu="onUpdateMenu"
                     height="40px"
+                    hide-details
                     class="mb-3 filter-sidebar__card__search"/>
               </div>
             </div>
@@ -149,8 +151,6 @@ export default {
 
   },
 
-  computed: {},
-
   methods: {
 
     /**
@@ -163,11 +163,14 @@ export default {
         const divItems = sidebarTab.querySelectorAll('div.filter-sidebar__card');
 
         divItems.forEach(item => {
-          if(item.id !== `filter-sidebar__card--${id}`){
+          if(item.id !== `filter-sidebar__card--${id}` && item.id !== `filter-sidebar__card--status`){
             if(item.querySelector('.filter-sidebar__card__box')){
               if(item.querySelector('.filter-sidebar__card__box').classList.contains('open-card')){
                 item.querySelector('.filter-sidebar__card__box').classList.remove('open-card');
-                item.querySelector('.v-icon.mdi-chevron-down').classList.remove('mdi-chevron-up')
+                const hasClass = item.querySelector('.v-icon.mdi-chevron-down').classList.contains('mdi-chevron-up')
+                if(hasClass){
+                  item.querySelector('.v-icon.mdi-chevron-down').classList.remove('mdi-chevron-up')
+                }
               }
             }
           }
@@ -205,12 +208,12 @@ export default {
     /**
      * Show available Items
      */
-    setAmount(param) {
-
+     updateAmount(field, value, param) {
+      this.amount[field] = value;
       const form = {
         param: param,
         amount: this.amount
-      }
+      };
       this.$emit('setAmount', form);
     },
     /**

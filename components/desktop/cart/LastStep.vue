@@ -141,14 +141,14 @@ export default {
          */
          enhanceECommerceLastStep(){
             if(this.transactionData.status=== 'successful'){
-                let productArr = [];
+                let productArrLastTrue = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
-                        item_id: item.id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
+                        item_id: item?.sku_id,
                     }
-                    productArr.push(obj);
+                    productArrLastTrue.push(obj);
                 })
 
 
@@ -156,41 +156,40 @@ export default {
                 window.dataLayer.push({
                     event: 'purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
-                        currency: 'IRR',
-                        value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        currency: 'USD',
+                        value: Number(String(this.order?.data?.data?.sending_price + this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
-                        couponvalue: this.order?.data?.data?.voucher_amount,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                        couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
-                        items: productArr
+                        items: productArrLastTrue
                     }
                 });
 
             }  else{
-                let productArr = [];
+                let productArrLast = [];
                 this.order.data.data.details.forEach(item =>{
                     const obj={
-                        item_id: item.id,	// insert an actual product ID
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                        item_id: item?.sku_id,
                         quantity: item.count,	
                     }
-                    productArr.push(obj);
+                    productArrLast.push(obj);
                 })
                 
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
-                    ecommerce: {
-                        currency: 'IRR',
-                        value: Number(String(this.order?.data?.data?.total_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
-                        shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
-                        order_id: this.order?.data?.data?.id,	// order id
-                        coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
-                        couponvalue: this.order?.data?.data?.voucher_amount,   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
-                        
-                        items: productArr
-                    }
+                    currency: 'USD',
+                    userID: this.$store.getters['get_userData'].id,
+                    value: Number(String(this.order?.data?.data?.sending_price + this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                    shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
+                    order_id: this.order?.data?.data?.id,	// order id
+                    coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
+                    couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
+                    
+                    items: productArrLast
                 });
             }
         },

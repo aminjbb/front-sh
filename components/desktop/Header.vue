@@ -299,14 +299,13 @@ export default {
             this.userBasket.details.forEach(item =>{
                 const obj={
                     item_id: item.shps?.sku?.id, 
-                    price: Number(String(item.current_total_customer_price).slice(0, -1)),  
+                    price: Number(String(item.current_site_price).slice(0, -1)),  
                     item_brand: item?.shps?.sku?.brand?.name,   
                     quantity: item.count,
                     name: item?.shps?.sku?.label
                 }
                 productArr.push(obj);
             });
-
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: 'view_cart_popup',  // name of the event. In this case, it always must be view_cart_popup

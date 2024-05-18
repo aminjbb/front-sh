@@ -476,14 +476,17 @@
         if (amount?.param === "site_price") {
           let site_price_to = ''
           let site_price_from = ''
-          if (amount.amount?.max) {
-            site_price_to = amount.amount?.max
+
+          if (amount?.amount?.max !== null) {
+            site_price_to = amount?.amount?.max
           }
-          if (amount.amount?.min) {
-            site_price_from = amount.amount?.min
+          if (amount?.amount?.min !== null) {
+            site_price_from = amount?.amount?.min
           }
+
           let query = this.$route.query;
-          if (site_price_from && site_price_to === ''){
+
+          if (site_price_from && !site_price_to){
             this.$router.push({
               query: {
                 ...query,
@@ -491,7 +494,7 @@
               }
             })
           }
-          else if (site_price_from === '' && site_price_to ){
+          else if (!site_price_from && site_price_to ){
             this.$router.push({
               query: {
                 ...query,

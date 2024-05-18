@@ -248,7 +248,7 @@ export default {
          * Product count 
          * If isn't in 'Content'
          */
-        count: String,
+        count: String | Number,
 
         /**
          * Order status

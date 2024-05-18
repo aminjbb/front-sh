@@ -15,13 +15,19 @@
 
     <div class="d-flex align-center product-card__details">
         <div v-if="content.shps && content.shps?.sku?.image_url" class="product-card__image ml-5">
-            <a :href="`/sku/${content.shps?.sku?.slug}`" class="d-block">
-                <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
-            </a>
+            <template v-if="noLazy">
+                <a :href="`/sku/${content.shps?.sku?.slug}`" class="d-block">
+                    <img data-not-lazy :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
+                </a>
+            </template>
+            <template v-else>
+                <a :href="`/sku/${content.shps?.sku?.slug}`" class="d-block">
+                    <img :src="content.shps?.sku?.image_url" :title="content.label" :alt="content.label" width="100" height="100" />
+                </a>
+            </template>
         </div>
 
         <div>
-            
             <a v-if="content.shps?.sku" :href="`/sku/${content.shps?.sku?.slug}`" class="d-block">
                 <h3 class="t12 w400 text-grey-darken-1 product-card__title mb-5">
                     {{ content.shps?.sku?.label }}
@@ -147,7 +153,12 @@ export default {
         /**
          * hide seller
          */
-        noSeller: Boolean
+        noSeller: Boolean,
+
+        /**
+         * hide seller
+         */
+        noLazy:Boolean
     },
 
     methods: {
