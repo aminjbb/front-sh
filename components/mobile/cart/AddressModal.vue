@@ -116,7 +116,7 @@ export default {
          * Reverse address
          */
          addressRevers(){
-            return this.userAddress.reverse();
+            return this.userAddress;
         }
     },
 
