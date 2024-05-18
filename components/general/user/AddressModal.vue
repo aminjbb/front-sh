@@ -56,7 +56,7 @@
     
                 <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
                 <v-form v-model="valid" ref="addAddress">
-                    <div>
+                    <div class="mb-10">
                         <v-text-field
                             density="compact"
                             variant="outlined"
@@ -66,18 +66,18 @@
                             :append-inner-icon="rules ? 'mdi-check' : ''"
                             v-model="form.address" />
 
-                        <span class="t11 w400 text-grey mt-2 d-block">
-                            آدرس پستی پیشفرض بر اساس موقعیت مکانی انتخابی شما وارد شده است و قابلیت ویرایش دارد.
-                        </span>
+<!--                        <span class="t11 w400 text-grey mt-2 d-block">-->
+<!--                            آدرس پستی پیشفرض بر اساس موقعیت مکانی انتخابی شما وارد شده است و قابلیت ویرایش دارد.-->
+<!--                        </span>-->
                     </div>
 
-                    <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">
-                        <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>
-                        <v-icon
-                            icon="mdi-chevron-left"
-                            color="deep-purple"
-                            class="mr-2 t16" />
-                    </a>
+<!--                    <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">-->
+<!--                        <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>-->
+<!--                        <v-icon-->
+<!--                            icon="mdi-chevron-left"-->
+<!--                            color="deep-purple"-->
+<!--                            class="mr-2 t16" />-->
+<!--                    </a>-->
 
                     <v-row>
                         <v-col cols="12" md="6">
