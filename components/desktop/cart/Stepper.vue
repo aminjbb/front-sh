@@ -50,6 +50,50 @@
 
                     <v-divider color="grey-lighten-1" class="my-3 cart-hr" />
 
+                    <div class="d-flex align-center justify-space-between mb-4">
+                    <span class="t14 w400 text-grey-darken-1">جمع سبد خرید:</span>
+
+                    <span class="t19 w400 text-grey-darken-3 number-font">
+                            <template v-if="voucher && voucher.total_price">
+                                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }}
+                            </template>
+
+                            <template v-else>
+                                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }}
+                            </template>
+                            <span class="t12 w400 text-grey-darken-3">تومان</span>
+                        </span>
+                  </div>
+
+                  <div class="d-flex align-center justify-space-between mb-4">
+                    <span class="t14 w400 text-success">مجموع تخفیف ها:</span>
+
+                    <span class="t19 w400 text-success number-font">
+                            <template v-if="voucher && voucher.total_price && voucher.paid_price">
+                                {{ splitChar(Number(String(voucher.total_price - voucher.paid_price).slice(0, -1))) }}
+                            </template>
+
+                            <template v-else>
+                                {{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}
+                            </template>
+                            <span class="t12 w400 text-success">تومان</span>
+                        </span>
+                  </div>
+                   <div v-if="voucher" class="d-flex align-center justify-space-between mb-4">
+                    <span class="t14 w400 text-success">کد تخفیف:</span>
+
+                    <span class="t19 w400 text-success number-font">
+                            <template v-if="voucher && data?.voucher">
+                                {{ splitChar(Number(String(data?.voucher?.discount).slice(0, -1))) }}
+                            </template>
+
+                            <template v-else>
+                                {{ splitChar(Number(String(data.voucher.discount).slice(0, -1))) }}
+                            </template>
+                            <span class="t12 w400 text-success">تومان</span>
+                        </span>
+                  </div>
+
                     <div v-if="!freeDelivery && data.sending_price !== 0 && data.sending_price !== null" class="d-flex align-center justify-space-between mb-4">
                         <span class="t14 w400 text-grey-darken-1">هزینه ارسال:</span>
                         <span class="t16 w400 text-grey-darken-3 number-font">
@@ -84,36 +128,6 @@
 
                                 <span class="t16 w400 text-grey-darken-3 number-font">رایگان</span>
                             </template>
-                        </span>
-                    </div>
-
-                    <div class="d-flex align-center justify-space-between mb-4">
-                        <span class="t14 w400 text-grey-darken-1">مجموع قیمت کالاها:</span>
-
-                        <span class="t19 w400 text-grey-darken-3 number-font">
-                            <template v-if="voucher && voucher.total_price">
-                                {{ splitChar(Number(String(voucher.total_price).slice(0, -1))) }}
-                            </template>
-
-                            <template v-else>
-                                {{ splitChar(Number(String(data.total_price).slice(0, -1))) }}
-                            </template>
-                            <span class="t12 w400 text-grey-darken-3">تومان</span>
-                        </span>
-                    </div>
-
-                    <div class="d-flex align-center justify-space-between mb-4">
-                        <span class="t14 w400 text-success">سود شما:</span>
-
-                        <span class="t19 w400 text-success number-font">
-                            <template v-if="voucher && voucher.total_price && voucher.paid_price">
-                                {{ splitChar(Number(String(voucher.total_price - voucher.paid_price).slice(0, -1))) }}
-                            </template>
-
-                            <template v-else>
-                                {{ splitChar(Number(String(data.total_price - data.paid_price).slice(0, -1))) }}
-                            </template>
-                            <span class="t12 w400 text-success">تومان</span>
                         </span>
                     </div>
 

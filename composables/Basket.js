@@ -349,6 +349,7 @@ export default function setup() {
             })
             .then((response) => {
                 voucher.value = response.data.data
+                getBasket()
             })
             .catch((err) => {
                 if(err.response.data){
