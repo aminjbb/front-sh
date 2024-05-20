@@ -218,10 +218,10 @@ export default {
 
                 if(this.transactionData?.status=== 'successful'){
                     this.sendInfoToDeema(newVal?.data?.data); //Call Deema affiliate code
-                }
-                
-                if(this.taToken && this.taToken !== null && this.taToken !== ''){
-                    this.sendInfoToTakhfifan(this.order?.data?.data)
+
+                    if(this.taToken && this.taToken !== null && this.taToken !== ''){
+                        this.sendInfoToTakhfifan(this.order?.data?.data)
+                    }
                 }
             }
         }

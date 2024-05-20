@@ -26,7 +26,7 @@ export default function setup() {
 
         axios
             .post('https://analytics.takhfifan.com/track/purchase', {
-                token: taToken,
+                token: taToken.value,
                 transaction_id: order?.transaction_id ,
                 revenue: order?.paid_price,
                 shipping: order?.sending_price,
