@@ -64,10 +64,13 @@ export default {
    * @returns 
    */
   async verifyOTP(phoneNumber, otp) {
+    const tatoken = useCookie('tatoken');
+    
     try {
       const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/login-register/otp`, {
         phone_number: phoneNumber,
-        code: otp
+        code: otp,
+        is_takhfifan: tatoken !== null && tatoken !== '' ? true : false
       });
       return response;
     } catch (error) {

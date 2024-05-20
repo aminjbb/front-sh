@@ -1,10 +1,7 @@
 /**
- * A composable
+ * Affiliate composable
  */
-import {ref} from 'vue';
 import axios from 'axios'
-import {useRoute} from "vue-router";
-import {useStore} from "vuex";
 
 
 export default function setup() {
@@ -12,24 +9,52 @@ export default function setup() {
      * Send information to takhfifan
      * @param {*} data 
      */
-    async function sendInfoToTakhfifan(data) {
+    async function sendInfoToTakhfifan(order) {
+        const taToken = useCookie('tatoken')
+
+        let productList = [];
+        order?.details.forEach(item =>{
+            const obj={
+                price: item.site_price,
+                quantity: item.count,	
+                product_id: item?.shps?.sku?.id,
+                name: item?.shps?.sku?.label,
+                category: item?.shps?.sku?.category
+            }
+            productList.push(obj);
+        });
+
         axios
             .post('https://analytics.takhfifan.com/track/purchase', {
-                shps: shps,
-                count: countMain ,
-                identifier: number
+                token: taToken,
+                transaction_id: order?.transaction_id ,
+                revenue: order?.paid_price,
+                shipping: order?.sending_price,
+                tax: order?.tax,
+                discount: order?.total_discount,
+                new_customer: order?.is_takhfifan,
+                affiliation: 'takhfifan',
+                coupon_code: order?.voucher_code,
+                items: productList
             })
             .then((response) => {
-                voucher.value = response.data.data
+                taToken.value = '';
             })
             .catch((err) => {
-                if(err.response.data){
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }
             });
     };
+
+    async function sendInfoToDeema(order) {
+        const deemaToken = useCookie('dm-clickid')
+        
+        axios
+            .get(`https://deemanetwork.com/api/v1/affiliate/22896/callback/store/server?clickid=${deemaToken.value}&orderRefCode=${order?.order_number}&totalPrice=${order?.paid_price}`, {
+            })
+            .then((response) => {
+            })
+            .catch((err) => {
+            });
+    };
+
+    return{sendInfoToTakhfifan, sendInfoToDeema}
 }

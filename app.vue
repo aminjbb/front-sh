@@ -63,7 +63,7 @@ const structureData = {
     }
 }
 
-/* useHead({
+useHead({
   noscript: [{ children: `<iframe src="https://www.googletagmanager.com/ns.html?id=${runtimeConfig.public.gtagId}"
   height="0" width="0" style="display:none;visibility:hidden"></iframe>
   ` }],
@@ -75,8 +75,14 @@ const structureData = {
   {
       type: 'application/ld+json',
       children: JSON.stringify(structureData)
-  }],
-  }); */
+  } ,
+  {
+    src: 'https://deemanetwork.com/pxjs/22896.js',
+    type: 'text/javascript',
+    async: true
+  }
+],
+  }); 
 
   onMounted(() => {
     /* Takhfifan code */
@@ -84,10 +90,10 @@ const structureData = {
     const source = urlParams.get('utm_source');
 
     if(source === 'takhfifan'){
-      const tatokenValue = urlParams.get('tatoken');
+        const tatokenValue = urlParams.get('tatoken');
         const tatoken = useCookie('tatoken', {
-        maxAge: 2592000, // 30 days in seconds
-      });
+          maxAge: 2592000, // 30 days in seconds
+        });
 
       tatoken.value = tatokenValue
     }
