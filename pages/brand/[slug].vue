@@ -177,6 +177,7 @@
                     :sectionName = "`لیست کالاهای برند ${plpTitle} `"
                     :hideInfo="true"
                     :isPLP="true"
+                    showBasket
                     :categoryName = "category"
                     :showColors="true"/>
               </v-col>
