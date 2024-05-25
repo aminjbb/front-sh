@@ -48,7 +48,8 @@
                 <generalProductSimpleCard
                     v-for="(sku, index) in content?.details"
                     :key="`sku${index}`"
-                    tag="div"
+                    tag="a"
+                    :href="`/sku/${sku?.shps?.sku?.slug}`"
                     :image="sku?.shps?.sku?.image_url"
                     :label="sku?.shps?.sku?.label" />
             </template>
