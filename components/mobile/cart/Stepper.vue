@@ -99,7 +99,7 @@
             <span class="t12 w400 text-success">تومان</span>
         </span>
     </div>
-    <div v-if="voucher" class="d-flex align-center justify-space-between mb-3">
+    <div v-if="data?.voucher?.discount" class="d-flex align-center justify-space-between mb-3">
       <span class="t12 w400 text-success">کد تخفیف:</span>
       <span class="t16 w400 text-success number-font">
             <template v-if="voucher && data?.voucher">

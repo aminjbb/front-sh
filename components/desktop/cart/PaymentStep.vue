@@ -82,9 +82,8 @@
 
         <div v-if="deleteVoucher || voucherBasket" class="d-flex align-center mt-3">
             <div class="t13 w500 text-grey-darken-3 ml-2">کد تخفیف اعمال شده: </div>
-            <div class="d-flex align-center">
-                <div v-if="voucherBasket" class="t14 w400 text-primary ml-3">{{ voucherBasket.code }}</div>
-                <div  class="t14 w400 text-primary ml-3">{{ discountCodeShow }}</div>
+            <div v-if="voucherBasket" class="d-flex align-center">
+                <div class="t14 w400 text-primary ml-3">{{ voucherBasket.code }}</div>
                 <v-icon @click="deleteBasketVoucher()" icon="mdi-delete-outline" color="primary"/>
             </div>
         </div>
