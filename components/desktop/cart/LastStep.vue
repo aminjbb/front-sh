@@ -109,6 +109,7 @@ export default {
         const userToken = useCookie('userToken');
         const taToken = useCookie('tatoken');
         const alToken = useCookie('altoken');
+        const deemaToken = useCookie('dm-clickid')
 
         useHead({
             title,
@@ -146,7 +147,8 @@ export default {
             taToken,
             sendInfoToDeema,
             alToken,
-            sendInfoToTaAffilinks
+            sendInfoToTaAffilinks,
+            deemaToken
         }
     },
 
@@ -221,7 +223,10 @@ export default {
                 this.enhanceECommerceLastStep();
 
                 if(this.transactionData?.status=== 'successful'){
-                    this.sendInfoToDeema(newVal?.data?.data); //Call Deema affiliate code
+                    
+                    if(this.deemaToken && this.deemaToken !== null && this.deemaToken !== ''){
+                        this.sendInfoToDeema(newVal?.data?.data); //Call Deema affiliate code
+                    }
 
                     if(this.taToken && this.taToken !== null && this.taToken !== ''){
                         this.sendInfoToTakhfifan(this.order?.data?.data)//Call Takhfifan code

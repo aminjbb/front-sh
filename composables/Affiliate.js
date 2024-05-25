@@ -17,7 +17,7 @@ export default function setup() {
             const obj={
                 price: item.site_price,
                 quantity: item.count,	
-                product_id: item?.shps?.sku?.id,
+                product_id: `${item?.shps?.sku?.id}`,
                 name: item?.shps?.sku?.label,
                 category: item?.shps?.sku?.category
             }
@@ -27,7 +27,7 @@ export default function setup() {
         axios
             .post('https://analytics.takhfifan.com/track/purchase', {
                 token: taToken.value,
-                transaction_id: order?.transaction_id ,
+                transaction_id: `${order?.transaction_id}` ,
                 revenue: order?.paid_price,
                 shipping: order?.sending_price,
                 tax: order?.tax,
@@ -55,6 +55,7 @@ export default function setup() {
             .get(`https://deemanetwork.com/api/v1/affiliate/22896/callback/store/server?clickid=${deemaToken.value}&orderRefCode=${order?.order_number}&totalPrice=${order?.paid_price}`, {
             })
             .then((response) => {
+                deemaToken.value = ''
             })
             .catch((err) => {
             });
@@ -71,12 +72,12 @@ export default function setup() {
         let productList = [];
         order?.details.forEach(item =>{
             const obj={
-                price: Number(String(item?.site_price).slice(0, -1)),
+                price:Number(String(item?.site_price).slice(0, -1)) ,
                 quantity: item?.count,	
-                product_id: item?.shps?.sku?.id,
+                product_id: `${item?.shps?.sku?.id}`,
                 name: item?.shps?.sku?.label,
                 category: item?.shps?.sku?.category,
-                category_id: item?.shps?.sku?.category_id,
+                category_id: `${item?.shps?.sku?.category_id}`,
             }
             productList.push(obj);
         });
@@ -84,7 +85,7 @@ export default function setup() {
         axios
             .post('https://affilinks.ir/api/v1/third-party/track-purchase', {
                 token: alToken.value,
-                order_id:order?.id,
+                order_id:`${order?.id}`,
                 total: Number(String(order?.paid_price).slice(0, -1)),
                 shipping: Number(String(order?.sending_price).slice(0, -1)),
                 tax: Number(String(order?.tax).slice(0, -1)),
@@ -92,6 +93,11 @@ export default function setup() {
                 new_customer1: order?.is_affilinks,
                 coupon_code: order?.voucher_code,
                 items: productList
+            },
+            {
+                headers: {
+                    authorization: 'Special token for shavaz',
+                },
             })
             .then((response) => {
                 alToken.value = '';
