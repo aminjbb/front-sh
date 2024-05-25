@@ -108,6 +108,7 @@ export default {
         const description = ref("نتیجه پرداخت از فروشگاه لوازم آرایشی و بهداشتی شاواز")
         const userToken = useCookie('userToken');
         const taToken = useCookie('tatoken');
+        const alToken = useCookie('altoken');
 
         useHead({
             title,
@@ -130,7 +131,8 @@ export default {
 
         const{
             sendInfoToTakhfifan,
-            sendInfoToDeema
+            sendInfoToDeema,
+            sendInfoToTaAffilinks
         } = new Affiliate()
 
         return {
@@ -142,7 +144,9 @@ export default {
             order,
             sendInfoToTakhfifan,
             taToken,
-            sendInfoToDeema
+            sendInfoToDeema,
+            alToken,
+            sendInfoToTaAffilinks
         }
     },
 
@@ -220,7 +224,11 @@ export default {
                     this.sendInfoToDeema(newVal?.data?.data); //Call Deema affiliate code
 
                     if(this.taToken && this.taToken !== null && this.taToken !== ''){
-                        this.sendInfoToTakhfifan(this.order?.data?.data)
+                        this.sendInfoToTakhfifan(this.order?.data?.data)//Call Takhfifan code
+                    }
+
+                    if(this.alToken && this.alToken !== null && this.alToken !== ''){
+                        this.sendInfoToTaAffilinks(this.order?.data?.data)//Call Affilinks code
                     }
                 }
             }

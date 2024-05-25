@@ -97,5 +97,12 @@ useHead({
 
       tatoken.value = tatokenValue
     }
+
+    if(source === 'affilinks'){
+        const altokenValue = urlParams.get('altoken');
+        const altoken = useCookie('altoken');
+
+        altoken.value = altokenValue
+    }
 })
 </script>
