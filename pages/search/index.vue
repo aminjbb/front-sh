@@ -69,7 +69,7 @@
                 </div>
 
                 <ul class="v-product__filter__items d-flex align-center">
-                    <li class="t14 w400 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                    <li class="t14 w400 px-4" :class="(sortType=== 'related' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('related', 'asc')">مرتبط‌ترین</li>
                     <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
                     <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'desc')">گران‌ترین</li>
                     <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
@@ -93,6 +93,7 @@
                   :hideInfo="true"
                   :isPLP="true"
                   :index = "index + 1"
+                  showBasket
                   :sectionName = "`${query}لیست کالاهای`"
                   :showColors="true" />
             </v-col>
@@ -123,7 +124,7 @@ export default {
         return {
             filters: [],
             screenType: null,
-            sortType:'site_price',
+            sortType:'related',
             orderType: 'asc'
         }
     },
@@ -198,7 +199,6 @@ export default {
                     }
                 })
             }
-
         },
 
         /**

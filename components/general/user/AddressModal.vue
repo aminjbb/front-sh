@@ -54,167 +54,136 @@
                     </v-btn>
                 </header>
     
-                <template v-if="step === '1'">
-                    <p class="t12 w400 text-grey mb-5">موقعیت مکانی آدرس را در نقشه زیر مشخص کنید.</p>
-                    <div class="map mb-5 flex-grow-1">
-                        <ClientOnly>
-                            <NeshanMap
-                                ref="myMap"
-                                :viewType="screenType === 'mobile' ? 'mobile' : 'desktop'"
-                                :mapKey="runtimeConfig.public.neshanMapKey"
-                                :serviceKey="runtimeConfig.public.serviceKey"
-                                :center="form.latLong"
-                                :poi="false"
-                                :traffic="false"
-                                :markers-icon-callback="markersIconCallback"
-                                :zoom="15" />
-                        </ClientOnly>
+                <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
+                <v-form v-model="valid" ref="addAddress">
+                    <div class="mb-10">
+                        <v-text-field
+                            density="compact"
+                            variant="outlined"
+                            label="آدرس پستی *"
+                            hide-details
+                            :rules="rule"
+                            :append-inner-icon="rules ? 'mdi-check' : ''"
+                            v-model="form.address" />
+
+<!--                        <span class="t11 w400 text-grey mt-2 d-block">-->
+<!--                            آدرس پستی پیشفرض بر اساس موقعیت مکانی انتخابی شما وارد شده است و قابلیت ویرایش دارد.-->
+<!--                        </span>-->
                     </div>
-    
-                    <div class="d-flex justify-end">
-                        <v-btn
-                        :disabled="isDisable"
-                
-                            class="btn btn--submit"
-                            @click="getLocation()"
-                            color="grey-darken-1">
-                            تایید موقعیت مکانی
-                        </v-btn>
-                    </div>
-                </template>
-    
-                <template v-if="step === '2'">
-                    <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
-                    <v-form v-model="valid" ref="addAddress">
-                        <div>
+
+<!--                    <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">-->
+<!--                        <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>-->
+<!--                        <v-icon-->
+<!--                            icon="mdi-chevron-left"-->
+<!--                            color="deep-purple"-->
+<!--                            class="mr-2 t16" />-->
+<!--                    </a>-->
+
+                    <v-row>
+                        <v-col cols="12" md="6">
+
+                            <v-autocomplete
+                                :items="provinceList"
+                                density="compact"
+                                variant="outlined"
+                                :rules="rule"
+                                label="استان *"
+                                v-model="form.province"
+                                @update:modelValue="getCitiesList()" />
+                        </v-col>
+
+                        <v-col cols="12" md="6">
+                            <v-autocomplete
+                                :items="cityList"
+                                density="compact"
+                                variant="outlined"
+                                :rules="rule"
+                                label="شهر *"
+                                v-model="form.city" />
+                        </v-col>
+
+                        <v-col cols="12" md="4">
                             <v-text-field
                                 density="compact"
                                 variant="outlined"
-                                label="آدرس پستی *"
-                                hide-details
+                                label="کد پستی *"
+                                :rules="postalCodeRule"
+                                :append-inner-icon="rules ? 'mdi-check' : ''"
+                                v-model="form.postal_code" />
+                        </v-col>
+
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                density="compact"
+                                variant="outlined"
+                                label="پلاک *"
                                 :rules="rule"
                                 :append-inner-icon="rules ? 'mdi-check' : ''"
-                                v-model="form.address" />
-    
-                            <span class="t11 w400 text-grey mt-2 d-block">
-                                آدرس پستی پیشفرض بر اساس موقعیت مکانی انتخابی شما وارد شده است و قابلیت ویرایش دارد.
-                            </span>
-                        </div>
-    
-                        <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">
-                            <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>
-                            <v-icon
-                                icon="mdi-chevron-left"
-                                color="deep-purple"
-                                class="mr-2 t16" />
-                        </a>
-    
-                        <v-row>
-                            <v-col cols="12" md="6">
-    
-                                <v-autocomplete
-                                    :items="provinceList"
-                                    density="compact"
-                                    variant="outlined"
-                                    :rules="rule"
-                                    label="استان *"
-                                    v-model="form.province"
-                                    @update:modelValue="getCitiesList()" />
-                            </v-col>
-    
-                            <v-col cols="12" md="6">
-                                <v-autocomplete
-                                    :items="cityList"
-                                    density="compact"
-                                    variant="outlined"
-                                    :rules="rule"
-                                    label="شهر *"
-                                    v-model="form.city" />
-                            </v-col>
-    
-                            <v-col cols="12" md="4">
-                                <v-text-field
-                                    density="compact"
-                                    variant="outlined"
-                                    label="کد پستی *"
-                                    :rules="postalCodeRule"
-                                    :append-inner-icon="rules ? 'mdi-check' : ''"
-                                    v-model="form.postal_code" />
-                            </v-col>
-    
-                            <v-col cols="12" md="4">
-                                <v-text-field
-                                    density="compact"
-                                    variant="outlined"
-                                    label="پلاک *"
-                                    :rules="rule"
-                                    :append-inner-icon="rules ? 'mdi-check' : ''"
-                                    v-model="form.number" />
-                            </v-col>
-    
-                            <v-col cols="12" md="4">
-                                <v-text-field
-                                    density="compact"
-                                    variant="outlined"
-                                    label="واحد"
-                                    :rules="rule"
-                                    :append-inner-icon="rules ? 'mdi-check' : ''"
-                                    v-model="form.room_number" />
-                            </v-col>
-                        </v-row>
-    
-                        <div class="c-modal--address__receiver">
-                            <v-checkbox
-                                label="گیرنده سفارش خودم نیستم"
-                                hide-details
-                                v-model="newReceiver" />
-    
-                            <template v-if="newReceiver">
-                                <v-row>
-                                    <v-col cols="12" md="4">
-                                        <v-text-field
-                                            density="compact"
-                                            variant="outlined"
-                                            label="نام گیرنده *"
-                                            :rules="persianRule"
-                                            :append-inner-icon="rules ? 'mdi-check' : ''"
-                                            v-model="form.first_name" />
-                                    </v-col>
-    
-                                    <v-col cols="12" md="4">
-                                        <v-text-field
-                                            density="compact"
-                                            variant="outlined"
-                                            label=" نام خانوادگی گیرنده *"
-                                            :rules="persianRule"
-                                            :append-inner-icon="rules ? 'mdi-check' : ''"
-                                            v-model="form.last_name" />
-                                    </v-col>
-    
-                                    <v-col cols="12" md="4">
-                                        <v-text-field
-                                            density="compact"
-                                            variant="outlined"
-                                            label="شماره تماس گیرنده *"
-                                            :rules="mobileRule"
-                                            :append-inner-icon="rules ? 'mdi-check' : ''"
-                                            v-model="form.phone_number" />
-                                    </v-col>
-                                </v-row>
-                            </template>
-                        </div>
-    
-                        <div class="d-flex justify-end">
-                            <v-btn
-                                :loading="loading"
-                                class="btn btn--submit"
-                                @click="validate()"
-                                color="grey-darken-1">
-                                ثبت آدرس
-                            </v-btn>
-                        </div>
-                    </v-form>
-                </template>
+                                v-model="form.number" />
+                        </v-col>
+
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                density="compact"
+                                variant="outlined"
+                                label="واحد"
+                                :rules="rule"
+                                :append-inner-icon="rules ? 'mdi-check' : ''"
+                                v-model="form.room_number" />
+                        </v-col>
+                    </v-row>
+
+                    <div class="c-modal--address__receiver">
+                        <v-checkbox
+                            label="گیرنده سفارش خودم نیستم"
+                            hide-details
+                            v-model="newReceiver" />
+
+                        <template v-if="newReceiver">
+                            <v-row>
+                                <v-col cols="12" md="4">
+                                    <v-text-field
+                                        density="compact"
+                                        variant="outlined"
+                                        label="نام گیرنده *"
+                                        :rules="persianRule"
+                                        :append-inner-icon="rules ? 'mdi-check' : ''"
+                                        v-model="form.first_name" />
+                                </v-col>
+
+                                <v-col cols="12" md="4">
+                                    <v-text-field
+                                        density="compact"
+                                        variant="outlined"
+                                        label=" نام خانوادگی گیرنده *"
+                                        :rules="persianRule"
+                                        :append-inner-icon="rules ? 'mdi-check' : ''"
+                                        v-model="form.last_name" />
+                                </v-col>
+
+                                <v-col cols="12" md="4">
+                                    <v-text-field
+                                        density="compact"
+                                        variant="outlined"
+                                        label="شماره تماس گیرنده *"
+                                        :rules="mobileRule"
+                                        :append-inner-icon="rules ? 'mdi-check' : ''"
+                                        v-model="form.phone_number" />
+                                </v-col>
+                            </v-row>
+                        </template>
+                    </div>
+
+                    <div class="d-flex justify-end">
+                        <v-btn
+                            :loading="loading"
+                            class="btn btn--submit"
+                            @click="validate()"
+                            color="grey-darken-1">
+                            ثبت آدرس
+                        </v-btn>
+                    </div>
+                </v-form>
             </v-card>
         </v-dialog>
     
@@ -223,7 +192,6 @@
 </template>
     
 <script>
-import NeshanMap from "@neshan-maps-platform/vue3-openlayers";
 import Public from '@/composables/Public.js'
 import axios from "axios";
 import auth from "~/middleware/auth.js";
@@ -244,23 +212,14 @@ export default {
         }
     },
 
-    components: {
-        NeshanMap,
-    },
-
     data() {
         return {
             valid: true,
             dialog: false,
-            step: '1',
             isDisable : true,
             screenType: null,
             form: {
                 address: '',
-                latLong: {
-                    latitude: 35.745669792668494,
-                    longitude: 51.35438114404677
-                },
                 postal_code: '',
                 number: '',
                 room_number: '',
@@ -385,8 +344,6 @@ export default {
             formData.append('postal_code', digits(this.form.postal_code, 'en'))
             formData.append('number', digits(this.form.number, 'en'))
             formData.append('unit', digits(this.form.room_number, 'en'))
-            formData.append('lat', this.form.latLong.latitude)
-            formData.append('long', this.form.latLong.longitude)
 
             if (this.newReceiver) {
                 formData.append('am_i', 0)
@@ -418,10 +375,6 @@ export default {
                     },
                 })
                 .then((response) => {
-                    if(!this.edit){
-                        this.$refs.addAddress.reset()
-                    }
-                    this.step = '1'
                     this.dialog = false;
                     useNuxtApp().$toast.success('آدرس شما با موفقیت ایجاد شد.', {
                         rtl: true,
@@ -443,20 +396,11 @@ export default {
         },
 
         /**
-         * go 'step' to 2 for show address detail
-         */
-        getLocation() {
-            this.step = '2'
-        },
-
-        /**
          * Marker in map
          * @param {*} point 
          */
         markersIconCallback(point) {
             setTimeout(() => {
-                this.form.latLong.latitude = this.$refs.myMap.state.reverseResult.mapCoords[1]
-                this.form.latLong.longitude = this.$refs.myMap.state.reverseResult.mapCoords[0]
                 this.form.address = this.$refs.myMap.state.reverseResult.formatted_address
                 this.isDisable = false
             }, 1000)
@@ -492,10 +436,6 @@ export default {
             this.isDisable= true;
             this.form= {
                 address: '',
-                latLong: {
-                    latitude: 35.745669792668494,
-                    longitude: 51.35438114404677
-                },
                 postal_code: '',
                 number: '',
                 room_number: '',
@@ -508,24 +448,15 @@ export default {
         },
 
         /**
-         * back 'step' to 1 for show map
-         */
-        showMap() {
-            this.step = '1';
-        },
-
-        /**
          * get cities after select province
          */
         getCitiesList() {
-
             this.form.city = null
             this.getCities(this.form.province)
         },
 
         editMode() {
             if (this.edit) {
-                this.step = '2'
                 this.isDisable = false
             }
         },
@@ -566,7 +497,7 @@ export default {
 
   watch:{
     dialog(val){
-      if (val){
+      if (val === true && this.edit === true){
         this.getCities(this.form.province)
       }
     }
@@ -575,7 +506,6 @@ export default {
 </script>
     
 <style lang="scss">
-@import url("@neshan-maps-platform/vue3-openlayers/dist/style.css");
 @import "~/assets/scss/tools/bp";
 
 .c-modal {

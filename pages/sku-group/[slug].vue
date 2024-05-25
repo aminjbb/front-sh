@@ -74,6 +74,7 @@
                   :hideInfo="true"
                   :isPLP="true"
                   :index = "index + 1"
+                  showBasket
                   :sectionName = "`لیست کالاهای ${plpTitle}`"
                   :categoryName = "category"
                   :showColors="true" />
