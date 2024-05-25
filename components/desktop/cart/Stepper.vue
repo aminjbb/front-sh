@@ -79,11 +79,11 @@
                             <span class="t12 w400 text-success">تومان</span>
                         </span>
                   </div>
-                   <div v-if="voucher" class="d-flex align-center justify-space-between mb-4">
+                   <div v-if="data?.voucher?.discount" class="d-flex align-center justify-space-between mb-4">
                     <span class="t14 w400 text-success">کد تخفیف:</span>
 
                     <span class="t19 w400 text-success number-font">
-                            <template v-if="voucher && data?.voucher">
+                            <template v-if="voucher && data?.voucher && data?.voucher?.discount">
                                 {{ splitChar(Number(String(data?.voucher?.discount).slice(0, -1))) }}
                             </template>
 
