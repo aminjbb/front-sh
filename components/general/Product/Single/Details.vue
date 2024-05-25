@@ -79,22 +79,44 @@
                 :navigation="true"
                 class="mySwiper px-6">
                 <swiper-slide v-for="(color, index) in content?.colors" :key="`product-single-color${index}`">
-                    <div
-                        class="d-inline-flex align-center colors-pallet__item ml-5"
-                        :id="`color--${color.id}`"
-                        @click="selectColor(color?.slug)">
-                        <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color?.slug) === true ? 'colors-pallet__item__code--selected' : ''">
-                            <span :style="{backgroundColor: color?.value}" />
-                            <v-icon
-                                icon="mdi-check"
-                                size="x-small"
-                                color="white" />
-                        </div>
+                    <template v-if="color.have_stock && color.have_stock === 1">
+                        <div
+                            class="d-inline-flex align-center colors-pallet__item ml-5"
+                            :id="`color--${color.id}`"
+                            @click="selectColor(color?.slug)">
+                            <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color?.slug) === true ? 'colors-pallet__item__code--selected' : ''">
+                                <span :style="{backgroundColor: color?.value}" />
+                                <v-icon
+                                    icon="mdi-check"
+                                    size="x-small"
+                                    color="white" />
+                            </div>
 
-                        <span class="colors-pallet__item__label t12 w500 text-grey number-font">
-                            {{color?.label}}
-                        </span>
-                    </div>
+                            <span class="colors-pallet__item__label t12 w500 text-grey number-font">
+                                {{color?.label}}
+                            </span>
+                        </div>
+                    </template>
+
+                    <template v-else>
+                        
+                        <div
+                            class="d-inline-flex align-center colors-pallet__item ml-5"
+                            :id="`color--${color.id}`"
+                            @click="selectColor(color?.slug)">
+                            <div class="colors-pallet__item__code ml-1" :class="isColorSelected(color?.slug) === true ? 'colors-pallet__item__code--selected' : ''">
+                                <span :style="{backgroundColor: color?.value}" class="no-stock"/>
+                                <v-icon
+                                    icon="mdi-close"
+                                    size="x-small"
+                                    color="white" />
+                            </div>
+
+                            <span class="colors-pallet__item__label t12 w500 text-grey number-font">
+                                {{color?.label}}
+                            </span>
+                        </div>
+                    </template>
                 </swiper-slide>
         </swiper>
         </div>
