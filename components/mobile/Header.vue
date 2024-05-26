@@ -1,29 +1,51 @@
 <template>
 <client-only>
-    <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden }">
-    <div class="d-flex align-center">
-        <a href="/" class="d-flex align-center header__logo" title="Shavaz logo" id="mobile-logo">
-            <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
-        </a>
-        <mobileSearchResult />
-    </div>
-</header>
+    <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.href">
+        <img data-not-lazy :src="topBanner.image" class="w-100 h-100" alt="Shavaz Logo" width="1400" height="64" title="top banner" />
+    </a>
+
+    <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
+        <div class="d-flex align-center">
+            <a href="/" class="d-flex align-center header__logo" title="Shavaz logo" id="mobile-logo">
+                <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
+            </a>
+            <mobileSearchResult />
+        </div>
+    </header>
 <mobileMenu />
 </client-only>
 </template>
 
 <script>
+import Public from '~/composables/Public';
+
 export default {
     data() {
         return {
             isFixed: true,
             isHidden: false,
             lastScrollTop: 0,
+            hasBanner: false,
+            isBanner: false,
+            isTop: false,
         };
+    },
+
+    setup() {
+        const {
+            getTopBanner,
+            topBanner,
+        } = Public();
+
+        return {
+            getTopBanner,
+            topBanner
+        }
     },
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
+        this.getTopBanner();
     },
 
     beforeDestroy() {
@@ -40,6 +62,8 @@ export default {
             if (window.scrollY > 60) {
                 this.isHidden = true;
                 this.isFixed = false;
+                this.hasBanner = false;
+
                 const menu = document.getElementById('menu--mobile');
                 if(menu){
                     if (currentScrollTop > this.lastScrollTop) {
@@ -56,7 +80,22 @@ export default {
                 }
                 this.lastScrollTop = currentScrollTop;
             }
+            if (window.scrollY <= 60) {
+                this.hasBanner = true;
+            }
         },
+    },
+
+    watch:{
+        topBanner(newVal){
+            console.log("🚀 ~ topBanner ~ newVal:", newVal)
+            if(newVal){
+                console.log("🚀 ~ topBanner ~ newVal:", newVal)
+                this.isBanner = true;
+                this.hasBanner = true;
+                document.getElementsByTagName('body')[0].classList.add('hasBanner');  
+            }
+        }
     },
 }
 </script>
@@ -64,6 +103,15 @@ export default {
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 $parent: 'header';
+
+.fixed-banner {
+    width: 100%;
+    height: 64px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 11;
+}
 
 .#{$parent} {
     &--mobile {
@@ -96,6 +144,10 @@ $parent: 'header';
             opacity: 1;
             transform: translateY(0);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        &.has-banner {
+            top: 64px;
         }
     }
 }
