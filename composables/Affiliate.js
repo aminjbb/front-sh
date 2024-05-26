@@ -96,7 +96,7 @@ export default function setup() {
             },
             {
                 headers: {
-                    authorization: 'Special token for shavaz',
+                    authorization: '4e2c76387b9c5ea7e3d1ca0dcbbaa2af59caad8a96d8062ca98f445d92b51046',
                 },
             })
             .then((response) => {
