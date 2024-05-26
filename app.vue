@@ -8,6 +8,10 @@
 
 <script setup>
 
+import {
+    onMounted,
+} from 'vue'
+
 useSeoMeta({
   themeColor:'#D72685',
   ogType:'',
@@ -71,6 +75,34 @@ useHead({
   {
       type: 'application/ld+json',
       children: JSON.stringify(structureData)
-  }],
-  });
+  } ,
+  {
+    src: 'https://deemanetwork.com/pxjs/22896.js',
+    type: 'text/javascript',
+    async: true
+  }
+],
+  }); 
+
+  onMounted(() => {
+    /* Takhfifan code */
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('utm_source');
+
+    if(source === 'takhfifan'){
+        const tatokenValue = urlParams.get('tatoken');
+        const tatoken = useCookie('tatoken', {
+          maxAge: 2592000, // 30 days in seconds
+        });
+
+      tatoken.value = tatokenValue
+    }
+
+    if(source === 'affilinks'){
+        const altokenValue = urlParams.get('altoken');
+        const altoken = useCookie('altoken');
+
+        altoken.value = altokenValue
+    }
+})
 </script>
