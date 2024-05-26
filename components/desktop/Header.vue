@@ -1,6 +1,8 @@
 <template>
     <client-only>
-        <div v-if="bannerItem" class="fixed-banner" id="top-banner"></div>
+        <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.href">
+            <img data-not-lazy :src="topBanner.image" class="w-100 h-100" alt="Shavaz Logo" width="1400" height="64" title="top banner" />
+        </a>
     
         <header
             class="header header--desktop w-100"
@@ -182,6 +184,7 @@
 </template>
 <script>
 
+import Public from '~/composables/Public';
 export default {
     name: "Desktop Header",
 
@@ -197,7 +200,6 @@ export default {
             hasBanner: false,
             isBanner: false,
             isTop: false,
-            bannerItem:null,
             menu: false,
         };
     },
@@ -220,20 +222,22 @@ export default {
 
     setup() {
         const userToken = useCookie('userToken')
+
+        const {
+            getTopBanner,
+            topBanner,
+        } = Public();
         return {
             userToken,
+            getTopBanner,
+            topBanner,
         }
     },
 
     mounted() {
-        window.addEventListener('scroll', this.handleScroll);
+        this.getTopBanner();
 
-        const banner = document.getElementById("top-banner");
-        if (banner) {
-            this.isBanner = true;
-            this.hasBanner = true;
-            document.getElementsByTagName('body')[0].classList.add('hasBanner');           
-        }
+        window.addEventListener('scroll', this.handleScroll);
     },
 
     beforeDestroy() {
@@ -247,6 +251,14 @@ export default {
             } else {
                 this.isLogin = false
             };
+        },
+
+        topBanner(newVal){
+            if(newVal && newVal!==null){
+                this.isBanner = true;
+                this.hasBanner = true;
+                document.getElementsByTagName('body')[0].classList.add('hasBanner');  
+            }
         }
     },
 
@@ -368,7 +380,6 @@ $parent: 'header';
 .fixed-banner {
     width: 100%;
     height: 64px;
-    background: red;
     top: 0;
     right: 0;
     position: absolute;
