@@ -42,8 +42,7 @@
                                             <template v-if="userData && userData.first_name && userData.last_name">
                                                 <div class="d-flex flex-column">
                                                     <span class="user-phone t14 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
-                                                    <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span>
-                                                </div>
+<!--                                                     <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span> -->                                                </div>
                                             </template>
                                             <template v-else>
                                                 <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
@@ -79,6 +78,17 @@
                                                 size="small"
                                                 color="grey" />
                                             <span class="text-grey t14">علاقمندی‌ها</span>
+                                        </a>
+                                    </v-list-item>
+
+                                    <v-list-item class="py-0">
+                                        <a class="text-grey t14 d-flex align-center cur-p" href="/user/ticket">
+                                            <v-icon
+                                                icon="mdi-chat-processing-outline"
+                                                class="ml-2"
+                                                size="small"
+                                                color="grey" />
+                                            <span class="text-grey t14">ثبت تیکت</span>
                                         </a>
                                     </v-list-item>
 
