@@ -72,7 +72,7 @@ export default {
         phone_number: phoneNumber,
         code: otp,
         is_takhfifan: tatoken !== null && tatoken !== '' ? true : false,
-        is_affilinks: altoken !== null && altoken !== '' ? true : false
+        is_affilink: altoken !== null && altoken !== '' ? true : false
       });
       return response;
     } catch (error) {

@@ -90,7 +90,7 @@ export default function setup() {
                 shipping: Number(String(order?.sending_price).slice(0, -1)),
                 tax: Number(String(order?.tax).slice(0, -1)),
                 discount: Number(String(order?.total_discount).slice(0, -1)),
-                new_customer1: order?.is_affilinks,
+                new_customer1: order?.is_affilink,
                 coupon_code: order?.voucher_code,
                 items: productList
             },
