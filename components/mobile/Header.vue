@@ -1,6 +1,6 @@
 <template>
 <client-only>
-    <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.href">
+    <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
         <img data-not-lazy :src="topBanner.image" class="w-100 h-100" alt="Shavaz Logo" width="1400" height="64" title="top banner" />
     </a>
 
