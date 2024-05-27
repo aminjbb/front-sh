@@ -66,7 +66,8 @@ export default function setup() {
 
                         topBanner.value = {
                             image: imageAddress,
-                            link: topBannerResponse?.link
+                            link: topBannerResponse?.link,
+                            image_alt: topBannerResponse?.image_alt
                         }
 
                     }
