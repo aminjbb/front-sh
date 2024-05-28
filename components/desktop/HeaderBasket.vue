@@ -163,10 +163,12 @@ export default {
 },
 
     watch:{
-        userBasket(newVal){
+        userBasket(newVal, oldVal){
             if(newVal){
                 if(newVal.details && newVal?.details.length === 0){
                     document.body.classList.remove('active-basket');
+                    this.getProductUserHistory();
+                    this.getRandomProducts();
                 }
             }
         },
@@ -180,8 +182,6 @@ export default {
  
     mounted(){
         document.addEventListener('click', this.closeDropDown);
-        this.getProductUserHistory();
-        this.getRandomProducts();
     },
 
     beforeDestroy() {

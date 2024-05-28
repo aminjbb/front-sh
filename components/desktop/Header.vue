@@ -1,6 +1,5 @@
 <template>
     <client-only>
-      {{topBanner.image}}
         <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
             <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="64" :title="topBanner?.image_alt" />
         </a>
