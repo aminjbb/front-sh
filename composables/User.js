@@ -158,18 +158,21 @@ export default function setup() {
      * Get user product history on th profile page
      */
     async function getProductUserHistory() {
-        axios
-            .get(runtimeConfig.public.apiBase + `/product/user/history`, {
-                headers: {
-                    Authorization: `Bearer ${userToken.value}`,
-                },
-            })
-            .then((response) => {
-                productUserHistory.value = response.data.data
-            })
-            .catch((err) => {
-                
-            });
+        if (userToken.value){
+            axios
+                .get(runtimeConfig.public.apiBase + `/product/user/history`, {
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
+                    },
+                })
+                .then((response) => {
+                    productUserHistory.value = response.data.data
+                })
+                .catch((err) => {
+
+                });
+        }
+
     };
 
      /**

@@ -251,8 +251,9 @@ export default {
           this.timeDebounce = setTimeout(()=>{
             if(this.search !== null && this.search !== this.searchNew){
               this.searchNew = this.search;
+              let query = this.$route.query
               axios
-                  .post(this.runtimeConfig.public.apiBase + `/search/general?needle=${this.search}`)
+                  .post(this.runtimeConfig.public.apiBase + `/search/general` ,{needle:this.search,...query})
                   .then((response) => {
                     this.searchResult = response?.data?.data;
                   });

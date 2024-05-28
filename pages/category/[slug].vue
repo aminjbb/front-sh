@@ -265,6 +265,7 @@
                       :hideInfo="true"
                       :isPLP="true"
                       :index = "index + 1"
+                      showBasket
                       :categoryName = "category"
                       :sectionName = "` لیست کالاهای دسته بندی ${plpTitle}`"
                       :showColors="true"/>

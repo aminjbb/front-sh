@@ -33,7 +33,7 @@
 
                 <v-btn
                     v-if="result=== 'success'"
-                    :href="`/user/order/${order.data?.data?.id}`"
+                    :href="`/user/order/${order?.data?.data?.id}`"
                     height="44"
                     width="180"
                     title="مشاهده فاکتور"
@@ -92,6 +92,7 @@
 <script>
 import Basket from '@/composables/Basket.js'
 import Order from '@/composables/Order.js'
+import Affiliate from '@/composables/Affiliate.js'
 
 export default {
     data() {
@@ -106,6 +107,10 @@ export default {
         const title = ref('فروشگاه اینترنتی شاواز | نتیجه پرداخت ')
         const description = ref("نتیجه پرداخت از فروشگاه لوازم آرایشی و بهداشتی شاواز")
         const userToken = useCookie('userToken');
+        const taToken = useCookie('tatoken');
+        const alToken = useCookie('altoken');
+        const deemaToken = useCookie('dm-clickid')
+
         useHead({
             title,
             meta: [{
@@ -125,13 +130,25 @@ export default {
             order
         } = new Order()
 
+        const{
+            sendInfoToTakhfifan,
+            sendInfoToDeema,
+            sendInfoToTaAffilinks
+        } = new Affiliate()
+
         return {
             userToken,
             getTransactionData,
             transactionData,
             createFailedOrder,
             getOrderById,
-            order
+            order,
+            sendInfoToTakhfifan,
+            taToken,
+            sendInfoToDeema,
+            alToken,
+            sendInfoToTaAffilinks,
+            deemaToken
         }
     },
 
@@ -146,18 +163,17 @@ export default {
                     const obj={
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
-                        item_id: item?.sku_id,
+                        item_id: item?.shps?.sku?.id,
                     }
                     productArrLastTrue.push(obj);
                 })
-
 
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     event: 'purchase',  // name of the event. In this case, it always must be purchase
                     ecommerce: {
                         currency: 'USD',
-                        value: Number(String(this.order?.data?.data?.sending_price + this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                        value: Number(String(this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
@@ -183,7 +199,7 @@ export default {
                     event: 'unsuccessful_purchase',  // name of the event. In this case, it always must be purchase
                     currency: 'USD',
                     userID: this.$store.getters['get_userData'].id,
-                    value: Number(String(this.order?.data?.data?.sending_price + this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                    value: Number(String(this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                     shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                     order_id: this.order?.data?.data?.id,	// order id
                     coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
@@ -205,6 +221,21 @@ export default {
         order(newVal){
             if(newVal && newVal!==null){
                 this.enhanceECommerceLastStep();
+
+                if(this.transactionData?.status=== 'successful'){
+                    
+                    if(this.deemaToken && this.deemaToken !== null && this.deemaToken !== ''){
+                        this.sendInfoToDeema(newVal?.data?.data); //Call Deema affiliate code
+                    }
+
+                    if(this.taToken && this.taToken !== null && this.taToken !== ''){
+                        this.sendInfoToTakhfifan(this.order?.data?.data)//Call Takhfifan code
+                    }
+
+                    if(this.alToken && this.alToken !== null && this.alToken !== ''){
+                        this.sendInfoToTaAffilinks(this.order?.data?.data)//Call Affilinks code
+                    }
+                }
             }
         }
     },

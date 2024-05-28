@@ -118,7 +118,7 @@
     </v-container>
 
     <v-container  v-show="!loading">
-      <generalBreadcrumb :items="breadcrumbList"/>
+      <generalBreadcrumb :items="breadcrumb"/>
       <v-row class="mt-10">
         <v-col cols="12" md="3">
           <client-only>
@@ -177,6 +177,7 @@
                     :sectionName = "`لیست کالاهای برند ${plpTitle} `"
                     :hideInfo="true"
                     :isPLP="true"
+                    showBasket
                     :categoryName = "category"
                     :showColors="true"/>
               </v-col>
@@ -252,59 +253,6 @@ export default {
   },
 
   computed: {
-    breadcrumbList(){
-      let breadcrumb = []
-      if(this.breadcrumb?.category_l1?.name){
-        const form = {
-          type : "category_l1",
-          href: `/category/${this.breadcrumb.category_l1.slug}`,
-          title: this.breadcrumb.category_l1.name
-        }
-        breadcrumb.push(form)
-
-      }
-      
-      if(this.breadcrumb?.category_l2?.name){
-        const form = {
-          type : "category_l2",
-          href: `/category/${this.breadcrumb.category_l2.slug}`,
-          title: this.breadcrumb.category_l2.name
-        }
-        breadcrumb.push(form)
-
-      }
-
-      if(this.breadcrumb?.category_l3?.name){
-        const form = {
-          type : "category_l3",
-          href: `/category/${this.breadcrumb.category_l3.slug}`,
-          title: this.breadcrumb.category_l3.name
-        }
-        breadcrumb.push(form)
-      }
-
-      if(this.breadcrumb?.product){
-        const form = {
-          type : "product",
-          href: `/product/${this.breadcrumb.product.slug}`,
-          title: this.breadcrumb.product.name
-        }
-        breadcrumb.push(form)
-
-      }
-
-      if(this.breadcrumb?.sku_group){
-        const form = {
-          type : "sku_group",
-          href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
-          title: this.breadcrumb.sku_group.name
-        }
-        breadcrumb.push(form)
-
-      }
-
-      return breadcrumb
-    },
     /** return data product list  **/
     productListData() {
       try {
