@@ -4,6 +4,7 @@
         v-if="content?.stock"
         class="d-flex justify-end pa-1">
         <template v-if="count === 0 || notSelected">
+
             <v-btn
                 @click="addToCard(content?.shps_id)"
                 height="24"

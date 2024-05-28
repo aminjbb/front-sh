@@ -509,6 +509,6 @@ export default function setup() {
     return {getBasket, loading ,addToBasket , deleteShpsBasket ,
         calculateSendingPrice , createOrder,calculateVoucher,voucher,
         getTransactionData,transactionData,createFailedOrder , beforeAuthAddToBasket, deleteVoucherFromBasket,
-        loadingAddBasket, count ,  getSendingMethods ,sendingMethods, freeDelivery ,transactionErrorMassage  }
+        loadingAddBasket, count ,  getSendingMethods ,sendingMethods, freeDelivery ,transactionErrorMassage ,loadingFirstAddBasket }
 }
 
