@@ -209,7 +209,6 @@ export default {
 
     mounted() {
         document.addEventListener('click', this.closeSearchBox);
-        this.getMostSearch();
     },
 
     beforeDestroy() {
@@ -221,7 +220,8 @@ export default {
          * Open search box
          */
         openSearchbox() {
-            document.getElementById('header__search-box').classList.add('active')
+            document.getElementById('header__search-box').classList.add('active');
+            this.getMostSearch();
         },
 
         /**
