@@ -243,6 +243,8 @@ export default {
   setup() {
     const userToken = useCookie('userToken')
     const runtimeConfig = useRuntimeConfig()
+    const randomNumberForBasket = useCookie('randomNumberForBasket')
+
     const {
       deleteVoucherFromBasket,
       calculateSendingPrice,
@@ -255,6 +257,7 @@ export default {
     } = new Basket()
     const {paymentMethods, getPaymentMethods} = new Order()
     return {
+      randomNumberForBasket,
       deleteVoucherFromBasket,
       calculateSendingPrice,
       calculateVoucher,
@@ -408,6 +411,7 @@ export default {
      */
     deleteAllOrders() {
       let endpoint = ''
+      console.log(this.randomNumberForBasket)
       if (this.randomNumberForBasket && this.randomNumberForBasket != ""){
         endpoint = `/basket/crud/delete?identifier=${this.randomNumberForBasket}`
       }
