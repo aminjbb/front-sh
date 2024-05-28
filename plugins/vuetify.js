@@ -15,7 +15,8 @@ const myTheme = {
     success: '#4CAF50',
     warning: '#F57C00',
     danger: '#D32F2F',
-    detail: '#673AB7'
+    detail: '#673AB7',
+    primary500: '#E91E63',
   },
 }
 

@@ -2,24 +2,24 @@
 <v-app>
     <div v-show="show">
         <div v-if="screenType === 'desktop'">
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopHeader :userData="userData" />
             </template>
 
             <slot />
             <div id="body-cover" />
 
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopFooter />
             </template>
         </div>
 
         <div v-else-if="screenType === 'mobile'">
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <mobileFooter :userData="userData" />
             </template>
         </div>

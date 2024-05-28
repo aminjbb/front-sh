@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import auth from "~/middleware/auth.js";
 import User from '@/composables/User.js'
 import {
   copyText
