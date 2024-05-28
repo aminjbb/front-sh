@@ -271,7 +271,7 @@ export default {
             let currentScrollTop = window.scrollY;
 
             if (this.isBanner) {
-                if (window.scrollY > 74) {
+                if (window.scrollY > 64) {
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
@@ -288,11 +288,14 @@ export default {
                     this.lastScrollTop = currentScrollTop;
                 }
 
-                if (window.scrollY <= 74) {
+                if (window.scrollY <= 64) {
+                    this.hasBanner = true;
+                    const header = document.getElementById('header--desktop');
+                    header.style.top = `${64 - window.scrollY}px`;
                     this.hasBanner = true;
                 }
             } else {
-                if (window.scrollY > 60) {
+                if (window.scrollY > 64) {
                     this.isHidden = true;
                     this.isFixed = false;
 
