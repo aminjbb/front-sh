@@ -7,12 +7,12 @@
                 <v-form @submit.prevent="sendOTP" ref="phoneNumberForm" class="w-100">
                     <div class="w-100 form-inner">
                         <div class="mt-6">
-                            <h2 class="t34 w700 mb-2 text-white">
-                                گردونه شانس تابستانه شاواز
+                            <h2 class="game-title-mobile t34 w700 mb-2 text-white">
+                                گردونه شانس شاواز
                             </h2>
 
                             <div class="t14 w400 l26 text-white mb-15">
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز .
+                                گردونه رو بچرخون و برنده کد نخفیف محصولات آرایشی و بهداشتی شاواز شو!
                             </div>
 
                             <v-text-field class="game-auth__input" v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px"/>
@@ -32,12 +32,12 @@
                 <v-form  @submit.prevent="verifyOTP" ref="otpForm" class="w-100">
                     <div class="w-100 form-inner">
                         <div class="mt-6">
-                            <h2 class="t34 w700 mb-2 text-white">
-                                گردونه شانس تابستانه شاواز
+                            <h2 class="game-title-mobile t34 w700 mb-2 text-white">
+                                گردونه شانس شاواز
                             </h2>
 
                             <div class="t14 w400 l26 text-white mb-8">
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها .
+                                گردونه رو بچرخون و برنده کد نخفیف محصولات آرایشی و بهداشتی شاواز شو!
                             </div>
 
                             <div class="t15 text-center mb-1 text-white number-font text-bold">

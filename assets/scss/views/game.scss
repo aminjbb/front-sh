@@ -8,12 +8,20 @@
     min-height: 100vh;
 
     .parent-width{
-        height: calc(100% - 64px);
+        >.v-row{
+            @include gbp (0, 768) {
+                padding-top: 30px;
+            }
+        }
     }
 
     &__lucky-wheel{
         > div:first-child{
-            margin-top: 84px;
+            margin-top: 40px;
+
+            @include gbp (0, 768) {
+                margin-top: 0;
+            }
         }
     }
 
@@ -21,6 +29,18 @@
         background-color: #5E5E5E !important;
         color:#fff !important;
         opacity: 1;
+    }
+
+    .game-mobile-order{
+        @include gbp (0, 768) {
+            order:1 !important
+        }
+    }
+
+    .game-title-mobile{
+        @include gbp (0, 768) {
+            font-size: 24px !important;
+        }
     }
 
 }

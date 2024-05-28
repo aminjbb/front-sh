@@ -1,35 +1,35 @@
 <template>
 <div class="voucher-list">
     <template v-if="voucherList && voucherList.length">
-        <div v-for="voucher in voucherList" :key="`vouceher${voucher.id}`" class="voucher-card">
-            <div class="voucher-card__info">
-                <img data-not-lazy src="" alt="no voucher" width="100" height="81" title="no voucher" class="mb-3" />
+        <div v-for="voucher in voucherList" :key="`vouceher${voucher.id}`" class="voucher-card mb-4">
+            <div class="voucher-card__info d-flex align-center px-4 py-3">
+                <img data-not-lazy src="" alt="no voucher" width="50" height="50" title="no voucher" class="mb-3" />
 
                 <div class="">
-                    <h2 class="text-grey-darken-4 t16 w500 mb-1">{{ voucher.title }}</h2>
+                    <h2 class="text-grey-darken-4 t18 w700 mb-2">{{ voucher.label }}</h2>
 
                     <div class="d-flex align-center">
-                        <v-icon icon="mdi-clock-outline" class="ml-1" color="primary" />
-                        <span class="t12 w700 text-primary ml-1">مدت زمان استفاده</span>
-                        <span class="t12 w700 text-red"></span>
+                        <v-icon icon="mdi-clock-outline" class="ml-1" color="primary" size="small"/>
+                        <span class="t14 w700 text-primary ml-1">مدت زمان استفاده</span>
+                        <span class="t14 w700 text-red number-font text-bold">{{ voucher.deadline_for_use }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="d-flex align-center justify-space-between px-4 py-2">
-                <div class="voucher-code__code d-flex align-center" @click="doCopy(voucher.code)">
-                    <v-icon icon="mdi-content-copy" class="ml-1" color="primary" />
-                    <span class="t14 w700 text-primary ml-3">کپی کد</span>
-                    <span class="text-grey-darken-1 t12 w500">{{ voucher.code }}</span>
+            <div class="d-flex align-center justify-space-between pa-4">
+                <div class="voucher-code__code d-flex align-center cur-p" @click="doCopy(voucher.code)">
+                    <v-icon icon="mdi-content-copy" class="ml-1" color="primary" size="small"/>
+                    <span class="t16 w700 text-primary ml-3">کپی کد</span>
+                    <span class="text-grey-darken-1 t13 w500">{{ voucher.code }}</span>
                 </div>
                 <div class="voucher-code__link d-flex align-center">
-                    <span class="t12 w700 text-primary">خرید از شاواز</span>
+                    <a href="/" class="t14 w700 text-primary">خرید از شاواز</a>
                     <v-icon icon="mdi-chevron-left" class="mr-2" color="primary" />
                 </div>
             </div>
         </div>
-
     </template>
+    
     <template v-else>
         <div class="voucher-card d-flex align-center justify-center flex-column pa-5">
             <img data-not-lazy src="~/assets/images/voucher-cat.png" alt="no voucher" width="100" height="81" title="no voucher" class="mb-3" />
@@ -41,6 +41,10 @@
 </template>
 
 <script>
+import {
+  copyText
+} from 'vue3-clipboard'
+
 export default {
     props: {
         voucherList: Array
@@ -82,10 +86,13 @@ export default {
     border-radius: 15px;
 
     &__info{
-        border-bottom: 1px dashed rgba(154, 154, 154, 0.05);
+        border-bottom: 1px dashed rgba(154, 154, 154, 0.2);
 
         img{
-
+            width:50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-left: 10px;
         }
     }
 }

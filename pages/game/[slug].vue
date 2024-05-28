@@ -8,28 +8,29 @@
                 <v-col md="5" class="d-flex align-center justify-center">
                     <template v-if="isLogin">
                         <div class="d-flex flex-column">
-                            <h2 class="t34 w700 mb-2 text-white">
-                                گردونه شانس تابستانه شاواز
+                            <h2 class="game-title-mobile t34 w700 mb-2 text-white">
+                                گردونه شانس شاواز
                             </h2>
 
                             <div class="t14 w400 l26 text-white mb-8">
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها .
+                                گردونه رو بچرخون و برنده کد نخفیف محصولات آرایشی و بهداشتی شاواز شو!
                             </div>
 
-                            <generalGameVoucherCards />
+                            <generalGameVoucherCards :voucherList="voucherList"/>
                         </div>
                     </template>
                     <template v-else>
                         <generalGameAuth class="pl-15" @logined="logined" />
                     </template>
                 </v-col>
-                <v-col md="7" class="d-flex align-center justify-center v-game__lucky-wheel">
-                    <div class="d-flex justify-center flex-column align-center">
-                        <generalGameFortuneWheel :items="wheelItems" :isLogin="isLogin" />
+                <v-col md="7" class="d-flex justify-center v-game__lucky-wheel">
+                    <div class="d-flex flex-column align-center">
+                        <generalGameFortuneWheel :items="wheelItems" :isLogin="isLogin" :limit="turn_per_user"/>
                     </div>
                 </v-col>
             </v-row>
         </v-container>
+        <generalGameFooter />
     </main>
 </client-only>
 </template>
@@ -42,31 +43,54 @@ export default {
         return {
             isLogin: false,
             userData: null,
+            turn_per_user:3,
             wheelItems: [{
-                    title: 'wheel1',
-                    image: 'wheel1.png'
+                    label: 'wheel1',
+                    desktop_image_url: 'wheel1.png'
                 },
                 {
-                    title: 'wheel2',
-                    image: 'wheel2.png'
+                    label: 'wheel2',
+                    desktop_image_url: 'wheel2.png'
                 },
                 {
-                    title: 'wheel3',
-                    image: 'wheel3.png'
+                    label: 'wheel3',
+                    desktop_image_url: 'wheel3.png'
                 },
                 {
-                    title: 'wheel4',
-                    image: 'wheel4.png'
+                    label: 'wheel4',
+                    desktop_image_url: 'wheel4.png'
                 },
                 {
-                    title: 'wheel5',
-                    image: 'wheel5.png'
+                    label: 'wheel5',
+                    desktop_image_url: 'wheel5.png'
                 },
                 {
-                    title: 'wheel6',
-                    image: 'wheel6.png'
+                    label: 'wheel6',
+                    desktop_image_url: 'wheel6.png'
                 }
-            ]
+            ],
+            voucherList:[{
+                label:'کد تخفیف ۵۰ درصدی  کرم',
+                code:'MPN25-NLOW1',
+                deadline_for_use:'24:30:12',
+                desktop_image_url: "http://localhost:8000/storage/shavaz/brand/image/2023-08-26/cosmetics-logo.png",
+                mobile_image_url: "http://localhost:8000/storage/shavaz/brand/image/2023-08-26/mac-logo.png"
+            },
+            {
+                label:'کد تخفیف ۵۰ درصدی  کرم',
+                code:'MPN25-NLOW1',
+                deadline_for_use:'24:30:12',
+                desktop_image_url: "http://localhost:8000/storage/shavaz/brand/image/2023-08-26/cosmetics-logo.png",
+                mobile_image_url: "http://localhost:8000/storage/shavaz/brand/image/2023-08-26/mac-logo.png"
+            },
+            {
+                label:'کد تخفیف ۵۰ درصدی  کرم',
+                code:'MPN25-NLOW1',
+                deadline_for_use:'24:30:12',
+                desktop_image_url: "http://localhost:8000/storage/shavaz/brand/image/2023-08-26/cosmetics-logo.png",
+                mobile_image_url: "http://localhost:8000/storage/shavaz/brand/image/2023-08-26/mac-logo.png"
+            }
+            ],
         }
     },
 
