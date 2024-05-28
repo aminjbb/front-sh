@@ -51,8 +51,7 @@ export default function setup() {
         useAsyncData(
             async () => {
                 try {
-                    const response1 = null
-                    const response2 = null
+             
                     // First API - product
                     const mainResponse = await axios({
                         method: 'get',
