@@ -32,6 +32,7 @@
                 </v-btn>
 
                 <v-btn
+                    :disabled="!order"
                     v-if="result=== 'success'"
                     :href="`/user/order/${order?.data?.data?.id}`"
                     height="44"
@@ -76,6 +77,7 @@
                 </v-btn>
 
                 <v-btn
+                    :disabled="!order"
                     :href="`/user/order/${order?.data?.data.id}`"
                     height="44"
                     width="180"
