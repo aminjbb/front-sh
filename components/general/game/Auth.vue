@@ -98,7 +98,6 @@ export default {
             loginStep: 1,
             mobile: '',
             otp: '',
-            password: null,
             loading: false,
             mobileRule: [
                 (v) => !!v || "این فیلد الزامی است",
@@ -141,14 +140,6 @@ export default {
     },
 
     methods: {
-        changePasswordType() {
-            if (this.passwordType === 'password') this.passwordType = 'text'
-            else this.passwordType = 'password'
-        },
-
-        forgotPassword() {
-            this.$router.push('/forgot_password')
-        },
 
         backStep1() {
             this.loginStep = 1;
@@ -212,21 +203,6 @@ export default {
             } finally {
                 this.loading = false;
             }
-        },
-
-        /**
-         *  Assign Basket After Login
-         */
-        async syncBasket() {
-            await axios.post(`${this.runtimeConfig.public.apiBase}/basket/crud/sync`, {
-                identifier: this.randomNumberForBasket
-            }, {
-                headers: {
-                    Authorization: `Bearer ${this.userToken}`,
-                },
-            }).then(() => {
-                this.randomNumberForBasket = ''
-            });
         },
 
         /**

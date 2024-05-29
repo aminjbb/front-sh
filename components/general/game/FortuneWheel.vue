@@ -79,6 +79,7 @@
 import {
   copyText
 } from 'vue3-clipboard'
+import Game from '@/composables/Game.js';
 
 export default {
     data() {
@@ -120,7 +121,14 @@ export default {
             })
         }
 
+        const {
+            getUserPrize,
+            prize
+            } = new Game()
+
         return {
+            getUserPrize,
+            prize,
             doCopy,
         }
     },
@@ -168,22 +176,7 @@ export default {
          * Start lucky wheel
          */
         start() {
-            if (this.countClicked < this.limit) {
-                this.countClicked++;
-                this.clicked = true;
-                document.getElementById('wheel__inner').style.transition = "none";
-                document.getElementById('wheel__inner').style.transform = "rotate(0deg)";
-
-                setTimeout(() => {
-                    document.getElementById('wheel__inner').style.transition = "cubic-bezier(0.19, 1, 0.22, 1) 3s";
-                    document.getElementById('wheel__inner').style.transform = `rotate(${this.value}deg)`;
-                    this.dialog = true;
-                }, 50);
-
-                if (this.countClicked == this.limit) {
-                    this.clicked = false;
-                }
-            }
+            this.getUserPrize();
         },
 
         /**
@@ -202,7 +195,31 @@ export default {
                 })
             return assets['/assets/images/should-delete/' + path]
         },
+    },
+
+    watch: {
+        prize(newVal){
+            if(newVal && newVal !== null){
+                if (this.countClicked < this.limit) {
+                    this.countClicked++;
+                    this.clicked = true;
+                    document.getElementById('wheel__inner').style.transition = "none";
+                    document.getElementById('wheel__inner').style.transform = "rotate(0deg)";
+
+                    setTimeout(() => {
+                        document.getElementById('wheel__inner').style.transition = "cubic-bezier(0.19, 1, 0.22, 1) 3s";
+                        document.getElementById('wheel__inner').style.transform = `rotate(${this.value}deg)`;
+                        this.dialog = true;
+                    }, 50);
+
+                    if (this.countClicked == this.limit) {
+                        this.clicked = false;
+                    }
+                }
+            } 
+        }
     }
+
 }
 </script>
 

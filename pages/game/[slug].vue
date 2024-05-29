@@ -23,7 +23,7 @@
                         <generalGameAuth class="pl-15" @logined="logined" />
                     </template>
                 </v-col>
-                <v-col md="7" class="d-flex justify-center v-game__lucky-wheel">
+                <v-col md="7" class="d-flex justify-center v-game__lucky-wheel game-mobile-order">
                     <div class="d-flex flex-column align-center">
                         <generalGameFortuneWheel :items="wheelItems" :isLogin="isLogin" :limit="turn_per_user"/>
                     </div>
@@ -37,12 +37,12 @@
 
 <script>
 import auth from '@/middleware/auth';
+import Game from '@/composables/Game.js';
 
 export default {
     data() {
         return {
             isLogin: false,
-            userData: null,
             turn_per_user:3,
             wheelItems: [{
                     label: 'wheel1',
@@ -96,9 +96,19 @@ export default {
 
     setup() {
         const userToken = useCookie('userToken');
+        const {
+            getUserVoucherList,
+            voucherList,
+            getLuckyWheel,
+            luckyWheel
+            } = new Game()
 
         return {
-            userToken
+            userToken,
+            getUserVoucherList,
+            voucherList,
+            getLuckyWheel,
+            luckyWheel
         }
     },
 
@@ -115,20 +125,24 @@ export default {
                 const response = await auth.getUserProfile(this.userToken)
                 if (response.data.data) {
                     this.isLogin = true;
-                    this.$store.commit('set_userData', response.data.data)
-                    this.userData = response.data.data
+                    //this.getUserVoucherList();
+
                 }
             } catch (error) {
                 this.isLogin = false;
-                // Handle errors
             }
         },
 
         logined(e) {
             if (e === true) {
-                this.fetchUserProfile();
+                this.isLogin = true;
+                //this.getUserVoucherList();
             }
         }
+    },
+
+    mounted(){
+        //this.getLuckyWheel();
     }
 }
 </script>
