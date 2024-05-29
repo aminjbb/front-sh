@@ -58,9 +58,11 @@ export default {
          */
         handleScroll() {
             let currentScrollTop = window.scrollY;
+            let header = document.getElementById('mobile-header');
 
             if (this.isBanner) {
                 if (window.scrollY > 64) {
+                    header.style.top = '0px';
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
@@ -82,7 +84,6 @@ export default {
                     this.lastScrollTop = currentScrollTop;
                 }
                 if (window.scrollY <= 64) {
-                    const header = document.getElementById('mobile-header');
                     header.style.top = `${64 - window.scrollY}px`;
                     this.hasBanner = true;
                 }

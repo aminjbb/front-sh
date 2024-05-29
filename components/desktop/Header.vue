@@ -269,9 +269,11 @@ export default {
         handleScroll() {
             this.menu = false
             let currentScrollTop = window.scrollY;
+            let header = document.getElementById('header--desktop');
 
             if (this.isBanner) {
                 if (window.scrollY > 64) {
+                    header.style.top = '0px';
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
@@ -290,7 +292,6 @@ export default {
 
                 if (window.scrollY <= 64) {
                     this.hasBanner = true;
-                    const header = document.getElementById('header--desktop');
                     header.style.top = `${64 - window.scrollY}px`;
                     this.hasBanner = true;
                 }
