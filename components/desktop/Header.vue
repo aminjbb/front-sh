@@ -387,6 +387,10 @@ $parent: 'header';
     right: 0;
     position: absolute;
     z-index: 11;
+
+    img{
+        object-fit: cover !important;
+    }
 }
 
 .#{$parent} {

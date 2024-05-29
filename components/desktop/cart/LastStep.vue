@@ -99,7 +99,8 @@ export default {
         return {
             result: 'success',
             factorNumber: null,
-            factorNumberMoc: '256842'
+            factorNumberMoc: '256842',
+            umSource:null,
         }
     },
 
@@ -176,6 +177,7 @@ export default {
                         value: Number(String(this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
+                        um_source:this.umSource,
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
                         couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
@@ -226,14 +228,17 @@ export default {
                     
                     if(this.deemaToken && this.deemaToken !== null && this.deemaToken !== ''){
                         this.sendInfoToDeema(newVal?.data?.data); //Call Deema affiliate code
+                        this.umSource = 'Deema';
                     }
 
                     if(this.taToken && this.taToken !== null && this.taToken !== ''){
-                        this.sendInfoToTakhfifan(this.order?.data?.data)//Call Takhfifan code
+                        this.sendInfoToTakhfifan(this.order?.data?.data) //Call Takhfifan code
+                        this.umSource = 'Takhfifan';
                     }
 
                     if(this.alToken && this.alToken !== null && this.alToken !== ''){
-                        this.sendInfoToTaAffilinks(this.order?.data?.data)//Call Affilinks code
+                        this.sendInfoToTaAffilinks(this.order?.data?.data) //Call Affilinks code
+                        this.umSource = 'Affilinks';
                     }
                 }
             }
