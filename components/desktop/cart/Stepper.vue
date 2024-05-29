@@ -354,7 +354,7 @@ export default {
             window.dataLayer.push({
                 event: 'begin_checkout', // name of the event. In this case, it always must be begin_checkout
                 ecommerce: {
-                    userID: this.userDetail?.id,
+                    userID: this.$store.getters['get_userData']?.id,
                     items: productArrBeginCheckout
                 }
             });
@@ -417,7 +417,7 @@ export default {
                 ecommerce: {
                     value: this.voucher && this.voucher.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
                     shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis
-                    userID: this.userDetail?.id,
+                    userID: this.$store.getters['get_userData']?.id,
                     items: productArrAddShipping
                 }
             });
@@ -478,7 +478,7 @@ export default {
                     value: this.voucher && this.voucher ?.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
                     coupon: this.discountCode,
                     payment_type: this.orderPaymentMethod,
-                    userID: this.userDetail?.id,
+                    userID: this.$store.getters['get_userData']?.id,
                     items: productArr
                 }
             });
