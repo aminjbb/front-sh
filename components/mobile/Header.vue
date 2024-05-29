@@ -4,7 +4,7 @@
         <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="64" :title="topBanner?.image_alt" />
     </a>
 
-    <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
+    <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }" id="mobile-header">
         <div class="d-flex align-center">
             <a href="/" class="d-flex align-center header__logo" title="Shavaz logo" id="mobile-logo">
                 <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
@@ -58,39 +58,67 @@ export default {
          */
         handleScroll() {
             let currentScrollTop = window.scrollY;
+            let header = document.getElementById('mobile-header');
 
-            if (window.scrollY > 60) {
-                this.isHidden = true;
-                this.isFixed = false;
-                this.hasBanner = false;
+            if (this.isBanner) {
+                if (window.scrollY > 64) {
+                    header.style.top = '0px';
+                    this.isHidden = true;
+                    this.isFixed = false;
+                    this.hasBanner = false;
 
-                const menu = document.getElementById('menu--mobile');
-                if(menu){
-                    if (currentScrollTop > this.lastScrollTop) {
-                        this.isHidden = true;
-                        this.isFixed = false;
+                    const menu = document.getElementById('menu--mobile');
+                    if(menu){
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
 
-                        menu.classList.add('change-height');
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
+                            menu.classList.add('change-height');
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
 
-                        menu.classList.remove('change-height');
+                            menu.classList.remove('change-height');
+                        }
                     }
+                    this.lastScrollTop = currentScrollTop;
                 }
-                this.lastScrollTop = currentScrollTop;
+                if (window.scrollY <= 64) {
+                    header.style.top = `${64 - window.scrollY}px`;
+                    this.hasBanner = true;
+                }
             }
-            if (window.scrollY <= 60) {
-                this.hasBanner = true;
+            else{
+                if (window.scrollY > 64) {
+                    this.isHidden = true;
+                    this.isFixed = false;
+
+                    const menu = document.getElementById('menu--mobile');
+                    if(menu){
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+
+                            menu.classList.add('change-height');
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+
+                            menu.classList.remove('change-height');
+                        }
+                    }
+                    this.lastScrollTop = currentScrollTop;
+                }
+                if (window.scrollY <= 64) {
+                    const header = document.getElementById('mobile-header');
+                }
             }
         },
     },
 
     watch:{
         topBanner(newVal){
-            console.log("🚀 ~ topBanner ~ newVal:", newVal)
             if(newVal){
-                console.log("🚀 ~ topBanner ~ newVal:", newVal)
                 this.isBanner = true;
                 this.hasBanner = true;
                 document.getElementsByTagName('body')[0].classList.add('hasBanner');  
@@ -111,6 +139,10 @@ $parent: 'header';
     right: 0;
     position: absolute;
     z-index: 11;
+
+    img{
+        object-fit: cover !important;
+    }
 }
 
 .#{$parent} {

@@ -269,9 +269,11 @@ export default {
         handleScroll() {
             this.menu = false
             let currentScrollTop = window.scrollY;
+            let header = document.getElementById('header--desktop');
 
             if (this.isBanner) {
-                if (window.scrollY > 74) {
+                if (window.scrollY > 64) {
+                    header.style.top = '0px';
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
@@ -288,11 +290,13 @@ export default {
                     this.lastScrollTop = currentScrollTop;
                 }
 
-                if (window.scrollY <= 74) {
+                if (window.scrollY <= 64) {
+                    this.hasBanner = true;
+                    header.style.top = `${64 - window.scrollY}px`;
                     this.hasBanner = true;
                 }
             } else {
-                if (window.scrollY > 60) {
+                if (window.scrollY > 64) {
                     this.isHidden = true;
                     this.isFixed = false;
 
@@ -384,6 +388,10 @@ $parent: 'header';
     right: 0;
     position: absolute;
     z-index: 11;
+
+    img{
+        object-fit: cover !important;
+    }
 }
 
 .#{$parent} {
