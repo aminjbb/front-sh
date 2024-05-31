@@ -13,7 +13,7 @@
                             </h2>
 
                             <div class="t14 w400 l26 text-white mb-8">
-                                گردونه رو بچرخون و برنده کد نخفیف محصولات آرایشی و بهداشتی شاواز شو!
+                                گردونه رو بچرخون و برنده کد تخفیف محصولات آرایشی و بهداشتی شاواز شو!
                             </div>
 
                             <generalGameVoucherCards :voucherList="voucherList"/>
@@ -25,7 +25,7 @@
                 </v-col>
                 <v-col md="7" class="d-flex justify-center v-game__lucky-wheel game-mobile-order">
                     <div class="d-flex flex-column align-center">
-                        <generalGameFortuneWheel :items="wheelItems" :isLogin="isLogin" :limit="turn_per_user"/>
+                        <generalGameFortuneWheel :items="wheelItemsMoc" :isLogin="isLogin" :limit="turn_per_user"/>
                     </div>
                 </v-col>
             </v-row>
@@ -44,7 +44,7 @@ export default {
         return {
             isLogin: false,
             turn_per_user:3,
-            wheelItems: [{
+            wheelItemsMoc: [{
                     label: 'wheel1',
                     desktop_image_url: 'wheel1.png'
                 },
@@ -142,7 +142,7 @@ export default {
     },
 
     mounted(){
-        //this.getLuckyWheel();
+        this.getLuckyWheel();
     }
 }
 </script>
