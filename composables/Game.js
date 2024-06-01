@@ -13,6 +13,7 @@ export default function setup() {
     const voucherList = ref([]);
     const prize = ref({});
     const luckyWheel = ref({})
+    const turnPerUser = ref(0)
 
     /**
      * Get Lucky wheel
@@ -21,7 +22,8 @@ export default function setup() {
         axios
             .get(runtimeConfig.public.apiBase + `/game/lucky-wheel/get/${route.params.slug}`)
             .then((response) => {
-                luckyWheel.value = response.data.data;
+                turnPerUser.value = response.data.data?.turn_per_user;
+                luckyWheel.value = response.data.data?.prizes;
             })
             .catch((err) => {
                 useNuxtApp().$toast.error(err.response.data.message, {
@@ -46,6 +48,7 @@ export default function setup() {
                 voucherList.value = response.data.data
             })
             .catch((err) => {
+                if (err.response.status !=401)
                 useNuxtApp().$toast.error(err.response.data.message, {
                     rtl: true,
                     position: 'top-center',
@@ -82,6 +85,7 @@ export default function setup() {
         getUserPrize,
         prize,
         getLuckyWheel,
-        luckyWheel
+        luckyWheel,
+        turnPerUser
     }
 }

@@ -2,7 +2,7 @@
     <div class="wheel game-mobile-order">
         <div class="wheel__inner" id="wheel__inner" ref="circle">
             <div class="wheel__sec" v-for="(item, index) in items" :key="index" ref="children">
-                <img data-not-lazy :src="imageAddress(item.desktop_image_url)" :title="item.label" :alt="item.label" />
+                <img data-not-lazy :src="item.desktop_image_url" :title="item.label" :alt="item.label"  />
             </div>
         </div>
         <div class="wheel__arrow"></div>
@@ -32,20 +32,20 @@
                     <img data-not-lazy src="~/assets/images/game-modal.jpg" alt="گردونه" width="445" height="253" title="Shavaz Logo" class="w-100" />
 
                     <h2 class="game-title-mobile t20 w700 mb-2 text-grey-darken-3 mt-3">
-                        {{ prize.label }}
+                        {{ prize?.prize?.label }}
                     </h2>
 
                     <div class="t14 w400 l26 text-grey-darken-3 mb-8">
-                        {{ prize.description }}
+                        {{ prize?.prize?.description }}
                     </div>
 
                     <div class="game-modal__pink-box">
                         <h4 class="t17 w700 text-pink-darken-3 mb-3">همین الان خرید کن</h4>
                         <div class="d-flex align-center justify-space-between px-2 py-1">
-                            <div class="voucher-code__code d-flex align-center cur-p" @click="doCopy(prize.code)">
+                            <div class="voucher-code__code d-flex align-center cur-p" @click="doCopy(prize?.prize?.voucher_code)">
                                 <v-icon icon="mdi-content-copy" class="ml-1" color="grey-darken-3" size="small"/>
                                 <span class="t14 w700 text-grey-darken-3 ml-3">کپی کد</span>
-                                <span class="text-grey-darken-1 t13 w500">{{ prize.code }}</span>
+                                <span class="text-grey-darken-1 t13 w500">{{ prize?.prize?.voucher_code }}</span>
                             </div>
                             <div class="voucher-code__link d-flex align-center">
                                 <a href="/" class="t12 w700 text-primary">خرید از شاواز</a>
@@ -60,9 +60,9 @@
                             <span class="t14 w700 text-primary ml-1">مدت زمان استفاده</span>
                         </div>
 
-                        <span class="t14 w700 text-primary number-font text-bold">{{ prize.deadline_for_use }}</span>
+                        <span class="t14 w700 text-primary number-font text-bold">{{ prize?.prize?.deadline_for_use }} ساعت </span>
                     </div>
-        
+
                     <v-btn
                         @click="closeModal()"
                         height="44"
@@ -137,6 +137,7 @@ export default {
         items: Array,
         isLogin: Boolean,
         limit: String | Number,
+       userUsed: String | Number,
     },
 
     mounted() {
@@ -209,15 +210,21 @@ export default {
                     setTimeout(() => {
                         document.getElementById('wheel__inner').style.transition = "cubic-bezier(0.19, 1, 0.22, 1) 3s";
                         document.getElementById('wheel__inner').style.transform = `rotate(${this.value}deg)`;
-                        this.dialog = true;
+                       setTimeout(()=>{
+                         this.dialog = true;
+                       }, 2000)
                     }, 50);
 
                     if (this.countClicked == this.limit) {
                         this.clicked = false;
                     }
                 }
-            } 
-        }
+            }
+        },
+
+      userUsed(newVal){
+          this.countClicked = parseInt(newVal)
+      }
     }
 
 }

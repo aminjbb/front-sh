@@ -3,7 +3,7 @@
     <template v-if="voucherList && voucherList.length">
         <div v-for="voucher in voucherList" :key="`vouceher${voucher.id}`" class="voucher-card mb-4">
             <div class="voucher-card__info d-flex align-center px-4 py-3">
-                <img data-not-lazy src="" alt="no voucher" width="50" height="50" title="no voucher" class="mb-3" />
+
 
                 <div class="">
                     <h2 class="text-grey-darken-4 t18 w700 mb-2">{{ voucher.label }}</h2>
@@ -17,10 +17,10 @@
             </div>
 
             <div class="d-flex align-center justify-space-between pa-4">
-                <div class="voucher-code__code d-flex align-center cur-p" @click="doCopy(voucher.code)">
+                <div class="voucher-code__code d-flex align-center cur-p" @click="doCopy(voucher.voucher_code)">
                     <v-icon icon="mdi-content-copy" class="ml-1" color="primary" size="small"/>
                     <span class="t16 w700 text-primary ml-3">کپی کد</span>
-                    <span class="text-grey-darken-1 t13 w500">{{ voucher.code }}</span>
+                    <span class="text-grey-darken-1 t13 w500">{{ voucher.voucher_code }}</span>
                 </div>
                 <div class="voucher-code__link d-flex align-center">
                     <a href="/" class="t14 w700 text-primary">خرید از شاواز</a>
@@ -56,8 +56,10 @@ export default {
          * @param {*} code
          */
         const doCopy = (code) => {
+          console.log(code)
             copyText(code, undefined, (error, event) => {
                 if (error) {
+                  console.log(error)
                     useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
                         rtl: true,
                         position: 'top-center',
