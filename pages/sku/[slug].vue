@@ -266,7 +266,7 @@
 
 <!--        <v-divider color="grey" class="mt-5" />-->
 
-        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getSecondaryData" />
+        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getPdpData" />
 
         <template v-if="screenType !== null && screenType === 'mobile'">
             <div class="mobile-basket" v-if="productSelectedSeller">
@@ -294,10 +294,8 @@ export default {
         const {
             product,
             color,
-            getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb,
             breadcrumb,
             skuTitle,
             description,
@@ -315,10 +313,8 @@ export default {
         return {
             product,
             color,
-            getSecondaryData,
             secondaryData,
             getPdpData,
-            getBreadcrumb,
             breadcrumb,
             title,
             description,
@@ -394,7 +390,7 @@ export default {
         productDetail() {
             try {
                 
-                return this.product.data.data
+                return this.product
             } catch (e) {
                 return ''
             }
@@ -431,7 +427,7 @@ export default {
 
         relatedProducts() {
             try {
-                return this.secondaryData ?.data ?.data ?.related_products
+                return this.secondaryData?.related_products
             } catch (e) {
                 return []
             }
@@ -439,7 +435,7 @@ export default {
 
         pdpSecondaryData() {
             try {
-                return this.secondaryData ?.data ?.data
+                return this.secondaryData
             } catch (e) {
                 return []
             }
@@ -518,9 +514,6 @@ export default {
         }
     },
 
-    beforeMount() {
-      this.getBreadcrumb('sku')
-    },
 }
 </script>
 

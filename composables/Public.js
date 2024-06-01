@@ -64,11 +64,13 @@ export default function setup() {
                             imageAddress = topBannerResponse?.mobile_image_url
                         }
 
-                        topBanner.value = {
-                            image: imageAddress,
-                            link: topBannerResponse?.link
+                        if(imageAddress !== null){
+                            topBanner.value = {
+                                image: imageAddress,
+                                link: topBannerResponse?.link,
+                                image_alt: topBannerResponse?.image_alt
+                            }
                         }
-
                     }
                 });
             })

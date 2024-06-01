@@ -1,7 +1,7 @@
 <template>
 <client-only>
-    <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.href">
-        <img data-not-lazy :src="topBanner.image" class="w-100 h-100" alt="Shavaz Logo" width="1400" height="64" title="top banner" />
+    <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
+        <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="64" :title="topBanner?.image_alt" />
     </a>
 
     <header class="header header--mobile w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">

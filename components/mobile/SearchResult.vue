@@ -237,6 +237,7 @@ export default {
         openModal() {
             this.dialog = true;
             document.getElementById('inputSearchMobile').blur();
+            this.getMostSearch();
         },
 
         closeModal() {
@@ -307,10 +308,6 @@ export default {
             }
         },
     },
-
-    mounted(){
-        this.getMostSearch();
-    }
 }
 </script>
 

@@ -18,7 +18,12 @@ body {
     &.hasBanner{
         main{
             padding-top: 234px !important;
+            @include gbp (0, 768) {
+                padding-bottom: 60px;
+                padding-top: 75px !important;
+            }
         }
+
     }
 
     &::before {
