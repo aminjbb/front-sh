@@ -209,7 +209,7 @@ export default {
 
                     setTimeout(() => {
                         document.getElementById('wheel__inner').style.transition = "cubic-bezier(0.19, 1, 0.22, 1) 3s";
-                        document.getElementById('wheel__inner').style.transform = `rotate(${newVal.degree}deg)`;
+                        document.getElementById('wheel__inner').style.transform = `rotate(-${newVal.degree}deg)`;
                        setTimeout(()=>{
                          this.dialog = true;
                        }, 2000)
