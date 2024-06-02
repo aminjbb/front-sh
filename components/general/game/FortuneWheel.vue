@@ -123,7 +123,7 @@ export default {
 
         const {
             getUserPrize,
-            prize
+            prize,
             } = new Game()
 
         return {
@@ -137,7 +137,7 @@ export default {
         items: Array,
         isLogin: Boolean,
         limit: String | Number,
-       userUsed: String | Number,
+        userUsed: String | Number,
     },
 
     mounted() {
@@ -209,12 +209,13 @@ export default {
 
                     setTimeout(() => {
                         document.getElementById('wheel__inner').style.transition = "cubic-bezier(0.19, 1, 0.22, 1) 3s";
-                        document.getElementById('wheel__inner').style.transform = `rotate(${this.value}deg)`;
+                        document.getElementById('wheel__inner').style.transform = `rotate(${newVal.degree}deg)`;
                        setTimeout(()=>{
                          this.dialog = true;
                        }, 2000)
                     }, 50);
 
+                    this.$emit('updateForm',true)
                     if (this.countClicked == this.limit) {
                         this.clicked = false;
                     }
