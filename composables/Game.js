@@ -69,6 +69,11 @@ export default function setup() {
             })
             .then((response) => {
                 prize.value = response.data.data
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    event: 'wheelPercent', // The event name for tracking user authentication.
+                    percent:response?.data?.data?.prize.discount_amount
+                });
             })
             .catch((err) => {
                 useNuxtApp().$toast.error(err.response.data.message, {
