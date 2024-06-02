@@ -7,14 +7,6 @@
     background-color: #31031C;
     min-height: 100vh;
 
-    .parent-width{
-        >.v-row{
-            @include gbp (0, 768) {
-                padding-top: 30px;
-            }
-        }
-    }
-
     &__lucky-wheel{
         > div:first-child{
             margin-top: 40px;
@@ -40,6 +32,7 @@
     .game-title-mobile{
         @include gbp (0, 768) {
             font-size: 24px !important;
+            margin-top: 40px;
         }
     }
 
