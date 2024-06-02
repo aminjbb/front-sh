@@ -212,7 +212,7 @@ export default {
                         document.getElementById('wheel__inner').style.transform = `rotate(${newVal.degree}deg)`;
                        setTimeout(()=>{
                          this.dialog = true;
-                       }, 2000)
+                       }, 2500)
                     }, 50);
 
                     this.$emit('updateForm',true)
