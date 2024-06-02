@@ -224,7 +224,10 @@ export default {
         },
 
       userUsed(newVal){
-          this.countClicked = parseInt(newVal)
+          this.countClicked = parseInt(newVal);
+          if (newVal == this.limit) {
+                this.clicked = false;
+            }
       }
     }
 
