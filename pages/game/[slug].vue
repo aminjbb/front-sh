@@ -5,7 +5,7 @@
       <generalGameHeader/>
       <v-container class="parent-width">
         <v-row class="h-100">
-          <v-col md="5" class="d-flex align-center justify-center">
+          <v-col md="5" class="d-flex align-center justify-center game-mobile-order">
             <template v-if="isLogin">
               <div class="d-flex flex-column">
                 <h2 class="game-title-mobile t34 w700 mb-2 text-white">
@@ -23,7 +23,7 @@
               <generalGameAuth class="pl-15" @logined="logined"/>
             </template>
           </v-col>
-          <v-col md="7" class="d-flex justify-center v-game__lucky-wheel game-mobile-order">
+          <v-col md="7" class="d-flex justify-center v-game__lucky-wheel">
             <div class="d-flex flex-column align-center" v-if="luckyWheel.length">
               <generalGameFortuneWheel :items="luckyWheel" :isLogin="isLogin" :limit="turnPerUser" :userUsed="voucherList?.length"/>
             </div>

@@ -22,9 +22,11 @@
                     <span class="t16 w700 text-primary ml-3">کپی کد</span>
                     <span class="text-grey-darken-1 t13 w500">{{ voucher.voucher_code }}</span>
                 </div>
-                <div class="voucher-code__link d-flex align-center">
-                    <a href="/" class="t14 w700 text-primary">خرید از شاواز</a>
-                    <v-icon icon="mdi-chevron-left" class="mr-2" color="primary" />
+                <div class="voucher-code__link">
+                    <a href="/" class="t14 w700 text-primary d-flex align-center">
+                        خرید از شاواز
+                        <v-icon icon="mdi-chevron-left" class="mr-2" color="primary" />
+                    </a>
                 </div>
             </div>
         </div>
