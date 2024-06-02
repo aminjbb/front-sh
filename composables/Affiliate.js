@@ -28,7 +28,7 @@ export default function setup() {
             .post('https://analytics.takhfifan.com/track/purchase', {
                 token: taToken.value,
                 transaction_id: `${order?.transaction_id}` ,
-                revenue: order?.paid_price,
+                revenue: Number(String(order?.site_price).slice(0, -1)),
                 shipping: order?.sending_price,
                 tax: order?.tax,
                 discount: order?.total_discount,
