@@ -7,11 +7,12 @@
 
                 <div class="">
                     <h2 class="text-grey-darken-4 t18 w700 mb-2">{{ voucher.label }}</h2>
+                    <h3 class="text-grey-darken-4 t14 w400 mb-2">{{ voucher.description }}</h3>
 
                     <div class="d-flex align-center">
                         <v-icon icon="mdi-clock-outline" class="ml-1" color="primary" size="small"/>
                         <span class="t14 w700 text-primary ml-1">مدت زمان استفاده</span>
-                        <span class="t14 w700 text-red number-font text-bold">{{ voucher.deadline_for_use }}</span>
+                        <span class="t14 w700 text-red number-font text-bold">{{ voucher.deadline_for_use }}  <span>ساعت</span></span>
                     </div>
                 </div>
             </div>
@@ -23,7 +24,7 @@
                     <span class="text-grey-darken-1 t13 w500">{{ voucher.voucher_code }}</span>
                 </div>
                 <div class="voucher-code__link">
-                    <a href="/" class="t14 w700 text-primary d-flex align-center">
+                    <a href="https://shavaz.com/?utm_source=Game&utm_medium=Wheel&utm_campaign=Besalamaty&utm_content=gardoone1d" class="t14 w700 text-primary d-flex align-center">
                         خرید از شاواز
                         <v-icon icon="mdi-chevron-left" class="mr-2" color="primary" />
                     </a>
