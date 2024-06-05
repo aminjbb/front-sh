@@ -71,13 +71,12 @@ export default {
       const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/login-register/otp`, {
         phone_number: phoneNumber,
         code: otp,
-        is_takhfifan: tatoken !== null && tatoken !== '' ? true : false,
-        is_affilink: altoken !== null && altoken !== '' ? true : false
+        is_takhfifan: tatoken.value !== null && tatoken.value !== '' ? true : false,
+        is_affilink: altoken.value !== null && altoken.value !== '' ? true : false
       });
       return response;
     } catch (error) {
       if (error.response.status === 400) {
-
         useNuxtApp().$toast.error(error.response.data.message, {
           rtl: true,
           position: 'top-center',
