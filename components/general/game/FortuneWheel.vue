@@ -29,7 +29,7 @@
             width="493px">
             <v-card class="game-modal pt-5 px-6 pb-5">
                 <div>
-                    <img data-not-lazy src="~/assets/images/game-modal.jpg" alt="گردونه" width="445" height="253" title="Shavaz Logo" class="w-100" />
+                    <img data-not-lazy src="~/assets/images/game-modal2.png" alt="گردونه" width="445" height="253" title="Shavaz Logo" class="w-100" />
 
                     <h2 class="game-title-mobile t20 w700 mb-2 text-grey-darken-3 mt-3">
                         {{ prize?.prize?.label }}
