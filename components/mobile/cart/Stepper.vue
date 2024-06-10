@@ -319,7 +319,7 @@ export default {
 
     previousStep(){
       if (this.activeStep === 1){
-        this.$router.go(-1)
+        window.location = '/'
       }
       else{
         this.activeStep = this.activeStep -1
@@ -626,7 +626,7 @@ export default {
   align-items: center;
   position: fixed;
   right: 0;
-  bottom: 55px;
+  bottom: 0;
   width: 100%;
   padding: 16px 36px;
 
