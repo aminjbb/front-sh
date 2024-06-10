@@ -19,7 +19,7 @@
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart'" >
                 <mobileFooter :userData="userData" />
             </template>
         </div>
