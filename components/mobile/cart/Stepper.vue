@@ -310,6 +310,8 @@ export default {
             }
           }
           else{
+            /* Open bottom sheet */
+            this.$refs.cartLogin.sheet =true;
           }
         }
       }
