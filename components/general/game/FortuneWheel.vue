@@ -29,7 +29,7 @@
             width="493px">
             <v-card class="game-modal pt-5 px-6 pb-5">
                 <div>
-                    <img data-not-lazy src="~/assets/images/game-modal2.png" alt="گردونه" width="445" height="253" title="Shavaz Logo" class="w-100" />
+                    <img data-not-lazy src="~/assets/images/game-modal2.png" alt="گردونه" width="445" height="253" title="Shavaz Logo" class="w-100 lucky-modal-image" />
 
                     <h2 class="game-title-mobile t20 w700 mb-2 text-grey-darken-3 mt-3">
                         {{ prize?.prize?.label }}
@@ -84,17 +84,11 @@ import Game from '@/composables/Game.js';
 export default {
     data() {
         return {
-            value: 3850,
             countClicked: 0,
             clicked: true,
             screenType: null,
             dialog:false,
-            prize:{
-                label:'کد تخفیف ٪ ۵۰ برای خرید کرم',
-                description:'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز .',
-                code:'MPN25-NLOW1',
-                deadline_for_use:'۱۲:۳۴:۴۵'
-            }
+            mainDegree: null,
         }
     },
 
@@ -159,10 +153,10 @@ export default {
             const childSize = (2 * Math.PI * radius) / children.length / 2; // Dynamic size based on circumference
 
             const itemPosition = (radius / 2) - (childSize / 2)
-            const degree = 360 / children.length;
+            this.mainDegree = 360 / children.length;
             
             children.forEach((child, index) => {
-                const itemTransform = index * degree;
+                const itemTransform = index * this.mainDegree;
                 child.style.width = `${childSize}px`;
                 child.style.transform = `rotate(${itemTransform}deg)`;
                 child.style.right = `${itemPosition}px`;
@@ -207,9 +201,11 @@ export default {
                     document.getElementById('wheel__inner').style.transition = "none";
                     document.getElementById('wheel__inner').style.transform = "rotate(0deg)";
 
+                    const wheelDegree = newVal.degree;
+
                     setTimeout(() => {
                         document.getElementById('wheel__inner').style.transition = "cubic-bezier(0.19, 1, 0.22, 1) 3s";
-                        document.getElementById('wheel__inner').style.transform = `rotate(-${newVal.degree}deg)`;
+                        document.getElementById('wheel__inner').style.transform = `rotate(-${wheelDegree}deg)`;
                        setTimeout(()=>{
                          this.dialog = true;
                        }, 2500)
@@ -335,6 +331,10 @@ export default {
         padding:10px 16px;
         border-radius: 10px;
         margin:20px 0;
+    }
+
+    .lucky-modal-image{
+        object-fit: contain;
     }
 }
 </style>
