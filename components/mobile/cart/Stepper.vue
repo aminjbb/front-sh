@@ -172,6 +172,8 @@
       </v-btn>
     </div>
   </div>
+
+  <MobileCartBottomSheet ref="cartLogin" />
 </template>
 
 <script>
@@ -308,12 +310,8 @@ export default {
             }
           }
           else{
-            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
-            this.$router.push('/login')
           }
         }
-
-        // this.activeButton = false;
       }
     },
 
@@ -563,29 +561,18 @@ export default {
         }
       });
     },
-
   },
-  beforeMount() {
-    this.fetchUserProfile()
-  },
-
-  watch: {
-    voucher(newVal) {
-      this.getPaymentMethods()
-      if (newVal && newVal.paid_price) {
-        this.$refs.paymentStep.deleteVoucher = true;
-      } else {
-        this.$refs.paymentStep.deleteVoucher = false;
-      }
-    }
-  },
-
+  
   created() {
     const token = this.$route.query.token
 
     if (token) {
       this.activeStep = 4;
     }
+  },
+
+  beforeMount() {
+    this.fetchUserProfile()
   },
 
   mounted() {
@@ -601,7 +588,17 @@ export default {
     if(this.activeStep === 1){
       this.enhanceECommerceSkuList();
     }
+  },
 
+  watch: {
+    voucher(newVal) {
+      this.getPaymentMethods()
+      if (newVal && newVal.paid_price) {
+        this.$refs.paymentStep.deleteVoucher = true;
+      } else {
+        this.$refs.paymentStep.deleteVoucher = false;
+      }
+    }
   },
 }
 </script>
