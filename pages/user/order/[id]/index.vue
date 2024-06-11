@@ -54,10 +54,10 @@
                           </v-col>
 
                             <v-col
-                                    cols="12"
-                                    sm="6"
-                                    lg="8"
-                                    class="d-flex align-center order-details__item py-5">
+                                cols="12"
+                                sm="6"
+                                lg="8"
+                                class="d-flex align-center order-details__item py-5">
                                 <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
                                 <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
                                 <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
@@ -79,8 +79,30 @@
                                             درخواست مرجوعی
                                         </template>
                                     </span>
-                              <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
+                                <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
                             </a>
+
+                            <template v-if="userOrder && userOrder.status == 'payment_in_progress'">
+                                <v-btn
+                                    @click="repeatPayment"
+                                    height="28"
+                                    title="پرداخت مجدد"
+                                    style="height: 32px !important;"
+                                    class="btn btn--submit">
+                                    پرداخت مجدد
+                                </v-btn>
+                            </template>
+
+                            <template v-if="userOrder && userOrder.status == 'payment_out_date'">
+                                <v-btn
+                                    href="/cart"
+                                    height="28"
+                                    style="height: 32px !important;"
+                                    title="سفارش مجدد"
+                                    class="btn btn--submit">
+                                    سفارش مجدد
+                                </v-btn>
+                            </template>
                           </v-col>
 
                         </v-row>
@@ -91,25 +113,27 @@
                                 sm="4"
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5">
-                              <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                              <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
-                              <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.order_number }}</span>
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1 ml-1">کد سفارش:</span>
+                                <span v-if="userOrder && userOrder.id" class="t13 w400 text-grey-darken-3 number-font">{{ userOrder.order_number }}</span>
                             </v-col>
+
                             <v-col
                               cols="12"
                               sm="6"
                               lg="6"
                               class="d-flex align-center order-details__item py-5">
-                            <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
-                            <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
-                            <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
-                          </v-col>
+                                <v-icon icon="mdi-circle ml-1" color="grey-darken-1" />
+                                <span class="t13 w400 text-grey-darken-1 ml-1">تاریخ تحویل:</span>
+                                <span  class="t13 w400 text-grey-darken-3 number-font">زمان تقریبی تحویل سفارش 5 الی 8 روز کاری می‌باشد.</span>
+                            </v-col>
+
                             <v-col
                                 cols="12"
                                 sm="4"
                                 lg="3"
                                 class="d-flex align-center order-details__item py-5 justify-end">
-                              <a
+                                <a
                                   v-if="(userOrder && userOrder.id) && (userOrder.status == 'pre_progress')"
                                   :href="`/user/order/${userOrder.id}/cancel`"
                                   class="d-flex align-center mobile-button">
@@ -121,11 +145,32 @@
                                                 درخواست مرجوعی
                                             </template>
                                         </span>
-                                <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
-                              </a>
+                                    <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
+                                </a>
+
+                                 <template v-if="userOrder && userOrder.status == 'payment_in_progress'">
+                                    <v-btn
+                                        @click="repeatPayment"
+                                        height="28"
+                                        style="height: 32px !important;"
+                                        title="پرداخت مجدد"
+                                        class="btn btn--submit">
+                                        پرداخت مجدد
+                                    </v-btn>
+                                </template>
+                                
+                                <template v-if="userOrder && userOrder.status == 'payment_out_date'">
+                                    <v-btn
+                                        href="/cart"
+                                        height="28"
+                                        style="height: 32px !important;"
+                                        title="سفارش مجدد"
+                                        class="btn btn--submit">
+                                        سفارش مجدد
+                                    </v-btn>
+                                </template>
                             </v-col>
                         </v-row>
-
 
                         <v-divider color="grey" />
 
@@ -210,11 +255,17 @@
                                 <v-divider v-if="index + 1 < userOrder.details.length " color="grey-lighten-1" />
                             </template>
                         </div>
+
+                        <template v-else>
+                            <generalLoading />
+                        </template>
                     </div>
+                    
                 </v-card>
             </div>
         </v-row>
     </v-container>
+    <generalOrdersPaymentMethodModal ref="selectPaymentMethod" :view="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
 </main>
 </template>
 
@@ -225,6 +276,7 @@ export default {
     data() {
         return {
             products: null,
+            screenType : 'desktop'
         }
     },
 
@@ -268,12 +320,27 @@ export default {
             } catch (e) {
 
             }
+        },
+
+        repeatPayment(){
+            if(this.screenType === 'desktop'){
+                this.$refs.selectPaymentMethod.dialog = true;
+            }else{
+                this.$refs.selectPaymentMethod.sheet = true;
+            }
         }
     },
     
     beforeMount() {
         this.getOrder()
-    }
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
 }
 </script>
 
