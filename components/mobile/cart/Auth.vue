@@ -3,7 +3,7 @@
     <v-locale-provider rtl>
         <div class="game-auth">
             <a class="d-flex justify-center mb-2 mt-2" href="/">
-                <img src="@/assets/images/shavaz-logo.png" class="mb-5" alt="shavaz image">
+                <img src="@/assets/images/logo.svg" class="mb-5" alt="shavaz image">
             </a> 
             <template v-if="loginStep === 1">
                 <!-- Step 1: Get user's phone number -->
