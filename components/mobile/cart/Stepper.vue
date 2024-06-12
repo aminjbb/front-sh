@@ -172,6 +172,8 @@
       </v-btn>
     </div>
   </div>
+
+  <MobileCartBottomSheet ref="cartLogin" />
 </template>
 
 <script>
@@ -308,18 +310,16 @@ export default {
             }
           }
           else{
-            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath)
-            this.$router.push('/login')
+            /* Open bottom sheet */
+            this.$refs.cartLogin.sheet =true;
           }
         }
-
-        // this.activeButton = false;
       }
     },
 
     previousStep(){
       if (this.activeStep === 1){
-        this.$router.go(-1)
+        window.location = '/'
       }
       else{
         this.activeStep = this.activeStep -1
@@ -563,29 +563,18 @@ export default {
         }
       });
     },
-
   },
-  beforeMount() {
-    this.fetchUserProfile()
-  },
-
-  watch: {
-    voucher(newVal) {
-      this.getPaymentMethods()
-      if (newVal && newVal.paid_price) {
-        this.$refs.paymentStep.deleteVoucher = true;
-      } else {
-        this.$refs.paymentStep.deleteVoucher = false;
-      }
-    }
-  },
-
+  
   created() {
     const token = this.$route.query.token
 
     if (token) {
       this.activeStep = 4;
     }
+  },
+
+  beforeMount() {
+    this.fetchUserProfile()
   },
 
   mounted() {
@@ -601,7 +590,17 @@ export default {
     if(this.activeStep === 1){
       this.enhanceECommerceSkuList();
     }
+  },
 
+  watch: {
+    voucher(newVal) {
+      this.getPaymentMethods()
+      if (newVal && newVal.paid_price) {
+        this.$refs.paymentStep.deleteVoucher = true;
+      } else {
+        this.$refs.paymentStep.deleteVoucher = false;
+      }
+    }
   },
 }
 </script>
@@ -627,7 +626,7 @@ export default {
   align-items: center;
   position: fixed;
   right: 0;
-  bottom: 55px;
+  bottom: 0;
   width: 100%;
   padding: 16px 36px;
 
