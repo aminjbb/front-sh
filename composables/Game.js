@@ -68,11 +68,28 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                prize.value = response.data.data
+                prize.value = response.data.data;
+
+                const characters = 'abcdefghijklmnopqrstuvwxyz';
+                const numbers = '0123456789';
+                let randomWord = '';
+                let randomNum = '';
+                
+                for (let i = 0; i < 3; i++) {
+                    const randomIndex = Math.floor(Math.random() * characters.length);
+                    randomWord += characters[randomIndex];
+                }
+
+                for (let i = 0; i < 2; i++) {
+                    const randomIndexNum = Math.floor(Math.random() * numbers.length);
+                    randomNum += numbers[randomIndexNum];
+                }
+
                 window.dataLayer = window.dataLayer || [];
                 window.dataLayer.push({
                     event: 'wheelPercent', // The event name for tracking user authentication.
-                    percent:response?.data?.data?.prize.discount_amount
+                    percent:response?.data?.data?.prize.discount_amount,
+                    number: randomWord + randomNum + this.$store.getters['get_userData']?.phone_number,
                 });
             })
             .catch((err) => {

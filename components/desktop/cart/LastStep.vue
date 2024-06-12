@@ -167,6 +167,7 @@ export default {
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
                         item_id: item?.shps?.sku?.id,
+                        name: item ?.shps ?.sku ?.label
                     }
                     productArrLastTrue.push(obj);
                 })
@@ -180,6 +181,7 @@ export default {
                         shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
                         order_id: this.order?.data?.data?.id,	// order id
                         um_source:this.umSource,
+                        userID: this.$store.getters['get_userData']?.id,
                         coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
                         couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon 
                         
