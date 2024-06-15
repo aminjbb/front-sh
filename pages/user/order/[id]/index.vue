@@ -82,27 +82,27 @@
                                 <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
                             </a>
 
-                            <template v-if="userOrder && userOrder.status == 'payment_in_progress'">
-                                <v-btn
-                                    @click="repeatPayment"
-                                    height="28"
-                                    title="پرداخت مجدد"
-                                    style="height: 32px !important;"
-                                    class="btn btn--submit">
-                                    پرداخت مجدد
-                                </v-btn>
-                            </template>
+<!--                            <template v-if="userOrder && userOrder.status == 'payment_in_progress'">-->
+<!--                                <v-btn-->
+<!--                                    @click="repeatPayment"-->
+<!--                                    height="28"-->
+<!--                                    title="پرداخت مجدد"-->
+<!--                                    style="height: 32px !important;"-->
+<!--                                    class="btn btn&#45;&#45;submit">-->
+<!--                                    پرداخت مجدد-->
+<!--                                </v-btn>-->
+<!--                            </template>-->
 
-                            <template v-if="userOrder && userOrder.status == 'payment_out_date'">
-                                <v-btn
-                                    href="/cart"
-                                    height="28"
-                                    style="height: 32px !important;"
-                                    title="سفارش مجدد"
-                                    class="btn btn--submit">
-                                    سفارش مجدد
-                                </v-btn>
-                            </template>
+<!--                            <template v-if="userOrder && userOrder.status == 'payment_out_date'">-->
+<!--                                <v-btn-->
+<!--                                    href="/cart"-->
+<!--                                    height="28"-->
+<!--                                    style="height: 32px !important;"-->
+<!--                                    title="سفارش مجدد"-->
+<!--                                    class="btn btn&#45;&#45;submit">-->
+<!--                                    سفارش مجدد-->
+<!--                                </v-btn>-->
+<!--                            </template>-->
                           </v-col>
 
                         </v-row>
@@ -148,27 +148,27 @@
                                     <v-icon icon="mdi-chevron-left" color="grey-darken-1" />
                                 </a>
 
-                                 <template v-if="userOrder && userOrder.status == 'payment_in_progress'">
-                                    <v-btn
-                                        @click="repeatPayment"
-                                        height="28"
-                                        style="height: 32px !important;"
-                                        title="پرداخت مجدد"
-                                        class="btn btn--submit">
-                                        پرداخت مجدد
-                                    </v-btn>
-                                </template>
-                                
-                                <template v-if="userOrder && userOrder.status == 'payment_out_date'">
-                                    <v-btn
-                                        href="/cart"
-                                        height="28"
-                                        style="height: 32px !important;"
-                                        title="سفارش مجدد"
-                                        class="btn btn--submit">
-                                        سفارش مجدد
-                                    </v-btn>
-                                </template>
+<!--                                 <template v-if="userOrder && userOrder.status == 'payment_in_progress'">-->
+<!--                                    <v-btn-->
+<!--                                        @click="repeatPayment"-->
+<!--                                        height="28"-->
+<!--                                        style="height: 32px !important;"-->
+<!--                                        title="پرداخت مجدد"-->
+<!--                                        class="btn btn&#45;&#45;submit">-->
+<!--                                        پرداخت مجدد-->
+<!--                                    </v-btn>-->
+<!--                                </template>-->
+<!--                                -->
+<!--                                <template v-if="userOrder && userOrder.status == 'payment_out_date'">-->
+<!--                                    <v-btn-->
+<!--                                        href="/cart"-->
+<!--                                        height="28"-->
+<!--                                        style="height: 32px !important;"-->
+<!--                                        title="سفارش مجدد"-->
+<!--                                        class="btn btn&#45;&#45;submit">-->
+<!--                                        سفارش مجدد-->
+<!--                                    </v-btn>-->
+<!--                                </template>-->
                             </v-col>
                         </v-row>
 
