@@ -165,6 +165,7 @@ export default {
                         price: Number(String(item.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
                         quantity: item.count,	
                         item_id: item?.shps?.sku?.id,
+                        name: item ?.shps ?.sku ?.label
                     }
                     productArrLastTrue.push(obj);
                 })
