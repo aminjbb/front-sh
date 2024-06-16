@@ -55,11 +55,28 @@
             </template>
         </div>
     </div>
+
+    <div class="d-flex justify-end px-3 pb-3">
+        <template v-if="content && content.status == 'payment_in_progress'">
+            <v-btn @click="repeatPayment()" height="28" style="height: 32px !important;" title="پرداخت مجدد" class="btn btn--submit">
+                پرداخت مجدد
+            </v-btn>
+        </template>
+
+        <template v-if="content && content.status == 'payment_out_date'">
+            <v-btn @click="reCreateOrder()" :loading="reCreateOrderLoading" height="28" style="height: 32px !important;" title="سفارش مجدد" class="btn btn--submit">
+                سفارش مجدد
+            </v-btn>
+        </template>
+    </div>
 </section>
+<generalOrdersPaymentMethodModal ref="selectPaymentMethod" :view="screenType === 'desktop' ? 'desktop' : 'mobile'" :orderId ="content?.id" :paidPrice = "content?.paid_price"/>
 </template>
 
 <script>
+import Basket from '@/composables/Basket.js'
 export default {
+
     props: {
         /**
          * Content
@@ -112,7 +129,18 @@ export default {
                     text: 'در انتظار پرداخت',
                     value: 'payment_in_progress'
                 }
-            ]
+            ],
+            screenType: 'desktop',
+            reCreateOrderLoading: false
+        }
+    },
+
+    setup() {
+        const {
+            getBasket
+        } = new Basket();
+        return {
+            getBasket
         }
     },
 
@@ -123,7 +151,51 @@ export default {
         findOrderStatus(status) {
             const findStatus = this.orderStatus.find(element => element.value === status)
             if (findStatus) return findStatus.text
-        }
+        },
+
+         /**
+         * Repeat Payment
+         */
+         repeatPayment() {
+            if (this.screenType === 'desktop') {
+                this.$refs.selectPaymentMethod.dialog = true;
+            } else {
+                this.$refs.selectPaymentMethod.sheet = true;
+            }
+        },
+
+        /**
+        * Recreate for a order
+        */
+        reCreateOrder() {
+            this.reCreateOrderLoading = true
+            axios
+                .get(this.runtimeConfig.public.apiBase + `/order/reorder/${this.userOrder.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.getBasket()
+                    this.$router.push('/cart')
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.reCreateOrderLoading = false
+                });
+        },
+
+        mounted() {
+            /**
+             * Check screen size
+             */
+            window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+        },
     }
 }
 </script>

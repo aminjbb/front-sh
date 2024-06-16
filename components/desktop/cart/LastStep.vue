@@ -61,7 +61,7 @@
             </h2>
 
             <span class="t14 text-grey-darken-2 mb-10 number-font">
-                در صورت عدم پرداخت، سفارش شما تا 1 ساعت آینده به صورت خودکار لغو خواهد شد
+                در صورت عدم پرداخت، سفارش شما تا<span class="text-primary w-500"> ۲۰ دقیقه آینده</span> به صورت خودکار لغو خواهد شد 
             </span>
 
             <img src="~/assets/images/basket-failed.jpg" alt="payment-image" width="217" height="163">

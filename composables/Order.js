@@ -209,8 +209,36 @@ export default function setup() {
             });
     };
 
+     /**
+     * Repeat payment for order
+     * @param {*} order_id 
+     * @param {*} payment_method 
+     */
+     async function rePaymentOrder( order_id , payment_method ) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/crud/repay`, {
+                order_id: order_id,
+                payment_method:payment_method
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                window.location = response.data.data.payment_link
+
+            })
+            .catch((err) => {
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            });
+    };
+
     return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
             getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder,
-        trackingOrder, trackingDetails, getOrderById ,paymentMethods , getPaymentMethods}
+        trackingOrder, trackingDetails, getOrderById ,paymentMethods , getPaymentMethods, rePaymentOrder}
 }
 
