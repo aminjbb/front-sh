@@ -49,7 +49,7 @@
                 <v-icon icon="mdi-store-outline" color="grey-lighten-1" class="ml-2" />
                 <span>
                     فروشگاه:
-                    {{content.shps?.seller?.company_name}}
+                    {{content.shps?.seller?.shopping_name}}
                 </span>
             </div>
         </div>
