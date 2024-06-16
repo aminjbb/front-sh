@@ -204,7 +204,21 @@ export default {
                 this.loading = false;
             }
         },
-
+      /**
+       * fetch user data
+       */
+      async fetchUserProfile() {
+        try {
+          if (this.userToken){
+            const response = await auth.getUserProfile(this.userToken)
+            if (response.data.data) {
+              this.$store.commit('set_userData', response.data.data)
+            }
+          }
+        } catch (error) {
+          // Handle errors
+        }
+      },
         /**
          * Verify OTP
          */
@@ -213,7 +227,9 @@ export default {
                 this.loading = true;
                 const response = await auth.verifyOTP(digits(this.mobile, 'en'), digits(this.otp, 'en'));
                 if (response.status === 200) {
+
                     this.userToken = response.data.data.token;
+                    this.fetchUserProfile()
                     if (this.randomNumberForBasket) {
                         await this.syncBasket()
                     }
