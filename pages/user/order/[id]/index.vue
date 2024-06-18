@@ -70,7 +70,7 @@
                                 </template>
 
                                 <template v-if="userOrder && userOrder.status == 'payment_out_date'">
-                                    <v-btn @click="reCreateOrder()" :loading="reCreateOrderLoading" height="28" style="height: 32px !important;" title="سفارش مجدد" class="btn btn--submit">
+                                    <v-btn @click="reOrder()" :loading="reCreateOrderLoading" height="28" style="height: 32px !important;" title="سفارش مجدد" class="btn btn--submit">
                                         سفارش مجدد
                                     </v-btn>
                                 </template>
@@ -111,7 +111,7 @@
                                 </template>
 
                                 <template v-if="userOrder && userOrder.status == 'payment_out_date'">
-                                    <v-btn @click="reCreateOrder()" :loading="reCreateOrderLoading" height="28" style="height: 32px !important;" title="سفارش مجدد" class="btn btn--submit">
+                                    <v-btn @click="reOrder()" :loading="reCreateOrderLoading" height="28" style="height: 32px !important;" title="سفارش مجدد" class="btn btn--submit">
                                         سفارش مجدد
                                     </v-btn>
                                 </template>
@@ -207,7 +207,6 @@ export default {
         return {
             products: null,
             screenType: 'desktop',
-            reCreateOrderLoading: false
         }
     },
 
@@ -222,7 +221,9 @@ export default {
         } = new Basket()
         const {
             getOrder,
-            order
+            order,
+          reCreateOrder,
+          reCreateOrderLoading
         } = new Order()
         useHead({
             title,
@@ -236,7 +237,9 @@ export default {
             order,
             runtimeConfig,
             userToken,
-            getBasket
+              getBasket,
+            reCreateOrder,
+            reCreateOrderLoading
         }
     },
 
@@ -256,27 +259,8 @@ export default {
       /**
        * Recreate for a order
        */
-        reCreateOrder() {
-            this.reCreateOrderLoading = true
-            axios
-                .get(this.runtimeConfig.public.apiBase + `/order/reorder/${this.userOrder.id}`, {
-                    headers: {
-                        Authorization: `Bearer ${this.userToken}`,
-                    },
-                })
-                .then((response) => {
-                    this.getBasket()
-                    this.$router.push('/cart')
-                })
-                .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }).finally(() => {
-                    this.reCreateOrderLoading = false
-                });
+      reOrder() {
+        this.reCreateOrder(this.userOrder.id)
         },
 
         /**
@@ -301,6 +285,14 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+    watch:{
+    reCreateOrderLoading(newVal){
+      if (!newVal){
+        this.getBasket()
+        this.$router.push('/cart')
+      }
+    }
+  }
 }
 </script>
 
