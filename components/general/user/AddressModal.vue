@@ -56,29 +56,6 @@
     
                 <p class="t12 w400 text-grey mb-8">جزئیات آدرس را تکمیل نمایید.</p>
                 <v-form v-model="valid" ref="addAddress">
-                    <div class="mb-10">
-                        <v-text-field
-                            density="compact"
-                            variant="outlined"
-                            label="آدرس پستی *"
-                            hide-details
-                            :rules="rule"
-                            :append-inner-icon="rules ? 'mdi-check' : ''"
-                            v-model="form.address" />
-
-<!--                        <span class="t11 w400 text-grey mt-2 d-block">-->
-<!--                            آدرس پستی پیشفرض بر اساس موقعیت مکانی انتخابی شما وارد شده است و قابلیت ویرایش دارد.-->
-<!--                        </span>-->
-                    </div>
-
-<!--                    <a @click="showMap" class="d-flex align-center mt-5 mb-7 cur-p">-->
-<!--                        <span class="t13 w500 l30 text-deep-purple">تغییر موقعیت مکانی روی نقشه</span>-->
-<!--                        <v-icon-->
-<!--                            icon="mdi-chevron-left"-->
-<!--                            color="deep-purple"-->
-<!--                            class="mr-2 t16" />-->
-<!--                    </a>-->
-
                     <v-row>
                         <v-col cols="12" md="6">
 
@@ -99,7 +76,8 @@
                                 variant="outlined"
                                 :rules="rule"
                                 label="شهر *"
-                                v-model="form.city" />
+                                v-model="form.city"
+                                @update:modelValue="getCityName()"  />
                         </v-col>
 
                         <v-col cols="12" md="4">
@@ -132,6 +110,34 @@
                                 v-model="form.room_number" />
                         </v-col>
                     </v-row>
+
+                    <div class="mb-10">
+                        <div class="mb-5">
+                            <v-text-field
+                                density="compact"
+                                variant="outlined"
+                                label="تکمیل آدرس *"
+                                hide-details
+                                :rules="rule"
+                                :append-inner-icon="rules ? 'mdi-check' : ''"
+                                v-model="form.address" />
+                        </div>
+
+                        <div v-if="form.address" class="full-address mb-5">
+                            <span class="t15 w500 text-black ml-2 l24">آدرس کامل: </span>
+                            <span class="t14 text-grey-darken-1 l24 number-font">
+                                {{ stateName }}<template v-if="cityName">, شهر {{ cityName }}</template>,
+                                {{ form.address }}
+                                <template v-if="form.number">, پلاک {{ form.number }}</template>
+                                <template v-if="form.room_number">, واحد {{ form.room_number }}</template>
+                            </span>
+                        </div>
+
+                        <div class="mt-1">
+                            <v-icon icon="mdi-alert-remove-outline" color="red" class="ml-2"/>
+                            <span class="t14 text-red">کاربر گرامی، در صورت اشتباه بودن جزئیات آدرس، مسئولیت نرسیدن بسته با مشتری می‌باشد. </span>
+                        </div>
+                    </div>
 
                     <div class="c-modal--address__receiver">
                         <v-checkbox
@@ -249,6 +255,8 @@ export default {
                 (v) => /^[\p{N}\d\u06F0-\u06F9]{10}$/u.test(v) || "کد پستی ۱۰ رقمی را وارد کنید",
             ],
             loading: false,
+            stateName: null,
+            cityName: null,
         }
     },
 
@@ -338,7 +346,9 @@ export default {
             let endPoint = ''
             const formData = new FormData()
 
-            formData.append('address', this.form.address)
+            const fullAddress = 'استان ' + this.stateName +', شهر '+ this.cityName +', '+ this.form.address +', پلاک '+ this.form.number +', واحد '+ this.form.room_number
+
+            formData.append('address', fullAddress)
             formData.append('state_id', this.form.province)
             formData.append('city_id', this.form.city)
             formData.append('postal_code', digits(this.form.postal_code, 'en'))
@@ -444,7 +454,9 @@ export default {
                 phone_number: '',
                 province: null,
                 city: null
-            }
+            },
+            this.stateName= null;
+            this.cityName= null;
         },
 
         /**
@@ -453,6 +465,13 @@ export default {
         getCitiesList() {
             this.form.city = null
             this.getCities(this.form.province)
+            this.stateName = this.provinceList[this.form.province - 1].title
+        },
+
+        getCityName(){
+            let city = null;
+            city = this.cityList.find(item => item.value === this.form.city);
+            this.cityName = city.title
         },
 
         editMode() {
