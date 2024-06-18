@@ -83,7 +83,7 @@
 
 <script>
 import Basket from '@/composables/Basket.js'
-import Order from '@/composables/order.js'
+import Order from '@/composables/Order.js'
 
 export default {
 
