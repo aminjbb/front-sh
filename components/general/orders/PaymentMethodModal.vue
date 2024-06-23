@@ -19,13 +19,16 @@
             <div class="d-flex align-center justify-space-between my-8">
                 <span class="color-black w400 t12">مبلغ قابل پرداخت:</span>
                 <div class="d-flex align-center">
-                    <span class="color-black w500 t16 ml-2 number-font">97,000</span>
+                    <span class="color-black w500 t16 ml-2 number-font">{{
+                      splitChar(Number(String(paidPrice).slice(0, -1)))
+                    }}</span>
                     <span class="color-black w400 t12">تومان</span>
                 </div>
             </div>
 
             <div class="d-flex align-center justify-center mb-2">
                 <v-btn
+                    @click="reSubmitOrder()"
                     height="28"
                     style="height: 32px !important;"
                     title="پرداخت"
@@ -36,9 +39,8 @@
         </v-card>
     </v-dialog>
 </template>
-
 <template v-if="view === 'mobile'">
-    <v-bottom-sheet v-model="sheet" height="550px" >
+    <v-bottom-sheet v-model="sheet">
         <v-card class="pt-3 px-6 pb-5">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
                 <span class="t15 w500 text-black">
@@ -54,17 +56,19 @@
                 <generalOrdersPaymentMethod ref="paymentStep" @selectedPayment="getPayment" />
             </div>
 
-
             <div class="d-flex align-center justify-space-between my-8">
                 <span class="color-black w400 t12">مبلغ قابل پرداخت:</span>
                 <div class="d-flex align-center">
-                    <span class="color-black w500 t16 ml-2 number-font">97,000</span>
+                    <span class="color-black w500 t16 ml-2 number-font">{{
+                      splitChar(Number(String(paidPrice).slice(0, -1)))
+                    }}</span>
                     <span class="color-black w400 t12">تومان</span>
                 </div>
             </div>
 
             <div class="d-flex align-center justify-center mb-2">
                 <v-btn
+                    @click="reSubmitOrder()"
                     height="28"
                     style="height: 32px !important;"
                     title="پرداخت"
@@ -78,13 +82,14 @@
 </template>
 
 <script>
+import Order from '@/composables/Order.js'
 export default {
     data() {
         return {
             activeButton: false,
             sheet:false,
-            dialog:false
-
+            dialog:false,
+            paymentWay:null,
         }
     },
 
@@ -92,6 +97,17 @@ export default {
         view: {
             default: 'mobile',
             type: String
+        },
+        orderId: String | Number,
+        paidPrice: String | Number
+    },
+
+    setup() {
+        const {
+            rePaymentOrder
+        } = new Order()
+        return {
+            rePaymentOrder
         }
     },
 
@@ -103,6 +119,7 @@ export default {
         getPayment(id) {
             if (id !== false) {
                 this.activeButton = true;
+                this.paymentWay = id;
             } else {
                 this.activeButton = false;
             }
@@ -114,6 +131,10 @@ export default {
 
         closeSheet(){
             this.sheet = false;
+        },
+
+        reSubmitOrder(){
+            this.rePaymentOrder(this.orderId, this.paymentWay)
         }
     }
 

@@ -14,6 +14,7 @@ export default function setup() {
     const order = ref(null);
     const orderReturnOrRejectObject = ref(null);
     const loading = ref(false)
+    const reCreateOrderLoading = ref(false)
     const runtimeConfig = useRuntimeConfig();
     const userToken = useCookie('userToken');
     const route = useRoute();
@@ -209,8 +210,61 @@ export default function setup() {
             });
     };
 
+     /**
+     * Repeat payment for order
+     * @param {*} order_id 
+     * @param {*} payment_method 
+     */
+     async function rePaymentOrder( order_id , payment_method ) {
+        axios
+            .post(runtimeConfig.public.apiBase + `/order/crud/repay`, {
+                order_id: order_id,
+                payment_method:payment_method
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                window.location = response.data.data.payment_link
+
+            })
+            .catch((err) => {
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            });
+    };
+
+    /**
+     * Recreate for a order
+     */
+    async function reCreateOrder( order_id) {
+        reCreateOrderLoading.value = true
+        axios
+            .get(runtimeConfig.public.apiBase  + `/order/reorder/${ order_id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+            })
+            .catch((err) => {
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            }).finally(() => {
+            reCreateOrderLoading.value = false
+        });
+    };
+
     return {getOrderList, orderList, getOrder, order, returnOrRejectOrder, orderReturnOrRejectObject, loading,
             getReturnedOrderList , returnedOrderList, getReturnedOrderDetails, returnedOrderDetail, cancelReturnedOrder,
-        trackingOrder, trackingDetails, getOrderById ,paymentMethods , getPaymentMethods}
+        trackingOrder, trackingDetails, getOrderById ,paymentMethods , getPaymentMethods, rePaymentOrder , reCreateOrder,
+        reCreateOrderLoading}
 }
 
