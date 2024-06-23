@@ -10,6 +10,7 @@ export default function setup() {
      * @param {*} data 
      */
     async function sendInfoToTakhfifan(order) {
+        console.log("🚀 ~ sendInfoToTakhfifan ~ order:", order)
         const taToken = useCookie('tatoken')
 
         let productList = [];
@@ -28,7 +29,7 @@ export default function setup() {
             .post('https://analytics.takhfifan.com/track/purchase', {
                 token: taToken.value,
                 transaction_id: `${order?.transaction_id}` ,
-                revenue: Number(String(order?.site_price).slice(0, -1)),
+                revenue: Number(String(order?.paid_price).slice(0, -1)),
                 shipping: order?.sending_price,
                 tax: order?.tax,
                 discount: order?.total_discount,
