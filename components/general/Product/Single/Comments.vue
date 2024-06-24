@@ -74,7 +74,7 @@
         <p v-if="comment.comment" class="t14 w400 l25 text-grey-darken-2 product-comment__card__msg">
           {{ comment.comment }}</p>
 
-        <div class="d-flex justify-start ga-10">
+        <div class="d-flex justify-start ga-10 mt-2">
           <div v-if="comment?.order?.seller_name">
             <v-icon
                 icon="mdi-account-star-outline"
@@ -88,11 +88,11 @@
           <div class="d-flex align-center">
             <div
                 style="width: 16px; height: 16px; border-radius: 50px;padding: 2px"
-                :style="comment?.order?.color_name ? {background: comment?.order?.color_name} : {} "/>
+                :style="comment?.order?.color_value ? { background: comment?.order?.color_value} : {} "/>
 
             <span
                 v-if="comment?.order?.color_label"
-                class="t11 w400 text-grey-darken-1 product-comment__card__author">
+                class="t11 w400 text-grey-darken-1 product-comment__card__author mr-2">
                   {{ comment?.order?.color_label }}
                 </span>
           </div>
