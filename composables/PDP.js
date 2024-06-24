@@ -23,16 +23,18 @@ export default function setup() {
     const loading = ref(true)
 
 
-    async function getPdpData() {
-        axios.get(runtimeConfig.public.apiBase + `/product/pdp/get/${route.params.slug}`,
+    async function getPdpData(orderType) {
+        axios.get(runtimeConfig.public.apiBase + `/product/pdp/info/${route.params.slug}`,
             {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
-                params: {...route.query}
+                params: {
+                    order_type:orderType
+                }
             })
             .then((response) => {
-                product.value = response
+                secondaryData.value =response.data?.data?.detail
             })
             .catch((err) => {
                 if (err.response.status) {
