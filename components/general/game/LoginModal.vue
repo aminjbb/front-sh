@@ -21,7 +21,7 @@
                                             برای ورود و ثبت ‌نام، شماره موبایل خود را وارد نمایید.
                                         </div>
 
-                                        <v-text-field class="game-auth__input" v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px"/>
+                                        <v-text-field  v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px" color="black"/>
                                     </div>
 
                                     <div class="mt-7">
@@ -113,7 +113,7 @@
                                             برای ورود و ثبت ‌نام، شماره موبایل خود را وارد نمایید.
                                         </div>
 
-                                        <v-text-field class="game-auth__input" v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px"/>
+                                        <v-text-field v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px"/>
                                     </div>
 
                                     <div class="mt-7">
