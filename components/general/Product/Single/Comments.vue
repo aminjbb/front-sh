@@ -66,7 +66,7 @@
                     </span>
           </div>
           <div class="d-flex align-center justify-center">
-            <v-rating :length="1" :size="32" color="orange-lighten-2" active-color="orange-darken-1" readonly/>
+            <v-rating model-value="3" :length="1" size="small" color="orange-lighten-2" active-color="orange-darken-1" readonly/>
             <span class="t11 w400 text-grey-lighten-1">{{ comment.score }}</span>
           </div>
         </header>
