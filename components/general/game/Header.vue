@@ -5,7 +5,7 @@
                 <img data-not-lazy src="~/assets/images/mobile-logo.svg"  alt="Shavaz Logo" width="107" height="36" title="Shavaz Logo" />
             </a>
             <a href="/">
-                <v-icon color="white" class="float-left " >mdi-logout</v-icon>
+                <v-icon color="white" class="float-left " @click="logout">mdi-logout</v-icon>
             </a>
         </div>
 
@@ -14,6 +14,19 @@
 
 <script>
 export default {
+    setup() {
+        const userToken = useCookie('userToken')
+        return {
+            userToken,
+        }
+    },
+    methods: {
+        logout() {
+            this.userToken = '';
+             window.location = '/';
+        },
+
+    }
 
 }
 </script>
