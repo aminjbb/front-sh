@@ -37,13 +37,16 @@
 
                         <div class="user-commenting__contents">
                             <div class="user-commenting__content active" id="user-commenting__content--1">
-                                <template v-if="approvedRejectedComment && approvedRejectedComment.length">
-                                  <template v-for="(product, index) in approvedRejectedComment" :key="`product${index}`">
-                                    <v-col cols="12" md="6" :class="screenType === 'desktop' ? 'px-10' : ''">
-                                      <generalUserAwaitingProductComments :content="product" />
-                                      <v-divider color="grey" class="my-2" />
-                                    </v-col>
-                                  </template>
+                                <template v-if="productComment && productComment.length">
+                                  <v-row>
+                                    <template v-for="(product, index) in productComment" :key="`product${index}`">
+                                      <v-col cols="12" md="6" :class="screenType === 'desktop' ? 'px-10' : ''">
+                                        <generalUserAwaitingProductComments @updateCommentList="getUserProductComment" @updateUserComment="getUserComment" :content="product" />
+                                        <v-divider color="grey" class="my-2" />
+                                      </v-col>
+                                    </template>
+                                  </v-row>
+
                                 </template>
 
                                 <template v-else>
@@ -57,7 +60,7 @@
 
                             <div class="user-commenting__content" id="user-commenting__content--2">
                                 <v-row>
-                                  <template v-for="(product, index) in waitingComment" :key="`product-${index}`">
+                                  <template v-for="(product, index) in userComments" :key="`product-${index}`">
                                     <v-col cols="12" :class="screenType === 'desktop' ? 'px-10' : ''">
                                     <generalUserCommentedProducts :content="product" @refreshProducts="refreshProducts" />
                                     </v-col>
@@ -86,6 +89,7 @@ export default {
             tabImage: 1,
             commentedProducts: null,
             userComments: [],
+            productComment:[]
         }
     },
 
@@ -158,7 +162,21 @@ export default {
                 .catch((err) => {
 
                 });
-        }
+        },
+        getUserProductComment() {
+        axios
+            .get(this.runtimeConfig.public.apiBase + `/product/pdp/user/sku/waiting/comments`, {
+              headers: {
+                Authorization: `Bearer ${this.userToken}`,
+              },
+            })
+            .then((response) => {
+              this.productComment = response.data.data
+            })
+            .catch((err) => {
+
+            });
+      }
     },
 
     mounted() {
@@ -167,25 +185,9 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
         this.getUserComment()
+        this.getUserProductComment()
     },
-    computed: {
-        waitingComment() {
-            try {
-                const waitingComment = this.userComments.filter(comment => comment.status === 'waiting')
-                return waitingComment
-            } catch (e) {
 
-            }
-        },
-        approvedRejectedComment() {
-            try {
-                const approvedRejectedComment = this.userComments.filter(comment => comment.status === 'approved' || comment.status === 'rejected')
-                return approvedRejectedComment
-            } catch (e) {
-
-            }
-        }
-    }
 
 }
 </script>
