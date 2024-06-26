@@ -1,5 +1,14 @@
 <template>
-    <div class="wheel game-mobile-order">
+    <div v-if="isLogin" class="wheel__limit mb-10">
+        <div class="d-flex align-center justify-between-space">
+            <v-icon icon="mdi-medal-outline" size="small" color="white" class="ml-2" />
+            <span class="number-font text-bold t12 text-white">
+                تعداد شانس: <span class="number-font text-bold">{{ countClicked }}</span> / <span class="number-font text-bold">{{ limit }}</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="wheel game-mobile-order" @click="start()">
         <div class="wheel__inner" id="wheel__inner" ref="circle">
             <div class="wheel__sec" v-for="(item, index) in items" :key="index" ref="children">
                 <img data-not-lazy :src="item.desktop_image_url" :title="item.label" :alt="item.label"  />
@@ -8,18 +17,9 @@
         <div class="wheel__arrow"></div>
     </div>
 
-    <v-btn :disabled="isLogin && clicked ? false : true" @click="start()" color="primary500" rounded="xl" type="submit" height="48px" class="w-100 game-auth__btn wheel__btn game-mobile-order">
+    <v-btn :disabled=" clicked ? false : true" @click="start()" color="primary500" rounded="xl" type="submit" height="48px" class="w-100 game-auth__btn wheel__btn game-mobile-order">
         شانستو امتحان کن
     </v-btn>
-
-    <div v-if="isLogin" class="wheel__limit mt-10">
-        <div class="d-flex align-center justify-between-space">
-            <v-icon icon="mdi-medal-outline" size="small" color="white" class="ml-2" />
-            <span class="number-font text-bold t12 text-white">
-                تعداد شانس: <span class="number-font text-bold">{{ countClicked }}</span> / <span class="number-font text-bold">{{ limit }}</span>
-            </span>
-        </div>
-    </div>
 
     <v-dialog
             v-if="dialog"
@@ -171,7 +171,12 @@ export default {
          * Start lucky wheel
          */
         start() {
-            this.getUserPrize();
+            if(this.isLogin){
+                this.getUserPrize();
+            }
+            else if (!this.isLogin) {
+                this.$emit('luckyBtnClicked')
+            }
         },
 
         /**
@@ -225,7 +230,7 @@ export default {
                 this.clicked = false;
             }
       }
-    }
+    },
 
 }
 </script>

@@ -85,7 +85,7 @@
 
 <!--        <v-divider color="grey" class="mt-5" />-->
 
-        <generalProductSingleComments :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getPdpData" />
+        <generalProductSingleComments @sortCommentList="getPdpData" :productSelectedSeller="productSelectedSeller" :comments="skuComments" :getSecondaryData="getPdpData" />
 
         <template v-if="screenType !== null && screenType === 'mobile'">
             <div class="mobile-basket" v-if="productSelectedSeller">
@@ -305,6 +305,9 @@ export default {
     },
 
     methods:{
+      sortCommentList(orderType){
+        this.getPdpData(orderType)
+      },
         handleWatchChange() {
             if(this.productDetail){
                 this.enhanceECommerce(this.productDetail,this.productSelectedSeller)
