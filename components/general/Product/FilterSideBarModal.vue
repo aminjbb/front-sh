@@ -1,12 +1,12 @@
 <template>
-<div class="c-modal w-100">
-    <div class="w-100 d-flex justify-start align-center mt-3" @click="openModal()">
+<div class="c-modal">
+    <div class="product-mobile-control w-100 d-flex justify-start align-center" @click="openModal()">
         <v-icon
             icon="mdi-filter-outline"
-            color="grey-darken-2"
+            color="grey-darken-1"
             class="mr-1" />
 
-        <span class="text-grey-darken-2 t13 w500">فیلتر</span>
+        <span class="text-grey-darken-3 t12 w700">فیلتر</span>
     </div>
 
     <v-dialog
@@ -15,16 +15,16 @@
         color="white"
         fullscreen>
         <v-card class="pt-2 pb-5 c-modal--filter">
-            <header class="c-modal--filter__header d-flex justify-space-between align-center pb-1 px-6 ">
+            <header class="c-modal--filter__header d-flex justify-space-between align-center pb-1 pr-6 pl-2">
                 <div class="d-flex flex-column c-modal--filter__header__title">
-                    <span class="t16 w400 mb-1">
+                    <span class="t18 w700 mb-1">
                         فیلتر
                     </span>
                 </div>
 
-                <span class="t13 text-grey-darken-1 py-3" @click="deleteAllFilter()">
-                    حذف همه
-                </span>
+                <v-btn class="c-modal--comment__header__btn pa-0 text-none" @click="deleteAllFilter()" width="25" color="grey-darken-3" size="large" variant="icon">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
             </header>
 
             <div class="px-3">
@@ -35,7 +35,7 @@
                             v-if="filter.type !== 'switch' && filter.type !== 'period' "
                             class="d-flex align-center justify-space-between filter-sidebar__card__header my-4"
                             @click="slideToggleCard(index)">
-                            <span class="t16 w400 text-grey-darken-2">{{filter.name}}</span>
+                            <span class="t12 w700 text-grey-darken-2">{{filter.name}}</span>
 
                             <v-icon icon="mdi-chevron-down" color="grey" />
                         </header>
@@ -70,14 +70,14 @@
                       <template v-else-if="filter.type === 'period'">
                         <div  class="filter-sidebar__card mt-3" :id="`filter-sidebar__card--${filterList.length}`">
                           <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard(filterList.length)">
-                            <span class="t16 w400 text-grey-darken-2">محدوده قیمت</span>
+                            <span class="t12 w700 text-grey-darken-2">محدوده قیمت</span>
 
                             <v-icon icon="mdi-chevron-down" color="grey" />
                           </header>
 
                           <div class="filter-sidebar__card__box">
                             <div class="d-flex align-center justify-space-between">
-                              <span class="t14 w400 ml-5">حداقل</span>
+                              <span class="t12 w700 ml-5">حداقل</span>
 
                               <v-autocomplete
                                   density="compact"
@@ -94,7 +94,7 @@
                             </div>
 
                             <div class="d-flex align-center justify-space-between">
-                              <span class="t14 w400 ml-5">حداکثر</span>
+                              <span class="t12 w700 ml-5">حداکثر</span>
 
                               <v-autocomplete
                                   density="compact"
@@ -122,9 +122,17 @@
                 <v-btn
                     @click="closeModal()"
                     height="44"
-                    title=" مشاهده نتایج"
+                    title="اعمال فیلتر"
                     class="btn btn--submit w-100">
-                    مشاهده نتایج
+                    اعمال فیلتر
+                </v-btn>
+
+                <v-btn
+                    @click="deleteAllFilter()"
+                    height="44"
+                    title="حذف فیلتر ها"
+                    class="btn btn--submit w-100">
+                    حذف فیلتر ها
                 </v-btn>
             </div>
         </v-card>
@@ -273,5 +281,14 @@ export default {
     bottom: 0;
     width: 100%;
     padding: 16px 36px;
+}
+
+.c-modal--comment__header__btn{
+    width: 25px !important;
+    height: 25px !important;
+    min-width: auto;
+    background: #ececec;
+    border-radius: 50%;
+    margin: 10px;
 }
 </style>

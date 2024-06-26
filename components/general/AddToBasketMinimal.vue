@@ -8,8 +8,9 @@
             <v-btn
                 @click="addToCard(content?.shps_id)"
                 height="24"
-                icon="mdi-plus"
+                icon="mdi-plus-box"
                 :loading="loadingFirstAddBasket"
+                color="primary"
                 class="btn btn--submit minimal">
             </v-btn>
         </template>
@@ -242,10 +243,8 @@ export default {
     height: 24px !important;
     width: 24px !important;
     border-radius: 0 !important;
-    color: #9E9E9E !important;
-    border:1px solid #9E9E9E !important;
-    border-radius: 3px !important;
     padding: 0 !important;
+    border: 0 !important;
 
     &:hover{
         color: #D72685 !important;
@@ -258,6 +257,10 @@ export default {
     &::after{
         background-color: none !important;
         background: none !important;
+    }
+
+    .v-icon{
+        font-size:27px !important ;
     }
 }
 
