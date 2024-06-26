@@ -1,6 +1,14 @@
 <template>
 <div class="c-modal">
-    <v-btn @click="openModal()" height="36" title="ثبت دیدگاه" append-icon="mdi-comment-plus-outline" class="btn btn--comment">
+  <v-btn
+      v-if="userProfileComment"
+      @click="openModal()"
+      height="44"
+      title="ثبت نظر"
+      class="btn btn--cancel w-100 mt-5">
+    ثبت نظر
+  </v-btn>
+    <v-btn v-else @click="openModal()" height="36" title="ثبت دیدگاه" append-icon="mdi-comment-plus-outline" class="btn btn--comment">
         ثبت دیدگاه
     </v-btn>
 
@@ -109,7 +117,9 @@ export default {
         /** productSelectedSeller for add comment **/
         productSelectedSeller: Object,
         /** method for get SecondaryData after add comment **/
-        getSecondaryData: Function
+        getSecondaryData: Function,
+      /** bool for change button open modal **/
+        userProfileComment:false
     },
 
     methods: {
@@ -156,6 +166,7 @@ export default {
 
                 }, )
                 .then((response) => {
+                    if (this.userProfileComment) this.$emit('getCommentList')
                     const userDetail = this.$store.getters['get_userData'];
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
