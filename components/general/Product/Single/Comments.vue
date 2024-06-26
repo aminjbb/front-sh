@@ -50,20 +50,16 @@
                 v-if="comment.user"
                 class="t13 w400 text-grey-darken-1 product-comment__card__author">
                       {{ comment.user?.first_name }} {{ comment.user?.last_name }}
-                    </span>
+            </span>
 
             <span
                 v-if="comment?.order"
                 style="background: #e9ddf4"
-                class="rounded-lg px-2 t10 text-detail mr-2">
-                      خریدار
-                    </span>
+                class="rounded-lg px-2 t10 text-detail mr-2">خریدار</span>
 
             <span
                 v-if="comment?.created_at_fa"
-                class="t10 w400 text-grey-darken-1 product-comment__card__author mr-10">
-                       {{ comment?.created_at_fa.split(' ')[0] }}
-                    </span>
+                class="t10 w400 text-grey-darken-1 product-comment__card__author product-card__price-info__price mr-10">{{ comment?.created_at_fa }}</span>
           </div>
           <div class="d-flex align-center justify-center">
             <v-rating model-value="3" :length="1" size="small" color="orange-lighten-2" active-color="orange-darken-1" readonly/>
