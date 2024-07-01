@@ -2,7 +2,7 @@
 <div class="login">
     <v-locale-provider rtl>
         <div class="game-auth">
-            <a class="d-flex justify-center mb-2 mt-2" href="/">
+            <a v-if="!noLogo" class="d-flex justify-center mb-2 mt-2" href="/">
                 <img src="@/assets/images/logo.svg" class="mb-5" alt="shavaz image">
             </a> 
             <template v-if="loginStep === 1">
@@ -10,18 +10,32 @@
                 <v-form @submit.prevent="sendOTP" ref="phoneNumberForm" class="w-100">
                     <div class="w-100 form-inner">
                         <div class="mt-6 w-100">
-                            <h2 class="text-right t18 w700 mb-4 text-grey-darken-3">
+                            <h2 v-if="!noTitle" class="text-right t18 w700 mb-4 text-grey-darken-3">
                                 ورود یا ثبت‌نام
                             </h2>
 
-                            <div class="text-right t14 w400 l15 text-grey-darken-2 mb-15">
+                            <div v-if="loginDesc" class="game-auth__desc text-right t14 w400 l15 text-grey-darken-2 mb-15">
+                                {{ loginDesc }}
+                            </div>
+
+                            <div v-else class="game-auth__desc text-right t14 w400 l15 text-grey-darken-2 mb-15">
                                 برای ورود و ثبت‌نام، شماره موبایل خود را وارد نمایید.
                             </div>
 
                             <v-text-field class="game-auth__input" v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره موبایل" hide-details height="46px"/>
                         </div>
 
-                        <div class="mt-7">
+                        <div v-if="showCancel" class="mt-7 d-flex align-center justify-space-between">
+                            <v-btn :loading="loading" color="primary" type="submit" height="46px" class="game-auth__btn ">
+                                دریافت کد
+                            </v-btn>
+
+                            <v-btn @click="backToSite"  color="primary" height="46px" class="game-auth__btn--cancel">
+                                بازگشت به سایت
+                            </v-btn>
+                        </div>
+
+                        <div v-else class="mt-7">
                             <v-btn :loading="loading" color="primary" block type="submit" height="46px" class="game-auth__btn">
                                 دریافت کد تایید
                             </v-btn>
@@ -88,6 +102,25 @@ import axios from "axios";
 
 export default {
 
+    props:{
+        noLogo:{
+            type: Boolean,
+            default: false
+        },
+
+        noTitle:{
+            type: Boolean,
+            default: false
+        },
+
+        showCancel:Boolean,
+
+        loginDesc:{
+            type: String,
+            default:null,
+        }
+    },
+
     data() {
         return {
             loginStep: 1,
@@ -135,7 +168,6 @@ export default {
     },
 
     methods: {
-
         backStep1() {
             this.loginStep = 1;
             this.minutes = null;
@@ -267,6 +299,13 @@ export default {
                 this.randomNumberForBasket = ''
             });
         },
+
+        /**
+         * Emit method for back to site
+         */
+        backToSite(){
+            this.$emit('backToSite',true)
+        }
     },
 };
 </script>
@@ -302,6 +341,17 @@ export default {
     &__btn{
         border-radius: 4px !important;
         height: 50px !important;
+        width: 48% !important;
+        box-shadow: none !important;
+
+        &--cancel{
+            background:white !important;
+            border: 1px solid #D72685 !important;
+            color: #D72685 !important;
+            width: 48% !important;
+            box-shadow: none !important;
+            height: 50px !important;
+        }
     }
 
     .v-otp-input__content{

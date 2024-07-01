@@ -3,7 +3,7 @@
     <v-bottom-sheet v-model="sheet" height="400px">
         <v-card class="text-center">
             <v-card-text>
-                <MobileCartAuth @logined="logined"/>
+                <generalAuth @logined="logined"/>
             </v-card-text>
         </v-card>
     </v-bottom-sheet>
