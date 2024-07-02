@@ -65,10 +65,6 @@ export default {
               value: 'seen_count',
               type:'asc'
           },
-          {
-        label: 'پربازدیدترین',
-        value: 'most_view'
-        },
         {
           label: 'جدیدترین',
           value: 'created_at',
