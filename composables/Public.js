@@ -11,6 +11,7 @@ export default function setup() {
     const runtimeConfig = useRuntimeConfig()
     const topBanner = ref({})
     const route = useRoute()
+    const categoryList =  ref([])
     
     async function getProvince() {
         axios
@@ -79,6 +80,17 @@ export default function setup() {
             });
     };
 
-    return {getProvince, provinces, loading , cities ,getCities, getTopBanner, topBanner }
+    async function getBestCategoryList() {
+        axios
+            .get(runtimeConfig.public.apiBase + '/product/plp/category/best-selling')
+            .then((response) => {
+                categoryList.value = response.data.data;
+                console.log("🚀 ~ .then ~ categoryList.value:", categoryList.value)
+            })
+            .catch((err) => {
+            });
+    };
+
+    return {getProvince, provinces, loading , cities ,getCities, getTopBanner, topBanner, getBestCategoryList,categoryList }
 }
 
