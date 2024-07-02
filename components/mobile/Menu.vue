@@ -3,6 +3,33 @@
     <div v-if="menuList && menuList.length" class="menu menu--mobile" id="menu--mobile">
         <nav>
             <div>
+                <div v-if="categoryList && categoryList.length" class="menu__name my-5">
+                    <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none">
+                        <path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 17C14 17.7956 14.3161 18.5587 14.8787 19.1213C15.4413 19.6839 16.2044 20 17 20C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17C20 16.2044 19.6839 15.4413 19.1213 14.8787C18.5587 14.3161 17.7956 14 17 14C16.2044 14 15.4413 14.3161 14.8787 14.8787C14.3161 15.4413 14 16.2044 14 17Z" stroke="#3C3C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="t17 w700">پرفروش ترین ها</span>
+                </div>
+
+                <swiper v-if="categoryList && categoryList.length" dir="rtl" :slidesPerView="2.5" :spaceBetween="10" :navigation="false" :modules="modules" :loop="loop" :breakpoints="{
+                    '200': {
+                        slidesPerView: 2.5,
+                        spaceBetween: 15,
+                    },
+                    '500': {
+                        slidesPerView: 2.7,
+                        spaceBetween: 15,
+                    },
+                    '768': {
+                        slidesPerView: 3.5,
+                    }
+                }" class="mySwiper menu__slider mb-5">
+                    <swiper-slide v-for="category in categoryList" :key="category?.id">
+                        <a class="menu__slider__item d-flex flex-column justify-center align-center" :href="category?.link" :title="category?.label">
+                            <img :src="category?.image" :alt="category?.image_alt" width="130" height="90" class="w-100" />
+                        </a>
+                    </swiper-slide>
+                </swiper>
+
                 <div class="menu__name">
                     <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none">
                         <path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 17C14 17.7956 14.3161 18.5587 14.8787 19.1213C15.4413 19.6839 16.2044 20 17 20C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17C20 16.2044 19.6839 15.4413 19.1213 14.8787C18.5587 14.3161 17.7956 14 17 14C16.2044 14 15.4413 14.3161 14.8787 14.8787C14.3161 15.4413 14 16.2044 14 17Z" stroke="#3C3C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -23,7 +50,7 @@
                                 <div class="child-preview">
                                     <span v-for="(child1, index) in item.children.slice(0,5)" :key="child1.id" class="t10 w400 text-grey ">
                                         <v-icon v-if="index !== 0" icon="mdi-circle" class="t10 text-primary sp d-inline-block mx-1" color="primary"></v-icon>
-                                        {{ child1.label }} 
+                                        {{ child1.label }}
                                     </span>
                                 </div>
                             </div>
@@ -59,12 +86,29 @@
 </template>
 
 <script>
+// Composables
 import Menu from '~/composables/Menu';
+import Public from '~/composables/Public';
+
+// Import Swiper Vue.js components
+import {
+    Swiper,
+    SwiperSlide
+} from 'swiper/vue';
+
+// Import Swiper styles
+import 'swiper/css';
+
 export default {
     data() {
         return {
             categoriesMenu: []
         }
+    },
+
+    components: {
+        Swiper,
+        SwiperSlide,
     },
 
     setup() {
@@ -73,18 +117,27 @@ export default {
             menuList,
             loading
         } = Menu();
+
+        const {
+            getBestCategoryList,
+            categoryList
+        } = Public();
+
         return {
             getMenuList,
             menuList,
-            loading
+            loading,
+            getBestCategoryList,
+            categoryList
         };
     },
 
     mounted() {
         /**
-         * Call getHomeSections in setup 
+         * Call apis
          */
         this.getMenuList();
+        this.getBestCategoryList();
     },
 
     methods: {
