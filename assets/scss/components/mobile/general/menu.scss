@@ -41,6 +41,12 @@ $parent: 'menu';
             }
         }
 
+        .#{$parent}__slider{
+            img{
+                height: auto !important;
+            }
+        }
+
         >nav {
             height: 100%;
 
