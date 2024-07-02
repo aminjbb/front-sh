@@ -1,6 +1,6 @@
 <template>
 <v-bottom-sheet v-model="sheet">
-    <div class="voucher-auth bg-white h-100 px-5">
+    <div class="voucher-auth voucher-auth--sheet bg-white h-100 px-5">
         <div class="close-modal" @click="closeSheet()">
             <v-icon color="grey-darken-1">mdi-close</v-icon>
         </div>
@@ -18,7 +18,7 @@
                     <h4 class="t12 w700 l30 mb-2">{{ title }}</h4>
                     <img data-not-lazy :src="imageAddress(image)" width="100" height="100" />
                 </template>
-               
+
             </div>
 
             <generalAuth v-if="!voucherStep" class="pt-2" @userInfo="getUserInfo" @backToSite="closeModal" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
@@ -37,7 +37,7 @@
 
 <script>
 import {
-  copyText
+    copyText
 } from 'vue3-clipboard'
 
 export default {
@@ -45,7 +45,7 @@ export default {
         return {
             sheet: false,
             voucherStep: false,
-            voucher_code:'new_guest'
+            voucher_code: 'new_guest'
         }
     },
 
@@ -71,10 +71,10 @@ export default {
          * @param {*} code
          */
         const doCopy = (code) => {
-          console.log(code)
+            console.log(code)
             copyText(code, undefined, (error, event) => {
                 if (error) {
-                  console.log(error)
+                    console.log(error)
                     useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -112,18 +112,22 @@ export default {
          */
         closeSheet() {
             this.sheet = false;
+
+            if(this.voucherStep === true){
+                window.location.reload();
+            }
         },
 
         /**
          * Get user Info after login
          * @param {*} user 
          */
-        userInfo(user){
-            if(user.has_order === false){
+         getUserInfo(user) {
+            if (user.has_order === false) {
                 this.voucherStep = true;
                 this.voucher_code = user.voucher_code
 
-            } else{
+            } else {
                 this.sheet = false;
                 window.location.reload();
             }
@@ -150,39 +154,43 @@ export default {
 </script>
 
 <style lang="scss">
-.voucher-auth {
-    position: relative;
-    border-top-left-radius: 16px !important;
-    border-top-right-radius: 16px !important;
-    overflow: hidden;
-    padding-bottom: 16px;
+$parent: 'voucher-auth';
 
-    .game-auth__desc {
-        margin-bottom: 20px !important;
-    }
+.#{$parent} {
+    &--sheet {
+        position: relative;
+        border-top-left-radius: 16px !important;
+        border-top-right-radius: 16px !important;
+        overflow: hidden;
+        padding-bottom: 16px;
 
-    .close-modal {
-        width: 24px;
-        height: 24px;
-        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.405);
-        position: absolute;
-        top: 39px;
-        left: 16px;
-        border-radius: 50%;
-    }
+        .game-auth__desc {
+            margin-bottom: 20px !important;
+        }
 
-    &__code{
-        border-radius: 4px;
-        border: 1px solid #9E9E9E;
-        margin-top: 10px;
-        height: 50px;
-        padding: 10px;
-        color: black;
-        font-size: 18px;
+        .close-modal {
+            width: 24px;
+            height: 24px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.405);
+            position: absolute;
+            top: 39px;
+            left: 16px;
+            border-radius: 50%;
+        }
 
-        > span:first-child{
-            font-size: 15px;
-            color: black !important;
+        .#{$parent}__code {
+            border-radius: 4px;
+            border: 1px solid #9E9E9E;
+            margin-top: 10px;
+            height: 50px;
+            padding: 10px;
+            color: black;
+            font-size: 18px;
+
+            >span:first-child {
+                font-size: 15px;
+                color: black !important;
+            }
         }
     }
 }

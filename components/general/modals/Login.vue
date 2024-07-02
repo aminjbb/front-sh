@@ -1,7 +1,7 @@
 <template>
 <div class="c-modal">
     <v-dialog v-if="dialog" v-model="dialog" color="white" width="724px" height="507px">
-        <div class="voucher-auth bg-white px-10 py-15 h-100">
+        <div class="voucher-auth voucher-auth--desktop bg-white px-10 py-15 h-100">
             <div class="close-modal" @click="closeModal()">
                 <v-icon color="grey-darken-1">mdi-close</v-icon>
             </div>
@@ -35,7 +35,7 @@
 
 <script>
 import {
-  copyText
+    copyText
 } from 'vue3-clipboard'
 
 export default {
@@ -45,7 +45,7 @@ export default {
             dialog: false,
             loading: false,
             voucherStep: false,
-            voucher_code:'new_guest'
+            voucher_code: 'new_guest'
         }
     },
 
@@ -71,10 +71,10 @@ export default {
          * @param {*} code
          */
         const doCopy = (code) => {
-          console.log(code)
+            console.log(code)
             copyText(code, undefined, (error, event) => {
                 if (error) {
-                  console.log(error)
+                    console.log(error)
                     useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
                         rtl: true,
                         position: 'top-center',
@@ -112,22 +112,27 @@ export default {
          */
         closeModal() {
             this.dialog = false;
+
+            if(this.voucherStep === true){
+                window.location.reload();
+            }
         },
 
         /**
          * Get user info
          * @param {*} user 
          */
-        userInfo(user){
-            if(user.has_order === false){
+         getUserInfo(user) {
+            if (user.has_order === false) {
                 this.voucherStep = true;
-                this.voucher_code = user.voucher_code
+                this.voucher_code = user?.voucher_code
 
-            } else{
+            } else {
                 this.dialog = false;
                 window.location.reload();
             }
         },
+        //09383439367
 
         /**
          * Get image address
@@ -150,39 +155,44 @@ export default {
 </script>
 
 <style lang="scss">
-.voucher-auth {
+$parent: 'voucher-auth';
+
+.#{$parent} {
     position: relative;
 
-    .game-auth__desc {
-        margin-bottom: 20px !important;
-    }
+    &--desktop {
+        border-radius:8px !important ;
+        .game-auth__desc {
+            margin-bottom: 20px !important;
+        }
 
-    .game-auth__input{
-        margin-bottom: 70px;
-    }
+        .game-auth__input {
+            margin-bottom: 70px;
+        }
 
-    .close-modal {
-        width: 24px;
-        height: 24px;
-        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.405);
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        border-radius: 50%;
-    }
+        .close-modal {
+            width: 24px;
+            height: 24px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.405);
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            border-radius: 50%;
+        }
 
-    &__code{
-        border-radius: 4px;
-        border: 1px solid #9E9E9E;
-        margin-top: 10px;
-        height: 50px;
-        padding: 10px;
-        color: black;
-        font-size: 18px;
+        .#{$parent}__code {
+            border-radius: 4px;
+            border: 1px solid #9E9E9E;
+            margin-top: 10px;
+            height: 50px;
+            padding: 10px;
+            color: black;
+            font-size: 18px;
 
-        > span:first-child{
-            font-size: 15px;
-            color: black !important;
+            >span:first-child {
+                font-size: 15px;
+                color: black !important;
+            }
         }
     }
 }
