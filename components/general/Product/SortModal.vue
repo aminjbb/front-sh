@@ -42,8 +42,9 @@ export default {
         return {
             dialog: false,
             sortItems: [{
-                    label: 'پربازدیدترین',
-                    value: 'most_view'
+                    label: 'محبوب ترین',
+                    value: 'seen_count',
+                    type: 'asc'
                 },
                 {
                     label: 'جدیدترین',
@@ -105,7 +106,7 @@ export default {
     box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
 }
 
-.c-modal--comment__header__btn{
+.c-modal--comment__header__btn {
     width: 25px !important;
     height: 25px !important;
     min-width: auto;

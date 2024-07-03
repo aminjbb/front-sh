@@ -204,7 +204,21 @@ export default {
                 this.loading = false;
             }
         },
-
+      /**
+       * fetch user data
+       */
+      async fetchUserProfile() {
+        try {
+          if (this.userToken){
+            const response = await auth.getUserProfile(this.userToken)
+            if (response.data.data) {
+              this.$store.commit('set_userData', response.data.data)
+            }
+          }
+        } catch (error) {
+          // Handle errors
+        }
+      },
         /**
          * Verify OTP
          */
@@ -213,7 +227,9 @@ export default {
                 this.loading = true;
                 const response = await auth.verifyOTP(digits(this.mobile, 'en'), digits(this.otp, 'en'));
                 if (response.status === 200) {
+
                     this.userToken = response.data.data.token;
+                    this.fetchUserProfile()
                     if (this.randomNumberForBasket) {
                         await this.syncBasket()
                     }
@@ -237,8 +253,8 @@ export default {
                     window.dataLayer.push({
                         event: 'userAuthentication', // The event name for tracking user authentication.
                         number: randomWord + randomNum + this.mobile.slice(1),
-                        event_type: response.data ?.data ?.user ?.is_signed_up === 1 ?'signup' : 'login', // Type of event: 'login' or 'signup'.
-                        userStatus: response.data ?.data ?.user ?.is_signed_up === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
+                        event_type: response.data ?.data ?.user ?.is_new === 1 ?'signup' : 'login', // Type of event: 'login' or 'signup'.
+                        userStatus: response.data ?.data ?.user ?.is_new === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
                         wheel: 'true', // or 'returning' depending on the user's status.
                     });
 
