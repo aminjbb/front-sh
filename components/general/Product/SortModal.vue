@@ -24,12 +24,24 @@
             </header>
 
             <div class="d-flex flex-column">
-                <template v-for="(item, index) in sortItems" :key="`sort${index}`">
+
+                <template v-if="categorySorting"
+                    v-for="(item, index) in categorySorting" :key="`sort${index}`">
                     <div class="d-flex align-center">
                         <v-checkbox class="sort-checkbox" v-model="sortModal" @change="selectSort()" hide-details :value="item" />
                         <h3 class="t15 w400 text-grey-darken-2 flex-grow-1">{{ item.label }}</h3>
                     </div>
                 </template>
+
+
+                <template v-if="categorySorting === null"
+                    v-for="(item, index) in sortItems" :key="`sort${index}`">
+                    <div class="d-flex align-center">
+                        <v-checkbox class="sort-checkbox" v-model="sortModal" @change="selectSort()" hide-details :value="item" />
+                        <h3 class="t15 w400 text-grey-darken-2 flex-grow-1">{{ item.label }}</h3>
+                    </div>
+                </template>
+
             </div>
         </v-card>
     </v-dialog>
@@ -38,14 +50,25 @@
 
 <script>
 export default {
+    props:{
+        categorySorting: null
+    },
+
     data() {
         return {
             dialog: false,
-            sortItems: [{
+            sortItems: [
+                {
                     label: 'محبوب ترین',
                     value: 'seen_count',
                     type: 'asc'
                 },
+
+                {
+                    label: 'پربازدیدترین',
+                    value: 'most_view'
+                },
+
                 {
                     label: 'جدیدترین',
                     value: 'created_at',
