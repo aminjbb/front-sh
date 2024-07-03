@@ -9,8 +9,8 @@
     <v-container v-show="!loading">
       <generalBreadcrumb :items="breadcrumbList" />
 
-      <v-row class="mt-10">
-        <v-col cols="12" md="3">
+      <v-row :class="screenType === 'desktop' ? 'mt-5' : ''">
+        <v-col cols="12" md="3" class="filter-bg-mobile">
           <client-only>
             <template v-if="screenType === 'desktop'">
               <generalProductFilterSideBar
@@ -21,8 +21,9 @@
             </template>
 
             <template v-if="screenType === 'mobile'">
-              <div class="d-flex align-center justify-space-between">
+              <div class="d-flex align-center">
                 <generalProductFilterSideBarModal
+                  class="ml-3"
                     :filterList="productFilterSecondaryData"
                     @listFiltersModal="listFiltersModal"
                     @selectFiltersModal="selectFiltersModal"
@@ -33,7 +34,7 @@
             </template>
           </client-only>
         </v-col>
-        <v-col cols="12" md="9">
+        <v-col cols="12" md="9" class="main-col">
           <template v-if="screenType === 'desktop'">
             <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
               <nav class="d-flex align-center flex-grow-1">
@@ -51,10 +52,10 @@
               </nav>
             </div>
           </template>
-          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-8' : ''">
             <v-row v-if="productListData?.length" class="ma-0">
               <v-col
-                  cols="12"
+                  cols="6"
                   md="3"
                   v-for="(item, index) in productListData"
                   :key="`card-${index}`"
@@ -74,7 +75,7 @@
             </v-row>
           </div>
 
-          <div class="v-product__pagination d-flex justify-center mt-8">
+          <div class="v-product__pagination d-flex justify-center mt-8 w-100">
             <v-pagination
                 v-model="page"
                 :length="productListPageLength"

@@ -85,7 +85,6 @@ export default function setup() {
             .get(runtimeConfig.public.apiBase + '/product/plp/category/best-selling')
             .then((response) => {
                 categoryList.value = response.data.data;
-                console.log("🚀 ~ .then ~ categoryList.value:", categoryList.value)
             })
             .catch((err) => {
             });
