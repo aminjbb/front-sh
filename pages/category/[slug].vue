@@ -153,6 +153,7 @@
     computed: {
       breadcrumbList(){
         let breadcrumb = []
+        
         if(this.breadcrumb?.category_l1?.name){
           const form = {
             type : "category_l1",
