@@ -59,10 +59,12 @@ export default {
   data() {
     return {
       dialog: false,
-      sortItems: [{
-        label: 'پربازدیدترین',
-        value: 'most_view'
-      },
+      sortItems: [
+          {
+              label: 'محبوب ترین',
+              value: 'seen_count',
+              type:'asc'
+          },
         {
           label: 'جدیدترین',
           value: 'created_at',
