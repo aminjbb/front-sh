@@ -100,7 +100,7 @@
         <div class="v-product__contents" :class="screenSize === 'desktop' ? 'mt-6' : ''">
             <div class="px-2">
                 <v-row>
-                    <v-col v-for="card in 12" :key="card" cols="12" lg="3">
+                    <v-col v-for="card in 12" :key="card" cols="6" lg="3">
                         <v-skeleton-loader :loading="loading" height="240" type="image, list-item-two-line">
                             <v-responsive>
                                 <v-img src="src" class="rounded-lg mb-2" height="184" cover />

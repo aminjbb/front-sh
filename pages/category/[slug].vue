@@ -78,7 +78,7 @@
               </v-row>
             </div>
   
-            <div class="v-product__pagination d-flex justify-center mt-8">
+            <div class="v-product__pagination d-flex justify-center mt-8 w-100">
               <v-pagination
                   v-model="page"
                   :length="productListPageLength"
