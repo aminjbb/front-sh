@@ -29,7 +29,7 @@
                       @selectFiltersModal="selectFiltersModal"
                       @setAmount="selectByAmount"/>
     
-                    <generalProductSortModal @sort="sort" :categorySorting="sortItems"/>
+                    <generalProductSortModal @sort="sort" :sortItems="sortItems"/>
                 </div>
               </template>
             </client-only>

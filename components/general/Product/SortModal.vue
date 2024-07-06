@@ -25,17 +25,8 @@
 
             <div class="d-flex flex-column">
 
-                <template v-if="categorySorting"
-                    v-for="(item, index) in categorySorting" :key="`sort${index}`">
-                    <div class="d-flex align-center">
-                        <v-checkbox class="sort-checkbox" v-model="sortModal" @change="selectSort()" hide-details :value="item" />
-                        <h3 class="t15 w400 text-grey-darken-2 flex-grow-1">{{ item.label }}</h3>
-                    </div>
-                </template>
 
-
-                <template v-if="categorySorting === null"
-                    v-for="(item, index) in sortItems" :key="`sort${index}`">
+                <template  v-for="(item, index) in sortItems" :key="`sort${index}`">
                     <div class="d-flex align-center">
                         <v-checkbox class="sort-checkbox" v-model="sortModal" @change="selectSort()" hide-details :value="item" />
                         <h3 class="t15 w400 text-grey-darken-2 flex-grow-1">{{ item.label }}</h3>
@@ -51,7 +42,7 @@
 <script>
 export default {
     props:{
-        categorySorting: {
+        sortItems: {
             type: Array,
             default: null
         },
@@ -60,39 +51,6 @@ export default {
     data() {
         return {
             dialog: false,
-            sortItems: [
-/*                {
-                    label: 'محبوب ترین',
-                    value: 'seen_count',
-                    type: 'asc'
-                },*/
-
-                {
-                    label: 'پربازدیدترین',
-                    value: 'most_view'
-                },
-
-                {
-                    label: 'جدیدترین',
-                    value: 'created_at',
-                    type: 'desc'
-                },
-                {
-                    label: 'ارزان‌ترین',
-                    value: 'site_price',
-                    type: 'asc'
-                },
-                {
-                    label: 'گران‌ترین',
-                    value: 'site_price',
-                    type: 'desc'
-                },
-                {
-                    label: 'بیشترین تخفیف',
-                    value: 'discount',
-                    type: 'desc'
-                }
-            ],
             sortModal: null,
         }
     },

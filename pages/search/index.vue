@@ -29,7 +29,7 @@
         </template>
         <template v-if="screenType === 'mobile'">
             <div class="w-100 filter-bg-mobile d-flex align-center px-2 py-3">
-                <generalProductSortModal @sort="sort"/>
+                <generalProductSortModal @sort="sort"  :sortItems="sortItems"/>
             </div>
         </template>
 
@@ -79,7 +79,29 @@ export default {
             filters: [],
             screenType: null,
             sortType:'related',
-            orderType: 'asc'
+            orderType: 'asc',
+            sortItems: [
+                {
+                    label: 'جدیدترین',
+                    value: 'created_at',
+                    type: 'desc'
+                },
+                {
+                    label: 'ارزان‌ترین',
+                    value: 'site_price',
+                    type: 'asc'
+                },
+                {
+                    label: 'گران‌ترین',
+                    value: 'site_price',
+                    type: 'desc'
+                },
+                {
+                    label: 'بیشترین تخفیف',
+                    value: 'discount',
+                    type: 'desc'
+                }
+            ],
         }
     },
 
