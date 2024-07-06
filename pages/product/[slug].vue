@@ -29,7 +29,7 @@
                     @selectFiltersModal="selectFiltersModal"
                     @setAmount="selectByAmount" />
 
-                <generalProductSortModal @sort="sort"  />
+                <generalProductSortModal @sort="sort"  :sortItems="sortItems"/>
               </div>
             </template>
           </client-only>
@@ -102,7 +102,30 @@ export default {
       screenType: null,
       sortType:'site_price',
       orderType: 'asc',
-      category:null
+      category:null,
+      sortItems: [
+            {
+                label: 'جدیدترین',
+                value: 'created_at',
+                type: 'desc'
+            },
+            {
+                label: 'ارزان‌ترین',
+                value: 'site_price',
+                type: 'asc'
+            },
+            {
+                label: 'گران‌ترین',
+                value: 'site_price',
+                type: 'desc'
+            },
+            {
+                label: 'بیشترین تخفیف',
+                value: 'discount',
+                type: 'desc'
+            }
+        ],
+
     }
   },
 
