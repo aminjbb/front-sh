@@ -16,9 +16,11 @@
             md="9"
             lg="10"
             class="pa-0 pos-r">
-<!--             <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5" :class="content.status === 'approved' ? 'product-comments__status--accept' : 'product-comments__status--reject'">{{getStatus(content.status)}}</div>
- -->            <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5 product-comments__status--accept">تایید شده</div>
-            
+<!--            <div class="product-comments__status mb-5 t12 w400 d-inline-block mt-5" :class=" ? 'product-comments__status&#45;&#45;accept' : 'product-comments__status&#45;&#45;reject'">{{getStatus(content.status)}}</div>-->
+            <div v-if="content.status === 'approved'" class="product-comments__status mb-5 t12 w400 d-inline-block mt-5 product-comments__status--accept">{{getStatus(content.status)}}</div>
+            <div v-else-if="content.status === 'rejected'" class="product-comments__status mb-5 t12 w400 d-inline-block mt-5 product-comments__status--reject">{{getStatus(content.status)}}</div>
+            <div v-else-if="content.status === 'waiting'" class="product-comments__status mb-5 t12 w400 d-inline-block mt-5 product-comments__status--waiting">{{getStatus(content.status)}}</div>
+
             <h3 v-if="content.comment" class="t12 w400 text-grey-darken-1 mb-2 xs-hide">
                 {{content.comment}}
             </h3>
@@ -97,7 +99,8 @@ export default {
          */
         getStatus(status) {
             if (status === 'approved') return 'تایید شده';
-            else return 'رد شده';
+           else if (status === 'rejected') return 'رد شده';
+            else return 'در انتظار';
         },
 
         /**
@@ -129,6 +132,10 @@ export default {
             border-color: #4CAF50;
             color: #4CAF50;
         }
+      &--waiting {
+        border-color: #a2a2077a;
+        color: #a2a2077a;
+      }
 
         &--reject {
             border-color: #D32F2F;
