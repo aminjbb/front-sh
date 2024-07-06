@@ -51,18 +51,21 @@
 <script>
 export default {
     props:{
-        categorySorting: null
+        categorySorting: {
+            type: Array,
+            default: null
+        },
     },
 
     data() {
         return {
             dialog: false,
             sortItems: [
-                {
+/*                {
                     label: 'محبوب ترین',
                     value: 'seen_count',
                     type: 'asc'
-                },
+                },*/
 
                 {
                     label: 'پربازدیدترین',
