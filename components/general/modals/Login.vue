@@ -71,7 +71,6 @@ export default {
          * @param {*} code
          */
         const doCopy = (code) => {
-            console.log(code)
             copyText(code, undefined, (error, event) => {
                 if (error) {
                     console.log(error)

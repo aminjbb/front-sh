@@ -65,20 +65,20 @@
                 <div class="d-flex align-center justify-end">
                     <span class="product-card__price-info__discount t10 w500 ml-2">%{{content.discount_percent}}</span>
                     <span v-if="content.site_price" class="l19 t16 w700 product-card__price-info__price product-card__price-info__price--new">
-                        {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
+                        {{splitChar(Number(String(content.site_price).slice(0, -1)))}}
                         <svgToman/>
                     </span>
                 </div>
 
                 <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
                 </span>
             </template>
 
             <template v-else>
-                <span v-if="content.customer_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
-                <span v-else-if="content.site_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
-                <svgToman/>
+                <span v-if="content.customer_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
+                <span v-else-if="content.site_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{splitChar(Number(String(content.site_price).slice(0, -1)))}}</span>
+                <svgToman class="mr-1"/>
             </template>
         </div>
     </div>
