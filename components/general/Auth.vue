@@ -26,7 +26,7 @@
                         </div>
 
                         <div v-if="showCancel" class="mt-7 d-flex align-center justify-space-between">
-                            <v-btn :loading="loading" color="primary" type="submit" height="46px" class="game-auth__btn ">
+                            <v-btn :disabled="activeButton === true ? false :true" :loading="loading" color="primary" type="submit" height="46px" class="game-auth__btn ">
                                 دریافت کد
                             </v-btn>
 
@@ -140,7 +140,8 @@ export default {
             showRetry: true,
             counter: '',
             startTime: null,
-            passwordType: 'password'
+            passwordType: 'password',
+            activeButton: false
         };
     },
 
@@ -309,6 +310,16 @@ export default {
             this.$emit('backToSite',true)
         }
     },
+
+    watch:{
+        mobile(newVal){
+            if (/^(?:(\u0660\u0669[\u0660-\u0669][\u0660-\u0669]{8})|(\u06F0\u06F9[\u06F0-\u06F9][\u06F0-\u06F9]{8})|(09[0-9][0-9]{8}))$/.test(newVal)) {
+            this.activeButton = true
+            } else {
+                this.activeButton = false
+            }
+        }
+    }
 };
 </script>
     

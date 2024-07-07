@@ -1,7 +1,7 @@
 <template>
 <v-bottom-sheet v-model="sheet" height="auto">
-    <div class="voucher-auth voucher-auth--sheet bg-white h-100 px-5">
-        <div class="close-modal" @click="closeSheet()">
+    <div class="voucher-auth voucher-auth--sheet bg-white h-100 px-5 pb-7">
+        <div class="close-modal cur-p" @click="closeSheet()">
             <v-icon color="grey-darken-1">mdi-close</v-icon>
         </div>
 
@@ -26,8 +26,8 @@
                 <span class="t14 w400 mt-5 d-block text-grey-darken-3">کد تخفیف شما :</span>
                 <div class="voucher-auth__code mb-10 d-flex align-center cur-p" @click="doCopy(voucher_code)">
                     <span class="text-grey-darken-1 t13 w500 flex-grow-1">{{ voucher_code }}</span>
+                    <span class="t14 w700 text-primary ml-3">کپی</span>
                     <v-icon icon="mdi-content-copy" class="ml-1" color="primary" size="small" />
-                    <span class="t14 w700 text-primary ml-3">کپی کد</span>
                 </div>
             </div>
         </div>
@@ -171,7 +171,6 @@ $parent: 'voucher-auth';
         .close-modal {
             width: 24px;
             height: 24px;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.405);
             position: absolute;
             top: 39px;
             left: 16px;

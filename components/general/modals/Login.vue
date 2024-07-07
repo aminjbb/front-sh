@@ -2,29 +2,29 @@
 <div class="c-modal">
     <v-dialog v-if="dialog" v-model="dialog" color="white" width="724px" height="507px">
         <div class="voucher-auth voucher-auth--desktop bg-white px-10 py-15 h-100">
-            <div class="close-modal" @click="closeModal()">
+            <div class="close-modal cur-p" @click="closeModal()">
                 <v-icon color="grey-darken-1">mdi-close</v-icon>
             </div>
 
-            <v-row align="center" class="h-100">
+            <v-row :align="voucherStep ?'start' : 'center'" class="h-100">
                 <v-col sm="7" class="pl-7">
-                    <h4 class="t17 w700 l30">{{ title }}</h4>
+                    <h4 class="t17 w700 l30" :class="voucherStep ?'mb-10 pb-10' : ''">{{ title }}</h4>
                     <generalAuth v-if="!voucherStep" class="pt-5" @userInfo="getUserInfo" @backToSite="closeModal" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
 
                     <div v-else>
                         <span class="t14 w400 mt-15 d-block text-grey-darken-3">کد تخفیف شما :</span>
                         <div class="voucher-auth__code d-flex align-center cur-p" @click="doCopy(voucher_code)">
                             <span class="text-grey-darken-1 t13 w500 flex-grow-1">{{ voucher_code }}</span>
+                            <span class="t14 w700 text-primary ml-3">کپی</span>
                             <v-icon icon="mdi-content-copy" class="ml-1" color="primary" size="small" />
-                            <span class="t14 w700 text-primary ml-3">کپی کد</span>
                         </div>
                     </div>
                 </v-col>
                 <v-col sm="5" class="d-flex align-center justify-center flex-column">
-                    <template v-if="voucherStep">
-                        <img data-not-lazy :src="imageAddress(voucherImage)" width="222" height="182" />
-                        <span class="t16 w500 mt-15 d-block text-grey-darken-3">به شاواز خوش آمدید ...</span>
-                    </template>
+                    <div v-if="voucherStep" class="px-5 mb-15 pt-15">
+                        <img data-not-lazy :src="imageAddress(voucherImage)" width="222" height="182" class="mt-10"/>
+                        <div class="t16 w500 mt-15 d-block text-grey-darken-3 text-center">به شاواز خوش آمدید ...</div>
+                    </div>
                     <img v-else data-not-lazy :src="imageAddress(image)" width="272" height="284" />
                 </v-col>
             </v-row>
@@ -173,9 +173,8 @@ $parent: 'voucher-auth';
         .close-modal {
             width: 24px;
             height: 24px;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.405);
             position: absolute;
-            top: 15px;
+            top: 20px;
             left: 15px;
             border-radius: 50%;
         }
