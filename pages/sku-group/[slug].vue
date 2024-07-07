@@ -1,6 +1,5 @@
 <template>
 <main class="v-product v-product--list">
-  <h1 class="v-hide">{{ title }}</h1>
   <v-container v-show="loading">
     <generalSkeletonPlpNoFilter :loading="loading"/>
   </v-container>

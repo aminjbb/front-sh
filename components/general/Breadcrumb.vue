@@ -1,6 +1,16 @@
 <template>
 <div v-if="(items && items.length) && screenType === 'desktop'">
     <v-breadcrumbs :items="items">
+        <template v-slot:title="{ item, index }">
+           <template v-if="index + 1 === items.length && this.$route.name !== 'sku-slug'">
+                <h1>
+                    {{ item.title }}
+                </h1>
+           </template>
+           <template v-else>
+                {{ item.title }}
+           </template>
+        </template>
         <template v-slot:divider>
             <span>/</span>
         </template>

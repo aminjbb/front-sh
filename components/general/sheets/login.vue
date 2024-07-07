@@ -1,5 +1,5 @@
 <template>
-<v-bottom-sheet v-model="sheet">
+<v-bottom-sheet v-model="sheet" height="auto">
     <div class="voucher-auth voucher-auth--sheet bg-white h-100 px-5">
         <div class="close-modal" @click="closeSheet()">
             <v-icon color="grey-darken-1">mdi-close</v-icon>
