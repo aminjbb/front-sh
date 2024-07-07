@@ -21,7 +21,7 @@
 
             </div>
 
-            <generalAuth v-if="!voucherStep" class="pt-2" @userInfo="getUserInfo" @backToSite="closeModal" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
+            <generalAuth v-if="!voucherStep" class="pt-2" @userInfo="getUserInfo" @backToSite="closeSheet" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
             <div v-else>
                 <span class="t14 w400 mt-5 d-block text-grey-darken-3">کد تخفیف شما :</span>
                 <div class="voucher-auth__code mb-10 d-flex align-center cur-p" @click="doCopy(voucher_code)">
