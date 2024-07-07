@@ -2,7 +2,7 @@
 <v-row class="add-to-basket add-to-basket--minimal ma-0">
     <div
         v-if="content?.stock"
-        class="d-flex justify-end pa-1">
+        class="d-flex justify-end">
         <template v-if="count === 0 || notSelected">
 
             <v-btn
@@ -21,7 +21,7 @@
                       icon="mdi-plus"
                       color="primary"
                       @click="increaseCount()" />
-                  <span class="t16 w300 text-primary number-font">
+                  <span class="t14 text-black number-font">
                       {{count}}
                   </span>
                   <v-icon
@@ -266,13 +266,28 @@ export default {
 
 .add-to-basket--minimal{
     .product-card__product-count{
-        width: 65px;
-        height: 24px;
-        border-color: #e0e0e0;
+        width: 80px;
+        height: 30px;
+        border-color: #9E9E9E;
+        border-radius: 8px !important;
+        box-shadow: 0px 4px 8px 0px rgba(97, 97, 97, 0.08);
 
-        span,
         .v-icon{
-            font-size: 14px !important;
+            font-size: 20px !important;
+
+            &.mdi-plus,
+            &.mdi-minus{
+                border: 1.5px solid #D72685;
+                border-radius: 5px !important;
+                font-size: 14px !important;
+                padding: 4px;
+                width: 17px;
+                height: 17px;
+            }
+        }
+
+        span{
+            font-weight: 700 !important;
         }
     }
 }

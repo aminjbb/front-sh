@@ -13,7 +13,7 @@
                 <desktopFooter />
             </template>
             <template v-if="$route.name === 'index'">
-                <generalModalsLogin :signupStatus="!loginStatus" image="voucher-login.svg" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید"/>
+                <generalModalsLogin :signupStatus="!loginStatus" image="voucher-login.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید"/>
             </template>
         </div>
 
@@ -26,7 +26,7 @@
                 <mobileFooter :userData="userData" />
             </template>
             <template v-if="$route.name === 'index'">
-                <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login.svg" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید"/>
+                <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login-m.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید"/>
             </template>
         </div>
     </div>

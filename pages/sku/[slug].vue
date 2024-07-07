@@ -1,6 +1,5 @@
 <template>
 <main class="v-product v-product--single">
-    <h1 class="v-hide">{{ title }}</h1>
     <v-container v-show="loading">
       <generalSkeletonPdp :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
     </v-container>

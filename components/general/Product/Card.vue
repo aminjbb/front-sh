@@ -1,8 +1,8 @@
 <template>
 <div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
-    <div v-if="index && showIndex" class="product-card__index">
+    <!-- <div v-if="index && showIndex" class="product-card__index">
         <span class="t16">#{{index}}</span>
-    </div>
+    </div> -->
 
     <div v-if="deleteIcon" class="product-card__delete">
         <generalModalsDelete
@@ -31,8 +31,8 @@
         </a>
     </template>
 
-    <div class="d-flex align-center justify-space-between w-100 px-1">
-        <span class="t10 w400 text-grey">{{ content.brand_name }}</span>
+    <div class="d-flex align-center justify-space-between w-100 pl-1">
+        <span class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
 
         <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center">
             <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
@@ -44,39 +44,40 @@
                 </div>
             </template>
 
-            <div v-if="content.colors.length > 4" class="number-font text-grey t10 w400 text-right d-inline-block ml-1">{{ content.colors.length - 4 }}+</div>
+            <div v-if="content.colors.length > 4" class="product-card__colors__more number-font t12 text-right d-inline-block ml-1">{{ content.colors.length - 4 }}+</div>
         </div>
     </div>
 
-    <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`">
-        <h3 v-if="!hideLabel && content.label" class="t13 w400 product-card__title card-title mb-2">
+    
+    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w400 product-card__title card-title">
+        <a class="t12 l21 w400 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}
-        </h3>
-    </a>
+        </a>
+    </h3>
 
     <div v-if="content.stock ||  skusObjectStock || relatedObjectStock" class="product-card__price-info mb-2" :class="showBasket ? 'd-flex align-center justify-space-between' : ''">
         <div>
             <generalAddToBasketMinimal v-if="showBasket" :content="content" />
         </div>
 
-        <div>
+        <div :class="!showBasket ? 'pt-3' : ''">
             <template v-if="content.discount">
-                <div class="d-flex align-center" :class="showBasket ? 'justify-end' : 'justify-space-between'">
-                    <span class="product-card__price-info__discount t11 w500 ml-2">{{content.discount_percent}}%</span>
-                    <span v-if="content.site_price" class="t16 w700 text-grey-darken-3 product-card__price-info__price product-card__price-info__price--new">
-                        {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
-                        <svgToman class="mr-1"/>
+                <div class="d-flex align-center justify-end">
+                    <span class="product-card__price-info__discount t10 w500 ml-2">%{{content.discount_percent}}</span>
+                    <span v-if="content.site_price" class="l19 t16 w700 product-card__price-info__price product-card__price-info__price--new">
+                        {{splitChar(Number(String(content.site_price).slice(0, -1)))}}
+                        <svgToman/>
                     </span>
                 </div>
 
                 <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
                 </span>
             </template>
 
             <template v-else>
-                <span v-if="content.customer_price" class="t16 w700 text-grey-darken-3 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
-                <span v-else-if="content.site_price" class="t16 w700 text-grey-darken-3 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
+                <span v-if="content.customer_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
+                <span v-else-if="content.site_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{splitChar(Number(String(content.site_price).slice(0, -1)))}}</span>
                 <svgToman class="mr-1"/>
             </template>
         </div>

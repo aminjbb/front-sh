@@ -18,7 +18,6 @@
         position: absolute;
         top: 0;
         right: 0;
-
         &::before {
             border-top: 25px solid #D72685;
             border-right: 25px solid #D72685;
@@ -45,7 +44,7 @@
     }
 
     &__image{
-        max-height: 150px;
+        height: 150px;
         overflow: hidden;
 
         @include gbp (0, 768) {
@@ -54,8 +53,7 @@
 
         img{
             max-width: 100%;
-            height: auto;
-            max-height: 100%;
+            height: 100%;
 
             @include gbp (0, 768) {
                 width: 120px;
@@ -65,19 +63,22 @@
     }
 
     &__title {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        -webkit-line-clamp: 2;
         margin-top: 5px;
-        color:#3C3C3C !important;
+        
+        a{
+            color:#6A6A6A !important;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+            &:hover{
+                color:#3A4A3A !important
+            }
+        }
 
         @include gbp(0, 768) {
             font-size: 12px !important;
-        }
-
-        &:hover{
-            color:#616161 !important
         }
     }
 
@@ -114,7 +115,7 @@
             font-family: 'IranSansFaNum' !important;
             background: var(--conceptual-primary, #D72685);
             display: block;
-            padding: 3px 5px 2px;
+            padding: 5px 5px 4px;
             color: #fff;
             font-size: 11px;
             position: absolute;
@@ -127,6 +128,7 @@
         &__price {
             font-family: 'IranSansFaNum' !important;
             font-weight: bold;
+            color: #6A6A6A;
 
             @include gbp(0,768){
                 font-size: 14px !important;
@@ -135,7 +137,8 @@
             &--old {
                 display: block;
                 text-align: left;
-                font-weight: 500 !important;
+                font-weight: 700 !important;
+                padding-left: 14px !important;
 
                 @include gbp(0,768){
                     font-size: 11px !important;
@@ -212,6 +215,10 @@
             &:hover {
                 border-color: #616161;
             }
+        }
+
+        &__more{
+            color: #6A6A6A !important;
         }
     }
 }
