@@ -6,7 +6,7 @@
           @click="openModal()"
           icon="mdi-square-edit-outline"
           size="small"
-          color="grey" />
+          color="grey"/>
     </template>
 
     <template v-if="buttonType == 'text'">
@@ -26,7 +26,7 @@
             icon="mdi-square-edit-outline"
             size="small"
             class="ml-2 d-flex align-center"
-            color="grey" />
+            color="grey"/>
         ویرایش آدرس
       </div>
     </template>
@@ -66,7 +66,7 @@
                   :rules="rule"
                   label="استان *"
                   v-model="form.province"
-                  @update:modelValue="getCitiesList()" />
+                  @update:modelValue="getCitiesList()"/>
             </v-col>
 
             <v-col cols="12" md="6">
@@ -77,7 +77,7 @@
                   :rules="rule"
                   label="شهر *"
                   v-model="form.city"
-                  @update:modelValue="getCityName()"  />
+                  @update:modelValue="getCityName()"/>
             </v-col>
 
             <v-col cols="12" md="4">
@@ -87,7 +87,7 @@
                   label="کد پستی *"
                   :rules="postalCodeRule"
                   :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.postal_code" />
+                  v-model="form.postal_code"/>
             </v-col>
 
             <v-col cols="12" md="4">
@@ -97,7 +97,8 @@
                   label="پلاک *"
                   :rules="rule"
                   :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.number" />
+                  v-model="form.number"
+                  @update:modelValue="changeNumberAddress()"/>
             </v-col>
 
             <v-col cols="12" md="4">
@@ -107,7 +108,8 @@
                   label="واحد"
                   :rules="rule"
                   :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.room_number" />
+                  v-model="form.room_number"
+                  @update:modelValue="changeRoomNumberAddress()"/>
             </v-col>
           </v-row>
 
@@ -120,15 +122,15 @@
                   hide-details
                   :rules="rule"
                   :append-inner-icon="rules ? 'mdi-check' : ''"
-                  v-model="form.address" />
+                  v-model="form.address"/>
             </div>
 
             <div v-if="form.address" class="full-address mb-5">
               <span class="t15 w500 text-black ml-2 l24">آدرس کامل: </span>
               <span class="t14 text-grey-darken-1 l24 number-font">
 
-                                <template v-if="stateName && !edit"> {{ stateName }}</template>,
-                                <template v-if="cityName && !edit">, شهر {{ cityName }}</template>,
+                                <template v-if="stateName && !edit"> {{ stateName }},</template>
+                                <template v-if="cityName && !edit">, شهر {{ cityName }}</template>
                                 {{ form.address }}
                                 <template v-if="form.number && !edit">, پلاک {{ form.number }}</template>
                                 <template v-if="form.room_number && !edit">, واحد {{ form.room_number }}</template>
@@ -145,7 +147,7 @@
             <v-checkbox
                 label="گیرنده سفارش خودم نیستم"
                 hide-details
-                v-model="newReceiver" />
+                v-model="newReceiver"/>
 
             <template v-if="newReceiver">
               <v-row>
@@ -156,7 +158,7 @@
                       label="نام گیرنده *"
                       :rules="persianRule"
                       :append-inner-icon="rules ? 'mdi-check' : ''"
-                      v-model="form.first_name" />
+                      v-model="form.first_name"/>
                 </v-col>
 
                 <v-col cols="12" md="4">
@@ -166,7 +168,7 @@
                       label=" نام خانوادگی گیرنده *"
                       :rules="persianRule"
                       :append-inner-icon="rules ? 'mdi-check' : ''"
-                      v-model="form.last_name" />
+                      v-model="form.last_name"/>
                 </v-col>
 
                 <v-col cols="12" md="4">
@@ -176,7 +178,7 @@
                       label="شماره تماس گیرنده *"
                       :rules="mobileRule"
                       :append-inner-icon="rules ? 'mdi-check' : ''"
-                      v-model="form.phone_number" />
+                      v-model="form.phone_number"/>
                 </v-col>
               </v-row>
             </template>
@@ -195,7 +197,8 @@
       </v-card>
     </v-dialog>
 
-    <generalUserProfileModal ref="profileModal" :phoneNumber="userDetail ?.phone_number" @profileSubmitted="openAddressModal()"/>
+    <generalUserProfileModal ref="profileModal" :phoneNumber="userDetail ?.phone_number"
+                             @profileSubmitted="openAddressModal()"/>
   </div>
 </template>
 
@@ -224,7 +227,7 @@ export default {
     return {
       valid: true,
       dialog: false,
-      isDisable : true,
+      isDisable: true,
       screenType: null,
       form: {
         address: '',
@@ -348,9 +351,9 @@ export default {
       let endPoint = ''
       const formData = new FormData()
 
-      const fullAddress = 'استان ' + this.stateName +', شهر '+ this.cityName +', '+ this.form.address +', پلاک '+ this.form.number +', واحد '+ this.form.room_number
-
-      formData.append('address', fullAddress)
+      const fullAddress = 'استان ' + this.stateName + ', شهر ' + this.cityName + ', ' + this.form.address + ', پلاک ' + this.form.number + ', واحد ' + this.form.room_number
+      if (this.edit) formData.append('address', this.form.address)
+      else formData.append('address', fullAddress)
       formData.append('state_id', this.form.province)
       formData.append('city_id', this.form.city)
       formData.append('postal_code', digits(this.form.postal_code, 'en'))
@@ -364,9 +367,9 @@ export default {
         formData.append('phone_number', digits(this.form.phone_number, 'en'))
       } else {
         formData.append('am_i', 1)
-        formData.append('first_name', this.userDetail ?.first_name)
-        formData.append('last_name', this.userDetail ?.last_name)
-        formData.append('phone_number', digits(this.userDetail ?.phone_number, 'en'))
+        formData.append('first_name', this.userDetail?.first_name)
+        formData.append('last_name', this.userDetail?.last_name)
+        formData.append('phone_number', digits(this.userDetail?.phone_number, 'en'))
       }
       if (this.edit) endPoint = `/user/profile/address/update/${this.address.id}`
       else endPoint = `/user/profile/address/add`
@@ -427,16 +430,16 @@ export default {
      * Open modal
      */
     openModal() {
-      if((this.userDetail?.first_name === null || this.userDetail?.first_name === '') && (this.userDetail?.last_name === null || this.userDetail?.last_name === '')){
+      if ((this.userDetail?.first_name === null || this.userDetail?.first_name === '') && (this.userDetail?.last_name === null || this.userDetail?.last_name === '')) {
         this.$refs.profileModal.dialog = true
-      } else{
+      } else {
         this.dialog = true;
         this.setAddressForm();
         this.editMode();
       }
     },
 
-    openAddressModal(){
+    openAddressModal() {
       this.dialog = true;
     },
 
@@ -445,8 +448,8 @@ export default {
      */
     closeModal() {
       this.dialog = false;
-      this.isDisable= true;
-      this.form= {
+      this.isDisable = true;
+      this.form = {
         address: '',
         postal_code: '',
         number: '',
@@ -457,35 +460,72 @@ export default {
         province: null,
         city: null
       },
-          this.stateName= null;
-      this.cityName= null;
+          this.stateName = null;
+      this.cityName = null;
+    },
+
+    /**
+     * change number in address detail if modal edit
+     */
+    changeNumberAddress(){
+      if (this.edit){
+        let formAddress = this.form.address.split(',')
+        formAddress[3] = ` پلاک${this.form.number}`
+        this.form.address = ''
+        formAddress.forEach(address => {
+          this.form.address += `${address},`
+        })
+        this.form.address = this.form.address.substring(0, this.form.address.length - 1);
+      }
+    },
+
+    /**
+     * change number in address detail if modal edit
+     */
+    changeRoomNumberAddress(){
+      if (this.edit){
+        let formAddress = this.form.address.split(',')
+        formAddress[4] = ` واحد${this.form.room_number}`
+        this.form.address = ''
+        formAddress.forEach(address => {
+          this.form.address += `${address},`
+        })
+        this.form.address = this.form.address.substring(0, this.form.address.length - 1);
+      }
     },
 
     /**
      * get cities after select province
      */
     getCitiesList() {
-      let formAddress= this.form.address.split(',')
-      formAddress[0] = ` استان ${this.provinceList[this.form.province - 1].title}`
+
       this.form.city = null
       this.getCities(this.form.province)
       this.stateName = this.provinceList[this.form.province - 1].title
-      this.form.address =''
-      formAddress.forEach(address=>{
-        this.form.address += `${address} ,`
-      })
+      if (this.edit) {
+        let formAddress = this.form.address.split(',')
+        formAddress[0] = ` استان ${this.provinceList[this.form.province - 1].title}`
+        this.form.address = ''
+        formAddress.forEach(address => {
+          this.form.address += `${address},`
+        })
+        this.form.address = this.form.address.substring(0, this.form.address.length - 1);
+      }
     },
 
-    getCityName(){
+    getCityName() {
       let city = null;
       city = this.cityList.find(item => item.value === this.form.city);
       this.cityName = city.title
-      let formAddress= this.form.address.split(',')
-      formAddress[1] = ` شهر ${ city.title}`
-      this.form.address =''
-      formAddress.forEach(address=>{
-        this.form.address += `${address} ,`
-      })
+      if (this.edit) {
+        let formAddress = this.form.address.split(',')
+        formAddress[1] = ` شهر ${city.title}`
+        this.form.address = ''
+        formAddress.forEach(address => {
+          this.form.address += `${address},`
+        })
+        this.form.address = this.form.address.substring(0, this.form.address.length - 1);
+      }
     },
 
     editMode() {
@@ -499,20 +539,33 @@ export default {
      */
     setAddressForm() {
       try {
-        this.form.address = this.address ?.address
-        this.form.full_name = this.address ?.receiver_full_name
-        this.form.number =  digits(this.address ?.number, 'en')
-        this.form.phone_number = digits(this.address ?.phone_number, 'en')
-        this.form.postal_code = digits(this.address ?.postal_code, 'en')
-        this.form.room_number =  digits(this.address ?.unit, 'en')
-        this.form.province = this.address ?.state ?.id
-        this.form.city = this.address ?.city ?.id
-        if(this.edit){
-          if (this.address ?.am_i === 1 ) this.newReceiver = false
+        if (this.edit){
+
+          let addressSplit = this.address.address.split(',')
+          console.log(addressSplit)
+          if (addressSplit.length > 4){
+            this.form.address = this.address?.address
+          }
+          else {
+            this.form.address = ` استان ${this.address?.state?.label} ,  شهر ${this.address?.city?.label}  , ${ this.address?.address} , پلاک  ${this.address?.number} , واحد  ${this.address?.unit}`
+          }
+        }
+        else {
+          this.form.address = this.address?.address
+        }
+        this.form.full_name = this.address?.receiver_full_name
+        this.form.number = digits(this.address?.number, 'en')
+        this.form.phone_number = digits(this.address?.phone_number, 'en')
+        this.form.postal_code = digits(this.address?.postal_code, 'en')
+        this.form.room_number = digits(this.address?.unit, 'en')
+        this.form.province = this.address?.state?.id
+        this.form.city = this.address?.city?.id
+        if (this.edit) {
+          if (this.address?.am_i === 1) this.newReceiver = false
           else {
             this.newReceiver = true;
-            this.form.first_name = this.address ?.first_name
-            this.form.last_name = this.address ?.last_name
+            this.form.first_name = this.address?.first_name
+            this.form.last_name = this.address?.last_name
           }
         }
 
@@ -524,15 +577,17 @@ export default {
   },
 
   mounted() {
-    this.setAddressForm(),
+
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
   },
 
-  watch:{
-    dialog(val){
-      if (val === true && this.edit === true){
+  watch: {
+    dialog(val) {
+      if (val === true && this.edit === true) {
         this.getCities(this.form.province)
+        this.setAddressForm()
       }
+
     }
   }
 }
