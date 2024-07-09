@@ -74,7 +74,8 @@
         position: relative;
 
         @include gbp(0, 768) {
-            border: 0 !important
+            border: 0 !important;
+            height: auto;
         }
 
         img {
