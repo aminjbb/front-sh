@@ -542,7 +542,6 @@ export default {
         if (this.edit){
 
           let addressSplit = this.address.address.split(',')
-          console.log(addressSplit)
           if (addressSplit.length > 4){
             this.form.address = this.address?.address
           }
