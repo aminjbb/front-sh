@@ -1,6 +1,6 @@
 <template>
 <div v-if="items && items.length" class="image-gallery">
-    <v-row class="ma-0 xs-hide h-100">
+    <v-row v-if="screenType === 'desktop'" class="ma-0 xs-hide h-100">
         <div class="pa-0 pl-3 image-gallery__thumbnail h-100">
             <div class="d-flex flex-column align-center">
                 <template v-if="items.length <= 5">
@@ -49,12 +49,12 @@
                         @click="checkFavorite()"
                         size="small" />
                 </div>
-                <img  data-not-lazy :src="selectedImage" :alt="imageAlt" width="351" height="351">
+                <img data-not-lazy :src="selectedImage" :alt="imageAlt" width="351" height="351">
             </div>
         </div>
     </v-row>
 
-    <div class="xs-show">
+    <div v-if="screenType === 'mobile'" class="xs-show">
         <div class="image-gallery__selected-image pb-2">
             <div class="image-gallery__selected-image__icons d-flex align-center">
                 <v-icon
@@ -71,19 +71,20 @@
             </div>
 
             <swiper
-                :pagination="true"
-                :modules="modules"
+                :pagination="{
+                    clickable: true,
+                }"
+                :modules="modulesMobile"
                 class="mySwiper"
                 :autoplay="{
-                    delay: 2500,
+                    delay: 5000,
                     disableOnInteraction: false,
                 }">
                 <swiper-slide
                     v-for="(item,index) in items"
-                    :key="index"
-                    class="h-100">
-                    <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
-                        <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="300" height="300" />
+                    :key="index">
+                    <div @click="openModal()" class="d-flex w-100 align-center justify-center mobile-image-gallery-size">
+                        <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="300" height="300"/>
                     </div>
                 </swiper-slide>
             </swiper>
@@ -201,6 +202,7 @@ export default {
             selectedImage: this.items ? this.items[0] ?.image_url : '',
             dialog: false,
             isFavorite: false,
+            screenType: 'desktop'
         }
     },
     components: {
@@ -292,12 +294,14 @@ export default {
             setSwiperRef,
             slideTo,
             modules: [FreeMode, Navigation, Pagination, Autoplay],
+            modulesMobile: [FreeMode, Pagination, Autoplay],
             doCopy,
             userToken,
             runtimeConfig
         };
 
     },
+
     methods: {
 
         /**
@@ -410,6 +414,10 @@ export default {
                 })
         },
     },
+
+    mounted(){
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
     
     watch: {
         items() {
@@ -428,6 +436,16 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.mobile-image-gallery-size{
+    height: 350px;
+    overflow: auto;
+    padding-bottom: 50px !important;
+
+    img{
+        height: 300px;
+    }
+}
+
 .c-modal {
     .v-card {
         background: #fff !important;
