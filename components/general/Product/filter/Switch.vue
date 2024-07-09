@@ -1,12 +1,12 @@
 <template>
   <div class="filter-sidebar__card my-2 filter-sidebar__card--status">
     <div class="d-flex justify-space-between align-center">
-      <span class="t16 w400 text-grey-darken-2">{{ title }}</span>
+      <span class="t12 w700 text-grey-darken-2">{{ title }}</span>
 
       <v-switch
           v-model="availableItems"
           inset
-          color="success"
+          color="primary"
           hide-details
           @change="changeStatus()"/>
     </div>

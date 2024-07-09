@@ -1,18 +1,17 @@
 <template>
 <main class="v-product v-product--list">
-  <h1 class="v-hide">{{ title }}</h1>
   <v-container v-show="loading">
     <generalSkeletonPlpNoFilter :loading="loading"/>
   </v-container>
 
-  <v-container v-show="!loading">
+  <v-container v-show="!loading" class="main-col">
     <generalBreadcrumb :items="breadcrumbList" />
-    <v-row class="mt-10">
+    <v-row>
       <v-col cols="12">
         <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
           <v-row v-if="productListData?.length" class="ma-0">
             <v-col
-                cols="12"
+                cols="6"
                 md="3"
                 v-for="(item, index) in productListData"
                 :key="`card-${index}`"
@@ -32,7 +31,7 @@
           </v-row>
         </div>
 
-        <div class="v-product__pagination d-flex justify-center mt-8">
+        <div class="v-product__pagination d-flex justify-center mt-8 w-100">
           <v-pagination
               v-model="page"
               :length="productListPageLength"

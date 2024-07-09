@@ -1,6 +1,5 @@
 <template>
     <main class="v-product v-product--list">
-      <h1 class="v-hide">{{ title }}</h1>
       <v-container v-show="loading">
         <generalSkeletonPlp :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
       </v-container>
@@ -9,8 +8,8 @@
         <generalBreadcrumb :items="breadcrumbList"/>
   
         <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>
-        <v-row class="mt-10">
-          <v-col cols="12" md="3">
+        <v-row class="mt-5">
+          <v-col cols="12" md="3" class="filter-bg-mobile">
             <client-only>
               <template v-if="screenType === 'desktop'">
                 <generalProductFilterSideBar
@@ -19,20 +18,22 @@
                     @selectFiltersModal="selectFiltersModal"
                     @setAmount="selectByAmount"/>
               </template>
+
               <template v-if="screenType === 'mobile'">
-                <div class="d-flex align-center justify-space-between">
-                  <generalProductFilterSideBarModal
+                <div class="d-flex align-center">
+                    <generalProductFilterSideBarModal
+                      class="ml-3"
                       :filterList="productFilterSecondaryData"
                       @listFiltersModal="listFiltersModal"
                       @selectFiltersModal="selectFiltersModal"
                       @setAmount="selectByAmount"/>
     
-                    <generalProductSortModal @sort="sort"/>
+                    <generalProductSortModal @sort="sort" :sortItems="sortItems"/>
                 </div>
               </template>
             </client-only>
           </v-col>
-          <v-col cols="12" md="9">
+          <v-col cols="12" md="9" class="main-col">
             <template v-if="screenType === 'desktop'">
               <client-only>
                 <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
@@ -43,6 +44,7 @@
                     </div>
     
                     <ul class="v-product__filter__items d-flex align-center">
+                      <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
                       <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
                       <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
                       <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
@@ -52,10 +54,10 @@
                 </div>
               </client-only>
             </template>
-            <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+            <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-8' : ''">
               <v-row v-if="productListData?.length" class="ma-0">
                 <v-col
-                    cols="12"
+                    cols="6"
                     md="3"
                     v-for="(item, index) in productListData"
                     :key="`card-${index}`"
@@ -75,7 +77,7 @@
               </v-row>
             </div>
   
-            <div class="v-product__pagination d-flex justify-center mt-8">
+            <div class="v-product__pagination d-flex justify-center mt-8 w-100">
               <v-pagination
                   v-model="page"
                   :length="productListPageLength"
@@ -104,7 +106,34 @@
         screenType: null,
         sortType:'site_price',
         orderType: 'asc',
-        category:null
+        category:null,
+        sortItems: [
+              {
+                  label: 'محبوب ترین',
+                  value: 'seen_count',
+                  type: 'asc'
+              },
+              {
+                  label: 'جدیدترین',
+                  value: 'created_at',
+                  type: 'desc'
+              },
+              {
+                  label: 'ارزان‌ترین',
+                  value: 'site_price',
+                  type: 'asc'
+              },
+              {
+                  label: 'گران‌ترین',
+                  value: 'site_price',
+                  type: 'desc'
+              },
+              {
+                  label: 'بیشترین تخفیف',
+                  value: 'discount',
+                  type: 'desc'
+              }
+          ],
       }
     },
   
@@ -150,6 +179,7 @@
     computed: {
       breadcrumbList(){
         let breadcrumb = []
+        
         if(this.breadcrumb?.category_l1?.name){
           const form = {
             type : "category_l1",

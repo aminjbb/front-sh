@@ -1,14 +1,13 @@
 <template>
   <main class="v-product v-product--list">
-    <h1 class="v-hide">{{ title }}</h1>
     <v-container v-show="loading">
       <generalSkeletonPlpNoSlider :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
     </v-container>
 
     <v-container  v-show="!loading">
       <generalBreadcrumb :items="breadcrumb"/>
-      <v-row class="mt-10">
-        <v-col cols="12" md="3">
+      <v-row :class="screenType === 'desktop' ? 'mt-5' : ''">
+        <v-col cols="12" md="3" class="filter-bg-mobile">
           <client-only>
             <template v-if="screenType === 'desktop'">
               <generalProductFilterSideBar
@@ -17,18 +16,19 @@
                   @setAmount="selectByAmount"/>
             </template>
             <template v-if="screenType === 'mobile'">
-              <div class="d-flex align-center justify-space-between">
+              <div class="d-flex align-center">
                 <generalProductFilterSideBarModal
+                  class="ml-3"
                     :filterList="productFilterSecondaryData"
                     @selectFiltersModal="selectFiltersModal"
                     @setAmount="selectByAmount"/>
 
-                <generalProductSortModal @sort="sort" />
+                <generalProductSortModal @sort="sort"  :sortItems="sortItems"/>
               </div>
             </template>
           </client-only>
         </v-col>
-        <v-col cols="12" md="9">
+        <v-col cols="12" md="9" class="main-col">
           <template v-if="screenType === 'desktop'">
             <client-only>
               <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
@@ -49,10 +49,10 @@
               </div>
             </client-only>
           </template>
-          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-8' : ''">
             <v-row v-if="productListData?.length" class="ma-0">
               <v-col
-                  cols="12"
+                  cols="6"
                   md="3"
                   v-for="(item, index) in productListData"
                   :key="`card-${index}`"
@@ -72,7 +72,7 @@
             </v-row>
           </div>
 
-          <div class="v-product__pagination d-flex justify-center mt-8">
+          <div class="v-product__pagination d-flex justify-center mt-8 w-100">
             <v-pagination
                 v-model="page"
                 :length="productListPageLength"
@@ -99,7 +99,29 @@ export default {
       screenType: null,
       sortType:'site_price',
       orderType: 'asc',
-      category:null
+      category:null,
+      sortItems: [
+            {
+                label: 'جدیدترین',
+                value: 'created_at',
+                type: 'desc'
+            },
+            {
+                label: 'ارزان‌ترین',
+                value: 'site_price',
+                type: 'asc'
+            },
+            {
+                label: 'گران‌ترین',
+                value: 'site_price',
+                type: 'desc'
+            },
+            {
+                label: 'بیشترین تخفیف',
+                value: 'discount',
+                type: 'desc'
+            }
+        ],
     }
   },
 

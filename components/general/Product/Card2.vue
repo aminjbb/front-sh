@@ -1,8 +1,8 @@
 <template>
 <div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
-    <!-- <div v-if="index && showIndex" class="product-card__index">
+    <div v-if="index && showIndex" class="product-card__index">
         <span class="t16">#{{index}}</span>
-    </div> -->
+    </div>
 
     <div v-if="deleteIcon" class="product-card__delete">
         <generalModalsDelete
@@ -30,60 +30,62 @@
             <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
+    <a class="flex-grow-1 w-100" :href="`/sku/${content.slug}`">
+        <h3 v-if="!hideLabel && content.label" class="t13 w500 text-grey product-card__title card-title mb-2">
+            {{content.label}}
+        </h3>
+    </a>
 
-    <div class="d-flex align-center justify-space-between w-100 pl-1">
-        <span class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
-
-        <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center">
-            <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
-                <div
-                    class="product-card__colors__item my-2"
-                    v-for="(color,index) in content.colors.slice(0,4)"
-                    :key="`product-color${index}`">
-                    <span :style="{ backgroundColor: color.value }" :class="color.value === '#ffffff' || color.value === '#FF00FF00' ? 'border' : '' "></span>
-                </div>
-            </template>
-
-            <div v-if="content.colors.length > 4" class="product-card__colors__more number-font t12 text-right d-inline-block ml-1">{{ content.colors.length - 4 }}+</div>
+    <div class="product-card__info d-flex align-center justify-end mb-2" :class="hideInfo ? 'hideInfo' : ''">
+        <div v-if="content.score" class="product-card__info__rate">
+            <span class="t12 text-grey">{{content.score}}</span>
+            <v-icon icon="mdi-star" color="orange-lighten-2" />
         </div>
     </div>
-
-    
-    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w400 product-card__title card-title">
-        <a class="t12 l21 w400 text-right" :href="`/sku/${content.slug}`">
-            {{content.label}}
-        </a>
-    </h3>
 
     <div v-if="content.stock ||  skusObjectStock || relatedObjectStock" class="product-card__price-info mb-2" :class="showBasket ? 'd-flex align-center justify-space-between' : ''">
         <div>
             <generalAddToBasketMinimal v-if="showBasket" :content="content" />
         </div>
 
-        <div :class="!showBasket ? 'pt-3' : ''">
+        <div>
             <template v-if="content.discount">
-                <div class="d-flex align-center justify-end">
-                    <span class="product-card__price-info__discount t10 w500 ml-2">%{{content.discount_percent}}</span>
-                    <span v-if="content.site_price" class="l19 t16 w700 product-card__price-info__price product-card__price-info__price--new">
-                        {{splitChar(Number(String(content.site_price).slice(0, -1)))}}
-                        <svgToman/>
+                <div class="d-flex align-center" :class="showBasket ? 'justify-end' : 'justify-space-between'">
+                    <span class="product-card__price-info__discount t11 w500 ml-2">{{content.discount_percent}}%</span>
+                    <span v-if="content.site_price" class="t18 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
+                        {{ splitChar(Number(String(content.site_price).slice(0, -1))) }}
+                        <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                     </span>
                 </div>
 
                 <span v-if="content.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
-                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
+                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                    <span class="t10 w300 text-grey currency">تومان</span>
                 </span>
             </template>
-
             <template v-else>
-                <span v-if="content.customer_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
-                <span v-else-if="content.site_price" class="t16 w700 product-card__price-info__price product-card__price-info__price--main">{{splitChar(Number(String(content.site_price).slice(0, -1)))}}</span>
-                <svgToman class="mr-1"/>
+                <span v-if="content.customer_price" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.customer_price).slice(0, -1))) }}</span>
+                <span v-else-if="content.site_price" class="t18 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main">{{ splitChar(Number(String(content.site_price).slice(0, -1))) }}</span>
+                <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
             </template>
         </div>
     </div>
     <div class="product-card__price-info mb-2" v-else>
       <span class="t14 w800 text-grey-darken-2 currency ">ناموجود</span>
+    </div>
+
+    <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center justify-center">
+        <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
+            <div
+                class="product-card__colors__item my-2"
+                v-for="(color,index) in content.colors.slice(0,6)"
+                :key="`product-color${index}`">
+                <span :style="{ backgroundColor: color.value }" :class="color.value === '#ffffff' || color.value === '#FF00FF00' ? 'border' : '' "></span>
+                
+                <v-tooltip activator="parent" location="top">{{color.label}}</v-tooltip>
+            </div>
+        </template>
+        <div v-if="content.colors.length > 7" class="number-font text-grey-lighten-1 t12 w400">+{{ content.colors.length - 7 }} تنوع</div>
     </div>
 
     <div v-if="functions" class="d-flex align-center justify-end mt-2 mobile-pa-0 w-100">

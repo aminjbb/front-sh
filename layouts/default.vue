@@ -2,15 +2,18 @@
 <v-app>
     <div v-show="show">
         <div v-if="screenType === 'desktop'">
+           
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopHeader :userData="userData" />
             </template>
-
             <slot />
             <div id="body-cover" />
 
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopFooter />
+            </template>
+            <template v-if="$route.name === 'index'">
+                <generalModalsLogin :signupStatus="!loginStatus" image="voucher-login.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید"/>
             </template>
         </div>
 
@@ -19,8 +22,11 @@
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart'" >
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart'">
                 <mobileFooter :userData="userData" />
+            </template>
+            <template v-if="$route.name === 'index'">
+                <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login-m.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید"/>
             </template>
         </div>
     </div>
@@ -43,7 +49,8 @@ export default {
         return {
             screenType: 'desktop',
             userData: null,
-            show: false
+            show: false,
+            loginStatus: false
         }
     },
 
@@ -87,14 +94,16 @@ export default {
          */
         async fetchUserProfile() {
             try {
-              if (this.userToken){
-                const response = await auth.getUserProfile(this.userToken)
-                if (response.data.data) {
-                  this.$store.commit('set_userData', response.data.data)
-                  this.userData = response.data.data
-
+                if (this.userToken) {
+                    const response = await auth.getUserProfile(this.userToken)
+                    if (response.data.data) {
+                        this.$store.commit('set_userData', response.data.data)
+                        this.userData = response.data.data
+                        this.loginStatus = true;
+                    }
+                } else {
+                    this.loginStatus = false;
                 }
-              }
             } catch (error) {
                 // Handle errors
             }

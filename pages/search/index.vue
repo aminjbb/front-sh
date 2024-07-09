@@ -6,9 +6,8 @@
     <generalSkeletonPlpNoFilter :loading="loading"/>
   </v-container>
 
-  <v-container v-show="!loading">
-    <v-row class="mt-10">
-      <v-col cols="12">
+  <v-container v-show="!loading" :class="screenType === 'desktop' ? 'mt-10' : ''">
+    <v-row >
         <template v-if="screenType === 'desktop'">
           <client-only>
             <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
@@ -28,10 +27,16 @@
             </div>
           </client-only>
         </template>
-        <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+        <template v-if="screenType === 'mobile'">
+            <div class="w-100 filter-bg-mobile d-flex align-center px-2 py-3">
+                <generalProductSortModal @sort="sort"  :sortItems="sortItems"/>
+            </div>
+        </template>
+
+        <div class="main-col v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
           <v-row v-if="productListData?.length" class="ma-0">
             <v-col
-                cols="12"
+                cols="6"
                 md="3"
                 v-for="(item, index) in productListData"
                 :key="`card-${index}`"
@@ -50,7 +55,7 @@
           </v-row>
         </div>
 
-        <div class="v-product__pagination d-flex justify-center mt-8">
+        <div class="v-product__pagination d-flex justify-center mt-8 w-100">
           <v-pagination
               v-model="page"
               :length="productListPageLength"
@@ -60,7 +65,6 @@
               prev-icon="mdi-chevron-right"
               next-icon="mdi-chevron-left" />
         </div>
-      </v-col>
     </v-row>
   </v-container>
 </main>
@@ -75,7 +79,29 @@ export default {
             filters: [],
             screenType: null,
             sortType:'related',
-            orderType: 'asc'
+            orderType: 'asc',
+            sortItems: [
+                {
+                    label: 'جدیدترین',
+                    value: 'created_at',
+                    type: 'desc'
+                },
+                {
+                    label: 'ارزان‌ترین',
+                    value: 'site_price',
+                    type: 'asc'
+                },
+                {
+                    label: 'گران‌ترین',
+                    value: 'site_price',
+                    type: 'desc'
+                },
+                {
+                    label: 'بیشترین تخفیف',
+                    value: 'discount',
+                    type: 'desc'
+                }
+            ],
         }
     },
 
@@ -104,7 +130,8 @@ export default {
             filterQuery,
             page,
             query,
-            loading
+            loading,
+            title
         }
     },
 
@@ -148,64 +175,6 @@ export default {
 
                     }
                 })
-            }
-        },
-
-        /**
-         * Params generator
-         * @param {*} array
-         */
-        async paramGenerator(array) {
-            let finalFilterObject = []
-            const newObject = Object.create(this.filterQuery)
-            if (array ?.param === "stock") {
-                let param = ''
-                if (array.values) {
-                    param = `1`
-                } else {
-                    param = `0`
-                }
-                let routeSplit = this.$route.fullPath.split('?')
-                let query = this.$route.query;
-                if (routeSplit[1]) {
-                    if (this.$route.query ?.stock) {
-                        if (query) {
-                            this.$router.push({
-                                query: {
-                                    ...query,
-                                    stock: param
-                                }
-                            })
-                        } else {
-                            this.$router.push({
-                                query: {
-                                    stock: param
-                                }
-                            })
-                        }
-
-                    } else {
-                        this.$router.push({
-                            query: {
-                                ...query,
-                                stock: param
-                            }
-                        })
-                    }
-                } else {
-                    this.$router.push(`${this.$route.path}?stock=${param}`)
-                }
-            } else {
-                await newObject.forEach((query, index) => {
-                    query.values.forEach(value => {
-                        const form = {
-                            param: query.param,
-                            value: value
-                        }
-                        finalFilterObject.push(form)
-                    })
-                })
-                this.createRoute(finalFilterObject)
             }
         },
 

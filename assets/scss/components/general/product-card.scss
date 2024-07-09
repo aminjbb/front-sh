@@ -18,7 +18,6 @@
         position: absolute;
         top: 0;
         right: 0;
-
         &::before {
             border-top: 25px solid #D72685;
             border-right: 25px solid #D72685;
@@ -45,28 +44,41 @@
     }
 
     &__image{
-        max-height: 150px;
+        height: 150px;
         overflow: hidden;
+
+        @include gbp (0, 768) {
+            max-height: 120px !important;
+        }
+
         img{
             max-width: 100%;
-            height: auto;
-            max-height: 100%;
+            height: 100%;
+
+            @include gbp (0, 768) {
+                width: 120px;
+            }
             
         }
     }
 
     &__title {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        -webkit-line-clamp: 2;
+        margin-top: 5px;
+        
+        a{
+            color:#6A6A6A !important;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
 
-        @include gbp(0, "sm") {
-            font-size: 14px !important;
+            &:hover{
+                color:#3A4A3A !important
+            }
         }
 
-        &:hover{
-            color:#616161 !important
+        @include gbp(0, 768) {
+            font-size: 12px !important;
         }
     }
 
@@ -101,20 +113,36 @@
 
         &__discount {
             font-family: 'IranSansFaNum' !important;
-            border-radius: 4px;
             background: var(--conceptual-primary, #D72685);
             display: block;
-            padding: 2px 5px 1px;
+            padding: 5px 5px 4px;
             color: #fff;
             font-size: 11px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 0;
+            border-bottom-left-radius: 5px;
         }
 
         &__price {
             font-family: 'IranSansFaNum' !important;
+            font-weight: bold;
+            color: #6A6A6A;
+
+            @include gbp(0,768){
+                font-size: 14px !important;
+            }
 
             &--old {
                 display: block;
                 text-align: left;
+                font-weight: 700 !important;
+                padding-left: 14px !important;
+
+                @include gbp(0,768){
+                    font-size: 11px !important;
+                }
 
                 span:first-child {
                     text-decoration: line-through;
@@ -163,14 +191,19 @@
     }
 
     &__colors {
+        direction: ltr !important;
         &__item {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            padding: 2px;
-            border: 1px solid transparent;
-            margin-left: 6px;
-            cursor: pointer;
+            padding: 0px;
+            border: 1px solid white;
+            margin-left: -6px;
+
+            @include gbp(0,768){
+                width: 15px;
+                height: 15px;
+            }
 
             span {
                 display: block;
@@ -182,6 +215,10 @@
             &:hover {
                 border-color: #616161;
             }
+        }
+
+        &__more{
+            color: #6A6A6A !important;
         }
     }
 }

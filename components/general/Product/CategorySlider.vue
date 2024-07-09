@@ -5,24 +5,21 @@
     </header>
 
     <div class="product-category-slider__swiper">
-        <swiper
-            dir="rtl"
-            :slidesPerView="7"
-            :spaceBetween="60"
-            :navigation="true"
-            :modules="modules"
-            :loop="loop"
-            :breakpoints="{
+        <swiper dir="rtl" :slidesPerView="7" :spaceBetween="60" :navigation="true" :modules="modules" :loop="loop" :breakpoints="{
                     '200': {
                         slidesPerView: 2.5,
                         spaceBetween: 15,
                     },
+                    '360': {
+                        slidesPerView: 4.5,
+                        spaceBetween: 15,
+                    },
                     '500': {
-                        slidesPerView: 2.7,
+                        slidesPerView: 4.7,
                         spaceBetween: 15,
                     },
                     '768': {
-                        slidesPerView: 3.5,
+                        slidesPerView: 5.5,
                     },
                     '992': {
                         slidesPerView: 5.8,
@@ -33,8 +30,7 @@
                     '1398': {
                         slidesPerView: 7,
                     }
-                }"
-            class="mySwiper">
+                }" class="mySwiper">
             <swiper-slide v-for="(item, index) in items" :key="`brands-${index}`">
                 <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="`/product/${item?.page?.slug}`" :title="item?.label">
                     <img :src="item?.image?.image_url" :title="item?.label" :alt="item?.label" width="116" height="116" />
@@ -79,7 +75,7 @@ export default {
         /**
          * slider loop
          */
-        loop:{
+        loop: {
             type: Boolean,
             default: true,
         }
@@ -103,15 +99,28 @@ export default {
 
     header {
         @include gbp(0, 768) {
-            font-size: 16px !important;
-            font-variation-settings: "wght"500;
+            display: none !important;
         }
     }
 
     &__swiper {
         border-radius: 8px;
         border: 1px solid #D9D9D9;
-        padding: 15px
+        padding: 15px;
+
+        @include gbp(0, 768) {
+            border: 0 !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+        }
+
+        img {
+            @include gbp(0, 768) {
+                width: 64px;
+                height: 64px;
+                border-radius: 12px;
+            }
+        }
     }
 
     .swiper-button-prev,
@@ -129,12 +138,16 @@ export default {
             font-size: 17px !important;
             color: #D72685 !important;
         }
+
+        @include gbp(0, 768) {
+            display: none !important;
+        }
     }
 
     h2 {
         @include gbp(0, 768) {
-            font-size: 14px;
-            font-variation-settings: "wght"500;
+            font-size: 12px;
+            font-variation-settings: "wght" 500;
         }
     }
 }
