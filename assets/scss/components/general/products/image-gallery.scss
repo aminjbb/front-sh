@@ -86,9 +86,15 @@
         }
 
         &__icons {
-            //position: absolute;
+            position: absolute;
             top: 12px;
             right: 12px;
+
+            @include gbp(0, 768) {
+                position: unset !important;
+                padding-top: 16px;
+                padding-right: 12px;
+            }
         }
     }
 
