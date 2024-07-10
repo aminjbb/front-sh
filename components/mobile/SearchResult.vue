@@ -1,12 +1,20 @@
 <template>
   <client-only>
     <div class="header__search-box" id="header__search-box">
-      <div class="header__search-box__inner d-flex align-center w-100 px-2" @click="openModal()">
+      <div v-if="buttonType === 'form'" class="header__search-box__inner header__search-box__inner--show d-flex align-center w-100 px-2" @click="openModal()">
         <v-icon
             icon="mdi-magnify"
             color="grey-darken-1"
-            class="ml-2" />
-        <input placeholder="جستجو در شاواز " id="inputSearchMobile"/>
+            class="ml-1" />
+          <span class="header__search-box__brand-name">شاواز</span>
+        <input placeholder="جستجو در " id="inputSearchMobile"/>
+      </div>
+
+      <div v-if="buttonType === 'icon'" @click="openModal()">
+        <v-icon
+            icon="mdi-magnify"
+            color="grey-darken-1"
+            class="icon-mode ml-1" />
       </div>
 
       <v-dialog
@@ -201,6 +209,13 @@ export default {
         }
     },
 
+    props:{
+      buttonType:{
+        type: String,
+        default: 'form',
+      }
+    },
+
     computed: {
         filteredWords() {
             if(this.searchResult && this.searchResult.last_searches && this.searchResult.last_searches.length){
@@ -235,8 +250,11 @@ export default {
 
     methods: {
         openModal() {
+          console.log('salammmm :D')
             this.dialog = true;
-            document.getElementById('inputSearchMobile').blur();
+            if(this.buttonType === 'form'){
+              document.getElementById('inputSearchMobile').blur();
+            }
             this.getMostSearch();
         },
 

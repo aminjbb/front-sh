@@ -1,4 +1,6 @@
 <template>
+  <mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle"/>
+
   <main class="v-product v-product--list">
     <v-container v-show="loading">
       <generalSkeletonPlpNoSlider :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
@@ -94,6 +96,7 @@ import PLP from '@/composables/PLP.js'
 export default {
   data() {
     return {
+      pageTitle: null,
       productList: [],
       categoryList: [],
       filters: [],
@@ -403,7 +406,8 @@ export default {
           title: this.breadcrumb.category_l1.name
         }
         breadcrumb.push(form)
-        this.category = this.breadcrumb.category_l1.name
+        this.category = this.breadcrumb.category_l1.name;
+        this.pageTitle = this.breadcrumb.category_l1.name;
       }
       
       if(this.breadcrumb?.category_l2?.name){
@@ -413,6 +417,8 @@ export default {
           title: this.breadcrumb.category_l2.name
         }
         breadcrumb.push(form)
+        this.pageTitle = this.breadcrumb.category_l2.name;
+
       }
 
       if(this.breadcrumb?.category_l3?.name){
@@ -422,6 +428,7 @@ export default {
           title: this.breadcrumb.category_l3.name
         }
         breadcrumb.push(form)
+        this.pageTitle = this.breadcrumb.category_l3.name;
       }
 
       if(this.breadcrumb?.product){
@@ -431,8 +438,9 @@ export default {
           title: this.breadcrumb.product.name
         }
         breadcrumb.push(form)
-
+        this.pageTitle = this.breadcrumb.product.name;
       }
+
       if(this.breadcrumb?.sku_group){
         const form = {
           type : "sku_group",
@@ -440,7 +448,7 @@ export default {
           title: this.breadcrumb.sku_group.name
         }
         breadcrumb.push(form)
-
+        this.pageTitle = this.breadcrumb.sku_group.name;
       }
 
       return breadcrumb

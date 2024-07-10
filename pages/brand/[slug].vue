@@ -1,4 +1,6 @@
 <template>
+  <mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle"/>
+
   <main class="v-product v-product--list">
     <v-container v-show="loading">
       <generalSkeletonPlpNoSlider :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
@@ -94,6 +96,7 @@ import PLP from '@/composables/PLP.js'
 export default {
   data() {
     return {
+      pageTitle:null,
       productList: [],
       filters: [],
       screenType: null,
@@ -224,8 +227,6 @@ export default {
      */
     async selectByAmount(amount) {
       if (amount?.param === "site_price") {
-        let site_price_to = ''
-        let site_price_from = ''
         if (amount.amount?.max) {
           site_price_to = amount.amount?.max
         }
@@ -415,6 +416,7 @@ export default {
       this.page = parseInt(this.$route.query.page)
     }
   },
+
   beforeMount() {
     this.getBreadcrumb('brand')
   },
@@ -437,13 +439,8 @@ export default {
     },
 
     breadcrumb(newVal){
-        if(newVal?.category_l3?.name){
-          this.category = newVal?.category_l3?.name
-        }else if(newVal?.category_l2?.name){
-          this.category = newVal?.category_l2?.name
-        }else if(newVal?.category_l1?.name){
-          this.category = newVal.category_l1.name
-        }
+        this.category = newVal[newVal.length - 1]?.title
+        this.pageTitle = newVal[newVal.length - 1]?.title
       }
   }
 }

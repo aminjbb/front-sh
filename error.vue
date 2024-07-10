@@ -80,7 +80,7 @@ export default {
 
     @include gbp (0, 768) {
         padding-bottom: 60px;
-        padding-top: 75px;
+        padding-top: 0 !important;
     }
 
     img {
