@@ -107,7 +107,7 @@
         productList: [],
         filters: [],
         screenType: null,
-        sortType:'site_price',
+        sortType:'seen_count',
         orderType: 'asc',
         category:null,
         sortItems: [
