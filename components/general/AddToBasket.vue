@@ -18,7 +18,7 @@
                     </div>
 
                     <div class="d-flex align-center">
-                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content?.discount_percent}} %</span>
+                        <span v-if="!isPdp" class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content?.discount_percent}} %</span>
                         <span v-if="content?.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
                             <span>{{ splitChar(Number(String(content?.customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
@@ -134,7 +134,8 @@ export default {
          * Product Category
          * For seo
          */
-        productCategory: String
+        productCategory: String,
+        isPdp:false
     },
 
     computed: {

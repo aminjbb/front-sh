@@ -55,7 +55,7 @@
     </v-row>
 
     <div class="xs-show">
-        <div class="image-gallery__selected-image pb-2">
+        <div class="pb-2">
             <div class="image-gallery__selected-image__icons d-flex align-center">
                 <v-icon
                     icon="mdi-share-variant-outline"
@@ -73,7 +73,7 @@
             <swiper
                 :pagination="true"
                 :modules="modules"
-                class="mySwiper"
+                class="mySwiper mobile-gallery-height"
                 :autoplay="{
                     delay: 2500,
                     disableOnInteraction: false,
@@ -428,6 +428,10 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.mobile-gallery-height{
+    height:400px;
+}
+
 .c-modal {
     .v-card {
         background: #fff !important;

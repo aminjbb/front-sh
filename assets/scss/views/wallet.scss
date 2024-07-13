@@ -7,8 +7,8 @@
     padding-top: 170px;
 
     @include gbp (0, 768) {
-        padding-bottom: 60px;
-        padding-top: 75px;
+        padding-bottom: 80px;
+        padding-top: 0;
     }
 
     .bold {

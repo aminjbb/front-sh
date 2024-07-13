@@ -93,6 +93,7 @@
                     :productCategory="breadcrumb?.category_l2?.name ? breadcrumb.category_l2.name : breadcrumb?.category_l1?.name"
                     :productDetails="productDetail"
                     revers="revers"
+                    :isPdp="true"
                     :mdCols="['6','6']"
                     :smCols="['4','8']" />
             </div>

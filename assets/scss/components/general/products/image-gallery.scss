@@ -74,7 +74,8 @@
         position: relative;
 
         @include gbp(0, 768) {
-            border: 0 !important
+            border: 0 !important;
+            height: auto;
         }
 
         img {
@@ -88,6 +89,12 @@
             position: absolute;
             top: 12px;
             right: 12px;
+
+            @include gbp(0, 768) {
+                position: unset !important;
+                padding-top: 16px;
+                padding-right: 12px;
+            }
         }
     }
 

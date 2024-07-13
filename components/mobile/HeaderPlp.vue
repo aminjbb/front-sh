@@ -1,22 +1,20 @@
 <template>
 <client-only>
-    <a v-if="topBanner && topBanner.image" class="fixed-banner--mobile d-block fixed-banner--mobile" id="top-banner" :href="topBanner.link">
+    <a v-if="topBanner && topBanner.image" class="fixed-banner d-block fixed-banner--mobile" id="top-banner" :href="topBanner.link">
         <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="64" :title="topBanner?.image_alt" />
     </a>
 
-    <header class="header header--mobile w-100">
-        <div class="d-flex align-center justify-space-between header__logo-row">
-            <a href="/" class="d-flex align-center header__logo" title="Shavaz logo" id="mobile-logo">
-                <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="79" height="28" title="Shavaz Logo" />
-            </a>
+    <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }" id="mobile-header">
+        <div class="w-100 d-flex align-center justify-space-between header__logo-row">
+            <div class="d-flex align-center">
+                <a href="/">
+                    <v-icon icon="mdi-chevron-right" color="text-gray-darken-3" class="ml-1" />
+                </a>
 
-            <a href="/user/ticket" class="header__notification">
-                <v-icon icon="mdi-bell" />
-            </a>
-        </div>
+                <span class="t14 w700 text-gray-darken-3">{{ pageTitle }}</span>
+            </div>
 
-        <div id="mobile-header__search" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }">
-            <mobileSearchResult />
+            <mobileSearchResult buttonType="icon" />
         </div>
     </header>
     <mobileMenu />
@@ -33,9 +31,13 @@ export default {
             isHidden: false,
             lastScrollTop: 0,
             hasBanner: false,
-            isBanner: false,
+            isBanner: true,
             isTop: false,
         };
+    },
+
+    props: {
+        pageTitle: String
     },
 
     setup() {
@@ -149,38 +151,30 @@ $parent: 'header';
 }
 
 .#{$parent} {
-    &--mobile {
-        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+    &--mobile-plp {
         .#{$parent}__logo-row {
             height: 48px;
-            padding: 12px 16px 0;
+            padding: 0 16px 0 !important;
             background: #fff;
-        }
+            box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
 
-        .#{$parent}__notification {
-            width: 36px !important;
-            height: 36px !important;
-            border-radius: 12px;
-            border: 1px solid #E8E8E8;
-            background: #F5F5F5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .v-icon {
-                color: #6A6A6A;
-                font-size: 24px;
+            .v-icon.mdi-chevron-right {
+                font-size: 25px !important;
             }
         }
-
-        .header__search-box {
-            flex: 1;
-        }
-
     }
+
+    .header__search-box {
+        flex-grow: 0 !important
+    }
+
 }
 
 .header__search-box {
+    .v-icon.icon-mode {
+        font-size: 26px !important;
+    }
+
     &__inner--show {
         border-radius: 12px !important;
         border: 1px solid #E8E8E8 !important;
@@ -298,13 +292,11 @@ $parent: 'header';
     }
 }
 
-#mobile-header__search {
+#mobile-header {
     transition: opacity 0.3s ease-in-out;
     opacity: 1;
     width: 100% !important;
     z-index: 10;
-    height: 70px;
-    padding: 12px 16px 16px;
     background: #fff;
     overflow: hidden;
     position: relative;

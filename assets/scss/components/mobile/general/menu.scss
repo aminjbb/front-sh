@@ -6,10 +6,10 @@ $parent: 'menu';
 
 .#{$parent} {
     &--mobile {
-        height: calc(100vh - 112px);
+        height: calc(100vh - 56px);
         width: 100%;
         position: fixed;
-        top: 56px;
+        top: 0;
         right: -100%;
         background-color: #fff;
         z-index: 10;
