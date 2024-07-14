@@ -17,8 +17,8 @@
         <div class="wheel__arrow"></div>
     </div>
 
-    <v-btn :disabled=" clicked ? false : true" @click="start()" color="primary500" rounded="xl" type="submit" height="48px" class="w-100 game-auth__btn wheel__btn game-mobile-order">
-        شانستو امتحان کن
+    <v-btn :disabled=" clicked ? false : true" @click="start()" color="primary500" rounded="xl" type="submit" height="48px" class="w-100 game-auth__btn wheel__btn game-mobile-order ">
+      شانستو امتحان کن
     </v-btn>
 
     <v-dialog
@@ -132,6 +132,7 @@ export default {
         isLogin: Boolean,
         limit: String | Number,
         userUsed: String | Number,
+        token: String,
     },
 
     mounted() {
@@ -172,7 +173,7 @@ export default {
          */
         start() {
             if(this.isLogin){
-                this.getUserPrize();
+                this.getUserPrize(this.token);
             }
             else if (!this.isLogin) {
                 this.$emit('luckyBtnClicked')
@@ -216,7 +217,7 @@ export default {
                        }, 2500)
                     }, 50);
 
-                    this.$emit('updateForm',true)
+                    this.$emit('updateForm',this.token)
                     if (this.countClicked == this.limit) {
                         this.clicked = false;
                     }

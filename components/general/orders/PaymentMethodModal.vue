@@ -5,6 +5,8 @@
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
                 <span class="t15 w500 text-black">
                     روش پرداخت
+
+
                 </span>
 
                 <v-btn class="c-modal__header__btn pa-0 text-none" @click="closeModal()" color="grey-darken-1" size="large" variant="icon">
@@ -13,7 +15,7 @@
             </header>
 
             <div class="mt-2">
-                <generalOrdersPaymentMethod ref="paymentStep" @selectedPayment="getPayment" />
+                <generalOrdersPaymentMethod :orderId="orderId" ref="paymentStep" @selectedPayment="getPayment" />
             </div>
 
             <div class="d-flex align-center justify-space-between my-8">
@@ -53,7 +55,8 @@
             </header>
 
             <div>
-                <generalOrdersPaymentMethod ref="paymentStep" @selectedPayment="getPayment" />
+
+                <generalOrdersPaymentMethod :orderId="orderId" ref="paymentStep" @selectedPayment="getPayment" />
             </div>
 
             <div class="d-flex align-center justify-space-between my-8">

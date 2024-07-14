@@ -341,7 +341,7 @@ export default {
     &__btn{
         border-radius: 4px !important;
         height: 50px !important;
-        width: 48% !important;
+        width: 55% !important;
         box-shadow: none !important;
 
         &--cancel{

@@ -114,9 +114,9 @@ export default function setup() {
 
     /**
      * returnOrRejectOrder
-     * @param {*} form 
-     * @param {*} endPoint 
-     * @param {*} accept 
+     * @param {*} form
+     * @param {*} endPoint
+     * @param {*} accept
      */
     async function returnOrRejectOrder(form, endPoint ,accept) {
         loading.value = true
@@ -151,7 +151,7 @@ export default function setup() {
 
     /**
      * Cancel return order
-     * @param {*} id 
+     * @param {*} id
      */
     async function cancelReturnedOrder(id) {
         axios
@@ -195,9 +195,12 @@ export default function setup() {
     /**
      * Get payment Methods for create order
      */
-    async function getPaymentMethods() {
+    async function getPaymentMethods(order_id) {
+        let endPoint = ''
+        if (order_id) endPoint =`/order/payment-methods?order_id=${order_id}`
+        else endPoint =`/order/payment-methods`
         axios
-            .get(runtimeConfig.public.apiBase + `/order/payment-methods`, {
+            .get(runtimeConfig.public.apiBase + endPoint, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
@@ -212,8 +215,8 @@ export default function setup() {
 
      /**
      * Repeat payment for order
-     * @param {*} order_id 
-     * @param {*} payment_method 
+     * @param {*} order_id
+     * @param {*} payment_method
      */
      async function rePaymentOrder( order_id , payment_method ) {
         axios
