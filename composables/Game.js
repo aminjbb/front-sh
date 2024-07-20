@@ -37,11 +37,11 @@ export default function setup() {
      /**
      * Get user voucher list
      */
-     async function getUserVoucherList() {
+     async function getUserVoucherList(token) {
         axios
             .get(runtimeConfig.public.apiBase + `/game/lucky-wheel/user/prizes/${route.params.slug}`, {
                 headers: {
-                    Authorization: `Bearer ${userToken.value}`,
+                    Authorization: `Bearer ${token}`,
                 },
             })
             .then((response) => {
@@ -60,11 +60,11 @@ export default function setup() {
     /**
      * Get voucher Prize
      */
-    async function getUserPrize() {
+    async function getUserPrize(token) {
         axios
             .get(runtimeConfig.public.apiBase + `/game/lucky-wheel/turn/${route.params.slug}`, {
                 headers: {
-                    Authorization: `Bearer ${userToken.value}`,
+                    Authorization: `Bearer ${token}`,
                 },
             })
             .then((response) => {
@@ -108,6 +108,7 @@ export default function setup() {
         prize,
         getLuckyWheel,
         luckyWheel,
-        turnPerUser
+        turnPerUser,
+        runtimeConfig
     }
 }

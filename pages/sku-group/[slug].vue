@@ -1,50 +1,50 @@
 <template>
-<main class="v-product v-product--list">
-  <v-container v-show="loading">
-    <generalSkeletonPlpNoFilter :loading="loading"/>
-  </v-container>
+  <main class="v-product v-product--list">
+    <v-container v-show="loading">
+      <generalSkeletonPlpNoFilter :loading="loading"/>
+    </v-container>
 
-  <v-container v-show="!loading" class="main-col">
-    <generalBreadcrumb :items="breadcrumbList" />
-    <v-row>
-      <v-col cols="12">
-        <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
-          <v-row v-if="productListData?.length" class="ma-0">
-            <v-col
-                cols="6"
-                md="3"
-                v-for="(item, index) in productListData"
-                :key="`card-${index}`"
-                class="v-product__content d-flex">
-              <generalProductCard
-                  :content="item"
-                  :lazy=false
-                  class="mb-4 flex-grow-1"
-                  :hideInfo="true"
-                  :isPLP="true"
-                  :index = "index + 1"
-                  showBasket
-                  :sectionName = "`لیست کالاهای ${plpTitle}`"
-                  :categoryName = "category"
-                  :showColors="true" />
-            </v-col>
-          </v-row>
-        </div>
+    <v-container v-show="!loading" class="main-col">
+      <generalBreadcrumb :items="breadcrumbList" />
+      <v-row>
+        <v-col cols="12">
+          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+            <v-row v-if="productListData?.length" class="ma-0">
+              <v-col
+                  cols="6"
+                  md="3"
+                  v-for="(item, index) in productListData"
+                  :key="`card-${index}`"
+                  class="v-product__content d-flex">
+                <generalProductCard
+                    :content="item"
+                    :lazy=false
+                    class="mb-4 flex-grow-1"
+                    :hideInfo="true"
+                    :isPLP="true"
+                    :index = "index + 1"
+                    showBasket
+                    :sectionName = "`لیست کالاهای ${plpTitle}`"
+                    :categoryName = "category"
+                    :showColors="true" />
+              </v-col>
+            </v-row>
+          </div>
 
-        <div class="v-product__pagination d-flex justify-center mt-8 w-100">
-          <v-pagination
-              v-model="page"
-              :length="productListPageLength"
-              size="40"
-              :total-visible="6"
-              @click="backToTop"
-              prev-icon="mdi-chevron-right"
-              next-icon="mdi-chevron-left" />
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
-</main>
+          <div class="v-product__pagination d-flex justify-center mt-8 w-100">
+            <v-pagination
+                v-model="page"
+                :length="productListPageLength"
+                size="40"
+                :total-visible="6"
+                @click="backToTop"
+                prev-icon="mdi-chevron-right"
+                next-icon="mdi-chevron-left" />
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </main>
 </template>
 
 <script>
@@ -53,15 +53,6 @@ import PLP from '@/composables/PLP.js'
 export default {
     data() {
         return {
-            BreadcrumbItems: [{
-                    title: 'لوازم آرایشی',
-                    href: '/'
-                },
-                {
-                    title: 'آرایش صورت',
-                    href: '/products'
-                }
-            ],
             productList: [],
             filters: [],
             screenType: null,
@@ -119,8 +110,8 @@ export default {
             title: this.breadcrumb.category_l2.name
           }
           breadcrumb.push(form)
-
         }
+
         if(this.breadcrumb?.category_l3?.name){
           const form = {
             type : "category_l3",
@@ -128,7 +119,6 @@ export default {
             title: this.breadcrumb.category_l3.name
           }
           breadcrumb.push(form)
-
         }
 
         if(this.breadcrumb?.product){
@@ -138,8 +128,8 @@ export default {
             title: this.breadcrumb.product.name
           }
           breadcrumb.push(form)
-
         }
+
         if(this.breadcrumb?.sku_group){
           const form = {
             type : "sku_group",
@@ -147,7 +137,6 @@ export default {
             title: this.breadcrumb.sku_group.name
           }
           breadcrumb.push(form)
-
         }
 
         return breadcrumb

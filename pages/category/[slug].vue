@@ -1,4 +1,6 @@
 <template>
+  <mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle"/>
+  
     <main class="v-product v-product--list">
       <v-container v-show="loading">
         <generalSkeletonPlp :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
@@ -101,6 +103,7 @@
   export default {
     data() {
       return {
+        pageTitle:null,
         productList: [],
         filters: [],
         screenType: null,
@@ -187,8 +190,9 @@
             title: this.breadcrumb.category_l1.name
           }
           breadcrumb.push(form)
-  
+          this.pageTitle = this.breadcrumb?.category_l1?.name;
         }
+
         if(this.breadcrumb?.category_l2?.name){
           const form = {
             type : "category_l2",
@@ -196,8 +200,9 @@
             title: this.breadcrumb.category_l2.name
           }
           breadcrumb.push(form)
-  
+          this.pageTitle = this.breadcrumb?.category_l2?.name;
         }
+
         if(this.breadcrumb?.category_l3?.name){
           const form = {
             type : "category_l3",
@@ -205,8 +210,9 @@
             title: this.breadcrumb.category_l3.name
           }
           breadcrumb.push(form)
-  
+          this.pageTitle = this.breadcrumb?.category_l3?.name;
         }
+
         if(this.breadcrumb?.product){
           const form = {
             type : "product",
@@ -214,6 +220,8 @@
             title: this.breadcrumb.product.name
           }
           breadcrumb.push(form)
+
+          this.pageTitle = this.breadcrumb?.product.name;
   
         }
   
@@ -221,9 +229,10 @@
           const form = {
             type : "sku_group",
             href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
-            title: this.breadcrumb.sku_group.name
+            title: this.breadcrumb?.sku_group.name
           }
           breadcrumb.push(form)
+          this.pageTitle = this.breadcrumb.product.name;
   
         }
   

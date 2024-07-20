@@ -18,11 +18,11 @@
         </div>
 
         <div v-else-if="screenType === 'mobile'">
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
+            <template v-if="mobileMainHeader">
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart'">
+            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
                 <mobileFooter :userData="userData" />
             </template>
             <template v-if="$route.name === 'index'">
@@ -50,7 +50,8 @@ export default {
             screenType: 'desktop',
             userData: null,
             show: false,
-            loginStatus: false
+            loginStatus: false,
+            mobileMainHeader:false
         }
     },
 
@@ -86,6 +87,7 @@ export default {
 
     created() {
         this.fetchUserProfile();
+        this.checkMobileHeaderPages();
     },
 
     methods: {
@@ -107,7 +109,19 @@ export default {
             } catch (error) {
                 // Handle errors
             }
+        },
+
+        checkMobileHeaderPages(){
+            const allowedName = ['index','user-dashboard','sku-slug','sku-group-slug','promotion-slug','search','faq','rules-general-rules',
+            'rules-how-to-trade','rules-information','rules-iranian-products','rules-my-orders','rules-office-rights','rules-product-return','rules-standard']
+            allowedName.forEach(item => {
+                if(item === this.$route.name){
+                    this.mobileMainHeader = true
+                }
+            });
         }
+
+        
     }
 
 }

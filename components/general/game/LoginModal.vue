@@ -354,7 +354,7 @@ export default {
                         theme: 'dark'
                     });
 
-                    this.$emit('logined', true);
+                    this.$emit('logined', response.data.data.token);
                     this.modalLogin = false
                     this.modalSheet = false
                     this.backStep1()
