@@ -16,7 +16,7 @@ export default function setup() {
         let productList = [];
         order?.details.forEach(item =>{
             const obj={
-                price: item.site_price,
+                price: Number(String(item.site_price).slice(0, -1)) ,
                 quantity: item.count,	
                 product_id: `${item?.shps?.sku?.id}`,
                 name: item?.shps?.sku?.label,
@@ -30,9 +30,9 @@ export default function setup() {
                 token: taToken.value,
                 transaction_id: `${order?.id}` ,
                 revenue: Number(String(order?.paid_price).slice(0, -1)),
-                shipping: order?.sending_price,
+                shipping: Number(String(order?.sending_price).slice(0, -1)),
                 tax: order?.tax,
-                discount: order?.total_discount,
+                discount: Number(String(order?.total_discount).slice(0, -1)),
                 new_customer: order?.is_takhfifan,
                 affiliation: 'takhfifan',
                 coupon_code: order?.voucher_code,
