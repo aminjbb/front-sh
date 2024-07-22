@@ -113,7 +113,7 @@ export default {
 
         checkMobileHeaderPages(){
             const allowedName = ['index','user-dashboard','sku-slug','sku-group-slug','promotion-slug','search','faq','rules-general-rules',
-            'rules-how-to-trade','rules-information','rules-iranian-products','rules-my-orders','rules-office-rights','rules-product-return','rules-standard', 'auth-login', 'login']
+            'rules-how-to-trade','rules-information','rules-iranian-products','rules-my-orders','rules-office-rights','rules-product-return','rules-standard', 'auth-login']
             allowedName.forEach(item => {
                 if(item === this.$route.name){
                     this.mobileMainHeader = true
