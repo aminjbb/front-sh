@@ -31,7 +31,7 @@
                             </v-btn>
 
                             <v-btn @click="backToSite"  color="primary" height="46px" class="game-auth__btn--cancel">
-                                بازگشت به سایت
+                                {{ backToSiteText }}
                             </v-btn>
                         </div>
 
@@ -118,6 +118,10 @@ export default {
         loginDesc:{
             type: String,
             default:null,
+        },
+        backToSiteText:{
+            type: String,
+            default:'بازگشت به سایت'
         }
     },
 
