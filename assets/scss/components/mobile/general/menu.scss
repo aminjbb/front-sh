@@ -137,7 +137,7 @@ $parent: 'menu';
     
                             > .#{$parent}__item__info >.#{$parent}__item__link {
                                 > .down-icon{
-                                    transition: transform 0.3s ease-in-out;
+                                    transition: transform 0.8s ease-in-out;
                                     transform: rotate(-180deg);
                                 }
                             }
@@ -152,12 +152,13 @@ $parent: 'menu';
                             transition: max-height 0.8s ease-out;
                             overflow: hidden;
                             margin-top: -14px;
+                            padding-bottom: 0;
     
                             &.show-mega-menu {
                                 overflow-y: auto;
                                 max-height: 1000px;
                                 transition: max-height 0.8s ease-in;
-                                padding: 0 5px 5px 0;
+                                padding: 0 5px 0 0;
                                 margin-top: -14px;
                             }
     
