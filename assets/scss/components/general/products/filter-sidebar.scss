@@ -23,13 +23,15 @@
         }
 
         &__box{
-            height: 0;
             overflow: hidden;
             padding: 0;
+            max-height: 0;
+            transition: max-height 0.25s ease-out;
 
             &.open-card{
-                height: auto !important;
                 padding-bottom: 12px;
+                max-height: 1000px;
+                transition: max-height 0.25s ease-in;
             }
         }
 
@@ -82,6 +84,73 @@
             }
 
 
+        }
+
+        &__color{
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: block;
+        }
+
+
+        &--mobile{
+            $parent : 'filter-sidebar__card';
+
+            .#{$parent} {
+                &__box{
+        
+                    .v-input.filter-sidebar__card__search{
+                        .v-input__control{
+                            border-radius: 12px !important;
+                            border: 1px solid #E8E8E8 !important;
+                            background: #F5F5F5 !important;
+                            position: relative;
+                        }
+        
+                        .v-icon
+                        {
+                            font-size: 26px !important;
+                        }
+        
+                        .v-field__input{
+                            font-size: 15px !important;
+                            color: #6A6A6A !important;
+                            opacity: 1 !important;
+        
+                            &::placeholder{
+                                font-size: 15px !important;
+                                color: #6A6A6A !important;
+                                opacity: 1 !important;
+                            }
+                        }
+        
+                        .v-field__outline{
+                            display: none;
+                        }
+                    }
+        
+                    .v-checkbox{
+                        .v-label--clickable{
+                            font-weight: 700 !important;
+                        }
+                        .mdi-checkbox-blank-outline.v-icon{
+                            color: #444 !important;
+                        }
+                    }
+                }
+
+                
+                &__scroll{
+                    &::-webkit-scrollbar-track {
+                        background-color: #F5F5F5 !important;
+                    }
+        
+                    &::-webkit-scrollbar-thumb {
+                        background-color: #EFA8CE !important;
+                    }
+                }
+            }
         }
     }
 }

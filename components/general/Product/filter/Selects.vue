@@ -3,23 +3,28 @@
     <v-text-field
         density="compact"
         variant="outlined"
-        :placeholder="`جستجو ${title}`"
+        :placeholder="` جستجو در ${title}`"
         hide-details
         height="40px"
         prepend-inner-icon="mdi-magnify"
-        class="mb-3 filter-sidebar__card__search"
+        class="mb-2 filter-sidebar__card__search"
         v-model="searchItem" />
 
     <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
-            <div class="d-flex justify-space-between align-center">
+            <div class="d-flex justify-space-between align-center mb-1">
                 <v-checkbox
                     v-model="itemsModel"
                     :label="item.label ? item.label : item.value"
                     @change="selectItems()"
                     hide-details
                     :value="item.id" />
-                <span class="t11 w500 text-grey-lighten-1" v-if="item.name">{{item.name}}</span>
+
+                <span v-if="item.name && !showEnName && param !== 'colors'" class="t14 w500 text-grey-lighten-1">{{item.name}}</span>
+
+                <template v-else-if="param === 'colors'">
+                    <span class="filter-sidebar__card__color" :style="{ backgroundColor: item.color.value }" :class="item.color.value === '#ffffff' || item.color.value === '#FF00FF00' ? 'border' : '' "></span>
+                </template>
             </div>
         </template>
     </div>
@@ -61,7 +66,12 @@ export default {
         clear: {
             type: Boolean,
             default: false
-        }
+        },
+
+        showEnName: {
+            type: Boolean,
+            default: false
+        },
     },
 
     computed: {

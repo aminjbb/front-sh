@@ -24,6 +24,7 @@
               <template v-if="screenType === 'mobile'">
                 <div class="d-flex align-center">
                     <generalProductFilterSideBarModal
+                      :filterLength ="selectedFilterLength"
                       class="ml-3"
                       :filterList="productFilterSecondaryData"
                       @listFiltersModal="listFiltersModal"
@@ -110,6 +111,7 @@
         sortType:'seen_count',
         orderType: 'asc',
         category:null,
+        selectedFilterLength: null,
         sortItems: [
               {
                   label: 'محبوب ترین',
@@ -298,13 +300,15 @@
         if (array.param === "stock") {
           this.createQueryForFilter(array)
         } else {
-          const findQueryIndex = this.filterQuery.findIndex(query => query.name === array.name)
+          const findQueryIndex = this.filterQuery.findIndex(query => query.name === array.name);
+
           if (findQueryIndex > -1) {
-            if (array.values.length) this.filterQuery[findQueryIndex].values = array.values
-            else this.filterQuery.splice(findQueryIndex, 1)
+              if (array.values.length) this.filterQuery[findQueryIndex].values = array.values
+              else this.filterQuery.splice(findQueryIndex, 1)
           } else {
             this.filterQuery.push(array)
           }
+
           this.createQueryForFilter()
         }
   
@@ -545,6 +549,15 @@
         }else if(newVal?.category_l1?.name){
           this.category = newVal.category_l1.name
         }
+      },
+
+      $route(newVal){
+      if(Object.keys(newVal?.query).length === 0){
+          this.selectedFilterLength = 0
+        }else{
+          this.selectedFilterLength = Object.keys(newVal?.query).length
+        }
+
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="filter-sidebar" ref="refSidebar">
     <header class="d-flex align-center justify-space-between mb-5">
-      <span class="t20 w400 text-grey-darken-3">فیلتر</span>
+      <span class="t18 w400 text-grey-darken-3">فیلتر</span>
       <v-btn variant="text" @click="removeAllFilter()">
         <span class="t12 w400 text-grey-darken-1 pointer">حذف همه</span>
       </v-btn>
@@ -12,7 +12,7 @@
             v-if="filter.type !== 'switch'"
             class="d-flex align-center justify-space-between filter-sidebar__card__header my-4"
             @click="slideToggleCard(index)">
-          <span class="t16 w400 text-grey-darken-2">{{ filter.name }}</span>
+          <span class="t15 w400 text-grey-darken-2">{{ filter.name }}</span>
 
           <v-icon icon="mdi-chevron-down" color="grey"/>
         </header>
