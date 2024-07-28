@@ -11,7 +11,7 @@ $parent: 'menu';
         position: fixed;
         top: 0;
         right: -100%;
-        background-color: #fff;
+        background-color: #fafafa !important;
         z-index: 10;
         transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
 
@@ -91,8 +91,7 @@ $parent: 'menu';
                     display: flex;
                     position: relative;
                     flex-direction: column;
-                    background-color: #fff;
-                    box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
+                    background-color: #fafafa;
                     padding-right:16px;
                     padding-left: 16px;
                     justify-content: flex-start;
@@ -103,15 +102,18 @@ $parent: 'menu';
     
                     > li {
                         border-bottom: 1px solid #edecec;
+                        padding-bottom: 12px;
 
                         >.#{$parent}__item__info{
-                            padding-bottom: 12px;
 
                             .child-preview{
                                 overflow: hidden;
                                 width: 100%;
                                 position: relative;
                                 height: 24px;
+                                opacity: 1;
+                                transition: opacity 0.3s ease-out;
+                                transition-delay: 0.8s;
 
                                 &::after{
                                     content: '';
@@ -120,8 +122,8 @@ $parent: 'menu';
                                     height: 100%;
                                     top: 0;
                                     right: 0;
-                                    background: rgb(255,255,255);
-                                    background: linear-gradient(90deg, rgba(255,255,255,1) 1%, rgba(255,255,255,0.5144651610644257) 13%, rgba(255,255,255,0) 25%);
+                                    background: #fafafa;
+                                    background: linear-gradient(90deg, rgba(#fafafa,1) 1%, rgba(#fafafa,0.5144651610644257) 13%, rgba(#fafafa,0) 25%);
                                     z-index: 1;
                                 }
 
@@ -152,22 +154,22 @@ $parent: 'menu';
                                 > .down-icon{
                                     position: absolute;
                                     left: 0;
-                                    font-size: 23px;
-                                    color: #9A9A9A;
+                                    font-size: 26px;
+                                    color: #6A6A6A;
                                     transition: transform 0.3s ease-in-out;
                                 }
                             }
                         }
                          
                         &.active-menu {
-
                             .child-preview {
-                                display: none !important;
+                                opacity: 0;
+                                transition: opacity 0.1s ease-in;
                             }
     
                             > .#{$parent}__item__info >.#{$parent}__item__link {
                                 > .down-icon{
-                                    transition: transform 0.3s ease-in-out;
+                                    transition: transform 0.8s ease-in-out;
                                     transform: rotate(-180deg);
                                 }
                             }
@@ -177,20 +179,23 @@ $parent: 'menu';
                             display: flex;
                             flex-direction: column;
                             position: relative;
-                            
                             max-height: 0;
-                            transition: max-height 0.15s ease-out;
+                            padding-right: 5px;
+                            transition: max-height 0.8s ease-out;
                             overflow: hidden;
+                            margin-top: -14px;
+                            padding-bottom: 0;
     
                             &.show-mega-menu {
-                                overflow: auto;
-                                max-height: 500px;
-                                transition: max-height 0.25s ease-in;
-                                padding: 0 5px 25px 0;
+                                overflow-y: auto;
+                                max-height: 1000px;
+                                transition: max-height 0.8s ease-in;
+                                padding: 0 5px 0 0;
+                                margin-top: -14px;
                             }
     
                             >li {
-                                padding: 9px 5px;
+                                padding: 9px 8px 9px 0;
                                 border-right: 1px solid #EFA8CE;
     
                                 &:first-child{
@@ -207,7 +212,8 @@ $parent: 'menu';
                                     justify-content: space-around;
     
                                     >span {
-                                        color: #9A9A9A
+                                        color: #9A9A9A;
+                                        font-variation-settings: "wght" 700
                                     }
     
                                     >.v-icon {
@@ -228,7 +234,9 @@ $parent: 'menu';
     
                                 >ul {
                                     padding-top: 8px;
-                                    display: none;
+                                    max-height: 0;
+                                    transition: max-height 0.8s ease-out;
+                                    overflow: hidden;
     
                                     >li {
                                         padding: 8px 16px;
@@ -240,7 +248,9 @@ $parent: 'menu';
                                     }
     
                                     &.show-sub-menu {
-                                        display: block;
+                                        max-height: 1000px;
+                                        transition: max-height 0.8s ease-in;
+                                        overflow: hidden;
                                     }
                                 }
                             }
