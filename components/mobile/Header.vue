@@ -19,7 +19,7 @@
             <mobileSearchResult />
         </div>
     </header>
-    <mobileMenu />
+    <mobileMenu :class="{'has-banner': hasBanner }"/>
 </client-only>
 </template>
 
@@ -65,57 +65,71 @@ export default {
          */
         handleScroll() {
             let currentScrollTop = window.scrollY;
+            const menu = document.getElementById('menu--mobile');
 
             if (this.isBanner) {
-                if (window.scrollY > 112) {
+                if (window.scrollY > 182) {
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
+                    menu.style.top = '';
+                    menu.style.height = '';
 
-                    const menu = document.getElementById('menu--mobile');
+                   
                     if (menu) {
                         if (currentScrollTop > this.lastScrollTop) {
                             this.isHidden = true;
                             this.isFixed = false;
 
                             menu.classList.add('change-height');
+                            menu.classList.remove('change-height2');
                         } else {
                             this.isFixed = true;
                             this.isHidden = false;
 
                             menu.classList.remove('change-height');
+                            menu.classList.add('change-height2');
                         }
                     }
                     this.lastScrollTop = currentScrollTop;
                 }
-                if (window.scrollY <= 112) {
+                if (window.scrollY <= 182) {
                     this.isFixed = false;
                     this.isHidden = false;
+                    menu.style.top = `${182 - window.scrollY}px`;
+                    menu.style.height = `calc(100% - ${238 - window.scrollY}px)`;
                 }
             } else {
-                if (window.scrollY > 48) {
+                if (window.scrollY > 118) {
                     this.isHidden = true;
                     this.isFixed = false;
+                    this.hasBanner = false;
+                    menu.style.top = '';
+                    menu.style.height = '';
 
-                    const menu = document.getElementById('menu--mobile');
+                   
                     if (menu) {
                         if (currentScrollTop > this.lastScrollTop) {
                             this.isHidden = true;
                             this.isFixed = false;
 
                             menu.classList.add('change-height');
+                            menu.classList.remove('change-height2');
                         } else {
                             this.isFixed = true;
                             this.isHidden = false;
 
                             menu.classList.remove('change-height');
+                            menu.classList.add('change-height2');
                         }
                     }
                     this.lastScrollTop = currentScrollTop;
                 }
-                if (window.scrollY <= 48) {
+                if (window.scrollY <= 118) {
                     this.isFixed = false;
                     this.isHidden = false;
+                    menu.style.top = `${118 - window.scrollY}px`;
+                    menu.style.height = `calc(100% - ${174 - window.scrollY}px)`;
                 }
             }
         },
