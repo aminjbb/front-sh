@@ -9,7 +9,7 @@
             <v-row :align="voucherStep ?'start' : 'center'" class="h-100">
                 <v-col sm="7" class="pl-7">
                     <h4 class="t17 w700 l30" :class="voucherStep ?'mb-10 pb-10' : ''">{{ title }}</h4>
-                    <generalAuth v-if="!voucherStep" class="pt-5" @userInfo="getUserInfo" @backToSite="closeModal" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
+                    <generalAuth v-if="!voucherStep" class="pt-5" backToSiteText="ورود به سایت" @userInfo="getUserInfo" @backToSite="goLoginPage" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
 
                     <div v-else>
                         <span class="t14 w400 mt-15 d-block text-grey-darken-3">کد تخفیف شما :</span>
@@ -115,6 +115,13 @@ export default {
             if(this.voucherStep === true){
                 window.location.reload();
             }
+        },
+
+        /**
+         * Go to login page
+         */
+        goLoginPage() {
+            this.$router.push('/login')
         },
 
         /**
