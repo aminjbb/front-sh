@@ -17,7 +17,7 @@
             <mobileSearchResult buttonType="icon" />
         </div>
     </header>
-    <mobileMenu />
+    <mobileMenu class="menu-plp" :class="{'has-banner': hasBanner }"/>
 </client-only>
 </template>
 
@@ -31,7 +31,7 @@ export default {
             isHidden: false,
             lastScrollTop: 0,
             hasBanner: false,
-            isBanner: true,
+            isBanner: false,
             isTop: false,
         };
     },
@@ -67,25 +67,29 @@ export default {
          */
         handleScroll() {
             let currentScrollTop = window.scrollY;
+            const menu = document.getElementById('menu--mobile');
 
             if (this.isBanner) {
                 if (window.scrollY > 112) {
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
-
-                    const menu = document.getElementById('menu--mobile');
+                    menu.style.top = '';
+                    menu.style.height = '';
+                    
                     if (menu) {
                         if (currentScrollTop > this.lastScrollTop) {
                             this.isHidden = true;
                             this.isFixed = false;
 
                             menu.classList.add('change-height');
+                            menu.style.top = 0;
                         } else {
                             this.isFixed = true;
                             this.isHidden = false;
 
                             menu.classList.remove('change-height');
+                            menu.style.top = '48px';
                         }
                     }
                     this.lastScrollTop = currentScrollTop;
@@ -93,13 +97,16 @@ export default {
                 if (window.scrollY <= 112) {
                     this.isFixed = false;
                     this.isHidden = false;
+                    menu.style.top = `${112 - window.scrollY}px`;
+                    menu.style.height = `calc(100% - ${168 - window.scrollY}px)`;
                 }
             } else {
                 if (window.scrollY > 48) {
                     this.isHidden = true;
                     this.isFixed = false;
+                    menu.style.top = '';
+                    menu.style.height = '';
 
-                    const menu = document.getElementById('menu--mobile');
                     if (menu) {
                         if (currentScrollTop > this.lastScrollTop) {
                             this.isHidden = true;
@@ -118,6 +125,8 @@ export default {
                 if (window.scrollY <= 48) {
                     this.isFixed = false;
                     this.isHidden = false;
+                    menu.style.top = `${48 - window.scrollY}px`;
+                    menu.style.height = `calc(100% - ${104 - window.scrollY}px)`;
                 }
             }
         },
@@ -296,7 +305,8 @@ $parent: 'header';
     transition: opacity 0.3s ease-in-out;
     opacity: 1;
     width: 100% !important;
-    z-index: 10;
+    z-index: 11;
+
     background: #fff;
     overflow: hidden;
     position: relative;
