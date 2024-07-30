@@ -9,7 +9,7 @@ $parent: 'menu';
         height: calc(100vh - 174px);
         width: 100%;
         position: fixed;
-        top: 0;
+        top: 118px;
         right: -100%;
         background-color: #fafafa !important;
         z-index: 10;
@@ -18,12 +18,6 @@ $parent: 'menu';
         &.change-height {
             height: calc(100vh - 56px);
             top: 0;
-            transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
-        }
-
-        &.change-height2 {
-            height: calc(100vh - 56px);
-            top:0 ;
             transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
         }
 
@@ -46,6 +40,7 @@ $parent: 'menu';
         &.menu-plp{
             top: 48px;
             height: calc(100vh - 104px);
+            
             &.has-banner{
                 top: 112px;
                 height: calc(100vh - 168px);
