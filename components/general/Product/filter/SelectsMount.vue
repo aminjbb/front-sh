@@ -5,7 +5,7 @@
     <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
             <div class="d-flex justify-space-between align-center mb-1">
-                <v-checkbox v-model="itemsModel" @change="selectItems()" hide-details :value="item.value">
+                <v-checkbox v-model="itemsModel" @change="selectItems()" hide-details :value="item.value" color="primary">
                     <template v-slot:label>
                         <div class="d-flex align-center justify-center">
                             <span class="number-font t12 fw700">

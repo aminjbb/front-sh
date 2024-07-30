@@ -10,6 +10,28 @@
         <generalBreadcrumb :items="breadcrumbList"/>
   
         <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>
+
+        <template v-if="screenType === 'desktop'">
+          <client-only>
+            <div class="v-product__filter d-flex pt-1 align-center justify-space-between mt-7 pb-1">
+              <nav class="d-flex align-center flex-grow-1">
+                <div class="pl-4">
+                  <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
+                  <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
+                </div>
+
+                <ul class="v-product__filter__items d-flex align-center">
+                  <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
+                  <li class="t14 w400  px-4"  :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                </ul>
+              </nav>
+            </div>
+          </client-only>
+        </template>
+
         <v-row class="mt-5">
           <v-col cols="12" md="3" class="filter-bg-mobile">
             <client-only>
@@ -36,28 +58,9 @@
               </template>
             </client-only>
           </v-col>
+
           <v-col cols="12" md="9" class="main-col">
-            <template v-if="screenType === 'desktop'">
-              <client-only>
-                <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
-                  <nav class="d-flex align-center flex-grow-1">
-                    <div class="pl-4">
-                      <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
-                      <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
-                    </div>
-    
-                    <ul class="v-product__filter__items d-flex align-center">
-                      <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
-                      <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
-                      <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                      <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
-                      <li class="t14 w400  px-4"  :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
-                    </ul>
-                  </nav>
-                </div>
-              </client-only>
-            </template>
-            <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-8' : ''">
+            <div class="v-product__contents" >
               <v-row v-if="productListData?.length" class="ma-0">
                 <v-col
                     cols="6"
@@ -379,8 +382,6 @@
         }
   
       },
-  
-  
   
       /**
        * Params generator
