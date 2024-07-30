@@ -10,7 +10,7 @@
         class="mb-2 filter-sidebar__card__search"
         v-model="searchItem" />
 
-    <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
+    <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems && filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
             <div class="d-flex justify-space-between align-center mb-1">
                 <v-checkbox
@@ -18,12 +18,13 @@
                     :label="item.label ? item.label : item.value"
                     @change="selectItems()"
                     hide-details
+                    color="primary"
                     :value="item.id" />
 
-                <span v-if="item.name && !showEnName && param !== 'colors'" class="t14 w500 text-grey-lighten-1">{{item.name}}</span>
+                <span v-if="item?.name && !showEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1">{{item.name}}</span>
 
                 <template v-else-if="param === 'colors'">
-                    <span class="filter-sidebar__card__color" :style="{ backgroundColor: item.color.value }" :class="item.color.value === '#ffffff' || item.color.value === '#FF00FF00' ? 'border' : '' "></span>
+                    <span class="filter-sidebar__card__color" :style="{ backgroundColor: item?.color?.value }" :class="item?.color?.value === '#ffffff' || item?.color?.value === '#FF00FF00' ? 'border' : '' "></span>
                 </template>
             </div>
         </template>

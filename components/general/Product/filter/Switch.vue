@@ -1,7 +1,7 @@
 <template>
 <div class="filter-sidebar__card filter-sidebar__card--status" :class="screenType === 'desktop' ? 'my-2' : 'm-0'">
     <div class="d-flex justify-space-between align-center">
-        <span :class="screenType === 'desktop' ? 't15 w400 text-grey-darken-2' : 't12 w700 color-3c'">{{ title }}</span>
+        <span :class="screenType === 'desktop' ? 't12 w700 color-3c' : 't12 w700 color-3c'">{{ title }}</span>
 
         <v-switch v-model="availableItems" color="primary" hide-details @change="changeStatus()" />
     </div>

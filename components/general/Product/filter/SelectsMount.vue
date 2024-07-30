@@ -1,27 +1,23 @@
 <template>
 <div class="filter-sidebar__card__box">
-    <v-text-field density="compact" variant="outlined" :placeholder="`جستجو ${title}`" hide-details height="40px" prepend-inner-icon="mdi-magnify" class="mb-2 filter-sidebar__card__search" v-model="searchItem" />
+    <v-text-field v-if="isFilter" density="compact" variant="outlined" :placeholder="`جستجو ${title}`" hide-details height="40px" prepend-inner-icon="mdi-magnify" class="mb-2 filter-sidebar__card__search" v-model="searchItem" />
 
     <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
             <div class="d-flex justify-space-between align-center mb-1">
-                <v-checkbox v-model="itemsModel" @change="selectItems()" hide-details :value="item.value">
-                    <template v-slot:label>
-                        <div class="d-flex align-center justify-center">
+              <v-radio-group v-model="itemsModel"  @change="selectItems()">
+                <v-radio hide-details :value="item" color="primary">
+                  <template v-slot:label>
+                    <div class="d-flex align-center justify-center">
                             <span class="number-font t12 fw700">
-                                از
-                                <template>
-                                    {{splitChar(Number(String(item.key).slice(0, -1)))}}
-                                </template>
-                                تا
-                                <template>
-                                    {{splitChar(Number(String(item.key).slice(0, -1)))}}
-                                </template>
+                             {{ item.label }}
                             </span>
-                            <svgToman />
-                        </div>
-                    </template>
-                </v-checkbox>
+                      <svgToman />
+                    </div>
+                  </template>
+                </v-radio>
+              </v-radio-group>
+
             </div>
         </template>
     </div>
@@ -32,12 +28,16 @@
 export default {
     data() {
         return {
-            itemsModel: [],
+            itemsModel: null,
             searchItem: null,
         }
     },
 
     props: {
+        /**
+         * isFilter
+         */
+        isFilter: Boolean,
         /**
          * Title
          */
@@ -77,21 +77,32 @@ export default {
          */
         filteredItems() {
             if (this.searchItem == null || this.searchItem == '') {
-
+              if(this.param == 'site_price'){
                 return this.items.sort((a, b) => {
-                    if (a.name) a.name.localeCompare(b.name)
-                    else a.value.localeCompare(b.value)
+                  if (a.label) a.label.localeCompare(b.label)
+                  else a.to.localeCompare(b.to)
                 });
+
+              }
+              else {
+                return this.items.sort((a, b) => {
+                  if (a.name) a.name.localeCompare(b.name)
+                  else a.value.localeCompare(b.value)
+                });
+              }
+
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
                 if (this.param == 'brands') {
                     return this.items
-                        .sort((a, b) => a.label.localeCompare(b.label))
+                        .sort((a, b) => a.to.localeCompare(b.to))
                         .filter(
                             (brand) =>
-                            brand.label.toLowerCase().includes(lowerCaseSearch)
+                            brand.to.toLowerCase().includes(lowerCaseSearch)
                         );
-                } else {
+                }
+
+                else {
                     return this.items
                         .sort((a, b) => a.value.localeCompare(b.value))
                         .filter(
@@ -117,6 +128,7 @@ export default {
          * Emit selected items to parent
          */
         selectItems() {
+
             const obj = {
                 param: this.param,
                 name: this.name,

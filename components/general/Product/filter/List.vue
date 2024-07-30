@@ -5,7 +5,7 @@
             v-for="(value, index) in items"
             :key="`cat${index}`"
             @click="chooseItem(value.slug)"
-            class="t14 w400 text-grey pa-1 mb-1">
+            class="t12 w700 text-grey pa-1 mb-1">
             {{value.label}}
         </li>
     </ul>

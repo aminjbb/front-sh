@@ -30,7 +30,7 @@
                             </header>
 
                             <template v-if="filter.type === 'select'">
-                                <!--<generalProductFilterList :items="filter.data" :clear="clearAll" :name="filter.name" :param="filter.param" @listItems="listFiltersModalEmit" />-->                                
+                                <!--<generalProductFilterList :items="filter.data" :clear="clearAll" :name="filter.name" :param="filter.param" @listItems="listFiltersModalEmit" />-->
                                 <generalProductFilterSelects :showEnName="filter.param === 'categories' ? true : false" :items="filter.data" :clear="clearAll" :title="filter.name" :name="filter.name" :param="filter.param" @selectItems="selectFiltersModalEmit" />
                             </template>
 
@@ -50,19 +50,11 @@
                                         <v-icon icon="mdi-chevron-down" color="grey" />
                                     </header>
 
-                                    <div class="filter-sidebar__card__box">
-                                        <div class="d-flex align-center justify-space-between">
-                                            <span class="t12 w700 ml-5">حداقل</span>
-
-                                            <v-autocomplete hide-details density="compact" variant="outlined" placeholder="مثلا 10,000" :items="amounts" item-title="label" item-value="value" suffix="تومان" @keydown.enter="setAmount(filter.param)" v-model="amount.min" height="40px" class="mb-3 filter-sidebar__card__search" />
-                                        </div>
-
-                                        <div class="d-flex align-center justify-space-between">
-                                            <span class="t12 w700 ml-5">حداکثر</span>
-
-                                            <v-autocomplete hide-details density="compact" variant="outlined" placeholder="مثلا 10,000" :items="amounts" item-title="label" item-value="value" suffix="تومان" @keydown.enter="setAmount(filter.param)" v-model="amount.max" height="40px" class="mb-3 filter-sidebar__card__search" />
-                                        </div>
-                                    </div>
+                                  <div>
+                                    <generalProductFilterSelectsMount @selectItems="setAmount" :isFilter="filter?.is_searchable" :items="filter?.data"  :title="filter.name"
+                                                                      :param="filter.param"
+                                                                      :name="filter.name"/>
+                                  </div>
                                 </div>
                             </template>
                         </div>
@@ -141,7 +133,7 @@ export default {
     methods: {
         /**
          * Toggle card box
-         * @param {*} index 
+         * @param {*} index
          */
         slideToggleCard(id) {
             const specificElement = document.getElementById(`filter-sidebar__card--${id}`);
@@ -151,7 +143,7 @@ export default {
 
         /**
          * List type filters
-         * @param {*} arr 
+         * @param {*} arr
          */
         listFiltersModalEmit(arr) {
             this.$emit('listFiltersModal', arr);
@@ -159,7 +151,7 @@ export default {
 
         /**
          * Select type filters
-         * @param {array} Arr 
+         * @param {array} Arr
          */
         selectFiltersModalEmit(arr) {
             this.$emit('selectFiltersModal', arr);
@@ -167,7 +159,7 @@ export default {
 
         /**
          * switch type filters
-         * @param {array} Arr 
+         * @param {array} Arr
          */
         switchFiltersModalEmit(arr) {
             this.$emit('switchFiltersModal', arr);
@@ -176,12 +168,12 @@ export default {
         /**
          * Show available Items
          */
-        setAmount(param) {
-            const form = {
-                param: param,
-                amount: this.amount
-            }
-            this.$emit('setAmount', form);
+        setAmount(field) {
+          const form = {
+            param: field.param,
+            amount: field.values
+          };
+          this.$emit('setAmount', form);
         },
 
         /**
