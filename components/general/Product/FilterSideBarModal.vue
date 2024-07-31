@@ -10,7 +10,7 @@
         </span>
     </div>
 
-    <v-bottom-sheet v-model="sheet" fullscreen close-on-back>
+    <v-bottom-sheet v-model="sheet" fullscreen>
         <div class="filter-sheet bg-white">
             <div class="close-modal cur-p" @click="closeSheet()">
                 <v-icon color="#9e9e9e" size="small">mdi-close</v-icon>
@@ -30,7 +30,6 @@
                             </header>
 
                             <template v-if="filter.type === 'select'">
-                                <!--<generalProductFilterList :items="filter.data" :clear="clearAll" :name="filter.name" :param="filter.param" @listItems="listFiltersModalEmit" />-->
                                 <generalProductFilterSelects :showEnName="filter.param === 'categories' ? true : false" :items="filter.data" :clear="clearAll" :title="filter.name" :name="filter.name" :param="filter.param" @selectItems="selectFiltersModalEmit" />
                             </template>
 
@@ -44,22 +43,20 @@
 
                             <template v-else-if="filter.type === 'period'">
                                 <div class="filter-sidebar__card mt-3" :id="`filter-sidebar__card--${filterList.length}`">
-                                    <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-5" @click="slideToggleCard(filterList.length)">
+                                    <header class="d-flex align-center justify-space-between filter-sidebar__card__header mb-4 mt-4" @click="slideToggleCard(filterList.length)">
                                         <span class="t12 w700">محدوده قیمت</span>
 
                                         <v-icon icon="mdi-chevron-down" color="grey" />
                                     </header>
 
-                                  <div>
-                                    <generalProductFilterSelectsMount @selectItems="setAmount" :isFilter="filter?.is_searchable" :items="filter?.data"  :title="filter.name"
-                                                                      :param="filter.param"
-                                                                      :name="filter.name"/>
-                                  </div>
+                                    <div>
+                                        <generalProductFilterSelectsMount @selectItems="setAmount" :isFilter="filter?.is_searchable" :items="filter?.data" :title="filter.name" :param="filter.param" :name="filter.name" />
+                                    </div>
                                 </div>
                             </template>
                         </div>
 
-                        <v-divider color="grey" />
+                        <v-divider v-if="index < (filterList.length - 1)" color="grey" />
                     </template>
                 </div>
 
@@ -169,11 +166,11 @@ export default {
          * Show available Items
          */
         setAmount(field) {
-          const form = {
-            param: field.param,
-            amount: field.values
-          };
-          this.$emit('setAmount', form);
+            const form = {
+                param: field.param,
+                amount: field.values
+            };
+            this.$emit('setAmount', form);
         },
 
         /**

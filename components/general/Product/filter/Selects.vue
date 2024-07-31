@@ -21,10 +21,10 @@
                     color="primary"
                     :value="item.id" />
 
-                <span v-if="item?.name && !showEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1">{{item.name}}</span>
+                <span v-if="item?.name && !showEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1 text-left ltr">{{item.name}}</span>
 
                 <template v-else-if="param === 'colors'">
-                    <span class="filter-sidebar__card__color" :style="{ backgroundColor: item?.color?.value }" :class="item?.color?.value === '#ffffff' || item?.color?.value === '#FF00FF00' ? 'border' : '' "></span>
+                    <span class="filter-sidebar__card__color" :style="{ backgroundColor: item?.value }" :class="item?.value === '#ffffff' || item?.value === '#FF00FF00' ? 'border' : '' "></span>
                 </template>
             </div>
         </template>
@@ -88,20 +88,20 @@ export default {
                 });
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
-                if (this.param == 'brands'){
+                if (this.param == 'brands' || this.param == 'colors'){
                   return this.items
                       .sort((a, b) => a.label.localeCompare(b.label))
                       .filter(
-                          (brand) =>
-                              brand.label.toLowerCase().includes(lowerCaseSearch)
+                          (item) =>
+                              item.label.toLowerCase().includes(lowerCaseSearch)
                       );
                 }
                 else{
                   return this.items
                       .sort((a, b) => a.value.localeCompare(b.value))
                       .filter(
-                          (brand) =>
-                              brand.value.toLowerCase().includes(lowerCaseSearch)
+                          (item) =>
+                              item.value.toLowerCase().includes(lowerCaseSearch)
                       );
                 }
 

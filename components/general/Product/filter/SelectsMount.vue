@@ -5,19 +5,17 @@
     <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
             <div class="d-flex justify-space-between align-center mb-1">
-              <v-radio-group v-model="itemsModel"  @change="selectItems()">
-                <v-radio hide-details :value="item" color="primary">
-                  <template v-slot:label>
-                    <div class="d-flex align-center justify-center">
-                            <span class="number-font t12 fw700">
-                             {{ item.label }}
-                            </span>
-                      <svgToman />
-                    </div>
-                  </template>
-                </v-radio>
-              </v-radio-group>
-
+                <v-radio-group v-model="itemsModel" @change="selectItems()">
+                    <v-radio hide-details :value="item" color="primary">
+                        <template v-slot:label>
+                            <div class="d-flex align-center justify-center">
+                                <span class="number-font t12 fw700">
+                                    {{ item.label }}
+                                </span>
+                            </div>
+                        </template>
+                    </v-radio>
+                </v-radio-group>
             </div>
         </template>
     </div>
@@ -77,19 +75,18 @@ export default {
          */
         filteredItems() {
             if (this.searchItem == null || this.searchItem == '') {
-              if(this.param == 'site_price'){
-                return this.items.sort((a, b) => {
-                  if (a.label) a.label.localeCompare(b.label)
-                  else a.to.localeCompare(b.to)
-                });
+                if (this.param == 'site_price') {
+                    return this.items.sort((a, b) => {
+                        if (a.label) a.label.localeCompare(b.label)
+                        else a.to.localeCompare(b.to)
+                    });
 
-              }
-              else {
-                return this.items.sort((a, b) => {
-                  if (a.name) a.name.localeCompare(b.name)
-                  else a.value.localeCompare(b.value)
-                });
-              }
+                } else {
+                    return this.items.sort((a, b) => {
+                        if (a.name) a.name.localeCompare(b.name)
+                        else a.value.localeCompare(b.value)
+                    });
+                }
 
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
@@ -100,9 +97,7 @@ export default {
                             (brand) =>
                             brand.to.toLowerCase().includes(lowerCaseSearch)
                         );
-                }
-
-                else {
+                } else {
                     return this.items
                         .sort((a, b) => a.value.localeCompare(b.value))
                         .filter(
