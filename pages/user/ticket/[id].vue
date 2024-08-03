@@ -120,6 +120,7 @@ import axios from "axios";
 export default {
     data() {
         return {
+          valid:true,
             ticket: null,
             loading: false,
             showAnswerBox: false,
@@ -127,7 +128,7 @@ export default {
             form: {
                 content: null,
             },
-            images: null,
+            images: [],
         }
     },
 
