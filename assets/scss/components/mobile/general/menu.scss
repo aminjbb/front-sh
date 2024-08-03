@@ -6,18 +6,14 @@ $parent: 'menu';
 
 .#{$parent} {
     &--mobile {
-        height: calc(100vh - 56px);
+        height: calc(100vh - 174px);
         width: 100%;
         position: fixed;
-        top: 0;
+        top: 118px;
         right: -100%;
         background-color: #fafafa !important;
         z-index: 10;
         transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
-
-        a{
-            text-decoration: none !important;
-        }
 
         &.change-height {
             height: calc(100vh - 56px);
@@ -25,9 +21,40 @@ $parent: 'menu';
             transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
         }
 
+        &.change-height2 {
+            height: calc(100vh - 126px);
+            top:70px;
+            transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
+        }
+
         &.open-menu {
             right: 0;
             transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
+        }
+
+        &.has-banner{
+            top: 182px;
+            height: calc(100vh - 238px);
+        }
+
+        &.menu-plp{
+            top: 48px;
+            height: calc(100vh - 104px);
+            
+            &.has-banner{
+                top: 112px;
+                height: calc(100vh - 168px);
+            }
+
+            &.change-height {
+                height: calc(100vh - 56px);
+                top: 0;
+                transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
+            }
+        }
+
+        a{
+            text-decoration: none !important;
         }
 
         .menu__name{
