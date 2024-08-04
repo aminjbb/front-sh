@@ -165,6 +165,9 @@ $parent: 'header';
 .#{$parent} {
     &--mobile {
         box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+        z-index: 11;
+        position: relative;
+        
         .#{$parent}__logo-row {
             height: 48px;
             padding: 12px 16px 0;
