@@ -459,21 +459,26 @@
         let brandParam = ''
         let paramQuery = ''
         let categoryQuery = ''
+        let productQuery = ''
         const colorsObject = values.filter(filterValue => filterValue.param == "colors")
         const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
         const brandObject = values.filter(filterValue => filterValue.param == "brands")
         const categoriesObject = values.filter(filterValue => filterValue.param == "categories")
+        const productsObject = values.filter(filterValue => filterValue.param == "products")
         attributeObject.forEach(element => {
-          param += `attributes[]=${element.value},`
+          param += `attributes[]=${element.value}&`
         })
         brandObject.forEach(element => {
-          brandParam += `brands[]=${element.value},`
+          brandParam += `brands[]=${element.value}&`
         })
         colorsObject.forEach(element => {
-          colorParam += `colors[]=${element.value},`
+          colorParam += `colors[]=${element.value}&`
         })
         categoriesObject.forEach(element => {
-          categoryQuery += `categories[]=${element.value},`
+          categoryQuery += `categories[]=${element.value}&`
+        })
+        productsObject.forEach(element => {
+          productQuery += `products[]=${element.value}&`
         })
   
         if (attributeObject.length) {
@@ -494,6 +499,11 @@
         }
         if (categoriesObject.length) {
           let finalParam = `${categoryQuery.substring(0, categoryQuery.length - 1)}`
+          if (!paramQuery) paramQuery += `?${finalParam}`
+          else paramQuery += `&${finalParam}`
+        }
+        if (productsObject.length) {
+          let finalParam = `${productQuery.substring(0, productQuery.length - 1)}`
           if (!paramQuery) paramQuery += `?${finalParam}`
           else paramQuery += `&${finalParam}`
         }

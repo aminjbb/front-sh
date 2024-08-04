@@ -192,6 +192,7 @@ export default {
 
     },
 
+
     /**
      * Filter by amount
      * @param {*} amount
@@ -200,15 +201,42 @@ export default {
       if (amount?.param === "site_price") {
         let site_price_to = ''
         let site_price_from = ''
-        if (amount.amount?.max) {
-          site_price_to = amount.amount?.max
+
+        if (amount?.amount?.from !== null) {
+          site_price_from = amount?.amount?.from
         }
-        if (amount.amount?.min) {
-          site_price_from = amount.amount?.min
+        if (amount?.amount?.to !== null) {
+          site_price_to = amount?.amount?.to
         }
 
-        await this.setMinAmount(amount)
-        await this.setMaxAmount(amount)
+        let query = this.$route.query;
+
+        if (site_price_from && !site_price_to){
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+            }
+          })
+        }
+        else if (!site_price_from && site_price_to ){
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_to: site_price_to
+            }
+          })
+        }
+        else if (site_price_from && site_price_to ){
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+              site_price_to: site_price_to
+            }
+          })
+        }
+
       }
     },
 
@@ -315,21 +343,26 @@ export default {
       let brandParam = ''
       let paramQuery = ''
       let categoryQuery = ''
+      let productQuery = ''
       const colorsObject = values.filter(filterValue => filterValue.param == "colors")
       const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
       const brandObject = values.filter(filterValue => filterValue.param == "brands")
       const categoriesObject = values.filter(filterValue => filterValue.param == "categories")
+      const productsObject = values.filter(filterValue => filterValue.param == "products")
       attributeObject.forEach(element => {
-        param += `attributes[]=${element.value},`
+        param += `attributes[]=${element.value}&`
       })
       brandObject.forEach(element => {
-        brandParam += `brands[]=${element.value},`
+        brandParam += `brands[]=${element.value}&`
       })
       colorsObject.forEach(element => {
-        colorParam += `colors[]=${element.value},`
+        colorParam += `colors[]=${element.value}&`
       })
       categoriesObject.forEach(element => {
-        categoryQuery += `categories[]=${element.value},`
+        categoryQuery += `categories[]=${element.value}&`
+      })
+      productsObject.forEach(element => {
+        productQuery += `products[]=${element.value}&`
       })
 
       if (attributeObject.length) {
@@ -350,6 +383,11 @@ export default {
       }
       if (categoriesObject.length) {
         let finalParam = `${categoryQuery.substring(0, categoryQuery.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (productsObject.length) {
+        let finalParam = `${productQuery.substring(0, productQuery.length - 1)}`
         if (!paramQuery) paramQuery += `?${finalParam}`
         else paramQuery += `&${finalParam}`
       }

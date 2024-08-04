@@ -62,6 +62,11 @@ export default {
         items: Array,
 
         /**
+         * index of filter
+         */
+        index: Number,
+
+        /**
          * Clear modal if 'clear' be true
          */
         clear: {
@@ -83,7 +88,7 @@ export default {
             if (this.searchItem == null || this.searchItem == '') {
 
                 return this.items.sort((a, b) =>{
-                 if (a.name)  a.name.localeCompare(b.name)
+                 if (a.label)  a.label.localeCompare(b.label)
                   else  a.value.localeCompare(b.value)
                 });
             } else {
@@ -127,6 +132,9 @@ export default {
                 name: this.name,
                 values: this.itemsModel
             }
+          console.log(obj.values.length)
+            if (obj.values.length) this.$emit('selectedFilter', this.index);
+            else  this.$emit('removeSelectedFilter', this.index);
 
             this.$emit('selectItems', obj);
         },
@@ -140,25 +148,60 @@ export default {
     },
 
   mounted() {
-      if(this.param === 'brands'){
-        if(this.$route.query.brands){
-          let selectedBrands = []
-          const FilteredBrands = JSON.parse(this.$route.query.brands)
-          FilteredBrands.forEach(brand=>{
-            const findBrand =  this.items.find(searchBrand=>searchBrand.id === brand)
-            if (findBrand) this.itemsModel.push(findBrand.id)
-          })
+      try {
+        if(this.param === 'brands'){
+          if(this.$route.query[`brands[]`].length){
+            const FilteredBrands = this.$route.query[`brands[]`]
+            FilteredBrands.forEach(brand=>{
+              const findBrand =  this.items.find(searchBrand=>searchBrand.id == brand)
+              if (findBrand) {
+                this.itemsModel.push(findBrand.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+        }
+        else if (this.param === 'attributes'){
+          if(this.$route.query[`attributes[]`].length){
+            const FilteredAttribute = this.$route.query[`attributes[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+        }
+        else if (this.param === 'products'){
+          if(this.$route.query[`products[]`].length){
+            const FilteredAttribute = this.$route.query[`products[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+        }
+        else if (this.param === 'categories'){
+          if(this.$route.query[`categories[]`].length){
+            const FilteredAttribute = this.$route.query[`categories[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
         }
       }
-      else if (this.param === 'attributes'){
-        if(this.$route.query.attribute){
-          const FilteredAttribute = JSON.parse(this.$route.query.attribute)
-          FilteredAttribute.forEach(attribute=>{
-            const findAttribute =  this.items.find(findAttribute=>findAttribute.id === attribute)
-            if (findAttribute) this.itemsModel.push(findAttribute.id)
-          })
-        }
+      catch (e) {
+
       }
+
   }
 
 }

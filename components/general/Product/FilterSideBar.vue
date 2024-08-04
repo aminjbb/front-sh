@@ -16,26 +16,35 @@
     <template v-for="(filter, index) in filterList" :key="`filter${index}`">
         <div class="filter-sidebar__card" :id="`filter-sidebar__card--${index}`">
             <header v-if="filter.type !== 'switch'" class="d-flex align-center justify-space-between filter-sidebar__card__header py-4" @click="slideToggleCard(index)">
-                <span class="t12 w700 color-3c">{{ filter.name }}</span>
+                <span class="t12 w700 color-3c">{{ filter.label }}</span>
 
-                <v-icon icon="mdi-chevron-down" color="grey" />
+                <div class="d-flex align-center">
+<!--                  <v-icon size="5" icon="mdi-checkbox-blank-circle" color="success" />-->
+                  <v-badge
+                      v-if="returnShowBadgeFilter(index)"
+                      color="primary"
+                      dot
+                      class="ml-2 mb-2">
+                  </v-badge>
+                  <v-icon icon="mdi-chevron-down" color="grey" />
+                </div>
             </header>
 
             <template v-if="filter.type === 'select'">
-                <generalProductFilterSelects :showEnName="filter.param === 'categories' ? true : false" :items="filter.data" :clear="clearAll" :title="filter.name" :name="filter.name" :param="filter.param" @selectItems="selectFiltersModalEmit" />
+                <generalProductFilterSelects @selectedFilter="addSelectedFilterForShowBadge" :index="index" :showEnName="filter.param === 'categories' ? true : false" :items="filter.data" :clear="clearAll" :title="filter.label" :name="filter.label" :param="filter.param" @selectItems="selectFiltersModalEmit" />
             </template>
 
             <template v-else-if="filter.type === 'switch'">
-                <generalProductFilterSwitch style="margin: 0 !important;" :title="filter.name" :param="filter.param" :name="filter.name" :clear="clearAll" :switchName="filter.value" @changeStatus="selectFiltersModalEmit" />
+                <generalProductFilterSwitch :index="index" style="margin: 0 !important;" :title="filter.label" :param="filter.param" :name="filter.label" :clear="clearAll" :switchName="filter.value" @changeStatus="selectFiltersModalEmit" />
             </template>
 
             <template v-else-if="filter.type === 'checkbox'">
-                <generalProductFilterSelects :items="filter.data" :title="filter.name" :param="filter.param" :name="filter.name" :clear="clearAll" @selectItems="selectFiltersModalEmit" />
+                <generalProductFilterSelects @removeSelectedFilter="removeSelectedFilterForShowBadge"  @selectedFilter="addSelectedFilterForShowBadge" :index="index" :items="filter.data" :title="filter.label" :param="filter.param" :name="filter.label" :clear="clearAll" @selectItems="selectFiltersModalEmit" />
             </template>
 
             <template v-else-if="filter.type === 'period'">
                 <div>
-                    <generalProductFilterSelectsMount @selectItems="updateAmount" :isFilter="filter.is_searchable" :items="filter?.data" :title="filter.name" :param="filter.param" :name="filter.name" />
+                    <generalProductFilterSelectsMount :index="index" @selectItems="updateAmount" :isFilter="filter.is_searchable" :items="filter?.data" :title="filter.label" :param="filter.param" :name="filter.label" />
                 </div>
             </template>
         </div>
@@ -56,6 +65,7 @@ export default {
                 max: null,
                 min: null
             },
+            selectedFilters:new Set([]),
             amounts: [{
                     label: '10 هزار',
                     value: '100000'
@@ -101,7 +111,7 @@ export default {
 
         /**
          * Toggle card box
-         * @param {*} index
+         * @param {*} id
          */
         slideToggleCard(id) {
             const sidebarTab = this.$refs['refSidebar'];
@@ -125,6 +135,31 @@ export default {
             const specificElement = document.getElementById(`filter-sidebar__card--${id}`);
             specificElement.querySelector('.v-icon.mdi-chevron-down').classList.toggle('mdi-chevron-up')
             specificElement.querySelector('.filter-sidebar__card__box').classList.toggle('open-card');
+        },
+
+        /**
+         * for show badge
+         * @param {*} index
+         */
+        addSelectedFilterForShowBadge(index) {
+          this.selectedFilters.add(index)
+        },
+        /**
+         * for show badge
+         * @param {*} index
+         */
+        removeSelectedFilterForShowBadge(index) {
+          this.selectedFilters.delete(index)
+        },
+
+        /**
+         * for show badge
+         * @param {*} index
+         */
+        returnShowBadgeFilter(index){
+          const showBadgeIndex = this.selectedFilters.has(index)
+          if (showBadgeIndex) return true
+          return false
         },
 
         /**
