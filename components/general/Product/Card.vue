@@ -1,9 +1,5 @@
 <template>
 <div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
-    <!-- <div v-if="index && showIndex" class="product-card__index">
-        <span class="t16">#{{index}}</span>
-    </div> -->
-
     <div v-if="deleteIcon" class="product-card__delete">
         <generalModalsDelete
             ref="refRemoveProduct"
@@ -49,8 +45,8 @@
     </div>
 
     
-    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w400 product-card__title card-title">
-        <a class="t12 l21 w400 text-right" :href="`/sku/${content.slug}`">
+    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
+        <a class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}
         </a>
     </h3>

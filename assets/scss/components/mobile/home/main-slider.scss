@@ -19,9 +19,16 @@ $parent: 'main-slider';
             }
         }
 
+        .swiper{
+            padding-bottom: 30px;
+        }
+
         .swiper-pagination-bullet {
+            background-color: #EFA8CE !important;
+            opacity: 1 !important;
+
             &.swiper-pagination-bullet-active {
-                background-color: #424242 !important;
+                background-color: #D72685 !important;
             }
         }
     }
