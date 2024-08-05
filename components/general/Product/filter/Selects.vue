@@ -116,7 +116,7 @@ export default {
 
     watch: {
         clear(newValue) {
-            if (newValue) {
+          if (newValue) {
                 this.clearModal();
             }
         },
@@ -132,7 +132,6 @@ export default {
                 name: this.name,
                 values: this.itemsModel
             }
-          console.log(obj.values.length)
             if (obj.values.length) this.$emit('selectedFilter', this.index);
             else  this.$emit('removeSelectedFilter', this.index);
 
@@ -143,7 +142,9 @@ export default {
          * Clear modal
          */
         clearModal() {
-            this.searchItem = [];
+            this.itemsModel = [];
+          this.$emit('changeClearToFalse');
+
         }
     },
 
