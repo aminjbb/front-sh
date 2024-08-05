@@ -151,7 +151,7 @@ export default {
   mounted() {
       try {
         if(this.param === 'brands'){
-          if(this.$route.query[`brands[]`].length){
+          if(typeof this.$route.query[`brands[]`]  ==='object'){
             const FilteredBrands = this.$route.query[`brands[]`]
             FilteredBrands.forEach(brand=>{
               const findBrand =  this.items.find(searchBrand=>searchBrand.id == brand)
@@ -161,9 +161,16 @@ export default {
               }
             })
           }
+          else if(typeof this.$route.query[`brands[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`brands[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
         }
         else if (this.param === 'attributes'){
-          if(this.$route.query[`attributes[]`].length){
+          if(typeof this.$route.query[`attributes[]`] ==='object'){
             const FilteredAttribute = this.$route.query[`attributes[]`]
             FilteredAttribute.forEach(attribute=>{
               const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
@@ -173,9 +180,16 @@ export default {
               }
             })
           }
+          else if(typeof this.$route.query[`attributes[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`attributes[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
         }
         else if (this.param === 'products'){
-          if(this.$route.query[`products[]`].length){
+          if(typeofthis.$route.query[`products[]`]==='object' ){
             const FilteredAttribute = this.$route.query[`products[]`]
             FilteredAttribute.forEach(attribute=>{
               const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
@@ -185,9 +199,16 @@ export default {
               }
             })
           }
+          else if(typeof this.$route.query[`products[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`products[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
         }
         else if (this.param === 'categories'){
-          if(this.$route.query[`categories[]`].length){
+          if(typeof this.$route.query[`categories[]`] ==='object'){
             const FilteredAttribute = this.$route.query[`categories[]`]
             FilteredAttribute.forEach(attribute=>{
               const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
@@ -197,10 +218,17 @@ export default {
               }
             })
           }
+          else if(typeof this.$route.query[`categories[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`categories[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
         }
       }
       catch (e) {
-
+        // console.log(e)
       }
 
   }

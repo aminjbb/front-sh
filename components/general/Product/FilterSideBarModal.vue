@@ -24,21 +24,21 @@
 
                         <div class="filter-sidebar__card filter-sidebar__card--mobile" :id="`filter-sidebar__card--${index}`">
                             <header v-if="filter.type !== 'switch' && filter.type !== 'period' " class="d-flex align-center justify-space-between filter-sidebar__card__header my-4" @click="slideToggleCard(index)">
-                                <span class="t12 w700">{{filter.name}}</span>
+                                <span class="t12 w700">{{filter.label}}</span>
 
                                 <v-icon icon="mdi-chevron-down" color="grey" />
                             </header>
 
                             <template v-if="filter.type === 'select'">
-                                <generalProductFilterSelects :showEnName="filter.param === 'categories' ? true : false" :items="filter.data" :clear="clearAll" :title="filter.name" :name="filter.name" :param="filter.param" @selectItems="selectFiltersModalEmit" />
+                                <generalProductFilterSelects :showEnName="filter.param === 'categories' ? true : false" :items="filter.data" :clear="clearAll" :title="filter.label" :name="filter.label" :param="filter.param" @selectItems="selectFiltersModalEmit" />
                             </template>
 
                             <template v-else-if="filter.type === 'switch'">
-                                <generalProductFilterSwitch :title="filter.name" :clear="clearAll" :name="filter.name" :param="filter.param" :switchName="filter.value" />
+                                <generalProductFilterSwitch :title="filter.label" :clear="clearAll" :name="filter.label" :param="filter.param" :switchName="filter.value" />
                             </template>
 
                             <template v-else-if="filter.type === 'checkbox'">
-                                <generalProductFilterSelects :items="filter.data" :title="filter.name" :name="filter.name" :param="filter.param" :clear="clearAll" @selectItems="selectFiltersModalEmit" />
+                                <generalProductFilterSelects :items="filter.data" :title="filter.label" :name="filter.label" :param="filter.param" :clear="clearAll" @selectItems="selectFiltersModalEmit" />
                             </template>
 
                             <template v-else-if="filter.type === 'period'">
@@ -82,6 +82,7 @@ export default {
             sheet: false,
             selectedItem: null,
             availableItems: false,
+            clearAll:false,
             amount: {
                 max: null,
                 min: null
@@ -128,6 +129,14 @@ export default {
     },
 
     methods: {
+        /**
+         * Remove Filter For PLP Page
+         */
+        removeAllFilter() {
+          this.$router.push(`${this.$route.path}`)
+          this.clearAll = true
+          this.selectedFilters= new Set([])
+        },
         /**
          * Toggle card box
          * @param {*} index
