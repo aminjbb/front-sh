@@ -1,5 +1,5 @@
 <template>
-  <main class="v-home">
+  <main class="v-home" :style="screenType === 'mobile' ? 'padding-top: 30px !important' : ''">
     <h1 class="ov-h h-0">{{ title }}</h1>
     <div v-show="loading">
       <generalSkeletonHome :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
@@ -10,68 +10,68 @@
       <div v-if="screenType === 'desktop'">
         <desktopHomeMainSlider :items="responseDot(1)" />
         <v-container>
-          <mobileHomeSurprise class="mt-4" :content="responseDot(2)" />
+            <desktopHomeSurprise class="mt-4" :content="responseDot(2)" />
 
-          <desktopHomeCategoryList :items="responseDot(3)" />
+            <desktopHomeCategoryList :items="responseDot(3)" />
 
-          <desktopHomeBanner
-              :items="desktopBanner1"
-              col="6"
-              class="pt-3 mb-4" />
-          <MobileHomeSection5Slider :content="responseDot(5)" />
+            <desktopHomeBanner
+                :items="desktopBanner1"
+                col="6"
+                class="pt-3 mb-4" />
+            <MobileHomeSection5Slider :content="responseDot(5)" />
 
-          <generalTabSlider
-              :items="responseDot(6)"
-              class="tab-slider1 mb-8"
-              contentWidth="1080px"
-              title="پیشنهاد شاواز"
-              :componentProps="tabSlider1ComponentProps"
-              columnHeader />
+            <generalTabSlider
+                :items="responseDot(6)"
+                class="tab-slider1 mb-8"
+                contentWidth="1080px"
+                title="پیشنهاد شاواز"
+                :componentProps="tabSlider1ComponentProps"
+                columnHeader />
 
-          <mobileHomeBrands :items="responseDot(7)" />
+            <mobileHomeBrands :items="responseDot(7)" />
 
-          <desktopHomeBanner
-              class="mt-3"
-              :items="desktopBanner2"
-              col="3" />
+            <desktopHomeBanner
+                class="mt-3"
+                :items="desktopBanner2"
+                col="3" />
 
-          <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" />
+            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" />
 
-          <desktopHomeBanner
-              :title="titleSection10"
-              :items="desktopBanner3"
-              col="3" />
+            <desktopHomeBanner
+                :title="titleSection10"
+                :items="desktopBanner3"
+                col="3" />
 
-          <generalTabSlider
-              setRef="tab2"
-              :items="responseDot(11)"
-              class="tab-slider2 mb-8"
-              :title="titleSection11"
-              componentName="generalProductMinimalCard"
-              contentWidth="100%"
-              wrapContent
-              limit=6 />
+            <generalTabSlider
+                setRef="tab2"
+                :items="responseDot(11)"
+                class="tab-slider2 mb-8"
+                :title="titleSection11"
+                componentName="generalProductMinimalCard"
+                contentWidth="100%"
+                wrapContent
+                limit=6 />
 
-          <desktopHomeBanner :items="desktopBanner4" col="4" />
+            <desktopHomeBanner :items="desktopBanner4" col="4" />
 
-          <template v-if="homeBlog && homeBlog.length">
-            <header class="pa-3 pb-5">
-              <h2 class="t20 text-right text-grey-darken-2">
-                {{titleSection13 }}
-              </h2>
-            </header>
+            <template v-if="homeBlog && homeBlog.length">
+                <header class="pa-3 pb-5">
+                <h2 class="t20 text-right text-grey-darken-2">
+                    {{titleSection13 }}
+                </h2>
+                </header>
 
-            <v-row>
-              <v-col
-                  cols="12"
-                  md="3"
-                  sm="6"
-                  v-for="(item, index) in homeBlog"
-                  :key="`blogs-${index}`">
-                <mobileHomeBlogCard :content="item" />
-              </v-col>
-            </v-row>
-          </template>
+                <v-row>
+                <v-col
+                    cols="12"
+                    md="3"
+                    sm="6"
+                    v-for="(item, index) in homeBlog"
+                    :key="`blogs-${index}`">
+                    <mobileHomeBlogCard :content="item" />
+                </v-col>
+                </v-row>
+            </template>
         </v-container>
       </div>
 
@@ -80,9 +80,9 @@
         <mobileHomeMainSlider :items="responseDot(1)" />
 
         <v-container class="mobile-no-padd mt-4">
-          <mobileHomeSurprise :content="responseDot(2)" />
-
-          <mobileHomeCategoryList :items="responseDot(3)" />
+            <mobileHomeSurprise :content="responseDot(2)" />
+            
+            <mobileHomeCategoryList :items="responseDot(3)" class="px-5 mb-5" />
         </v-container>
 
         <v-container>
