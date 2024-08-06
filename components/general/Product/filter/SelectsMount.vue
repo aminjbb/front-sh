@@ -44,6 +44,11 @@ export default {
     title: String,
 
     /**
+     * index of filter
+     */
+    index: Number,
+
+    /**
      * Name of filter
      */
     name: String,
