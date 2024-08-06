@@ -3,7 +3,7 @@
     <div class="product-mobile-control d-flex justify-end align-center" @click="openModal()">
         <v-icon icon="mdi-sort-ascending" color="grey-darken-2" class="ml-2" />
 
-        <span class="text-primary t12 w700">
+        <span class=" t12 w700">
             <template v-if="sortModal && sortModal.label">{{ sortModal.label }}</template>
             <template v-else>جدیدترین</template>
         </span>

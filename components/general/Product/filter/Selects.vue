@@ -103,10 +103,10 @@ export default {
                 }
                 else{
                   return this.items
-                      .sort((a, b) => a.value.localeCompare(b.value))
+                      .sort((a, b) => a.label.localeCompare(b.label))
                       .filter(
                           (item) =>
-                              item.value.toLowerCase().includes(lowerCaseSearch)
+                              item.label.toLowerCase().includes(lowerCaseSearch)
                       );
                 }
 

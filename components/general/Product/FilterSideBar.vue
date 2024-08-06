@@ -56,7 +56,7 @@
           <div>
             <generalProductFilterSelectsMount :index="index" @selectItems="updateAmount"
                                               :isFilter="filter.is_searchable" :items="filter?.data"
-                                              :title="filter.label" :param="filter.param" :name="filter.label" @changeClearToFalse="changeClearToFalse"/>
+                                              :title="filter.label" @selectedFilter="addSelectedFilterForShowBadge" :clear="clearAll" :param="filter.param" :name="filter.label" @changeClearToFalse="changeClearToFalse"/>
           </div>
         </template>
       </div>
