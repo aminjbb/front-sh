@@ -40,6 +40,7 @@
                     :filterList="productFilterSecondaryData"
                     @listFiltersModal="listFiltersModal"
                     @selectFiltersModal="selectFiltersModal"
+                    @clearFilterQuery="clearFilterQuery"
                     @setAmount="selectByAmount"/>
               </template>
 
@@ -49,6 +50,7 @@
                       :filterLength ="selectedFilterLength"
                       class="ml-3"
                       :filterList="productFilterSecondaryData"
+                      @clearFilterQuery="clearFilterQuery"
                       @listFiltersModal="listFiltersModal"
                       @selectFiltersModal="selectFiltersModal"
                       @setAmount="selectByAmount"/>
@@ -279,6 +281,10 @@
     },
   
     methods: {
+
+      clearFilterQuery(){
+        this.filterQuery = []
+      },
       /**
        * Filter productList by list type items
        * @param {*} array
@@ -454,6 +460,7 @@
        * @param {*} values
        */
       createRoute(values) {
+        console.log(values)
         let param = ''
         let colorParam = ''
         let brandParam = ''

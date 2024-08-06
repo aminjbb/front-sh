@@ -33,30 +33,36 @@
         </header>
 
         <template v-if="filter.type === 'select'">
-          <generalProductFilterSelects @selectedFilter="addSelectedFilterForShowBadge" :index="index"
+          <generalProductFilterSelects @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                       @selectedFilter="addSelectedFilterForShowBadge" :index="index"
                                        :showEnName="filter.param === 'categories' ? true : false" :items="filter.data"
                                        :clear="clearAll" :title="filter.label" :name="filter.label"
-                                       :param="filter.param" @selectItems="selectFiltersModalEmit" @changeClearToFalse="changeClearToFalse"/>
+                                       :param="filter.param" @selectItems="selectFiltersModalEmit"
+                                       @changeClearToFalse="changeClearToFalse"/>
         </template>
 
         <template v-else-if="filter.type === 'switch'">
           <generalProductFilterSwitch :index="index" style="margin: 0 !important;" :title="filter.label"
                                       :param="filter.param" :name="filter.label" :clear="clearAll"
-                                      :switchName="filter.value" @changeStatus="selectFiltersModalEmit" @changeClearToFalse="changeClearToFalse"/>
+                                      :switchName="filter.value" @changeStatus="selectFiltersModalEmit"
+                                      @changeClearToFalse="changeClearToFalse"/>
         </template>
 
         <template v-else-if="filter.type === 'checkbox'">
           <generalProductFilterSelects @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                        @selectedFilter="addSelectedFilterForShowBadge" :index="index"
                                        :items="filter.data" :title="filter.label" :param="filter.param"
-                                       :name="filter.label" :clear="clearAll" @selectItems="selectFiltersModalEmit" @changeClearToFalse="changeClearToFalse"/>
+                                       :name="filter.label" :clear="clearAll" @selectItems="selectFiltersModalEmit"
+                                       @changeClearToFalse="changeClearToFalse"/>
         </template>
 
         <template v-else-if="filter.type === 'period'">
           <div>
             <generalProductFilterSelectsMount :index="index" @selectItems="updateAmount"
                                               :isFilter="filter.is_searchable" :items="filter?.data"
-                                              :title="filter.label" @selectedFilter="addSelectedFilterForShowBadge" :clear="clearAll" :param="filter.param" :name="filter.label" @changeClearToFalse="changeClearToFalse"/>
+                                              :title="filter.label" @selectedFilter="addSelectedFilterForShowBadge"
+                                              :clear="clearAll" :param="filter.param" :name="filter.label"
+                                              @changeClearToFalse="changeClearToFalse"/>
           </div>
         </template>
       </div>
@@ -215,7 +221,8 @@ export default {
     removeAllFilter() {
       this.$router.push(`${this.$route.path}`)
       this.clearAll = true
-      this.selectedFilters= new Set([])
+      this.selectedFilters = new Set([])
+      this.$emit('clearFilterQuery')
     },
 
     /**
