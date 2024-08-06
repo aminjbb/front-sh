@@ -34,6 +34,7 @@
               <generalProductFilterSideBar
                   :filterList="productFilterSecondaryData"
                   @listFiltersModal="listFiltersModal"
+                  @clearFilterQuery="clearFilterQuery"
                   @selectFiltersModal="selectFiltersModal"
                   @setAmount="selectByAmount" />
             </template>
@@ -44,6 +45,7 @@
                   class="ml-3"
                     :filterList="productFilterSecondaryData"
                     @listFiltersModal="listFiltersModal"
+                  @clearFilterQuery="clearFilterQuery"
                     @selectFiltersModal="selectFiltersModal"
                     @setAmount="selectByAmount" />
 
@@ -156,6 +158,9 @@ export default {
   },
 
   methods: {
+    clearFilterQuery(){
+      this.filterQuery = []
+    },
     /**
      * Filter productList by list type items
      * @param {*} array
