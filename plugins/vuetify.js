@@ -6,7 +6,7 @@ import * as directives from 'vuetify/directives'
 
 const myTheme = {
   colors: {
-    background: '#FFFFFF',
+    background: '#FAFAFA',
     surface: '#FFFFFF',
     primary: '#D72685',
     secondary: '#757575',

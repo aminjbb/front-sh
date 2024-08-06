@@ -27,8 +27,8 @@
         </a>
     </template>
 
-    <div class="d-flex align-center justify-space-between w-100 pl-1">
-        <span class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
+    <div v-if="content?.brand_name || (content?.colors && content?.colors.length > 0)" class="d-flex align-center justify-space-between w-100 pl-1">
+        <span v-if="content?.brand_name" class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
 
         <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center">
             <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">

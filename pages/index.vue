@@ -1,147 +1,103 @@
 <template>
-  <main class="v-home" :style="screenType === 'mobile' ? 'padding-top: 30px !important' : ''">
+<main class="v-home">
     <h1 class="ov-h h-0">{{ title }}</h1>
     <div v-show="loading">
-      <generalSkeletonHome :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
+        <generalSkeletonHome :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'" />
     </div>
 
     <div v-show="!loading">
-      <!--  desktop size -->
-      <div v-if="screenType === 'desktop'">
-        <desktopHomeMainSlider :items="responseDot(1)" />
-        <v-container>
-            <desktopHomeSurprise class="mt-4" :content="responseDot(2)" />
+        <!--  desktop size -->
+        <div v-if="screenType === 'desktop'">
+            <desktopHomeMainSlider :items="responseDot(1)" />
+            <v-container>
+                <desktopHomeSurprise class="mt-4" :content="responseDot(2)" />
 
-            <desktopHomeCategoryList :items="responseDot(3)" />
+                <desktopHomeCategoryList :items="responseDot(3)" />
 
-            <desktopHomeBanner
-                :items="desktopBanner1"
-                col="6"
-                class="pt-3 mb-4" />
-            <MobileHomeSection5Slider :content="responseDot(5)" />
+                <desktopHomeBanner :items="desktopBanner1" col="6" class="pt-3 mb-4" />
+                <MobileHomeSection5Slider :content="responseDot(5)" />
 
-            <generalTabSlider
-                :items="responseDot(6)"
-                class="tab-slider1 mb-8"
-                contentWidth="1080px"
-                title="پیشنهاد شاواز"
-                :componentProps="tabSlider1ComponentProps"
-                columnHeader />
+                <generalTabSlider :items="responseDot(6)" class="tab-slider1 mb-8" contentWidth="1080px" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" columnHeader />
 
-            <mobileHomeBrands :items="responseDot(7)" />
+                <mobileHomeBrands :items="responseDot(7)" class="mb-8" />
 
-            <desktopHomeBanner
-                class="mt-3"
-                :items="desktopBanner2"
-                col="3" />
+                <desktopHomeBanner class="mt-3" :items="desktopBanner2" col="3" />
 
-            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" />
+                <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" />
 
-            <desktopHomeBanner
-                :title="titleSection10"
-                :items="desktopBanner3"
-                col="3" />
+                <desktopHomeBanner :title="titleSection10" :items="desktopBanner3" col="3" />
 
-            <generalTabSlider
-                setRef="tab2"
-                :items="responseDot(11)"
-                class="tab-slider2 mb-8"
-                :title="titleSection11"
-                componentName="generalProductMinimalCard"
-                contentWidth="100%"
-                wrapContent
-                limit=6 />
+                <generalTabSlider setRef="tab2" :items="responseDot(11)" class="tab-slider2 mb-8" :title="titleSection11" componentName="generalProductMinimalCard" contentWidth="100%" wrapContent limit=6 />
 
-            <desktopHomeBanner :items="desktopBanner4" col="4" />
+                <desktopHomeBanner :items="desktopBanner4" col="4" />
+
+                <template v-if="homeBlog && homeBlog.length">
+                    <header class="pa-3 pb-5">
+                        <h2 class="t20 text-right text-grey-darken-2">
+                            {{titleSection13 }}
+                        </h2>
+                    </header>
+
+                    <v-row>
+                        <v-col cols="12" md="3" sm="6" v-for="(item, index) in homeBlog" :key="`blogs-${index}`">
+                            <mobileHomeBlogCard :content="item" />
+                        </v-col>
+                    </v-row>
+                </template>
+            </v-container>
+        </div>
+
+        <!--  mobile size -->
+        <div v-if="screenType === 'mobile'">
+            <mobileHomeMainSlider class="pt-6" :items="responseDot(1)" />
+
+            <v-container class="mobile-no-padd mt-4">
+                <mobileHomeSurprise :content="responseDot(2)" />
+
+                <mobileHomeCategoryList :items="responseDot(3)" class="px-5" />
+            </v-container>
+
+            <mobileHomeBanner :items="mobileBanner1" scroll class="pr-4 mt-4"/>
+
+            <v-container class="mobile-no-padd">
+                <MobileHomeSection5Slider class="mt-4" :content="responseDot(5)" />
+            </v-container>
+
+            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" contentWidth="830px" title="پیشنهاد شاواز" device='mobile' :componentProps="tabSlider1ComponentProps" />
+
+            <v-container>
+                <mobileHomeBanner :items="mobileBanner2" scroll />
+
+                <mobileHomeBrands :items="responseDot(7)" device="mobile" class="mb-3" />
+
+                <mobileHomeBanner :items="mobileBanner3" generalCol="6" col="6" device="mobile"/>
+
+            </v-container>
+
+            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile" />
+
+            <mobileHomeBanner :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
+
+            <generalTabSlider :items="responseDot(11)" class="tab-slider1 pr-4" contentWidth="830px" :title="titleSection11" device='mobile' :componentProps="tabSlider1ComponentProps" />
 
             <template v-if="homeBlog && homeBlog.length">
-                <header class="pa-3 pb-5">
-                <h2 class="t20 text-right text-grey-darken-2">
-                    {{titleSection13 }}
-                </h2>
-                </header>
+                <div class="pr-4 blog-section blog-section--mobile mb-15">
+                    <header>
+                        <h2 class="t16 text-sGrayDarken2 py-4 w700">
+                            پربازدیدترین مقالات
+                        </h2>
+                    </header>
 
-                <v-row>
-                <v-col
-                    cols="12"
-                    md="3"
-                    sm="6"
-                    v-for="(item, index) in homeBlog"
-                    :key="`blogs-${index}`">
-                    <mobileHomeBlogCard :content="item" />
-                </v-col>
-                </v-row>
+                    <section class="scroll--x scroll--x--hide">
+                        <div class="d-flex align-center flex-nowrap blog-section__contents">
+                            <div v-for="(item, index) in homeBlog" :key="`blogs-${index}`" class="blog-section__content">
+                                <mobileHomeBlogCard :content="item" />
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </template>
-        </v-container>
-      </div>
-
-      <!--  mobile size -->
-      <div v-if="screenType === 'mobile'">
-        <mobileHomeMainSlider :items="responseDot(1)" />
-
-        <v-container class="mobile-no-padd mt-4">
-            <mobileHomeSurprise :content="responseDot(2)" />
-            
-            <mobileHomeCategoryList :items="responseDot(3)" class="px-5 mb-5" />
-        </v-container>
-
-        <v-container>
-          <mobileHomeBanner :items="mobileBanner1" />
-        </v-container>
-
-        <v-container class="mobile-no-padd mt-4">
-          <MobileHomeSection5Slider :content="responseDot(5)" />
-        </v-container>
-
-        <v-container>
-          <generalTabSlider
-              :items="responseDot(6)"
-              class="tab-slider1"
-              contentWidth="1080px"
-              title="پیشنهاد شاواز"
-              :componentProps="tabSlider1ComponentProps" />
-
-          <mobileHomeBrands :items="responseDot(7)" />
-
-          <mobileHomeBanner :items="mobileBanner2" />
-
-          <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" class="mb-5"/>
-
-          <mobileHomeBanner :items="mobileBanner3" :title="titleSection10" generalCol="6" col="6"/>
-
-          <generalTabSlider
-              setRef="tab2"
-              :items="responseDot(11)"
-              class="tab-slider2"
-              :title="titleSection11"
-              componentName="generalProductMinimalCard"
-              contentWidth="1160px"
-              wrapContent
-              limit=6 />
-
-          <div class="custom-banner">
-            <mobileHomeBanner :items="mobileBanner4" col="4" />
-          </div>
-
-          <template v-if="homeBlog && homeBlog.length">
-            <header class="pa-3 pb-5 w500">
-              <h2 class="t20 text-right text-grey-darken-2">
-                پربازدیدترین مقالات
-              </h2>
-            </header>
-
-            <v-row>
-              <v-col
-                  cols="12"
-                  md="3"
-                  v-for="(item, index) in homeBlog"
-                  :key="`blogs-${index}`">
-                <mobileHomeBlogCard :content="item" />
-              </v-col>
-            </v-row>
-          </template>
-        </v-container>
-      </div>
+        </div>
     </div>
 </main>
 </template>
@@ -322,8 +278,8 @@ export default {
         homeSkus() {
             try {
                 const skus = this.responseDot(9) ?.skus.slice(0, 6)
-                const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length)
-              return findSkus
+                const findSkus = skus.filter(sku => sku ?.seller_s_k_us ?.length)
+                return findSkus
             } catch (e) {
                 return []
             }
@@ -345,7 +301,7 @@ export default {
          * @return {*}
          */
         responseDot(id) {
-            if (id) return this.homeSectionList?.find(item => item.id === id);
+            if (id) return this.homeSectionList ?.find(item => item.id === id);
             return '';
         },
     },

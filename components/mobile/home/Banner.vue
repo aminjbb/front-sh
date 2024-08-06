@@ -3,15 +3,30 @@
     <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
         {{title}}
     </header>
-    <v-row>
+    <div v-if="scroll" class="banner__scroll scroll--x scroll--x--hide">
+        <div class="d-flex align-center">
+            <div
+                class="banner__item"
+                v-for="item in items"
+                :key="item.id"
+                @click="enhanceECommerce(item)">
+                <a class="banner__image d-block" :href="item.link">
+                    <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="300" height="200" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <v-row v-else :class="device === 'mobile' ? 'ma-0' : ''">
         <v-col
             v-for="item in items"
             :key="item.id"
             :cols="generalCol"
+            :class="device === 'mobile' ? 'pa-1' : ''"
             @click="enhanceECommerce(item)"
             :sm="col">
-            <a class="banner__image d-block" :href="item.link">
-                <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
+            <a class="banner__image d-flex" :href="item.link">
+                <img class="d-block" :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
             </a>
         </v-col>
     </v-row>
@@ -45,7 +60,23 @@ export default {
         /**
          * Section title
          */
-        title: String
+        title: String,
+
+        /**
+         * Active scroll in mobile Size
+         */
+         scroll: {
+            type: Boolean,
+            default: false
+         },
+
+         /**
+         * device
+         */
+         device: {
+            type: String,
+            default: "desktop"
+        },
     },
 
     methods:{

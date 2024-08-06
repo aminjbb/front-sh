@@ -16,6 +16,12 @@ $parent: 'banner';
                     height: auto;
                 }
             }
+
+            &__item{
+                width: 90%;
+                flex: 0 0 90%;;
+                margin-left: 8px;
+            }
         }
     }
 }

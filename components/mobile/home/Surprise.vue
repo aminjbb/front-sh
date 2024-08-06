@@ -1,16 +1,15 @@
 <template>
 <section v-if="mainBanner?.skus && mainBanner?.skus?.length" class="surprise-slider surprise-slider--mobile">
-
-    <div class="surprise-slider__swiper" v-if="mainBanner?.skus && mainBanner?.skus?.length">
+    <div class="surprise-slider__swiper w-100" v-if="mainBanner?.skus && mainBanner?.skus?.length" :style="{ background: `${mainBanner?.background_hex_code}` }">
         <swiper dir="rtl" :slidesPerView="6" :spaceBetween="8" :modules="modules" :navigation="false" :breakpoints="{
                     '200': {
                         slidesPerView: 1.8,
                     },
                     '350': {
-                        slidesPerView: 2.5,
+                        slidesPerView: 2.2,
                     },
                     '500': {
-                        slidesPerView: 2.2,
+                        slidesPerView: 3.2,
                     },
                     '768': {
                         slidesPerView: 3.2,
