@@ -72,11 +72,21 @@
                             @click="slideToggleCard(filterList.length)">
                       <span class="t12 w700">محدوده قیمت</span>
 
-                      <v-icon icon="mdi-chevron-down" color="grey"/>
+                      <div class="d-flex align-center">
+                        <!--                  <v-icon size="5" icon="mdi-checkbox-blank-circle" color="success" />-->
+                        <v-badge
+                            v-if="returnShowBadgeFilter(index)"
+                            color="primary"
+                            dot
+                            class="ml-2 mb-2">
+                        </v-badge>
+                        <v-icon icon="mdi-chevron-down" color="grey"/>
+                      </div>
                     </header>
 
                     <div>
-                      <generalProductFilterSelectsMount @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                      <generalProductFilterSelectsMount :index="index"
+                                                        @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                                         @selectedFilter="addSelectedFilterForShowBadge"
                                                         @changeClearToFalse="changeClearToFalse"
                                                         @selectItems="setAmount" :isFilter="filter?.is_searchable"

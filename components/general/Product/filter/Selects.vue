@@ -226,6 +226,25 @@ export default {
             }
           }
         }
+        else if (this.param === 'colors'){
+          if(typeof this.$route.query[`colors[]`] ==='object'){
+            const FilteredAttribute = this.$route.query[`colors[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+          else if(typeof this.$route.query[`colors[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`colors[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
+        }
       }
       catch (e) {
         // console.log(e)
