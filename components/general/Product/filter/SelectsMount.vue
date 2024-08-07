@@ -136,7 +136,7 @@ export default {
         name: this.name,
         values: this.itemsModel
       }
-
+      this.$emit('selectedFilter', this.index);
       this.$emit('selectItems', obj);
     },
 
@@ -150,12 +150,9 @@ export default {
   },
 
   mounted() {
-    if (this.$route.query.attribute) {
-      const FilteredAttribute = JSON.parse(this.$route.query.attribute)
-      FilteredAttribute.forEach(attribute => {
-        const findAttribute = this.items.find(findAttribute => findAttribute.id === attribute)
-        if (findAttribute) this.itemsModel.push(findAttribute.id)
-      })
+    if (!this.$route.query.site_price_from && this.$route.query.site_price_to) {
+      const findPrice = this.items.find(element=>element.to ===this.$route.query.site_price_to)
+      this.itemsModel = findPrice.id
     }
   }
 }
