@@ -189,7 +189,7 @@ export default {
           }
         }
         else if (this.param === 'products'){
-          if(typeofthis.$route.query[`products[]`]==='object' ){
+          if(typeof this.$route.query[`products[]`]==='object' ){
             const FilteredAttribute = this.$route.query[`products[]`]
             FilteredAttribute.forEach(attribute=>{
               const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
