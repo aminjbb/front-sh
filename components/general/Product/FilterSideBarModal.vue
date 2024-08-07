@@ -183,7 +183,6 @@ export default {
      * @param {*} index
      */
     addSelectedFilterForShowBadge(index) {
-      console.log(index, 'indexxxx')
       this.selectedFilters.add(index)
     },
     /**
