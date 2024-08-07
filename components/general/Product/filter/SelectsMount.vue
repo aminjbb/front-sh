@@ -151,8 +151,14 @@ export default {
 
   mounted() {
     if (!this.$route.query.site_price_from && this.$route.query.site_price_to) {
-      const findPrice = this.items.find(element=>element.to ===this.$route.query.site_price_to)
-      this.itemsModel = findPrice.id
+      const findPrice = this.items.find(element=>element.to == this.$route.query.site_price_to)
+      this.itemsModel = findPrice
+      this.$emit('selectedFilter', this.index);
+    }
+    else if (this.$route.query.site_price_from && this.$route.query.site_price_to){
+      const findPrice = this.items.find(element=>element.to == this.$route.query.site_price_to && element.from == this.$route.query.site_price_from)
+      this.itemsModel = findPrice
+      this.$emit('selectedFilter', this.index);
     }
   }
 }
