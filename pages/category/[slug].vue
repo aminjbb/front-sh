@@ -9,7 +9,7 @@
       <v-container v-show="!loading">
         <generalBreadcrumb :items="breadcrumbList"/>
   
-        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>
+<!--        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>-->
         <v-row class="mt-5">
           <v-col cols="12" md="3" class="filter-bg-mobile">
             <client-only>
