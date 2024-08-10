@@ -6,8 +6,41 @@
       <generalSkeletonPlpNoSlider :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
     </v-container>
 
-    <v-container  v-show="!loading">
+    <v-container v-show="!loading">
       <generalBreadcrumb :items="breadcrumb"/>
+
+      <template v-if="screenType === 'desktop'">
+        <client-only>
+          <div class="v-product__filter d-flex pt-1 align-center justify-space-between mt-2">
+            <nav class="d-flex align-center flex-grow-1">
+              <div class="pl-4">
+                <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
+                <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
+              </div>
+
+              <ul class="v-product__filter__items d-flex align-center">
+                <li class="t14 w400 px-4"
+                    :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' "
+                    @click="sort('created_at', 'desc')">جدیدترین
+                </li>
+                <li class="t14 w400 px-4"
+                    :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' "
+                    @click="sort('site_price', 'asc')">ارزان‌ترین
+                </li>
+                <li class="t14 w400 px-4"
+                    :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "
+                    @click="sort('site_price', 'desc')">گران‌ترین
+                </li>
+                <li class="t14 w400 px-4"
+                    :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' "
+                    @click="sort('discount', 'desc')">بیشترین تخفیف
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </client-only>
+      </template>
+
       <v-row :class="screenType === 'desktop' ? 'mt-5' : ''">
         <v-col cols="12" md="3" class="filter-bg-mobile">
           <client-only>
@@ -15,43 +48,26 @@
               <generalProductFilterSideBar
                   :filterList="productFilterSecondaryData"
                   @selectFiltersModal="selectFiltersModal"
+                  @clearFilterQuery="clearFilterQuery"
                   @setAmount="selectByAmount"/>
             </template>
             <template v-if="screenType === 'mobile'">
               <div class="d-flex align-center">
                 <generalProductFilterSideBarModal
-                  class="ml-3"
+                    class="ml-3"
                     :filterList="productFilterSecondaryData"
                     @selectFiltersModal="selectFiltersModal"
+                    @clearFilterQuery="clearFilterQuery"
                     @setAmount="selectByAmount"/>
 
-                <generalProductSortModal @sort="sort"  :sortItems="sortItems"/>
+                <generalProductSortModal @sort="sort" :sortItems="sortItems"/>
               </div>
             </template>
           </client-only>
         </v-col>
-        <v-col cols="12" md="9" class="main-col">
-          <template v-if="screenType === 'desktop'">
-            <client-only>
-              <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
-                <nav class="d-flex align-center flex-grow-1">
-                  <div class="pl-4">
-                    <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
-                    <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
-                  </div>
 
-                  <ul class="v-product__filter__items d-flex align-center">
-                    <!--                  <li class="t14 w400 text-grey px-4" @click="mostView()">پربازدیدترین</li>-->
-                    <li class="t14 w400 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
-                    <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                    <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
-                    <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
-                  </ul>
-                </nav>
-              </div>
-            </client-only>
-          </template>
-          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-8' : ''">
+        <v-col cols="12" md="9" class="main-col">
+          <div class="v-product__contents">
             <v-row v-if="productListData?.length" class="ma-0">
               <v-col
                   cols="6"
@@ -63,12 +79,12 @@
                     :content="item"
                     :lazy=false
                     class="mb-4 flex-grow-1"
-                    :index = "index + 1"
-                    :sectionName = "`لیست کالاهای برند ${plpTitle} `"
+                    :index="index + 1"
+                    :sectionName="`لیست کالاهای برند ${plpTitle} `"
                     :hideInfo="true"
                     :isPLP="true"
                     showBasket
-                    :categoryName = "category"
+                    :categoryName="category"
                     :showColors="true"/>
               </v-col>
             </v-row>
@@ -96,35 +112,35 @@ import PLP from '@/composables/PLP.js'
 export default {
   data() {
     return {
-      pageTitle:null,
+      pageTitle: null,
       productList: [],
       filters: [],
       screenType: null,
-      sortType:'site_price',
+      sortType: 'site_price',
       orderType: 'asc',
-      category:null,
+      category: null,
       sortItems: [
-            {
-                label: 'جدیدترین',
-                value: 'created_at',
-                type: 'desc'
-            },
-            {
-                label: 'ارزان‌ترین',
-                value: 'site_price',
-                type: 'asc'
-            },
-            {
-                label: 'گران‌ترین',
-                value: 'site_price',
-                type: 'desc'
-            },
-            {
-                label: 'بیشترین تخفیف',
-                value: 'discount',
-                type: 'desc'
-            }
-        ],
+        {
+          label: 'جدیدترین',
+          value: 'created_at',
+          type: 'desc'
+        },
+        {
+          label: 'ارزان‌ترین',
+          value: 'site_price',
+          type: 'asc'
+        },
+        {
+          label: 'گران‌ترین',
+          value: 'site_price',
+          type: 'desc'
+        },
+        {
+          label: 'بیشترین تخفیف',
+          value: 'discount',
+          type: 'desc'
+        }
+      ],
     }
   },
 
@@ -136,7 +152,7 @@ export default {
       page,
       secondaryData,
       filterForFilter,
-      getBreadcrumb ,
+      getBreadcrumb,
       breadcrumb,
       query,
       plpTitle,
@@ -156,7 +172,7 @@ export default {
       page,
       secondaryData,
       filterForFilter,
-      getBreadcrumb ,
+      getBreadcrumb,
       breadcrumb,
       query,
       plpTitle,
@@ -202,6 +218,9 @@ export default {
   },
 
   methods: {
+    clearFilterQuery() {
+      this.filterQuery = []
+    },
     /**
      * Filter productList by select type items
      * @param {*} array
@@ -221,21 +240,49 @@ export default {
       }
 
     },
+
     /**
      * Filter by amount
      * @param {*} amount
      */
     async selectByAmount(amount) {
       if (amount?.param === "site_price") {
-        if (amount.amount?.max) {
-          site_price_to = amount.amount?.max
+        let site_price_to = ''
+        let site_price_from = ''
+
+        if (amount?.amount?.from !== null) {
+          site_price_from = amount?.amount?.from
         }
-        if (amount.amount?.min) {
-          site_price_from = amount.amount?.min
+        if (amount?.amount?.to !== null) {
+          site_price_to = amount?.amount?.to
         }
 
-        await this.setMinAmount(amount)
-        await this.setMaxAmount(amount)
+        let query = this.$route.query;
+
+        if (site_price_from && !site_price_to) {
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+            }
+          })
+        } else if (!site_price_from && site_price_to) {
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_to: site_price_to
+            }
+          })
+        } else if (site_price_from && site_price_to) {
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+              site_price_to: site_price_to
+            }
+          })
+        }
+
       }
     },
 
@@ -253,6 +300,7 @@ export default {
         })
       }
     },
+
     sort(order, orderType) {
       this.sortType = order
       this.orderType = orderType
@@ -262,7 +310,7 @@ export default {
           query: {
             ...query,
             order: order, order_type: orderType,
-            page:1
+            page: 1
           }
         })
         this.page = 1
@@ -310,15 +358,14 @@ export default {
                 query: {
                   ...query,
                   stock: param,
-                  page:1
+                  page: 1
                 }
               })
-            }
-            else {
+            } else {
               this.$router.push({
                 query: {
                   stock: param,
-                  page:1
+                  page: 1
                 }
               })
             }
@@ -353,26 +400,57 @@ export default {
      */
     createRoute(values) {
       let param = ''
+      let colorParam = ''
       let brandParam = ''
       let paramQuery = ''
+      let categoryQuery = ''
+      let productQuery = ''
+      const colorsObject = values.filter(filterValue => filterValue.param == "colors")
       const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
       const brandObject = values.filter(filterValue => filterValue.param == "brands")
+      const categoriesObject = values.filter(filterValue => filterValue.param == "categories")
+      const productsObject = values.filter(filterValue => filterValue.param == "products")
       attributeObject.forEach(element => {
-        param += `${element.value},`
+        param += `attributes[]=${element.value}&`
       })
       brandObject.forEach(element => {
-        brandParam += `${element.value},`
+        brandParam += `brands[]=${element.value}&`
+      })
+      colorsObject.forEach(element => {
+        colorParam += `colors[]=${element.value}&`
+      })
+      categoriesObject.forEach(element => {
+        categoryQuery += `categories[]=${element.value}&`
+      })
+      productsObject.forEach(element => {
+        productQuery += `products[]=${element.value}&`
       })
 
       if (attributeObject.length) {
-        let finalParam = `[${param.substring(0, param.length - 1)}]`
-        if (!paramQuery) paramQuery += `?attribute=${finalParam}`
-        else paramQuery += `&attribute=${finalParam}`
+
+        let finalParam = `${param.substring(0, param.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
       }
       if (brandObject.length) {
-        let finalParam = `[${brandParam.substring(0, brandParam.length - 1)}]`
-        if (!paramQuery) paramQuery += `?brands=${finalParam}`
-        else paramQuery += `&brands=${finalParam}`
+        let finalParam = `${brandParam.substring(0, brandParam.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (colorsObject.length) {
+        let finalParam = `${colorParam.substring(0, colorParam.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (categoriesObject.length) {
+        let finalParam = `${categoryQuery.substring(0, categoryQuery.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (productsObject.length) {
+        let finalParam = `${productQuery.substring(0, productQuery.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
       }
       if (this.$route.query.site_price_from) {
         if (!paramQuery) paramQuery += `?site_price_from=${this.$route.query.site_price_from}`
@@ -386,9 +464,9 @@ export default {
         if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
         else paramQuery += `&stock=${this.$route.query.stock}`
       }
-
       this.$router.push(this.$route.path + paramQuery)
       this.query = paramQuery
+      this.page = 1
     },
 
     async createQueryForFilter(array) {
@@ -399,10 +477,10 @@ export default {
     /**
      * Back to top on change pagination
      */
-     backToTop(){
+    backToTop() {
       window.scrollTo({
-          top: 0,
-          behavior: "smooth",
+        top: 0,
+        behavior: "smooth",
       });
     }
   },
@@ -412,7 +490,7 @@ export default {
      */
     window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
 
-    if(this.$route.query?.page){
+    if (this.$route.query?.page) {
       this.page = parseInt(this.$route.query.page)
     }
   },
@@ -421,8 +499,8 @@ export default {
     this.getBreadcrumb('brand')
   },
 
-  watch:{
-    page(val){
+  watch: {
+    page(val) {
       let query = this.$route.query;
       if (val) {
         this.$router.push({
@@ -434,14 +512,14 @@ export default {
       }
     },
 
-    plpTitle(newVal){
-        this.title = newVal
+    plpTitle(newVal) {
+      this.title = newVal
     },
 
-    breadcrumb(newVal){
-        this.category = newVal[newVal.length - 1]?.title
-        this.pageTitle = newVal[newVal.length - 1]?.title
-      }
+    breadcrumb(newVal) {
+      this.category = newVal[newVal.length - 1]?.title
+      this.pageTitle = newVal[newVal.length - 1]?.title
+    }
   }
 }
 </script>

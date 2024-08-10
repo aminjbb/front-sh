@@ -11,8 +11,8 @@ $parent: 'menu';
         position: fixed;
         top: 118px;
         right: -100%;
+        z-index: 11;
         background-color: #fafafa !important;
-        z-index: 10;
         transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
 
         &.change-height {
