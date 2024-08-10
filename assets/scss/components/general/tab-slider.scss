@@ -64,24 +64,27 @@ $parent: 'tab-slider';
             }
 
             @include gbp (0, 768) {
-                padding: 5px 10px !important;
-                font-size: 13px !important;
+                padding: 7px 16px !important;
+                font-size: 12px !important;
                 display: inline-block !important;
                 border-radius: 30px !important;
                 margin-left: 8px !important;
-                background-color: #efefef !important;
+                background-color: #fff !important;
+                border:1px solid #E8E8E8;
 
                 &.active {
                     background-color: #D72685 !important;
-                    color: #fff !important;
 
                     span {
                         border: 0 !important;
+                        color: #fff !important;
                     }
                 }
 
                 span {
                     padding: 0 !important;
+                    color: #3c3c3c;
+                    font-variation-settings: "wght" 700;
                 }
             }
 

@@ -4,12 +4,11 @@
     class="tab-slider mb-4"
     :class="getDynamicClasses"
     :ref="setRef">
-    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+    <header v-if="title" class="text-right" :class="device === 'desktop' ? 't20 text-grey-darken-1 py-4 w500' : 't16 text-sGrayDarken2 pt-6 pb-1 w700'">
         {{title}}
     </header>
 
     <div>
-
         <nav class="tab-slider__header">
             <ul class="ma-0 pa-0">
                 <li
@@ -28,7 +27,8 @@
                 </li>
             </ul>
         </nav>
-        <div class="tab-slider__contents">
+        
+        <div class="tab-slider__contents py-2">
             <div
                 v-for="(item, index) in categories"
                 class="tab-slider__content d-flex"
@@ -126,6 +126,14 @@ export default {
         setRef: {
             type: String,
             default: 'tab1'
+        },
+
+        /**
+         * device
+         */
+         device: {
+            type: String,
+            default: "desktop"
         },
     },
 

@@ -1,6 +1,6 @@
 <template>
 <section class="section8-slider section8-slider--mobile" >
-    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+    <header v-if="items && items.length > 0 && title" class="text-right py-4" :class="device === 'desktop' ? 't20 text-grey-darken-1 w500': 's-title s-title--medium text-sGrayDarken2'">
         {{ title }}
     </header>
 
@@ -11,19 +11,18 @@
         :modules="modules"
         :navigation="navigation"
         :loop="true"
-        :height="286" 
         :breakpoints="{
                 '200': {
-                    slidesPerView: 1.3,
-                    spaceBetween: 15,
+                    slidesPerView: 2.1,
+                    spaceBetween: 8,
                 },
                 '500': {
                     slidesPerView: 2.8,
-                    spaceBetween: 15,
+                    spaceBetween: 8,
                 },
                 '650': {
                     slidesPerView: 3.2,
-                    spaceBetween: 15,
+                    spaceBetween: 8,
                 },
                 '768': {
                     slidesPerView: 4.2,
@@ -39,7 +38,7 @@
                     slidesPerView: 6,
                 }
             }"
-        class="mySwiper">
+        class="mySwiper py-2">
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
             <generalProductCard
                 :sectionName = "title"
@@ -98,7 +97,15 @@ export default {
          /**
           * is plp for product card
           */
-         isPLP:Boolean
+         isPLP:Boolean,
+
+         /**
+         * device
+         */
+         device: {
+            type: String,
+            default: "desktop"
+        },
     },
 
     setup() {
@@ -125,6 +132,12 @@ $parent:'section8-slider';
     .product-card {
         margin-bottom: 0 !important;
         height: 276px !important;
+        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+        border: 0;
+
+        @include gbp(0, 768) {
+            height: 217px !important;
+        }
     }
 
     .swiper-button-prev,

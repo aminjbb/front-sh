@@ -1,44 +1,65 @@
 <template>
 <section v-if="mainBanner?.skus && mainBanner?.skus?.length" class="surprise-slider surprise-slider--mobile">
-    <div class="surprise-slider__swiper w-100" v-if="mainBanner?.skus && mainBanner?.skus?.length" :style="{ background: `${mainBanner?.background_hex_code}` }">
-        <swiper dir="rtl" :slidesPerView="6" :spaceBetween="8" :modules="modules" :navigation="false" :breakpoints="{
-                    '200': {
-                        slidesPerView: 1.8,
-                    },
-                    '350': {
-                        slidesPerView: 2.2,
-                    },
-                    '500': {
-                        slidesPerView: 3.2,
-                    },
+    <div class="d-flex align-center flex-wrap" :style="{ background: `${mainBanner?.background_hex_code}` }">
+        <div class=" surprise-slider__info">
+            <div class="surprise-slider__info__counter mb-4">
+                <span class="t14 ml-2">{{ formattedTime }}</span>
+                <v-icon icon="mdi-clock-outline" />
+            </div>
+
+            <div class="surprise-slider__info__image mb-4">
+                <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
+            </div>
+          <div class="surprise-slider__info__title mb-4">
+            <span class="t14 ml-2">  {{mainBanner?.label}}</span>
+          </div>
+
+            <v-btn
+                color="primary500"
+                height="40"
+                variant="outlined"
+                :href="mainBanner?.link"
+                class="px-8 mt-1 surprise-slider__info__btn">
+                مشاهده همه
+                <template v-slot:append>
+                    <v-icon icon="mdi-chevron-left" />
+                </template>
+            </v-btn>
+        </div>
+
+        <div class="surprise-slider__swiper" v-if="mainBanner?.skus && mainBanner?.skus?.length">
+            <swiper
+                dir="rtl"
+                :slidesPerView="6"
+                :spaceBetween="8"
+                :modules="modules"
+                :navigation="true"
+                :breakpoints="{
                     '768': {
                         slidesPerView: 3.2,
                     },
-                }" class="mySwiper">
-            <swiper-slide>
-                <div class="d-flex flex-column align-center surprise-slider__info h-100 w-100">
-                    <div class="surprise-slider__info__counter mb-4">
-                        <span class="t20 w700 ml-2">{{ formattedTime }}</span>
-                        <v-icon icon="mdi-clock-outline" />
-                    </div>
-
-                    <div class="surprise-slider__info__image flex-grow-1 mb-4">
-                        <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
-                    </div>
-                    <div class="surprise-slider__info__title mb-4">
-                        <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>
-                    </div>
-
-                    <v-btn color="primary500" height="40" variant="outlined" :href="mainBanner?.link" class="mb-2 t12 w700 px-4 mt-1 surprise-slider__info__btn s-border--medium">
-                        مشاهده بیشتر
-                    </v-btn>
-                </div>
-            </swiper-slide>
-
-            <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
-                <generalProductCard :content="item" hideInfo :index="index + 1" sectionName="سورپرایز" :shps="item?.pivot?.shps" class="mb-4" />
-            </swiper-slide>
-        </swiper>
+                    '1000': {
+                        slidesPerView:  3.8,
+                    },
+                    '1200': {
+                        slidesPerView: 4.8,
+                    },
+                    '1398': {
+                        slidesPerView: 5.5,
+                    }
+                }"
+                class="mySwiper">
+                <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
+                    <generalProductCard
+                        :content="item"
+                        hideInfo
+                        :index = "index + 1"
+                        sectionName = "سورپرایز"
+                        :shps="item?.pivot?.shps"
+                        class="mb-4" />
+                </swiper-slide>
+            </swiper>
+        </div>
     </div>
 </section>
 </template>
@@ -57,8 +78,7 @@ import 'swiper/css/navigation';
 
 // import required modules
 import {
-    FreeMode,
-    Navigation
+    FreeMode,Navigation
 } from 'swiper/modules';
 
 export default {
@@ -140,14 +160,15 @@ export default {
                 return ''
             }
         },
-        mainBannerSkus() {
-            try {
-                const skus = this.mainBanner.skus.slice(0, 10)
-                const findSkus = skus.filter(sku => sku ?.seller_s_k_us ?.length && sku ?.seller_s_k_us[0] ?.site_stock > 0)
-                return findSkus
-            } catch (e) {
-                return []
-            }
+        mainBannerSkus(){
+          try {
+            const skus = this.mainBanner.skus.slice(0, 10)
+            const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length && sku?.seller_s_k_us[0]?.site_stock > 0)
+            return findSkus
+          }
+          catch (e) {
+            return  []
+          }
         },
         mainBannerImage() {
             try {
@@ -163,3 +184,4 @@ export default {
 <style>
 @import '~/assets/scss/components/mobile/home/surprise.scss';
 </style>
+
