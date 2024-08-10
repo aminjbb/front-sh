@@ -1,0 +1,158 @@
+//------------------------------------------------
+// System design class for 'Typography'
+//------------------------------------------------
+
+// Heading Typo class
+
+$typoParent : 's-typo';
+
+.#{$typoParent} {
+    font-variation-settings: "wght" 700;
+    line-height: normal;
+
+    &-h1{
+        font-size: 96px;
+    }
+    
+    &-h2{
+        font-size: 60px;
+    }
+    
+    &-h3{
+        font-size: 48px;
+    }
+    
+    &-h4{
+        font-size: 34px;
+    }
+    
+    &-h5{
+        font-size: 24px;
+    }
+    
+    &-h6{
+        font-size: 20px;
+    }
+}
+
+// Title class
+
+$titleParent : 's-title';
+
+.#{$titleParent} {
+    font-variation-settings: "wght" 700;
+    line-height: normal;
+
+    &--x-large{
+        font-size: 22px;
+    }
+
+    &--large{
+        font-size: 18px;
+    }
+
+    &--medium{
+        font-size: 16px;
+    }
+
+    &--small{
+        font-size: 14px;
+    }
+
+    &--x-small{
+        font-size: 12px;
+    }
+
+    &--micro{
+        font-size: 10px;
+    }
+}
+
+// Caption class
+
+$captionParent : 's-caption';
+
+.#{$captionParent} {
+    line-height: normal;
+
+    &--large{
+        font-variation-settings: "wght" 500;
+        font-size: 14px;
+    }
+
+    &--bold{
+        font-variation-settings: "wght" 700;
+        font-size: 12px;
+    }
+
+    &--medium{
+        font-variation-settings: "wght" 500;
+        font-size: 12px;
+    }
+
+    &--small{
+        font-variation-settings: "wght" 400;
+        font-size: 10px;
+    }
+}
+
+//------------------------------------------------
+// System design class for 'Border'
+//------------------------------------------------
+
+$captionParent : 's-border';
+
+.#{$captionParent} {
+    border:1px solid #E8E8E8;
+
+    // border weight
+    &--thin{
+        border-width: 1px !important;
+    }
+
+    &--medium{
+        border-width: 2px !important;
+    }
+
+    // border style
+    &--dashed{
+        border-style: dashed !important;
+    }
+
+    &--solid{
+        border-style: solid !important;
+    }
+
+    // border color
+    &--light-gray{
+        border-color: #F3F3F3 !important;
+    }
+
+    &--gray{
+        border-style: #E8E8E8 !important;
+    }
+
+    &--dark-gray{
+        border-style: #CBCBCB !important;
+    }
+}
+
+//------------------------------------------------
+// System design class for 'Shadow'
+//------------------------------------------------
+
+$shadowParent : 's-shadow';
+
+.#{$shadowParent} {
+    &--dark{
+        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+    }
+
+    &--medium{
+        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+    }
+
+    &--light{
+        box-shadow: 2px 2px 4px 0px rgba(97, 97, 97, 0.05);
+    }
+}

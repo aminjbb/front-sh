@@ -1,5 +1,4 @@
 <template>
-<client-only>
     <div v-if="menuList && menuList.length" class="menu menu--mobile" id="menu--mobile">
         <nav>
             <div>
@@ -82,7 +81,6 @@
             </div>
         </nav>
     </div>
-</client-only>
 </template>
 
 <script>

@@ -9,7 +9,7 @@
       <v-container v-show="!loading">
         <generalBreadcrumb :items="breadcrumbList"/>
   
-        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>
+<!--        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>-->
 
         <template v-if="screenType === 'desktop'">
           <client-only>
