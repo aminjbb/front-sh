@@ -39,7 +39,7 @@
             <swiper-slide v-for="(item, index) in brands.slice(0, 7)" :key="`brands-${index}`">
                 <a class="brands__item w-100 pa-2 flex-column d-flex justify-center align-center bg-white" :href="item?.link" :title="item?.label">
                     <img class="flex-grow-1" :src="item.image?.image_url" :title="item?.label" :alt="item?.label" width="104" height="58" />
-                    <h5 class="number-font w700 t10 text-sGray text-center mt-1">110محصول موجود</h5>
+                    <h5 v-if="item.label" class="number-font w700 t10 text-sGray text-center mt-1">{{ item?.label }}</h5>
                 </a>
             </swiper-slide>
         </swiper>
