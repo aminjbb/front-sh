@@ -21,8 +21,10 @@ $parent: 'main-slider';
         }
 
         .swiper-pagination-bullet {
+            background-color: #EFA8CE !important;
+
             &.swiper-pagination-bullet-active {
-                background-color: #424242 !important;
+                background-color: #D72685 !important;
             }
         }
     }
