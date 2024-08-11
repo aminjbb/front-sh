@@ -64,7 +64,7 @@
                 <MobileHomeSection5Slider class="mt-4" :content="responseDot(5)" />
             </v-container>
 
-            <generalTabSlider :items="responseDot(6)" class="tab-slider1" limit="12" device="mobile" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <mobileHomeBanner :items="mobileBanner2" scroll class="pr-4"/>
 
