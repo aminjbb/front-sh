@@ -11,23 +11,23 @@
                 <v-skeleton-loader :loading="loading" type="text" />
             </v-col>
         </v-row>
-        <v-row>
-            <v-col cols="12">
-                <v-card class="px-5" rounded="lg">
-                    <v-row>
-                        <v-col v-for="pro in 6" :key="pro" cols="2">
-                            <v-skeleton-loader :loading="loading" height="240" type="image, list-item">
-                                <v-responsive>
-                                    <v-img src="src" class="rounded-lg mb-2" height="184" cover />
+<!--        <v-row>-->
+<!--            <v-col cols="12">-->
+<!--                <v-card class="px-5" rounded="lg">-->
+<!--                    <v-row>-->
+<!--                        <v-col v-for="pro in 6" :key="pro" cols="2">-->
+<!--                            <v-skeleton-loader :loading="loading" height="240" type="image, list-item">-->
+<!--                                <v-responsive>-->
+<!--                                    <v-img src="src" class="rounded-lg mb-2" height="184" cover />-->
 
-                                    <v-list-item subtitle="subtitle" title="title" class="px-0" />
-                                </v-responsive>
-                            </v-skeleton-loader>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-        </v-row>
+<!--                                    <v-list-item subtitle="subtitle" title="title" class="px-0" />-->
+<!--                                </v-responsive>-->
+<!--                            </v-skeleton-loader>-->
+<!--                        </v-col>-->
+<!--                    </v-row>-->
+<!--                </v-card>-->
+<!--            </v-col>-->
+<!--        </v-row>-->
     </v-col>
 </v-row>
 
