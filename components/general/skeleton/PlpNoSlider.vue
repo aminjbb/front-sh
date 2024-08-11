@@ -5,6 +5,14 @@
     </v-col>
 </v-row>
 
+<template v-if="screenSize === 'desktop'">
+    <v-row justify="start">
+        <v-col cols="1" v-for="cat in 5" :key="cat">
+            <v-skeleton-loader v-if="loading" type="text" />
+        </v-col>
+    </v-row>
+</template>
+
 <v-row class="mt-10">
     <v-col cols="12" md="3" v-if="screenSize === 'desktop'">
         <div class="filter-sidebar">
@@ -37,15 +45,7 @@
     </v-row>
 
     <v-col cols="12" md="9">
-        <template v-if="screenSize === 'desktop'">
-            <v-row justify="start">
-                <v-col cols="1" v-for="cat in 5" :key="cat">
-                    <v-skeleton-loader v-if="loading" type="text" />
-                </v-col>
-            </v-row>
-        </template>
-
-        <div class="v-product__contents" :class="screenSize === 'desktop' ? 'mt-6' : ''">
+        <div class="v-product__contents">
             <div class="px-2">
                 <v-row>
                     <v-col v-for="card in 12" :key="card" cols="6" lg="3">

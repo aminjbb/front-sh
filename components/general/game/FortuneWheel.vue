@@ -184,7 +184,17 @@ export default {
          * close modal
          */
         closeModal(){
+          if (this.clicked){
             this.dialog = false;
+          }
+          else {
+            useNuxtApp().$toast.error('تعداد دفعات مجاز در بازی به پایان رسیده.', {
+              rtl: true,
+              position: 'top-center',
+              theme: 'dark'
+            });
+          }
+
         },
 
         //TODO: Should delete after add endpoint

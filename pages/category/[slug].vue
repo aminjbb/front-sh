@@ -9,7 +9,29 @@
       <v-container v-show="!loading">
         <generalBreadcrumb :items="breadcrumbList"/>
   
-        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>
+<!--        <generalProductCategorySlider v-if="productsSecondaryData?.length" :items="productsSecondaryData" class="mt-5" :loop="false"/>-->
+
+        <template v-if="screenType === 'desktop'">
+          <client-only>
+            <div class="v-product__filter d-flex pt-1 align-center justify-space-between mt-7 pb-1">
+              <nav class="d-flex align-center flex-grow-1">
+                <div class="pl-4">
+                  <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
+                  <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
+                </div>
+
+                <ul class="v-product__filter__items d-flex align-center">
+                  <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                  <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
+                  <li class="t14 w400  px-4"  :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                </ul>
+              </nav>
+            </div>
+          </client-only>
+        </template>
+
         <v-row class="mt-5">
           <v-col cols="12" md="3" class="filter-bg-mobile">
             <client-only>
@@ -18,14 +40,17 @@
                     :filterList="productFilterSecondaryData"
                     @listFiltersModal="listFiltersModal"
                     @selectFiltersModal="selectFiltersModal"
+                    @clearFilterQuery="clearFilterQuery"
                     @setAmount="selectByAmount"/>
               </template>
 
               <template v-if="screenType === 'mobile'">
                 <div class="d-flex align-center">
                     <generalProductFilterSideBarModal
+                      :filterLength ="selectedFilterLength"
                       class="ml-3"
                       :filterList="productFilterSecondaryData"
+                      @clearFilterQuery="clearFilterQuery"
                       @listFiltersModal="listFiltersModal"
                       @selectFiltersModal="selectFiltersModal"
                       @setAmount="selectByAmount"/>
@@ -35,28 +60,9 @@
               </template>
             </client-only>
           </v-col>
+
           <v-col cols="12" md="9" class="main-col">
-            <template v-if="screenType === 'desktop'">
-              <client-only>
-                <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
-                  <nav class="d-flex align-center flex-grow-1">
-                    <div class="pl-4">
-                      <v-icon icon="mdi-sort-ascending" color="grey-darken-1"/>
-                      <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
-                    </div>
-    
-                    <ul class="v-product__filter__items d-flex align-center">
-                      <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
-                      <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
-                      <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                      <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
-                      <li class="t14 w400  px-4"  :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
-                    </ul>
-                  </nav>
-                </div>
-              </client-only>
-            </template>
-            <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-8' : ''">
+            <div class="v-product__contents" >
               <v-row v-if="productListData?.length" class="ma-0">
                 <v-col
                     cols="6"
@@ -110,6 +116,7 @@
         sortType:'seen_count',
         orderType: 'asc',
         category:null,
+        selectedFilterLength: null,
         sortItems: [
               {
                   label: 'محبوب ترین',
@@ -274,6 +281,10 @@
     },
   
     methods: {
+
+      clearFilterQuery(){
+        this.filterQuery = []
+      },
       /**
        * Filter productList by list type items
        * @param {*} array
@@ -295,19 +306,22 @@
        */
       selectFiltersModal(array) {
 
+
         if (array.param === "stock") {
           this.createQueryForFilter(array)
         } else {
-          const findQueryIndex = this.filterQuery.findIndex(query => query.name === array.name)
+          const findQueryIndex = this.filterQuery.findIndex(query => query.name === array.name);
+
           if (findQueryIndex > -1) {
-            if (array.values.length) this.filterQuery[findQueryIndex].values = array.values
-            else this.filterQuery.splice(findQueryIndex, 1)
+              if (array.values.length) this.filterQuery[findQueryIndex].values = array.values
+              else this.filterQuery.splice(findQueryIndex, 1)
           } else {
             this.filterQuery.push(array)
           }
+
           this.createQueryForFilter()
         }
-  
+
       },
   
       /**
@@ -319,11 +333,11 @@
           let site_price_to = ''
           let site_price_from = ''
 
-          if (amount?.amount?.max !== null) {
-            site_price_to = amount?.amount?.max
+          if (amount?.amount?.from !== null) {
+            site_price_from = amount?.amount?.from
           }
-          if (amount?.amount?.min !== null) {
-            site_price_from = amount?.amount?.min
+          if (amount?.amount?.to !== null) {
+            site_price_to = amount?.amount?.to
           }
 
           let query = this.$route.query;
@@ -375,8 +389,6 @@
         }
   
       },
-  
-  
   
       /**
        * Params generator
@@ -448,27 +460,59 @@
        * @param {*} values
        */
       createRoute(values) {
+        console.log(values)
         let param = ''
+        let colorParam = ''
         let brandParam = ''
         let paramQuery = ''
+        let categoryQuery = ''
+        let productQuery = ''
+        const colorsObject = values.filter(filterValue => filterValue.param == "colors")
         const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
         const brandObject = values.filter(filterValue => filterValue.param == "brands")
+        const categoriesObject = values.filter(filterValue => filterValue.param == "categories")
+        const productsObject = values.filter(filterValue => filterValue.param == "products")
         attributeObject.forEach(element => {
-          param += `${element.value},`
+          param += `attributes[]=${element.value}&`
         })
         brandObject.forEach(element => {
-          brandParam += `${element.value},`
+          brandParam += `brands[]=${element.value}&`
+        })
+        colorsObject.forEach(element => {
+          colorParam += `colors[]=${element.value}&`
+        })
+        categoriesObject.forEach(element => {
+          categoryQuery += `categories[]=${element.value}&`
+        })
+        productsObject.forEach(element => {
+          productQuery += `products[]=${element.value}&`
         })
   
         if (attributeObject.length) {
-          let finalParam = `[${param.substring(0, param.length - 1)}]`
-          if (!paramQuery) paramQuery += `?attribute=${finalParam}`
-          else paramQuery += `&attribute=${finalParam}`
+
+          let finalParam = `${param.substring(0, param.length - 1)}`
+          if (!paramQuery) paramQuery += `?${finalParam}`
+          else paramQuery += `&${finalParam}`
         }
         if (brandObject.length) {
-          let finalParam = `[${brandParam.substring(0, brandParam.length - 1)}]`
-          if (!paramQuery) paramQuery += `?brands=${finalParam}`
-          else paramQuery += `&brands=${finalParam}`
+          let finalParam = `${brandParam.substring(0, brandParam.length - 1)}`
+          if (!paramQuery) paramQuery += `?${finalParam}`
+          else paramQuery += `&${finalParam}`
+        }
+        if (colorsObject.length) {
+          let finalParam = `${colorParam.substring(0, colorParam.length - 1)}`
+          if (!paramQuery) paramQuery += `?${finalParam}`
+          else paramQuery += `&${finalParam}`
+        }
+        if (categoriesObject.length) {
+          let finalParam = `${categoryQuery.substring(0, categoryQuery.length - 1)}`
+          if (!paramQuery) paramQuery += `?${finalParam}`
+          else paramQuery += `&${finalParam}`
+        }
+        if (productsObject.length) {
+          let finalParam = `${productQuery.substring(0, productQuery.length - 1)}`
+          if (!paramQuery) paramQuery += `?${finalParam}`
+          else paramQuery += `&${finalParam}`
         }
         if (this.$route.query.site_price_from) {
           if (!paramQuery) paramQuery += `?site_price_from=${this.$route.query.site_price_from}`
@@ -545,6 +589,15 @@
         }else if(newVal?.category_l1?.name){
           this.category = newVal.category_l1.name
         }
+      },
+
+      $route(newVal){
+      if(Object.keys(newVal?.query).length === 0){
+          this.selectedFilterLength = 0
+        }else{
+          this.selectedFilterLength = Object.keys(newVal?.query).length
+        }
+
       }
     }
   }

@@ -1,101 +1,74 @@
 <template>
   <div class="filter-sidebar" ref="refSidebar">
     <header class="d-flex align-center justify-space-between mb-5">
-      <span class="t20 w400 text-grey-darken-3">فیلتر</span>
-      <v-btn variant="text" @click="removeAllFilter()">
-        <span class="t12 w400 text-grey-darken-1 pointer">حذف همه</span>
+      <div class="d-flex align-center">
+        <v-icon icon="mdi-filter-outline" color="color-3c" class="ml-1" style="font-size: 19px !important;"/>
+        <span class="t16 w700 color-3c">فیلتر</span>
+      </div>
+
+      <v-btn class="filter-sidebar__btn btn btn--submit-border" heigh="34px" @click="removeAllFilter()">
+        <span class="t12 w700 text-primary pointer">حذف فیلترها</span>
       </v-btn>
     </header>
+
+    <v-divider color="grey"/>
+
     <template v-for="(filter, index) in filterList" :key="`filter${index}`">
       <div class="filter-sidebar__card" :id="`filter-sidebar__card--${index}`">
-        <header
-            v-if="filter.type !== 'switch'"
-            class="d-flex align-center justify-space-between filter-sidebar__card__header my-4"
-            @click="slideToggleCard(index)">
-          <span class="t16 w400 text-grey-darken-2">{{ filter.name }}</span>
+        <header v-if="filter.type !== 'switch'"
+                class="d-flex align-center justify-space-between filter-sidebar__card__header py-4"
+                @click="slideToggleCard(index)">
+          <span class="t12 w700 color-3c">{{ filter.label }}</span>
 
-          <v-icon icon="mdi-chevron-down" color="grey"/>
+          <div class="d-flex align-center">
+            <!--                  <v-icon size="5" icon="mdi-checkbox-blank-circle" color="success" />-->
+            <v-badge
+                v-if="returnShowBadgeFilter(index)"
+                color="primary"
+                dot
+                class="ml-2 mb-2">
+            </v-badge>
+            <v-icon icon="mdi-chevron-down" color="grey"/>
+          </div>
         </header>
 
-        <template v-if="filter.type === 'select' ">
-          <generalProductFilterList
-              :items="filter.data"
-              :clear="clearAll"
-              :param="filter.param"
-              :name="filter.name"
-              @listItems="listFiltersModalEmit"/>
+        <template v-if="filter.type === 'select'">
+          <generalProductFilterSelects @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                       @selectedFilter="addSelectedFilterForShowBadge" :index="index"
+                                       :showEnName="filter.param === 'categories' ? true : false" :items="filter.data"
+                                       :clear="clearAll" :title="filter.label" :name="filter.label"
+                                       :param="filter.param" @selectItems="selectFiltersModalEmit"
+                                       @changeClearToFalse="changeClearToFalse"/>
         </template>
 
         <template v-else-if="filter.type === 'switch'">
-          <generalProductFilterSwitch
-              :title="filter.name"
-              :param="filter.param"
-              :name="filter.name"
-              :clear="clearAll"
-              :switchName="filter.value"
-              @changeStatus="selectFiltersModalEmit"
-          />
+          <generalProductFilterSwitch :index="index" style="margin: 0 !important;" :title="filter.label"
+                                      :param="filter.param" :name="filter.label" :clear="clearAll"
+                                      :switchName="filter.value" @changeStatus="selectFiltersModalEmit"
+                                      @changeClearToFalse="changeClearToFalse"/>
         </template>
 
         <template v-else-if="filter.type === 'checkbox'">
-          <generalProductFilterSelects
-              :items="filter.data"
-              :title="filter.name"
-              :param="filter.param"
-              :name="filter.name"
-              :clear="clearAll"
-              @selectItems="selectFiltersModalEmit"/>
+          <generalProductFilterSelects @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                       @selectedFilter="addSelectedFilterForShowBadge" :index="index"
+                                       :items="filter.data" :title="filter.label" :param="filter.param"
+                                       :name="filter.label" :clear="clearAll" @selectItems="selectFiltersModalEmit"
+                                       @changeClearToFalse="changeClearToFalse"/>
         </template>
-        
+
         <template v-else-if="filter.type === 'period'">
           <div>
-
-            <div class="filter-sidebar__card__box">
-              <div class="d-flex align-center justify-space-between mb-3">
-                <span class="t14 w400 ml-5">حداقل</span>
-
-                <v-autocomplete
-                    density="compact"
-                    variant="outlined"
-                    placeholder="مثلا 10,000"
-                    :items="amounts"
-                    item-title="label"
-                    item-value="value"
-                    suffix="تومان"
-                    ref="minAmount"
-                    @update:modelValue="updateAmount('min', $event, filter.param)"
-                    v-model="amount.min"
-                    @update:menu="onUpdateMenu"
-                    height="40px"
-                    hide-details
-                    class="mb-3 filter-sidebar__card__search"/>
-              </div>
-
-              <div class="d-flex align-center justify-space-between">
-                <span class="t14 w400 ml-5">حداکثر</span>
-                <v-autocomplete
-                    density="compact"
-                    variant="outlined"
-                    placeholder="مثلا 10,000"
-                    :items="amounts"
-                    item-title="label"
-                    item-value="value"
-                    suffix="تومان"
-                    @update:modelValue="updateAmount('max', $event, filter.param)"
-                    v-model="amount.max"
-                    @update:menu="onUpdateMenu"
-                    height="40px"
-                    hide-details
-                    class="mb-3 filter-sidebar__card__search"/>
-              </div>
-            </div>
+            <generalProductFilterSelectsMount :index="index" @selectItems="updateAmount"
+                                              :isFilter="filter.is_searchable" :items="filter?.data"
+                                              :title="filter.label" @selectedFilter="addSelectedFilterForShowBadge"
+                                              :clear="clearAll" :param="filter.param" :name="filter.label"
+                                              @changeClearToFalse="changeClearToFalse"/>
           </div>
         </template>
       </div>
 
-      <v-divider color="grey"/>
+      <v-divider v-if="index < (filterList.length - 1)" color="grey"/>
     </template>
-
 
   </div>
 </template>
@@ -105,15 +78,17 @@ export default {
   data() {
     return {
       availableItems: false,
-      searchInput:'',
+      searchInput: '',
       amount: {
         max: null,
         min: null
       },
-      amounts: [{
-        label: '10 هزار',
-        value: '100000'
-      },
+      selectedFilters: new Set([]),
+      amounts: [
+        {
+          label: '10 هزار',
+          value: '100000'
+        },
         {
           label: '25 هزار',
           value: '250000'
@@ -143,42 +118,67 @@ export default {
           value: '3000000'
         }
       ],
+      clearAll: false,
     }
   },
 
   props: {
     filterList: Array,
-
   },
 
   methods: {
 
     /**
      * Toggle card box
-     * @param {*} index
+     * @param {*} id
      */
     slideToggleCard(id) {
       const sidebarTab = this.$refs['refSidebar'];
 
-        const divItems = sidebarTab.querySelectorAll('div.filter-sidebar__card');
+      const divItems = sidebarTab.querySelectorAll('div.filter-sidebar__card');
 
-        divItems.forEach(item => {
-          if(item.id !== `filter-sidebar__card--${id}` && item.id !== `filter-sidebar__card--status`){
-            if(item.querySelector('.filter-sidebar__card__box')){
-              if(item.querySelector('.filter-sidebar__card__box').classList.contains('open-card')){
-                item.querySelector('.filter-sidebar__card__box').classList.remove('open-card');
-                const hasClass = item.querySelector('.v-icon.mdi-chevron-down').classList.contains('mdi-chevron-up')
-                if(hasClass){
-                  item.querySelector('.v-icon.mdi-chevron-down').classList.remove('mdi-chevron-up')
-                }
+      divItems.forEach(item => {
+        if (item.id !== `filter-sidebar__card--${id}` && item.id !== `filter-sidebar__card--status`) {
+          if (item.querySelector('.filter-sidebar__card__box')) {
+            if (item.querySelector('.filter-sidebar__card__box').classList.contains('open-card')) {
+              item.querySelector('.filter-sidebar__card__box').classList.remove('open-card');
+              const hasClass = item.querySelector('.v-icon.mdi-chevron-down').classList.contains('mdi-chevron-up')
+              if (hasClass) {
+                item.querySelector('.v-icon.mdi-chevron-down').classList.remove('mdi-chevron-up')
               }
             }
           }
-        });
+        }
+      });
 
-        const specificElement = document.getElementById(`filter-sidebar__card--${id}`);
-        specificElement.querySelector('.v-icon.mdi-chevron-down').classList.toggle('mdi-chevron-up')
-        specificElement.querySelector('.filter-sidebar__card__box').classList.toggle('open-card');
+      const specificElement = document.getElementById(`filter-sidebar__card--${id}`);
+      specificElement.querySelector('.v-icon.mdi-chevron-down').classList.toggle('mdi-chevron-up')
+      specificElement.querySelector('.filter-sidebar__card__box').classList.toggle('open-card');
+    },
+
+    /**
+     * for show badge
+     * @param {*} index
+     */
+    addSelectedFilterForShowBadge(index) {
+      this.selectedFilters.add(index)
+    },
+    /**
+     * for show badge
+     * @param {*} index
+     */
+    removeSelectedFilterForShowBadge(index) {
+      this.selectedFilters.delete(index)
+    },
+
+    /**
+     * for show badge
+     * @param {*} index
+     */
+    returnShowBadgeFilter(index) {
+      const showBadgeIndex = this.selectedFilters.has(index)
+      if (showBadgeIndex) return true
+      return false
     },
 
     /**
@@ -208,11 +208,10 @@ export default {
     /**
      * Show available Items
      */
-     updateAmount(field, value, param) {
-      this.amount[field] = value;
+    updateAmount(field) {
       const form = {
-        param: param,
-        amount: this.amount
+        param: field.param,
+        amount: field.values
       };
       this.$emit('setAmount', form);
     },
@@ -221,16 +220,26 @@ export default {
      */
     removeAllFilter() {
       this.$router.push(`${this.$route.path}`)
+      this.clearAll = true
+      this.selectedFilters = new Set([])
+      this.$emit('clearFilterQuery')
+    },
+
+    /**
+     * change clear
+     */
+    changeClearToFalse() {
+      this.clearAll = false
     },
 
     /**
      * Fix bug for select in c-select
      */
-      onUpdateMenu(open) {
-        if (open) {
-            // WORKAROUND: fixes dialog menu popup position
-            setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
-        }
+    onUpdateMenu(open) {
+      if (open) {
+        // WORKAROUND: fixes dialog menu popup position
+        setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+      }
     }
   }
 }

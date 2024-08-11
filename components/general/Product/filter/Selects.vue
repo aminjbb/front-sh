@@ -3,23 +3,29 @@
     <v-text-field
         density="compact"
         variant="outlined"
-        :placeholder="`جستجو ${title}`"
+        :placeholder="` جستجو در ${title}`"
         hide-details
         height="40px"
         prepend-inner-icon="mdi-magnify"
-        class="mb-3 filter-sidebar__card__search"
+        class="mb-2 filter-sidebar__card__search"
         v-model="searchItem" />
 
-    <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems.length > 5}">
+    <div class="pl-2 pt-1" :class="{'filter-sidebar__card__scroll' : filteredItems && filteredItems.length > 5}">
         <template v-for="item in filteredItems" :key="item.id">
-            <div class="d-flex justify-space-between align-center">
+            <div class="d-flex justify-space-between align-center mb-1">
                 <v-checkbox
                     v-model="itemsModel"
                     :label="item.label ? item.label : item.value"
                     @change="selectItems()"
                     hide-details
+                    color="primary"
                     :value="item.id" />
-                <span class="t11 w500 text-grey-lighten-1" v-if="item.name">{{item.name}}</span>
+
+                <span v-if="item?.name && !showEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1 text-left ltr">{{item.name}}</span>
+
+                <template v-else-if="param === 'colors'">
+                    <span class="filter-sidebar__card__color" :style="{ backgroundColor: item?.value }" :class="item?.value === '#ffffff' || item?.value === '#FF00FF00' ? 'border' : '' "></span>
+                </template>
             </div>
         </template>
     </div>
@@ -56,12 +62,22 @@ export default {
         items: Array,
 
         /**
+         * index of filter
+         */
+        index: Number,
+
+        /**
          * Clear modal if 'clear' be true
          */
         clear: {
             type: Boolean,
             default: false
-        }
+        },
+
+        showEnName: {
+            type: Boolean,
+            default: false
+        },
     },
 
     computed: {
@@ -72,25 +88,25 @@ export default {
             if (this.searchItem == null || this.searchItem == '') {
 
                 return this.items.sort((a, b) =>{
-                 if (a.name)  a.name.localeCompare(b.name)
+                 if (a.label)  a.label.localeCompare(b.label)
                   else  a.value.localeCompare(b.value)
                 });
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
-                if (this.param == 'brands'){
+                if (this.param == 'brands' || this.param == 'colors'){
                   return this.items
                       .sort((a, b) => a.label.localeCompare(b.label))
                       .filter(
-                          (brand) =>
-                              brand.label.toLowerCase().includes(lowerCaseSearch)
+                          (item) =>
+                              item.label.toLowerCase().includes(lowerCaseSearch)
                       );
                 }
                 else{
                   return this.items
-                      .sort((a, b) => a.value.localeCompare(b.value))
+                      .sort((a, b) => a.label.localeCompare(b.label))
                       .filter(
-                          (brand) =>
-                              brand.value.toLowerCase().includes(lowerCaseSearch)
+                          (item) =>
+                              item.label.toLowerCase().includes(lowerCaseSearch)
                       );
                 }
 
@@ -100,7 +116,7 @@ export default {
 
     watch: {
         clear(newValue) {
-            if (newValue) {
+          if (newValue) {
                 this.clearModal();
             }
         },
@@ -116,6 +132,8 @@ export default {
                 name: this.name,
                 values: this.itemsModel
             }
+            if (obj.values.length) this.$emit('selectedFilter', this.index);
+            else  this.$emit('removeSelectedFilter', this.index);
 
             this.$emit('selectItems', obj);
         },
@@ -124,30 +142,114 @@ export default {
          * Clear modal
          */
         clearModal() {
-            this.searchItem = [];
+            this.itemsModel = [];
+          this.$emit('changeClearToFalse');
+
         }
     },
 
   mounted() {
-      if(this.param === 'brands'){
-        if(this.$route.query.brands){
-          let selectedBrands = []
-          const FilteredBrands = JSON.parse(this.$route.query.brands)
-          FilteredBrands.forEach(brand=>{
-            const findBrand =  this.items.find(searchBrand=>searchBrand.id === brand)
-            if (findBrand) this.itemsModel.push(findBrand.id)
-          })
+      try {
+        if(this.param === 'brands'){
+          if(typeof this.$route.query[`brands[]`]  ==='object'){
+            const FilteredBrands = this.$route.query[`brands[]`]
+            FilteredBrands.forEach(brand=>{
+              const findBrand =  this.items.find(searchBrand=>searchBrand.id == brand)
+              if (findBrand) {
+                this.itemsModel.push(findBrand.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+          else if(typeof this.$route.query[`brands[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`brands[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
+        }
+        else if (this.param === 'attributes'){
+          if(typeof this.$route.query[`attributes[]`] ==='object'){
+            const FilteredAttribute = this.$route.query[`attributes[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+          else if(typeof this.$route.query[`attributes[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`attributes[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
+        }
+        else if (this.param === 'products'){
+          if(typeof this.$route.query[`products[]`]==='object' ){
+            const FilteredAttribute = this.$route.query[`products[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+          else if(typeof this.$route.query[`products[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`products[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
+        }
+        else if (this.param === 'categories'){
+          if(typeof this.$route.query[`categories[]`] ==='object'){
+            const FilteredAttribute = this.$route.query[`categories[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+          else if(typeof this.$route.query[`categories[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`categories[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
+        }
+        else if (this.param === 'colors'){
+          if(typeof this.$route.query[`colors[]`] ==='object'){
+            const FilteredAttribute = this.$route.query[`colors[]`]
+            FilteredAttribute.forEach(attribute=>{
+              const findAttribute =  this.items.find(findAttribute=>findAttribute.id == attribute)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
+          else if(typeof this.$route.query[`colors[]`] ==='string'){
+            const findAttribute =  this.items.find(findAttribute=> findAttribute.id == this.$route.query[`colors[]`])
+            if (findAttribute) {
+              this.itemsModel.push(findAttribute.id)
+              this.$emit('selectedFilter', this.index);
+            }
+          }
         }
       }
-      else if (this.param === 'attributes'){
-        if(this.$route.query.attribute){
-          const FilteredAttribute = JSON.parse(this.$route.query.attribute)
-          FilteredAttribute.forEach(attribute=>{
-            const findAttribute =  this.items.find(findAttribute=>findAttribute.id === attribute)
-            if (findAttribute) this.itemsModel.push(findAttribute.id)
-          })
-        }
+      catch (e) {
+        // console.log(e)
       }
+
   }
 
 }

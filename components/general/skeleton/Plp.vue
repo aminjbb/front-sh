@@ -11,25 +11,34 @@
                 <v-skeleton-loader :loading="loading" type="text" />
             </v-col>
         </v-row>
-        <v-row>
-            <v-col cols="12">
-                <v-card class="px-5" rounded="lg">
-                    <v-row>
-                        <v-col v-for="pro in 6" :key="pro" cols="2">
-                            <v-skeleton-loader :loading="loading" height="240" type="image, list-item">
-                                <v-responsive>
-                                    <v-img src="src" class="rounded-lg mb-2" height="184" cover />
+<!--        <v-row>-->
+<!--            <v-col cols="12">-->
+<!--                <v-card class="px-5" rounded="lg">-->
+<!--                    <v-row>-->
+<!--                        <v-col v-for="pro in 6" :key="pro" cols="2">-->
+<!--                            <v-skeleton-loader :loading="loading" height="240" type="image, list-item">-->
+<!--                                <v-responsive>-->
+<!--                                    <v-img src="src" class="rounded-lg mb-2" height="184" cover />-->
 
-                                    <v-list-item subtitle="subtitle" title="title" class="px-0" />
-                                </v-responsive>
-                            </v-skeleton-loader>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-        </v-row>
+<!--                                    <v-list-item subtitle="subtitle" title="title" class="px-0" />-->
+<!--                                </v-responsive>-->
+<!--                            </v-skeleton-loader>-->
+<!--                        </v-col>-->
+<!--                    </v-row>-->
+<!--                </v-card>-->
+<!--            </v-col>-->
+<!--        </v-row>-->
     </v-col>
 </v-row>
+
+<template v-if="screenSize === 'desktop'">
+    <v-row justify="start">
+        <v-col cols="1" v-for="cat in 5" :key="cat">
+            <v-skeleton-loader v-if="loading" type="text" />
+        </v-col>
+    </v-row>
+</template>
+
 <v-row v-if="screenSize === 'mobile'">
     <v-col cols="12">
         <v-row justify="start">
@@ -89,15 +98,7 @@
     </v-row>
 
     <v-col cols="12" md="9">
-        <template v-if="screenSize === 'desktop'">
-            <v-row justify="start">
-                <v-col cols="1" v-for="cat in 5" :key="cat">
-                    <v-skeleton-loader v-if="loading" type="text" />
-                </v-col>
-            </v-row>
-        </template>
-
-        <div class="v-product__contents" :class="screenSize === 'desktop' ? 'mt-6' : ''">
+        <div class="v-product__contents">
             <div class="px-2">
                 <v-row>
                     <v-col v-for="card in 12" :key="card" cols="6" lg="3">
