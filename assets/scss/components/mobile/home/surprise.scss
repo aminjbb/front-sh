@@ -102,17 +102,29 @@
         }
     }
 
-    .swiper-button-prev,
-        .swiper-button-next {
-            background: var(--Shade-white, #FFF);
-            border: 1px solid #9E9E9E;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+    .swiper-button-next,
+    .swiper-button-prev{
+        border-radius: 16px !important;
+        background: #FBE9F3 !important;
+        width: 42px !important;
+        height: 42px !important;
 
-            &::after{
-                color:#D72685;
-                font-size: 15px !important;
-            }
+        &::before{
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            content: '';
+            position: absolute;
+            top: calc(50% - 11.5px);
+            right: calc(50% - 11.5px);
+            background-color: #D72685;
         }
+
+        &::after{
+            z-index: 1;
+            color: white;
+            font-size: 13px;
+        
+        }
+    }
 }

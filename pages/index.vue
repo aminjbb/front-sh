@@ -9,37 +9,38 @@
         <!--  desktop size -->
         <div v-if="screenType === 'desktop'">
             <desktopHomeMainSlider :items="responseDot(1)" />
-            <v-container>
+            <v-container class="pt-0">
                 <desktopHomeSurprise class="mt-4" :content="responseDot(2)" />
 
                 <desktopHomeCategoryList :items="responseDot(3)" />
 
                 <desktopHomeBanner :items="desktopBanner1" col="6" class="pt-3 mb-4" />
-                <MobileHomeSection5Slider :content="responseDot(5)" />
 
-                <generalTabSlider :items="responseDot(6)" class="tab-slider1 mb-8" contentWidth="1080px" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" columnHeader />
+                <MobileHomeSection5Slider :content="responseDot(5)"/>
 
-                <mobileHomeBrands :items="responseDot(7)" class="mb-8" />
+                <generalTabSlider :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+
+                <mobileHomeBrands :items="responseDot(7)" class="mb-8"/>
 
                 <desktopHomeBanner class="mt-3" :items="desktopBanner2" col="3" />
 
-                <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" />
+                <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" class="mb-10 mt-4"/>
 
-                <desktopHomeBanner :title="titleSection10" :items="desktopBanner3" col="3" />
+                <desktopHomeBanner :items="desktopBanner3" col="3" class="mt-5"/>
 
-                <generalTabSlider setRef="tab2" :items="responseDot(11)" class="tab-slider2 mb-8" :title="titleSection11" componentName="generalProductMinimalCard" contentWidth="100%" wrapContent limit=6 />
+                <generalTabSlider :items="responseDot(11)" class="tab-slider1 mb-8 mt-4" limit="12" contentWidth="1080px" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
                 <desktopHomeBanner :items="desktopBanner4" col="4" />
 
                 <template v-if="homeBlog && homeBlog.length">
                     <header class="pa-3 pb-5">
-                        <h2 class="t20 text-right text-grey-darken-2">
+                        <h2 class="t20 text-sGrayDarken2 pt-4 w700">
                             {{titleSection13 }}
                         </h2>
                     </header>
 
                     <v-row>
-                        <v-col cols="12" md="3" sm="6" v-for="(item, index) in homeBlog" :key="`blogs-${index}`">
+                        <v-col cols="12" md="3" sm="6" class="px-2" v-for="(item, index) in homeBlog" :key="`blogs-${index}`">
                             <mobileHomeBlogCard :content="item" />
                         </v-col>
                     </v-row>
@@ -63,22 +64,21 @@
                 <MobileHomeSection5Slider class="mt-4" :content="responseDot(5)" />
             </v-container>
 
-            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" contentWidth="830px" title="پیشنهاد شاواز" device='mobile' :componentProps="tabSlider1ComponentProps" />
+            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+
+            <mobileHomeBanner :items="mobileBanner2" scroll class="pr-4"/>
+
+             <mobileHomeBrands :items="responseDot(7)" device="mobile" class="mb-3 pr-4" />
 
             <v-container>
-                <mobileHomeBanner :items="mobileBanner2" scroll />
-
-                <mobileHomeBrands :items="responseDot(7)" device="mobile" class="mb-3" />
-
                 <mobileHomeBanner :items="mobileBanner3" generalCol="6" col="6" device="mobile"/>
-
             </v-container>
 
-            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile" />
+            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"  :navigation="true"/>
 
             <mobileHomeBanner :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
 
-            <generalTabSlider :items="responseDot(11)" class="tab-slider1 pr-4" contentWidth="830px" :title="titleSection11" device='mobile' :componentProps="tabSlider1ComponentProps" />
+            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <template v-if="homeBlog && homeBlog.length">
                 <div class="pr-4 blog-section blog-section--mobile mb-15">

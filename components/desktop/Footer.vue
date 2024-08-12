@@ -181,7 +181,7 @@ $parent: "footer";
 .#{$parent} {
     &--desktop {
         width: 100%;
-        background: #fff;
+        background: #FAFAFA;
         display: flex;
 
         flex-direction: column;

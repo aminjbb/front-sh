@@ -2,6 +2,8 @@
 //  Desktop category list
 //------------------------------------------------
 
+@import "~/assets/scss/tools/bp";
+
 $parent: 'category-list';
 
 .#{$parent} {
@@ -10,12 +12,22 @@ $parent: 'category-list';
             &__items {
                 margin: 0 -6px;
                 flex-wrap: wrap;
+                padding: 0 25%;
+                align-items: baseline;
+
+                @include gbp (992, 1280) {
+                    padding: 0 16%;
+                }
+
+                @include gbp (768, 992) {
+                    padding: 0 10%;
+                }
             }
 
             &__item {
-                flex: 0 0 154px;
-                width: 154px;
-                height: 154px;
+                flex: 0 0 100px;
+                width: 100px;
+                height: 153px;
                 margin: 0 6px;
                 display: flex;
                 flex-direction: column;
@@ -29,7 +41,7 @@ $parent: 'category-list';
                     img {
                         width: 100%;
                         height: auto;
-                        max-height: 112px;
+                        max-height: 72px;
                         transition: transform 0.3s ease-in-out;
                     }
 
