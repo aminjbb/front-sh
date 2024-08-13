@@ -14,16 +14,17 @@
             <span class="t14 ml-2">  {{mainBanner?.label}}</span>
           </div>
 
+          <div class="surprise-slider__info__title mb-4">
+            <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>
+        </div>
+
             <v-btn
                 color="primary500"
                 height="40"
                 variant="outlined"
                 :href="mainBanner?.link"
                 class="px-8 mt-1 surprise-slider__info__btn">
-                مشاهده همه
-                <template v-slot:append>
-                    <v-icon icon="mdi-chevron-left" />
-                </template>
+                مشاهده بیشتر
             </v-btn>
         </div>
 
