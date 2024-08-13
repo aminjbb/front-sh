@@ -110,15 +110,16 @@
         </v-row>
 
         <v-row class="footer__row2" align="center">
-            <v-col cols="12" lg="6">
+            <v-col cols="12" lg="8">
                 <div class="footer__contact-us d-flex align-center">
                     <v-icon color="grey-darken-1" icon="mdi-phone-in-talk-outline" />
-                    <span class="t14 text-grey-darken-1 ml-2 d-block"> پشتیبانی شاواز:۹۱۰۳۲۳۴۳-۰۲۱</span>
+                    <span class="t14 text-grey-darken-1 ml-2 d-block"> پشتیبانی شاواز : ۹۱۰۳۲۳۴۳-۰۲۱</span>
+                    <span class="t14 text-grey-darken-1 ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
                     <span class="t14 text-grey-darken-1">| شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲.</span>
                 </div>
             </v-col>
 
-            <v-col cols="12" lg="6">
+            <v-col cols="12" lg="4">
                 <div class="footer__logo-hologram">
                     <a href="/" title="Shavaz hologram">
                         <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
