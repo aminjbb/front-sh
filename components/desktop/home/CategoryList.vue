@@ -1,6 +1,6 @@
 <template>
 <section class="category-list category-list--desktop">
-    <header v-if="sectionLabel && categories && categories.length > 0" class="pa-6 mt-6">
+    <header v-if="sectionLabel && categories && categories.length > 0" class="pt-6 pb-4 mt-6">
         <h2 class="t22 w700 text-center text-sGrayDarken2 ma-0">
             {{ sectionLabel }}
         </h2>
