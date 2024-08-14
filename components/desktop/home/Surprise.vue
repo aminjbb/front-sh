@@ -7,14 +7,14 @@
                 <v-icon icon="mdi-clock-outline" />
             </div>
 
-            <div class="surprise-slider__info__image mb-4">
+            <div class="surprise-slider__info__image mb-1">
                 <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
             </div>
           <div class="surprise-slider__info__title mb-4">
             <span class="t14 ml-2">  {{mainBanner?.label}}</span>
           </div>
 
-          <div class="surprise-slider__info__title mb-4">
+          <div class="surprise-slider__info__title ">
             <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>
         </div>
 
