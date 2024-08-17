@@ -26,10 +26,30 @@
 
                     <div class="d-flex align-center">
                         <span class="t14 w400 text-grey-darken-2 ml-1">شماره تماس:</span>
-
-                        <a :href="setTel('02191032343')" class="number-font t14 w400 text-grey-darken-2" dir="ltr">
+                        <div class="d-md-flex d-none">
+                          <a :href="setTel('02191032343')" class="number-font t14 w400 text-grey-darken-2" dir="ltr">
                             021-91032343
-                        </a>
+                          </a>
+                          <span class="mx-1 t14 w400">
+                          و
+                        </span>
+                          <a :href="setTel('021-91552343')" class="number-font t14 w400 text-grey-darken-2" dir="ltr">
+                            021-91552343
+                          </a>
+                        </div>
+                        <div class="d-md-none d-block">
+                         <div>
+                           <a :href="setTel('02191032343')" class="number-font t14 w400 text-grey-darken-2" dir="ltr">
+                             021-91032343
+                           </a>
+                         </div>
+
+                        <div>
+                          <a :href="setTel('021-91552343')" class="number-font t14 w400 text-grey-darken-2" dir="ltr">
+                            021-91552343
+                          </a>
+                        </div>
+                        </div>
                     </div>
                 </div>
 
