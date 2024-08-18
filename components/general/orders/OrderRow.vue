@@ -51,6 +51,7 @@
       <div class="order-row__items d-flex flex-nowrap pb-5">
         <template v-if="content?.details && content?.details.length">
           <generalProductSimpleCard
+              class="order-row__item"
               v-for="(sku, index) in content?.details"
               :key="`sku${index}`"
               tag="a"

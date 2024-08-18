@@ -27,6 +27,12 @@
         }
     }
 
+    &__item{
+        .product-card__image{
+            height: 100px !important;
+        }
+    }
+
     .v-icon.mdi-circle{
         font-size: 5px;
     }
