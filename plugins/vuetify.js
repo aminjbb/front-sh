@@ -53,9 +53,9 @@ const myTheme = {
     sErrorLighten2: '#FFEBEE',
 
     sGray: '#6A6A6A',
-    sGrayLighten1: '#64B5F6',
+    sGrayLighten1: '#9E9E9E',
     sGrayLighten2: '#9A9A9A',
-    sGrayLighten3: '#9E9E9E',
+    sGrayLighten3: '#F5F5F5',
     sGrayDarken1: '#424242',
     sGrayDarken2: '#3C3C3C',
   },
