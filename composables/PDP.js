@@ -18,6 +18,12 @@ export default function setup() {
     const store = useStore()
     const skuTitle = ref('')
     const description = ref('')
+    const productIdMeta = ref('')
+    const productNameMeta = ref('')
+    const ogImage = ref('')
+    const productPriceMeta = ref('')
+    const productOldPriceMeta = ref('')
+    const availability = ref('')
     const structuredData = ref(null)
     const structuredDataBreadcrumb = ref(null)
     const loading = ref(true)
@@ -77,6 +83,14 @@ export default function setup() {
                         product.value = mainResponse.data?.data?.info
                         skuTitle.value = mainResponse.data?.data?.info.page.meta_title
                         description.value =mainResponse.data?.data?.info.page.meta_description
+                        productIdMeta.value =mainResponse.data?.data?.info?.id
+                        productNameMeta.value =mainResponse.data?.data?.info?.label
+                        ogImage.value =mainResponse.data?.data?.info?.primary_image_url
+                        productPriceMeta.value =mainResponse.data?.data?.info?.shps_list[0]?.customer_price
+                        productOldPriceMeta.value =mainResponse.data?.data?.info?.shps_list[0]?.site_price
+                        if (mainResponse.data?.data?.info?.shps_list[0]?.stock === 1)   availability.value = 'instock'
+                        else  availability.value = 'outofstock'
+
                         /**Schema - structured data */
                         structuredData.value = {
                             "@context": "http://schema.org/",
@@ -139,7 +153,8 @@ export default function setup() {
 
     return {
         product, color, secondaryData, loading,
-        getPdpData,  breadcrumb, skuTitle, description
+        getPdpData,  breadcrumb, skuTitle, description, availability , productOldPriceMeta,
+        productPriceMeta , ogImage , productNameMeta , productIdMeta
     }
 }
 

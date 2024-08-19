@@ -1,50 +1,53 @@
 <template>
-
-<section
-    class="tab-slider mb-4"
-    :class="getDynamicClasses"
-    :ref="setRef">
-    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+<section class="tab-slider mb-4" :class="getDynamicClasses" :ref="setRef">
+    <header v-if="title" class="text-right" :class="device === 'desktop' ? 't20 text-sGrayDarken2 py-4 w700' : 't16 text-sGrayDarken2 pt-6 pb-1 w700'">
         {{title}}
     </header>
 
     <div>
-
         <nav class="tab-slider__header">
             <ul class="ma-0 pa-0">
-                <li
-                    v-for="(tab, index) in categories"
-                    :key="`tab-slider__${index}`"
-                    @click="activeTab(tab.id,tab.label)"
-                    :id="`tab-header-${tab.id}`"
-                    class="tab-slider__header__item"
-                    :class="index == 0 ? 'active' : ''">
+                <li v-for="(tab, index) in categories" :key="`tab-slider__${index}`" @click="activeTab(tab.id,tab.label)" :id="`tab-header-${tab.id}`" class="tab-slider__header__item" :class="index == 0 ? 'active' : ''">
                     <span>{{tab.label}}</span>
 
-                    <v-icon
-                        v-if="columnHeader"
-                        icon="mdi-chevron-left"
-                        color="grey" />
+                    <v-icon v-if="columnHeader" icon="mdi-chevron-left" color="grey" />
                 </li>
             </ul>
         </nav>
-        <div class="tab-slider__contents">
-            <div
-                v-for="(item, index) in categories"
-                class="tab-slider__content d-flex"
-                :class="{ 'active': index === 0, 'flex-wrap': wrapContent }"
-                :key="`tab-content-${item.id}`"
-                :id="`tab-content-${item.id}`"
-                :style="{ width: `${contentWidth}`, flex:`0 0 ${contentWidth}`}">
 
-                <component
-                    v-for="sku in getSkuList(item ,limit)"
-                    :key="`tab-skus-${sku.id}`"
-                    :is="component"
-                    :index = "index+1"
-                    :sectionName= "`${title} - ${selectedTab}`"
-                    v-bind=componentProps
-                    :content="sku" />
+        <div class="tab-slider__contents py-2">
+            <div v-for="(item, index) in categories" class="tab-slider__content" :class="{ 'active': index === 0, 'flex-wrap': wrapContent, 'd-flex': mobileMode === false }" :key="`tab-content-${item.id}`" :id="`tab-content-${item.id}`" :style="mobileMode ? '' : { width: `${contentWidth}`, flex:`0 0 ${contentWidth}`}">
+                <template v-if="mobileMode">
+                    <swiper dir="rtl" :slidesPerView="6" :spaceBetween="8" :modules="modules" :navigation="device === 'desktop' ? true : false" :breakpoints="{
+                        '200': {
+                            slidesPerView: 2.3,
+                        },
+                        '500': {
+                            slidesPerView: 2.8,
+                        },
+                        '650': {
+                            slidesPerView: 3.2,
+                        },
+                        '768': {
+                            slidesPerView: 4.2,
+                        },
+                        '992': {
+                            slidesPerView: 5.2,
+                        },
+                        '1200': {
+                            slidesPerView: 6.2,
+                        },
+                        '1398': {
+                            slidesPerView: 7.2,
+                        }
+                    }" class="mySwiper py-3 w-100">
+                            <swiper-slide v-for="sku in getSkuList(item ,limit)" :key="`tab-skus-${sku.id}`">
+                                <component class="w-100 h-100" :is="component" :index="index+1" :sectionName="`${title} - ${selectedTab}`" v-bind=componentProps :content="sku" />
+                            </swiper-slide>
+                    </swiper>
+                </template>
+
+                <component v-else v-for="sku in getSkuList(item ,limit)" :key="`tab-skus-${sku.id}`" :is="component" :index="index+1" :sectionName="`${title} - ${selectedTab}`" v-bind=componentProps :content="sku" />
             </div>
         </div>
     </div>
@@ -55,6 +58,24 @@
 import {
     resolveComponent
 } from 'vue';
+
+// Import Swiper Vue.js components
+import {
+    Swiper,
+    SwiperSlide
+} from 'swiper/vue';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+
+// import required modules
+import {
+    FreeMode,
+    Navigation
+} from 'swiper/modules';
+
 export default {
     data() {
         return {
@@ -127,6 +148,27 @@ export default {
             type: String,
             default: 'tab1'
         },
+
+        /**
+         * device
+         */
+        device: {
+            type: String,
+            default: "desktop"
+        },
+
+        /**
+         * Set mobile view in desktop view
+         */
+        mobileMode: {
+            type: Boolean,
+            default: false
+        },
+    },
+
+    components: {
+        Swiper,
+        SwiperSlide,
     },
 
     setup(props) {
@@ -136,7 +178,8 @@ export default {
         const component = resolveComponent(componentName);
 
         return {
-            component
+            component,
+            modules: [FreeMode, Navigation],
         };
     },
 
@@ -147,12 +190,13 @@ export default {
         getDynamicClasses() {
             return {
                 'column-header': this.columnHeader,
+                'mobile-mode': this.mobileMode
             };
         },
 
         categories() {
             try {
-                this.selectedTab = this.items.categories[0]?.label
+                this.selectedTab = this.items.categories[0] ?.label
                 return this.items.categories.slice(0, 6)
             } catch (e) {
                 return []
@@ -161,9 +205,9 @@ export default {
     },
 
     methods: {
-        getSkuList(item , limit){
-            const skus = item.skus.slice(0,limit)
-            const findSkus = skus.filter(sku => sku?.seller_s_k_us?.length && sku?.seller_s_k_us[0]?.site_stock > 0)
+        getSkuList(item, limit) {
+            const skus = item.skus.slice(0, limit)
+            const findSkus = skus.filter(sku => sku ?.seller_s_k_us ?.length && sku ?.seller_s_k_us[0] ?.site_stock > 0)
             return findSkus
         },
         /**
@@ -192,6 +236,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import '~/assets/scss/components/general/tab-slider.scss';
 </style>

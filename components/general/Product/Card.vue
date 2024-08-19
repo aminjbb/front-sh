@@ -1,9 +1,5 @@
 <template>
 <div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
-    <!-- <div v-if="index && showIndex" class="product-card__index">
-        <span class="t16">#{{index}}</span>
-    </div> -->
-
     <div v-if="deleteIcon" class="product-card__delete">
         <generalModalsDelete
             ref="refRemoveProduct"
@@ -31,8 +27,8 @@
         </a>
     </template>
 
-    <div class="d-flex align-center justify-space-between w-100 pl-1">
-        <span class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
+    <div v-if="content?.brand_name || (content?.colors && content?.colors.length > 0)" class="d-flex align-center justify-space-between w-100 pl-1">
+        <span v-if="content?.brand_name" class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
 
         <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center">
             <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
@@ -49,8 +45,8 @@
     </div>
 
     
-    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w400 product-card__title card-title">
-        <a class="t12 l21 w400 text-right" :href="`/sku/${content.slug}`">
+    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
+        <a class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}
         </a>
     </h3>

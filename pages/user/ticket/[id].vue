@@ -120,6 +120,7 @@ import axios from "axios";
 export default {
     data() {
         return {
+          valid:true,
             ticket: null,
             loading: false,
             showAnswerBox: false,
@@ -127,7 +128,7 @@ export default {
             form: {
                 content: null,
             },
-            images: null,
+            images: [],
         }
     },
 
@@ -165,8 +166,13 @@ export default {
          * @param {*} response 
          */
         getImage(response) {
-            const image = response.file_id;
+          const image = response.file_id;
+
+          if (!Array.isArray(this.images)) {
+            this.images = []
+          }
             this.images.push(image);
+
         },
 
         /**
@@ -183,6 +189,8 @@ export default {
             this.loading = true;
 
             const formData = new FormData();
+
+          console.log(this.images, 'image')
 
             formData.append('content', this.form.content)
             if (this.images) {

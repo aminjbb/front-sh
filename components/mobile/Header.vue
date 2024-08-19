@@ -164,7 +164,6 @@ $parent: 'header';
 
 .#{$parent} {
     &--mobile {
-        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
         z-index: 11;
         position: relative;
         
@@ -325,6 +324,7 @@ $parent: 'header';
     background: #fff;
     overflow: hidden;
     position: relative;
+    box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
 
     &.hidden {
         opacity: 0;
