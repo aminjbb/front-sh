@@ -67,6 +67,7 @@
             color: #F7F8FA !important;
             height: 33px !important;
             border-radius: 12px;
+            border-width: 2px;
 
             @include gbp("md") {
                 width: 130px !important;
