@@ -12,7 +12,7 @@ export default function setup() {
        async () =>
            await   axios.get(runtimeConfig.public.apiBase + `/homepage/index/`)
                 .then((response) => {
-                    homeSectionList.value = response.data?.data
+                    homeSectionList.value = response.data?.data?.sections
                 })
                 .catch((err) => {
                     if (err.response.status){
