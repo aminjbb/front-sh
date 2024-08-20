@@ -16,16 +16,16 @@
                     },
                 }" class="mySwiper">
             <swiper-slide>
-                <div class="d-flex flex-column align-center surprise-slider__info h-100 w-100">
-                    <div class="surprise-slider__info__counter mb-4">
-                        <span class="t20 w700 ml-2">{{ formattedTime }}</span>
+                <div class="d-flex flex-column align-center surprise-slider__info h-100 w-100 flex-nowrap">
+                    <div class="surprise-slider__info__counter mb-2">
+                        <span class="t18 w700 ml-2">{{ formattedTime }}</span>
                         <v-icon icon="mdi-clock-outline" />
                     </div>
 
-                    <div class="surprise-slider__info__image flex-grow-1 mb-4">
+                    <div class="surprise-slider__info__image flex-grow-1 mb-2 d-flex align-center justify-center">
                         <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
                     </div>
-                    <div class="surprise-slider__info__title mb-4">
+                    <div class="surprise-slider__info__title mb-2">
                         <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>
                     </div>
 
