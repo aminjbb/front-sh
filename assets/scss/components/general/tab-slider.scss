@@ -64,24 +64,27 @@ $parent: 'tab-slider';
             }
 
             @include gbp (0, 768) {
-                padding: 5px 10px !important;
-                font-size: 13px !important;
+                padding: 7px 16px !important;
+                font-size: 12px !important;
                 display: inline-block !important;
                 border-radius: 30px !important;
                 margin-left: 8px !important;
-                background-color: #efefef !important;
+                background-color: #fff !important;
+                border:1px solid #E8E8E8;
 
                 &.active {
                     background-color: #D72685 !important;
-                    color: #fff !important;
 
                     span {
                         border: 0 !important;
+                        color: #fff !important;
                     }
                 }
 
                 span {
                     padding: 0 !important;
+                    color: #3c3c3c;
+                    font-variation-settings: "wght" 700;
                 }
             }
 
@@ -119,11 +122,6 @@ $parent: 'tab-slider';
     &__content {
         display: none !important;
         height: 100%;
-
-        @include gbp (0, 768) {
-            width: 900px;
-            flex: 0 0 900px;
-        }
 
         &.active {
             display: flex !important;
@@ -195,6 +193,95 @@ $parent: 'tab-slider';
             &__contents {
                 width: calc(100% - 210px);
                 flex: 0 0 calc(100% - 210px);
+            }
+        }
+    }
+
+    &.mobile-mode{
+        > div {
+            flex-direction: column;
+            border: 0;
+        }
+
+        .#{$parent}{
+            &__header {
+                width: 100% !important;
+                    display: block !important;
+                    padding: 0;
+        
+                ul {
+                    width: max-content;
+                    padding: 0 !important;
+                }
+        
+                li {
+                    padding: 7px 16px !important;
+                    font-size: 12px !important;
+                    display: inline-block !important;
+                    border-radius: 30px !important;
+                    margin-left: 8px !important;
+                    background-color: #fff !important;
+                    border:1px solid #E8E8E8;
+    
+                    &.active {
+                        background-color: #D72685 !important;
+    
+                        span {
+                            border: 0 !important;
+                            color: #fff !important;
+                        }
+                    }
+    
+                    span {
+                        padding: 0 !important;
+                        color: #3c3c3c;
+                        font-variation-settings: "wght" 700;
+                    }
+                }
+        
+                @include gbp (0, 768) {
+                    padding: 10px 0 !important;
+                    overflow-x: auto !important;
+                    margin-bottom: 2px !important;
+                    border: 0 !important;
+        
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+                }
+            }
+
+            &__contents {
+                background-color: transparent !important;
+                border: 0;
+
+                .#{$parent}__content{
+                    .swiper-button-next,
+                    .swiper-button-prev{
+                        border-radius: 16px !important;
+                        background: #FBE9F3 !important;
+                        width: 42px !important;
+                        height: 42px !important;
+            
+                        &::before{
+                            width: 23px;
+                            height: 23px;
+                            border-radius: 50%;
+                            content: '';
+                            position: absolute;
+                            top: calc(50% - 11.5px);
+                            right: calc(50% - 11.5px);
+                            background-color: #D72685;
+                        }
+
+                        &::after{
+                            z-index: 1;
+                            color: white;
+                            font-size: 13px;
+                        
+                        }
+                    }
+                }
             }
         }
     }

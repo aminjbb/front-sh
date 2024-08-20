@@ -1,29 +1,21 @@
 <template>
-<section class="section8-slider section8-slider--mobile" >
-    <header v-if="title" class="text-right t20 text-grey-darken-1 py-4 w500">
+<section class="section8-slider section8-slider--mobile">
+    <header v-if="items && items.length > 0 && title" class="text-right py-4" :class="device === 'desktop' ? 't20 text-sGrayDarken2 py-4 w700': 's-title s-title--medium text-sGrayDarken2'">
         {{ title }}
     </header>
 
-    <swiper
-        dir="rtl"
-        :slidesPerView="6"
-        :spaceBetween="24"
-        :modules="modules"
-        :navigation="navigation"
-        :loop="true"
-        :height="286" 
-        :breakpoints="{
+    <swiper dir="rtl" :slidesPerView="6" :spaceBetween="8" :modules="modules" :navigation="device === 'desktop' ? true : false" :loop="true" :breakpoints="{
                 '200': {
-                    slidesPerView: 1.3,
-                    spaceBetween: 15,
+                    slidesPerView: 2.3,
+                    spaceBetween: 8,
                 },
                 '500': {
                     slidesPerView: 2.8,
-                    spaceBetween: 15,
+                    spaceBetween: 8,
                 },
                 '650': {
                     slidesPerView: 3.2,
-                    spaceBetween: 15,
+                    spaceBetween: 8,
                 },
                 '768': {
                     slidesPerView: 4.2,
@@ -33,21 +25,14 @@
                     slidesPerView: 4.5,
                 },
                 '1200': {
-                    slidesPerView: 4.8,
+                    slidesPerView: 5.8,
                 },
                 '1398': {
-                    slidesPerView: 6,
+                    slidesPerView: 7,
                 }
-            }"
-        class="mySwiper">
+            }" class="mySwiper py-2">
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
-            <generalProductCard
-                :sectionName = "title"
-                :content= "item"
-                :isPLP= "isPLP"
-                :index = "index + 1"
-                :showIndex= "hideIndex !== true ? true : false"
-                class="mb-4" />
+            <generalProductCard :sectionName="title" :content="item" :isPLP="isPLP" :index="index + 1" :showIndex="hideIndex !== true ? true : false" class="mb-4" />
         </swiper-slide>
     </swiper>
 </section>
@@ -85,25 +70,33 @@ export default {
         /**
          * section title
          */
-        title:String,
+        title: String,
         /**
          * Hide index
          */
-        hideIndex:Boolean,
+        hideIndex: Boolean,
         /**
          * Show navigation
          */
-         navigation:Boolean,
+        navigation: Boolean,
 
-         /**
-          * is plp for product card
-          */
-         isPLP:Boolean
+        /**
+         * is plp for product card
+         */
+        isPLP: Boolean,
+
+        /**
+         * device
+         */
+        device: {
+            type: String,
+            default: "desktop"
+        },
     },
 
     setup() {
         return {
-            modules: [FreeMode,Navigation],
+            modules: [FreeMode, Navigation],
         };
     },
 
@@ -124,23 +117,41 @@ $parent:'section8-slider';
 
     .product-card {
         margin-bottom: 0 !important;
-        height: 276px !important;
+        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+        border: 0;
+
+        @include gbp(0, 768) {
+            height: 217px !important;
+        }
+
+        &__image {
+            height: 110px;
+        }
     }
 
-    .swiper-button-prev,
-    .swiper-button-next {
-        width: 40px;
-        height: 40px;
-        background: #fff;
-        border:1px solid #9E9E9E;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .swiper-button-next,
+    .swiper-button-prev {
+        border-radius: 16px !important;
+        background: #FBE9F3 !important;
+        width: 42px !important;
+        height: 42px !important;
 
-        &::after{
-            font-size: 17px !important;
-            color: #D72685 !important;
+        &::before {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            content: '';
+            position: absolute;
+            top: calc(50% - 11.5px);
+            right: calc(50% - 11.5px);
+            background-color: #D72685;
+        }
+
+        &::after {
+            z-index: 1;
+            color: white;
+            font-size: 13px;
+
         }
     }
 }
