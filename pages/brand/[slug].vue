@@ -19,22 +19,11 @@
               </div>
 
               <ul class="v-product__filter__items d-flex align-center">
-                <li class="t14 w400 px-4"
-                    :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' "
-                    @click="sort('created_at', 'desc')">جدیدترین
-                </li>
-                <li class="t14 w400 px-4"
-                    :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' "
-                    @click="sort('site_price', 'asc')">ارزان‌ترین
-                </li>
-                <li class="t14 w400 px-4"
-                    :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "
-                    @click="sort('site_price', 'desc')">گران‌ترین
-                </li>
-                <li class="t14 w400 px-4"
-                    :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' "
-                    @click="sort('discount', 'desc')">بیشترین تخفیف
-                </li>
+                <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
+                <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' "  @click="sort('site_price', 'desc')">گران‌ترین</li>
+                <li class="t14 w400  px-4"  :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
               </ul>
             </nav>
           </div>
@@ -116,7 +105,7 @@ export default {
       productList: [],
       filters: [],
       screenType: null,
-      sortType: 'site_price',
+      sortType: 'seen_count',
       orderType: 'asc',
       category: null,
       sortItems: [
