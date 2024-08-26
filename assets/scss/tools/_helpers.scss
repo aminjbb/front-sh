@@ -220,3 +220,20 @@
 		}
 	}
 }
+
+//---------------------------------------------
+//	Border radius
+//---------------------------------------------
+
+@mixin borderRadius($start: 6, $end: 40) {
+    @for $i from $start through $end {
+        $class: "br#{$i}";
+
+        .#{$class} {
+            border-radius: #{$i}px !important;
+            // You can add more styles here if needed
+        }
+    }
+}
+
+@include borderRadius(6, 40);
