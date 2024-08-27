@@ -46,17 +46,26 @@ export default function setup() {
                 /** create schema object from breadcrumb.value*/
                 const schemaBreadcrumbList = []
 
-                const sortBreadcrumb = Object.entries(breadcrumb.value).reverse();
+                const homeSchemaObj = {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": 'خانه',
+                    "item": runtimeConfig.public.siteUrl
+                }
 
-                sortBreadcrumb.forEach(([key, value], index) => {
+                schemaBreadcrumbList.push(homeSchemaObj);
+
+                breadcrumb.value.forEach((value, index) => {
                     const schemaObj = {
                         "@type": "ListItem",
-                        "position": index+1,
+                        "position": index+2,
                         "name": value.name,
-                        "item": key.includes('category') ? `${runtimeConfig.public.siteUrl}/category/${value.slug}` : key.includes('product') ? `${runtimeConfig.public.siteUrl}/product/${value.slug}`: key.includes('sku_group') ? `${runtimeConfig.public.siteUrl}/sku-group/${value.slug}`: ''
+                        "item": runtimeConfig.public.siteUrl + value.slug
                     }
+
                     schemaBreadcrumbList.push(schemaObj);
                 });
+
                 /** breadcrumb schema structure */
                 structuredDataBreadcrumb.value = {
                     "@context": "http://schema.org/",
