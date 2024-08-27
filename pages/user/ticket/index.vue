@@ -50,7 +50,7 @@
                                     title=" ثبت تیکت"
                                     color="primary"
                                     prepend-icon="mdi-message-processing-outline"
-                                    class="btn btn--submit br16">
+                                    class="btn btn--submit br12 px-7">
                                     ثبت تیکت
                                 </v-btn>
                             </div>
