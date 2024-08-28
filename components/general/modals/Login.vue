@@ -89,8 +89,13 @@ export default {
             })
         }
 
+        const voucherShownCookie = useCookie('voucher_shown', {
+            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days in seconds
+        });
+
         return {
             doCopy,
+            voucherShownCookie
         }
     },
 
@@ -99,11 +104,7 @@ export default {
          * Open modal
          */
         openModal() {
-            setTimeout(() => {
-                if (this.signupStatus === true) {
-                    this.dialog = true
-                }
-            }, 5000);
+            this.dialog = true;
         },
 
         /**
@@ -155,7 +156,10 @@ export default {
     },
 
     mounted() {
-        this.openModal();
+        if (this.voucherShownCookie !== true && this.signupStatus === true) {
+            this.openModal();
+            this.voucherShownCookie = true;  // Set the cookie value
+        }
     }
 }
 </script>
