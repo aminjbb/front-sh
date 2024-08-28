@@ -152,7 +152,7 @@ export default {
             if (this.breadcrumb && this.breadcrumb.length) {
                 this.breadcrumb.forEach((item, index) => {
                     const form = {
-                        href: this.runtimeConfig.public.apiBase + item ?.slug,
+                        href: this.runtimeConfig.public.siteUrl + item ?.slug,
                         title: item ?.name
                     }
 
