@@ -2,7 +2,7 @@
   <div class="ticket-card pa-2 mb-4 s-shadow s-shadow--light bg-white">
         <div class="d-flex justify-space-between align-start mb-2">
             <div>
-                <h2 v-if="content && content.title" class="t15 w700 text-sGrayDarken2">
+                <h2 v-if="content && content.title !== null && content.title !== ''" class="t15 w700 text-sGrayDarken2">
                     <v-icon icon="mdi-chat-outline" color="text-sGrayDarken2" class="ml-1"></v-icon>
                     {{ content.title}}
                 </h2>
