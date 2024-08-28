@@ -8,7 +8,6 @@ import axios from 'axios'
 
 export default function setup() {
     const runtimeConfig = useRuntimeConfig()
-    const userToken = useCookie('userToken')
     const route = useRoute()
     const voucherList = ref([]);
     const prize = ref({});
