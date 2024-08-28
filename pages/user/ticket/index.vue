@@ -4,7 +4,7 @@
         <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
-        <span class="grey-darken-3 t14">لیست تیکت‌ها</span>
+        <span class="text-sGrayDarken2 t14 w700">لیست تیکت‌ها</span>
     </header>
 
     <v-container>
@@ -29,7 +29,7 @@
                             </v-btn>
                         </header>
 
-                        <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : 'pt-15'">
+                        <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
                             <GeneralTicketTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedTickets" showAll AllTitle="همه تیکت ها" componentName="generalTicketCard"/>
                         </div>
                     </template>
@@ -50,7 +50,7 @@
                                     title=" ثبت تیکت"
                                     color="primary"
                                     prepend-icon="mdi-message-processing-outline"
-                                    class="btn btn--submit br16">
+                                    class="btn btn--submit br12 px-7">
                                     ثبت تیکت
                                 </v-btn>
                             </div>
