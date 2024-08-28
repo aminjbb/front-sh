@@ -98,6 +98,7 @@ export default function setup() {
                 );
 
                 try {
+                    loading.value = true;
                     // First API
                     const response1 = await axios({
                         method: 'get',
