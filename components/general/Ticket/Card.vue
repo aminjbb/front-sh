@@ -6,6 +6,10 @@
                     <v-icon icon="mdi-chat-outline" color="text-sGrayDarken2" class="ml-1"></v-icon>
                     {{ content.title}}
                 </h2>
+                <h2 v-else-if="content.parent_topic || content.topic_title" class="t15 w700 text-sGrayDarken2">
+                    <v-icon icon="mdi-chat-outline" color="text-sGrayDarken2" class="ml-1"></v-icon>
+                    {{content.parent_topic}}<template v-if="content.topic_title"> - {{content.topic_title}}</template>
+                </h2>
                 <span class="t12 w500 text-sGray">عنوان زیر موضوع تیکت</span>
             </div>
 
