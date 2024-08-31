@@ -272,7 +272,7 @@ export default {
             let header = document.getElementById('header--desktop');
 
             if (this.isBanner) {
-                if (window.scrollY > 40) {
+                if (window.scrollY > 185) {
                     header.style.top = '0px';
                     this.isHidden = true;
                     this.isFixed = false;
@@ -290,13 +290,12 @@ export default {
                     this.lastScrollTop = currentScrollTop;
                 }
 
-                if (window.scrollY <= 40) {
+                if (window.scrollY <= 185) {
                     this.hasBanner = true;
                     header.style.top = `${40 - window.scrollY}px`;
-                    this.hasBanner = true;
                 }
             } else {
-                if (window.scrollY > 40) {
+                if (window.scrollY > 145) {
                     this.isHidden = true;
                     this.isFixed = false;
 
