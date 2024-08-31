@@ -59,7 +59,7 @@
         <div :class="!showBasket ? 'pt-3' : ''">
             <template v-if="content.discount">
                 <div class="d-flex align-center justify-end">
-                    <span class="product-card__price-info__discount t10 w500 ml-2">%{{content.discount_percent}}</span>
+                    <span class="product-card__price-info__discount t16 w500 ml-2">%{{content.discount_percent}}</span>
                     <span v-if="content.site_price" class="l19 t16 w700 product-card__price-info__price product-card__price-info__price--new">
                         {{splitChar(Number(String(content.site_price).slice(0, -1)))}}
                         <svgToman/>

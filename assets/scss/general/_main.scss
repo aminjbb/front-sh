@@ -17,7 +17,7 @@ body {
 
     &.hasBanner{
         main{
-            padding-top: 234px !important;
+            padding-top: 210px !important;
             @include gbp (0, 768) {
                 padding-bottom: 60px;
                 padding-top: 0 !important;
