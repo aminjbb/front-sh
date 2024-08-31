@@ -4,7 +4,7 @@
         {{ title }}
     </header>
 
-    <swiper dir="rtl" :slidesPerView="6" :spaceBetween="8" :modules="modules" :navigation="device === 'desktop' ? true : false" :loop="true" :breakpoints="{
+    <swiper dir="rtl" :slidesPerView="6" :spaceBetween="8" :modules="modules" :navigation="device === 'desktop' ? true : false" :loop="false" :breakpoints="{
                 '200': {
                     slidesPerView: 2.3,
                     spaceBetween: 8,
