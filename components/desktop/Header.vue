@@ -1,7 +1,7 @@
 <template>
     <client-only>
         <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
-            <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="64" :title="topBanner?.image_alt" />
+            <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="40" :title="topBanner?.image_alt" />
         </a>
     
         <header
@@ -272,7 +272,7 @@ export default {
             let header = document.getElementById('header--desktop');
 
             if (this.isBanner) {
-                if (window.scrollY > 64) {
+                if (window.scrollY > 40) {
                     header.style.top = '0px';
                     this.isHidden = true;
                     this.isFixed = false;
@@ -290,13 +290,13 @@ export default {
                     this.lastScrollTop = currentScrollTop;
                 }
 
-                if (window.scrollY <= 64) {
+                if (window.scrollY <= 40) {
                     this.hasBanner = true;
-                    header.style.top = `${64 - window.scrollY}px`;
+                    header.style.top = `${40 - window.scrollY}px`;
                     this.hasBanner = true;
                 }
             } else {
-                if (window.scrollY > 64) {
+                if (window.scrollY > 40) {
                     this.isHidden = true;
                     this.isFixed = false;
 
@@ -383,7 +383,7 @@ $parent: 'header';
 
 .fixed-banner {
     width: 100%;
-    height: 64px;
+    height: 40px;
     top: 0;
     right: 0;
     position: absolute;
@@ -555,7 +555,7 @@ $parent: 'header';
         }
 
         &.has-banner {
-            top: 64px;
+            top: 40px;
         }
 
         &.hidden {

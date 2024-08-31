@@ -1,7 +1,7 @@
 <template>
 <client-only>
     <a v-if="topBanner && topBanner.image" class="fixed-banner--mobile d-block fixed-banner--mobile" id="top-banner" :href="topBanner.link">
-        <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="64" :title="topBanner?.image_alt" />
+        <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="40" :title="topBanner?.image_alt" />
     </a>
 
     <header class="header header--mobile w-100">
@@ -68,7 +68,7 @@ export default {
             const menu = document.getElementById('menu--mobile');
 
             if (this.isBanner) {
-                if (window.scrollY > 182) {
+                if (window.scrollY > 158) {
                     this.isHidden = true;
                     this.isFixed = false;
                     this.hasBanner = false;
@@ -93,11 +93,11 @@ export default {
                     }
                     this.lastScrollTop = currentScrollTop;
                 }
-                if (window.scrollY <= 182) {
+                if (window.scrollY <= 158) {
                     this.isFixed = false;
                     this.isHidden = false;
-                    menu.style.top = `${182 - window.scrollY}px`;
-                    menu.style.height = `calc(100% - ${238 - window.scrollY}px)`;
+                    menu.style.top = `${158 - window.scrollY}px`;
+                    menu.style.height = `calc(100% - ${214 - window.scrollY}px)`;
                 }
             } else {
                 if (window.scrollY > 118) {
@@ -153,8 +153,7 @@ $parent: 'header';
 
 .fixed-banner--mobile {
     width: 100% !important;
-    height: 64px !important;
-    background: red !important;
+    height: 40px !important;
     position: relative !important;
 
     img {
