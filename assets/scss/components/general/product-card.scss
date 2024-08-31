@@ -54,6 +54,7 @@
         img{
             max-width: 100%;
             height: 100%;
+            width: auto;
 
             @include gbp (0, 768) {
                 width: 120px;
