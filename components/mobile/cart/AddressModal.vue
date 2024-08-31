@@ -33,7 +33,7 @@
                 </v-btn>
             </header>
 
-            <div class="px-6">
+            <div class="px-6 mb-15 pb-15">
                 <template v-for="(address , index) in addressRevers" :key="`address${index}`">
                     <div class="d-flex align-center justify-space-between">
                         <v-checkbox
