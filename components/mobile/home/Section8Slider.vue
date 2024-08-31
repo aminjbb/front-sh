@@ -119,6 +119,7 @@ $parent:'section8-slider';
         margin-bottom: 0 !important;
         box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
         border: 0;
+        min-height: 242px;
 
         @include gbp(0, 768) {
             height: 217px !important;

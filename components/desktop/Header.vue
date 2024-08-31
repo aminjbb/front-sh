@@ -293,11 +293,13 @@ export default {
                 if (window.scrollY <= 185) {
                     this.hasBanner = true;
                     header.style.top = `${40 - window.scrollY}px`;
+                    
                 }
             } else {
                 if (window.scrollY > 145) {
                     this.isHidden = true;
                     this.isFixed = false;
+                    header.style.top = '0px';
 
                     if (currentScrollTop > this.lastScrollTop) {
                         this.isHidden = true;
@@ -307,9 +309,18 @@ export default {
                         this.isFixed = true;
                         this.isHidden = false;
                     }
-
-                    this.lastScrollTop = currentScrollTop;
                 }
+
+                if (window.scrollY <= 145) {
+                    if (currentScrollTop > this.lastScrollTop) {
+                        header.style.top = `${0 - window.scrollY}px`;
+
+                    } else {
+                        header.style.top = '0px';
+                    }
+                }
+
+                this.lastScrollTop = currentScrollTop;
             }
         },
 
