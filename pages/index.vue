@@ -81,7 +81,7 @@
             <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <template v-if="homeBlog && homeBlog.length">
-                <div class="pr-4 blog-section blog-section--mobile mb-15">
+                <div class="pr-4 blog-section blog-section--mobile mb-6">
                     <header>
                         <h2 class="t16 text-sGrayDarken2 py-4 w700">
                             پربازدیدترین مقالات
