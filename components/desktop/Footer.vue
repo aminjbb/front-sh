@@ -36,7 +36,7 @@
                         <ul>
                             <li><a href="/about" class="t13 text-grey">درباره ما</a></li>
                             <li><a href="/contact" class="t13 text-grey">تماس با ما</a></li>
-                            <li><a href="/faq" class="t13 text-grey">سوالات متدال</a></li>
+                            <li><a href="/faq" class="t13 text-grey">سوالات متداول</a></li>
                             <li><a href="/" class="t13 text-grey">فرصت‌های شغلی</a></li>
                             <li><a href="/" class="t13 text-grey">فروشنده شوید</a></li>
                         </ul>
