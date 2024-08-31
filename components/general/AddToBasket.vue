@@ -1,5 +1,5 @@
 <template>
-<v-row class="add-to-basket ma-0">
+<v-row class="add-to-basket add-to-basket--pdp ma-0">
     <v-col
         xs="4"
         :sm="smCols[0]"
@@ -10,15 +10,17 @@
             <template v-if="content?.stock">
                 <template v-if="content?.discount">
                     <div class="d-flex align-center justify-space-between">
-                        <span class="product-card__price-info__discount t11 w500 ml-2 xs-hide">{{content?.discount_percent}} %</span>
+
+
+                        <span class="product-card__price-info__discount t11 w500 ml-2" :class="isPdp ? true : false">{{content.discount_percent}} %</span>
                         <span v-if="content?.site_price" class="t19 w400 text-pink-darken-1 product-card__price-info__price product-card__price-info__price--new">
                             {{ splitChar(Number(String(content?.site_price).slice(0, -1))) }}
                             <span class="t12 w300 text-pink-darken-1 currency">تومان</span>
                         </span>
                     </div>
 
-                    <div class="d-flex align-center">
-                        <span v-if="!isPdp" class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content?.discount_percent}} %</span>
+                    <div class="d-flex align-center justify-end">
+                        <span v-if="!isPdp" class="product-card__price-info__discount t11 w500 ml-2 xs-show">{{content.discount_percent}} %</span>
                         <span v-if="content?.customer_price" class="t12 w400 text-grey product-card__price-info__price product-card__price-info__price--old">
                             <span>{{ splitChar(Number(String(content?.customer_price).slice(0, -1))) }}</span>
                             <span class="t10 w300 text-grey currency">تومان</span>
@@ -281,10 +283,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import '~/assets/scss/components/general/product-card.scss';
 
 .revers {
     order: 1 !important
+}
+
+.add-to-basket--pdp{
+    position: relative;
+
+    .product-card__price-info__discount{
+        border-radius:5px !important;
+        font-size: 13px !important;
+        padding: 4px 7px !important;
+        font-variation-settings: "wght" 700 !important;
+        position: unset !important;
+    }
 }
 </style>
