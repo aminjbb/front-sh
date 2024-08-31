@@ -277,7 +277,7 @@ export default {
 
         homeSkus() {
             try {
-                const skus = this.responseDot(9)
+                const skus = this.responseDot(9) ?.skus
                 const findSkus = skus.filter(sku => sku ?.seller_s_k_us ?.length)
                 return findSkus
             } catch (e) {
