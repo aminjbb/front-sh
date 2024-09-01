@@ -91,7 +91,7 @@ export default function setup() {
      */
     async function getUserTicketList() {
         axios
-            .get(runtimeConfig.public.apiBase + `/ticket/user/crud/index`, {
+            .get(runtimeConfig.public.apiBase + `/ticket/user/crud/index?per_page=10000&order=updated_at&order_type=desc`, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
