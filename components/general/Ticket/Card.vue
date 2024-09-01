@@ -39,11 +39,11 @@
             <v-btn
                 :href="`/user/ticket/${content.id}`"
                 height="44"
-                title="جزیات تیکت"
+                title="جزئیات تیکت"
                 color="primary"
                 prepend-icon="mdi-information-slab-circle-outline"
                 class="ticket-card__btn">
-                جزیات تیکت
+              جزئیات تیکت
             </v-btn>
         </div>
   </div>
