@@ -30,6 +30,7 @@ build:
   artifacts:
     paths:
       - .output/  # Updated Nuxt build output directory
+      - .nuxt/ 
       - static/
       - package.json
       - node_modules/
