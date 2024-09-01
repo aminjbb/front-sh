@@ -29,7 +29,10 @@ build:
     - npm run build
   artifacts:
     paths:
-      - dist/
+      - .output/  # Updated Nuxt build output directory
+      - static/
+      - package.json
+      - node_modules/
 
 deploy:
   stage: deploy
@@ -76,10 +79,10 @@ deploy:
     # Create the directory structure for the branch
     - sudo mkdir -p $DEPLOY_DIR
 
-    #- sudo rsync -av --delete .nuxt/ $DEPLOY_DIR
+    - sudo rsync -av --delete .nuxt/ $DEPLOY_DIR
     #- sudo rsync -av --delete .output/public/ $DEPLOY_DIR
 
-    - rsync -avz --delete-after
+    #- rsync -avz --delete-after
 
 
     # Check the Nginx configuration
