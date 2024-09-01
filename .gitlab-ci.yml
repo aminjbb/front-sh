@@ -76,7 +76,7 @@ deploy:
     # Create the directory structure for the branch
     - sudo mkdir -p $DEPLOY_DIR
 
-    - sudo rsync -av --delete .nuxt/ $DEPLOY_DIR
+    - sudo rsync -av --delete .output/ $DEPLOY_DIR
     #- sudo rsync -av --delete .output/public/ $DEPLOY_DIR
 
     #- rsync -avz --delete-after
