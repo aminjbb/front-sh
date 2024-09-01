@@ -77,7 +77,10 @@ deploy:
     - sudo mkdir -p $DEPLOY_DIR
 
     #- sudo rsync -av --delete .nuxt/ $DEPLOY_DIR
-    - sudo rsync -av --delete .output/public/ $DEPLOY_DIR
+    #- sudo rsync -av --delete .output/public/ $DEPLOY_DIR
+
+    - rsync -avz --delete-after
+
 
     # Check the Nginx configuration
     - sudo nginx -t
