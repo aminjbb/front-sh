@@ -31,7 +31,7 @@
                                 </div>
 
                                 <div cols="12" md="6" class="ticket__form__item ticket__form__item--text-field">
-                                    <v-select label="اولیوت تیکت" density="compact" variant="outlined" single-line :rules="rule" item-title="title" item-value="value" hide-details :items="priorities" v-model="form.priority"/>
+                                    <v-select label="اولویت تیکت" density="compact" variant="outlined" single-line :rules="rule" item-title="title" item-value="value" hide-details :items="priorities" v-model="form.priority"/>
                                 </div>
 
                                 <div cols="12" md="6" class="ticket__form__item ticket__form__item--text-field">
@@ -187,7 +187,8 @@ export default {
             if(this.mandatoryFields && this.mandatoryFields.length){
                 this.mandatoryFields.forEach(item => {
                   if(item === 'sku_id' ){
-                    if(this.form.sku_id !== null){
+                    console.log(this.form.sku_id )
+                    if(this.form.sku_id !== null && this.form.sku_id !== ''){
                       skuAccess = true
                     } else{
                       useNuxtApp().$toast.error('شناسه کالا انتخاب نشده است.', {
@@ -201,7 +202,7 @@ export default {
                   }
 
                   if(item === 'order_number' ){
-                    if(this.form.order_number !== null){
+                    if(this.form.order_number !== null && this.form.order_number !== ''){
                       orderNumberAccess = true
                     } else{
                       useNuxtApp().$toast.error('شماره سفارش انتخاب نشده است.', {
