@@ -44,25 +44,21 @@ deploy:
     # Create Nginx config file for the branch with actual values
     - |
       sudo bash -c "cat > $NGINX_CONF" << EOF
-      server{
-        client_max_body_size 5000M;
-        fastcgi_send_timeout 36000;
-        fastcgi_read_timeout 36000;
-        fastcgi_connect_timeout 30000;
-        root $DEPLOY_DIR;
-        server_name $NGINX_FILE_NAME.shvz.ir;
-        # Add index.php to the list if you are using PHP
-        index index.html index.php index.htm index.nginx-debian.html;
-        location / {
-         try_files \$uri \$uri/ /index.html;
+
+      server {
+      listen 80;
+      listen [::]:80;
+      index index.html;
+      server_name $NGINX_FILE_NAME.shvz.ir;
+
+      location / {
+          proxy_pass http://localhost:3000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection 'upgrade';
+          proxy_set_header Host $host;
+          proxy_cache_bypass $http_upgrade;
         }
-      
-          #listen 443 ssl; # managed by Certbot
-          #ssl_certificate /etc/letsencrypt/live/seller.shvz.ir/fullchain.pem; # managed by Certbot
-          #ssl_certificate_key /etc/letsencrypt/live/seller.shvz.ir/privkey.pem; # managed by Certbot
-          #include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-          ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-      
       }
       EOF
 
