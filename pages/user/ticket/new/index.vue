@@ -23,23 +23,23 @@
                         <v-form ref="ticket" v-model="valid">
                             <v-row class="ticket__form__1stRow w-100 ma-0">
                                 <div class="ticket__form__item ticket__form__item--text-field">
-                                    <v-select label="موضوع" density="compact" variant="outlined" single-line :rules="rule" item-title="title" item-value="value" hide-details :items="getFirstTitles" v-model="form.title" @update:model-value="getSubTitle()"/>
+                                    <v-select label="موضوع" density="compact" variant="outlined"  :rules="rule" item-title="title" item-value="value" hide-details :items="getFirstTitles" v-model="form.title" @update:model-value="getSubTitle()"/>
                                 </div>
 
                                 <div class="ticket__form__item ticket__form__item--text-field">
-                                    <v-select label="انتخاب زیرموضوع" density="compact" variant="outlined" single-line :rules="rule" item-title="title" item-value="value" hide-details :items="subTitleList" v-model="form.subtitle" @update:model-value="selectSubTitle()"/>
+                                    <v-select label="انتخاب زیرموضوع" density="compact" variant="outlined" :rules="rule" item-title="title" item-value="value" hide-details :items="subTitleList" v-model="form.subtitle" @update:model-value="selectSubTitle()"/>
                                 </div>
 
                                 <div cols="12" md="6" class="ticket__form__item ticket__form__item--text-field">
-                                    <v-select label="اولویت تیکت" density="compact" variant="outlined" single-line :rules="rule" item-title="title" item-value="value" hide-details :items="priorities" v-model="form.priority"/>
+                                    <v-select label="اولویت تیکت" density="compact" variant="outlined" :rules="rule" item-title="title" item-value="value" hide-details :items="priorities" v-model="form.priority"/>
                                 </div>
 
                                 <div cols="12" md="6" class="ticket__form__item ticket__form__item--text-field">
-                                    <v-text-field density="compact" variant="outlined" single-line :rules="mandatoryFields['sku_id'] ? rule : ''" hide-details label="شناسه کالا" v-model="form.sku_id" />
+                                    <v-text-field density="compact" variant="outlined"  :rules="mandatoryFields['sku_id'] ? rule : ''" hide-details label="شناسه کالا" v-model="form.sku_id" />
                                 </div>
 
                                 <div cols="12" md="6" class="ticket__form__item ticket__form__item--text-field">
-                                    <v-text-field density="compact" variant="outlined" single-line :rules="mandatoryFields['order_number'] ? rule : ''" hide-details label="شماره سفارش" v-model="form.order_number" />
+                                    <v-text-field density="compact" variant="outlined" :rules="mandatoryFields['order_number'] ? rule : ''" hide-details label="شماره سفارش" v-model="form.order_number" />
                                 </div>
                             </v-row>
 
@@ -269,11 +269,29 @@ export default {
                       });
                   })
                   .catch((err) => {
-                      useNuxtApp().$toast.error(err.response ?.data ?.message, {
-                          rtl: true,
-                          position: 'top-center',
-                          theme: 'dark'
+                    if (err.response ?.data ?.details?.order_number){
+                      useNuxtApp().$toast.error(err.response ?.data ?.details?.order_number, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
                       });
+                    }
+                    if (err.response ?.data ?.details?.sku_id){
+                      useNuxtApp().$toast.error(err.response ?.data ?.details?.sku_id, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                      });
+                    }
+                    if (err.response ?.data ?.details?.files_id){
+                      useNuxtApp().$toast.error(err.response ?.data ?.details?.files_id, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                      });
+                    }
+
+
                   }).finally(() => {
                       this.loading = false;
                   });
