@@ -74,7 +74,7 @@
                 <mobileHomeBanner :items="mobileBanner3" generalCol="6" col="6" device="mobile"/>
             </v-container>
 
-            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"  :navigation="true"/>
+            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"  :navigation="true"/>
 
             <mobileHomeBanner :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
 
