@@ -12,6 +12,7 @@ export default function setup() {
     const userWallet = ref([]);
     const userTransactions = ref([]);
     const ticketList = ref([]);
+    const titleList = ref([]);
     const productUserHistory = ref([]);
     const singleTicket = ref(null);
     const wishList = ref([]);
@@ -90,13 +91,36 @@ export default function setup() {
      */
     async function getUserTicketList() {
         axios
-            .get(runtimeConfig.public.apiBase + `/ticket/user/crud/index`, {
+            .get(runtimeConfig.public.apiBase + `/ticket/user/crud/index?per_page=10000&order=updated_at&order_type=desc`, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
                 },
             })
             .then((response) => {
                 ticketList.value = response.data.data
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            });
+    };
+
+     /**
+     * Get user ticket Title
+     */
+     async function getUserTicketTitle() {
+        axios
+            .get(runtimeConfig.public.apiBase + `/ticket/user/topic/index`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                titleList.value = response.data.data
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
@@ -206,6 +230,8 @@ export default function setup() {
         getProductUserHistory,
         productUserHistory,
         getRandomProducts,
-        randomProducts
+        randomProducts,
+        getUserTicketTitle,
+        titleList
     }
 }

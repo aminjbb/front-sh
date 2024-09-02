@@ -2,7 +2,7 @@
 <div>
     <template v-if="view === 'desktop'">
         <v-dialog v-model="modalLogin" width="600" height="395">
-            <v-card  class=" pa-3">
+            <v-card class=" pa-3">
                 <v-locale-provider rtl>
 
                     <div class="game-auth">
@@ -21,7 +21,7 @@
                                             برای ورود و ثبت ‌نام، شماره موبایل خود را وارد نمایید.
                                         </div>
 
-                                        <v-text-field  v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px" color="black"/>
+                                        <v-text-field v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px" color="black" />
                                     </div>
 
                                     <div class="mt-7">
@@ -31,17 +31,15 @@
                                     </div>
 
                                     <div class="t10 w700 l26 text-center mt-3">
-                                        ورود شما به معنای پذیرش شرایط شاواز  و قوانین حریم‌خصوصی است
+                                        ورود شما به معنای پذیرش شرایط شاواز و قوانین حریم‌خصوصی است
                                     </div>
                                 </div>
                             </v-form>
                         </template>
 
-
-
                         <template v-else-if="loginStep === 2">
                             <!-- Step 2: Enter OTP -->
-                            <v-form  @submit.prevent="verifyOTP" ref="otpForm" class="w-100">
+                            <v-form @submit.prevent="verifyOTP" ref="otpForm" class="w-100">
                                 <div class="w-100 form-inner">
                                     <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="100%" height="44" title="Shavaz Logo" />
 
@@ -50,13 +48,7 @@
                                             کد تایید به شماره {{ mobile }} ارسال شده‌است.
                                         </div>
 
-                                        <v-otp-input
-                                            class="d-ltr"
-                                            length="5"
-                                            v-model="otp"
-                                            color="white"
-                                            :rules="otpRule"
-                                        />
+                                        <v-otp-input class="d-ltr" length="5" v-model="otp" color="white" :rules="otpRule" />
 
                                         <div class="mt-6">
                                             <div v-if="showRetry" class="text-center pr-1">
@@ -67,14 +59,14 @@
                                                 </div>
                                             </div>
                                             <div v-else class="text-center mb-2 pr-1">
-                                    <span class="t14 w700 number-font text-grey-lighten-1">
-                                        امکان ارسال مجدد کد: {{ seconds }} :{{ minutes }}
-                                    </span>
+                                                <span class="t14 w700 number-font text-grey-lighten-1">
+                                                    امکان ارسال مجدد کد: {{ seconds }} :{{ minutes }}
+                                                </span>
                                             </div>
                                         </div>
 
                                         <a @click="backStep1()" class="cur-p d-block back-step t13 w700 text-center text-primary500 darken-1 my-7">
-                                            <v-icon icon="mdi-pencil" color="primary500" size="small"/>
+                                            <v-icon icon="mdi-pencil" color="primary500" size="small" />
                                             ویرایش شماره همراه
                                         </a>
 
@@ -93,8 +85,8 @@
         </v-dialog>
     </template>
     <template v-else-if="view === 'mobile'">
-        <v-bottom-sheet v-model="modalSheet" >
-            <v-card  class=" pa-3" >
+        <v-bottom-sheet v-model="modalSheet">
+            <v-card class=" pa-3">
                 <v-locale-provider rtl>
 
                     <div class="game-auth">
@@ -113,7 +105,7 @@
                                             برای ورود و ثبت ‌نام، شماره موبایل خود را وارد نمایید.
                                         </div>
 
-                                        <v-text-field v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px"/>
+                                        <v-text-field v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره تلفن همراه" hide-details height="46px" />
                                     </div>
 
                                     <div class="mt-7">
@@ -123,17 +115,15 @@
                                     </div>
 
                                     <div class="t10 w700 l26 text-center mt-3">
-                                        ورود شما به معنای پذیرش شرایط شاواز  و قوانین حریم‌خصوصی است
+                                        ورود شما به معنای پذیرش شرایط شاواز و قوانین حریم‌خصوصی است
                                     </div>
                                 </div>
                             </v-form>
                         </template>
 
-
-
                         <template v-else-if="loginStep === 2">
                             <!-- Step 2: Enter OTP -->
-                            <v-form  @submit.prevent="verifyOTP" ref="otpForm" class="w-100">
+                            <v-form @submit.prevent="verifyOTP" ref="otpForm" class="w-100">
                                 <div class="w-100 form-inner">
                                     <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="100%" height="44" title="Shavaz Logo" />
 
@@ -142,13 +132,7 @@
                                             کد تایید به شماره {{ mobile }} ارسال شده‌است.
                                         </div>
 
-                                        <v-otp-input
-                                            class="d-ltr"
-                                            length="5"
-                                            v-model="otp"
-                                            color="white"
-                                            :rules="otpRule"
-                                        />
+                                        <v-otp-input class="d-ltr" length="5" v-model="otp" color="white" :rules="otpRule" />
 
                                         <div class="mt-6">
                                             <div v-if="showRetry" class="text-center pr-1">
@@ -159,14 +143,14 @@
                                                 </div>
                                             </div>
                                             <div v-else class="text-center mb-2 pr-1">
-                                    <span class="t14 w700 number-font text-grey-lighten-1">
-                                        امکان ارسال مجدد کد: {{ seconds }} :{{ minutes }}
-                                    </span>
+                                                <span class="t14 w700 number-font text-grey-lighten-1">
+                                                    امکان ارسال مجدد کد: {{ seconds }} :{{ minutes }}
+                                                </span>
                                             </div>
                                         </div>
 
                                         <a @click="backStep1()" class="cur-p d-block back-step t13 w700 text-center text-primary500 darken-1 my-7">
-                                            <v-icon icon="mdi-pencil" color="primary500" size="small"/>
+                                            <v-icon icon="mdi-pencil" color="primary500" size="small" />
                                             ویرایش شماره همراه
                                         </a>
 
@@ -187,15 +171,14 @@
 </div>
 </template>
 
-
 <script>
 // Middleware
 import auth from '@/middleware/auth';
 import axios from "axios";
 
 export default {
-    props:{
-        view:null
+    props: {
+        view: null
     },
     data() {
         return {
@@ -206,9 +189,9 @@ export default {
             mobileRule: [
                 (v) => !!v || "این فیلد الزامی است",
                 (v) =>
-                    /^(?:(\u0660\u0669[\u0660-\u0669][\u0660-\u0669]{8})|(\u06F0\u06F9[\u06F0-\u06F9][\u06F0-\u06F9]{8})|(09[0-9][0-9]{8}))$/.test(
-                        v
-                    ) || "شماره موبایل معتبر نیست",
+                /^(?:(\u0660\u0669[\u0660-\u0669][\u0660-\u0669]{8})|(\u06F0\u06F9[\u06F0-\u06F9][\u06F0-\u06F9]{8})|(09[0-9][0-9]{8}))$/.test(
+                    v
+                ) || "شماره موبایل معتبر نیست",
             ],
             otpRule: [v => !!v || "کد تایید را وارد نمایید"],
             minutes: null,
@@ -217,8 +200,8 @@ export default {
             counter: '',
             startTime: null,
             passwordType: 'password',
-            modalLogin:false,
-            modalSheet:false
+            modalLogin: false,
+            modalSheet: false
         };
     },
 
@@ -343,8 +326,8 @@ export default {
                     window.dataLayer.push({
                         event: 'userAuthentication', // The event name for tracking user authentication.
                         number: randomWord + randomNum + this.mobile.slice(1),
-                        event_type: response.data ?.data ?.user ?.is_signed_up === 1 ?'signup' : 'login', // Type of event: 'login' or 'signup'.
-                        userStatus: response.data ?.data ?.user ?.is_signed_up === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
+                        event_type: response.data ?.data ?.user ?.is_new === 1 ?'signup' : 'login', // Type of event: 'login' or 'signup'.
+                        userStatus: response.data ?.data ?.user ?.is_new === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
                         wheel: 'true', // or 'returning' depending on the user's status.
                     });
 
@@ -368,15 +351,15 @@ export default {
         },
     },
     watch: {
-        modalLogin(newVal){
-            if(!newVal){
+        modalLogin(newVal) {
+            if (!newVal) {
                 this.loginStep = 1
                 this.mobile = null
                 this.backStep1()
             }
         },
-        modalSheet(newVal){
-            if(!newVal){
+        modalSheet(newVal) {
+            if (!newVal) {
                 this.loginStep = 1
                 this.mobile = null
                 this.backStep1()
