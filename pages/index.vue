@@ -78,7 +78,7 @@
 
             <mobileHomeBanner :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
 
-            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
+            <generalTabSlider :items="responseDot(11)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <template v-if="homeBlog && homeBlog.length">
                 <div class="pr-4 blog-section blog-section--mobile mb-6">
