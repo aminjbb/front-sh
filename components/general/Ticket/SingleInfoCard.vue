@@ -3,7 +3,7 @@
     <div>
         <div class="mb-2">
             <span class="t12 w400 text-grey-darken-2 ml-2">موضوع:</span>
-            <span v-if="content.parent_topic || content.topic_title" class="t14 w500 text-grey-darken-3">{{content.parent_topic}} - {{content.topic_title}}</span>
+            <span v-if="content.title" class="t14 w500 text-grey-darken-3">{{content.title}}</span>
         </div>
 
         <div class="mb-2">

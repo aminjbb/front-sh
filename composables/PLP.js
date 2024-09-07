@@ -46,26 +46,17 @@ export default function setup() {
                 /** create schema object from breadcrumb.value*/
                 const schemaBreadcrumbList = []
 
-                const homeSchemaObj = {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": 'خانه',
-                    "item": runtimeConfig.public.siteUrl
-                }
+                const sortBreadcrumb = Object.entries(breadcrumb.value).reverse();
 
-                schemaBreadcrumbList.push(homeSchemaObj);
-
-                breadcrumb.value.forEach((value, index) => {
+                sortBreadcrumb.forEach(([key, value], index) => {
                     const schemaObj = {
                         "@type": "ListItem",
-                        "position": index+2,
+                        "position": index+1,
                         "name": value.name,
-                        "item": runtimeConfig.public.siteUrl + value.slug
+                        "item": key.includes('category') ? `${runtimeConfig.public.siteUrl}/category/${value.slug}` : key.includes('product') ? `${runtimeConfig.public.siteUrl}/product/${value.slug}`: key.includes('sku_group') ? `${runtimeConfig.public.siteUrl}/sku-group/${value.slug}`: ''
                     }
-
                     schemaBreadcrumbList.push(schemaObj);
                 });
-
                 /** breadcrumb schema structure */
                 structuredDataBreadcrumb.value = {
                     "@context": "http://schema.org/",
@@ -98,7 +89,6 @@ export default function setup() {
                 );
 
                 try {
-                    loading.value = true;
                     // First API
                     const response1 = await axios({
                         method: 'get',
