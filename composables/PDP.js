@@ -4,6 +4,7 @@
 import {ref} from 'vue';
 import axios from 'axios'
 import {useRoute} from "vue-router";
+import auth from "~/middleware/auth.js";
 import {useStore} from 'vuex'
 
 export default function setup() {
@@ -24,6 +25,7 @@ export default function setup() {
     const productOldPriceMeta = ref('')
     const availability = ref('')
     const structuredData = ref(null)
+    const structuredDataBreadcrumb = ref(null)
     const loading = ref(true)
 
 
@@ -73,6 +75,7 @@ export default function setup() {
                             statusMessage: "Page Not Found"
                         })
                     });
+
 
                     if (mainResponse) {
                         breadcrumb.value =mainResponse.data?.data?.breadCrumb
@@ -131,6 +134,7 @@ export default function setup() {
                             script: [{type: 'application/ld+json', children: JSON.stringify(structuredData.value)}]
                         })
                     }
+
 
                 } catch (error) {
                     if (error.response) {

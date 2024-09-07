@@ -10,6 +10,7 @@ export default function setup() {
      * @param {*} data 
      */
     async function sendInfoToTakhfifan(order) {
+        console.log("🚀 ~ sendInfoToTakhfifan ~ order:", order)
         const taToken = useCookie('tatoken')
 
         let productList = [];

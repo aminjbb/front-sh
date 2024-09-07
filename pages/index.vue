@@ -74,11 +74,11 @@
                 <mobileHomeBanner :items="mobileBanner3" generalCol="6" col="6" device="mobile"/>
             </v-container>
 
-            <mobileHomeSection8Slider :items="homeSkus" title="پرفروش‌ترین محصولات" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"  :navigation="true"/>
+            <mobileHomeSection8Slider :items="homeSkus" :title="titleSection9" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"  :navigation="true"/>
 
             <mobileHomeBanner :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
 
-            <generalTabSlider :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
+            <generalTabSlider :items="responseDot(11)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <template v-if="homeBlog && homeBlog.length">
                 <div class="pr-4 blog-section blog-section--mobile mb-6">
