@@ -1,4 +1,5 @@
 <template>
+    
 <mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle" />
 
 <main class="v-product v-product--list">
@@ -7,28 +8,14 @@
     </v-container>
 
     <v-container v-show="!loading">
-        <generalBreadcrumb :items="breadcrumbList" />
-
-        <template v-if="screenType === 'desktop'">
-            <client-only>
-                <div class="v-product__filter d-flex pt-1 align-center justify-space-between mt-7 pb-1">
-                    <nav class="d-flex align-center flex-grow-1">
-                        <div class="pl-4">
-                            <v-icon icon="mdi-sort-ascending" color="grey-darken-1" />
-                            <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
-                        </div>
-
-                        <ul class="v-product__filter__items d-flex align-center">
-                            <li class="t14 w400  px-4" :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
-                            <li class="t14 w400  px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('created_at', 'desc')">جدیدترین</li>
-                            <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                            <li class="t14 w400  px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'desc')">گران‌ترین</li>
-                            <li class="t14 w400  px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
-                        </ul>
-                    </nav>
-                </div>
-            </client-only>
-        </template>
+        <v-row v-if="screenType === 'desktop'">
+            <v-col cols="6">
+                <div class="t18 w700 text-sGrayDarken2">{{ pageTitle }}</div>
+            </v-col>
+            <v-col cols="6">
+                <generalBreadcrumb :items="breadcrumbList" icon/>
+            </v-col>
+        </v-row>
 
         <v-row class="mt-5">
             <v-col cols="12" md="3" class="filter-bg-mobile">
@@ -48,6 +35,27 @@
             </v-col>
 
             <v-col cols="12" md="9" class="main-col">
+                <template v-if="screenType === 'desktop'">
+                    <client-only>
+                        <div class="v-product__filter d-flex pt-1 align-center justify-space-between mb-4 pb-1">
+                            <nav class="d-flex align-center flex-grow-1">
+                                <div class="pl-4">
+                                    <v-icon icon="mdi-sort-ascending" color="grey-darken-1" class="ml-1" size="small"/>
+                                    <span class="t12 w700 text-sGray">مرتب‌سازی بر اساس</span>
+                                </div>
+
+                                <ul class="v-product__filter__items d-flex align-center">
+                                    <li class="t12 w700 px-4" :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
+                                    <li class="t12 w700 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                                    <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                                    <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'desc')">گران‌ترین</li>
+                                    <li class="t12 w700 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-sGray' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </client-only>
+                </template>
+
                 <div class="v-product__contents">
                     <v-row v-if="productListData?.length" class="ma-0">
                         <v-col cols="6" md="3" v-for="(item, index) in productListData" :key="`card-${index}`" class="v-product__content d-flex">

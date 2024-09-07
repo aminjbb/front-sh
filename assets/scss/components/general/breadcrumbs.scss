@@ -7,10 +7,30 @@
     padding-top: 0 !important;
     padding-bottom: 25px !important;
     padding-right: 0 !important;
-    
-    .v-breadcrumbs-item,
-    .v-breadcrumbs-item h1 {
-        font-size: 13px !important;
+
+    .v-breadcrumbs-item{
+        font-size: 12px !important;
         font-weight: 400 !important;
+        color: #9A9A9A;
+
+        &:hover{
+            color: #3C3C3C !important;
+        }
+
+        h1 {
+            font-size: 12px !important;
+            font-variation-settings: "wght" 700 !important;
+            color: #3C3C3C !important;
+        }
+
+        &--disabled{
+            opacity: 1 !important;
+        }
+    }
+
+    .v-breadcrumbs-divider{
+        span{
+            color: #9A9A9A;
+        }
     }
 }

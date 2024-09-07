@@ -33,8 +33,8 @@ $parent : 'v-product';
         border-radius: 16px;
         overflow: hidden;
         padding: 12px 10px;
-        background-color: #FAFAFA;
-        border: 1px solid var(--Boarder-Light, #F3F3F3);
+        background-color: transparent;
+        border: 1px solid #CBCBCB;
 
 
         @include gbp (0, 768) {
