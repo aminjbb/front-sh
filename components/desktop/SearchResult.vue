@@ -319,6 +319,10 @@ export default {
             color: #D72685;
             font-size: 15px !important;
         }
+
+        &.swiper-button-disabled{
+            display: none !important;
+        }
     }
 
     .swiper-slide {
