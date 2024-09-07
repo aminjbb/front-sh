@@ -179,6 +179,21 @@ export default {
         .v-icon{
             font-size: 13px !important;
         }
+
+        > div:not(:last-child){
+            position: relative;
+            padding-left: 5px;
+
+            &::after{
+                content: '';
+                width: 1px;
+                height: 12px;
+                left: 0;
+                top: 7px;
+                background: rgb(var(--v-theme-sGrayLighten2)) !important;
+                position: absolute;
+            }
+        }
     }
 
     &__status{
