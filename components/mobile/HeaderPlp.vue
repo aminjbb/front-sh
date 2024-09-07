@@ -37,7 +37,8 @@ export default {
     },
 
     props: {
-        pageTitle: String
+        pageTitle: String,
+        items:Array
     },
 
     setup() {

@@ -1,11 +1,15 @@
 <template>
     
-<mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle" />
+<mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle" :items="breadcrumbList"/>
 
 <main class="v-product v-product--list">
     <v-container v-show="loading">
         <generalSkeletonPlp :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'" />
     </v-container>
+
+    <div v-show="!loading">
+        <generalProductCategorySlider :items="categoryList" :title="screenType === 'desktop' ? `دسته بندی ${pageTitle}` : pageTitle"/>
+    </div>
 
     <v-container v-show="!loading">
         <v-row v-if="screenType === 'desktop'">
@@ -133,7 +137,9 @@ export default {
             query,
             plpTitle,
             description,
-            loading
+            loading,
+            lastCategoryImage,
+            categoryList
         } = new PLP()
 
         useHead({
@@ -155,7 +161,9 @@ export default {
             plpTitle,
             title,
             loading,
-            runtimeConfig
+            runtimeConfig,
+            lastCategoryImage,
+            categoryList
         }
     },
 

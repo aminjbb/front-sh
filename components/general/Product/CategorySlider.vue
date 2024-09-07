@@ -1,44 +1,48 @@
 <template>
-<div class="product-category-slider">
-    <header class="t20 w400 text-grey-darken-3 mb-4">
-        خرید بر اساس محصول
-    </header>
+<div v-if="items && items.length" class="product-category-slider">
+    <v-container>
+        <header class="t18 w700 text-sGrayDarken2 mb-4">
+            {{ title }}
+        </header>
 
-    <div class="product-category-slider__swiper">
-        <swiper dir="rtl" :slidesPerView="7" :spaceBetween="60" :navigation="true" :modules="modules" :loop="loop" :breakpoints="{
+        <div class="product-category-slider__swiper">
+            <swiper dir="rtl" :slidesPerView="8" :spaceBetween="16" :navigation="true" :modules="modules" :loop="false" :breakpoints="{
                     '200': {
                         slidesPerView: 2.5,
-                        spaceBetween: 15,
+                        spaceBetween: 10,
                     },
                     '360': {
                         slidesPerView: 4.5,
-                        spaceBetween: 15,
+                        spaceBetween: 10,
                     },
                     '500': {
                         slidesPerView: 4.7,
-                        spaceBetween: 15,
+                        spaceBetween: 10,
                     },
                     '768': {
                         slidesPerView: 5.5,
                     },
                     '992': {
-                        slidesPerView: 5.8,
+                        slidesPerView: 6.8,
                     },
                     '1200': {
-                        slidesPerView: 6.5,
+                        slidesPerView: 7,
                     },
                     '1398': {
-                        slidesPerView: 7,
+                        slidesPerView: 8.3,
                     }
                 }" class="mySwiper">
-            <swiper-slide v-for="(item, index) in items" :key="`brands-${index}`">
-                <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="`/product/${item?.page?.slug}`" :title="item?.label">
-                    <img :src="item?.image?.image_url" :title="item?.label" :alt="item?.label" width="116" height="116" />
-                    <h2 class="t16 w400 mt-2 text-grey-darken-2 text-center">{{item?.label}}</h2>
-                </a>
-            </swiper-slide>
-        </swiper>
-    </div>
+                <swiper-slide v-for="(item, index) in items" :key="`slider-${index}`">
+                    <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="`/${prefix}/${item?.slug}`" :title="item?.label" :class="item.is_selected === true ? 'selected' : ''">
+                        <div class="product-category-slider__item__image">
+                            <img :src="item?.image_url" :title="item?.label" :alt="item?.label" width="76" height="76" />
+                        </div>
+                        <h2 class="t14 w700 mt-3 text-sGrayLighten2 text-center">{{item?.label}}</h2>
+                    </a>
+                </swiper-slide>
+            </swiper>
+        </div>
+    </v-container>
 </div>
 </template>
 
@@ -73,11 +77,16 @@ export default {
         items: Array,
 
         /**
-         * slider loop
+         * Title of slider
          */
-        loop: {
-            type: Boolean,
-            default: true,
+        title: String,
+
+        /**
+         * Link prefix
+         */
+        prefix: {
+            type: String,
+            default: 'category'
         }
     },
 
@@ -93,50 +102,102 @@ export default {
 @import "~/assets/scss/tools/bp";
 
 .product-category-slider {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #E8E8E8;
+
     @include gbp(0, 768) {
         margin-top: 0 !important;
     }
 
-    header {
+    .v-container{
         @include gbp(0, 768) {
-            display: none !important;
+            padding-left: 0 !important;
         }
     }
 
-    &__swiper {
-        border-radius: 8px;
-        border: 1px solid #D9D9D9;
-        padding: 15px;
+    header{
+        @include gbp(0, 768) {
+            font-size: 14px !important;
+        } 
+    }
 
+    &__swiper {
         @include gbp(0, 768) {
             border: 0 !important;
             border-radius: 0 !important;
             padding: 0 !important;
         }
+    }
 
-        img {
+    &__item {
+        &__image {
+            border-radius: 32px;
+            background: #F5F5F5;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #F5F5F5;
+
             @include gbp(0, 768) {
-                width: 64px;
-                height: 64px;
-                border-radius: 12px;
+                padding: 8px !important;
+                border-radius: 16px !important;
+            }
+
+
+            img {
+                width: 76px;
+                max-height: 76px;
+                border-radius: 16px;
+
+                @include gbp(0, 768) {
+                    width: 49px !important;
+                    height: 49px !important;
+                    border-radius: 50% !important;
+                }
+            }
+        }
+
+        &.selected {
+            .product-category-slider__item__image {
+                border-color: transparent !important;
+                background: linear-gradient(135deg, #E77DB6 -0.38%, #811750 99.62%);
+            }
+
+            h2 {
+                color: #D72685 !important;
             }
         }
     }
 
-    .swiper-button-prev,
-    .swiper-button-next {
-        width: 40px;
-        height: 40px;
-        background: #fff;
-        border: 1px solid #9E9E9E;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .swiper-button-next,
+    .swiper-button-prev {
+        border-radius: 16px !important;
+        background: #FBE9F3 !important;
+        width: 42px !important;
+        height: 42px !important;
+        top: 70px !important;
+
+        &::before {
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            content: '';
+            position: absolute;
+            top: calc(50% - 11.5px);
+            right: calc(50% - 11.5px);
+            background-color: #D72685;
+        }
 
         &::after {
-            font-size: 17px !important;
-            color: #D72685 !important;
+            z-index: 1;
+            color: white;
+            font-size: 13px;
+
+        }
+
+        &.swiper-button-disabled{
+            display: none !important;
         }
 
         @include gbp(0, 768) {
@@ -144,7 +205,7 @@ export default {
         }
     }
 
-    h2 {
+    h2{
         @include gbp(0, 768) {
             font-size: 12px;
             font-variation-settings: "wght" 500;
