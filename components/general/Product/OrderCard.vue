@@ -10,7 +10,7 @@
             </a>
 
             <div>
-                <a v-if="content.shps && content.shps?.sku?.label" :href="`/sku/${content.shps?.sku?.slug}`">
+                <a v-if="content.shps && content.shps?.sku?.label" :href="`/sku/${content.shps?.sku?.slug}`" class="product-card__image ml-5">
                     <h3 class="t14 w400 text-grey-darken-1 product-card__title mb-5">
                         {{content.shps?.sku?.label}}
                     </h3>
@@ -319,10 +319,6 @@ $parent:'product-card';
                     align-items: center;
                     justify-content: space-between;
                 }
-            }
-
-            &__image{
-                height: 110px;
             }
         }
 

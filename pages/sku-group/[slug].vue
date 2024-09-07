@@ -1,28 +1,50 @@
 <template>
-<main class="v-product v-product--list">
+  <main class="v-product v-product--list">
     <v-container v-show="loading">
-        <generalSkeletonPlpNoFilter :loading="loading" />
+      <generalSkeletonPlpNoFilter :loading="loading"/>
     </v-container>
 
     <v-container v-show="!loading" class="main-col">
-        <generalBreadcrumb :items="breadcrumbList" />
-        <v-row>
-            <v-col cols="12">
-                <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
-                    <v-row v-if="productListData?.length" class="ma-0">
-                        <v-col cols="6" md="3" v-for="(item, index) in productListData" :key="`card-${index}`" class="v-product__content d-flex">
-                            <generalProductCard :content="item" :lazy=false class="mb-4 flex-grow-1" :hideInfo="true" :isPLP="true" :index="index + 1" showBasket :sectionName="`لیست کالاهای ${plpTitle}`" :categoryName="category" :showColors="true" />
-                        </v-col>
-                    </v-row>
-                </div>
+      <generalBreadcrumb :items="breadcrumbList" />
+      <v-row>
+        <v-col cols="12">
+          <div class="v-product__contents" :class="screenType === 'desktop' ? 'mt-6' : ''">
+            <v-row v-if="productListData?.length" class="ma-0">
+              <v-col
+                  cols="6"
+                  md="3"
+                  v-for="(item, index) in productListData"
+                  :key="`card-${index}`"
+                  class="v-product__content d-flex">
+                <generalProductCard
+                    :content="item"
+                    :lazy=false
+                    class="mb-4 flex-grow-1"
+                    :hideInfo="true"
+                    :isPLP="true"
+                    :index = "index + 1"
+                    showBasket
+                    :sectionName = "`لیست کالاهای ${plpTitle}`"
+                    :categoryName = "category"
+                    :showColors="true" />
+              </v-col>
+            </v-row>
+          </div>
 
-                <div class="v-product__pagination d-flex justify-center mt-8 w-100">
-                    <v-pagination v-model="page" :length="productListPageLength" size="40" :total-visible="6" @click="backToTop" prev-icon="mdi-chevron-right" next-icon="mdi-chevron-left" />
-                </div>
-            </v-col>
-        </v-row>
+          <div class="v-product__pagination d-flex justify-center mt-8 w-100">
+            <v-pagination
+                v-model="page"
+                :length="productListPageLength"
+                size="40"
+                :total-visible="6"
+                @click="backToTop"
+                prev-icon="mdi-chevron-right"
+                next-icon="mdi-chevron-left" />
+          </div>
+        </v-col>
+      </v-row>
     </v-container>
-</main>
+  </main>
 </template>
 
 <script>
@@ -34,19 +56,17 @@ export default {
             productList: [],
             filters: [],
             screenType: null,
-            category: null
+            category:null
         }
     },
 
     setup() {
         const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
-        const runtimeConfig = useRuntimeConfig()
-
         const {
             productList,
             page,
             query,
-            getBreadcrumb,
+            getBreadcrumb ,
             breadcrumb,
             plpTitle,
             description,
@@ -63,49 +83,66 @@ export default {
             productList,
             page,
             query,
-            getBreadcrumb,
+            getBreadcrumb ,
             breadcrumb,
             plpTitle,
             title,
-            loading,
-            runtimeConfig
+            loading
         }
     },
 
     computed: {
-        /**
-         * BreadCrumb
-         */
-         breadcrumbList() {
-            let breadcrumb = []
+      breadcrumbList(){
+        let breadcrumb = []
+        if(this.breadcrumb?.category_l1?.name){
+          const form = {
+            type : "category_l1",
+            href: `/category/${this.breadcrumb.category_l1.slug}`,
+            title: this.breadcrumb.category_l1.name
+          }
+          breadcrumb.push(form)
 
-            const homeForm = {
-                href: '/',
-                title: 'خانه'
-            }
-            breadcrumb.push(homeForm)
+        }
+        if(this.breadcrumb?.category_l2?.name){
+          const form = {
+            type : "category_l2",
+            href: `/category/${this.breadcrumb.category_l2.slug}`,
+            title: this.breadcrumb.category_l2.name
+          }
+          breadcrumb.push(form)
+        }
 
-            if (this.breadcrumb && this.breadcrumb.length) {
-                this.breadcrumb.forEach((item, index) => {
-                    const form = {
-                        href: this.runtimeConfig.public.siteUrl + item ?.slug,
-                        title: item ?.name
-                    }
+        if(this.breadcrumb?.category_l3?.name){
+          const form = {
+            type : "category_l3",
+            href: `/category/${this.breadcrumb.category_l3.slug}`,
+            title: this.breadcrumb.category_l3.name
+          }
+          breadcrumb.push(form)
+        }
 
-                    if (index === this.breadcrumb.length - 1) {
-                        this.pageTitle = item ?.name;
-                        this.title = item ?.name
-                    }
+        if(this.breadcrumb?.product){
+          const form = {
+            type : "product",
+            href: `/product/${this.breadcrumb.product.slug}`,
+            title: this.breadcrumb.product.name
+          }
+          breadcrumb.push(form)
+        }
 
-                    breadcrumb.push(form)
-                })
-            }
-            return breadcrumb
-        },
+        if(this.breadcrumb?.sku_group){
+          const form = {
+            type : "sku_group",
+            href: `/sku-group/${this.breadcrumb.sku_group.slug}`,
+            title: this.breadcrumb.sku_group.name
+          }
+          breadcrumb.push(form)
+        }
 
-        /** 
-         * Return data product list  
-         */
+        return breadcrumb
+      },
+
+        /** return data product list  **/
         productListData() {
             try {
                 return this.productList.data.data.data
@@ -114,9 +151,7 @@ export default {
             }
         },
 
-        /** 
-         * Return PageLength product list for pagination 
-         */
+        /** return PageLength product list for pagination **/
         productListPageLength() {
             try {
                 return this.productList.data.data.last_page
@@ -126,15 +161,15 @@ export default {
         },
     },
 
-    methods: {
+    methods:{
         /**
          * Back to top on change pagination
          */
-        backToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
+        backToTop(){
+          window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+          });
         }
     },
 
@@ -144,7 +179,7 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
 
-        if (this.$route.query ?.page) {
+        if(this.$route.query?.page){
             this.page = parseInt(this.$route.query.page)
         }
     },
@@ -165,6 +200,20 @@ export default {
                 })
             }
         },
+
+        plpTitle(newVal){
+            this.title = newVal
+        },
+
+        breadcrumb(newVal){
+          if(newVal?.category_l3?.name){
+            this.category = newVal?.category_l3?.name
+          }else if(newVal?.category_l2?.name){
+            this.category = newVal?.category_l2?.name
+          }else if(newVal?.category_l1?.name){
+            this.category = newVal.category_l1.name
+          }
+        }
     }
 }
 </script>
