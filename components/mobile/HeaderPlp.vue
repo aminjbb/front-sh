@@ -7,12 +7,12 @@
     <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }" id="mobile-header">
         <div class="w-100 d-flex align-center justify-space-between header__logo-row">
             <div class="d-flex align-center">
-                <a :href="pageReference !== null && pageReference.slug ? `${runtimeConfig.public.siteUrl}/${pageSlug}/${pageReference.slug}` :'/' ">
+                <a :href="pageReference && pageReference !== null && pageReference.slug ? `${runtimeConfig.public.siteUrl}/${pageSlug}/${pageReference.slug}` :'/' ">
                     <v-icon icon="mdi-chevron-right" color="text-gray-darken-3" class="ml-1" />
                 </a>
 
                 <span class="t14 w700 text-gray-darken-3">
-                    <template v-if="pageReference !== null && pageReference.label">{{ pageReference.label }}</template>
+                    <template v-if="pageReference && pageReference !== null && pageReference.label">{{ pageReference.label }}</template>
                     <template v-else>{{ pageTitle }}</template>
                 </span>
             </div>
