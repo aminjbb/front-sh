@@ -26,6 +26,7 @@ export default function setup() {
     const loading =ref(true)
     const categoryList = ref([]);
     const selectedLastCategory = ref(null)
+    const parentCategory = ref(null)
 
     function checkRouteForSlug() {
         if (route.name != 'search') {
@@ -125,11 +126,11 @@ export default function setup() {
                             productList.value = response1;
     
                             secondaryData.value = response2;
-                            plpTitle.value = response2.data.data.page.meta_title;
-                            description.value = response2.data.data.page.meta_description;
-                            categoryList.value = response2.data.data?.categories
-
-                            selectedLastCategory.value = categoryList.value.find(item => item.is_selected == true);
+                            plpTitle.value = response2.data.data.page.meta_title; // Get `title` of page
+                            description.value = response2.data.data.page.meta_description; // Get `description` of page 
+                            categoryList.value = response2.data.data?.categories // Get category page
+                            selectedLastCategory.value = categoryList.value.find(item => item.is_selected == true); // Get last category with is_selected: true
+                            parentCategory.value = response2.data.data?.parent_category // Get category patent name for categories page
                         }
                     }
 
@@ -162,7 +163,7 @@ export default function setup() {
 
     return {
         productList, filterQuery, secondaryData, page, filterForFilter, query,
-        getBreadcrumb, breadcrumb , description , plpTitle , loading, categoryList, selectedLastCategory
+        getBreadcrumb, breadcrumb , description , plpTitle , loading, categoryList, selectedLastCategory, parentCategory
     }
 }
 

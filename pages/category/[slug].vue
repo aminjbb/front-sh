@@ -1,6 +1,6 @@
 <template>
     
-<mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle" :items="breadcrumbList"/>
+<mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle" :pageReference="parentCategory" :items="breadcrumbList"/>
 
 <main class="v-product v-product--list">
     <v-container v-show="loading">
@@ -143,7 +143,8 @@ export default {
             description,
             loading,
             selectedLastCategory,
-            categoryList
+            categoryList,
+            parentCategory
         } = new PLP()
 
         useHead({
@@ -167,7 +168,8 @@ export default {
             loading,
             runtimeConfig,
             selectedLastCategory,
-            categoryList
+            categoryList,
+            parentCategory
         } 
     },
 

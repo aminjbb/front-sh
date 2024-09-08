@@ -107,6 +107,8 @@ export default {
 
     @include gbp(0, 768) {
         margin-top: 0 !important;
+        border: 0 !important;
+        margin-bottom: 0 !important;
     }
 
     .v-container{
