@@ -4,7 +4,7 @@
         <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="40" :title="topBanner?.image_alt" />
     </a>
 
-    <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }" id="mobile-header">
+    <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop, 'ov-v':submenu }" id="mobile-header">
         <div class="w-100 d-flex align-center justify-space-between header__logo-row">
             <div class="d-flex align-center">
                 <a :href="pageReference && pageReference !== null && pageReference.slug ? `${runtimeConfig.public.siteUrl}/${pageSlug}/${pageReference.slug}` :'/' ">
@@ -19,7 +19,15 @@
 
             <mobileSearchResult buttonType="icon" />
         </div>
+
+        <div v-if="submenu" class="header header--mobile-plp__submenu px-3 d-flex align-center" id="header--mobile-plp__submenu" :class="{ 'fixed': showSubMeu, 'hidden': hideSubMenu}">
+            <template v-if="pageImage">
+                <img :src="pageImage" :title="pageTitle" width="24" height="24" class="ml-2 br8 ov-h">
+            </template>
+            <div class="t16 w700 text-sGrayDarken2">{{ pageTitle }}</div>
+        </div>
     </header>
+
     <mobileMenu class="menu-plp" :class="{'has-banner': hasBanner }"/>
 </client-only>
 </template>
@@ -36,17 +44,21 @@ export default {
             hasBanner: false,
             isBanner: false,
             isTop: false,
+            showSubMeu: false,
+            hideSubMenu: true,
         };
     },
 
     props: {
         pageTitle: String,
-        items:Array,
+        items: Array,
         pageReference: Object,
         pageSlug: {
             type: String,
             default: 'category'
-        }
+        },
+        submenu: Boolean,
+        pageImage: String,
     },
 
     setup() {
@@ -141,6 +153,27 @@ export default {
                     menu.style.height = `calc(100% - ${104 - window.scrollY}px)`;
                 }
             }
+
+            if(this.submenu){
+                const submenu = document.getElementById('header--mobile-plp__submenu');
+
+                if(window.scrollY > 200){
+                    this.showSubMeu = true;
+                    this.hideSubMenu = false;
+
+                    if (currentScrollTop > this.lastScrollTop) {
+                        this.hideSubMenu = true;
+                        this.showSubMeu = false;
+
+                    } else {
+                        this.showSubMeu = true;
+                        this.hideSubMenu = false;
+                    }
+                }else{
+                    this.showSubMeu = false;
+                    this.hideSubMenu = true;
+                }
+            }
         },
     },
 
@@ -174,9 +207,12 @@ $parent: 'header';
     &--mobile-plp {
         .#{$parent}__logo-row {
             height: 48px;
+            overflow: hidden;
             padding: 0 16px 0 !important;
             background: #fff;
             box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+            position: relative;
+            z-index: 3;
 
             .v-icon.mdi-chevron-right {
                 font-size: 25px !important;
@@ -188,6 +224,35 @@ $parent: 'header';
         flex-grow: 0 !important
     }
 
+}
+
+.#{$parent}--mobile-plp__submenu{
+    height: 44px;
+    width: 100%;
+    position: absolute;
+    top: 48px;
+    right: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1;
+    background: #fff;
+    border-top: 1px solid #E8E8E8;
+
+    &.hidden {
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    &.fixed {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .header__search-box {

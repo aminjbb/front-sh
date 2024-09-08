@@ -1,6 +1,6 @@
 <template>
     
-<mobileHeaderPlp v-if="screenType === 'mobile'" :pageTitle="pageTitle" :pageReference="parentCategory" :items="breadcrumbList"/>
+<mobileHeaderPlp v-if="screenType === 'mobile'" :submenu="selectedLastCategory ? true : false" :pageImage="selectedLastCategory ? selectedLastCategory.image_url : ''" :pageTitle="pageTitle" :pageReference="parentCategory" :items="breadcrumbList"/>
 
 <main class="v-product v-product--list">
     <v-container v-show="loading">
