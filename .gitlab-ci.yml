@@ -99,7 +99,7 @@ deploy:
 
     # Change directory to where the pm2 ecosystem file is located
     - cd $DEPLOY_DIR
-
+    - pwd
     # Restart pm2 with the ecosystem config
     - pm2 restart ecosystem.config.cjs
 
