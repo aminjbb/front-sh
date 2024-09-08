@@ -87,7 +87,7 @@ deploy:
     - sudo mkdir -p $DEPLOY_DIR
 
     - sudo rsync -av --delete .output/ $DEPLOY_DIR
-    - sudo rsync -av --delete ecosystem.config.cjs $DEPLOY_DIR
+    #- sudo rsync -av --delete ecosystem.config.cjs $DEPLOY_DIR
     #- sudo rsync -av --delete .output/public/ $DEPLOY_DIR
 
     #- rsync -avz --delete-after
@@ -103,7 +103,7 @@ deploy:
     - cd $DEPLOY_DIR
     - pwd
     # Restart pm2 with the ecosystem config
-    - sudo pm2 restart ecosystem.config.cjs
+    #- sudo pm2 restart ecosystem.config.cjs
 
     - echo "Deployment complete."
   environment:
