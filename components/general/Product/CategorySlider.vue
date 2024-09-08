@@ -140,8 +140,9 @@ export default {
             border: 2px solid #F5F5F5;
 
             @include gbp(0, 768) {
-                padding: 8px !important;
+                padding: 10px !important;
                 border-radius: 16px !important;
+                border: 0 !important;
             }
 
 
@@ -160,14 +161,22 @@ export default {
 
         &.selected {
             .product-category-slider__item__image {
-                border-color: transparent !important;
-                background: linear-gradient(135deg, #E77DB6 -0.38%, #811750 99.62%);
+                border-color:#D72685;
+
+                @include gbp(0, 768) {
+                    border-color: transparent !important;
+                    background: linear-gradient(135deg, #E77DB6 -0.38%, #811750 99.62%);
+                }
             }
 
             h2 {
                 color: #D72685 !important;
             }
         }
+    }
+
+    .swiper-slide{
+        padding-bottom: 20px;
     }
 
     .swiper-button-next,

@@ -5,8 +5,9 @@
 
 .v-breadcrumbs {
     padding-top: 0 !important;
-    padding-bottom: 25px !important;
+    padding-bottom: 0 !important;
     padding-right: 0 !important;
+    justify-content: flex-end !important;
 
     .v-breadcrumbs-item{
         font-size: 12px !important;

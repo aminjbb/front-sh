@@ -50,8 +50,4 @@ export default {
 
 <style>
 @import '~/assets/scss/components/general/breadcrumbs.scss';
-
-.v-breadcrumbs{
-    justify-content: flex-end !important;
-}
 </style>

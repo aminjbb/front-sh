@@ -13,7 +13,10 @@
 
     <v-container v-show="!loading">
         <v-row v-if="screenType === 'desktop'">
-            <v-col cols="6">
+            <v-col cols="6" class="d-flex align-center">
+                <template v-if="selectedLastCategory">
+                    <img :src="selectedLastCategory.image_url" :title="selectedLastCategory.label" width="32" height="32" class="ml-2 br12 ov-h">
+                </template>
                 <div class="t18 w700 text-sGrayDarken2">{{ pageTitle }}</div>
             </v-col>
             <v-col cols="6">
@@ -86,6 +89,7 @@ export default {
     data() {
         return {
             pageTitle: null,
+            parentTitle:null,
             productList: [],
             filters: [],
             screenType: null,
@@ -138,7 +142,7 @@ export default {
             plpTitle,
             description,
             loading,
-            lastCategoryImage,
+            selectedLastCategory,
             categoryList
         } = new PLP()
 
@@ -162,9 +166,9 @@ export default {
             title,
             loading,
             runtimeConfig,
-            lastCategoryImage,
+            selectedLastCategory,
             categoryList
-        }
+        } 
     },
 
     computed: {
@@ -243,10 +247,13 @@ export default {
     },
 
     methods: {
-
+        /**
+         * Clear filter
+         */
         clearFilterQuery() {
             this.filterQuery = []
         },
+
         /**
          * Filter productList by list type items
          * @param {*} array
@@ -262,6 +269,7 @@ export default {
                 })
             }
         },
+
         /**
          * Filter productList by select type items
          * @param {*} array
@@ -330,6 +338,11 @@ export default {
             }
         },
 
+        /**
+         * Sort data
+         * @param {*} array
+         * @param {*} orderType
+         */
         sort(order, orderType) {
             this.sortType = order
             this.orderType = orderType

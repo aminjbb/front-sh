@@ -25,7 +25,7 @@ export default function setup() {
     const structuredDataBreadcrumb = ref(null)
     const loading =ref(true)
     const categoryList = ref([]);
-    const lastCategoryImage = ref(null)
+    const selectedLastCategory = ref(null)
 
     function checkRouteForSlug() {
         if (route.name != 'search') {
@@ -129,7 +129,7 @@ export default function setup() {
                             description.value = response2.data.data.page.meta_description;
                             categoryList.value = response2.data.data?.categories
 
-                            lastCategoryImage.value = categoryList.value.find(item => item.is_selected == true);
+                            selectedLastCategory.value = categoryList.value.find(item => item.is_selected == true);
                         }
                     }
 
@@ -162,7 +162,7 @@ export default function setup() {
 
     return {
         productList, filterQuery, secondaryData, page, filterForFilter, query,
-        getBreadcrumb, breadcrumb , description , plpTitle , loading, categoryList, lastCategoryImage
+        getBreadcrumb, breadcrumb , description , plpTitle , loading, categoryList, selectedLastCategory
     }
 }
 
