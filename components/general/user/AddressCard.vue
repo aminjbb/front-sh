@@ -176,7 +176,7 @@ export default {
 .address-card {
     border-bottom: 1px solid #eee;
     padding: 20px 0;
-
+    width: 100%;
     .mdi-circle {
         font-size: 4px !important;
         margin-left: 4px;

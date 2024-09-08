@@ -14,9 +14,9 @@
             <div class="col-3 pa-4 xs-hide">
                 <generalUserSidebar />
             </div>
-            <div class="col-9 pa-4">
+            <div class="col-9 pa-4 ">
                 <v-form ref="editUser" v-model="valid">
-                    <v-card class="pa-8 mobile-pa-0 mobile-no-border ov-v">
+                    <v-card class="pa-8 mobile-no-border ov-v mt-16 pt-10 pt-md-5  mt-md-0">
                         <v-row class="pa-5">
                             <v-col cols="12" md="6">
                                 <v-text-field
