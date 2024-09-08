@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <p v-if="content && content.content" class="t11 w400 text-sGray mb-1">{{ content.content }}</p>
+        <p v-if="content && content.content" class="t11 w400 text-sGray mb-1" v-html="content.content"></p>
 
         <div class="d-flex align-center ticket-card__info">
             <div v-if="content && content.id" class="ml-2">
