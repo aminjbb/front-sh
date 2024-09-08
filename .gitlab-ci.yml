@@ -98,10 +98,10 @@ deploy:
     - if [ $? -eq 0 ]; then sudo systemctl reload nginx; else echo "Nginx configuration test failed" && exit 1; fi
 
     # Change directory to where the pm2 ecosystem file is located
-    - cd $DEPLOY_DIR
-    - pwd
+    #- cd $DEPLOY_DIR
+    #- pwd
     # Restart pm2 with the ecosystem config
-    - sudo pm2 restart ecosystem.config.cjs
+    #- sudo pm2 restart ecosystem.config.cjs
 
     - echo "Deployment complete."
   environment:
