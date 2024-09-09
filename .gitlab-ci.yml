@@ -118,12 +118,10 @@ deploy:
         apps: [
           {
             name: "$BRANCH_NAME",
-            script: "npm",
-            args: "run start",
-            env: {
-              NODE_ENV: "production",
-              PORT: $PORT_USED
-            }
+            exec_mode: 'cluster',
+            instances: 'max',
+            script: './server/index.mjs',
+            port: $PORT_USED
           }
         ]
       };
