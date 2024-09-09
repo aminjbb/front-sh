@@ -128,7 +128,7 @@ deploy:
       EOF
 
     # Start or restart the new PM2 process with the ecosystem file
-    - sudo cd $DEPLOY_DIR
+    - cd $DEPLOY_DIR
     - sudo pm2 start ./ecosystem.config.js --env production
     - sudo pm2 save
     
