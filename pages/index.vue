@@ -1,5 +1,5 @@
 <template>
-<main class="v-home bg-error">
+<main class="v-home">
     <h1 class="ov-h h-0">{{ title }}</h1>
     <div v-show="loading">
         <generalSkeletonHome :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'" />
