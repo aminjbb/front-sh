@@ -4,7 +4,6 @@
         <div class="close-modal cur-p" @click="closeSheet()">
             <v-icon color="grey-darken-1">mdi-close</v-icon>
         </div>
-
         <h4 class="t18 w700 l30 mt-10 mb-5">کد تخفیف</h4>
 
         <div>
@@ -15,8 +14,8 @@
                 </template>
 
                 <template v-else>
-                    <h4 class="t12 w700 l30 mb-2">{{ title }}</h4>
-                    <img data-not-lazy :src="imageAddress(image)" width="100" height="100" />
+                    <h4 class="t12 w700 l30 mb-2">{{ modalData?.content }}</h4>
+                    <img data-not-lazy :src="modalData?.image_url " width="100" height="100" />
                 </template>
 
             </div>
@@ -105,7 +104,11 @@ export default {
          * Open sheet
          */
         openSheet() {
-            this.sheet = true
+          setTimeout(() => {
+            if (this.signupStatus === true && this.modalData !== null) {
+              this.sheet = true
+            }
+          }, 5000);
         },
 
         /**
@@ -155,9 +158,15 @@ export default {
         },
     },
 
+    computed:{
+      modalData(){
+        return this.$store.getters['get_homePageFirstTimeModal']
+      }
+    },
+
     mounted() {
-        if (this.voucherShownCookie !== true && this.signupStatus === true) {
-            this.openModal();
+        if (this.voucherShownCookie!== true && this.signupStatus === true) {
+            this.openSheet();
             this.voucherShownCookie = true;  // Set the cookie value
         }
     }

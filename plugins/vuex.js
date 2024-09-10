@@ -26,11 +26,15 @@ const store = createStore({
         submitText:'',
         type:null,
         emptyBasket:''
-      }
+      },
+      homePageFirstTimeModal:null,
     };
   },
 
   mutations: {
+    set_homePageFirstTimeModal(state , obj){
+      state.homePageFirstTimeModal = obj
+    },
     set_orderModalError(state, obj){
       state.orderErrorModal.buttonType = obj.buttonType
       state.orderErrorModal.text = obj.text
@@ -71,6 +75,9 @@ const store = createStore({
   },
 
   getters: {
+    get_homePageFirstTimeModal(state){
+      return  state.homePageFirstTimeModal
+    },
     get_orderModalError(state){
       return state.orderErrorModal
     },
