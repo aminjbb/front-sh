@@ -7,11 +7,11 @@
     <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop, 'ov-v':submenu }" id="mobile-header">
         <div class="w-100 d-flex align-center justify-space-between header__logo-row">
             <div class="d-flex align-center">
-                <a :href="pageReference && pageReference !== null && pageReference.slug ? `${runtimeConfig.public.siteUrl}/${pageSlug}/${pageReference.slug}` :'/' ">
-                    <v-icon icon="mdi-chevron-right" color="text-gray-darken-3" class="ml-1" />
+                <a :href="pageReference && pageReference !== null && pageReference.slug ? `${runtimeConfig.public.siteUrl}/${pageSlug}/${pageReference.slug}` :'/' " class="text-sGrayDarken2">
+                    <v-icon icon="mdi-chevron-right" color="sGrayDarken2" class="ml-1" />
                 </a>
 
-                <span class="t14 w700 text-gray-darken-3">
+                <span class="t14 w700 text-sGrayDarken2">
                     <template v-if="pageReference && pageReference !== null && pageReference.label">{{ pageReference.label }}</template>
                     <template v-else>{{ pageTitle }}</template>
                 </span>
@@ -28,7 +28,7 @@
         </div>
     </header>
 
-    <mobileMenu class="menu-plp" :class="{'has-banner': hasBanner }"/>
+    <mobileMenu class="menu-plp" :class="{'has-banner': hasBanner }" />
 </client-only>
 </template>
 
@@ -79,6 +79,8 @@ export default {
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         this.getTopBanner();
+
+
     },
 
     beforeDestroy() {
@@ -90,88 +92,50 @@ export default {
          * Show and hide menu in scroll down and up
          */
         handleScroll() {
-            let currentScrollTop = window.scrollY;
+            //let currentScrollTop = window.scrollY;
             const menu = document.getElementById('menu--mobile');
+            const header = document.getElementById('mobile-header');
+            const filter = document.getElementById('filter-bg-mobile');
+
+            const headerHeight = header.offsetHeight;
 
             if (this.isBanner) {
-                if (window.scrollY > 88) {
-                    this.isHidden = true;
-                    this.isFixed = false;
+                if (window.scrollY > 40) {
                     this.hasBanner = false;
+                    header.style.top = '0px';
                     menu.style.top = '';
                     menu.style.height = '';
-                    
-                    if (menu) {
-                        if (currentScrollTop > this.lastScrollTop) {
-                            this.isHidden = true;
-                            this.isFixed = false;
-
-                            menu.classList.add('change-height');
-                            menu.style.top = 0;
-                        } else {
-                            this.isFixed = true;
-                            this.isHidden = false;
-
-                            menu.classList.remove('change-height');
-                            menu.style.top = '48px';
-                        }
-                    }
-                    this.lastScrollTop = currentScrollTop;
                 }
-                if (window.scrollY <= 88) {
-                    this.isFixed = false;
-                    this.isHidden = false;
+                if (window.scrollY <= 40) {
+                    this.hasBanner = true;
+                    header.style.top = `${40 - window.scrollY}px`;
                     menu.style.top = `${88 - window.scrollY}px`;
                     menu.style.height = `calc(100% - ${144 - window.scrollY}px)`;
                 }
-            } else {
-                if (window.scrollY > 48) {
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    menu.style.top = '';
-                    menu.style.height = '';
-
-                    if (menu) {
-                        if (currentScrollTop > this.lastScrollTop) {
-                            this.isHidden = true;
-                            this.isFixed = false;
-
-                            menu.classList.add('change-height');
-                        } else {
-                            this.isFixed = true;
-                            this.isHidden = false;
-
-                            menu.classList.remove('change-height');
-                        }
-                    }
-                    this.lastScrollTop = currentScrollTop;
-                }
-                if (window.scrollY <= 48) {
-                    this.isFixed = false;
-                    this.isHidden = false;
-                    menu.style.top = `${48 - window.scrollY}px`;
-                    menu.style.height = `calc(100% - ${104 - window.scrollY}px)`;
-                }
             }
 
-            if(this.submenu){
-                const submenu = document.getElementById('header--mobile-plp__submenu');
+            const filterParent = document.getElementById('filter-parent');
 
-                if(window.scrollY > 200){
-                    this.showSubMeu = true;
-                    this.hideSubMenu = false;
+            if(filterParent){
+                const filterOffset = filterParent.offsetTop;
+                const margin = filterOffset - headerHeight;
 
-                    if (currentScrollTop > this.lastScrollTop) {
-                        this.hideSubMenu = true;
-                        this.showSubMeu = false;
+                // Fix category sub menu and filter
+                if(window.scrollY >= margin){
+                    filter.classList.add('fixed');
 
-                    } else {
+                    if(this.submenu){
                         this.showSubMeu = true;
                         this.hideSubMenu = false;
+                        filter.style.top = '89px'
                     }
-                }else{
-                    this.showSubMeu = false;
-                    this.hideSubMenu = true;
+                }else if(window.scrollY < margin){
+                    filter.classList.remove('fixed')
+                    
+                    if(this.submenu){
+                        this.showSubMeu = false;
+                        this.hideSubMenu = true;
+                    }
                 }
             }
         },
@@ -205,6 +169,13 @@ $parent: 'header';
 
 .#{$parent} {
     &--mobile-plp {
+        position: fixed !important;
+        top: 0px;
+
+        &.has-banner {
+            top: 40px;
+        }
+
         .#{$parent}__logo-row {
             height: 48px;
             overflow: hidden;
@@ -226,27 +197,23 @@ $parent: 'header';
 
 }
 
-.#{$parent}--mobile-plp__submenu{
+.#{$parent}--mobile-plp__submenu {
     height: 44px;
     width: 100%;
     position: absolute;
     top: 48px;
     right: 0;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 1;
+    transition: opacity 0.1s ease-in-out;
+    z-index: 3;
     background: #fff;
     border-top: 1px solid #E8E8E8;
 
     &.hidden {
         opacity: 0;
-        transform: translateY(-100%);
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
 
     &.fixed {
         opacity: 1;
-        transform: translateY(0);
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
 
     img {

@@ -11,7 +11,7 @@ $parent : 'v-product';
 
     @include gbp (0, 768) {
         padding-bottom: 80px;
-        padding-top: 10px !important;
+        padding-top: 45px !important;
     }
 
     &__filter {
@@ -99,6 +99,24 @@ $parent : 'v-product';
     .filter-bg-mobile{
         @include gbp (0, 768) {
             background-color: #F5F5F5;
+        }
+
+        &.fixed{
+            @include gbp (0, 768) {
+                width: 100%;
+                position: fixed;
+                top: 45px;
+                z-index: 10;
+                background-color: #FAFAFA !important;
+            }
+        }
+    }
+
+    .mobile-filter-box{
+        @include gbp (0, 768) {
+            height: 58px;
+            align-items: center;
+            display: flex;
         }
     }
 

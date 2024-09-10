@@ -16,19 +16,21 @@
                 </v-col>
             </v-row>
     
-            <v-row :class="screenType === 'desktop' ? 'mt-5' : ''">
-                <v-col cols="12" md="3" class="filter-bg-mobile">
+            <v-row :class="screenType === 'desktop' ? 'mt-5' : 'change-row'">
+                <v-col cols="12" md="3" class="pa-0 mobile-filter-box" id="filter-parent">
                     <client-only>
-                        <template v-if="screenType === 'desktop'">
-                            <generalProductFilterSideBar :filterList="productFilterSecondaryData" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
-                        </template>
-                        <template v-if="screenType === 'mobile'">
-                            <div class="d-flex align-center">
-                                <generalProductFilterSideBarModal class="ml-3" :filterList="productFilterSecondaryData" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
-    
-                                <generalProductSortModal @sort="sort" :sortItems="sortItems" />
-                            </div>
-                        </template>
+                        <div class="filter-bg-mobile pa-3 w-100" id="filter-bg-mobile">
+                            <template v-if="screenType === 'desktop'">
+                                <generalProductFilterSideBar :filterList="productFilterSecondaryData" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
+                            </template>
+                            <template v-if="screenType === 'mobile'">
+                                <div class="d-flex align-center">
+                                    <generalProductFilterSideBarModal class="ml-3" :filterList="productFilterSecondaryData" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
+        
+                                    <generalProductSortModal @sort="sort" :sortItems="sortItems" />
+                                </div>
+                            </template>
+                        </div>
                     </client-only>
                 </v-col>
     

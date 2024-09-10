@@ -1,7 +1,7 @@
 <template>
 <div v-if="items && items.length" class="product-category-slider">
     <v-container>
-        <header class="t18 w700 text-sGrayDarken2 mb-4">
+        <header class="t18 w700 text-sGrayDarken2 mb-4 product-category-slider__header">
             {{ title }}
         </header>
 
@@ -117,9 +117,10 @@ export default {
         }
     }
 
-    header{
+    &__header{
         @include gbp(0, 768) {
             font-size: 14px !important;
+            padding-top: 8px;
         } 
     }
 

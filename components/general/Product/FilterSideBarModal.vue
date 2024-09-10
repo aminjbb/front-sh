@@ -42,7 +42,7 @@
 
                 <template v-if="filter.type === 'select'">
                   <generalProductFilterSelects :index="index" @selectedFilter="addSelectedFilterForShowBadge"
-                                               :showEnName="filter.param === 'categories' ? true : false"
+                                               :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
                                                :items="filter.data" :clear="clearAll" :title="filter.label"
                                                :name="filter.label" :param="filter.param"
                                                @selectItems="selectFiltersModalEmit"
@@ -60,6 +60,7 @@
                 <template v-else-if="filter.type === 'checkbox'">
                   <generalProductFilterSelects :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                                @selectedFilter="addSelectedFilterForShowBadge"
+                                               :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
                                                @changeClearToFalse="changeClearToFalse" :items="filter.data"
                                                :title="filter.label" :name="filter.label"
                                                :param="filter.param" :clear="clearAll"
