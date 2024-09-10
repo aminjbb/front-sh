@@ -41,7 +41,7 @@
                                 <nav class="d-flex align-center flex-grow-1">
                                     <div class="pl-4">
                                         <v-icon icon="mdi-sort-ascending" color="grey-darken-1" class="ml-1" size="small"/>
-                                        <span class="t12 w700 text-grey-darken-1">مرتب‌سازی بر اساس</span>
+                                        <span class="t12 w700 text-sGray">مرتب‌سازی بر اساس</span>
                                     </div>
     
                                     <ul class="v-product__filter__items d-flex align-center">
@@ -524,6 +524,10 @@
     
             if (this.$route.query ?.page) {
                 this.page = parseInt(this.$route.query.page)
+            }
+
+            if(this.$route.query && this.$route.query?.order){
+                this.sortType = this.$route.query?.order
             }
         },
     

@@ -542,6 +542,10 @@ export default {
         if (this.$route.query ?.page) {
             this.page = parseInt(this.$route.query.page)
         }
+
+        if(this.$route.query && this.$route.query?.order){
+            this.sortType = this.$route.query?.order
+        }
     },
 
     beforeMount() {

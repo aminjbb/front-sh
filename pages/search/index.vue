@@ -14,14 +14,14 @@
                 <nav class="d-flex align-center flex-grow-1">
                 <div class="pl-4">
                     <v-icon icon="mdi-sort-ascending" color="grey-darken-1" />
-                    <span class="t14 w400 text-grey-darken-1">مرتب‌سازی بر اساس:</span>
+                    <span class="t12 w700 text-sGray">مرتب‌سازی بر اساس:</span>
                 </div>
 
                 <ul class="v-product__filter__items d-flex align-center">
-                    <li class="t14 w400 px-4" :class="(sortType=== 'related' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('related', 'asc')">مرتبط‌ترین</li>
-                    <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                    <li class="t14 w400 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-grey' " @click="sort('site_price', 'desc')">گران‌ترین</li>
-                    <li class="t14 w400 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-grey' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                    <li class="t12 w700 px-4" :class="(sortType=== 'related' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('related', 'asc')">مرتبط‌ترین</li>
+                    <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                    <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'desc')">گران‌ترین</li>
+                    <li class="t12 w700 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-sGray' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                 </ul>
                 </nav>
             </div>
@@ -197,6 +197,10 @@ export default {
 
         if(this.$route.query?.page){
             this.page = parseInt(this.$route.query.page)
+        }
+
+        if(this.$route.query && this.$route.query?.order){
+            this.sortType = this.$route.query?.order
         }
     },
 
