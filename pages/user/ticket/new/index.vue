@@ -340,6 +340,7 @@ export default {
         }
         this.subTitleList.push(value)
       })
+      this.form.subtitle = null
     },
 
     selectSubTitle() {
