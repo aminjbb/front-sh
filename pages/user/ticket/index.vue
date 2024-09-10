@@ -26,12 +26,7 @@
                         <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
                             <GeneralTicketTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedTickets" showAll AllTitle="همه تیکت ها" componentName="generalTicketCard" emptyText=" با کلیک بر روی دکمه زیر می‌توانید یک تیکت جدید ارسال کنید." emptyTitle="تیکتی" emptyButtonLink="/user/ticket/new" emptyButtonText="ثبت تیکت"/>
                         </div>
-                        <div class="w-100 d-flex justify-center px-4">
-                            <v-btn v-if="screenType === 'mobile'" href="/user/ticket/new" height="44" block title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 mb-5 mx-5 px-7">
-                                ثبت تیکت
-                            </v-btn>
 
-                        </div>
                     </template>
 
                     <template v-else>

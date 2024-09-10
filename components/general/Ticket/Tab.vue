@@ -18,6 +18,12 @@
             <div class="s-tab__content">
               <template v-if="filteredData?.length">
                 <component v-for="(item, index) in filteredData" :key="`tab-content-${index}`" :is="component" :content="item" />
+                <div class="w-100 d-flex justify-center px-4">
+                  <v-btn v-if="screenType === 'mobile'" href="/user/ticket/new" height="44" block title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 mb-5 mx-5 px-7">
+                    ثبت تیکت
+                  </v-btn>
+
+                </div>
               </template>
 
                 <div v-else class="flex-grow-1 d-flex flex-column mb-8">
