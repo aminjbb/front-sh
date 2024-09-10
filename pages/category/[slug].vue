@@ -46,7 +46,7 @@
             <v-col cols="12" md="9" class="main-col">
                 <template v-if="screenType === 'desktop'">
                     <client-only>
-                        <div class="v-product__filter d-flex pt-1 align-center justify-space-between mb-4 pb-1">
+                        <div class="v-product__filter d-flex align-center justify-space-between mb-4 pb-1 pr-2">
                             <nav class="d-flex align-center flex-grow-1">
                                 <div class="pl-4">
                                     <v-icon icon="mdi-sort-ascending" color="grey-darken-1" class="ml-1" size="small"/>
