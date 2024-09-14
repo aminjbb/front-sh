@@ -221,7 +221,6 @@ export default {
     h2{
         @include gbp(0, 768) {
             font-size: 12px;
-            font-variation-settings: "wght" 500;
         }
     }
 }
