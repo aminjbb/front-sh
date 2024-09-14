@@ -196,7 +196,6 @@ export default {
             if (this.mandatoryFields && this.mandatoryFields.length) {
                 this.mandatoryFields.forEach(item => {
                     if (item === 'seller_sku_id') {
-                        console.log(this.form.seller_sku_id)
                         if (this.form.seller_sku_id !== null && this.form.seller_sku_id !== '') {
                             skuAccess = true
                         } else {
@@ -245,8 +244,8 @@ export default {
                 formData.append('topic_id', topicId)
                 formData.append('content', this.form.content)
                 formData.append('priority', this.form.priority)
-                formData.append('seller_sku_id', Number(String(this.form.seller_sku_id)))
-                formData.append('order_number', Number(String(this.form.order_number)))
+                if (this.form.seller_sku_id) formData.append('seller_sku_id', Number(String(this.form.seller_sku_id)))
+                if (this.form.order_number)  formData.append('order_number', Number(String(this.form.order_number)))
 
                 if (this.images) {
                     this.images.forEach((image, index) => {
