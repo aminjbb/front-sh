@@ -13,25 +13,25 @@
                 <span class="t12 w500 text-sGray">عنوان زیر موضوع تیکت</span>
             </div>
 
-            <div v-if="content && content.status" class="ticket-card__status t11 w700" :class="[getStatusBg(content.status), getStatusColor(content.status)]">
+            <div v-if="content && content.status" class="ticket-card__status t10 w700" :class="[getStatusBg(content.status), getStatusColor(content.status)]">
                 {{ getStatusText(content.status) }}
             </div>
         </div>
 
-        <p v-if="content && content.content" class="t11 w400 text-sGray mb-1" v-html="content.content"></p>
-
+        <p v-if="content && content.content" class="t10 w400 text-sGray mb-1" v-html="content.content"></p>
+ 
         <div class="d-flex align-center ticket-card__info">
             <div v-if="content && content.id" class="ml-2">
                 <v-icon color="sGrayLighten2" class="t12 ml-1" icon="mdi-clipboard-text-outline"></v-icon>
-                <span class="t11 w400 text-sGrayLighten2 number-font">شناسه: {{ content.id }}</span>
+                <span class="t10 w400 text-sGrayLighten2 number-font">شناسه: {{ content.id }}</span>
             </div>
             <div v-if="content && content.priority" class="ml-2">
                 <v-icon color="sGrayLighten2" class="t12 ml-1" icon="mdi-filter-variant"></v-icon>
-                <span class="t11 w400 text-sGrayLighten2">اولویت: {{ getPriorityText(content.priority) }}</span>
+                <span class="t10 w400 text-sGrayLighten2">اولویت: {{ getPriorityText(content.priority) }}</span>
             </div>
             <div v-if="content && content.created_at" class="ml-2">
                 <v-icon color="sGrayLighten2" class="t12 ml-1" icon="mdi-calendar-month-outline"></v-icon>
-                <span class="t11 w400 text-sGrayLighten2 number-font">{{ content.created_at_fa }}</span>
+                <span class="t10 w400 text-sGrayLighten2 number-font">{{ content.created_at_fa }}</span>
             </div>
         </div>
 
