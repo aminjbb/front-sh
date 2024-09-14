@@ -349,9 +349,7 @@ $parent: 'header';
     opacity: 1;
     width: 100% !important;
     z-index: 11;
-
     background: #fff;
-    overflow: hidden;
     position: relative;
 
     &.hidden {
