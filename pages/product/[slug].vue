@@ -26,7 +26,7 @@
         
                             <template v-if="screenType === 'mobile'">
                                 <div class="d-flex align-center">
-                                    <generalProductFilterSideBarModal class="ml-3" :filterList="productFilterSecondaryData" @listFiltersModal="listFiltersModal" @clearFilterQuery="clearFilterQuery" @selectFiltersModal="selectFiltersModal" @setAmount="selectByAmount" />
+                                    <generalProductFilterSideBarModal class="ml-1" :filterList="productFilterSecondaryData" @listFiltersModal="listFiltersModal" @clearFilterQuery="clearFilterQuery" @selectFiltersModal="selectFiltersModal" @setAmount="selectByAmount" />
         
                                     <generalProductSortModal @sort="sort" :sortItems="sortItems" />
                                 </div>
