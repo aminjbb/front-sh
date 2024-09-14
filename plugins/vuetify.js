@@ -52,12 +52,19 @@ const myTheme = {
     sErrorLighten1: '#F44336',
     sErrorLighten2: '#FFEBEE',
 
+    sInfo: '#0277BD',
+    sInfoLighten1: '#E1F5FE',
+    sInfoLighten2: '#E1F5FE',
+
     sGray: '#6A6A6A',
-    sGrayLighten1: '#64B5F6',
+    sGrayLighten1: '#9E9E9E',
     sGrayLighten2: '#9A9A9A',
-    sGrayLighten3: '#9E9E9E',
+    sGrayLighten3: '#F5F5F5',
+    sGrayLighten4: '#E0E0E0',
+    sGrayLighten5: '#BDBDBD',
     sGrayDarken1: '#424242',
     sGrayDarken2: '#3C3C3C',
+    
   },
 }
 
