@@ -9,11 +9,30 @@
 
     @include gbp (0, 768) {
         padding-bottom: 80px;
-        padding-top: 0;
+        padding-top: 70px;
     }
 
     .ticket {
         &__form {
+            &__1stRow{
+                >div {
+                    width: 20%;
+                    flex: 0 0 20%;
+                    padding-left: 24px;
+                    margin-top: 16px;
+
+                    @include gbp (0, 768) {
+                        width: 100%;
+                        flex: 0 0 100%;
+                        padding-left: 0 !important;
+                    }
+
+                    &:last-child{
+                        padding-left: 0 !important;
+                    }
+                }
+            }
+
             &__item {
                 &--text-field {
                     input {
@@ -23,6 +42,53 @@
                     .v-field__input {
                         font-size: 13px !important;
                     }
+
+                    .v-field__outline{
+                        &__start{
+                            border-top-right-radius: 8px !important;
+                            border-bottom-right-radius: 8px !important;
+                        }
+
+                        &__end{
+                            border-top-left-radius: 8px !important;
+                            border-bottom-left-radius: 8px !important;
+                        }
+                    }
+
+                    .v-select .v-field__input {
+                        height: 40px !important;
+                        padding: 0 15px !important;
+                    }
+
+                }
+            }
+        }
+    }
+
+    &__card{
+        padding: 0 !important;
+        border-radius: 32px !important;
+        border-color: transparent !important;
+
+        @include gbp (768) {
+            border-color: #CBCBCB !important;
+        }
+
+        @include gbp (0, 768) {
+            background-color: transparent !important;
+        }
+
+        header{
+            border: 0 !important;
+
+            .btn--submit{
+                border-radius: 12px !important;
+                padding-left: 24px !important;
+                padding-right: 24px !important;
+
+                .v-btn__content{
+                    font-size: 14px !important;
+                    font-variation-settings: "wght" 700 !important;
                 }
             }
         }
