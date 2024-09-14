@@ -114,6 +114,7 @@ export default {
     .v-container{
         @include gbp(0, 768) {
             padding-left: 0 !important;
+            padding-bottom: 12px !important;
         }
     }
 
@@ -179,7 +180,7 @@ export default {
     }
 
     .swiper-slide{
-        padding-bottom: 20px;
+        padding-bottom: 0 !important;
     }
 
     .swiper-button-next,
