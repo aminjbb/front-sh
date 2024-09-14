@@ -126,7 +126,10 @@ deploy:
         ]
       };
       EOF
-
+      
+    # Clean up old PM2 processes before starting the new one
+    - sudo pm2 delete $BRANCH_NAME || true
+    
     # Start or restart the new PM2 process with the ecosystem file
     - cd $DEPLOY_DIR
     - sudo pm2 start ecosystem.config.js
