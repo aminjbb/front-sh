@@ -20,7 +20,7 @@
            </template>
         </template>
         <template v-slot:divider>
-            <span>/</span>
+            <span class="w700">/</span>
         </template>
     </v-breadcrumbs>
 </div>
