@@ -368,4 +368,8 @@ $parent: 'header';
         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
 }
+
+.filter-bg-mobile.fixed{
+    box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+}
 </style>
