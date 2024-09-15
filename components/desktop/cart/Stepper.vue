@@ -385,8 +385,13 @@ export default {
             if (way !== false) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId, way)
+                if (way === 'nafis'){
+                  this.activeButton = false;
+                }
+                else {
+                  this.activeButton = true;
+                }
 
-                this.activeButton = true;
 
             } else {
                 this.$store.commit('set_orderSendingMethod', null);
@@ -428,8 +433,15 @@ export default {
          * @param {*} arr
          */
         getTime(arr) {
-            //TODO: Add set time to cart
+
+          if (arr.length){
+            console.log(arr , 'arr')
+            this.$store.commit('set_orderSendingMethod', arr[0])
+            this.calculateSendingPrice(this.orderAddressId, arr[0] ,arr[1])
+
             this.activeButton = true;
+            this.activeButton = true;
+          }
         },
 
         /**
