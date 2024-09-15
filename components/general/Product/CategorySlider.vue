@@ -180,7 +180,11 @@ export default {
     }
 
     .swiper-slide{
-        padding-bottom: 0 !important;
+        padding-bottom: 16px !important;
+
+        @include gbp(0, 768) {
+            padding-bottom:0 !important ;
+        }
     }
 
     .swiper-button-next,

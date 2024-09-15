@@ -36,7 +36,7 @@
                             <div class="d-flex align-center">
                                 <generalProductFilterSideBarModal :filterLength="selectedFilterLength" class="ml-1" :filterList="productFilterSecondaryData" @clearFilterQuery="clearFilterQuery" @listFiltersModal="listFiltersModal" @selectFiltersModal="selectFiltersModal" @setAmount="selectByAmount" />
 
-                                <generalProductSortModal @sort="sort" :sortItems="sortItems" />
+                                <generalProductSortModal @selectSort= "mobileSort" @sort="sort" :sortItems="sortItems" :sortType = "sortType" :orderType="orderType"/>
                             </div>
                         </template>
                     </div>
@@ -54,7 +54,7 @@
                                 </div>
 
                                 <ul class="v-product__filter__items d-flex align-center">
-                                    <li class="t12 w700 px-4" :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('seen_count', 'asc')">محبوب ترین </li>
+                                    <li class="t12 w700 px-4" :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('seen_count', 'desc')">محبوب ترین </li>
                                     <li class="t12 w700 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('created_at', 'desc')">جدیدترین</li>
                                     <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
                                     <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'desc')">گران‌ترین</li>
@@ -102,27 +102,32 @@ export default {
             sortItems: [{
                     label: 'محبوب ترین',
                     value: 'seen_count',
-                    type: 'desc'
+                    type: 'desc',
+                    valueByType:'seen_count'
                 },
                 {
                     label: 'جدیدترین',
                     value: 'created_at',
-                    type: 'desc'
+                    type: 'desc',
+                    valueByType:'created_at'
                 },
                 {
                     label: 'ارزان‌ترین',
                     value: 'site_price',
-                    type: 'asc'
+                    type: 'asc',
+                    valueByType:'site_price_asc'
                 },
                 {
                     label: 'گران‌ترین',
                     value: 'site_price',
-                    type: 'desc'
+                    type: 'desc',
+                    valueByType:'site_price_desc'
                 },
                 {
                     label: 'بیشترین تخفیف',
                     value: 'discount',
-                    type: 'desc'
+                    type: 'desc',
+                    valueByType:'discount'
                 }
             ],
         }
@@ -343,6 +348,13 @@ export default {
         },
 
         /**
+         * Sort in mobile
+         */
+        mobileSort(item){
+            this.sort(item.value, item.type)
+        },
+
+        /**
          * Sort data
          * @param {*} array
          * @param {*} orderType
@@ -543,8 +555,9 @@ export default {
             this.page = parseInt(this.$route.query.page)
         }
 
-        if(this.$route.query && this.$route.query?.order){
+        if(this.$route?.query && this.$route.query?.order && this.$route.query?.order_type){
             this.sortType = this.$route.query?.order
+            this.orderType = this.$route.query?.order_type
         }
     },
 
@@ -562,6 +575,21 @@ export default {
                 this.selectedFilterLength = 0
             } else {
                 this.selectedFilterLength = Object.keys(newVal ?.query).length
+
+                Object.keys(newVal ?.query).forEach(element => {
+                    if(element === 'order'){
+                        this.selectedFilterLength = this.selectedFilterLength - 1
+                    }
+
+                    if(element === 'order_type'){
+                        this.selectedFilterLength = this.selectedFilterLength - 1
+                    }
+
+                    if(element === 'page'){
+                        this.selectedFilterLength = this.selectedFilterLength - 1
+                    }
+                });
+                
             }
 
         }

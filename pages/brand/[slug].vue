@@ -25,9 +25,9 @@
                             </template>
                             <template v-if="screenType === 'mobile'">
                                 <div class="d-flex align-center">
-                                    <generalProductFilterSideBarModal class="ml-1" :filterList="productFilterSecondaryData" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
+                                    <generalProductFilterSideBarModal :filterLength="selectedFilterLength" class="ml-1" :filterList="productFilterSecondaryData" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
         
-                                    <generalProductSortModal @sort="sort" :sortItems="sortItems" />
+                                    <generalProductSortModal @selectSort= "mobileSort" @sort="sort" :sortItems="sortItems" :sortType = "sortType" :orderType="orderType" />
                                 </div>
                             </template>
                         </div>
@@ -46,14 +46,10 @@
     
                                     <ul class="v-product__filter__items d-flex align-center">
                                         <li class="t12 w700  px-4" :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('seen_count', 'desc')">محبوب ترین </li>
-                                        <li class="t12 w700 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('created_at', 'desc')">جدیدترین
-                                        </li>
-                                        <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'asc')">ارزان‌ترین
-                                        </li>
-                                        <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'desc')">گران‌ترین
-                                        </li>
-                                        <li class="t12 w700 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-sGray' " @click="sort('discount', 'desc')">بیشترین تخفیف
-                                        </li>
+                                        <li class="t12 w700 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('created_at', 'desc')">جدیدترین</li>
+                                        <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
+                                        <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'desc')">گران‌ترین</li>
+                                        <li class="t12 w700 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-sGray' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
                                     </ul>
                                 </nav>
                             </div>
@@ -91,31 +87,37 @@
                 sortType: 'seen_count',
                 orderType: 'desc',
                 category: null,
+                selectedFilterLength: null,
                 sortItems: [
                     {
                       label: 'محبوب ترین',
                       value: 'seen_count',
-                      type: 'desc'
+                      type: 'desc',
+                      valueByType:'seen_count'
                     },
                     {
                         label: 'جدیدترین',
                         value: 'created_at',
-                        type: 'desc'
+                        type: 'desc',
+                        valueByType:'created_at'
                     },
                     {
                         label: 'ارزان‌ترین',
                         value: 'site_price',
-                        type: 'asc'
+                        type: 'asc',
+                        valueByType:'site_price_asc'
                     },
                     {
                         label: 'گران‌ترین',
                         value: 'site_price',
-                        type: 'desc'
+                        type: 'desc',
+                        valueByType:'site_price_desc'
                     },
                     {
                         label: 'بیشترین تخفیف',
                         value: 'discount',
-                        type: 'desc'
+                        type: 'desc',
+                        valueByType:'discount'
                     }
                 ],
             }
@@ -324,6 +326,13 @@
                     })
                 }
             },
+
+            /**
+             * Sort in mobile
+             */
+            mobileSort(item){
+                this.sort(item.value, item.type)
+            },
     
             /**
              * Sort data
@@ -526,8 +535,9 @@
                 this.page = parseInt(this.$route.query.page)
             }
 
-            if(this.$route.query && this.$route.query?.order){
+            if(this.$route?.query && this.$route.query?.order && this.$route.query?.order_type){
                 this.sortType = this.$route.query?.order
+                this.orderType = this.$route.query?.order_type
             }
         },
     
@@ -551,6 +561,30 @@
             plpTitle(newVal) {
                 this.title = newVal
             },
+
+            $route(newVal) {
+                if (Object.keys(newVal ?.query).length === 0) {
+                    this.selectedFilterLength = 0
+                } else {
+                    this.selectedFilterLength = Object.keys(newVal ?.query).length
+
+                    Object.keys(newVal ?.query).forEach(element => {
+                        if(element === 'order'){
+                            this.selectedFilterLength = this.selectedFilterLength - 1
+                        }
+
+                        if(element === 'order_type'){
+                            this.selectedFilterLength = this.selectedFilterLength - 1
+                        }
+
+                        if(element === 'page'){
+                            this.selectedFilterLength = this.selectedFilterLength - 1
+                        }
+                    });
+                    
+                }
+
+            }
         }
     }
     </script>
