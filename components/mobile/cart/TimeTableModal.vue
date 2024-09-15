@@ -1,7 +1,7 @@
 <template>
   <div class="c-modal w-100">
     <div class="w-100 d-flex justify-start align-center mt-3" @click="openModal()">
-      <span class="text-primary t12 w400">انتخاب زمان ارسال</span>
+      <span class="text-primary t12 w400 mr-3">انتخاب زمان ارسال</span>
       <v-icon
           icon="mdi-chevron-left"
           color="primary"
@@ -15,8 +15,8 @@
         fullscreen>
       <v-card class="pt-2 pb-5 c-modal--comment">
         <header class="c-modal--comment__header d-flex justify-space-between align-center pb-1 px-6 ">
-          <div class="d-flex flex-column c-modal--comment__header__title">
-                    <span class="t16 w400 mb-1">
+          <div class="d-flex flex-column c-modal--comment__header__title ">
+                    <span class="t16 w400 mb-1 ">
                         انتخاب زمان ارسال
                     </span>
           </div>
@@ -35,10 +35,10 @@
         <div class="px-6">
           <div class="cart-way-calendar  w-100 mt-3" :ref="`nafisRef-${key}`">
             <div class="scroll--x">
-              <div class="d-flex align-center" style="width: 768px;">
+              <div class="d-flex align-center" style="width: 435px;">
                 <template v-for="(item, index) in items.slice(0,6)" :key="`day${index}`">
                   <div class="flex-grow-1 cart-way-calendar__item" :id="`cart-way-calendar__item-${index}${key}`">
-                    <div class="cart-way-calendar__item__day-name d-flex align-center justify-center flex-column"
+                    <div  class="cart-way-calendar__item__day-name d-flex align-center justify-center flex-column"
                          @click="selectDay(index,item)">
                                         <span class="t14 w400 text-grey mb-2"
                                               :class="item.totalCapacity == 0   ? 'text-grey-lighten-2' :''">
@@ -58,8 +58,9 @@
             <div v-if="showSelectedTime">
               <template v-for="(workShit , index) in workShitSelected">
                 <v-checkbox
-                    :label="workShit?.label"
+                    :label="`${workShit?.label} ${workShit?.startFrom} الی ${workShit?.startTo}`"
                     hide-details
+                    :disabled="workShit?.capacity == 0"
                     @change="selectTime(workShit)"/>
 
               </template>
@@ -146,6 +147,7 @@ export default {
         const classes = document.getElementsByTagName('div');
         Object.keys(classes).forEach(key => {
           const selectedClass = classes[key];
+
           selectedClass.classList.remove('active-day');
         })
 
@@ -171,6 +173,13 @@ export default {
 
     openModal() {
       this.dialog = true;
+      this.showSelectedTime = true
+      this.workShitSelected = this.items[0]?.workShifts
+      this.selectedItem = this.items[0]
+      setTimeout(()=>{
+        document.getElementById(`cart-way-calendar__item-${0}${this.key}`).classList.add('active-day');
+
+      } , 200)
     },
 
     closeModal() {
@@ -178,6 +187,9 @@ export default {
       this.workShitSelected =[]
     },
   },
+
+  watch:{
+  }
 }
 </script>
 

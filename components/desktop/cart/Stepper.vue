@@ -365,7 +365,9 @@ export default {
          * @param {*} address
          */
         getAddress(address) {
-            if (address !== false) {
+          this.activeButton = false;
+
+          if (address !== false) {
                 this.$store.commit('set_orderAddress', address)
                 this.getSendingMethods(address)
                 if (this.$store.getters['get_orderSendingMethod']) {
@@ -435,11 +437,9 @@ export default {
         getTime(arr) {
 
           if (arr.length){
-            console.log(arr , 'arr')
             this.$store.commit('set_orderSendingMethod', arr[0])
             this.calculateSendingPrice(this.orderAddressId, arr[0] ,arr[1])
 
-            this.activeButton = true;
             this.activeButton = true;
           }
         },

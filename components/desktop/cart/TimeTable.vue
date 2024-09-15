@@ -8,7 +8,7 @@
                     {{item.dayTitle}}
                 </span>
                 <span class="t11 w400 text-grey number-font"   :class="item.totalCapacity == 0  ? 'text-grey-lighten-2' :''">
-                    {{item.date}}
+                    {{fixDateLabel(item.date)}}
                 </span>
             </div>
 
@@ -22,9 +22,9 @@
                   <div>
                     {{ workShift?.label }}
                   </div>
-                  <div class="number-font">
-                 {{ workShift?.startTo }} - {{ workShift?.startFrom }}
-                  </div>
+<!--                  <div class="number-font">-->
+<!--                 {{ workShift?.startTo }} - {{ workShift?.startFrom }}-->
+<!--                  </div>-->
                 </div>
 
             </div>
@@ -32,8 +32,8 @@
     </template>
 </div>
 <div v-if="showSelectedTime" class="mt-3">
-    <p class="number-font t12 w400 text-grey-darken-1">زمان ارسال {{selectedItem.dayTitle}}  {{fixDate(selectedItem.date)}}
-      {{ selectedTime?.label }} ساعت {{ selectedTime?.startFrom }} الی {{ selectedTime?.startTo }}
+    <p class="number-font t12 w400 text-grey-darken-1">زمان ارسال {{selectedItem.dayTitle}}  {{fixDateLabel(selectedItem.date)}}
+      - {{ selectedTime?.label }}  ساعت {{ selectedTime?.startFrom }} الی {{ selectedTime?.startTo }}
     </p>
 </div>
 </template>
@@ -69,19 +69,36 @@ export default {
     },
 
     methods: {
-      fixDate(date){
+      fixDateLabel(date){
         try {
           const splitDate = date.split('-')
-          return  `${splitDate[0]}/${splitDate[1]}/${splitDate[2]}`
+          const month = this.monthToString(date[1])
+          return splitDate[2] + ' ' + month
         }
         catch (e) {
 
         }
       },
+      monthToString(month){
+        switch (month){
+          case '1' : return  'فرودین'
+          case '2' : return  'اردیبهشت'
+          case '3' : return  'خرداد'
+          case '4' : return  'تیر'
+          case '5' : return  'مرداد'
+          case '6' : return  'شهریور'
+          case '7' : return  'مهر'
+          case '8' : return  'آبان'
+          case '9' : return  'آذر'
+          case '10' : return  'دی'
+          case '11' : return  'بهمن'
+          case '12' : return  'اسنفد'
+        }
+      },
         selectTime(index, item, status) {
             // If time is full
-            if (item.capacity == 0) {
-                useNuxtApp().$toast.error(item.capacity , {
+            if (status.capacity == 0) {
+                useNuxtApp().$toast.error('بازه زمانی مورد نظر شما قابل انتخاب نمی باشد.' , {
                     rtl: true,
                     position: 'top-center',
                     theme: 'dark'

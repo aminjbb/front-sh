@@ -11,30 +11,32 @@
 
     <div>
       <template v-for="(way , index) in sendingMethods" :key="`way${index}`">
-        <div class="d-flex align-center">
-          <v-checkbox
-              class="way-checkbox"
-              v-model="waysModal"
-              :disabled="!way.availability"
-              @change="selectedWay(way)"
-              hide-details
-              :value="way.name"/>
+        <div v-if="way.availability">
+          <div class="d-flex align-center"  >
+            <v-checkbox
+                class="way-checkbox"
+                v-model="waysModal"
 
-          <h3 class="t16 w400 text-grey-darken-1">{{ way?.title }}</h3>
+                @change="selectedWay(way)"
+                hide-details
+                :value="way.name"/>
+
+            <h3 class="t16 w400 text-grey-darken-1">{{ way?.title }}</h3>
+          </div>
+
+          <div class="d-flex align-center justify-space-between">
+            <p class="t12 w400 text-grey number-font">{{ way?.description }}</p>
+
+            <div class="t14 w400 text-grey-darken-1 number-font">
+              {{ splitChar(Number(String(way?.sending_price).slice(0, -1))) }} <span class="t12">تومان</span></div>
+          </div>
+
+
+          <v-divider
+              v-if="index+1 < sendingMethods.length"
+              color="grey-lighten-1"
+              class="my-3"/>
         </div>
-
-        <div class="d-flex align-center justify-space-between">
-          <p class="t12 w400 text-grey number-font">{{ way?.description }}</p>
-
-          <div class="t14 w400 text-grey-darken-1 number-font">
-            {{ splitChar(Number(String(way?.sending_price).slice(0, -1))) }} <span class="t12">تومان</span></div>
-        </div>
-
-
-        <v-divider
-            v-if="index+1 < sendingMethods.length"
-            color="grey-lighten-1"
-            class="my-3"/>
       </template>
       <template v-if="waysModal === 'nafis'">
         <desktopCartTimeTable :items="timeSlot" :calendar="calendarMoc" :index="index" @selectedDate="selectedDate"/>
@@ -144,12 +146,25 @@ export default {
      * Selected way for send package to customer
      */
     selectedWay(way) {
+
       this.timeSlot = way?.time_slots
+
       this.$emit('selectedWay', this.waysModal);
 
     },
   },
 
+  computed:{
+    orderAddressId(){
+      return this.$store.getters['get_orderAddress']
+    }
+  },
+  watch:{
+    orderAddressId(val){
+      this.timeSlot = []
+      this.waysModal = null
+    },
+  },
   beforeMount() {
     // todo: add get time table after backend fixed
     this.getUserAddress()

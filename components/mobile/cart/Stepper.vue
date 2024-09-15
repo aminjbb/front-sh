@@ -347,6 +347,7 @@ export default {
      * @param {*} address
      */
     getAddress(address) {
+      this.activeButton = false;
       if (address && address !== false) {
         this.$store.commit('set_orderAddress', address)
 
@@ -361,11 +362,6 @@ export default {
         this.activeButton = false;
       }
 
-      if (address && address !== false && this.emitWay) {
-        this.activeButton = true;
-      } else{
-        this.activeButton = false;
-      }
     },
 
     /**

@@ -11,24 +11,25 @@
 
     <div>
       <template v-for="(way , index) in sendingMethods" :key="`way${index}`">
-        <div class="d-flex align-center justify-space-between">
-          <div class="d-flex align-center">
-            <v-checkbox
-                class="way-checkbox"
-                :disabled="!way?.availability"
-                v-model="waysModal"
-                @change="selectedWay(way)"
-                hide-details
-                :value="way.name"/>
+        <div v-if="way?.availability" >
+          <div class="d-flex align-center justify-space-between" >
+            <div class="d-flex align-center">
+              <v-checkbox
+                  class="way-checkbox"
+                  v-model="waysModal"
+                  @change="selectedWay(way)"
+                  hide-details
+                  :value="way.name"/>
 
-            <h3 class="t16 w400 text-grey-darken-1">{{ way.title }}</h3>
+              <h3 class="t16 w400 text-grey-darken-1">{{ way.title }}</h3>
+            </div>
+            <div class="t14 w400 text-grey-darken-1 number-font px-3">
+              {{ splitChar(Number(String(way.sending_price).slice(0, -1))) }} <span class="t12">تومان</span>
+            </div>
           </div>
-          <div class="t14 w400 text-grey-darken-1 number-font">
-            {{ splitChar(Number(String(way.sending_price).slice(0, -1))) }} <span class="t12">تومان</span>
-          </div>
+
+          <p class="t12 w400 text-grey px-3">{{ way.description }}</p>
         </div>
-
-        <p class="t12 w400 text-grey">{{ way.desc }}</p>
 
 
         <v-divider
@@ -43,8 +44,8 @@
             @selectedDate="selectedDate"/>
 
         <div v-if="showSelectedTime" class="mt-3">
-          <p class="number-font t12 w400 text-grey-darken-1">زمان ارسال {{ showSelectedTime[2]?.dayTitle }}
-            <span > {{ showSelectedTime[1]?.label }} ساعت {{ showSelectedTime[1]?.startFrom }} الی {{ showSelectedTime[1]?.startTo }}</span>
+          <p class="number-font t12 w400 text-grey-darken-1 px-3">زمان ارسال {{ showSelectedTime[2]?.dayTitle }}
+            <span class="number-font"> {{ showSelectedTime[1]?.label }} ساعت {{ showSelectedTime[1]?.startFrom }} الی {{ showSelectedTime[1]?.startTo }}</span>
           </p>
         </div>
       </template>
@@ -119,7 +120,16 @@ export default {
 
     }
   },
-
+  computed:{
+    orderAddress(){
+      return this.$store.getters['get_orderAddress']
+    }
+  },
+  watch:{
+    orderAddress(){
+      this.waysModal = null
+    }
+  },
   beforeMount() {
     this.getUserAddress()
     this.getProvince()
