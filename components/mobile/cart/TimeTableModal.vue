@@ -110,7 +110,7 @@ export default {
     fixDateLabel(date){
       try {
         const splitDate = date.split('-')
-        const month = this.monthToString(date[1])
+        const month = this.monthToString(splitDate[1])
         return splitDate[2] + ' ' + month
       }
       catch (e) {
@@ -119,15 +119,15 @@ export default {
     },
     monthToString(month){
       switch (month){
-        case '1' : return  'فرودین'
-        case '2' : return  'اردیبهشت'
-        case '3' : return  'خرداد'
-        case '4' : return  'تیر'
-        case '5' : return  'مرداد'
-        case '6' : return  'شهریور'
-        case '7' : return  'مهر'
-        case '8' : return  'آبان'
-        case '9' : return  'آذر'
+        case '01' : return  'فرودین'
+        case '02' : return  'اردیبهشت'
+        case '03' : return  'خرداد'
+        case '04' : return  'تیر'
+        case '05' : return  'مرداد'
+        case '06' : return  'شهریور'
+        case '07' : return  'مهر'
+        case '08' : return  'آبان'
+        case '09' : return  'آذر'
         case '10' : return  'دی'
         case '11' : return  'بهمن'
         case '12' : return  'اسنفد'
