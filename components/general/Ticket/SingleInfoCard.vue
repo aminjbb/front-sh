@@ -53,7 +53,7 @@ export default {
             const text = '';
 
             if (priority == 'urgent') {
-                return 'ضروری';
+                return 'فوری';
             }
             if (priority == 'low') {
                 return 'پایین';
@@ -75,7 +75,7 @@ export default {
             const text = '';
 
             if (status == 'open') {
-                return 'باز';
+                return 'باز نشده';
             }
             if (status == 'answered') {
                 return 'پاسخ داده شده';
@@ -83,14 +83,11 @@ export default {
             if (status == 'resolved') {
                 return 'بسته شده';
             }
-            if (status == 'postponed') {
-                return 'متوقف شده';
-            }
-            if (status == 'seen') {
-                return 'دیده شده';
+            if (status == 'pending') {
+                return 'در انتظار پاسخ';
             }
 
-            return 'نامعلوم';
+            return '';
         },
     },
 }
@@ -107,11 +104,11 @@ export default {
         flex-direction: column !important;
         align-items: flex-start !important;
 
-        >div > div{
+        > div > div{
             margin-bottom: 5px !important;
         }
 
-        >div:nth-child(2) div {
+        > div:nth-child(2) div {
             text-align: right !important;
         }
     }

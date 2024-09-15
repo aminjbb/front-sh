@@ -1,5 +1,5 @@
 <template>
-  <div class="ticket-card pa-2 mb-4 s-shadow s-shadow--light bg-white">
+  <a class="ticket-card pa-2 mb-4 s-shadow s-shadow--light bg-white d-block" :href="`/user/ticket/${content.id}`">
         <div class="d-flex justify-space-between align-start mb-2">
             <div>
                 <h2 v-if="content && content.title !== null && content.title !== ''" class="t15 w700 text-sGrayDarken2">
@@ -21,16 +21,16 @@
         <p v-if="content && content.content" class="t10 w400 text-sGray mb-1" v-html="content.content"></p>
  
         <div class="d-flex align-center ticket-card__info">
-            <div v-if="content && content.id" class="ml-2">
-                <v-icon color="sGrayLighten2" class="t12 ml-1" icon="mdi-clipboard-text-outline"></v-icon>
+            <div v-if="content && content.id" class="d-flex align-center">
+                <v-icon color="sGrayLighten2" class="t12" icon="mdi-clipboard-text-outline"></v-icon>
                 <span class="t10 w400 text-sGrayLighten2 number-font">شناسه: {{ content.id }}</span>
             </div>
-            <div v-if="content && content.priority" class="ml-2">
-                <v-icon color="sGrayLighten2" class="t12 ml-1" icon="mdi-filter-variant"></v-icon>
+            <div v-if="content && content.priority" class="d-flex align-center">
+                <v-icon color="sGrayLighten2" class="t12" icon="mdi-filter-variant"></v-icon>
                 <span class="t10 w400 text-sGrayLighten2">اولویت: {{ getPriorityText(content.priority) }}</span>
             </div>
-            <div v-if="content && content.created_at" class="ml-2">
-                <v-icon color="sGrayLighten2" class="t12 ml-1" icon="mdi-calendar-month-outline"></v-icon>
+            <div v-if="content && content.created_at" class="d-flex align-center">
+                <v-icon color="sGrayLighten2" class="t12" icon="mdi-calendar-month-outline"></v-icon>
                 <span class="t10 w400 text-sGrayLighten2 number-font">{{ content.created_at_fa }}</span>
             </div>
         </div>
@@ -46,7 +46,7 @@
               جزئیات تیکت
             </v-btn>
         </div>
-  </div>
+    </a>
 </template>
 
 <script>
@@ -63,7 +63,7 @@ export default {
             const text = '';
 
             if (priority == 'urgent') {
-                return 'ضروری';
+                return 'فوری';
             }
             if (priority == 'low') {
                 return 'پایین';
@@ -85,7 +85,7 @@ export default {
             const text = '';
 
             if (status == 'open') {
-                return 'باز';
+                return 'باز نشده';
             }
             if (status == 'answered') {
                 return 'پاسخ داده شده';
@@ -93,17 +93,11 @@ export default {
             if (status == 'resolved') {
                 return 'بسته شده';
             }
-            if (status == 'postponed') {
-                return 'متوقف شده';
-            }
-            if (status == 'seen') {
-                return 'دیده شده';
-            }
             if (status == 'pending') {
                 return 'در انتظار پاسخ';
             }
 
-            return 'نامعلوم';
+            return '';
         },
 
         /**
@@ -116,19 +110,13 @@ export default {
                 return 'bg-sWarningLighten2';
             }
             if (status == 'answered') {
-                return 'bg-sInfoLighten2';
+                return 'bg-sYellowLighten2';
             }
             if (status == 'resolved') {
                 return 'bg-sSuccessLighten2';
             }
-            if (status == 'postponed') {
-                return 'bg-sErrorLighten2';
-            }
-            if (status == 'seen') {
-                return 'bg-purple-lighten-5';
-            }
             if (status == 'pending') {
-                return 'bg-cyan-lighten-5';
+                return 'bg-sInfoLighten2';
             }
 
             return 'text-sGreyLighten2';
@@ -144,19 +132,13 @@ export default {
                 return 'text-sWarning';
             }
             if (status == 'answered') {
-                return 'text-sInfo';
+                return 'text-sYellow';
             }
             if (status == 'resolved') {
                 return 'text-sSuccess';
             }
-            if (status == 'postponed') {
-                return 'text-sError';
-            }
-            if (status == 'seen') {
-                return 'text-purple';
-            }
             if (status == 'pending') {
-                return 'text-cyan';
+                return 'text-sInfo';
             }
 
             return 'text-sGray';
@@ -180,18 +162,20 @@ export default {
     &__info{
         .v-icon{
             font-size: 13px !important;
+            margin-left: 2px;
         }
 
         > div:not(:last-child){
             position: relative;
-            padding-left: 5px;
+            padding-left: 6px;
+            margin-left: 6px;
 
             &::after{
                 content: '';
                 width: 1px;
                 height: 12px;
                 left: 0;
-                top: 7px;
+                top: 2px;
                 background: #E8E8E8 !important;
                 position: absolute;
             }
