@@ -16,7 +16,7 @@ $parent: 's-tab';
         width: 100%;
         display: flex;
         margin-bottom: 10px;
-        padding: 10px 0;
+        padding: 10px 0 10px;
 
         @include gbp (0, 768) {
             width: 100% !important;
@@ -34,7 +34,7 @@ $parent: 's-tab';
         }
 
         li {
-            padding: 7px 16px !important;
+            padding: 7px 8px 7px 16px !important;
             font-size: 12px !important;
             display: inline-block !important;
             border-radius: 30px !important;
@@ -57,7 +57,7 @@ $parent: 's-tab';
 
             span {
                 padding: 0 !important;
-                color: #3c3c3c;
+                color: #6A6A6A;
                 font-variation-settings: "wght" 700;
             }
 

@@ -6,11 +6,11 @@
                     <v-icon icon="mdi-chat-outline" color="text-sGrayDarken2" class="ml-1"></v-icon>
                     {{ content.title}}
                 </h2>
-                <h2 v-else-if="content.parent_topic || content.topic_title" class="t15 w700 text-sGrayDarken2">
+                <h2 v-else-if="content.parent_topic" class="t15 w700 text-sGrayDarken2">
                     <v-icon icon="mdi-chat-outline" color="text-sGrayDarken2" class="ml-1"></v-icon>
-                    {{content.parent_topic}}<template v-if="content.topic_title"> - {{content.topic_title}}</template>
+                    {{content.parent_topic}}
                 </h2>
-                <span class="t12 w500 text-sGray">عنوان زیر موضوع تیکت</span>
+                <span v-if="content.topic_title" class="t12 w500 text-sGray">{{content.topic_title}}</span>
             </div>
 
             <div v-if="content && content.status" class="ticket-card__status t10 w700" :class="[getStatusBg(content.status), getStatusColor(content.status)]">
@@ -171,6 +171,8 @@ export default {
 .ticket-card{
     border-radius: 12px;
 
+    box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10) !important;
+
     @include gbp (0, 768) {
         box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10) !important;
     }
@@ -190,7 +192,7 @@ export default {
                 height: 12px;
                 left: 0;
                 top: 7px;
-                background: rgb(var(--v-theme-sGrayLighten2)) !important;
+                background: #E8E8E8 !important;
                 position: absolute;
             }
         }
