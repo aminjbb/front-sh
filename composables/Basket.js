@@ -313,11 +313,12 @@ export default function setup() {
      * @param {*} address_id 
      * @param {*} sending_method 
      */
-    async function calculateSendingPrice(address_id , sending_method ) {
+    async function calculateSendingPrice(address_id , sending_method , timeSlot ) {
         axios
             .post(runtimeConfig.public.apiBase + `/order/calculate/sending/price`, {
                 address_id:address_id,
                 sending_method:sending_method,
+                time_slot_id:timeSlot
             }, {
                 headers: {
                     Authorization: `Bearer ${userToken.value}`,
