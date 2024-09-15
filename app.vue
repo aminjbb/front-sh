@@ -77,7 +77,7 @@ import {useRoute} from "vue-router";
           children: JSON.stringify(structureData)
       } ,
       {
-        src: 'https://deemanetwork.com/pxjs/22896.js',
+        // src: 'https://deemanetwork.com/pxjs/22896.js',
         type: 'text/javascript',
         async: true
       }
