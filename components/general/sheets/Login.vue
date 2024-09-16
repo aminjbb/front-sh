@@ -20,7 +20,7 @@
 
         </div>
 
-        <generalAuth v-if="!voucherStep" class="pt-2" backToSiteText="ورود به سایت" @userInfo="getUserInfo"
+        <generalAuth  :showSucces="false" v-if="!voucherStep" class="pt-2" backToSiteText="ورود به سایت" @userInfo="getUserInfo"
                      @backToSite="goLoginPage" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید."/>
         <div v-else>
           <span class="t14 w400 mt-5 d-block text-grey-darken-3">کد تخفیف شما :</span>
