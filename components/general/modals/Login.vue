@@ -61,6 +61,7 @@ export default {
         /** Voucher image */
         voucherImage: String,
         screenType: String,
+        signupStatus: Boolean
 
 
     },
