@@ -55,21 +55,28 @@
                             </div>
 
                             <ul v-if="item.children && item.children.length" class="menu__items" :id="`menu__items--${item.id}`">
+                                <li class="pb-3">
+                                    <a :href="item?.url" class="menu__item__link d-flex align-center justify-space-between">
+                                        <span class="t12 w700 text-primary">همه محصولات {{item.label}}</span>
+                                        <v-icon icon="mdi-chevron-left" color="primary"/>
+                                    </a>
+                                </li>
+                                
                                 <li v-for="child1 in item.children" :key="child1.id" class="menu__item" :class="child1.children ? 'has-child' :''" :id="`menu__item--${child1.id}`" @click="child1.children && child1.children.length ? openSubMenu2(child1.id) : ''">
                                     <a v-if="child1.children && child1.children.length" class="menu__item__link d-flex align-center justify-space-between">
-                                        <span class="t13">{{child1.label}}</span>
+                                        <span class="t12">{{child1.label}}</span>
                                         <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-left" size="small" />
                                     </a>
 
                                     <a v-else class="menu__item__link d-flex align-center justify-space-between" :href="child1.url">
-                                        <span class="t13">{{child1.label}}</span>
+                                        <span class="t12">{{child1.label}}</span>
                                         <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-left" size="small" />
                                     </a>
 
                                     <ul v-if="child1.children && child1.children.length" class="menu__items" :id="`menu__items--${child1.id}`">
                                         <li v-for="child2 in child1.children" :key="child2.id" class="menu__item">
                                             <a :href="child2.url" class="menu__item__link">
-                                                <span class="t13 w500">{{child2.label}}</span>
+                                                <span class="t12 w500">{{child2.label}}</span>
                                             </a>
                                         </li>
                                     </ul>
