@@ -559,6 +559,30 @@ export default {
             this.sortType = this.$route.query?.order
             this.orderType = this.$route.query?.order_type
         }
+
+        /**
+         * Check length of filter in first time
+         */
+        if (Object.keys(this.$route ?.query).length === 0) {
+            this.selectedFilterLength = 0
+        } else {
+            this.selectedFilterLength = Object.keys(this.$route ?.query).length
+
+            Object.keys(this.$route ?.query).forEach(element => {
+                if(element === 'order'){
+                    this.selectedFilterLength = this.selectedFilterLength - 1
+                }
+
+                if(element === 'order_type'){
+                    this.selectedFilterLength = this.selectedFilterLength - 1
+                }
+
+                if(element === 'page'){
+                    this.selectedFilterLength = this.selectedFilterLength - 1
+                }
+            });
+            
+        }
     },
 
     beforeMount() {
@@ -591,7 +615,6 @@ export default {
                 });
                 
             }
-
         }
     }
 }
