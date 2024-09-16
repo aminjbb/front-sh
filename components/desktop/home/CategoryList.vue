@@ -7,7 +7,7 @@
     </header>
 
     <div class="category-list__items d-flex justify-center">
-        <a v-for="item in categories" :key="item.id" :href="item.link" class="category-list__item mb-3">
+        <a v-for="(item , index) in categories" :key="item.id" :href="item.link" class="category-list__item mb-3" :id="`home-${screenId}-${items?.id}-${index +1}`">
             <div class="category-list__item__image">
                 <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="72" height="72" />
             </div>
@@ -32,6 +32,14 @@ export default {
          * Section title
          */
         title: String,
+
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
+        },
     },
 
     computed: {

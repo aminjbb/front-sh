@@ -41,8 +41,10 @@
                             slidesPerView: 7.2,
                         }
                     }" class="mySwiper py-3 w-100">
-                            <swiper-slide v-for="sku in getSkuList(item ,limit)" :key="`tab-skus-${sku.id}`">
-                                <component class="w-100 h-100" :is="component" :index="index+1" :sectionName="`${title} - ${selectedTab}`" v-bind=componentProps :content="sku" />
+                            <swiper-slide v-for="(sku , skuIndex) in getSkuList(item ,limit)" :key="`tab-skus-${sku.id}`">
+                                <component :cardIdLabel="`home-${screenId}-${items?.id}-${index+1}-${skuIndex +1}-label`"
+                                           :cardIdImage="`home-${screenId}-${items?.id}-${index+1}-${skuIndex +1}-image`"
+                                           class="w-100 h-100" :is="component" :index="index+1" :sectionName="`${title} - ${selectedTab}`" v-bind=componentProps :content="sku" />
                             </swiper-slide>
                     </swiper>
                 </template>
@@ -163,6 +165,14 @@ export default {
         mobileMode: {
             type: Boolean,
             default: false
+        },
+
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
         },
     },
 

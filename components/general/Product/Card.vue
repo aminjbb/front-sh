@@ -11,18 +11,18 @@
     </div>
 
     <template v-if="lazy">
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
     <template v-else>
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img data-not-lazy :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
             <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
         </a>
     </template>
@@ -44,9 +44,9 @@
         </div>
     </div>
 
-    
+
     <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
-        <a class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
+        <a :id="cardIdLabel" class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}
         </a>
     </h3>
@@ -166,7 +166,22 @@ export default {
             default: null
         },
 
-        showBasket:Boolean
+        showBasket:Boolean,
+
+        /**
+         * card id for image
+         */
+        cardIdImage:{
+          type: String,
+          default: ''
+        },
+      /**
+         * Category name
+         */
+      cardIdLabel:{
+          type: String,
+          default: ''
+        },
     },
 
     methods: {
@@ -182,7 +197,7 @@ export default {
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: 'select_item',  	// name of the event. In this case, it always must be select_item
-                ecommerce: {							
+                ecommerce: {
                     items: [{   // an array where all currently viewed products must be included
                         item_id: this.content?.id,	// insert an actual product ID
                         price:  Number(String(this.content?.site_price).slice(0, -1)),    // insert an actual product price. Number or a string. Don't include currency code
