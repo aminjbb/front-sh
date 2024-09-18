@@ -23,7 +23,7 @@
               </p>
 
               <v-form ref="ticket" v-model="valid">
-                <v-row class="ticket__form__1stRow w-100 ma-0">
+                <v-row class="ticket__form__1stRow w-100 ma-0" v-if="!isMobile">
                   <div class="ticket__form__item ticket__form__item--text-field w__flex--50">
                     <v-select label="موضوع" density="compact" variant="outlined" :rules="rule" item-title="title"
                               item-value="value" hide-details :items="getFirstTitles" v-model="form.title"
@@ -55,6 +55,44 @@
                     <div class="ticket__form__item ticket__form__item--text-field"
                          v-if="mandatoryField ==='order_number'"
                          :class="mandatoryFields.includes('seller_sku_id') && mandatoryFields.includes('order_number')? '' :'w__flex--50'">
+                      <v-text-field density="compact" variant="outlined"
+                                    :rules="mandatoryFields['order_number'] ? rule : ''" hide-details
+                                    label="شماره سفارش" v-model="form.order_number"/>
+                    </div>
+                  </template>
+
+
+                </v-row>
+                <v-row class="ticket__form__1stRow w-100 ma-0" v-else>
+                  <div >
+                    <v-select label="موضوع" density="compact" variant="outlined" :rules="rule" item-title="title"
+                              item-value="value" hide-details :items="getFirstTitles" v-model="form.title"
+                              @update:model-value="getSubTitle()"/>
+                  </div>
+                  <div v-if="subTitleList?.length">
+                    <v-select label="زیرموضوع" density="compact" variant="outlined" item-title="title"
+                              item-value="value" hide-details :items="subTitleList" v-model="form.subtitle"
+                              @update:model-value="selectSubTitle()"/>
+                  </div>
+
+                  <div >
+                    <v-select label="اولویت تیکت" density="compact" variant="outlined" :rules="rule" item-title="title"
+                              item-value="value" hide-details :items="priorities" v-model="form.priority"/>
+
+                  </div>
+
+
+
+                  <template v-for="mandatoryField in mandatoryFields">
+                    <div
+                         v-if="mandatoryField ==='seller_sku_id'">
+                      <v-text-field density="compact" variant="outlined"
+                                    :rules="mandatoryFields['seller_sku_id'] ? rule : ''" hide-details
+                                    label="شناسه کالا" v-model="form.seller_sku_id"/>
+                    </div>
+
+                    <div
+                         v-if="mandatoryField ==='order_number'">
                       <v-text-field density="compact" variant="outlined"
                                     :rules="mandatoryFields['order_number'] ? rule : ''" hide-details
                                     label="شماره سفارش" v-model="form.order_number"/>
@@ -366,6 +404,8 @@ export default {
         this.subTitleList.push(value)
       })
       this.form.subtitle = null
+      this.form.order_number = null
+      this.form.seller_sku_id = null
     },
 
     selectSubTitle() {
