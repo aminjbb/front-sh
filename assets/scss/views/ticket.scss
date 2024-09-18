@@ -65,7 +65,7 @@
         }
     }
 
-    .btn{
+    .v-btn, .btn{
         .v-btn__content{
             @include gbp (0, 768) {
                 flex-grow: 1 !important;
@@ -85,6 +85,7 @@
 
         @include gbp (0, 768) {
             background-color: transparent !important;
+            border-radius: 0 !important;
         }
 
         header{
@@ -99,24 +100,6 @@
                     font-size: 14px !important;
                     font-variation-settings: "wght" 700 !important;
                 }
-            }
-        }
-    }
-
-    &__info-card{
-        @include gbp (0, 768) {
-            flex-direction: column !important;
-            padding-bottom: 30px !important;
-            border: 0 !important;
-            border-bottom:1px solid #e0e0e0 !important;
-            border-radius: 0 !important;
-
-            > div{
-                margin: 10px 0;
-            }
-
-            h1,h2{
-                text-align: center !important;
             }
         }
     }
@@ -140,5 +123,57 @@
                 }
             }
         }
+    }
+
+    &--single{
+        .v-ticket{
+            &__header{
+                .v-btn{
+                    box-shadow: none;
+                    padding: 0 24px;
+                }
+            }
+
+            &__list{
+                &__sort{
+                    @include gbp (0, 768) {
+                        padding: 0 12px !important;
+                    }
+
+                    header{
+                        height: 31px;
+                        position: relative;
+                        width: 100%;
+
+                        &::before{
+                            width: 100%;
+                            height: 1px;
+                            position: absolute;
+                            top: calc(50% - 1px);
+                            content: '';
+                            z-index: 1;
+                            background: #E8E8E8;
+                        }
+
+                        > span{
+                            position: relative;
+                            z-index: 2;
+
+                            @include gbp (0, 768) {
+                                background: #fafafa !important;
+                            }
+
+                            > span{
+                                @include gbp (0, 768) {
+                                    background: #fff !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
