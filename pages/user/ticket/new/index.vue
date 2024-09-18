@@ -25,22 +25,19 @@
               <v-form ref="ticket" v-model="valid">
                 <v-row class="ticket__form__1stRow w-100 ma-0" v-if="!isMobile">
                   <div class="ticket__form__item ticket__form__item--text-field w__flex--50">
-                    <v-select label="موضوع" density="compact" variant="outlined" :rules="rule" item-title="title"
-                              item-value="value" hide-details :items="getFirstTitles" v-model="form.title"
-                              @update:model-value="getSubTitle()"/>
+                    <desktopKitsSelectShSelect key="changeTitle" label="موضوع" :items="getFirstTitles" @changeValue="changeTitle"/>
                   </div>
 
                   <div class="ticket__form__item ticket__form__item--text-field  w__flex--50">
-                    <v-select label="اولویت تیکت" density="compact" variant="outlined" :rules="rule" item-title="title"
-                              item-value="value" hide-details :items="priorities" v-model="form.priority"/>
+
+                    <desktopKitsSelectShSelect key="changePriority" label="اولویت تیکت" :items="priorities" @changeValue="changePriority"/>
+
 
                   </div>
 
                   <div class="ticket__form__item ticket__form__item--text-field " v-if="subTitleList?.length"
                        :class="mandatoryFields.includes('seller_sku_id') && mandatoryFields.includes('order_number')? '' :'w__flex--50'">
-                    <v-select label="انتخاب زیرموضوع" density="compact" variant="outlined" item-title="title"
-                              item-value="value" hide-details :items="subTitleList" v-model="form.subtitle"
-                              @update:model-value="selectSubTitle()"/>
+                    <desktopKitsSelectShSelect key="changeSubTitle" ref="subTitleList" label="انتخاب زیرموضوع" :items="subTitleList" @changeValue="changeSubTitle"/>
                   </div>
 
                   <template v-for="mandatoryField in mandatoryFields">
@@ -70,7 +67,7 @@
                   </div>
                   <div v-if="subTitleList?.length">
 
-                    <mobileKitsSelectShSelect id="subTitleList" key="subTitleList" label="زیرموضوع" :items="subTitleList" @changeValue="changeSubTitle" />
+                    <mobileKitsSelectShSelect ref="subTitleList" id="subTitleList" key="subTitleList" label="زیرموضوع" :items="subTitleList" @changeValue="changeSubTitle" />
 
                   </div>
 
@@ -225,6 +222,7 @@ export default {
 
     changeTitle(value){
       this.form.title = value?.value
+      if (this.$refs.subTitleList ) this.$refs.subTitleList.selectValue = null
       this.getSubTitle()
     },
     changeSubTitle(value){
@@ -396,7 +394,6 @@ export default {
      * Fix bug for select in c-select
      */
     getSubTitle() {
-      console.log(this.form.title)
       this.subTitleList = [];
       this.titleChildren = null;
       const item = this.titleList.find(item => item.id === this.form.title);
