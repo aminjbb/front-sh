@@ -64,21 +64,18 @@
 
                 </v-row>
                 <v-row class="ticket__form__1stRow w-100 ma-0" v-else>
-                  <div >
-                    <v-select label="موضوع" density="compact" variant="outlined" :rules="rule" item-title="title"
-                              item-value="value" hide-details :items="getFirstTitles" v-model="form.title"
-                              @update:model-value="getSubTitle()"/>
+                  <div>
+                    <mobileKitsSelectShSelect id="firstTitles" key="firstTitles" label="موضوع" :items="getFirstTitles" @changeValue="changeTitle" />
+
                   </div>
                   <div v-if="subTitleList?.length">
-                    <v-select label="زیرموضوع" density="compact" variant="outlined" item-title="title"
-                              item-value="value" hide-details :items="subTitleList" v-model="form.subtitle"
-                              @update:model-value="selectSubTitle()"/>
+
+                    <mobileKitsSelectShSelect id="subTitleList" key="subTitleList" label="زیرموضوع" :items="subTitleList" @changeValue="changeSubTitle" />
+
                   </div>
 
                   <div >
-                    <v-select label="اولویت تیکت" density="compact" variant="outlined" :rules="rule" item-title="title"
-                              item-value="value" hide-details :items="priorities" v-model="form.priority"/>
-
+                    <mobileKitsSelectShSelect id="priorities" key="priorities" label="اولویت تیکت" :items="priorities" @changeValue="changePriority" />
                   </div>
 
 
@@ -132,7 +129,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -226,6 +222,18 @@ export default {
   },
 
   methods: {
+
+    changeTitle(value){
+      this.form.title = value?.value
+      this.getSubTitle()
+    },
+    changeSubTitle(value){
+      this.form.subtitle = value?.value
+      this.selectSubTitle()
+    },
+    changePriority(value){
+      this.form.priority = value?.value
+    },
     /**
      * Get image
      * @param {*} response
@@ -388,6 +396,7 @@ export default {
      * Fix bug for select in c-select
      */
     getSubTitle() {
+      console.log(this.form.title)
       this.subTitleList = [];
       this.titleChildren = null;
       const item = this.titleList.find(item => item.id === this.form.title);
