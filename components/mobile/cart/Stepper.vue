@@ -280,7 +280,7 @@ export default {
     nextStep() {
       if (this.activeStep < 5) {
         if (this.activeStep === 2 || this.activeStep === 3) {
-          const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده یا روش ارسال انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
+          const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده یا روش ارسال یا زمان ارسال انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
 
           if (!this.activeButton) {
             useNuxtApp().$toast.error(text, {
@@ -347,6 +347,7 @@ export default {
      * @param {*} address
      */
     getAddress(address) {
+      this.activeButton = false;
       if (address && address !== false) {
         this.$store.commit('set_orderAddress', address)
 
@@ -361,11 +362,6 @@ export default {
         this.activeButton = false;
       }
 
-      if (address && address !== false && this.emitWay) {
-        this.activeButton = true;
-      } else{
-        this.activeButton = false;
-      }
     },
 
     /**
@@ -381,7 +377,7 @@ export default {
         this.$store.commit('set_orderSendingMethod', null)
       }
 
-      if (way && way !== false && this.emitAddress) {
+      if (way && way !== 'nafis' && way !== false && this.emitAddress) {
         this.activeButton = true;
       }else{
         this.activeButton = false;
@@ -393,8 +389,16 @@ export default {
      * @param {*} arr
      */
     getTime(arr) {
-      //TODO: Add set time to cart
-      this.activeButton = true;
+      if (arr.length){
+        this.$store.commit('set_orderSendingMethod', arr[0])
+        this.calculateSendingPrice(this.orderAddressId.id, arr[0],  arr[1]?.id)
+        this.activeButton = true;
+      }
+      else {
+        this.activeButton = false;
+
+      }
+
     },
 
     /**
