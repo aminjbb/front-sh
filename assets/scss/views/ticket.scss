@@ -131,6 +131,10 @@
                 .v-btn{
                     box-shadow: none;
                     padding: 0 24px;
+
+                    &__content{
+                        font-variation-settings: "wght" 700;
+                    }
                 }
             }
 

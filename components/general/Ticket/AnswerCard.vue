@@ -34,19 +34,35 @@
             </span>
         </div>
 
-        <div class="d-flex align-center">
-            <v-icon icon="mdi-clock-outline" class="ml-1" color="sGray" size="x-small" />
-            <span v-if="content.time" class="text-sGray t10 w400 number-font">{{ content.time }}</span>
+        <div class="d-flex flex-column justify-end align-end">
+            <div class="d-flex align-center">
+                <v-icon icon="mdi-clock-outline" class="ml-1" color="sGray" size="x-small" />
+                <span v-if="content.time" class="text-sGray t10 w400 number-font">{{ content.time }}</span>
+            </div>
+            <div v-if="content.rate !== null && content.rate !== 0" class="d-flex align-center ltr">
+                <v-rating
+                    v-model="content.rate"
+                    class="ltr ml-0"
+                    :length="5"
+                    :size="20"
+                    half-increments
+                    readonly
+                    color="grey-lighten-2"
+                    active-color="orange-lighten-2"
+                ></v-rating>
+            </div>
         </div>
     </div>
 
-    <p v-if="content.content" class="t12 w500 mb-4 l23" :class="status === 'user' ?'text-sGray':'text-sGrayDarken2'">
+    <p v-if="content.content" :id="`text${content.id}`" class="ticket-answer__content t12 w500 mb-2 l23" :class="[ status === 'user' ? 'text-sGray':'text-sGrayDarken2', showMoreBtn === true ? 'hide-text' : '', show === true ? 'show-text' : '']">
         {{ content.content }}
     </p>
 
-    <div v-if="content.files && content.files.length > 0" class="py-5">
+    <div v-if="showMoreBtn === true" class="t12 w500 text-primary cur-p" :id="`show-more-span${content?.id}`" @click="showMoreData()">مشاهده بیشتر</div>
+
+    <div v-if="content.files && content.files.length > 0" class="pb-3 pt-2">
         <div class="scroll--x">
-            <div class="mt-2 d-flex align-center">
+            <div class="d-flex align-center">
                 <div v-for="(image, index) in content?.files" :key="`image_${index}`" class="ticket-answer__image br8 s-border s-border--medium s-border--gray ml-2 ov-h">
                     <img :src="image?.url" width="128" height="96" />
                 </div>
@@ -56,29 +72,44 @@
 
     <div v-if="status === 'admin'" class="d-flex align-center justify-end">
         <v-btn
-                :href="`/user/ticket/${content.id}`"
-                height="44"
-                title="پاسخ دادن"
-                color="primary"
-                prepend-icon="mdi-message-processing-outline"
-                class="ticket-answer__btn ticket-answer__btn--submit">
-                پاسخ دادن
-            </v-btn>
+            v-if="lastThread"
+            @click="openAnswerModal()"
+            height="44"
+            title="پاسخ دادن"
+            color="primary"
+            prepend-icon="mdi-message-processing-outline"
+            class="ticket-answer__btn ticket-answer__btn--submit">
+            پاسخ دادن
+        </v-btn>
 
-            <v-btn
-                :href="`/user/ticket/${content.id}`"
-                height="44"
-                title="امتیازدهی"
-                color="sGray"
-                class="ticket-answer__btn ticket-answer__btn--cancel">
-                امتیازدهی
-            </v-btn>
+        <v-btn
+            v-if="content.rate === null"
+            @click="openRatingModal()"
+            height="44"
+            title="امتیازدهی"
+            color="sGray"
+            class="ticket-answer__btn ticket-answer__btn--cancel">
+            امتیازدهی
+        </v-btn>
     </div>
+
+    <generalTicketAnswerModal ref="answerModal" title=" پاسخ به پشتیانی" text="عنوان" buttonText=" تایید پاسخ" />
+    <generalTicketAnswerBottomSheet ref="answerBottomSheet" title=" پاسخ به پشتیانی" text="عنوان" buttonText=" تایید پاسخ" />
+
+    <generalTicketRatingModal v-if="status === 'admin'" ref="ratingModal" :itemId="content.id" :title="` امتیازدهی به ${content?.creator_first_name} ${content?.creator_last_name}`" text="عنوان" buttonText="ارسال امتیاز" />
+    <generalTicketRatingBottomSheet v-if="status === 'admin'" ref="ratingBottomSheet" :itemId="content.id" :title="` امتیازدهی به ${content?.creator_first_name} ${content?.creator_last_name}`" text="عنوان" buttonText="ارسال امتیاز" />
 </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            showMoreBtn:false,
+            show: false
+        }
+    },
+
     props: {
         /**
          * Content
@@ -92,6 +123,56 @@ export default {
         status: {
             type: String,
             default: 'user'
+        },
+
+        lastThread: Boolean,
+    },
+
+    methods:{
+        openAnswerModal(){
+            if( window.innerWidth < 769){
+                this.$refs.answerBottomSheet.sheet = true;
+            }else{
+                this.$refs.answerModal.dialog = true;
+            }
+        },
+
+        openRatingModal(){
+            if( window.innerWidth < 769){
+                this.$refs.ratingBottomSheet.sheet = true;
+            }else{
+                this.$refs.ratingModal.dialog = true;
+            }
+        },
+
+        /**
+         * show more button
+         */
+         showMoreData() {
+            this.show = !this.show;
+            if (this.show === true) {
+                document.getElementById(`show-more-span${this.content?.id}`).innerHTML = 'مشاهده کمتر';
+            }
+            if (this.show === false) {
+                document.getElementById(`show-more-span${this.content?.id}`).innerHTML = 'مشاهده بیشتر';
+            }
+
+        },
+    },
+
+    mounted(){
+        const findContent = document.getElementById(`text${this.content?.id}`)
+
+        if(findContent){
+            const height = findContent.clientHeight;
+
+            const defaultHeight = window.innerWidth < 769 ? 75 : 25 ;
+
+            if(height > defaultHeight){
+                this.showMoreBtn = true
+            }else{
+                this.showMoreBtn = false
+            }
         }
     }
 }
@@ -135,6 +216,28 @@ export default {
             width: 100%;
             min-height: 100%;
             display: block;
+        }
+    }
+
+    &__content{
+        overflow: hidden;
+
+        &.hide-text{
+            height: 23px;
+
+            @include gbp (0, 768) {
+               height : 69px;
+            }
+
+            &.show-text{
+                height: auto !important;
+            }
+        }
+    }
+
+    .v-rating__item{
+        .v-icon{
+            font-size: 20px !important;
         }
     }
 

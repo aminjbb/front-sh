@@ -29,20 +29,19 @@
                             </v-btn>
                         </header>
 
-                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket.status !== 'open' ? true : false"/>
+                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket?.threads.length > 0 ? true : false"/>
 
                         <div v-if="singleTicket?.threads" class="v-ticket__list mt-6">
                             
-                            <div class="v-ticket__list__sort" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
-
+                            <div class="v-ticket__list__sort mb-4" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
                                 <header v-if="ticketListByDate.date" class="d-flex align-center justify-center">
                                     <span class="bg-white px-2">
-                                        <span class="px-4 py-2 t12 w400 text-primary number-font s-border br12">{{ticketListByDate.date}}</span>
+                                        <span class="px-4 py-2 t10 w400 text-primary number-font s-border br12">{{ticketListByDate.date}}</span>
                                     </span>
                                 </header>
 
                                 <template v-if="ticketListByDate.items">
-                                    <generalTicketAnswerCard v-for="(ticket, index) in ticketListByDate.items" :key="`child${index}`" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
+                                    <generalTicketAnswerCard v-for="(ticket, index2) in ticketListByDate.items"  :key="`child${index2}`" :lastThread = "index === 0 && index2 === 0 && ticket?.creator === 'admin'  ? true : false" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
                                 </template>
                             </div>
                         </div>
@@ -59,62 +58,6 @@
                         بستن جزئیات
                     </v-btn>
                 </div>
-
-                <!-- <div v-if="!showAnswerBox && singleTicket?.status !== 'resolved'" class="xs-show px-3">
-                    <v-btn
-                        @click="showAnswer()"
-                        height="36"
-                        title="ثبت پاسخ"
-                        class="btn--cancel w-100">
-                        ثبت پاسخ
-                    </v-btn>
-                </div> -->
-
-                <!-- <v-card v-if="showAnswerBox && singleTicket?.status !== 'resolved'" class="pa-8 mobile-pa-0 mobile-no-border">
-                    <div class="ticket__form px-3">
-                        <v-form ref="ticket" v-model="valid">
-                            <v-row>
-                                <v-col cols="12" class="ticket__form__item ticket__form__item--text-field">
-                                    <label class="d-block t12 text-grey-darken-3 mb-2">توضیحات </label>
-
-                                    <v-textarea
-                                        variant="outlined"
-                                        v-model="form.content"
-                                        placeholder="توضیحات را اینجا بنویسید"
-                                        hide-details
-                                        rows="3" />
-                                </v-col>
-
-                                <v-col cols="12" class="ticket__form__item ">
-                                    <label class="d-block t12 text-grey-darken-3 mb-1">تصویر یا ویدیو </label>
-                                    <span class="t11 w400 text-grey mb-3 d-block">در صورت نیاز، تصویر یا ویدیو مورد نظر خود را بارگذاری نمایید.</span>
-
-                                    <generalUploader ref="imageUploader" @getImage="getImage" />
-                                </v-col>
-                            </v-row>
-
-                            <v-divider color="grey" class="my-5" />
-                        </v-form>
-                        <div class="d-flex justify-end w-100 mobile-pa-0 align-center">
-                            <v-btn
-                                href="/user/ticket"
-                                height="44"
-                                title="انصراف"
-                                class="btn btn--cancel ml-5">
-                                انصراف
-                            </v-btn>
-
-                            <v-btn
-                                :loading="loading"
-                                @click="addAnswer()"
-                                height="44"
-                                class="btn btn--submit px-8"
-                                title="ثبت تیکت">
-                                ثبت تیکت
-                            </v-btn>
-                        </div>
-                    </div>
-                </v-card> -->
             </div>
         </v-row>
     </v-container>
@@ -197,9 +140,8 @@ export default {
 
             const formData = new FormData();
 
-          console.log(this.images, 'image')
-
             formData.append('content', this.form.content)
+
             if (this.images) {
                 this.images.forEach((image, index) => {
                     formData.append(`files_id[${index}]`, image)
