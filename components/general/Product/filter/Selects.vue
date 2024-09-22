@@ -21,7 +21,7 @@
                     color="primary"
                     :value="item.id" />
 
-                <span v-if="item?.name && !showEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1 text-left ltr">{{item.name}}</span>
+                <span v-if="item?.name && ShowEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1 text-left ltr">{{item.name}}</span>
 
                 <template v-else-if="param === 'colors'">
                     <span class="filter-sidebar__card__color" :style="{ backgroundColor: item?.value }" :class="item?.value === '#ffffff' || item?.value === '#FF00FF00' ? 'border' : '' "></span>
@@ -74,9 +74,9 @@ export default {
             default: false
         },
 
-        showEnName: {
+        ShowEnName: {
             type: Boolean,
-            default: false
+            default: true
         },
     },
 

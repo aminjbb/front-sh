@@ -152,7 +152,10 @@ $parent:'section8-slider';
             z-index: 1;
             color: white;
             font-size: 13px;
-
+        }
+        
+        &.swiper-button-disabled{
+            display: none !important;
         }
     }
 }

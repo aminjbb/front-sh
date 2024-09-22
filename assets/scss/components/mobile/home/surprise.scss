@@ -127,5 +127,9 @@
             font-size: 13px;
         
         }
+
+        &.swiper-button-disabled{
+            display: none !important;
+        }
     }
 }
