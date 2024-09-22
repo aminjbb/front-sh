@@ -150,7 +150,7 @@ export default {
     .v-bottom-sheet__content{
         border-top-right-radius: 12px !important;
         border-top-left-radius: 12px !important;
-        overflow: hidden;
+        overflow: hidden !important;
     }
 
     &__header {
