@@ -6,7 +6,7 @@
             <span class="t16 w700 color-3c">فیلتر</span>
         </div>
 
-        <v-btn class="filter-sidebar__btn btn btn--submit-border" heigh="34px" @click="removeAllFilter()">
+        <v-btn class="filter-sidebar__btn btn btn--submit-border" heigh="34px" @click="removeAllFilter()" :disabled="activeDeleteButton === true ? false : true">
             <span class="t12 w700 text-primary pointer">حذف فیلترها</span>
         </v-btn>
     </header>
@@ -55,6 +55,7 @@ export default {
     data() {
         return {
             availableItems: false,
+            activeDeleteButton:false,
             searchInput: '',
             amount: {
                 max: null,
@@ -215,6 +216,32 @@ export default {
             if (open) {
                 // WORKAROUND: fixes dialog menu popup position
                 setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
+            }
+        }
+    },
+
+    mounted() {
+        if (Object.keys(this.$route ?.query).length === 0) {
+            this.activeDeleteButton = false
+        } else{
+            Object.keys(this.$route ?.query).forEach(element => {
+                if(element !== 'order' && element !== 'order_type' && element !== 'page'){
+                    this.activeDeleteButton = true
+                }
+            });
+        }
+    },
+
+    watch: {
+        $route(newVal) {
+            if (Object.keys(newVal ?.query).length === 0) {
+                this.activeDeleteButton = false
+            } else{
+                Object.keys(newVal ?.query).forEach(element => {
+                    if(element !== 'order' && element !== 'order_type' && element !== 'page'){
+                        this.activeDeleteButton = true
+                    }
+                });
             }
         }
     }
