@@ -62,8 +62,8 @@
                                     </a>
                                 </li>
                                 
-                                <li v-for="child1 in item.children" :key="child1.id" class="menu__item" :class="child1.children ? 'has-child' :''" :id="`menu__item--${child1.id}`" @click="child1.children && child1.children.length ? openSubMenu2(child1.id) : ''">
-                                    <a v-if="child1.children && child1.children.length" class="menu__item__link d-flex align-center justify-space-between">
+                                <li v-for="child1 in item.children" :key="child1.id" class="menu__item" :class="child1.children ? 'has-child' :''" :id="`menu__item--${child1.id}`">
+                                    <a v-if="child1.children && child1.children.length" :href="child1.url" class="menu__item__link d-flex align-center justify-space-between">
                                         <span class="t12">{{child1.label}}</span>
                                         <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-left" size="small" />
                                     </a>
@@ -73,13 +73,13 @@
                                         <v-icon v-if="child1.children && child1.children.length" icon="mdi-chevron-left" size="small" />
                                     </a>
 
-                                    <ul v-if="child1.children && child1.children.length" class="menu__items" :id="`menu__items--${child1.id}`">
+                                    <!-- <ul v-if="child1.children && child1.children.length" class="menu__items" :id="`menu__items--${child1.id}`">
                                         <li v-for="child2 in child1.children" :key="child2.id" class="menu__item">
                                             <a :href="child2.url" class="menu__item__link">
                                                 <span class="t12 w500">{{child2.label}}</span>
                                             </a>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
                             </ul>
                         </li>
@@ -167,12 +167,12 @@ export default {
         /**
          * Open second sub menu
          */
-        openSubMenu2(id) {
+        /* openSubMenu2(id) {
             const selectedLi = document.getElementById(`menu__item--${id}`);
             selectedLi.classList.toggle('active-sub-menu');
 
             document.getElementById(`menu__items--${id}`).classList.toggle('show-sub-menu');
-        }
+        } */
     }
 }
 </script>
