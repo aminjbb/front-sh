@@ -48,7 +48,7 @@
                     </div>
                 </v-card>
 
-                <div class="v-ticket__mobile-no-threads" v-if="isMobile && singleTicket?.threads.length == 1">
+                <div class="v-ticket__mobile-no-threads" v-if="isMobile && singleTicket?.threads.length <= 1">
                     <img src="~/assets/images/emptyTicketTheards.svg"/>
                     <div>
                         <span class="text-white t14 w700 mb-1 d-block">پشتیبانی هنوز پاسخی نداده</span>
