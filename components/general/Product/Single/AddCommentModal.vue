@@ -146,11 +146,9 @@ export default {
         /** send comment to api **/
         AddComment() {
             if (this.rateModel === 0) {
-                useNuxtApp().$toast.error('لطفا امیتاز را وارد نمایید.', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'لطفا امیتاز را وارد نمایید.' , status:'error'
+              })
             }
             else{
               this.loading = true

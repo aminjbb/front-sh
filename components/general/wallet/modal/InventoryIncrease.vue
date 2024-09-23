@@ -188,11 +188,9 @@ export default {
                     window.location = response.data.data.payment_link
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                  })
                 }).finally(() => {
                     this.loading = false;
                     this.closeModal();

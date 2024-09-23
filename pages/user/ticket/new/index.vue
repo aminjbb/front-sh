@@ -194,17 +194,13 @@ export default {
 
             /* Check required item in form */
             if (this.mandatoryFields && this.mandatoryFields.length) {
-                this.mandatoryFields.forEach(item => {
+              let errorText =[]
+              this.mandatoryFields.forEach(item => {
                     if (item === 'seller_sku_id') {
                         if (this.form.seller_sku_id !== null && this.form.seller_sku_id !== '') {
                             skuAccess = true
                         } else {
-                            useNuxtApp().$toast.error('شناسه کالا انتخاب نشده است.', {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
-
+                          errorText.push('شناسه کالا انتخاب نشده است.')
                             skuAccess = false;
                         }
                     }
@@ -213,12 +209,7 @@ export default {
                         if (this.form.order_number !== null && this.form.order_number !== '') {
                             orderNumberAccess = true
                         } else {
-                            useNuxtApp().$toast.error('شماره سفارش انتخاب نشده است.', {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
-
+                          errorText.push('شماره سفارش انتخاب نشده است.')
                             orderNumberAccess = false;
                         }
                     }
@@ -227,16 +218,16 @@ export default {
                         if (this.images && this.images.length) {
                             photoAccess = true
                         } else {
-                            useNuxtApp().$toast.error('تصویری از محصول آپلود نشده است..', {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
-
+                          errorText.push('تصویری از محصول آپلود نشده است.')
                             photoAccess = false;
                         }
                     }
                 });
+                if (errorText.length) {
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:errorText, status:'error' , type:'array'
+                  })
+                }
             }
 
             if (skuAccess === true && photoAccess === true && orderNumberAccess === true) {
@@ -270,50 +261,35 @@ export default {
                         });
 
                         this.$router.push(`/user/ticket/${response?.data?.data?.id}`);
-
-                        useNuxtApp().$toast.success('تیکت شما با موفقیت ایجاد شد.', {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:'تیکت شما با موفقیت ایجاد شد.' , status:'success'
+                      })
                     })
                     .catch((err) => {
+                      let text = []
                         if (err.response ?.data ?.details ?.order_number) {
-                            useNuxtApp().$toast.error(err.response ?.data ?.details ?.order_number, {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
+                          text.push(err.response ?.data ?.details ?.order_number[0])
                         }
                         if (err.response ?.data ?.details ?.seller_sku_id) {
-                            useNuxtApp().$toast.error(err.response ?.data ?.details ?.seller_sku_id, {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
+                          text.push(err.response ?.data ?.details ?.seller_sku_id[0])
                         }
                         if (err.response ?.data ?.details ?.files_id) {
-                            useNuxtApp().$toast.error(err.response ?.data ?.details ?.files_id, {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
-                        }
+                          text.push(err.response ?.data ?.details ?.files_id[0])
 
+                        }
                         if (err.response ?.data ?.details ?.topic_id) {
-                            useNuxtApp().$toast.error(err.response ?.data ?.details ?.topic_id, {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
+                          text.push(err.response ?.data ?.details ?.topic_id[0])
+                        }
+                        if (text.length){
+                          this.$store.commit('set_snackBar', {
+                            show:true , text:text , status:'error' , type:'array'
+                          })
                         }
 
                         if (err.response ?.data ?.message) {
-                            useNuxtApp().$toast.error(err.response ?.data ?.message, {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
+                          this.$store.commit('set_snackBar', {
+                            show:true , text:err.response ?.data ?.message , status:'error'
+                          })
                         }
 
                     }).finally(() => {

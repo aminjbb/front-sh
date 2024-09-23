@@ -328,11 +328,9 @@ export default {
                     const response = await auth.resetPassword(digits(this.mobile, 'en'), this.newPassword, this.passwordConfirmation, digits(this.otp, 'en'));
                     if (response.status === 200) {
                         this.userToken = response.data.data.token;
-                        useNuxtApp().$toast.success(response.data.message, {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:response.data.message , status:'success'
+                      })
                         setTimeout(() => {
                             this.$router.push('/login')
                         }, 2000)

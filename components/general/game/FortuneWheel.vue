@@ -100,17 +100,14 @@ export default {
         const doCopy = (code) => {
             copyText(code, undefined, (error, event) => {
                 if (error) {
-                    useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کپی کد با مشکل مواجه شد' , status:'error'
+                  })
                 } else {
-                    useNuxtApp().$toast.success('کد  با موفقیت کپی شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کد  با موفقیت کپی شد.' , status:'success'
+                  })
+
                 }
             })
         }
@@ -188,11 +185,9 @@ export default {
             this.dialog = false;
           }
           else {
-            useNuxtApp().$toast.error('تعداد دفعات مجاز در بازی به پایان رسیده.', {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
+            this.$store.commit('set_snackBar', {
+              show:true , text:'تعداد دفعات مجاز در بازی به پایان رسیده.' , status:'error'
+            })
           }
 
         },

@@ -303,12 +303,9 @@ export default {
                     this.runCountdown();
                 }
             } catch (error) {
-                console.error('Send OTP error:', error);
-                useNuxtApp().$toast.error(error?.response?.data?.message,  {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:error?.response?.data?.message , status:'error'
+              })
             } finally {
                 this.loading = false;
             }
@@ -375,11 +372,9 @@ export default {
                         this.loginStep = 3;
 
                     } else {
-                        useNuxtApp().$toast.success(response.data.message, {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:response.data.message , status:'success'
+                      })
                         if (localStorage.getItem('returnPathAfterLogin')) {
                             window.location = localStorage.getItem('returnPathAfterLogin')
                             localStorage.removeItem('returnPathAfterLogin')
@@ -417,11 +412,9 @@ export default {
                         this.loginStep = 3;
 
                     } else {
-                        useNuxtApp().$toast.success(response.data.message, {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:response.data.message , status:'success'
+                      })
                         if (localStorage.getItem('returnPathAfterLogin')) {
                             window.location = localStorage.getItem('returnPathAfterLogin')
                             localStorage.removeItem('returnPathAfterLogin')

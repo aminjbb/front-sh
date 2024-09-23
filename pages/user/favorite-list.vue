@@ -111,21 +111,16 @@ export default {
                 })
                 .then((response) => {
                     this.closeModal();
-
-                    useNuxtApp().$toast.success('محصول مورد نظر، با موفقیت از لیست علاقه مندی های شما حذف شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'محصول مورد نظر، با موفقیت از لیست علاقه مندی های شما حذف شد.' , status:'success'
+                  })
 
                 })
                 .catch((err) => {
                     if(err.response?.data?.message){
-                        useNuxtApp().$toast.error(err.response.data.message, {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:err.response.data.message , status:'error'
+                      })
                     }
                 }).finally(() => {
                     this.loading = false;

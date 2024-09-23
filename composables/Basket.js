@@ -156,12 +156,9 @@ export default function setup() {
                 
                 loadingAddBasket.value = false;
                 loadingFirstAddBasket.value = false;
-                
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
 
                 if (err.response?.status === 401){
                     if (randomNumberForBasket.value && randomNumberForBasket.value != "") {
@@ -242,11 +239,9 @@ export default function setup() {
 
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
                 const getResponseCount = err.response.data.data.details.find(item => item.shps.id === shps )
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count
                 
@@ -353,11 +348,9 @@ export default function setup() {
             })
             .catch((err) => {
                 if(err.response.data){
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                    store.commit('set_snackBar', {
+                        show:true , text:err.response.data.message , status:'error'
+                    })
                 }
             });
     };
@@ -378,11 +371,9 @@ export default function setup() {
             })
             .catch((err) => {
                 if(err.response.data){
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                    store.commit('set_snackBar', {
+                        show:true , text:err.response.data.message , status:'error'
+                    })
                 }
             });
     };
@@ -411,11 +402,9 @@ export default function setup() {
 
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
                 if (err.response.status === 409){
 
                     const form = {
@@ -456,11 +445,9 @@ export default function setup() {
                 transactionErrorMassage.value = response.data.message
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 
@@ -480,11 +467,9 @@ export default function setup() {
             })
             .catch((err) => {
                 if(err.response.data.data === null){
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                    store.commit('set_snackBar', {
+                        show:true , text:err.response.data.message , status:'error'
+                    })
                 }
             });
     };

@@ -70,11 +70,9 @@ export default {
         selectTime(index, item, status) {
             // If time is full
             if (!item.have_space_evening, !item.have_space_morning) {
-                useNuxtApp().$toast.error('روز مورد نظر شما قابل انتخاب نمی باشد.', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'روز مورد نظر شما قابل انتخاب نمی باشد.' , status:'error'
+              })
             } else {
 
                 // Remove active classes from all div

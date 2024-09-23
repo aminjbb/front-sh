@@ -193,17 +193,13 @@ export default {
                     Authorization: `Bearer ${this.userToken}`,
                 },
             }).then((response) => {
-                useNuxtApp().$toast.success('رمز عبور با موفقیت تغییر کرد', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'رمز عبور با موفقیت تغییر کرد' , status:'success'
+              })
             }).catch((error) => {
-                useNuxtApp().$toast.error(error.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:error.response.data.message , status:'error'
+              })
             }).finally((response) => {
                 this.loading = false
             })

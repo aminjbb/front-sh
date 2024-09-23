@@ -26,11 +26,23 @@ const store = createStore({
         submitText:'',
         type:null,
         emptyBasket:''
+      },
+      snackBar:{
+        show:false,
+        text:'',
+        status:'',
+        type:'text'
       }
     };
   },
 
   mutations: {
+    set_snackBar(state , obj){
+      state.snackBar.show = obj.show
+      state.snackBar.text = obj.text
+      state.snackBar.status = obj.status
+      if (obj.type) state.snackBar.type = obj.type
+    },
     set_orderModalError(state, obj){
       state.orderErrorModal.buttonType = obj.buttonType
       state.orderErrorModal.text = obj.text
@@ -71,6 +83,9 @@ const store = createStore({
   },
 
   getters: {
+    get_snackBar(state){
+      return state.snackBar
+    },
     get_orderModalError(state){
       return state.orderErrorModal
     },

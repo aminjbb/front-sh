@@ -164,11 +164,10 @@ export default {
          * Sumbit email for newsletter
          */
         onClick(){
-            useNuxtApp().$toast.success('ایمیل شما با موفقیت ثبت شد.', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-            });
+          this.$store.commit('set_snackBar', {
+            show:true , text:'akbar' , status:'ایمیل شما با موفقیت ثبت شد.'
+          })
+
         },
     },
 };

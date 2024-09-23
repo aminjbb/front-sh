@@ -4,7 +4,7 @@
         <div class="game-auth">
             <a v-if="!noLogo" class="d-flex justify-center mb-2 mt-2" href="/">
                 <img src="@/assets/images/logo.svg" class="mb-5" alt="shavaz image">
-            </a> 
+            </a>
             <template v-if="loginStep === 1">
                 <!-- Step 1: Get user's phone number -->
                 <v-form @submit.prevent="sendOTP" ref="phoneNumberForm" class="w-100">
@@ -221,12 +221,9 @@ export default {
                     this.runCountdown();
                 }
             } catch (error) {
-                console.error('Send OTP error:', error);
-                useNuxtApp().$toast.error(error ?.response ?.data ?.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:error ?.response ?.data ?.message , status:'error'
+              })
             } finally {
                 this.loading = false;
             }
@@ -268,12 +265,12 @@ export default {
                         userStatus: response.data ?.data ?.user ?.is_new === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
                         wheel: 'true', // or 'returning' depending on the user's status.
                     });
-
-                    useNuxtApp().$toast.success(response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:response.data.message , status:'success'
+                  })
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:response.data.message , status:'success'
+                  })
 
                     this.$emit('logined', true);
                 }
@@ -309,8 +306,8 @@ export default {
     },
 };
 </script>
-    
-    
+
+
 <style lang="scss">
 
 .game-auth{
@@ -318,7 +315,7 @@ export default {
         background-color: #fff;
         border:1px solid #757575;
         border-radius: 6px;
-        height: 50px;  
+        height: 50px;
 
         .v-field__input{
             line-height: 50px;

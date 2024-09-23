@@ -157,11 +157,9 @@ export default {
          */
         setDiscountCode() {
             if (this.discountCode === null ||  this.discountCode === '') {
-                useNuxtApp().$toast.error('کد تخفیف را وارد کنید.', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'کد تخفیف را وارد کنید.' , status:'error'
+              })
             }
             else{
                 this.deleteVoucher = false;

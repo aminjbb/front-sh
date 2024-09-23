@@ -283,11 +283,10 @@ export default {
           const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده یا روش ارسال انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
 
           if (!this.activeButton) {
-            useNuxtApp().$toast.error(text, {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
+            this.$store.commit('set_snackBar', {
+              show:true , text:text , status:'error'
+            })
+
           } else {
             if (this.activeStep === 3) {
               this.createOrder(this.orderSendingMethod, '', this.orderAddressId.id, this.orderPaymentMethod)

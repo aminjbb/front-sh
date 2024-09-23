@@ -325,11 +325,9 @@ export default {
                 subject: this.form.subject,
                 description: this.form.description,
             }).then((response) => {
-                useNuxtApp().$toast.success('پیام شما با موفقیت ثبت شد', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'پیام شما با موفقیت ثبت شد' , status:'success'
+              })
             }).catch((error) => {
 
             }).finally((response) => {

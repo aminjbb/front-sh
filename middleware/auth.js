@@ -1,5 +1,9 @@
 import axios from 'axios';
+import {useStore} from "vuex";
+
 const BASE_URL = 'https://api.shvz.ir/api/v1';
+const store = useStore()
+
 export default {
 
   runtimeConfig(){
@@ -77,11 +81,9 @@ export default {
       return response;
     } catch (error) {
       if (error.response.status === 400) {
-        useNuxtApp().$toast.error(error.response.data.message, {
-          rtl: true,
-          position: 'top-center',
-          theme: 'dark'
-        });
+        store.commit('set_snackBar', {
+          show:true , text:error.response.data.message , status:'error'
+        })
       }
       console.error('Verify OTP error:', error);
       throw error;
@@ -103,12 +105,10 @@ export default {
       return response;
     } catch (error) {
       if (error.response.status === 400) {
+        store.commit('set_snackBar', {
+          show:true , text:error.response.data.message , status:'error'
+        })
 
-        useNuxtApp().$toast.error(error.response.data.message, {
-          rtl: true,
-          position: 'top-center',
-          theme: 'dark'
-        });
       }
       console.error('Verify password error:', error);
       throw error;
@@ -135,12 +135,9 @@ export default {
       return response;
     } catch (error) {
       if (error.response.status === 400) {
-
-        useNuxtApp().$toast.error(error.response.data.message, {
-          rtl: true,
-          position: 'top-center',
-          theme: 'dark'
-        });
+        store.commit('set_snackBar', {
+          show:true , text:error.response.data.message , status:'error'
+        })
       }
       throw error;
     }

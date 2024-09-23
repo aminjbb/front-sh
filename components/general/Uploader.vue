@@ -127,13 +127,9 @@ export default {
             },
           })
           .then((response) => {
-            useNuxtApp().$toast.success("فایل مورد نظر با موفقیت ذخیره شد.", {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
-
-
+            this.$store.commit('set_snackBar', {
+              show:true , text:'فایل مورد نظر با موفقیت ذخیره شد.' , status:'success'
+            })
             this.$emit('getImage', response?.data?.data?.data);
             this.uploadedFiles.push(response?.data?.data?.data);
           })

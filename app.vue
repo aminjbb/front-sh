@@ -2,6 +2,7 @@
   <div>
       <NuxtLayout>
           <NuxtPage />
+          <generalKitsSnakbarShToast/>
       </NuxtLayout>
   </div>
 </template>

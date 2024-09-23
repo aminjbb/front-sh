@@ -307,21 +307,18 @@ export default {
                             this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].label);
                             this.cancelReasonValueDescStep2.push(this.cancelReasonValueDesc[findIndex]);
                         } else {
-                            useNuxtApp().$toast.error('علت لغو انتخاب نشده است', {
-                                rtl: true,
-                                position: 'top-center',
-                                theme: 'dark'
-                            });
+                          this.$store.commit('set_snackBar', {
+                            show:true , text:'علت لغو انتخاب نشده است' , status:'error'
+                          })
                         }
 
                     }
                 })
                 if(ChooseAllReason){
-                    useNuxtApp().$toast.error('علت لغو انتخاب نشده است', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'علت لغو انتخاب نشده است' , status:'error'
+                  })
+
                 }else{
                     formData.append(`order_id`, this.$route.params.id)
                     formData.append(`accept`, accept)
@@ -329,11 +326,9 @@ export default {
                 }
                 
             } else {
-                useNuxtApp().$toast.error('هیچ آیتمی انتخاب نشده است.', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'هیچ آیتمی انتخاب نشده است.' , status:'error'
+              })
             }
         },
 
