@@ -29,9 +29,9 @@
                             </v-btn>
                         </header>
 
-                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket?.threads.length > 0 ? true : false"/>
+                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket?.threads.length > 1 ? true : false"/>
 
-                        <div v-if="singleTicket?.threads" class="v-ticket__list mt-6">
+                        <div v-if="singleTicket?.threads && singleTicket?.threads.length > 1" class="v-ticket__list mt-6">
                             
                             <div class="v-ticket__list__sort mb-4" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
                                 <header v-if="ticketListByDate.date" class="d-flex align-center justify-center">
@@ -47,6 +47,19 @@
                         </div>
                     </div>
                 </v-card>
+
+                <div class="v-ticket__mobile-no-threads" v-if="isMobile && singleTicket?.threads.length == 1">
+                    <img src="~/assets/images/emptyTicketTheards.svg"/>
+                    <div>
+                        <span class="text-white t14 w700 mb-1 d-block">پشتیبانی هنوز پاسخی نداده</span>
+                        <div class="d-flex align-center">
+                            <v-icon color="white" icon="mdi-phone-in-talk-outline" size="small"/>
+                            <span class="t10 text-white ml-2 d-block"> شماره پشتیبانی: ۹۱۰۳۲۳۴۳-۰۲۱</span>
+                            <span class="t10 text-white ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
+                        </div>
+
+                    </div>
+                </div>
 
                 <div v-if="isMobile" class="xs-show px-3">
                     <v-btn
