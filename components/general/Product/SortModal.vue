@@ -10,32 +10,28 @@
         </span>
     </div>
 
-    <v-dialog v-if="dialog" v-model="dialog" color="white" fullscreen>
-        <v-card class="pt-2 pb-5 c-modal--comment">
-            <header class="c-modal--comment__header d-flex justify-space-between align-center pb-1 pr-6 pl-2">
-                <div class="d-flex flex-column c-modal--comment__header__title">
-                    <span class="t16 w400 mb-1">
-                        مرتب سازی براساس
-                    </span>
-                </div>
+    <v-bottom-sheet v-if="sheet" v-model="sheet" color="white" height="auto">
+        <div class="pt-4 pb-5 c-modal--sort bg-white px-3">
+            <header class="d-flex justify-space-between align-center pb-1 pr-1">
+                <span class="t16 w700 mb-1 text-sGrayDarken2">
+                    مرتب سازی
+                </span>
 
-                <v-btn class="c-modal--comment__header__btn pa-0 text-none" @click="closeModal()" width="25" color="grey-darken-3" size="large" variant="icon">
-                    <v-icon>mdi-close</v-icon>
+                <v-btn class="c-modal--sort__header__btn pa-0 text-none" @click="closeModal()" width="25" color="grey-darken-3" size="large" variant="icon">
+                    <v-icon color="sGrayLighten1">mdi-close</v-icon>
                 </v-btn>
             </header>
 
             <div class="d-flex flex-column">
-
-
                 <template  v-for="(item, index) in sortItems" :key="`sort${index}`">
-                    <div class="d-flex align-center">
-                        <v-checkbox class="sort-checkbox" v-model="sortModal" @change="selectSort(item)" hide-details :value="item.valueByType" />
-                        <h3 class="t15 w400 text-grey-darken-2 flex-grow-1">{{ item.label }}</h3>
+                    <div class="d-flex align-center c-modal--sort__items py-4" @click="selectSort(item)">
+                        <v-icon v-if="sortModal === item.valueByType" icon="mdi-checkbox-outline" color="primary" class="ml-1"/>
+                        <h3 class="t12 w700 flex-grow-1" :class="sortModal === item.valueByType ? 'text-primary' : 'text-sGrayDarken2'">{{ item.label }}</h3>
                     </div>
                 </template>
             </div>
-        </v-card>
-    </v-dialog>
+        </div>
+    </v-bottom-sheet>
 </div>
 </template>
 
@@ -52,7 +48,7 @@ export default {
 
     data() {
         return {
-            dialog: false,
+            sheet: false,
             sortModal: null,
             sortTypeLabel: null,
         }
@@ -88,16 +84,17 @@ export default {
          * Emit sort Data for sorting page
          */
         selectSort(item) {
+            this.sortModal = item.valueByType
             this.$emit('selectSort', item);
             this.closeModal();
         },
 
         openModal() {
-            this.dialog = true;
+            this.sheet = true;
         },
 
         closeModal() {
-            this.dialog = false;
+            this.sheet = false;
         },
     },
 
@@ -133,17 +130,35 @@ export default {
     flex: 0 0 50px;
 }
 
-.c-modal--comment__header {
-    background: var(--Shade-white, #FFF);
-    box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
-}
+.c-modal--sort{
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    overflow: hidden;
 
-.c-modal--comment__header__btn {
-    width: 25px !important;
-    height: 25px !important;
-    min-width: auto;
-    background: #ececec;
-    border-radius: 50%;
-    margin: 10px;
+    &__header {
+        background: var(--Shade-white, #FFF);
+        box-shadow: 0px 6px 6px -3px rgba(126, 126, 126, 0.20);
+
+        &__btn {
+            width: 25px !important;
+            height: 25px !important;
+            min-width: auto;
+            background: #ececec;
+            border-radius: 50%;
+            margin: 10px;
+        }
+    }
+
+    &__items{
+        border-bottom: 1px solid #E8E8E8;
+
+        &:last-child{
+            border-bottom: 0 !important
+        }
+
+        h3{
+            padding: 2px 0;
+        }
+    }
 }
 </style>
