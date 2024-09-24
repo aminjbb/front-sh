@@ -49,18 +49,18 @@ export default function setup() {
      * Send information to Deema
      * @param {*} order 
      */
-    async function sendInfoToDeema(order) {
-        const deemaToken = useCookie('dm-clickid')
-        
-        axios
-            .get(`https://deemanetwork.com/api/v1/affiliate/22896/callback/store/server?clickid=${deemaToken.value}&orderRefCode=${order?.order_number}&totalPrice=${order?.paid_price}`, {
-            })
-            .then((response) => {
-                deemaToken.value = ''
-            })
-            .catch((err) => {
-            });
-    };
+    // async function sendInfoToDeema(order) {
+    //     const deemaToken = useCookie('dm-clickid')
+    //
+    //     axios
+    //         .get(`https://deemanetwork.com/api/v1/affiliate/22896/callback/store/server?clickid=${deemaToken.value}&orderRefCode=${order?.order_number}&totalPrice=${order?.paid_price}`, {
+    //         })
+    //         .then((response) => {
+    //             deemaToken.value = ''
+    //         })
+    //         .catch((err) => {
+    //         });
+    // };
 
     /**
      * Send information to Affilinks
@@ -107,5 +107,9 @@ export default function setup() {
             });
     };
 
-    return{sendInfoToTakhfifan, sendInfoToDeema, sendInfoToTaAffilinks}
+    return{
+        sendInfoToTakhfifan,
+        // sendInfoToDeema,
+        sendInfoToTaAffilinks
+    }
 }

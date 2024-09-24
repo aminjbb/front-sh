@@ -76,11 +76,11 @@ import {useRoute} from "vue-router";
           type: 'application/ld+json',
           children: JSON.stringify(structureData)
       } ,
-      {
-        src: 'https://deemanetwork.com/pxjs/22896.js',
-        type: 'text/javascript',
-        async: true
-      }
+      // {
+      //   src: 'https://deemanetwork.com/pxjs/22896.js',
+      //   type: 'text/javascript',
+      //   async: true
+      // }
     ],
   }); 
 
