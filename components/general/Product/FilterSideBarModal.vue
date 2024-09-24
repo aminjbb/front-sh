@@ -69,11 +69,11 @@
                 </div>
 
                 <div class="filter-mobile-btn pa-3">
-                    <v-btn @click="closeSheet()" height="45" title="اعمال فیلتر" class="btn btn--submit">
+                    <v-btn @click="closeSheet()" height="45" title="اعمال فیلتر" class="btn btn--submit" :disabled="activeFilterButton === true ? false : true">
                       اعمال فیلتر
                     </v-btn>
 
-                    <v-btn @click="deleteAllFilter()" height="45" title="حذف فیلتر ها" class="btn btn--submit-border">
+                    <v-btn @click="deleteAllFilter()" height="45" title="حذف فیلتر ها" class="btn btn--submit-border" :disabled="activeFilterButton === true ? false : true">
                       حذف فیلترها
                     </v-btn>
                 </div>
@@ -90,6 +90,7 @@ export default {
             sheet: false,
             selectedItem: null,
             availableItems: false,
+            activeFilterButton:false,
             selectedFilters: new Set([]),
             clearAll: false,
             amount: {
@@ -240,6 +241,32 @@ export default {
             this.sheet = false;
         },
     },
+
+    mounted() {
+        if (Object.keys(this.$route ?.query).length === 0) {
+            this.activeFilterButton = false
+        } else{
+            Object.keys(this.$route ?.query).forEach(element => {
+                if(element !== 'order' && element !== 'order_type' && element !== 'page'){
+                    this.activeFilterButton = true
+                }
+            });
+        }
+    },
+
+    watch: {
+        $route(newVal) {
+            if (Object.keys(newVal ?.query).length === 0) {
+                this.activeFilterButton = false
+            } else{
+                Object.keys(newVal ?.query).forEach(element => {
+                    if(element !== 'order' && element !== 'order_type' && element !== 'page'){
+                        this.activeFilterButton = true
+                    }
+                });
+            }
+        }
+    }
 }
 </script>
 
@@ -256,6 +283,7 @@ export default {
 
     .selected-filters {
         background: #D72685;
+        border-color: transparent !important;
 
         .v-icon,
         span {
@@ -360,6 +388,32 @@ $parent: 'voucher-auth';
     .v-btn__content {
           font-variation-settings: "wght" 700 !important;
           font-size: 14px !important;
+    }
+
+    .btn--submit.v-btn--disabled{
+        background-color: #BDBDBD !important;
+        .v-btn__content{
+            color: white !important
+        }
+
+        .v-btn__overlay{
+            background-color: transparent !important;
+        }
+    }
+
+    .btn--submit-border{
+        &.v-btn--disabled{
+            background-color: transparent !important;
+            border: 2px solid #BDBDBD !important;
+
+            .v-btn__content, .v-btn__content span{
+                color: #BDBDBD !important;
+            }
+
+            .v-btn__overlay{
+                background-color: transparent !important;
+            }
+        }
     }
 }
 </style>

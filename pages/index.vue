@@ -18,7 +18,7 @@
 
                 <MobileHomeSection5Slider :content="responseDot(5)"/>
 
-                <generalTabSlider :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+                <generalTabSlider :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px" :title="titleSection6" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
                 <mobileHomeBrands :items="responseDot(7)" class="mb-8"/>
 
@@ -202,6 +202,14 @@ export default {
         titleSection10() {
             try {
                 return this.responseDot(10) ?.label
+            } catch (e) {
+                return ''
+            }
+        },
+
+        titleSection6() {
+            try {
+                return this.responseDot(6) ?.label
             } catch (e) {
                 return ''
             }
