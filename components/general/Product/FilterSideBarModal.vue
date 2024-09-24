@@ -283,6 +283,7 @@ export default {
 
     .selected-filters {
         background: #D72685;
+        border-color: transparent !important;
 
         .v-icon,
         span {
