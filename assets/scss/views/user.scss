@@ -42,54 +42,67 @@
     }
 
     &__sidebar {
+        border-radius: 16px;
+        border: 1px solid #CBCBCB;
+        background: #FFF;
+        padding: 24px 16px;
 
         >div:first-child{
+            border-bottom: 1px solid #E8E8E8;
+            padding-bottom: 16px;
+
             @include gbp (768, 1280) {
                 padding-left: 5px !important;
                 padding-right: 5px !important;
             }
+
+            .v-icon.mdi-account-circle-outline{
+                font-size: 49px !important;
+            }
         }
 
-        .user-phone {
-            font-family: 'IranSansFaNum' !important;
-            color: #757575
+        &__edit-button{
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: var(--Space_2, 2px) solid var(--Background-Background, #FAFAFA);
+            background: var(--Primery-Primery-light-3, #FBE9F3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .v-icon{
+                font-size: 18px !important;
+            }
         }
 
         .user-nav {
             &__item {
-                padding: 14px 2px 13px;
+                padding: 16px 4px;
+                list-style: none;
+
+                .v-icon {
+                    font-size: 22px !important;
+                    
+                }
 
                 &.active {
                     position: relative;
 
-                    &::before {
-                        border-radius: 4px 0px 0px 4px;
-                        background: var(--Conceptual-Primary, #D72685);
-                        width: 4px;
-                        height: 100%;
-                        content: "";
-                        top: 0;
-                        right: -20px;
-                        position: absolute;
-                    }
-
-                    a,
                     .v-icon {
-                        color: #424242 !important;
+                        color: #E77DB6 !important;
                     }
                 }
 
                 &:hover {
-
-                    a,
                     .v-icon {
-                        color: #424242 !important;
+                        color: #E77DB6 !important;
                     }
                 }
             }
 
             &__item:not(:last-child) {
-                border-bottom: 0.5px solid #BDBDBD;
+                border-bottom: 1px solid #E8E8E8;
             }
         }
     }

@@ -11,7 +11,7 @@
 
     <v-container class="pt-0">
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
             <div class="col-9 pa-4">

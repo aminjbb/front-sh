@@ -1,93 +1,107 @@
 <template>
 <div class="v-user__sidebar">
-    <v-card class="pa-5">
-        <div class="d-flex align-center justify-space-between">
-            <div class="d-flex align-center flex-grow-1">
-                <v-icon
-                    icon="mdi-account-circle-outline"
-                    color="grey-darken-1"
-                    size="x-large"
-                    class="ml-3" />
+    <div class="d-flex align-center justify-space-between">
+        <div class="d-flex align-center flex-grow-1">
+            <v-icon
+                icon="mdi-account-circle-outline"
+                color="sGrayLighten2"
+                class="ml-3" />
 
-                <template v-if="userData">
-                    <div class="d-flex flex-column">
-                        <span v-if="userData.first_name && userData.last_name" class="user-phone t16">{{userData.first_name}} {{userData.last_name}}</span>
-                        <span v-if="userData && userData.phone_number" class="user-phone t13 text-grey mt-2 number-font">{{userData.phone_number}}</span>
-                    </div>
-                </template>
-                <template v-else>
-                    <span v-if="userData && userData.phone_number" class="user-phone t16 number-font">{{userData.phone_number}}</span>
-                </template>
-            </div>
-            <a href="/user/profile">
-                <v-icon icon="mdi-account-edit" color="primary" />
-            </a>
+            <template v-if="userData">
+                <div class="d-flex flex-column">
+                    <span v-if="userData.first_name && userData.last_name" class="t16 w700 text-sGrayDarken2 mt-1">{{userData.first_name}} {{userData.last_name}}</span>
+                    <span v-if="userData && userData.phone_number" class="t12 w500 text-sGrayLighten2 number-font" style="margin-top: 2px;">{{userData.phone_number}}</span>
+                </div>
+            </template>
+            <template v-else>
+                <span v-if="userData && userData.phone_number" class="t12 w500 text-sGrayLighten2 number-font">{{userData.phone_number}}</span>
+            </template>
         </div>
-    </v-card>
-    <nav class="card px-5">
+        <a class="v-user__sidebar__edit-button" href="/user/profile">
+            <v-icon icon="mdi-square-edit-outline" color="primary" />
+        </a>
+    </div>
+
+    <nav class="">
         <ul class="user-nav">
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/order') }">
-                <v-icon
-                    icon="mdi-cart-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/order">لیست سفارشات</a>
+            <li class="user-nav__item" :class="{ active: isActive('/user/order') }">
+                <a class="d-flex align-center" href="/user/order">
+                    <v-icon
+                        icon="mdi-cart-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">لیست سفارشات</div>
+                </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/address') }">
-                <v-icon
-                    icon="mdi-map-marker-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/address">آدرس‌ها</a>
+            <li class="user-nav__item" :class="{ active: isActive('/user/address') }">
+               <a class="d-flex align-center" href="/user/address">
+                    <v-icon
+                        icon="mdi-map-marker-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">لیست آدرس‌ها</div>
+               </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/wallet') }">
-                <v-icon
-                    icon="mdi-wallet-bifold-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/wallet">کیف پول</a>
+            <li class="user-nav__item" :class="{ active: isActive('/user/wallet') }">
+                <a class="d-flex align-center" href="/user/wallet">
+                    <v-icon
+                        icon="mdi-wallet-bifold-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">کیف پول</div>
+                </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/favorite-list') }">
-                <v-icon
-                    icon="mdi-heart-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/favorite-list">علاقمندی‌ها</a>
+            <li class="user-nav__item" :class="{ active: isActive('/user/favorite-list') }">
+                <a class="d-flex align-center" href="/user/favorite-list">
+                    <v-icon
+                        icon="mdi-heart-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">علاقمندی‌ها</div>
+                </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/password') }">
-                <v-icon
-                    icon="mdi-lock-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/password">رمز عبور</a>
+            <li class=" user-nav__item" :class="{ active: isActive('/user/password') }">
+                <a class="d-flex align-center" href="/user/password">
+                        <v-icon
+                        icon="mdi-lock-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">رمز عبور</div>
+                </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/comments') }">
-                <v-icon
-                    icon="mdi-comment-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/comments">نظرات</a>
+            <li class="user-nav__item" :class="{ active: isActive('/user/comments') }">
+                <a class="d-flex align-center" href="/user/comments">
+                    <v-icon
+                        icon="mdi-comment-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">نظرات</div>
+                </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item" :class="{ active: isActive('/user/ticket') }">
-                <v-icon
-                    icon="mdi-chat-processing-outline"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey" href="/user/ticket">تیکت</a>
+            <li class="user-nav__item" :class="{ active: isActive('/user/ticket') }">
+                <a class="d-flex align-center" href="/user/ticket">
+                    <v-icon
+                        icon="mdi-chat-processing-outline"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">تیکت</div>
+                </a>
             </li>
 
-            <li class="d-flex align-center user-nav__item cur-p" @click="openModal()">
-                <v-icon
-                    icon="mdi-exit-to-app"
-                    color="grey"
-                    class="ml-3" />
-                <a class="t13 text-grey">خروج</a>
+            <li class="user-nav__item cur-p pb-0" @click="openModal()">
+                <a class="d-flex align-center">
+                    <v-icon
+                        icon="mdi-exit-to-app"
+                        color="sGrayLighten2"
+                        class="ml-3" />
+                    <div class="t14 w700 text-sGray">خروج</div>
+                </a>
             </li>
         </ul>
     </nav>
