@@ -37,6 +37,10 @@ export default {
     label: {
       type: String,
       default: ''
+    },
+    index: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -54,7 +58,8 @@ export default {
       this.changeValue()
     },
     changeValue() {
-      this.$emit('changeValue', this.selectValue)
+      if (this.index !== '')    this.$emit('changeValue',{value: this.selectValue , index: this.index})
+      else    this.$emit('changeValue', this.selectValue)
     }
   }
 }

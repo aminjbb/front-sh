@@ -8,7 +8,7 @@
     <v-card height="360">
       <div class="d-flex justify-space-between px-3 py-4">
         <span class="t16 w700">
-          انتخاب موضوع
+          انتخاب {{ title }}
         </span>
         <span class="bg-sGrayLighten5 close_box">
           <v-icon @click="sheet= false" size="20" color="sGrayDarken1" >mdi-close</v-icon>
@@ -40,7 +40,17 @@ export default {
     label:{
       type:String,
       default: ''
-    }
+    },
+    title:{
+      type:String,
+      default: 'موضوع'
+    },
+    index:{
+      type:String,
+      default: ''
+    },
+
+
   },
   data() {
     return {
@@ -57,7 +67,8 @@ export default {
       this.changeValue()
     },
     changeValue() {
-      this.$emit('changeValue', this.selectValue)
+      if (this.index !== '') this.$emit('changeValue', {value:this.selectValue , index:this.index})
+      else  this.$emit('changeValue', this.selectValue)
     }
   }
 }
