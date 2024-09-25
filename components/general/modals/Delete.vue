@@ -50,7 +50,8 @@
                         @click="removeProduct()"
                         height="44"
                         :title="submitText"
-                        class="btn btn--submit ml-1 flex-grow-1 br12">
+                        class="btn btn--submit ml-1 flex-grow-1 br12" 
+                        style="margin-left: 8px !important;">
                         {{submitText}}
                     </v-btn>
 
