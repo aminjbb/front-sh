@@ -246,6 +246,10 @@ export default {
         }
     }
 
+    > div:last-child{
+        border-bottom: 0;
+    }
+
     .scroll--x {
         padding: 10px;
 
