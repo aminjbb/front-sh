@@ -5,8 +5,8 @@
                 item-title="title"
                 item-value="value" hide-details v-model="selectValue"/>
     </template>
-    <v-card height="360">
-      <div class="d-flex justify-space-between px-3 py-4">
+    <v-card height="360" style="border-top-left-radius: 16px !important;border-top-right-radius: 16px !important;">
+      <div class="d-flex justify-space-between px-3 py-4" >
         <span class="t16 w700">
           انتخاب {{ title }}
         </span>

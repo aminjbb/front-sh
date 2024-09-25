@@ -1,12 +1,12 @@
 <template>
 
-  <v-menu>
+  <v-menu height="279" >
     <template v-slot:activator="{ props }">
       <v-select v-bind="props" :label="label" readonly density="compact" variant="outlined" :rules="rule"
                 item-title="title"
                 item-value="value" hide-details v-model="selectValue"/>
     </template>
-    <v-list>
+    <v-list style="border-radius: 16px" class="mt-1 sh--select">
       <v-list-item
           v-for="(item, index) in items"
           :key="index"
