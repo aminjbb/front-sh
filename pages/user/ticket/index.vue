@@ -69,6 +69,11 @@ export default {
                     icon: 'mdi-message-outline'
                 },
                 {
+                    name: 'pending',
+                    label: 'در حال بررسی',
+                    icon: 'mdi-message-arrow-right-outline'
+                },
+                {
                     name: 'answered',
                     label: 'پاسخ داده شده',
                     icon: 'mdi-message-arrow-left-outline'
@@ -77,11 +82,6 @@ export default {
                     name: 'resolved',
                     label: 'بسته شده',
                     icon: 'mdi-message-off-outline'
-                },
-                {
-                    name: 'pending',
-                    label: 'در انتظار پاسخ',
-                    icon: 'mdi-message-arrow-right-outline'
                 }
             ]
         }

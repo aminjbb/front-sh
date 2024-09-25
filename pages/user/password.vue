@@ -1,5 +1,5 @@
 <template>
-<main class="v-user v-user--password">
+<main class="v-user v-user--password pt-15">
     <h1 class="ov-h h-0">رمز عبور</h1>
 
     <header class="v-user__mobile-page-head xs-show">

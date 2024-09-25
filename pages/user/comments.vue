@@ -1,5 +1,5 @@
 <template>
-<main class="v-user v-user--commenting">
+<main class="v-user v-user--commenting pt-15">
     <h1 class="ov-h h-0">نظرات</h1>
 
     <header class="v-user__mobile-page-head xs-show">

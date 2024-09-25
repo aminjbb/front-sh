@@ -94,7 +94,7 @@ export default {
                 return 'بسته شده';
             }
             if (status == 'pending') {
-                return 'در انتظار پاسخ';
+                return 'در حال بررسی';
             }
 
             return '';

@@ -1,5 +1,5 @@
 <template>
-<main class="v-order v-order--canceling">
+<main class="v-order v-order--canceling pt-15">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/order" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />

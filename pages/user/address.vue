@@ -1,5 +1,5 @@
 <template>
-<main class="v-user v-user--address">
+<main class="v-user v-user--address pt-15">
     <h1 class="ov-h h-0">آدرس های من </h1>
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/dashboard" class="ml-3">
@@ -22,7 +22,7 @@
                     </header>
 
                     <template v-if="userAddress && userAddress.length">
-                        <generalUserAddressCard v-for="(address , index) in userAddress" :key="`address${index}`" :userDetail="userDetail" :provinces="provinces" :address="address" :class="index+1 == userAddress.length ? 'border-0' :''" :getUserAddress="getUserAddress" />
+                        <generalUserAddressCard v-for="(address , index) in userAddress" :key="`address${index}`" :userDetail="userDetail" :provinces="provinces" :address="address" :class="index+1 == userAddress.length ? 'border-0' :''" :getUserAddress="getUserAddress"/>
                     </template>
 
                     <template v-else>

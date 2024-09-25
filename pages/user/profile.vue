@@ -1,5 +1,5 @@
 <template>
-<main class="v-user v-user--profile">
+<main class="v-user v-user--profile pt-15">
     <h1 class="ov-h h-0">اطلاعات حساب کاربری</h1>
 
     <header class="v-user__mobile-page-head xs-show">
