@@ -29,9 +29,9 @@
                             </v-btn>
                         </header>
 
-                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket?.threads.length > 1 ? true : false"/>
+                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket?.threads.length > 0 ? true : false"/>
 
-                        <div v-if="singleTicket?.threads && singleTicket?.threads.length > 1" class="v-ticket__list mt-6">
+                        <div v-if="singleTicket?.threads && singleTicket?.threads.length > 0" class="v-ticket__list mt-6">
                             
                             <div class="v-ticket__list__sort mb-4" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
                                 <header v-if="ticketListByDate.date" class="d-flex align-center justify-center">
