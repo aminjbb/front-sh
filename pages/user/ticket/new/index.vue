@@ -61,7 +61,7 @@
 
                   <v-col cols="12" class="ticket__form__item ">
                     <span class="t16 w700 text-sGrayDarken2 mb-3 d-block">افزودن فایل</span>
-                    <generalUploader @getImage="getImage" :rules="uploadRules"
+                    <generalUploader @getImage="getImage" @deleteImage="deleteImage" :rules="uploadRules"
                                      :isMobile="isMobile === true ? true : false"/>
                   </v-col>
                 </v-row>
@@ -184,6 +184,16 @@ export default {
     getImage(response) {
       const image = response.file_id;
       this.images.push(image);
+    },
+
+    /**
+     * Delete image
+     */
+    deleteImage(id){
+      const index = this.images.findIndex(item => item.id === id);
+        if (index !== -1) {
+            this.images.splice(index, 1);
+        }
     },
 
     async validate() {

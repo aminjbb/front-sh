@@ -1,20 +1,11 @@
 <template>
 <div class="uploader">
     <div class="uploader__upload-box">
-        <v-row
-            justify="center"
-            align="center"
-            class="pa-6 px-5 flex-column"
-            @dragover.prevent
-            @drop.prevent="onDrop">
+        <v-row justify="center" align="center" class="pa-6 px-5 flex-column" @dragover.prevent @drop.prevent="onDrop">
             <div class="d-flex align-center uploader__upload-box__items">
-                <v-icon icon="mdi-folder-plus-outline" color="primary" class="mb-2"/>
+                <v-icon icon="mdi-folder-plus-outline" color="primary" class="mb-2" />
             </div>
-            <v-btn
-                width="122"
-                height="25"
-                :loading="uploadLoading"
-                @click="selectFile()">
+            <v-btn width="122" height="25" :loading="uploadLoading" @click="selectFile()">
                 <span>افزودن فایل</span>
             </v-btn>
         </v-row>
@@ -31,23 +22,11 @@
     <div v-if="uploadedFiles.length" class="scroll--x">
         <div class="mt-2 d-flex align-center">
             <div v-for="(image, index) in uploadedFiles" :key="`image_${index}`" class="uploader__image br8 s-border s-border--medium s-border--gray ml-2 ov-h">
-                <img :src="image.url" width="146" height="88"/>
+                <img :src="image.url" width="146" height="88" />
                 <div class="uploader__image__trash">
-                    <generalSheetsDelete
-                        v-if="isMobile" 
-                        title="حذف عکس "
-                        text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟"
-                        submitText="حذف"
-                        buttonType="icon"
-                        @removeProduct="deleteImage(image.id)"/>
-                    
-                    <generalModalsDelete
-                        v-else
-                        title="حذف عکس "
-                        text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟"
-                        submitText="حذف"
-                        buttonType="icon"
-                        @removeProduct="deleteImage(image.id)" />
+                    <generalSheetsDelete v-if="isMobile" title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.id)" />
+
+                    <generalModalsDelete v-else title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.id)" />
                 </div>
             </div>
         </div>
@@ -61,19 +40,24 @@ export default {
     data() {
         return {
             files: [],
-            uploadedFiles:[],
+            uploadedFiles: [],
             uploadLoading: false,
             file: null
         }
     },
 
-    props:{
+    props: {
         /**
          * List of your rule text
          */
         rules: Array,
 
-        isMobile:Boolean,
+        isMobile: Boolean,
+
+        fileSize: {
+            type: String,
+            default: '10485760' //10MB
+        }
     },
 
     setup() {
@@ -117,40 +101,57 @@ export default {
             this.uploadLoading = true;
             const formData = new FormData()
 
-            formData.append('file', this.file)
-            formData.append('module', 'page');
-
-            axios
-                .post(this.runtimeConfig.public.apiBase + '/file-manager/direct/store', formData, {
-                    headers: {
-                        Authorization: `Bearer ${this.userToken}`,
-                    },
-                })
-                .then((response) => {
-                    useNuxtApp().$toast.success("فایل مورد نظر با موفقیت ذخیره شد.", {
+            if (this.file ?.size > Number(this.fileSize) || (this.file ?.type !== "image/jpeg" && this.file ?.type !== "image/jpg" && this.file ?.type !== "image/png" && this.file ?.type !== "video/mp4" && this.file ?.type !== "video/mkv")) {
+                if (this.file ?.size > Number(this.fileSize)) {
+                    useNuxtApp().$toast.error('حجم فایل صحیح نمی‌باشد.', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
                     });
+                }
 
+                if (this.file ?.type !== "image/jpeg" && this.file ?.type !== "image/jpg" && this.file ?.type !== "image/png" && this.file ?.type !== "video/mp4" && this.file ?.type !== "video/mkv") {
+                    useNuxtApp().$toast.error('فرمت فایل صحیح نمی‌باشد.', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }
+            } else {
+                formData.append('file', this.file);
+                formData.append('module', 'page');
 
-                    this.$emit('getImage', response?.data?.data?.data);
-                    this.uploadedFiles.push(response?.data?.data?.data);
-                })
-                .catch((err) => {
-                }).finally(() => {
-                    this.uploadLoading = false;
-                });
+                axios
+                    .post(this.runtimeConfig.public.apiBase + '/file-manager/direct/store', formData, {
+                        headers: {
+                            Authorization: `Bearer ${this.userToken}`,
+                        },
+                    })
+                    .then((response) => {
+                        useNuxtApp().$toast.success("فایل مورد نظر با موفقیت ذخیره شد.", {
+                            rtl: true,
+                            position: 'top-center',
+                            theme: 'dark'
+                        });
+
+                        this.$emit('getImage', response ?.data ?.data ?.data);
+                        this.uploadedFiles.push(response ?.data ?.data ?.data);
+                    })
+                    .catch((err) => {}).finally(() => {
+                        this.uploadLoading = false;
+                    });
+            }
         },
 
         /**
          * Delete image
          * @param {*} id 
          */
-        deleteImage(id){
+        deleteImage(id) {
             const index = this.uploadedFiles.findIndex(item => item.id === id);
             if (index !== -1) {
                 this.uploadedFiles.splice(index, 1);
+                this.$emit('deleteImage', id);
             }
         }
     }
@@ -166,7 +167,7 @@ export default {
         border: 1px dashed var(--Primery-Primery, #D72685);
         background: #fff;
 
-        >div.v-row{
+        >div.v-row {
             @include gbp (0, 768) {
                 flex-direction: column;
                 align-items: center;
@@ -180,15 +181,15 @@ export default {
             width: 110px !important;
 
             &:hover,
-            :focus{
+            :focus {
                 background: transparent;
             }
 
             &__content {
-                span{
+                span {
                     font-size: 12px;
                     color: var(--Primery-Primery, #D72685);
-                    font-variation-settings: "wght" 700 !important;
+                    font-variation-settings: "wght"700 !important;
                 }
             }
         }
@@ -202,20 +203,20 @@ export default {
         }
     }
 
-    &__image{
+    &__image {
         position: relative;
         width: 146px;
         flex: 0 0 146px;
         overflow: hidden;
         height: 96px;
 
-        img{
+        img {
             width: 100%;
             min-height: 100%;
             display: block;
         }
 
-        &__trash{
+        &__trash {
             width: 24px;
             height: 24px;
             border: 1px solid #E8E8E8;
@@ -228,7 +229,7 @@ export default {
             bottom: 6px;
             left: 6px;
 
-            .v-icon{
+            .v-icon {
                 font-size: 20px !important;
             }
         }
