@@ -60,7 +60,7 @@ export default {
             return this.$store.getters['get_loadingModal']
         },
         hasMobileHeader() {
-            const allowedName = ['index', 'sku-slug', 'sku-group-slug', 'promotion-slug', 'search', 'faq', 'rules-general-rules',
+            const allowedName = ['index', 'sku-slug', 'sku-group-slug', 'search', 'faq', 'rules-general-rules',
                 'rules-how-to-trade', 'rules-information', 'rules-iranian-products', 'rules-my-orders', 'rules-office-rights', 'rules-product-return', 'rules-standard'
             ]
             // allowedName.forEach(item => {
