@@ -54,9 +54,7 @@
         </div>
     </div>
 
-    <p v-if="content.content" :id="`text${content.id}`" class="ticket-answer__content t12 w500 mb-2 l23" :class="[ status === 'user' ? 'text-sGray':'text-sGrayDarken2', showMoreBtn === true ? 'hide-text' : '', show === true ? 'show-text' : '']">
-        {{ content.content }}
-    </p>
+    <p v-if="content.content" :id="`text${content.id}`" class="ticket-answer__content t12 w500 mb-2 l23" :class="[ status === 'user' ? 'text-sGray':'text-sGrayDarken2', showMoreBtn === true ? 'hide-text' : '', show === true ? 'show-text' : '']" v-html="content.content"/>
 
     <div v-if="showMoreBtn === true" class="t12 w500 text-primary cur-p" :id="`show-more-span${content?.id}`" @click="showMoreData()">مشاهده بیشتر</div>
 
