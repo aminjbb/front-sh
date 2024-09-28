@@ -105,7 +105,7 @@ export default {
         },
 
        async removeProduct() {
-            this.loading =true
+            this.loading = true
             this.$emit('removeProduct');
 
         },

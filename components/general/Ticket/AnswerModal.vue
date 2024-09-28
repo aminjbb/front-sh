@@ -95,7 +95,7 @@ export default {
          * Delete image
          */
         deleteImage(id){
-            const index = this.images.findIndex(item => item.id === id);
+            const index = this.images.findIndex(item => item === id);
             if (index !== -1) {
                 this.images.splice(index, 1);
             }

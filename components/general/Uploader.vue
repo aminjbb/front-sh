@@ -24,9 +24,9 @@
             <div v-for="(image, index) in uploadedFiles" :key="`image_${index}`" class="uploader__image br8 s-border s-border--medium s-border--gray ml-2 ov-h">
                 <img :src="image.url" width="146" height="88" />
                 <div class="uploader__image__trash">
-                    <generalSheetsDelete v-if="isMobile" title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.id)" />
+                    <generalSheetsDelete :ref="`deleteImageSheet${image.image_id}`" v-if="isMobile" title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.image_id, image.file_id)" />
 
-                    <generalModalsDelete v-else title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.id)" />
+                    <generalModalsDelete :ref="`deleteImageModal${image.image_id}`" v-else title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.image_id,image.file_id)" />
                 </div>
             </div>
         </div>
@@ -108,6 +108,7 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
+                    this.uploadLoading = false;
                 }
 
                 if (this.file ?.type !== "image/jpeg" && this.file ?.type !== "image/jpg" && this.file ?.type !== "image/png" && this.file ?.type !== "video/mp4" && this.file ?.type !== "video/mkv") {
@@ -116,6 +117,7 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
+                    this.uploadLoading = false;
                 }
             } else {
                 formData.append('file', this.file);
@@ -147,11 +149,19 @@ export default {
          * Delete image
          * @param {*} id 
          */
-        deleteImage(id) {
-            const index = this.uploadedFiles.findIndex(item => item.id === id);
+        deleteImage(id, fileId) {
+            const index = this.uploadedFiles.findIndex(item => item.image_id === id);
             if (index !== -1) {
+                if(this.isMobile){
+                    this.$refs[`deleteImageSheet${id}`].loading =false;
+                    this.$refs[`deleteImageSheet${id}`].sheet =false;
+                }else{
+                    this.$refs[`deleteImageModal${id}`][0].dialog = false;
+                    this.$refs[`deleteImageModal${id}`][0].loading =false;
+                }
+                
                 this.uploadedFiles.splice(index, 1);
-                this.$emit('deleteImage', id);
+                this.$emit('deleteImage', fileId);
             }
         }
     }
