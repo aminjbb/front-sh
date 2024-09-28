@@ -102,12 +102,12 @@ export default {
                     },
                 })
                 .then((response) => {
-                    useNuxtApp().$toast.success(response.message, {
+                    useNuxtApp().$toast.success('امتیاز شما با موفقیت ثبت شد!', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
                     });
-                    this.getUserTicketById();
+                    this.$emit('updateData', true);
                     this.form = {
                         content: null,
                     }

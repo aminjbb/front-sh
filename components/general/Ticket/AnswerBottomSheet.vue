@@ -128,7 +128,7 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
-                    this.getUserTicketById();
+                    this.$emit('updateData', true);
                     this.form = {
                         content: null,
                     },

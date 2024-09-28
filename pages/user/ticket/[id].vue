@@ -41,7 +41,7 @@
                                 </header>
 
                                 <template v-if="ticketListByDate.items">
-                                    <generalTicketAnswerCard v-for="(ticket, index2) in ticketListByDate.items"  :key="`child${index2}`" :lastThread = "index === 0 && index2 === 0 && ticket?.creator === 'admin'  ? true : false" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
+                                    <generalTicketAnswerCard v-for="(ticket, index2) in ticketListByDate.items"  :key="`child${index2}`" @updateData="updateData" :lastThread = "index === 0 && index2 === 0 && ticket?.creator === 'admin'  ? true : false" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
                                 </template>
                             </div>
                         </div>
@@ -145,53 +145,12 @@ export default {
             this.showAnswerBox = !this.showAnswerBox
         },
 
-        /**
-         * Add answer
-         */
-        addAnswer() {
-            this.loading = true;
-
-            const formData = new FormData();
-
-            formData.append('content', this.form.content)
-
-            if (this.images) {
-                this.images.forEach((image, index) => {
-                    formData.append(`files_id[${index}]`, image)
-                })
+        updateData(value){
+            console.log("🚀 ~ updateData[id] ~ value:", value)
+            if(value === true){
+                this.getUserTicketById();
             }
-
-            axios
-                .post(this.runtimeConfig.public.apiBase + `/ticket/user/crud/update/threads/${this.$route.params.id}`, formData, {
-                    headers: {
-                        Authorization: `Bearer ${this.userToken}`,
-                    },
-                })
-                .then((response) => {
-                    useNuxtApp().$toast.success('پاسخ شما با موفقیت ارسال شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                    this.getUserTicketById();
-                    this.form= {
-                        content: null,
-                    },
-
-                    this.images = [];
-                    this.$refs.imageUploader.files = [];
-                    this.showAnswerBox = false;
-                })
-                .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }).finally(() => {
-                    this.loading = false;
-                });
-        },
+        }
     },
 
     mounted() {

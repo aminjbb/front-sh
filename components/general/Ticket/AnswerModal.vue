@@ -43,6 +43,7 @@ export default {
     setup() {
         const userToken = useCookie('userToken')
         const runtimeConfig = useRuntimeConfig()
+        
         return {
             userToken,
             runtimeConfig
@@ -128,7 +129,7 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
-                    this.getUserTicketById();
+                    this.$emit('updateData', true);
                     this.form = {
                         content: null,
                     },
