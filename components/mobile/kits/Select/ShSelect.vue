@@ -5,7 +5,7 @@
                 item-title="title"
                 item-value="value" hide-details v-model="selectValue"/>
     </template>
-    <v-card height="360" style="border-top-left-radius: 16px !important;border-top-right-radius: 16px !important;">
+    <v-card height="360" style="border-top-left-radius: 16px !important;border-top-right-radius: 16px !important;" class="sh--select_mobile">
       <div class="d-flex justify-space-between px-3 py-4" >
         <span class="t16 w700">
           انتخاب {{ title }}

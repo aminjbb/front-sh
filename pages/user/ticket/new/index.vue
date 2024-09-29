@@ -67,12 +67,12 @@
                   </div>
                   <div v-if="subTitleList?.length">
 
-                    <mobileKitsSelectShSelect ref="subTitleList" id="subTitleList" key="subTitleList" label="زیرموضوع" :items="subTitleList" @changeValue="changeSubTitle" />
+                    <mobileKitsSelectShSelect :title="`زیرموضوع ${subTitle}`" ref="subTitleList" id="subTitleList" key="subTitleList" label="زیرموضوع" :items="subTitleList" @changeValue="changeSubTitle" />
 
                   </div>
 
                   <div >
-                    <mobileKitsSelectShSelect title="اولویت تیکت" id="priorities" key="priorities" label="اولویت تیکت" :items="priorities" @changeValue="changePriority" />
+                    <mobileKitsSelectShSelect title="اولویت " id="priorities" key="priorities" label="اولویت تیکت" :items="priorities" @changeValue="changePriority" />
                   </div>
 
 
@@ -137,6 +137,7 @@ export default {
       ticketImage: [],
       subTitleList: [],
       mandatoryFields: [],
+      subTitle:'',
       titleChildren: null,
       rule: [v => !!v || 'این فیلد الزامی است'],
 
@@ -222,6 +223,7 @@ export default {
 
     changeTitle(value){
       this.form.title = value?.value
+      this.subTitle = value?.title
       if (this.$refs.subTitleList ) this.$refs.subTitleList.selectValue = null
       this.getSubTitle()
     },
