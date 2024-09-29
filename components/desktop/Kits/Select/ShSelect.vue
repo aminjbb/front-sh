@@ -1,28 +1,33 @@
 <template>
 
-  <v-menu height="279" >
+  <v-menu max-height="279" class="select-border">
     <template v-slot:activator="{ props }">
       <v-select v-bind="props" :label="label" readonly density="compact" variant="outlined" :rules="rule"
                 item-title="title"
                 item-value="value" hide-details v-model="selectValue"/>
     </template>
     <v-list style="border-radius: 16px" class="mt-1 sh--select">
-      <v-list-item
-          v-for="(item, index) in items"
-          :key="index"
-          :value="index"
-          @click="selectItem(item)"
-      >
-        <div class="d-flex align-center" >
+      <div  v-for="(item, index) in items">
+        <v-list-item
+
+            :key="index"
+            :value="index"
+            @click="selectItem(item)"
+        >
+          <div class="d-flex align-center mb-3" >
            <span class="ml-2">
                  <img v-if="selectValue?.value === item.value" height="18" width="18"
                       src="@/components/general/Kits/Icons/tick-square-primary.svg">
                </span>
-          <span class="t12 w700" :class="selectValue?.value === item.value ?'text-primary' :'text-sGrayDarken2'">
+            <span class="t12 w700" :class="selectValue?.value === item.value ?'text-primary' :'text-sGrayDarken2'">
               {{ item?.title }}
+
           </span>
-        </div>
-      </v-list-item>
+          </div>
+          <v-divider v-if="index !== items.length -1"/>
+        </v-list-item>
+      </div>
+
     </v-list>
   </v-menu>
 
@@ -74,4 +79,5 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 </style>

@@ -72,7 +72,7 @@
                   </div>
 
                   <div >
-                    <mobileKitsSelectShSelect id="priorities" key="priorities" label="اولویت تیکت" :items="priorities" @changeValue="changePriority" />
+                    <mobileKitsSelectShSelect title="اولویت تیکت" id="priorities" key="priorities" label="اولویت تیکت" :items="priorities" @changeValue="changePriority" />
                   </div>
 
 
@@ -98,7 +98,7 @@
 
                 <v-row>
                   <v-col cols="12" class="ticket__form__item ticket__form__item--text-field">
-                    <v-textarea label="توضیحات" variant="outlined" v-model="form.content"
+                    <v-textarea label="توضیحات" :rules="rule" variant="outlined" v-model="form.content"
                                 placeholder="توضیحات را اینجا بنویسید" hide-details rows="4"/>
                   </v-col>
 
