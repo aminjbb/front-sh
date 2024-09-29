@@ -24,7 +24,7 @@
                         </header>
 
                         <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
-                            <GeneralTicketTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedTickets" showAll AllTitle="همه تیکت ها" componentName="generalTicketCard" emptyText=" با کلیک بر روی دکمه زیر می‌توانید یک تیکت جدید ارسال کنید." emptyTitle="تیکتی" emptyButtonLink="/user/ticket/new" emptyButtonText="ثبت تیکت" :hideButton="screenType === 'desktop' ? false : true"/>
+                            <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedTickets" showAll :allItems="ticketList ?.data" AllTitle="همه تیکت ها" componentName="generalTicketCard" emptyText=" با کلیک بر روی دکمه زیر می‌توانید یک تیکت جدید ارسال کنید." emptyTitle="تیکتی" emptyButtonLink="/user/ticket/new" emptyButtonText="ثبت تیکت" :hideButton="screenType === 'desktop' ? false : true" emptyImage="empty-ticket.png"/>
                         </div>
 
                         <div v-if="screenType === 'mobile'" class="w-100 d-flex justify-center px-4 v-ticket__submit--mobile">

@@ -22,7 +22,7 @@
 
                 <div v-else class="flex-grow-1 d-flex flex-column mb-8">
                     <div class="d-flex flex-column justify-center align-center pt-10">
-                        <img src="~/assets/images/empty-ticket.png" class="ml-10" alt="ticket image" width="171" height="162">
+                        <img :src="imageAddress(emptyImage)" class="ml-10" alt="ticket image" width="171" height="162">
 
                         <span class="t18 w700 text-sGrayDarken2 mt-2">در این بخش {{ emptyTitle }} وجود ندارد</span>
 
@@ -78,7 +78,7 @@ export default {
         /**
          * get all Items
          */
-        AllItems: Array,
+         allItems: Array,
 
         /**
          * All title for tab
@@ -120,6 +120,7 @@ export default {
         hideButton:Boolean,
         emptyButtonText: String,
         emptyButtonLink: String,
+        emptyImage: String,
     },
 
     setup(props) {
@@ -138,7 +139,11 @@ export default {
             try {
                 if (this.selectedTab === 'all') {
                     // Combine all ticket arrays into a single array
-                    return Object.values(this.items).flat();
+                    if(this.allItems && this.allItems.length){
+                        return this.allItems
+                    }else{
+                        return Object.values(this.items).flat();
+                    }
                 }
 
                 return this.items[this.selectedTab]
@@ -163,7 +168,16 @@ export default {
         activeTab(status, label) {
             this.selectedTab = status;
             this.selectedTabLabel = label;
-        }
+        },
+
+        imageAddress(path) {
+            const assets =
+                import.meta.glob('~/assets/images/*', {
+                    eager: true,
+                    import: 'default',
+                })
+            return assets['/assets/images/' + path]
+        },
     },
 }
 </script>

@@ -16,6 +16,25 @@
         min-height: 100%;
     }
 
+    &__card{
+        padding: 0 !important;
+        border-radius: 32px !important;
+        border-color: transparent !important;
+
+        @include gbp (768) {
+            border-color: #CBCBCB !important;
+        }
+
+        @include gbp (0, 768) {
+            background-color: transparent !important;
+            border-radius: 0 !important;
+        }
+
+        > header{
+            border: 0 !important;
+        }
+    }
+
     .order-tab {
         &__items-scroll {
             overflow: hidden;
