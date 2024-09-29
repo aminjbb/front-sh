@@ -81,7 +81,6 @@ export default {
         sendingOrder() {
             try {
                 const sendingOrder = this.userOrders.filter(order => order?.status === 'sending')
-                console.log("🚀 ~ sendingOrder ~ sendingOrder.length:", sendingOrder.length)
                 if (sendingOrder.length > 0) return sendingOrder.length
                 else return '0'
             } catch (e) {

@@ -146,7 +146,6 @@ export default {
         },
 
         updateData(value){
-            console.log("🚀 ~ updateData[id] ~ value:", value)
             if(value === true){
                 this.getUserTicketById();
             }
