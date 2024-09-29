@@ -158,7 +158,6 @@ export default {
         },
 
         updateData(value){
-            console.log("🚀 ~ updateData ~ value[card]:", value)
             if(value === true){
                 this.$emit('updateData', true);
             }
