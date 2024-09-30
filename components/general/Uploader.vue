@@ -22,7 +22,7 @@
     <div v-if="uploadedFiles.length" class="scroll--x">
         <div class="mt-2 d-flex align-center">
             <div v-for="(image, index) in uploadedFiles" :key="`image_${index}`" class="uploader__image br8 s-border s-border--medium s-border--gray ml-2 ov-h">
-                <img :src="image.url" width="146" height="88" />
+                <img data-not-lazy :src="image.url" width="146" height="88" />
                 <div class="uploader__image__trash">
                     <generalSheetsDelete :ref="`deleteImageSheet${image.image_id}`" v-if="isMobile" title="حذف عکس " text="آیا از حذف عکس بارگذاری شده اطمینان  دارید؟" submitText="حذف" buttonType="icon" @removeProduct="deleteImage(image.image_id, image.file_id)" />
 
