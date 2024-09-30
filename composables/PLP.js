@@ -23,11 +23,12 @@ export default function setup() {
     const plpTitle = ref('')
     const description = ref('')
     const structuredDataBreadcrumb = ref(null)
+    const structuredDataItem = ref(null)
     const loading =ref(true)
 
     function checkRouteForSlug() {
         if (route.name != 'search') {
-             return route.params.slug
+            return route.params.slug
         }
         return  ''
     };
@@ -60,7 +61,7 @@ export default function setup() {
                 /** breadcrumb schema structure */
                 structuredDataBreadcrumb.value = {
                     "@context": "http://schema.org/",
-	                "@type": "BreadcrumbList",
+                    "@type": "BreadcrumbList",
                     itemListElement : schemaBreadcrumbList
                 }
                 /** Set useHead for schema */
@@ -80,70 +81,117 @@ export default function setup() {
     else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
     else if (route.name == 'search') endPoint.value = `/product/plp/search/`
 
-        useAsyncData(
-            async () => {
-                let url = "".concat(
-                    runtimeConfig.public.apiBase,
-                    endPoint.value,
-                    checkRouteForSlug()
-                );
+    useAsyncData(
+        async () => {
+            let url = "".concat(
+                runtimeConfig.public.apiBase,
+                endPoint.value,
+                checkRouteForSlug()
+            );
 
-                try {
-                    // First API
-                    const response1 = await axios({
+            try {
+                // First API
+                const response1 = await axios({
+                    method: 'get',
+                    url: url,
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
+                    },
+                    params: {...route.query}
+                });
+
+                if(route.name !== 'promotion-slug' && route.name !=='search' && route.name !=='sku-group-slug'){
+                    // Second API
+                    const response2 = await axios({
                         method: 'get',
-                        url: url,
+                        url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
                         headers: {
                             Authorization: `Bearer ${userToken.value}`,
                         },
-                        params: {...route.query}
                     });
-                    
-                    if(route.name !== 'promotion-slug' && route.name !=='search' && route.name !=='sku-group-slug'){
-                        // Second API
-                        const response2 = await axios({
-                            method: 'get',
-                            url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
-                            headers: {
-                                Authorization: `Bearer ${userToken.value}`,
-                            },
+
+                    if(response1 && response2){
+                        // console.log(response1?.data?.data?.data)
+                        let schemaList = []
+                        response1?.data?.data?.data.slice(0,5).forEach((item, index) => {
+                            const schemaObj = {
+                                "@type": "ListItem",
+                                "position": index+1,
+                                "name": item.label,
+                                "item":{
+                                    "@type":"Product",
+                                    "name":item.label,
+                                    "url":`https://shavaz.com/sku/${item.slug}`,
+                                    "review":{
+                                        "@type":"Review",
+                                        "reviewRating":{
+                                            "@type":"Rating",
+                                            "bestRating":5,
+                                            "ratingValue":0 // fix after fix api
+                                        },
+                                        "author":{
+                                            "@type":"Person",
+                                            "name":"admin"
+                                        },
+                                        "datePublished":"", // fix after fix api
+                                        "reviewBody":"", // fix after fix api
+                                        "name":"",// fix after fix api
+                                    },
+                                    "aggregateRating":{
+                                        "@type":"AggregateRating",
+                                        "ratingValue":3,// fix after fix api
+                                        "reviewCount":3// fix after fix api
+                                    },
+                                    "image":item.image_url
+                                }
+                            }
+                            schemaList.push(schemaObj);
                         });
 
-                        if(response1 && response2){
-                            productList.value = response1;
-    
-                            secondaryData.value = response2;
-                            plpTitle.value = response2.data.data.page.meta_title;
-                            description.value = response2.data.data.page.meta_description;
+                        /** item list schema structure */
+                        structuredDataItem.value = {
+                            "@context": "http://schema.org/",
+                            "@type": "BreadcrumbList",
+                            itemListElement : schemaList
                         }
-                    }
-
-                    if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                        /** Set useHead for schema */
+                        useHead({
+                            script: [{ type: 'application/ld+json', children: JSON.stringify(structuredDataItem.value) }]
+                        })
                         productList.value = response1;
 
-                        if(route.name == 'promotion-slug'){
-                            plpTitle.value = response1.data.data.page.meta_title
-                            description.value = response1.data.data.page.meta_description;
-                        }
+                        secondaryData.value = response2;
+                        plpTitle.value = response2.data.data.page.meta_title;
+                        description.value = response2.data.data.page.meta_description;
                     }
+                }
 
-                } catch (error) {
-                    if (error.response) {
-                        showError({
-                            statusCode: error.response.status,
-                            statusMessage: error.response.statusText
-                        });
+                if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                    productList.value = response1;
+
+                    if(route.name == 'promotion-slug'){
+                        plpTitle.value = response1.data.data.page.meta_title
+                        description.value = response1.data.data.page.meta_description;
                     }
                 }
-                finally{
-                    loading.value= false
+
+            } catch (error) {
+                if (error.response) {
+                    showError({
+                        statusCode: error.response.status,
+                        statusMessage: error.response.statusText
+                    });
                 }
-            },
-            {
-                watch: [route]
             }
-        );
-        
+            finally{
+                loading.value= false
+            }
+        },
+        {
+            watch: [route]
+        }
+    );
+
 
     return {
         productList, filterQuery, secondaryData, page, filterForFilter, query,
