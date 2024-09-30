@@ -37,7 +37,7 @@
                         icon="mdi-cart-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">لیست سفارشات</div>
+                    <div class="t12 w700 text-sGray">لیست سفارشات</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -49,7 +49,7 @@
                         icon="mdi-map-marker-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">لیست آدرس‌ها</div>
+                    <div class="t12 w700 text-sGray">لیست آدرس‌ها</div>
                </a>
 
                <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -61,7 +61,7 @@
                         icon="mdi-wallet-bifold-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">کیف پول</div>
+                    <div class="t12 w700 text-sGray">کیف پول</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -73,7 +73,7 @@
                         icon="mdi-heart-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">علاقمندی‌ها</div>
+                    <div class="t12 w700 text-sGray">علاقمندی‌ها</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -85,7 +85,7 @@
                         icon="mdi-lock-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">رمز عبور</div>
+                    <div class="t12 w700 text-sGray">رمز عبور</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -97,7 +97,7 @@
                         icon="mdi-comment-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">نظرات</div>
+                    <div class="t12 w700 text-sGray">نظرات</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -109,7 +109,7 @@
                         icon="mdi-chat-processing-outline"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">تیکت</div>
+                    <div class="t12 w700 text-sGray">تیکت</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />
@@ -121,7 +121,7 @@
                         icon="mdi-exit-to-app"
                         color="sGrayLighten2"
                         class="ml-3" />
-                    <div class="t14 w700 text-sGray">خروج</div>
+                    <div class="t12 w700 text-sGray">خروج</div>
                 </a>
 
                 <v-icon icon="mdi-chevron-left" size="small" color="sGrayLighten2" />

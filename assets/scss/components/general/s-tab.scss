@@ -84,6 +84,8 @@ $parent: 's-tab';
 
         &.active-scroll{
             overflow-y: auto;
+            scrollbar-width: 8px;
+            scrollbar-color: rgb(var(--v-theme-sPrimaryLighten2)) #F5F5F5 !important;
         }
 
         &::-webkit-scrollbar {
