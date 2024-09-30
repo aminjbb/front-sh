@@ -113,11 +113,22 @@ export default {
                     }
                 })
                 .catch((err) => {
+                  console.log(err.response.data.message)
+                  if (err.response.data.details){
                     useNuxtApp().$toast.error(err.response.data.details.rate[0], {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
+                      rtl: true,
+                      position: 'top-center',
+                      theme: 'dark'
                     });
+                  }
+                  else if (err.response.data.message){
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                      rtl: true,
+                      position: 'top-center',
+                      theme: 'dark'
+                    });
+                  }
+
                 }).finally(() => {
                     this.loading = false;
                     this.dialog = false
