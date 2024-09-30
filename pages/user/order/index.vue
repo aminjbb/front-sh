@@ -21,26 +21,16 @@
                             </header>
 
                             <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
-                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" componentName="generalTicketCard" emptyTitle="سفارشی" :hideButton="true"/>
-                            </div>
-
-                            <div v-if="screenType === 'mobile'" class="w-100 d-flex justify-center px-4 v-ticket__submit--mobile">
-                                <v-btn href="/user/ticket/new" height="44" block title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 mb-5 mx-5 px-7">
-                                    ثبت تیکت
-                                </v-btn>
+                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" componentName="generalTicketCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg"/>
                             </div>
                         </template>
                         <template v-else>
                             <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
                                 <svgEmptyOrder />
 
-                                <span class="t14 w400 text-grey-darken-1 mt-2">سفارشی در این بخش موجود نیست.</span>
+                                <span class="t18 w700 text-sGrayDarken2 mt-2 text-center mb-4">سفارشی در این بخش موجود نیست.</span>
 
-                                <v-btn
-                                    href="/"
-                                    color="primary"
-                                    title="بازدید از سایت"
-                                    class="mt-5 order-tab__content__empty-button">
+                                <v-btn href="/" height="44" title="بازدید از سایت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 px-7" :block="screenType === 'mobile' ? true : false">
                                     بازدید از سایت
                                 </v-btn>
                             </div>
@@ -64,22 +54,22 @@ export default {
             statusList: [{
                     name: 'processing',
                     label: 'درحال پردازش',
-                    icon: 'mdi-message-outline'
+                    icon: 'mdi-basket-outline'
                 },
                 {
                     name: 'sending',
                     label: 'درحال ارسال',
-                    icon: 'mdi-message-arrow-right-outline'
+                    icon: 'mdi-truck-fast-outline'
                 },
                 {
                     name: 'received',
                     label: 'تحویل شده',
-                    icon: 'mdi-message-arrow-left-outline'
+                    icon: 'mdi-bag-personal-outline'
                 },
                 {
-                    name: 'resolved',
+                    name: 'returned',
                     label: 'مرجوعی',
-                    icon: 'mdi-message-off-outline'
+                    icon: 'mdi-sync'
                 }
             ]
         }
@@ -120,7 +110,7 @@ export default {
                     acc[order.status].push(order);
                     return acc;
                 }, {});
-                arr['resolved'] = this.returnedOrderList ?.data ?.data ?.data && this.returnedOrderList ?.data ?.data ?.data.length ? this.returnedOrderList ?.data ?.data ?.data  : [];
+                arr['returned'] = this.returnedOrderList ?.data ?.data ?.data && this.returnedOrderList ?.data ?.data ?.data.length ? this.returnedOrderList ?.data ?.data ?.data  : [];
 
                 return arr;
 
