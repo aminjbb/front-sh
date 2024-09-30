@@ -15,7 +15,7 @@
             <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
         <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-            <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
+            <img :src="content?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
     </template>
     <template v-else>
@@ -23,7 +23,7 @@
             <img data-not-lazy :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
         <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-            <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
+            <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
         </a>
     </template>
 

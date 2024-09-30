@@ -271,56 +271,58 @@ export default {
             let currentScrollTop = window.scrollY;
             let header = document.getElementById('header--desktop');
 
-            if (this.isBanner) {
-                if (window.scrollY > 185) {
-                    header.style.top = '0px';
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    this.hasBanner = false;
-
-                    if (currentScrollTop > this.lastScrollTop) {
+            if(header){
+                if (this.isBanner) {
+                    if (window.scrollY > 185) {
+                        header.style.top = '0px';
                         this.isHidden = true;
                         this.isFixed = false;
+                        this.hasBanner = false;
 
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+                        }
+
+                        this.lastScrollTop = currentScrollTop;
+                    }
+
+                    if (window.scrollY <= 185) {
+                        this.hasBanner = true;
+                        header.style.top = `${40 - window.scrollY}px`;
+                        
+                    }
+                } else {
+                    if (window.scrollY > 145) {
+                        this.isHidden = true;
+                        this.isFixed = false;
+                        header.style.top = '0px';
+
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+                        }
+                    }
+
+                    if (window.scrollY <= 145) {
+                        if (currentScrollTop > this.lastScrollTop) {
+                            header.style.top = `${0 - window.scrollY}px`;
+
+                        } else {
+                            header.style.top = '0px';
+                        }
                     }
 
                     this.lastScrollTop = currentScrollTop;
                 }
-
-                if (window.scrollY <= 185) {
-                    this.hasBanner = true;
-                    header.style.top = `${40 - window.scrollY}px`;
-                    
-                }
-            } else {
-                if (window.scrollY > 145) {
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    header.style.top = '0px';
-
-                    if (currentScrollTop > this.lastScrollTop) {
-                        this.isHidden = true;
-                        this.isFixed = false;
-
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
-                    }
-                }
-
-                if (window.scrollY <= 145) {
-                    if (currentScrollTop > this.lastScrollTop) {
-                        header.style.top = `${0 - window.scrollY}px`;
-
-                    } else {
-                        header.style.top = '0px';
-                    }
-                }
-
-                this.lastScrollTop = currentScrollTop;
             }
         },
 
@@ -413,8 +415,7 @@ $parent: 'header';
         z-index: 10;
         padding: 4px;
         padding-bottom: 0 !important;
-        border-bottom: 1px solid #DDDDDD;
-        box-shadow: 0px 4px 9px rgba(66, 66, 66, 0.1);
+        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
         background: #fff;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
