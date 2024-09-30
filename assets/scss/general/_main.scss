@@ -219,3 +219,44 @@ input[type=number] {
         margin: 0 -16px !important;
     }
 }
+
+
+.sh--select{
+    box-shadow: unset !important;
+    border: 1px solid #CBCBCB !important;
+    &::-webkit-scrollbar {
+        width: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: #F5F5F5;
+        margin: 15px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: #EFA8CE;
+
+    }
+
+}
+
+.sh--select_mobile{
+    &::-webkit-scrollbar {
+        width: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: #F5F5F5;
+        margin: 15px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: #EFA8CE;
+
+    }
+
+}
