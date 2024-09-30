@@ -1,6 +1,6 @@
 <template>
-<section v-if="content" class="order-card pt-5">
-    <header class="d-flex justify-space-between align-center mb-5">
+<section v-if="content" class="order-card pt-5 mb-6">
+    <header class="d-flex justify-space-between align-center mb-4">
         <span v-if="content.order_number" class="t12 w700 text-sGray number-font bold">
             <template v-if="content.status === 'returned'">
                 کد سفارش مرجوعی
@@ -17,16 +17,16 @@
         </div>
     </header>
     
-    <div class="d-flex align-center mb-7">
-        <div v-if="content.receiver_name" class="d-flex align-center ml-2">
+    <div class="d-flex align-center mb-5 order-card__info">
+        <div v-if="content.receiver_name" class="d-flex align-center">
             <v-icon icon="mdi-account-box-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
             <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده:{{ content.receiver_name }}</span>
         </div>
-        <div v-if="content?.submit_date_fa" class="d-flex align-center ml-2">
+        <div v-if="content?.submit_date_fa" class="d-flex align-center">
             <v-icon icon="mdi-calendar-month-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
             <span class="text-sGrayLighten2 t12 w500 number-font">{{ content?.submit_date_fa }}</span>
         </div>
-        <div v-if="content.sending_method" class="d-flex align-center ml-2">
+        <div v-if="content.sending_method" class="d-flex align-center">
             <v-icon icon="mdi-truck-fast-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
             <span class="text-sGrayLighten2 t12 w500">نحوه ارسال: {{ getWayText(content.sending_method) }}</span>
         </div>
@@ -56,7 +56,7 @@
             <div class="w-100 d-flex align-center justify-space-between">
                 <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
                 <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
-                    <span class="text-success t12 w700">بلی</span>
+                    <span class="text-sSuccess t12 w700">بلی</span>
                 </v-btn>
             </div>
         </template>
@@ -364,7 +364,7 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/scss/tools/bp";
 .order-card{
-    border-radius: 12px;
+    border-radius: 6px;
     box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10) !important;
     padding: 8px;
 
@@ -383,8 +383,8 @@ export default {
         display: block;
         overflow: hidden;
         border-radius: var(--Space_12, 12px);
-        border: 1px solid var(--Border-Border-light-2, #F3F3F3);
-        background: var(--Background-Background, #FAFAFA);
+        border: 1px solid #F3F3F3;
+        background: #FAFAFA;
         position: relative;
         margin-left: 6px;
 
@@ -395,13 +395,31 @@ export default {
 
         > span{
             position: absolute;
-            border: 1px solid var(--Border-Border-light-2, #F3F3F3);
-            background: var(--Primery-Primery-light-3, #FBE9F3);
+            border: 1px solid #F3F3F3;
+            background: #FBE9F3;
             border-radius: 6px;
             bottom: 4px;
             right: 4px;
             width: 18px;
             height: 18px;
+        }
+    }
+
+    &__info{
+        > div:not(:last-child){
+            position: relative;
+            padding-left: 6px;
+            margin-left: 6px;
+
+            &::after{
+                content: '';
+                width: 1px;
+                height: 12px;
+                left: 0;
+                top: 3px;
+                background: #E8E8E8 !important;
+                position: absolute;
+            }
         }
     }
 }
