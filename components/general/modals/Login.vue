@@ -5,11 +5,10 @@
             <div class="close-modal cur-p" @click="closeModal()">
                 <v-icon color="grey-darken-1">mdi-close</v-icon>
             </div>
-
             <v-row :align="voucherStep ?'start' : 'center'" class="h-100">
                 <v-col sm="7" class="pl-7">
-                    <h4 class="t17 w700 l30" :class="voucherStep ?'mb-10 pb-10' : ''">{{ title }}</h4>
-                    <generalAuth v-if="!voucherStep" class="pt-5" backToSiteText="ورود به سایت" @userInfo="getUserInfo" @backToSite="goLoginPage" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
+                    <h4 class="t17 w700 l30" :class="voucherStep ?'mb-10 pb-10' : ''">{{ modalData?.content }}</h4>
+                    <generalAuth :showSucces="false" v-if="!voucherStep" class="pt-5" backToSiteText="ورود به سایت" @userInfo="getUserInfo" @backToSite="goLoginPage" noLogo noTitle showCancel loginDesc="شماره موبایل خود را وارد نمایید." />
 
                     <div v-else>
                         <span class="t14 w400 mt-15 d-block text-grey-darken-3">کد تخفیف شما :</span>
@@ -22,10 +21,10 @@
                 </v-col>
                 <v-col sm="5" class="d-flex align-center justify-center flex-column">
                     <div v-if="voucherStep" class="px-5 mb-15 pt-15">
-                        <img data-not-lazy :src="imageAddress(voucherImage)" width="222" height="182" class="mt-10"/>
-                        <div class="t16 w500 mt-15 d-block text-grey-darken-3 text-center">به شاواز خوش آمدید ...</div>
+                        <img data-not-lazy :src="modalData?.image_url" width="222" height="182" class="mt-10"/>
+                        <div class="t16 w500 mt-15 d-block text-grey-darken-3 text-center">به شاواز خوش آمدید...</div>
                     </div>
-                    <img v-else data-not-lazy :src="imageAddress(image)" width="272" height="284" />
+                    <img v-else data-not-lazy :src="modalData?.image_url" width="272" height="284" />
                 </v-col>
             </v-row>
         </div>
@@ -61,8 +60,10 @@ export default {
 
         /** Voucher image */
         voucherImage: String,
-
+        screenType: String,
         signupStatus: Boolean
+
+
     },
 
     setup() {
@@ -89,8 +90,13 @@ export default {
             })
         }
 
+        const voucherShownCookie = useCookie('voucher_shown', {
+            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days in seconds
+        });
+
         return {
             doCopy,
+            voucherShownCookie
         }
     },
 
@@ -99,11 +105,12 @@ export default {
          * Open modal
          */
         openModal() {
-            setTimeout(() => {
-                if (this.signupStatus === true) {
-                    this.dialog = true
-                }
-            }, 5000);
+          setTimeout(() => {
+            if (this.signupStatus === true && this.modalData !== null) {
+              this.dialog = true
+              this.voucherShownCookie = true;  // Set the cookie value
+            }
+          }, 5000);
         },
 
         /**
@@ -134,6 +141,11 @@ export default {
                 this.voucher_code = user?.voucher_code
 
             } else {
+              useNuxtApp().$toast.error('با این شماره قبلا سفارش ثبت شده است.', {
+                rtl: true,
+                position: 'top-center',
+                theme: 'dark'
+              });
                 this.dialog = false;
                 window.location.reload();
             }
@@ -154,8 +166,16 @@ export default {
         },
     },
 
+  computed:{
+    modalData(){
+      return this.$store.getters['get_homePageFirstTimeModal']
+    }
+  },
+
     mounted() {
-        this.openModal();
+        if ( this.voucherShownCookie !== true && this.signupStatus === true) {
+            this.openModal();
+        }
     }
 }
 </script>

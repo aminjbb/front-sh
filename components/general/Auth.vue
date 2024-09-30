@@ -107,6 +107,10 @@ export default {
             type: Boolean,
             default: false
         },
+        showSuccess:{
+            type: Boolean,
+            default: true
+        },
 
         noTitle:{
             type: Boolean,
@@ -244,6 +248,7 @@ export default {
             try {
                 this.loading = true;
                 const response = await auth.verifyOTP(digits(this.mobile, 'en'), digits(this.otp, 'en'));
+                console.log(response.status)
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;
 
@@ -275,11 +280,13 @@ export default {
                         wheel: 'true', // or 'returning' depending on the user's status.
                     });
 
-                    useNuxtApp().$toast.success(response.data.message, {
+                    if (!this.showSuccess){
+                      useNuxtApp().$toast.success(response.data.message, {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
-                    });
+                      });
+                    }
 
                     this.$emit('logined', true);
                     this.$emit('userInfo',response.data.data.user)
