@@ -173,3 +173,42 @@ $shadowParent : 's-shadow';
 }
 
 @include borderRadius(6, 40);
+
+
+//---------------------------------------------
+//	Button
+//---------------------------------------------
+
+.s-btn{
+    &--outline{
+        border: 2px solid !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }
+
+    &--outline-primary{
+        border-color: #D72685 !important;
+    }
+
+    &--fill{
+        border: none;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }
+
+    &--fill-primary{
+        background-color: #D72685 !important;
+    }
+
+    &--outline-success{
+        border-color: #2E7D32 !important;
+    }
+
+    &--no-bg{
+        background-color: transparent !important;
+    }
+
+    &--bg-white{
+        background-color: #fff !important;
+    }
+}

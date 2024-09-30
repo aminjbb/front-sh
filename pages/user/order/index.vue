@@ -21,7 +21,7 @@
                             </header>
 
                             <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
-                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" componentName="generalTicketCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg"/>
+                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" componentName="generalOrdersCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg"/>
                             </div>
                         </template>
                         <template v-else>
