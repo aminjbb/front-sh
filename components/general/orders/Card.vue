@@ -1,6 +1,6 @@
 <template>
-<section v-if="content" class="order-card pt-5 mb-6">
-    <header class="d-flex justify-space-between align-center mb-4">
+<section v-if="content" class="order-card mb-6" :class="screenType === 'desktop' ? 'pt-5' : ''">
+    <header class="d-flex justify-space-between align-center" :class="screenType === 'desktop' ? 'mb-4' : 'mb-2'">
         <span v-if="content.order_number" class="t12 w700 text-sGray number-font bold">
             <template v-if="content.status === 'returned'">
                 کد سفارش مرجوعی
@@ -32,84 +32,83 @@
         </div>
     </div>
 
-    <div class="d-flex align-center justify-space-between mb-4">
-       <div class="order-card__items d-flex align-center">
+    <div class="d-flex align-center justify-space-between mb-4 order-card__contents">
+       <div class="scroll--x order-card__items d-flex align-center">
             <a v-for="(sku, index) in content?.details" :key="`sku${index}`" class="order-card__item" :href="`/sku/${sku?.shps?.sku?.slug}`">
                 <img :src="sku?.shps?.sku?.image_url" :title="sku?.shps?.sku?.label" :alt="sku?.shps?.sku?.label" width="79" height="80" />
                 <span class="number-font bold t10 w700 text-primary d-flex align-center justify-center">{{ sku.count }}</span>
             </a>
        </div>
 
-       <div class="t14 w700 number-font bold text-sGray">
+       <div class="t14 w700 number-font bold text-sGray d-flex justify-end align-center">
             {{ splitChar(Number(String(content?.paid_price).slice(0, -1)))}}  <svgToman/>
        </div>
     </div>
 
-    <div class="order-card__action justify-end d-flex">
+    <div class="order-card__action justify-end d-flex w-100">
         <template v-if="content.status === 'processing' || content.status === 'returned'" >
-            <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
+            <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">
                 <span class="text-primary t12 w700">مشاهده جزئیات</span>
             </v-btn>
         </template>
 
         <template v-else-if="content.status === 'sending'">
-            <div class="w-100 d-flex align-center justify-space-between">
+            <div class="w-100 d-flex align-center justify-space-between w-100">
                 <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
-                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">
                     <span class="text-sSuccess t12 w700">بلی</span>
                 </v-btn>
             </div>
         </template>
 
         <template v-else-if="content.status === 'received'">
-            <div class="d-flex align-center">
-                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="200" :href="`/user/order/${content?.id}/return`">
+            <div class="d-flex align-center w-100">
+                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content?.id}/return`">
                     <span class="text-white t12 w700">مرجوع سفارش</span>
                 </v-btn>
 
-                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
                     <span class="text-primary t12 w700">مشاهده جزئیات</span>
                 </v-btn>
             </div>
         </template>
 
         <template v-else-if="content.status === 'payment_out_date' || content.status=== 'cancelled'">
-            <div class="d-flex align-center">
-                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="200" @click="createOrder()">
+            <div class="d-flex align-center w-100">
+                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" @click="createOrder()">
                     <span class="text-white t12 w700"> سفارش مجدد</span>
                 </v-btn>
 
-                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
                     <span class="text-primary t12 w700">مشاهده جزئیات</span>
                 </v-btn>
             </div>
         </template>
 
         <template v-else-if="content.status === 'payment_in_progress'">
-            <div class="d-flex align-center">
-                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="200" @click="repeatPayment()" :loading="reCreateOrderLoading">
+            <div class="d-flex align-center w-100">
+                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" @click="repeatPayment()" :loading="reCreateOrderLoading">
                     <span class="text-white t12 w700"> پرداخت مجدد</span>
                 </v-btn>
 
-                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
                     <span class="text-primary t12 w700">مشاهده جزئیات</span>
                 </v-btn>
             </div>
         </template>
 
         <template v-else-if="content.status === 'pre_progress'">
-            <div class="d-flex align-center">
-                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="200" :href="`/user/order/${content.id}/cancel`">
+            <div class="d-flex align-center w-100">
+                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content.id}/cancel`">
                     <span class="text-white t12 w700">لفو سفارش</span>
                 </v-btn>
 
-                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="200" :href="`/user/order/${content?.id}`">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
                     <span class="text-primary t12 w700">مشاهده جزئیات</span>
                 </v-btn>
             </div>
         </template>
     </div>
-
         
 </section>
 <generalOrdersPaymentMethodModal ref="selectPaymentMethod" :view="screenType === 'desktop' ? 'desktop' : 'mobile'" :orderId="content?.id" :paidPrice="content?.paid_price" />
@@ -370,11 +369,32 @@ export default {
 
     @include gbp (0, 768) {
         box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10) !important;
+        background: #fff;
     }
 
     &__status{
         padding: 6px 9px;
         border-radius: 6px;
+
+        @include gbp (0, 768) {
+            padding: 8px 9px;
+        }
+    }
+
+    &__contents{
+        > div:first-child{
+            width: 70%;
+            flex: 0 0 70%;
+        }
+
+        > div:nth-child(2){
+            width: 30%;
+            flex: 0 0 30%;
+
+             > svg{
+                margin-right: 2px;
+             }
+        }
     }
 
     &__item{
@@ -387,6 +407,7 @@ export default {
         background: #FAFAFA;
         position: relative;
         margin-left: 6px;
+        flex: 0 0 50px;
 
         img{
             width: auto;
@@ -420,7 +441,16 @@ export default {
                 background: #E8E8E8 !important;
                 position: absolute;
             }
+
+            @include gbp (0, 768) {
+                margin-bottom: 10px;
+            }
         }
+
+        @include gbp (0, 768) {
+           flex-wrap:wrap !important
+        }
+        
     }
 }
 </style>
