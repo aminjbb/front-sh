@@ -88,6 +88,10 @@
             border-radius: 0 !important;
         }
 
+        &.margin-b-0{
+            margin-bottom: 0 !important;
+        }
+
         header{
             border: 0 !important;
 
@@ -180,6 +184,7 @@
             &__mobile-no-threads{
                 position: relative;
                 padding:0 8px;
+                margin-top: -20px;
 
                 img {
                     width: 100%;

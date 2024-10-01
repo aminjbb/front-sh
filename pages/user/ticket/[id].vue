@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-9 pa-4 mobile-pa-0">
-                <v-card class="pa-8 mobile-pa-0 v-ticket__card">
+                <v-card class="pa-8 mobile-pa-0 v-ticket__card" :class="isMobile && singleTicket?.threads.length === 0 ? 'margin-b-0' : ''">
                     <div class="flex-grow-1 d-flex flex-column" :class="isMobile === true ? 'mb-2' : 'pa-8'">
                         <header class="v-ticket__header d-flex align-center justify-space-between mb-3 xs-hide">
                             <h1 class="t18 w700 text-sGrayDarken2">{{ singleTicket?.parent_topic }}</h1>
@@ -33,7 +33,7 @@
 
                         <div v-if="singleTicket?.threads && singleTicket?.threads.length > 0" class="v-ticket__list mt-6">
                             
-                            <div class="v-ticket__list__sort mb-4" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
+                            <div class="v-ticket__list__sort" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
                                 <header v-if="ticketListByDate.date" class="d-flex align-center justify-center">
                                     <span class="bg-white px-2">
                                         <span class="px-4 py-2 t10 w400 text-primary number-font s-border br12">{{ticketListByDate.date}}</span>
@@ -48,7 +48,7 @@
                     </div>
                 </v-card>
 
-                <div class="v-ticket__mobile-no-threads" v-if="isMobile && singleTicket?.threads.length <= 1">
+                <div class="v-ticket__mobile-no-threads" v-if="isMobile && singleTicket?.threads.length === 0">
                     <img src="~/assets/images/emptyTicketTheards.svg"/>
                     <div>
                         <span class="text-white t14 w700 mb-1 d-block">پشتیبانی هنوز پاسخی نداده</span>
