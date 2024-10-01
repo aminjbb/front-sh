@@ -3,7 +3,7 @@
     <v-breadcrumbs :items="items">
         <template v-slot:title="{ item, index }">
            <template v-if="index + 1 === items.length && this.$route.name !== 'sku-slug'">
-                <h1 class="d-flex align-center">
+                <span class="d-flex align-center text-sGrayDarken2 t12 w700">
                     <span v-if="icon" class="ml-2 mt-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                             <path d="M2.9165 5.83329H4.08317C5.24984 5.83329 5.83317 5.24996 5.83317 4.08329V2.91663C5.83317 1.74996 5.24984 1.16663 4.08317 1.16663H2.9165C1.74984 1.16663 1.1665 1.74996 1.1665 2.91663V4.08329C1.1665 5.24996 1.74984 5.83329 2.9165 5.83329Z" stroke="#3C3C3C" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -13,7 +13,7 @@
                         </svg>
                     </span>
                     {{ item.title }}
-                </h1>
+                </span>
            </template>
            <template v-else>
                 {{ item.title }}

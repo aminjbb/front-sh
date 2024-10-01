@@ -17,7 +17,11 @@
                 <template v-if="selectedLastCategory">
                     <img :src="selectedLastCategory.image_url" :title="selectedLastCategory.label" width="32" height="32" class="ml-2 br12 ov-h">
                 </template>
-                <div class="t18 w700 text-sGrayDarken2">{{ pageTitle }}</div>
+                <div >
+                  <h1 class="t18 w700 text-sGrayDarken2">
+                    {{ pageTitle }}
+                  </h1>
+                </div>
             </v-col>
             <v-col cols="6">
                 <generalBreadcrumb :items="breadcrumbList" icon/>
