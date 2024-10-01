@@ -19,7 +19,7 @@
                             <span>لیست سفارشات</span>
                         </header>
 
-                        <div class="order-tab flex-grow-1 d-flex flex-column" ref="orderRef">
+                        <div class="order-tab flex-grow-1 d-flex flex-column" ref="orderRef" :class="screenType === 'mobile' ? 'mt-15' : ''">
                             <div class="order-tab__items-scroll">
                                 <div class="order-tab__items d-flex">
                                     <div

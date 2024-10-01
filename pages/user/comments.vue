@@ -14,7 +14,7 @@
             <div class="col-3 pa-4 xs-hide">
                 <generalUserSidebar />
             </div>
-            <div class="col-9 pa-4">
+            <div class="col-9 pa-4" :class="screenType === 'mobile' ? 'mt-15 ' : ''">
                 <v-card class="pa-8 mobile-pa-0 has-header mobile-no-border">
                     <header class="card__header">نظرات</header>
 

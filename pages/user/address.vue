@@ -14,18 +14,18 @@
                 <generalUserSidebar />
             </div>
 
-            <div class="col-9 pa-4">
-                <v-card class="pa-5 mobile-pa-0 mobile-no-border">
+            <div class="col-9 pa-4" :class="screenType === 'mobile' ? 'mt-15 pt-3' : ''" >
+                <v-card class="pa-5 mobile-pa-0 mobile-no-border" >
                     <header class="d-flex align-center justify-space-between mb-5 xs-hide">
                         <span>آدرس‌های شما</span>
                         <generalUserAddressModal v-if="userAddress && userAddress.length" :getUserAddress="getUserAddress" :userDetail="userDetail" :provinces="provinces" title="ثبت آدرس جدید" buttonType="text" />
                     </header>
 
-                    <template v-if="userAddress && userAddress.length">
+                    <template v-if="userAddress && userAddress.length" >
                         <generalUserAddressCard v-for="(address , index) in userAddress" :key="`address${index}`" :userDetail="userDetail" :provinces="provinces" :address="address" :class="index+1 == userAddress.length ? 'border-0' :''" :getUserAddress="getUserAddress" />
                     </template>
 
-                    <template v-else>
+                    <template v-else >
                         <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
                             <SvgEmptyAddress class="mt-10" />
 
