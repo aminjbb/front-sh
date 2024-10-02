@@ -90,14 +90,14 @@ import {useRoute} from "vue-router";
       const urlParams = new URLSearchParams(window.location.search);
       const source = urlParams.get('utm_source');
 
-      if(source === 'takhfifan'){
-          const tatokenValue = urlParams.get('tatoken');
-          const tatoken = useCookie('tatoken', {
-            maxAge: 2592000, // 30 days in seconds
-          });
-
-        tatoken.value = tatokenValue
-      }
+      // if(source === 'takhfifan'){
+      //     const tatokenValue = urlParams.get('tatoken');
+      //     const tatoken = useCookie('tatoken', {
+      //       maxAge: 2592000, // 30 days in seconds
+      //     });
+      //
+      //   tatoken.value = tatokenValue
+      // }
 
       if(source === 'affilinks'){
           const altokenValue = urlParams.get('altoken');

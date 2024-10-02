@@ -133,7 +133,7 @@ export default {
         } = new Order()
 
         const{
-            sendInfoToTakhfifan,
+            // sendInfoToTakhfifan,
             // sendInfoToDeema,
             sendInfoToTaAffilinks
         } = new Affiliate()
@@ -144,7 +144,7 @@ export default {
             createFailedOrder,
             getOrderById,
             order,
-            sendInfoToTakhfifan,
+            // sendInfoToTakhfifan,
             taToken,
             // sendInfoToDeema,
             alToken,
@@ -233,10 +233,10 @@ export default {
                     //     this.umSource = 'Deema';
                     // }
 
-                    if(this.taToken && this.taToken !== null && this.taToken !== ''){
-                        this.sendInfoToTakhfifan(this.order?.data?.data) //Call Takhfifan code
-                        this.umSource = 'Takhfifan';
-                    }
+                    // if(this.taToken && this.taToken !== null && this.taToken !== ''){
+                    //     this.sendInfoToTakhfifan(this.order?.data?.data) //Call Takhfifan code
+                    //     this.umSource = 'Takhfifan';
+                    // }
 
                     if(this.alToken && this.alToken !== null && this.alToken !== ''){
                         this.sendInfoToTaAffilinks(this.order?.data?.data) //Call Affilinks code
