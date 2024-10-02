@@ -4,7 +4,7 @@
         <nav class="s-tab__header">
             <ul class="ma-0 pa-0">
                 <li v-if="showAll" :class="{ active: selectedTab === 'all' }" @click="activeTab('all')" id="tab-header-all" class="s-tab__header__item">
-                    <v-icon icon="mdi-message-processing-outline" class="ml-2" color="sGrayLighten2"/>
+                    <v-icon :icon="allIcon" class="ml-2" color="sGrayLighten2"/>
                     <span>{{ AllTitle }}</span>
                 </li>
 
@@ -17,7 +17,10 @@
         <div class="s-tab__contents py-2" :class="{'active-scroll pl-4' : scroll}" :style="{height : `${height}`}">
             <div class="s-tab__content">
                 <template v-if="filteredData?.length">
-                    <component v-for="(item, index) in filteredData" :key="`tab-content-${index}`" :is="component" :content="item" />
+                    <template v-for="(item, index) in filteredData" :key="`tab-content-${index}`">
+                        <component v-if="activeExtraComponent === true && item.status === 'gift'" :is="extraComponent" :content="item" />
+                        <component v-else  :is="component" :content="item" />
+                    </template>
                 </template>
 
                 <div v-else class="flex-grow-1 d-flex flex-column mb-8">
@@ -86,9 +89,30 @@ export default {
         AllTitle: String,
 
         /**
+         * All icon for all tab
+         */
+        allIcon:{
+            type: String,
+            default:'mdi-message-processing-outline'
+        },
+
+        /**
          * Get child component name
          */
         componentName: {
+            type: String,
+            default: 'generalProductCard'
+        },
+
+        /**
+         * Active extra component
+         */
+        activeExtraComponent:Boolean,
+
+        /**
+         * Extra component name
+         */
+        extraComponentName: {
             type: String,
             default: 'generalProductCard'
         },
@@ -129,8 +153,14 @@ export default {
         } = props;
         const component = resolveComponent(componentName);
 
+        const {
+            extraComponentName
+        } = props;
+        const extraComponent = resolveComponent(extraComponentName);
+
         return {
             component,
+            extraComponent
         };
     },
 

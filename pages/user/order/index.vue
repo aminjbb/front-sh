@@ -4,7 +4,7 @@
         <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
-        <span class="grey-darken-3 t14">لیست سفارشات</span>
+        <span class="text-sGrayDarken2 t14 w700">لیست سفارش ها</span>
     </header>
 
     <v-container>
@@ -21,7 +21,7 @@
                             </header>
 
                             <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
-                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" componentName="generalOrdersCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg"/>
+                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" allIcon="mdi-cart-outline" componentName="generalOrdersCard" activeExtraComponent extraComponentName="generalOrdersGiftCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg"/>
                             </div>
                         </template>
                         <template v-else>
