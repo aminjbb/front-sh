@@ -4,11 +4,11 @@
 
 .v-user {
     padding-bottom: 60px;
-    padding-top: 170px;
+    padding-top: 170px !important;
 
     @include gbp (0, 768) {
         padding-bottom: 80px;
-        padding-top: 0;
+        padding-top: 0 !important;
     }
 
     &__mobile-page-head {
