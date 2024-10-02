@@ -40,7 +40,9 @@
                                 <div class="mb-5">
                                     <label class="d-block t13 text-grey-darken-1 mb-2">علت لغو<span class="text-red-accent-4">*</span>
                                     </label>
-                                    <v-select density="compact" variant="outlined" single-line :rules="rule" item-title="label" item-value="value" hide-details return-object :items="cancelReasonItems" @update:menu="onUpdateMenu" v-model="cancelReasonValueTitle[index]" />
+                                    <desktopKitsSelectShSelect v-if="!isMobile" :index="index" key="changeReason"  :items="cancelReasonItems" @changeValue="changeValue"/>
+                                    <mobileKitsSelectShSelect title="علت لغو" v-else :index="index" id="changeReasonMobile" key="changeReasonMobile" :items="cancelReasonItems" @changeValue="changeValue" />
+
                                 </div>
 
                                 <div>
@@ -55,7 +57,8 @@
                             <div class="mb-5">
                                 <label class="d-block t13 text-grey-darken-1 mb-2">علت لغو<span class="text-red-accent-4">*</span>
                                 </label>
-                                <v-select density="compact" variant="outlined" single-line :rules="rule" item-title="label" item-value="value" hide-details return-object :items="cancelReasonItems" @update:menu="onUpdateMenu" v-model="cancelReasonValueTitleAll" />
+                              <desktopKitsSelectShSelect v-if="!isMobile" key="changeAllReason"  :items="cancelReasonItems" @changeValue="changeAllValue"/>
+                              <mobileKitsSelectShSelect v-else id="changeAllReasonMobile" key="changeAllReasonMobile" :items="cancelReasonItems" @changeValue="changeAllValue" />
                             </div>
 
                             <div>
@@ -131,21 +134,22 @@ import Order from '@/composables/Order.js'
 export default {
     data() {
         return {
+          isMobile:false,
             cancelingStep: 1,
             checkAllProducts: false,
             activeSubmit: false,
             chooseAll: false,
             products: [],
             cancelReasonItems: [{
-                    label: 'از خرید این کالا منصرف شده‌ام',
+                    title: 'از خرید این کالا منصرف شده‌ام',
                     value: '1'
                 },
                 {
-                    label: 'سفارش تکراری ثبت کرده‌ام',
+                  title: 'سفارش تکراری ثبت کرده‌ام',
                     value: '3'
                 },
                 {
-                    label: 'کد تخفیفم اعمال نشده است',
+                  title: 'کد تخفیفم اعمال نشده است',
                     value: '2'
                 }
             ],
@@ -207,6 +211,15 @@ export default {
     },
 
     methods: {
+      changeValue(e){
+        console.log(e?.value?.value)
+        this.cancelReasonValueTitle[e?.index] = e?.value
+        console.log( this.cancelReasonValueTitle)
+      },
+      changeAllValue(e){
+        this.cancelReasonValueTitleAll = e?.value
+      },
+
         /**
          * Check checkbox and select item
          * @param {*} productIndex
@@ -289,6 +302,7 @@ export default {
             if (this.selectedProducts && this.selectedProducts.length) {
                 this.selectedProducts.forEach((product, index) => {
                     const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
+                  console.log(findIndex)
                     formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
                     formData.append(`shps_list[${index}][count]`, product ?.count)
                     if (this.chooseAll) {
@@ -300,10 +314,11 @@ export default {
                             ChooseAllReason = true;
                         }
 
-                    } else {
+                    }
+                    else {
                         if (this.cancelReasonValueTitle && this.cancelReasonValueTitle[findIndex]) {
-                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[findIndex].label)
-                            formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[findIndex])
+                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[findIndex].title)
+                            if (this.cancelReasonValueDesc[findIndex])  formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[findIndex])
                             this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].label);
                             this.cancelReasonValueDescStep2.push(this.cancelReasonValueDesc[findIndex]);
                         } else {
@@ -374,6 +389,8 @@ export default {
 
     beforeMount() {
         this.getOrder()
+        window.innerWidth < 769 ? this.isMobile = true : this.isMobile = false;
+
     }
 }
 </script>

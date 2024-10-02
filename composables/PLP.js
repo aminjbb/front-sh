@@ -113,6 +113,8 @@ export default function setup() {
                         });
 
                         if(response1 && response2){
+
+
                             productList.value = response1;
     
                             secondaryData.value = response2;
