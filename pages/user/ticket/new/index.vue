@@ -337,7 +337,7 @@ export default {
                 ticketDescription: this.form.content, // The detailed description of the issue.
               });
 
-              this.$router.push(`/user/ticket/${response?.data?.data?.id}`);
+              this.$router.push(`/user/ticket`);
 
               useNuxtApp().$toast.success('تیکت شما با موفقیت ایجاد شد.', {
                 rtl: true,
