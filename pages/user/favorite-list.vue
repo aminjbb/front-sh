@@ -1,5 +1,5 @@
 <template>
-<main class="v-user v-user--favorite-list">
+<main class="v-user v-user--favorite-list pt-15">
     <h1 class="ov-h h-0">لیست علاقمندی‌ها</h1>
 
     <header class="v-user__mobile-page-head xs-show">
@@ -11,7 +11,7 @@
 
     <v-container class="pt-0">
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
             <div class="col-9 pa-4" :class="screenType === 'mobile' ? 'mt-15 pt-8' : ''">
