@@ -167,7 +167,9 @@ export default {
         });
 
         const runtimeConfig = useRuntimeConfig()
-        const userToken = useCookie('userToken')
+        const userToken = useCookie('userToken', {
+            maxAge: 60 * 60 * 24 * 365, // 1 year
+        });
         const randomNumberForBasket = useCookie('randomNumberForBasket')
         return {
             userToken,

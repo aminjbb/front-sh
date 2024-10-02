@@ -12,9 +12,9 @@
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopFooter />
             </template>
-           <!--  <template v-if="$route.name === 'index'">
+           <template v-if="$route.name === 'index'">
                 <generalModalsLogin :signupStatus="!loginStatus" image="voucher-login.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید" />
-            </template> -->
+            </template>
         </div>
 
         <div v-else-if="screenType === 'mobile'">
@@ -25,9 +25,9 @@
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
                 <mobileFooter :userData="userData" />
             </template>
-           <!--  <template v-if="$route.name === 'index'">
+           <template v-if="$route.name === 'index'">
                 <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login-m.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید" />
-            </template> -->
+            </template>
         </div>
     </div>
 </v-app>

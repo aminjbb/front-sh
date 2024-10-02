@@ -57,13 +57,6 @@ export default {
         userData: null
     },
 
-    setup() {
-        const userToken = useCookie('userToken')
-        return {
-            userToken,
-        }
-    },
-
     computed: {
         userBasket() {
             try {
