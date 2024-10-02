@@ -1,11 +1,12 @@
 <template>
-  <div class="text-center ma-2">
+  <div class="text-center ma-2" >
     <v-snackbar
         location="top"
+
         v-model="snackBarShow"
         :color="snackBarColor"
     >
-      <div class="d-flex align-center">
+      <div class="d-flex align-center" >
         <div class="ml-2">
           <v-icon :color="snackBarIconColor">
             mdi-information-outline

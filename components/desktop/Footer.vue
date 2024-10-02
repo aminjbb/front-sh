@@ -165,7 +165,7 @@ export default {
          */
         onClick(){
           this.$store.commit('set_snackBar', {
-            show:true , text:'akbar' , status:'ایمیل شما با موفقیت ثبت شد.'
+            show:true , text:'ایمیل شما با موفقیت ثبت شد.' , status:'success'
           })
 
         },
