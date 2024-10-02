@@ -18,7 +18,7 @@
 
                 <MobileHomeSection5Slider :content="responseDot(5)"/>
 
-                <generalTabSlider :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+                <generalTabSlider home :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
                 <mobileHomeBrands :items="responseDot(7)" class="mb-8"/>
 
@@ -28,7 +28,7 @@
 
                 <desktopHomeBanner :sectionId="responseDot(10)?.id" :items="desktopBanner3" col="3" class="mt-5"/>
 
-                <generalTabSlider :items="responseDot(11)" class="tab-slider1 mb-8 mt-4" limit="12" contentWidth="1080px" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
+                <generalTabSlider home :items="responseDot(11)" class="tab-slider1 mb-8 mt-4" limit="12" contentWidth="1080px" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
                 <desktopHomeBanner :sectionId="responseDot(12)?.id" :items="desktopBanner4" col="4" />
 
@@ -64,7 +64,7 @@
                 <MobileHomeSection5Slider class="mt-4" :content="responseDot(5)" />
             </v-container>
 
-            <generalTabSlider screenId="M" :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+            <generalTabSlider home screenId="M" :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <mobileHomeBanner  screenId="M"  :sectionId="responseDot(8)?.id" :items="mobileBanner2" scroll class="pr-4"/>
 
@@ -78,7 +78,7 @@
 
             <mobileHomeBanner screenId="M"  :sectionId="responseDot(12)?.id" :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
 
-            <generalTabSlider screenId="M" :items="responseDot(11)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
+            <generalTabSlider home screenId="M" :items="responseDot(11)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
             <template v-if="homeBlog && homeBlog.length">
                 <div class="pr-4 blog-section blog-section--mobile mb-6">
