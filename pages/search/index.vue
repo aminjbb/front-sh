@@ -29,7 +29,7 @@
         </template>
         <template v-if="screenType === 'mobile'">
             <div class="w-100 filter-bg-mobile d-flex align-center px-2 py-3">
-                <generalProductSortModal @sort="sort"  :sortItems="sortItems"/>
+                <generalProductSortModal @selectSort= "mobileSort"   :sortItems="sortItems"/>
             </div>
         </template>
 
@@ -81,26 +81,30 @@ export default {
             sortType:'related',
             orderType: 'asc',
             sortItems: [
-                {
-                    label: 'جدیدترین',
-                    value: 'created_at',
-                    type: 'desc'
-                },
-                {
-                    label: 'ارزان‌ترین',
-                    value: 'site_price',
-                    type: 'asc'
-                },
-                {
-                    label: 'گران‌ترین',
-                    value: 'site_price',
-                    type: 'desc'
-                },
-                {
-                    label: 'بیشترین تخفیف',
-                    value: 'discount',
-                    type: 'desc'
-                }
+              {
+                label: 'جدیدترین',
+                value: 'created_at',
+                type: 'desc',
+                valueByType:'created_at'
+              },
+              {
+                label: 'ارزان‌ترین',
+                value: 'site_price',
+                type: 'asc',
+                valueByType:'site_price_asc'
+              },
+              {
+                label: 'گران‌ترین',
+                value: 'site_price',
+                type: 'desc',
+                valueByType:'site_price_desc'
+              },
+              {
+                label: 'بیشترین تخفیف',
+                value: 'discount',
+                type: 'desc',
+                valueByType:'discount'
+              }
             ],
         }
     },
@@ -156,6 +160,13 @@ export default {
     },
 
     methods: {
+
+      /**
+       * Sort in mobile
+       */
+      mobileSort(item){
+        this.sort(item.value, item.type)
+      },
 
       /**
        * Sort data

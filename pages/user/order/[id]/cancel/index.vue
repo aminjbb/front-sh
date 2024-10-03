@@ -217,7 +217,8 @@ export default {
         console.log( this.cancelReasonValueTitle)
       },
       changeAllValue(e){
-        this.cancelReasonValueTitleAll = e?.value
+        console.log( e?.value)
+        this.cancelReasonValueTitleAll = e
       },
 
         /**
@@ -302,14 +303,13 @@ export default {
             if (this.selectedProducts && this.selectedProducts.length) {
                 this.selectedProducts.forEach((product, index) => {
                     const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
-                  console.log(findIndex)
                     formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
                     formData.append(`shps_list[${index}][count]`, product ?.count)
                     if (this.chooseAll) {
-                        if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.label) {
+                        if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.title) {
                             ChooseAllReason = false;
-                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
-                            formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
+                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.title)
+                            if (this.cancelReasonValueDescAll) formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
                         } else {
                             ChooseAllReason = true;
                         }
@@ -319,7 +319,7 @@ export default {
                         if (this.cancelReasonValueTitle && this.cancelReasonValueTitle[findIndex]) {
                             formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[findIndex].title)
                             if (this.cancelReasonValueDesc[findIndex])  formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[findIndex])
-                            this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].label);
+                            this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].title);
                             this.cancelReasonValueDescStep2.push(this.cancelReasonValueDesc[findIndex]);
                         } else {
                             useNuxtApp().$toast.error('علت لغو انتخاب نشده است', {
