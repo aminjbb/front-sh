@@ -1,5 +1,5 @@
 <template>
-<main class="v-order v-order--single pt-15">
+<main class="v-order v-order--single">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/order" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
@@ -14,19 +14,17 @@
             </div>
             <div class="col-9 pa-4 mobile-pa-0">
                 <div>
-                    <v-card class="py-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
-                        <header class="d-flex align-center justify-space-between mb-5 xs-hide px-5">
-                            <div class="d-flex align-center">
-                                <a href="/user/order" class="ml-3">
-                                    <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
-                                </a>
-                                <span>جزئیات سفارش</span>
-                            </div>
+                    <v-card class="pa-8 mobile-pa-0 v-order__card">
+                        <header class="v-ticket__header d-flex align-center justify-space-between mb-3 xs-hide">
+                            <h1 class="t18 w700 text-sGrayDarken2 number-font bold">{{ userOrder?.id }}   جزئیات سفارش</h1>
 
-                            <div class="d-flex align-center">
-                                <v-icon icon="mdi-receipt-text-check-outline ml-2" color="grey" />
-                                <span class="t13 w400 text-grey">مشاهده فاکتور</span>
-                            </div>
+                            <v-btn
+                                href="/user/order"
+                                height="45"
+                                title="بازگشت"
+                                class="btn--cancel br12">
+                                بازگشت
+                            </v-btn>
                         </header>
 
                         <v-divider color="grey" class="xs-hide" />

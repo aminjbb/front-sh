@@ -62,7 +62,7 @@
         </template>
 
         <template v-else-if="content.status === 'received'">
-            <div class="d-flex align-center w-100">
+            <div class="d-flex align-center w-100 justify-end">
                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content?.id}/return`">
                     <span class="text-white t12 w700">مرجوع سفارش</span>
                 </v-btn>
@@ -74,7 +74,7 @@
         </template>
 
         <template v-else-if="content.status === 'payment_out_date' || content.status=== 'cancelled'">
-            <div class="d-flex align-center w-100">
+            <div class="d-flex align-center w-100 justify-end">
                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" @click="createOrder()">
                     <span class="text-white t12 w700"> سفارش مجدد</span>
                 </v-btn>
@@ -86,7 +86,7 @@
         </template>
 
         <template v-else-if="content.status === 'payment_in_progress'">
-            <div class="d-flex align-center w-100">
+            <div class="d-flex align-center w-100 justify-end">
                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" @click="repeatPayment()" :loading="reCreateOrderLoading">
                     <span class="text-white t12 w700"> پرداخت مجدد</span>
                 </v-btn>
@@ -98,7 +98,7 @@
         </template>
 
         <template v-else-if="content.status === 'pre_progress'">
-            <div class="d-flex align-center w-100">
+            <div class="d-flex align-center w-100 justify-end">
                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content.id}/cancel`">
                     <span class="text-white t12 w700">لفو سفارش</span>
                 </v-btn>
