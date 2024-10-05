@@ -26,7 +26,7 @@
             @click="enhanceECommerce(item)"
             :sm="col">
             <a class="banner__image d-flex" :href="item.link">
-                <img class="d-block" :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
+                <img class="d-block" :src="item.image?.image_url" title="بنرهای تبلیغاتی " alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
             </a>
         </v-col>
     </v-row>
