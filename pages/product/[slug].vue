@@ -135,7 +135,7 @@ export default {
   },
 
   setup() {
-    const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات')
+    const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
     const {
       productList,
       filterQuery,
