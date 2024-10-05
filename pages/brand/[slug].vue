@@ -124,7 +124,7 @@
         },
     
         setup() {
-            const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز');
+            const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات ');
             const runtimeConfig = useRuntimeConfig()
     
             const {
