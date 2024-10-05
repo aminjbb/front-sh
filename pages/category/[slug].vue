@@ -444,7 +444,6 @@ export default {
          * @param {*} values
          */
         createRoute(values) {
-            console.log(values)
             let param = ''
             let colorParam = ''
             let brandParam = ''

@@ -46,6 +46,7 @@
 
                 <template v-else-if="filter.type === 'switch'">
                   <generalProductFilterSwitch :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                              :selectedStock="stockModel"
                                               @selectedFilter="addSelectedFilterForShowBadge"
                                               @changeClearToFalse="changeClearToFalse"
                                               @changeStatus="selectFiltersModalEmit" :title="filter.label"
@@ -55,6 +56,7 @@
 
                 <template v-else-if="filter.type === 'checkbox'">
                   <generalProductFilterSelects :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                               :selectedFilter="finalFilterObject"
                                                @selectedFilter="addSelectedFilterForShowBadge"
                                                :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
                                                @changeClearToFalse="changeClearToFalse" :items="filter.data"
@@ -77,7 +79,9 @@
                     </header>
 
                     <div>
+
                       <generalProductFilterSelectsMount :index="index"
+                                                        :selectedAmount="amountModel"
                                                         @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                                         @selectedFilter="addSelectedFilterForShowBadge"
                                                         @changeClearToFalse="changeClearToFalse"
@@ -98,9 +102,8 @@
                    :disabled="finalFilterObject.length == 0 && amountModel===null && stockModel === null">
               اعمال فیلتر
             </v-btn>
-
             <v-btn @click="deleteAllFilter()" height="45" title="حذف فیلتر ها" class="btn btn--submit-border"
-                   :disabled="activeFilterButton === true ? false : true">
+                   :disabled="!activeFilterButton && finalFilterObject.length == 0 && amountModel===null && stockModel === null">
               حذف فیلترها
             </v-btn>
           </div>
@@ -277,6 +280,8 @@ export default {
       this.$router.push(`${this.$route.path}`)
       this.closeSheet();
       this.selectedFilters = new Set([])
+      this.filterQuery = []
+      this.finalFilterObject = []
       this.amountModel = null
       this.stockModel = null
       this.$emit('clearFilterQuery')
