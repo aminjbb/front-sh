@@ -1,7 +1,7 @@
 <template>
 <div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
-    <div v-if="index && showIndex" class="product-card__index">
-        <span class="t16">#{{index}}</span>
+    <div v-if="content.discount_percent" class="product-card__index">
+        <span class="t16">%{{content.discount_percent}}</span>
     </div>
 
     <a v-if="content.image && content.image.image_url" class="product-card__image mb-3" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
@@ -152,5 +152,5 @@ export default {
 </script>
 
 <style scoped>
-@import '~/assets/scss/views/general/campaign.scss';
+@import '~/assets/scss/views/campaign.scss';
 </style>
