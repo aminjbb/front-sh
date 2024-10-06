@@ -36,6 +36,7 @@ export default {
      * Switch name
      */
     switchName: String,
+    selectedStock: null,
     /**
      * Clear modal if 'clear' be true
      */
@@ -79,7 +80,14 @@ export default {
     if (this.$route.query.stock == 1) {
       this.availableItems = true
     } else {
-      this.availableItems = false
+      if (this.selectedStock){
+        if (this.selectedStock.param === 'stock'){
+          this.availableItems = this.selectedStock.value
+        }
+      }
+      else{
+        this.availableItems = false
+      }
     }
 
     /**

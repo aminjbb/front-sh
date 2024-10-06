@@ -1,6 +1,10 @@
 <template>
 <section v-if="content" class="ticket-info-card" :class="[{'show': show}, {'show-more' : more}]">
-    <div v-if="content.topic_title" class="ticket-info-card__item d-flex align-center justify-space-between py-5">
+    <div v-if="content.parent_topic" class="ticket-info-card__item d-flex align-center justify-space-between py-5">
+        <div class="t12 w700 text-sGrayLighten2 text-right"> موضوع : </div>
+        <div class="t12 w700 text-sGrayDarken2 text-left">{{ content?.parent_topic }}</div>
+    </div>
+  <div v-if="content.topic_title" class="ticket-info-card__item d-flex align-center justify-space-between py-5">
         <div class="t12 w700 text-sGrayLighten2 text-right">زیر موضوع : </div>
         <div class="t12 w700 text-sGrayDarken2 text-left">{{ content?.topic_title }}</div>
     </div>

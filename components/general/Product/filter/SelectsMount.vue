@@ -74,6 +74,10 @@ export default {
       type: Boolean,
       default: false
     },
+    selectedAmount: {
+      type: String,
+      default: null
+    },
   },
 
   computed: {
@@ -130,7 +134,7 @@ export default {
      * Emit selected items to parent
      */
     selectItems() {
-
+      console.log(this.itemsModel)
       const obj = {
         param: this.param,
         name: this.name,
@@ -159,6 +163,14 @@ export default {
       const findPrice = this.items.find(element=>element.to == this.$route.query.site_price_to && element.from == this.$route.query.site_price_from)
       this.itemsModel = findPrice
       this.$emit('selectedFilter', this.index);
+    }
+    else{
+      if (this.selectedAmount){
+        if (this.selectedAmount.param === "site_price"){
+          this.itemsModel = this.selectedAmount.amount
+        }
+      }
+
     }
   }
 }

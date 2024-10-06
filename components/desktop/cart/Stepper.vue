@@ -16,6 +16,15 @@
     <div class="stepper__content mt-7">
         <v-row v-if="activeStep !== 4">
             <v-col md="9">
+              <v-alert
+                  v-if="ipCountry !== 'IR' "
+                  color="sWarningLighten2"
+                  class="mb-3"
+              >
+                  <p class="t14 w500 text-sWarning">
+                    در صورت روشن بودن نرم افزار های تغییر ip لطفا آن را خاموش کنید!
+                  </p>
+              </v-alert>
                 <template v-if="activeStep === 1">
                     <desktopCartSkuListStep :count="dataCount" :productList="data.details" />
                 </template>
@@ -188,6 +197,9 @@ export default {
     },
 
     computed: {
+        ipCountry(){
+          return this.$store.getters['get_country']
+        },
         orderSendingMethod() {
             return this.$store.getters['get_orderSendingMethod']
         },
