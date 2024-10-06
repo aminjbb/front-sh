@@ -65,7 +65,8 @@
                     </div>
                 </div>
                 <div cols="12" class="d-flex align-center justify-center flex-column mb-5">
-                    <img data-not-lazy src="~/assets/images/campaign/romina-login1.svg" width="82" height="80" />
+                    <img data-not-lazy v-if="loginStep === 1" src="~/assets/images/campaign/romina-login1.svg" width="82" height="80" />
+                    <img data-not-lazy v-if="loginStep === 2" src="~/assets/images/campaign/romina-otp.svg" width="82" height="80" />
                 </div>
             </div>
 
@@ -96,7 +97,7 @@
 
                     <template v-if="showAddress">
                         <div v-if="userAddress && userAddress.length" class="campaign-address px-4" :class="{'height-auto' :showMore}">
-                            <div v-for="(address , index) in userAddress.slice(0,showMoreCount)" :key="`address${index}`" class="d-flex align-center campaign-address__item" @click="selectAddress(address.id)" :id="`address${address.id}`">
+                            <div v-for="(address , index) in userAddress.slice(0,showMoreCount)" :key="`address${index}`" class="d-flex align-center campaign-address__item" @click="selectAddress(address.id)" :id="`address${address.id}`" :class="index === 0 ? 'activeAddress' : ''">
                                 <v-icon icon="mdi-map-marker-outline" class="ml-2" color="grey" size="large" />
                                 <div class="d-flex flex-column">
                                     <p class="t14 number-font text-grey-darken-3 ">
@@ -111,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="w-100 d-flex justify-end px-4">
+                        <div v-if="userAddress.length > 3" class="w-100 d-flex justify-end px-4">
                             <span class="text-primary d-flex align-center t12 w700 mb-5 mt-2 cur-p" @click="activeShowMore" :style="showMore === true ? 'display:none !important' :''">
                                 مشاهده بیشتر
                                 <v-icon icon="mdi-chevron-down" color="primary"></v-icon>
@@ -119,7 +120,7 @@
                         </div>
 
                         <div class="px-4">
-                            <v-btn @click="getGift()" :loading="loading" color="primary" block type="submit" height="46px" class="game-auth__btn">
+                            <v-btn @click="getGift()" :loading="createLoading" color="primary" block type="submit" height="46px" class="game-auth__btn">
                                 <span class="w700">ثبت و ارسال هدیه</span>
                             </v-btn>
                         </div>
@@ -158,19 +159,19 @@
                             </v-btn>
                         </v-form>
                     </template>
+                </template>
 
-                    <template v-if="lastStep">
-                        <div class="d-flex flex-column align-center justify-center">
-                            <img data-not-lazy class="mt-8 mb-8" src="~/assets/images/campaign/romina-login3.svg" width="140" height="130" />
-                            <div class="t16 w300 text-sGray l32">شاوازی عزیز اطلاعات آدرست با موفقیت ذخیره شد. </div>
-                            <div class="t16 w300 text-sGray l32">هدیه‌‌‌‌‌‌ات به زودی به دستت می‌رسه.</div>
-                            <div class="t16 w300 text-sGray l32">میتونی وضعیتش رو از لیست سفارشات پیگیری کنی.</div>
-                        </div>
+                <template v-if="lastStep === true">
+                    <div class="d-flex flex-column align-center justify-center">
+                        <img data-not-lazy class="mt-8 mb-8" src="~/assets/images/campaign/romina-login3.svg" width="140" height="130" />
+                        <div class="t16 w300 text-sGray l32">شاوازی عزیز اطلاعات آدرست با موفقیت ذخیره شد. </div>
+                        <div class="t16 w300 text-sGray l32">هدیه‌‌‌‌‌‌ات به زودی به دستت می‌رسه.</div>
+                        <div class="t16 w300 text-sGray l32">میتونی وضعیتش رو از لیست سفارشات پیگیری کنی.</div>
+                    </div>
 
-                        <v-btn href="/user/order" color="primary" block type="submit" height="46px" class="game-auth__btn mt-5">
-                            <span class="w700">مشاهده هدیه</span>
-                        </v-btn>
-                    </template>
+                    <v-btn href="/user/order" color="primary" block type="submit" height="46px" class="game-auth__btn mt-5">
+                        <span class="w700">مشاهده هدیه</span>
+                    </v-btn>
                 </template>
             </div>
 
@@ -282,6 +283,7 @@ export default {
             loading: false,
             stateName: null,
             cityName: null,
+            tockenCookie:null,
         };
     },
 
@@ -291,13 +293,14 @@ export default {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
 
         const {
-            getUserAddress,
+            getUserAddress2,
             userAddress
         } = new User()
 
         const {
             createGiftOrder,
-            successGiftOrder
+            successGiftOrder,
+            createLoading
         } = new Campaign()
 
         const {
@@ -311,13 +314,15 @@ export default {
             userToken,
             runtimeConfig,
             randomNumberForBasket,
-            getUserAddress,
+            getUserAddress2,
             userAddress,
             getProvince,
             provinces,
             cities,
             getCities,
-            createGiftOrder
+            createGiftOrder,
+            successGiftOrder,
+            createLoading
         }
     },
 
@@ -472,9 +477,9 @@ export default {
             try {
                 this.loading = true;
                 const response = await auth.verifyOTP(digits(this.mobile, 'en'), digits(this.otp, 'en'));
-                console.log(response.status)
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;
+                    this.tockenCookie = response.data.data.token;
 
                     const characters = 'abcdefghijklmnopqrstuvwxyz';
                     const numbers = '0123456789';
@@ -516,7 +521,7 @@ export default {
                     } else {
                         this.hasOrder = true;
                         this.showAddress = true;
-                        this.getUserAddress();
+                        this.getUserAddress2(response.data.data.token);
                     }
                 }
 
@@ -546,7 +551,7 @@ export default {
         },
 
         getGift() {
-            this.createGiftOrder(this.selectAddressId, this.userToken);
+            this.createGiftOrder(this.selectAddressId, this.tockenCookie);
         },
 
         addNewAddress() {
@@ -595,7 +600,7 @@ export default {
             axios
                 .post(this.runtimeConfig.public.apiBase + endPoint, form, {
                     headers: {
-                        Authorization: `Bearer ${this.userToken}`,
+                        Authorization: `Bearer ${this.tockenCookie}`,
                     },
                 })
                 .then((response) => {
@@ -604,7 +609,9 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
-                    this.createGiftOrder(response?.data?.data?.id, this.userToken);
+                    this.getUserAddress2(this.tockenCookie);
+                    this.showAddress = true;
+                    this.showAddAddress = false;
                 })
                 .catch((err) => {
                     auth.checkAuthorization(err.response)
@@ -615,7 +622,6 @@ export default {
                     });
                 }).finally(() => {
                     this.loading = false
-                    this.getUserAddress()
                 });
         },
 
@@ -649,6 +655,12 @@ export default {
                 this.showAddAddress = false;
                 this.lastStep =true;
                 this.hasOrder = false;
+            }
+        },
+
+        userAddress(newVal){
+            if(newVal.length > 0){
+                this.selectAddressId = newVal[0].id
             }
         }
     }

@@ -65,7 +65,8 @@
                     </div>
                 </v-col>
                 <v-col sm="5" class="d-flex align-center justify-center flex-column">
-                    <img data-not-lazy src="~/assets/images/campaign/romina-login1.svg" width="110" height="134" />
+                    <img v-if="loginStep === 1" data-not-lazy src="~/assets/images/campaign/romina-login1.svg" width="110" height="134" />
+                    <img v-if="loginStep === 2" data-not-lazy src="~/assets/images/campaign/romina-otp.svg" width="110" height="134" />
                 </v-col>
             </v-row>
 
@@ -96,7 +97,7 @@
 
                     <template v-if="showAddress">
                         <div v-if="userAddress && userAddress.length" class="campaign-address px-4" :class="{'height-auto' :showMore}">
-                            <div v-for="(address , index) in userAddress.slice(0,showMoreCount)" :key="`address${index}`" class="d-flex align-center campaign-address__item" @click="selectAddress(address.id)" :id="`address${address.id}`">
+                            <div v-for="(address , index) in userAddress.slice(0,showMoreCount)" :key="`address${index}`" class="d-flex align-center campaign-address__item" @click="selectAddress(address.id)" :id="`address${address.id}`" :class="index === 0 ? 'activeAddress' : ''">
                                 <v-icon icon="mdi-map-marker-outline" class="ml-2" color="grey" size="large" />
                                 <div class="d-flex flex-column">
                                     <p class="t14 number-font text-grey-darken-3 ">
@@ -119,7 +120,7 @@
                         </div>
 
                         <div class="px-4">
-                            <v-btn @click="getGift()" :loading="loading" color="primary" block type="submit" height="46px" class="game-auth__btn">
+                            <v-btn @click="getGift()" :loading="createLoading" color="primary" block type="submit" height="46px" class="game-auth__btn">
                                 <span class="w700">ثبت و ارسال هدیه</span>
                             </v-btn>
                         </div>
@@ -282,6 +283,7 @@ export default {
             loading: false,
             stateName: null,
             cityName: null,
+            tockenCookie:null,
         };
     },
 
@@ -297,7 +299,8 @@ export default {
 
         const {
             createGiftOrder,
-            successGiftOrder
+            successGiftOrder,
+            createLoading
         } = new Campaign()
 
         const {
@@ -318,7 +321,8 @@ export default {
             cities,
             getCities,
             createGiftOrder,
-            successGiftOrder
+            successGiftOrder,
+            createLoading
         }
     },
 
@@ -473,9 +477,9 @@ export default {
             try {
                 this.loading = true;
                 const response = await auth.verifyOTP(digits(this.mobile, 'en'), digits(this.otp, 'en'));
-                console.log(response.status)
                 if (response.status === 200) {
                     this.userToken = response.data.data.token;
+                    this.tockenCookie = response.data.data.token;
 
                     const characters = 'abcdefghijklmnopqrstuvwxyz';
                     const numbers = '0123456789';
@@ -547,7 +551,7 @@ export default {
         },
 
         getGift() {
-            this.createGiftOrder(this.selectAddressId, this.userToken);
+            this.createGiftOrder(this.selectAddressId, this.tockenCookie);
         },
 
         addNewAddress() {
@@ -596,7 +600,7 @@ export default {
             axios
                 .post(this.runtimeConfig.public.apiBase + endPoint, form, {
                     headers: {
-                        Authorization: `Bearer ${this.userToken}`,
+                        Authorization: `Bearer ${this.tockenCookie}`,
                     },
                 })
                 .then((response) => {
@@ -605,7 +609,9 @@ export default {
                         position: 'top-center',
                         theme: 'dark'
                     });
-                    this.createGiftOrder(response?.data?.data?.id, this.userToken);
+                    this.getUserAddress2(this.tockenCookie);
+                    this.showAddress = true;
+                    this.showAddAddress = false;
                 })
                 .catch((err) => {
                     auth.checkAuthorization(err.response)
@@ -649,6 +655,12 @@ export default {
                 this.showAddAddress = false;
                 this.lastStep =true;
                 this.hasOrder = false;
+            }
+        },
+
+        userAddress(newVal){
+            if(newVal.length > 0){
+                this.selectAddressId = newVal[0].id
             }
         }
     }

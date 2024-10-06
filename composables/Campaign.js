@@ -10,6 +10,7 @@ export default function setup() {
     const loading = ref(false)
     const userToken = useCookie('userToken');
     const successGiftOrder = ref(false)
+    const createLoading = ref(false)
     
     async function getSku() {
         axios
@@ -27,7 +28,7 @@ export default function setup() {
      * @param {*} id
      */
     async function createGiftOrder(id, token) {
-        loading.value = true;
+        createLoading.value = true;
         const formData = new FormData()
 
         formData.append(`address_id`, id)
@@ -52,10 +53,10 @@ export default function setup() {
                     theme: 'dark'
                 });
             }).finally(() => {
-                loading.value = false
+                createLoading.value = false
         });
     };
 
-    return {getSku, skuList, createGiftOrder, successGiftOrder }
+    return {getSku, skuList, createGiftOrder, successGiftOrder, createLoading }
 }
 

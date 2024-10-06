@@ -82,6 +82,12 @@
                 fill: #D72685;
             }
 
+            .without-discount{
+                svg path{
+                    fill: #616161 !important;
+                }
+            }
+
             .bold{
                 font-weight: 700 !important;
             }

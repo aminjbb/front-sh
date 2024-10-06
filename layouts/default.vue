@@ -22,7 +22,7 @@
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== ' campaign-romina' && $route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
+            <template v-if="$route.name !== 'campaign-romina' && $route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
                 <mobileFooter :userData="userData" />
             </template>
            <template v-if="$route.name === 'index'">

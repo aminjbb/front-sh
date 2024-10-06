@@ -40,9 +40,9 @@ export default {
             currentImage: '',
             screenType:'desktop',
             images: [
-                'romina 01.svg',
-                'romina 02.svg',
-                'romina 03.svg'
+                'romina01.svg',
+                'romina02.svg',
+                'romina03.svg'
             ],
         }
     },

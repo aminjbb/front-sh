@@ -30,8 +30,8 @@
             </template>
 
             <template v-else>
-                <div class="d-flex align-center">
-                    <span class="t16 bold text-primary text-center number-font">{{splitChar(Number(String(1450000).slice(0, -1)))}}</span>
+                <div class="d-flex align-center without-discount">
+                    <span class="t16 bold text-sGray text-center number-font">{{splitChar(Number(String(1450000).slice(0, -1)))}}</span>
                     <svgToman class="mr-1"/>
                 </div>
             </template>
