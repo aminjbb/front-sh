@@ -28,10 +28,14 @@ const store = createStore({
         emptyBasket:''
       },
       homePageFirstTimeModal:null,
+      country:null,
     };
   },
 
   mutations: {
+    set_country(state , country){
+      state.country = country
+    },
     set_homePageFirstTimeModal(state , obj){
       state.homePageFirstTimeModal = obj
     },
@@ -75,6 +79,9 @@ const store = createStore({
   },
 
   getters: {
+    get_country(state){
+      return  state.country
+    },
     get_homePageFirstTimeModal(state){
       return  state.homePageFirstTimeModal
     },

@@ -10,6 +10,9 @@
 
 import { onMounted,} from 'vue'
 import {useRoute} from "vue-router";
+import axios from "axios";
+import {useStore} from "vuex";
+const store = useStore()
   const route = useRoute();
 
   useSeoMeta({
@@ -106,5 +109,13 @@ import {useRoute} from "vue-router";
           altoken.value = altokenValue
       }
     }
+
+    axios.get('https://api.my-ip.io/v2/ip.json')
+        .then((response) => {
+         store.commit('set_country' , response?.data?.country?.code)
+        })
+        .catch((err) => {
+          store.commit('set_country' , null)
+        })
 })
 </script>

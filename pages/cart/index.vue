@@ -2,11 +2,14 @@
 <main class="v-cart">
     <h1 class="ov-h h-0">سبد خرید </h1>
     <v-container class="pt-0">
-        <template v-if="!lastStep && userBasket.length < 1">
+
+
+      <template v-if="!lastStep && userBasket.length < 1">
             <generalCartEmpty :count="skuCount" :products="randomProducts.slice(0,6)" />
         </template>
 
         <template v-else>
+
             <desktopCartStepper v-if="screenType === 'desktop'" :data="userBasket" />
             <mobileCartStepper v-if="screenType === 'mobile'" :data="userBasket" />
         </template>
