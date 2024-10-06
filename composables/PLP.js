@@ -133,14 +133,14 @@ export default function setup() {
                                             "@type":"Person",
                                             "name":"admin"
                                         },
-                                        "datePublished":"", // fix after fix api
-                                        "reviewBody":"", // fix after fix api
-                                        "name":"",// fix after fix api
+                                        "datePublished":item?.created_at, // fix after fix api
+                                        "reviewBody":item?.last_review, // fix after fix api
+                                        "name":'',// fix after fix api
                                     },
                                     "aggregateRating":{
                                         "@type":"AggregateRating",
                                         "ratingValue":3,// fix after fix api
-                                        "reviewCount":3// fix after fix api
+                                        "reviewCount":item?.review_count// fix after fix api
                                     },
                                     "image":item.image_url
                                 }
