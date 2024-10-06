@@ -1,7 +1,7 @@
 <template>
 <div class="c-modal">
-    <v-dialog v-if="dialog" v-model="dialog" color="white" width="600px">
-        <div class="voucher-auth voucher-auth--desktop bg-white pb-6 h-100 d-flex flex-column w-100">
+    <v-bottom-sheet v-if="sheet" v-model="sheet" color="white" height="auto">
+        <div class="voucher-auth voucher-auth--mobile bg-white pb-6 h-100 d-flex flex-column w-100">
             <div class="d-flex align-center justify-space-between py-6 px-6">
                 <span class="t16 w600 text-sGray">دریافت هدیه</span>
 
@@ -10,8 +10,8 @@
                 </div>
             </div>
 
-            <v-row v-if="!logined" class="flex-grow-1 px-6 my-7">
-                <v-col sm="7" class="pl-7">
+            <div v-if="!logined" class="px-5 my-3">
+                <div>
                     <h4 class="t17 w700 l30">{{ modalData?.content }}</h4>
                     <div class="login">
                         <v-locale-provider rtl>
@@ -63,11 +63,11 @@
                             </div>
                         </v-locale-provider>
                     </div>
-                </v-col>
-                <v-col sm="5" class="d-flex align-center justify-center flex-column">
-                    <img data-not-lazy src="~/assets/images/campaign/romina-login1.svg" width="110" height="134" />
-                </v-col>
-            </v-row>
+                </div>
+                <div cols="12" class="d-flex align-center justify-center flex-column mb-5">
+                    <img data-not-lazy src="~/assets/images/campaign/romina-login1.svg" width="82" height="80" />
+                </div>
+            </div>
 
             <div v-else class="px-2">
                 <template v-if="noOrder">
@@ -86,9 +86,9 @@
 
                 <template v-if="hasOrder">
                     <div class="d-flex align-center justify-space-between px-4 mb-7">
-                        <span class="t16 w400 text-sGray">آدرس تحویل هدیه‌‌‌‌‌‌‌‌‌‌‌‌ات رو انتخاب کن</span>
+                        <span class="t14 w400 text-sGray">آدرس تحویل هدیه‌‌‌‌‌‌‌‌‌‌‌‌ات رو انتخاب کن</span>
 
-                        <span class="t16 w700 text-primary cur-p" @click="addNewAddress">
+                        <span class="t12 w700 text-primary cur-p" @click="addNewAddress">
                             <v-icon icon="mdi-plus-box" color="primary"/>
                             آدرس جدید
                         </span>
@@ -158,19 +158,19 @@
                             </v-btn>
                         </v-form>
                     </template>
-                </template>
 
-                <template v-if="lastStep === true">
-                    <div class="d-flex flex-column align-center justify-center">
-                        <img data-not-lazy class="mt-8 mb-8" src="~/assets/images/campaign/romina-last-step.svg" width="140" height="130" />
-                        <div class="t16 w300 text-sGray l32">شاوازی عزیز اطلاعات آدرست با موفقیت ذخیره شد. </div>
-                        <div class="t16 w300 text-sGray l32">هدیه‌‌‌‌‌‌ات به زودی به دستت می‌رسه.</div>
-                        <div class="t16 w300 text-sGray l32">میتونی وضعیتش رو از لیست سفارشات پیگیری کنی.</div>
-                    </div>
+                    <template v-if="lastStep">
+                        <div class="d-flex flex-column align-center justify-center">
+                            <img data-not-lazy class="mt-8 mb-8" src="~/assets/images/campaign/romina-login3.svg" width="140" height="130" />
+                            <div class="t16 w300 text-sGray l32">شاوازی عزیز اطلاعات آدرست با موفقیت ذخیره شد. </div>
+                            <div class="t16 w300 text-sGray l32">هدیه‌‌‌‌‌‌ات به زودی به دستت می‌رسه.</div>
+                            <div class="t16 w300 text-sGray l32">میتونی وضعیتش رو از لیست سفارشات پیگیری کنی.</div>
+                        </div>
 
-                    <v-btn href="/user/order" color="primary" block type="submit" height="46px" class="game-auth__btn mt-5">
-                        <span class="w700">مشاهده هدیه</span>
-                    </v-btn>
+                        <v-btn href="/user/order" color="primary" block type="submit" height="46px" class="game-auth__btn mt-5">
+                            <span class="w700">مشاهده هدیه</span>
+                        </v-btn>
+                    </template>
                 </template>
             </div>
 
@@ -188,7 +188,7 @@
                 </template>
             </div>
         </div>
-    </v-dialog>
+    </v-bottom-sheet>
 </div>
 </template>
 
@@ -239,7 +239,7 @@ export default {
             startTime: null,
             passwordType: 'password',
             activeButton: false,
-            dialog: false,
+            sheet: false,
             loading: false,
             logined: false,
             userInfo: null,
@@ -291,7 +291,7 @@ export default {
         const randomNumberForBasket = useCookie('randomNumberForBasket')
 
         const {
-            getUserAddress2,
+            getUserAddress,
             userAddress
         } = new User()
 
@@ -311,14 +311,13 @@ export default {
             userToken,
             runtimeConfig,
             randomNumberForBasket,
-            getUserAddress2,
+            getUserAddress,
             userAddress,
             getProvince,
             provinces,
             cities,
             getCities,
-            createGiftOrder,
-            successGiftOrder
+            createGiftOrder
         }
     },
 
@@ -371,14 +370,14 @@ export default {
          * Open modal
          */
         openModal() {
-            this.dialog = true
+            this.sheet = true
         },
 
         /**
          * Close modal
          */
         closeModal() {
-            this.dialog = false;
+            this.sheet = false;
             this.noOrder =false;
             this.noOrder = false;
             this.logined = false;
@@ -517,7 +516,7 @@ export default {
                     } else {
                         this.hasOrder = true;
                         this.showAddress = true;
-                        this.getUserAddress2(response.data.data.token);
+                        this.getUserAddress();
                     }
                 }
 
@@ -616,6 +615,7 @@ export default {
                     });
                 }).finally(() => {
                     this.loading = false
+                    this.getUserAddress()
                 });
         },
 
@@ -661,7 +661,7 @@ $parent: 'voucher-auth';
 .#{$parent} {
     position: relative;
 
-    &--desktop {
+    &--mobile {
         border-radius: 8px !important;
 
         .game-auth__desc {
@@ -669,7 +669,7 @@ $parent: 'voucher-auth';
         }
 
         .game-auth__input {
-            margin-bottom: 70px;
+            margin-bottom: 20px;
         }
 
         .close-modal {
@@ -746,7 +746,7 @@ input {
     }
 
     &__item {
-        padding: 16px;
+        padding: 8px;
         border: 1px solid #CBCBCB;
         border-radius: 8px;
         margin-bottom: 12px;

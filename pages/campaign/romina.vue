@@ -7,54 +7,41 @@
         <v-container class="pos-r">
             <desktopRominaCampaignGetGift />
             <desktopRominaCampaignHero />
-            <desktopRominaCampaignSlider/>
+            <desktopRominaCampaignSlider id="romina-sku-list" :items="skuList.data" :class="screenType === 'desktop' ? 'px-7' : 'px-3'"/>
         </v-container>
     </main>
 
-    <desktopRominaCampaignFooter />
-
-    <template>
-        <desktopRominaCampaignLoginModal :signupStatus="!loginStatus"  />
-    </template>
+    <desktopRominaCampaignFooter :class="screenType === 'desktop' ? 'mt-10' : ''"/>
   </template>
   
   <script>
-  import auth from '@/middleware/auth';
-  
+  import Campaign from '@/composables/Campaign.js'
+
   export default {
     data() {
         return {
-            loginStatus: false,
+            screenType:'desktop'
+        }
+    },
+    setup() {
+        const {
+            getSku,
+            skuList
+        } = new Campaign()
+
+        return {
+            getSku,
+            skuList
         }
     },
 
     created() {
-        this.fetchUserProfile();
+        this.getSku();
     },
 
-    methods: {
-        /**
-         * fetch user data
-         */
-        async fetchUserProfile() {
-            try {
-                if (this.userToken) {
-                    const response = await auth.getUserProfile(this.userToken)
-                    if (response.data.data) {
-                        this.$store.commit('set_userData', response.data.data)
-                        this.userData = response.data.data
-                        this.loginStatus = true;
-                    }
-                } else {
-                    this.loginStatus = false;
-                }
-            } catch (error) {
-                // Handle errors
-            }
-        },
-
-    },
-  
+    mounted() {
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    }
   }
   </script>
   

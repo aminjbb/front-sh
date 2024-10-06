@@ -1,20 +1,20 @@
 <template>
-<div v-if="content" class="product-card pa-2" @click="enhanceEcommerce()">
+<div v-if="content" class="product-card" @click="enhanceEcommerce()">
     <div v-if="content.discount_percent" class="product-card__index">
         <span class="t16">%{{content.discount_percent}}</span>
     </div>
 
-    <a v-if="content.image && content.image.image_url" class="product-card__image mb-3" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-        <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="370" height="386" />
+    <a v-if="content.image_url" class="product-card__image w-100 mb-3" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <img :src="content?.image_url" :title="content.label" :alt="content.label" width="370" height="386" />
     </a>
     
-    <h3 v-if="!hideLabel && content.label" class="t16 w400 number-font px-6 text-sGray">
-        <a class="t16 w400 number-font text-center text-sGray" :href="`/sku/${content.slug}`">
+    <h3 v-if="!hideLabel && content.label" class="w-100 text-center px-6 t16 w400 number-font px-6 text-sGray mt-4 mb-4">
+        <a class="t16 w400 number-font text-sGray" :href="`/sku/${content.slug}`">
             {{content.label}}
         </a>
     </h3>
 
-    <div class="product-card__price-info mb-2 px-6">
+    <div class="product-card__price-info mb-7 px-6 w-100">
         <div class="d-flex flex-column align-center justify-center">
             <template v-if="content.discount">
                 <div class="d-flex align-center">
@@ -24,21 +24,21 @@
                     </span>
                 </div>
 
-                <span v-if="content.customer_price" class="t12 bold number-font text-sGrey ">
-                    <span>{{ splitChar(Number(String(content.customer_price).slice(0, -1)))}}</span>
+                <span v-if="content.customer_price" class="t12 bold number-font text-sGray" style="text-decoration: line-through;">
+                    {{ splitChar(Number(String(content.customer_price).slice(0, -1)))}}
                 </span>
             </template>
 
             <template v-else>
                 <div class="d-flex align-center">
-                    <span class="t16 bold text-primary text-center number-font">{{splitChar(Number(String(content.site_price).slice(0, -1)))}}</span>
+                    <span class="t16 bold text-primary text-center number-font">{{splitChar(Number(String(1450000).slice(0, -1)))}}</span>
                     <svgToman class="mr-1"/>
                 </div>
             </template>
         </div>
     </div>
 
-    <div class="px-6 pb-6">
+    <div class="px-6 pb-6 w-100">
         <v-btn
             :href="`/sku/${content.slug}`"
             height="56"

@@ -14,11 +14,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "~/assets/scss/tools/bp";
+
 .romina-campaign{
     &__header{
         background: white;
         height: 96px;
         padding: 0 36px;
+
+        @include gbp(0, 769) {
+          height: 60px;
+          padding: 0 16px;
+        }
+
+        align-self: {
+          display: flex;
+        };
+
+        img{
+          @include gbp(0, 769) {
+            height: 28px;
+          }
+        }
     }
 }
 

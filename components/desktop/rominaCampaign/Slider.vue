@@ -1,17 +1,19 @@
 <template>
-<section v-if="items && items.length" class="campaign-slider">
+<section v-if="items && items.length" class="campaign-slider mb-5">
     <div class="campaign-slider__swiper">
-        <swiper dir="rtl" :slidesPerView="3" :spaceBetween="24" :modules="modules" :navigation="true" :breakpoints="{
+        <swiper dir="rtl" :spaceBetween="24" :modules="modules" :navigation="true"  :slidesPerView="3" :breakpoints="{
                     '320': {
                         slidesPerView: 1,
+                        slidesPerGroup: 1
                     },
                     '500': {
                         slidesPerView: 2,
+                        slidesPerGroup: 2
                     },
                     '992': {
-                        slidesPerView:  3,
+                        slidesPerGroup: 3
                     },
-                }" class="mySwiper">
+                }">
             <swiper-slide v-for="(item, index) in items" :key="`skus-${index}`">
                 <desktopRominaCampaignProductCard :content="item" />
             </swiper-slide>
@@ -64,5 +66,3 @@ export default {
 }
 </script>
     
-<style>
-</style>
