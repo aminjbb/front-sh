@@ -83,10 +83,10 @@ useHead({
           children: JSON.stringify(structureData)
       } ,
     {
-      src: 'https://deemanetwork.com/pxjs/22896.js',
+      src: 'https://s1.mediaad.org/serve/27794/retargeting.js',
       type: 'text/javascript',
       async: true
-    },
+    }
       // {
       //   src: 'https://deemanetwork.com/pxjs/22896.js',
       //   type: 'text/javascript',
