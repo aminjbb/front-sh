@@ -18,8 +18,8 @@
             <div class="s-tab__content">
                 <template v-if="filteredData?.length">
                     <template v-for="(item, index) in filteredData" :key="`tab-content-${index}`">
-                        <component v-if="activeExtraComponent === true && item.status === 'gift'" :is="extraComponent" :content="item" />
-                        <component v-else  :is="component" :content="item" />
+                        <component v-if="activeExtraComponent === true && item.is_gift" :is="extraComponent" :content="item" />
+                        <component v-else  :is="component" :content="item" @updateList="updateList"/>
                     </template>
                 </template>
 
@@ -200,6 +200,10 @@ export default {
             this.selectedTabLabel = label;
         },
 
+        /**
+         * Image address
+         * @param {*} path 
+         */
         imageAddress(path) {
             const assets =
                 import.meta.glob('~/assets/images/*', {
@@ -208,6 +212,16 @@ export default {
                 })
             return assets['/assets/images/' + path]
         },
+
+        /**
+         * Update form if card in tab has function
+         * @param {*} value 
+         */
+        updateList(value){
+            if(value === true){
+                this.$emit('updateList', value)
+            }
+        }
     },
 }
 </script>

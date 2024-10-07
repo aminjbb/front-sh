@@ -55,7 +55,7 @@
         <template v-else-if="content.status === 'sending'">
             <div class="w-100 d-flex align-center justify-space-between w-100">
                 <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
-                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
+                <v-btn :loading="receivedLoading" class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">
                     <span class="text-sSuccess t12 w700">بلی</span>
                 </v-btn>
             </div>
@@ -117,6 +117,7 @@
 <script>
 import Basket from '@/composables/Basket.js'
 import Order from '@/composables/Order.js'
+import axios from "axios";
 
 export default {
 
@@ -130,6 +131,7 @@ export default {
     data() {
         return {
             screenType: 'desktop',
+            receivedLoading: false,
         }
     },
 
@@ -137,14 +139,21 @@ export default {
         const {
             getBasket
         } = new Basket();
+
         const {
             reCreateOrder,
             reCreateOrderLoading
         } = new Order();
+
+        const runtimeConfig = useRuntimeConfig()
+        const userToken = useCookie('userToken');
+
         return {
             getBasket,
             reCreateOrder,
-            reCreateOrderLoading
+            reCreateOrderLoading,
+            runtimeConfig,
+            userToken,
         }
     },
 
@@ -339,6 +348,37 @@ export default {
 
             return 'text-sGray';
         },
+
+        /**
+         * Received order
+         * @param {*} id 
+         */
+        receivedOrder(id){
+            this.receivedLoading = true;
+
+            const formData = new FormData()
+
+            formData.append('order_id', id)
+
+            axios
+                .post(this.runtimeConfig.public.apiBase + '/user/return-order/received', formData, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.$emit('updateList', true)
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.receivedLoading = false;
+                });
+        }
         
     },
 

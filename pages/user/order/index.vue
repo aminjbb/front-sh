@@ -21,7 +21,7 @@
                             </header>
 
                             <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
-                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" allIcon="mdi-cart-outline" componentName="generalOrdersCard" activeExtraComponent extraComponentName="generalOrdersGiftCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg"/>
+                                <GeneralTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedOrders" showAll :allItems="userOrders" AllTitle="همه سفارشات" allIcon="mdi-cart-outline" componentName="generalOrdersCard" activeExtraComponent extraComponentName="generalOrdersGiftCard" emptyTitle="سفارشی" :hideButton="true" emptyImage="emptyOrder.svg" @updateList="updateList"/>
                             </div>
                         </template>
                         <template v-else>
@@ -132,25 +132,11 @@ export default {
     },
 
     methods: {
-        /**
-         * Order tab
-         * @param {*} id
-         */
-        showTab(id) {
-            const orderTab = this.$refs['orderRef'];
-
-            const liItems = orderTab.querySelectorAll('div.order-tab__item');
-            const tabContents = orderTab.querySelectorAll('div.order-tab__content');
-
-            liItems.forEach(item => {
-                item.classList.remove('active');
-                orderTab.querySelector(`#order-tab__item-${id}`).classList.add('active');
-            });
-
-            tabContents.forEach(item => {
-                item.classList.remove('active');
-                orderTab.querySelector(`#order-tab__content-${id}`).classList.add('active');
-            });
+        updateList(value){
+            if(value === true){
+                this.getOrderList()
+                this.getReturnedOrderList()
+            }
         }
     },
 
