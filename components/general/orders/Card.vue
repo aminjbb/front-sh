@@ -1,7 +1,7 @@
 <template>
 <section v-if="content" class="order-card mb-6" :class="screenType === 'desktop' ? 'pt-5' : ''">
     <header class="d-flex justify-space-between align-center" :class="screenType === 'desktop' ? 'mb-4' : 'mb-2'">
-        <span v-if="content.order_number" class="t12 w700 text-sGray number-font bold">
+        <a v-if="content.order_number" class="t12 w700 text-sGray number-font bold" :href="`/user/order/${content?.id}`">
             <template v-if="content.status === 'returned'">
                 کد سفارش مرجوعی
             </template>
@@ -9,7 +9,7 @@
                 کد سفارش
             </template>
             {{ content.order_number }}
-        </span>
+        </a>
 
         <div v-if="content && content.status" class="order-card__status t10 w700" :class="[getStatusBg(content.status), getStatusColor(content.status)]">
             <v-icon :color="getStatusColor(content.status)" :icon="getIcon(content.status)" class="ml-1"/>

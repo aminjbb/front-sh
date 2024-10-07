@@ -1,10 +1,10 @@
 <template>
 <main class="v-order v-order--single">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/order" class="ml-3">
-            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        <a href="/user/order" class="ml-1">
+            <v-icon icon="mdi-chevron-right" color="sGrayDarken2" />
         </a>
-        <span class="grey-darken-3 t14">جزئیات سفارش</span>
+        <span class="fw700 t14 number-font text-sGrayDarken2 ltr">{{ userOrder?.id }} جزئیات سفارش</span>
     </header>
 
     <v-container>
@@ -23,77 +23,161 @@
                             </v-btn>
                         </header>
 
-                        <div class="pa-8">
-                            <div class="order-details s-border s-border--bottom">
-                                <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">وضعیت سفارش : </span>
+                        <div class="pt-3" :class="screenType === 'desktop' ? 'pb-8 pr-8 pl-8' : 'pb-4 pr-4 pl-4'">
+                            <div v-if="userOrder?.status === 'payment_in_progress' || userOrder?.status === 'payment_out_date' || userOrder?.status === 'received'" class="v-order__notification pa-4 bg-sWarningLighten2 br16 mb-6">
+                                <v-icon icon="mdi-alert-circle-outline" color="sWarningLighten1" />
+                                <span class="t12 fw500 text-sWarning number-font">
+                                    <template v-if="userOrder?.status === 'payment_in_progress'">
+                                        شاوازی عزیز برای پرداخت مجدد سفارش ۲۰ دقیقه زمان دارید.
+                                    </template>
 
-                                    <div class="order-details__status t10 w700" :class="[getStatusBg(userOrder?.status), getStatusColor(userOrder?.status)]">
-                                        <v-icon :color="getStatusColor(userOrder.status)" :icon="getIcon(userOrder?.status)" class="ml-1" />
-                                        {{ getStatusText(userOrder?.status) }}
+                                    <template v-if="userOrder?.status === 'payment_out_date'">
+                                        شاوازی عزیز در صورت سفارش مجدد ممکن است هزینه و موجودی محصولات تغییر کند.
+                                    </template>
+
+                                    <template v-if="userOrder?.status === 'received'">
+                                        شاوازی عزیز برای مرجوع کردن محصول فقط“ ۷ روز “ وقت دارید .
+                                    </template>
+                                </span>
+                            </div>
+
+                            <div>
+                                <div class="order-details s-border s-border--bottom">
+                                    <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">وضعیت سفارش : </span>
+
+                                        <div class="order-details__status t10 w700" :class="[getStatusBg(userOrder?.status), getStatusColor(userOrder?.status)]">
+                                            <v-icon :color="getStatusColor(userOrder.status)" :icon="getIcon(userOrder?.status)" class="ml-1" />
+                                            {{ getStatusText(userOrder?.status) }}
+                                        </div>
+                                    </div>
+
+                                    <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">کد سفارش : </span>
+
+                                        <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.order_number }}</span>
                                     </div>
                                 </div>
 
-                                <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">کد سفارش : </span>
+                                <div class="order-details s-border s-border--bottom" :class="screenType === 'desktop' ? 'pt-7' : 'pt-5'">
+                                    <div v-if="userOrder && userOrder?.receiver_name" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">تحویل گیرنده : </span>
 
-                                    <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.order_number }}</span>
-                                </div>
-                            </div>
+                                        <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_name }}</span>
+                                    </div>
 
-                            <div class="order-details s-border s-border--bottom pt-7">
-                                <div v-if="userOrder && userOrder?.receiver_name" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">تحویل گیرنده : </span>
+                                    <div v-if="userOrder && userOrder?.receiver_mobile" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">شماره تماس : </span>
 
-                                    <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_name }}</span>
-                                </div>
+                                        <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_mobile }}</span>
+                                    </div>
 
-                                <div v-if="userOrder && userOrder?.receiver_mobile" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">شماره تماس : </span>
+                                    <div v-if="userOrder && userOrder?.receiver_address" class="pb-7">
+                                        <span class="d-block t14 w700 text-sGrayLighten2 mb-3">آدرس :</span>
 
-                                    <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_mobile }}</span>
-                                </div>
-
-                                <div v-if="userOrder && userOrder?.receiver_address" class="pb-7">
-                                    <span class="d-block t14 w700 text-sGrayLighten2 mb-3">آدرس :</span>
-
-                                    <span class="d-block t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_address }}</span>
-                                </div>
-                            </div>
-
-                            <div class="order-details pt-7">
-                                <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">مبلغ سفارش : </span>
-
-                                    <span class="t12 fw700 text-sGrayDarken2 number-font">
-                                        {{splitChar(Number(String(userOrder.total_price).slice(0, -1)))}}
-                                        <SvgToman />
-                                    </span>
+                                        <span class="d-block t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_address }}</span>
+                                    </div>
                                 </div>
 
-                                <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">سود شما: </span>
+                                <div class="order-details" :class="screenType === 'desktop' ? 'pt-7' : 'pt-5'">
+                                    <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">مبلغ سفارش : </span>
 
-                                    <span class="t12 fw700 text-sGrayDarken2 number-font">
-                                        {{splitChar(Number(String(userOrder.total_discount).slice(0, -1)))}}
-                                        <SvgToman />
-                                    </span>
-                                </div>
-
-                                <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between pb-7">
-                                    <span class="t12 w700 text-sGrayLighten2">هزینه ارسال : </span>
-
-                                    <span class="t12 fw700 text-sGrayDarken2 number-font">
-                                        <template v-if="userOrder.sending_price && userOrder.sending_price !== 0">
-                                            {{splitChar(Number(String(userOrder.sending_price).slice(0, -1)))}}
+                                        <span class="t12 fw700 text-sGrayDarken2 number-font">
+                                            {{splitChar(Number(String(userOrder.total_price).slice(0, -1)))}}
                                             <SvgToman />
-                                        </template>
+                                        </span>
+                                    </div>
 
-                                        <template v-else>
-                                            رایگان
-                                        </template>
-                                    </span>
+                                    <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">سود شما: </span>
+
+                                        <span class="t12 fw700 text-sGrayDarken2 number-font">
+                                            {{splitChar(Number(String(userOrder.total_discount).slice(0, -1)))}}
+                                            <SvgToman />
+                                        </span>
+                                    </div>
+
+                                    <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
+                                        <span class="t12 w700 text-sGrayLighten2">هزینه ارسال : </span>
+
+                                        <span class="t12 fw700 text-sGrayDarken2 number-font">
+                                            <template v-if="userOrder.sending_price && userOrder.sending_price !== 0">
+                                                {{splitChar(Number(String(userOrder.sending_price).slice(0, -1)))}}
+                                                <SvgToman />
+                                            </template>
+
+                                            <template v-else>
+                                                رایگان
+                                            </template>
+                                        </span>
+                                    </div>
                                 </div>
+
+                                <div class="order-card__action justify-end d-flex w-100 mb-2">
+                                    <template v-if="userOrder?.status === 'sending'">
+                                        <div class="w-100 bg-white pa-3 s-border br12 s-border--light-gray">
+                                            <span class="t14 w700 text-sGrayDarken2 d-block w-100 text-right mb-2 mt-1">آیا سفارش به دست شما رسیده ؟</span>
+                                            <div class="d-flex justify-end">
+                                                <v-btn :loading="receivedLoading" class="bg-sSuccessLighten2 s-btn s-btn--outline s-btn--outline-success" width="128" @click="changeStatus()">
+                                                    <span class="text-sSuccess t12 w700">بلی</span>
+                                                </v-btn>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <template v-else-if="userOrder?.status === 'received'">
+                                        <div class="d-flex align-center w-100 justify-center">
+                                            <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" :href="`/user/order/${userOrder?.id}/return`">
+                                                <span class="text-white t12 w700">مرجوع سفارش</span>
+                                            </v-btn>
+                                        </div>
+                                    </template>
+
+                                    <template v-else-if="userOrder?.status === 'payment_out_date' || userOrder?.status=== 'cancelled'">
+                                        <div class="d-flex align-center w-100 justify-center">
+                                            <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" @click="createOrder()">
+                                                <span class="text-white t12 w700"> سفارش مجدد</span>
+                                            </v-btn>
+                                        </div>
+                                    </template>
+
+                                    <template v-else-if="userOrder?.status === 'payment_in_progress'">
+                                        <div class="d-flex align-center w-100 justify-center">
+                                            <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" @click="repeatPayment()" :loading="reCreateOrderLoading">
+                                                <span class="text-white t12 w700"> پرداخت مجدد</span>
+                                            </v-btn>
+                                        </div>
+                                    </template>
+
+                                    <template v-else-if="userOrder?.status === 'pre_progress'">
+                                        <div class="d-flex align-center w-100 justify-center">
+                                            <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" :href="`/user/order/${userOrder?.id}/cancel`">
+                                                <span class="text-white t12 w700">لفو سفارش</span>
+                                            </v-btn>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div v-if="userOrder?.details && userOrder?.details.length" class="sku-list mt-6">
+                                <header class="d-flex align-center justify-space-between mb-6">
+                                    <div class="d-flex align-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" class="ml-1">
+                                            <path d="M6.60563 1.5L3.89062 4.2225" stroke="#3C3C3C" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M11.3906 1.5L14.1056 4.2225" stroke="#3C3C3C" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M1.5 5.88745C1.5 4.49995 2.2425 4.38745 3.165 4.38745H14.835C15.7575 4.38745 16.5 4.49995 16.5 5.88745C16.5 7.49995 15.7575 7.38745 14.835 7.38745H3.165C2.2425 7.38745 1.5 7.49995 1.5 5.88745Z" stroke="#3C3C3C" stroke-width="1.5" />
+                                            <path d="M7.32031 10.5V13.1625" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M10.7695 10.5V13.1625" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round" />
+                                            <path d="M2.625 7.5L3.6825 13.98C3.9225 15.435 4.5 16.5 6.645 16.5H11.1675C13.5 16.5 13.845 15.48 14.115 14.07L15.375 7.5" stroke="#3C3C3C" stroke-width="1.5" stroke-linecap="round" />
+                                        </svg>
+                                        <span class="t16 w700 text-sGrayDarken2">لیست خرید</span>
+                                    </div>
+
+                                    <span class="t10 fw400 number-font text-sGray">{{ userOrder?.details.length }} محصول</span>
+                                </header>
+
+                                <GeneralOrdersDetailsCard v-for="order in userOrder?.details" :key="`order${order.id}`" :content="order" class="mb-4" />
                             </div>
                         </div>
                     </v-card>
@@ -101,6 +185,9 @@
             </div>
         </v-row>
     </v-container>
+    <generalModalsDelete ref="changeStatusModal" title="تغییر وضعیت سفارش" text="آیا از تغییر وضعیت سفارش  اطمینان  دارید؟" submitText="بله" @removeProduct="receivedOrder" />
+    <generalSheetsDelete ref="changeStatusSheet" title="تغییر وضعیت سفارش" text="آیا از تغییر وضعیت سفارش  اطمینان  دارید؟" submitText="بله" @removeProduct="receivedOrder" />
+
     <generalOrdersPaymentMethodModal ref="selectPaymentMethod" :view="screenType === 'desktop' ? 'desktop' : 'mobile'" :orderId="userOrder?.id" :paidPrice="userOrder?.paid_price" />
 </main>
 </template>
@@ -115,6 +202,7 @@ export default {
         return {
             products: null,
             screenType: 'desktop',
+            receivedLoading: false,
         }
     },
 
@@ -318,8 +406,8 @@ export default {
         /**
          * Recreate for a order
          */
-        reOrder() {
-            this.reCreateOrder(this.userOrder.id)
+        async createOrder() {
+            this.reCreateOrder(this.userOrder ?.id)
         },
 
         /**
@@ -331,6 +419,48 @@ export default {
             } else {
                 this.$refs.selectPaymentMethod.sheet = true;
             }
+        },
+
+        /**
+         * Change order status confirm
+         */
+        changeStatus() {
+            if (this.screenType === 'desktop') {
+                this.$refs.changeStatusModal.dialog = true;
+            } else {
+                this.$refs.changeStatusSheet.sheet = true;
+            }
+        },
+
+        /**
+         * Received order
+         * @param {*} id 
+         */
+        receivedOrder() {
+            this.receivedLoading = true;
+
+            const formData = new FormData()
+
+            formData.append('order_id', this.userOrder ?.id)
+
+            axios
+                .post(this.runtimeConfig.public.apiBase + '/user/return-order/received', formData, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.$emit('updateList', true)
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.receivedLoading = false;
+                });
         }
     },
 

@@ -42,24 +42,26 @@
             </header>
 
             <div>
-                <p class="t12 w700 my-8 text-sGray">{{text}}</p>
+                <p class="t12 w700 my-5 text-sGray">{{text}}</p>
 
-                <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
+                <div class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
                     <v-btn
                         :loading="loading"
                         @click="removeProduct()"
                         height="44"
                         :title="submitText"
-                        class="btn btn--submit ml-1">
-                        {{submitText}}
+                        width="49%"
+                        class="btn btn--submit br12 ov-h" >
+                        <span class="w700">{{submitText}}</span>
                     </v-btn>
 
                     <v-btn
                         @click="closeModal()"
                         height="44"
                         title="انصراف"
-                        class="btn btn--cancel mr-1">
-                        انصراف
+                        width="49%"
+                        class="btn btn--cancel ov-h br12">
+                        <span class="w700">انصراف</span>
                     </v-btn>
                 </div>
             </div>

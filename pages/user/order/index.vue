@@ -1,8 +1,8 @@
 <template>
 <main class="v-order v-order--list">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/dashboard" class="ml-3">
-            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        <a href="/user/dashboard" class="ml-1">
+            <v-icon icon="mdi-chevron-right" color="grey-darken-3" />
         </a>
         <span class="text-sGrayDarken2 t14 w700">لیست سفارش ها</span>
     </header>
