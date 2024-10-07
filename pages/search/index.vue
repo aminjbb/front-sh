@@ -7,7 +7,7 @@
   </v-container>
 
   <v-container v-show="!loading" :class="screenType === 'desktop' ? 'mt-10' : ''">
-    <v-row >
+    <div>
         <template v-if="screenType === 'desktop'">
           <client-only>
             <div class="v-product__filter d-flex pt-1 align-center justify-space-between">
@@ -65,7 +65,7 @@
               prev-icon="mdi-chevron-right"
               next-icon="mdi-chevron-left" />
         </div>
-    </v-row>
+    </div>
   </v-container>
 </main>
 </template>
