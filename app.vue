@@ -15,8 +15,6 @@ import {useStore} from "vuex";
 const store = useStore()
   const route = useRoute();
 
-const route = useRoute();
-
 useSeoMeta({
   themeColor: '#D72685',
   ogType: '',
