@@ -11,7 +11,11 @@
         <v-container v-show="!loading">
             <v-row v-if="screenType === 'desktop'">
                 <v-col cols="6" class="d-flex align-center">
-                    <div class="t18 w700 text-sGrayDarken2">{{ plpTitle }}</div>
+                    <div >
+                      <h1 class="t18 w700 text-sGrayDarken2">
+                        {{ plpTitle }}
+                      </h1>
+                    </div>
                 </v-col>
             </v-row>
     
