@@ -3,7 +3,10 @@
     <v-bottom-sheet v-if="sheet" v-model="sheet" color="white" height="auto">
         <div class="voucher-auth voucher-auth--mobile bg-white pb-6 h-100 d-flex flex-column w-100">
             <div class="d-flex align-center justify-space-between py-6 px-6">
-                <span class="t16 w600 text-sGray">دریافت هدیه</span>
+                <span class="t16 w600 text-sGray">
+                    <v-icon v-if="showAddAddress === true" icon="mdi-chevron-right" color="text-sGray" style="font-size: 31px;" @click="showAddressList"/>
+                    دریافت هدیه
+                </span>
 
                 <div class="cur-p" @click="closeModal()">
                     <v-icon color="sGrayDarken1">mdi-close</v-icon>
@@ -15,7 +18,7 @@
                     <h4 class="t17 w700 l30">{{ modalData?.content }}</h4>
                     <div class="login">
                         <v-locale-provider rtl>
-                            <div class="game-auth">
+                            <div class="campaign-auth">
                                 <template v-if="loginStep === 1">
                                     <!-- Step 1: Get user's phone number -->
                                     <v-form ref="phoneNumberForm" class="w-100">
@@ -25,7 +28,7 @@
                                                     شماره موبایلت رو اینجا وارد کن
                                                 </div>
 
-                                                <v-text-field class="game-auth__input" v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره موبایل" hide-details height="46px" />
+                                                <v-text-field class="campaign-auth__input" v-model="mobile" :rules="mobileRule" type="tel" variant="outlined" placeholder="شماره موبایل" height="46px" />
                                             </div>
                                         </div>
                                     </v-form>
@@ -40,7 +43,7 @@
                                                     کد ارسال شده به شماره موبایلت رو وارد کن
                                                 </div>
 
-                                                <v-otp-input class="d-ltr" length="5" v-model="otp" color="white" :rules="otpRule" />
+                                                <v-otp-input class="d-ltr" length="5" v-model="otp" color="white" :rules="otpRule" :class="{'wrong-opt' : wrongOTP}" />
 
                                                 <div class="mt-3">
                                                     <div v-if="showRetry" class="text-center mb-2 pr-1">
@@ -79,23 +82,22 @@
 
                         <img data-not-lazy class="mt-10 mb-13" src="~/assets/images/campaign/romina-login3.svg" width="120" height="105" />
 
-                        <v-btn href="/" :loading="loading" color="primary" block type="submit" height="46px" class="game-auth__btn mb-5">
+                        <v-btn href="/" :loading="loading" color="primary" block type="submit" height="46px" class="campaign-auth__btn mb-5">
                             <span class="w700">ثبت سفارش</span>
                         </v-btn>
                     </div>
                 </template>
 
                 <template v-if="hasOrder">
-                    <div class="d-flex align-center justify-space-between px-4 mb-7">
-                        <span class="t14 w400 text-sGray">آدرس تحویل هدیه‌‌‌‌‌‌‌‌‌‌‌‌ات رو انتخاب کن</span>
-
-                        <span class="t12 w700 text-primary cur-p" @click="addNewAddress">
-                            <v-icon icon="mdi-plus-box" color="primary"/>
-                            آدرس جدید
-                        </span>
-                    </div>
-
                     <template v-if="showAddress">
+                        <div class="d-flex align-center justify-space-between px-4 mb-7">
+                            <span class="t14 w400 text-sGray">آدرس تحویل هدیه‌‌‌‌‌‌‌‌‌‌‌‌ات رو انتخاب کن</span>
+
+                            <span class="t12 w700 text-primary cur-p" @click="addNewAddress">
+                                <v-icon icon="mdi-plus-box" color="primary"/>
+                                آدرس جدید
+                            </span>
+                        </div>
                         <div v-if="userAddress && userAddress.length" class="campaign-address px-4" :class="{'height-auto' :showMore}">
                             <div v-for="(address , index) in userAddress.slice(0,showMoreCount)" :key="`address${index}`" class="d-flex align-center campaign-address__item" @click="selectAddress(address.id)" :id="`address${address.id}`" :class="index === 0 ? 'activeAddress' : ''">
                                 <v-icon icon="mdi-map-marker-outline" class="ml-2" color="grey" size="large" />
@@ -105,7 +107,7 @@
                                     </p>
 
                                     <div class="d-flex align-center mt-2">
-                                        <span class="t14 w600 text-grey-darken-3">گیرنده:</span>
+                                        <span class="t14 w600 text-grey-darken-3 ml-1">گیرنده:</span>
                                         <span class="t14 w400 text-grey-darken-3">{{ address?.receiver_full_name }} </span>
                                     </div>
                                 </div>
@@ -113,20 +115,29 @@
                         </div>
 
                         <div v-if="userAddress.length > 3" class="w-100 d-flex justify-end px-4">
-                            <span class="text-primary d-flex align-center t12 w700 mb-5 mt-2 cur-p" @click="activeShowMore" :style="showMore === true ? 'display:none !important' :''">
+                            <span v-if="showMore === false" class="text-primary d-flex align-center t12 w700 mb-5 mt-2 cur-p" @click="activeShowMore">
                                 مشاهده بیشتر
                                 <v-icon icon="mdi-chevron-down" color="primary"></v-icon>
+                            </span>
+
+                            <span v-if="showMore === true" class="text-primary d-flex align-center t12 w700 mb-5 mt-2 cur-p" @click="deActiveShowMore">
+                                بستن
+                                <v-icon icon="mdi-chevron-up" color="primary"></v-icon>
                             </span>
                         </div>
 
                         <div class="px-4">
-                            <v-btn @click="getGift()" :loading="createLoading" color="primary" block type="submit" height="46px" class="game-auth__btn">
+                            <v-btn @click="getGift()" :loading="createLoading" color="primary" block type="submit" height="46px" class="campaign-auth__btn">
                                 <span class="w700">ثبت و ارسال هدیه</span>
                             </v-btn>
                         </div>
                     </template>
 
                     <template v-if="showAddAddress">
+                        <div class="d-flex align-center justify-space-between px-4 mb-7">
+                            <span class="t16 w400 text-sGray">اطلاعات آدرست رو اینجا وارد کن</span>
+                        </div>
+
                         <v-form v-model="valid" ref="addAddress" class="px-4">
                             <v-row>
                                 <v-col cols="12" md="6" class="py-2">
@@ -169,7 +180,7 @@
                         <div class="t16 w300 text-sGray l32">میتونی وضعیتش رو از لیست سفارشات پیگیری کنی.</div>
                     </div>
 
-                    <v-btn href="/user/order" color="primary" block type="submit" height="46px" class="game-auth__btn mt-5">
+                    <v-btn href="/user/order" color="primary" block type="submit" height="46px" class="campaign-auth__btn mt-5">
                         <span class="w700">مشاهده هدیه</span>
                     </v-btn>
                 </template>
@@ -177,13 +188,13 @@
 
             <div v-if="!logined" class="px-6">
                 <template v-if="loginStep === 1">
-                    <v-btn @click="sendOTP()" :loading="loading" color="primary" block type="submit" height="46px" class="game-auth__btn">
+                    <v-btn @click="sendOTP()" :loading="loading" color="primary" block type="submit" height="46px" class="campaign-auth__btn">
                         <span class="w700">دریافت کد</span>
                     </v-btn>
                 </template>
 
                 <template v-else-if="loginStep === 2">
-                    <v-btn @click="verifyOTP()" :loading="loading" color="primary" block rounded="xl" type="submit" height="48px" class="game-auth__btn br8">
+                    <v-btn @click="verifyOTP()" :loading="loading" color="primary" block rounded="xl" type="submit" height="48px" class="campaign-auth__btn br8">
                         <span class="w700"> تایید کد</span>
                     </v-btn>
                 </template>
@@ -284,6 +295,7 @@ export default {
             stateName: null,
             cityName: null,
             tockenCookie:null,
+            wrongOTP: false
         };
     },
 
@@ -384,12 +396,17 @@ export default {
         closeModal() {
             this.sheet = false;
             this.noOrder =false;
-            this.noOrder = false;
+            this.hasOrder = false;
             this.logined = false;
             this.loginStep = 1;
             this.mobile= '';
             this.otp= '';
             this.showAddress = false;
+            this.wrongOTP = false;
+            this.showMoreCount= 3;
+            this.showMore = false;
+            this.lastStep = false;
+            this.showAddAddress = false;
 
             this.form = {
                 address: '',
@@ -452,6 +469,7 @@ export default {
                 this.startTime = null;
                 this.loading = true;
                 const response = await auth.sendOTP(digits(this.mobile, 'en'));
+                this.wrongOTP =  false;
 
                 if (response.data && response.status === 200) {
                     this.startTime = response.data ?.data ?.time
@@ -526,15 +544,20 @@ export default {
                 }
 
             } catch (error) {
-                console.error('Verify OTP error:', error);
+                this.wrongOTP =  true;
             } finally {
                 this.loading = false;
             }
         },
 
         activeShowMore() {
-            this.showMore = !this.showMore;
+            this.showMore = true;
             this.showMoreCount = 100
+        },
+
+        deActiveShowMore() {
+            this.showMore = false;
+            this.showMoreCount = 3;
         },
 
         selectAddress(id) {
@@ -558,6 +581,11 @@ export default {
             this.showAddress = false;
             this.showAddAddress = true;
             this.getProvince();
+        },
+
+        showAddressList(){
+            this.showAddress = true;
+            this.showAddAddress = false;
         },
 
         async validate() {
@@ -662,6 +690,12 @@ export default {
             if(newVal.length > 0){
                 this.selectAddressId = newVal[0].id
             }
+        },
+
+        otp(newVal, oldVal){
+            if(newVal !== oldVal){
+                this.wrongOTP = false
+            }
         }
     }
 }
@@ -676,11 +710,11 @@ $parent: 'voucher-auth';
     &--mobile {
         border-radius: 8px !important;
 
-        .game-auth__desc {
+        .campaign-auth__desc {
             margin-bottom: 20px !important;
         }
 
-        .game-auth__input {
+        .campaign-auth__input {
             margin-bottom: 20px;
         }
 
@@ -710,28 +744,35 @@ $parent: 'voucher-auth';
     }
 }
 
-.game-auth {
+.campaign-auth {
     &__input {
-        background-color: #fff;
-        border: 1px solid #757575;
-        border-radius: 6px;
-        height: 50px;
-
         .v-field__input {
             line-height: 50px;
             min-height: 50px !important;
             height: 50px;
+            border-radius: 8px;
             font-size: 15px;
             color: #000;
             padding: 0 20px !important;
+            overflow: hidden;
 
             &::placeholder {
                 color: #000 !important;
             }
         }
 
-        * {
-            border: 0 !important;
+        .v-field__outline__start{
+            border-top-right-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+        }
+
+        .v-field__outline__end{
+            border-top-left-radius: 8px !important;
+            border-bottom-left-radius: 8px !important;
+        }
+
+        .v-messages__message{
+            font-variation-settings: "wght" 700;
         }
     }
 
@@ -743,6 +784,15 @@ $parent: 'voucher-auth';
 
     .v-otp-input__content {
         direction: ltr !important;
+    }
+
+    .wrong-opt{
+        input{
+            background: #FFEFF1 !important;
+        }
+        .v-field__outline__start, .v-field__outline__end, .v-field__outline__notch::before, .v-field__outline__notch::after {
+            border-color:#D8384E !important;
+        }
     }
 }
 

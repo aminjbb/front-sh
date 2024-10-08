@@ -1,18 +1,18 @@
 <template>
 <section class="second-hero py-12">
     <v-row>
-        <v-col cols="12" md="6" class="d-flex align-center h100" :class="screenType === 'desktop' ? '' : 'mb-10'">
+        <v-col cols="12" md="7" class="d-flex align-center h100" :class="screenType === 'desktop' ? '' : 'mb-10'">
             <div>
-                <h2 class="w600 text-sGrayDarken2 mb-2" :class="screenType === 'desktop' ? 't20 l40' : 't14 l24'">این پاییز، تو شاواز بریز و بپاشه...!</h2>
-                <p class="w300 text-sGrayDarken2" :class="screenType === 'desktop' ? 't20 l40' : 't14 l24'">
-                    هدیه داریم برای همه، هم برای امروز هم برای جمعه سیاه.
-                    فقط کافیه شمارت رو وارد کنی و با انتخاب یا وارد کردن آدرست،هدیه شاواز و رومینا به دستت برسه! راستی همراه هدیه‌ات یه کد تخفیف ۲۵ درصدی، بدون هیچ قید و شرطی می‌گیری.
+                <h2 class="w600 text-sGrayDarken2 mb-1" :class="screenType === 'desktop' ? 't20 l40' : 't14 l24'">این پاییز، تو شاواز بریز و بپاشه...!</h2>
+                <p class="w300 text-sGrayDarken2" :class="screenType === 'desktop' ? 't19 l40' : 't14 l24'">
+                    هدیه داریم برای همه، هم برای امروز هم برای جمعه سیاه.<br>
+                    فقط کافیه شمارت رو وارد کنی و با انتخاب یا وارد کردن آدرست، هدیه شاواز و رومینا به دستت برسه! راستی همراه هدیه‌ات یه کد تخفیف ۲۵ درصدی، بدون هیچ قید و شرطی می‌گیری.<br>
                     ممنونیم که همراه شاوازی.
                 </p>
             </div>
         </v-col>
 
-        <v-col  cols="12" md="6" class="d-flex" :class="screenType === 'desktop' ? 'justify-end pl-15' : 'justify-center'">
+        <v-col  cols="12" md="5" class="d-flex" :class="screenType === 'desktop' ? 'justify-end pl-15' : 'justify-center'">
             <div class="second-hero__image">
                 <div class="second-hero__image__bag">
                     <div class="bag">

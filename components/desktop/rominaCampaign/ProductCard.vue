@@ -14,7 +14,7 @@
         </a>
     </h3>
 
-    <div class="product-card__price-info mb-7 px-6 w-100">
+    <div class="product-card__price-info px-6 w-100" :class="content.discount ? 'mb-3' : 'mb-7'">
         <div class="d-flex flex-column align-center justify-center">
             <template v-if="content.discount">
                 <div class="d-flex align-center">

@@ -1,7 +1,7 @@
 <template>
 <section v-if="items && items.length" class="campaign-slider mb-5">
     <div class="campaign-slider__swiper">
-        <swiper dir="rtl" :spaceBetween="24" :modules="modules" :navigation="true"  :slidesPerView="3" :breakpoints="{
+        <swiper dir="rtl" :spaceBetween="32" :modules="modules" :navigation="true"  :slidesPerView="3" :breakpoints="{
                     '320': {
                         slidesPerView: 1,
                         slidesPerGroup: 1
