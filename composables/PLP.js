@@ -113,6 +113,51 @@ export default function setup() {
                         });
 
                         if(response1 && response2){
+                            response1?.data?.data?.data.slice(0,5).forEach((item, index) => {
+                                const schemaObj = {
+                                    "@type": "ListItem",
+                                    "position": index+1,
+                                    "name": item.label,
+                                    "item":{
+                                        "@type":"Product",
+                                        "name":item.label,
+                                        "url":`https://shavaz.com/sku/${item.slug}`,
+                                        "review":{
+                                            "@type":"Review",
+                                            "reviewRating":{
+                                                "@type":"Rating",
+                                                "bestRating":5,
+                                                "ratingValue":0 // fix after fix api
+                                            },
+                                            "author":{
+                                                "@type":"Person",
+                                                "name":"admin"
+                                            },
+                                            "datePublished":item?.created_at, // fix after fix api
+                                            "reviewBody":item?.last_review, // fix after fix api
+                                            "name":'',// fix after fix api
+                                        },
+                                        "aggregateRating":{
+                                            "@type":"AggregateRating",
+                                            "ratingValue":3,// fix after fix api
+                                            "reviewCount":item?.review_count// fix after fix api
+                                        },
+                                        "image":item.image_url
+                                    }
+                                }
+                                schemaList.push(schemaObj);
+                            });
+
+                            /** item list schema structure */
+                            structuredDataItem.value = {
+                                "@context": "http://schema.org/",
+                                "@type": "BreadcrumbList",
+                                itemListElement : schemaList
+                            }
+                            /** Set useHead for schema */
+                            useHead({
+                                script: [{ type: 'application/ld+json', children: JSON.stringify(structuredDataItem.value) }]
+                            })  
 
 
                             productList.value = response1;

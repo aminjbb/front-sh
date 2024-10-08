@@ -32,39 +32,79 @@ useSeoMeta({
 
 const runtimeConfig = useRuntimeConfig()
 
-const structureData = {
-  "@context": "http://schema.org/",
-  "@type": "Organization",
-  "name": "shavaz",
-  "url": "https://shavaz.com/",
-  "telephone": "02191032343",
-  "keywords": "فروشگاه اینترنتی شاواز , شاواز , لوازم آرایش و بهداشتی",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "بزرگراه باکری جنوب کوی ارم خیابان شهیدمحسن یعقوبی(بهار جنوبی) نبش کوچه شهید اکبر اصغر زاده پلاک 18",
-    "addressLocality": "Tehran",
-    "addressRegion": "Tehran",
-    "postalCode": "1484633439",
-    "addressCountry": "Iran, Islamic Republic of",
-    "countryCode": "IR"
-  },
-  "sameAs": [
-    "https://twitter.com/ShavazCom",
-    "https://www.linkedin.com/company/shavaz/about",
-    "https://t.me/shavazcomm",
-    "https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4",
-    "https://www.instagram.com/shavazcom"
-  ],
-  "logo": {
-    "@type": "ImageObject",
-    "inLanguage": "fa-IR",
-    "url": `${runtimeConfig.public.siteUrl}/Sign192.png`,
-    "contentUrl": `${runtimeConfig.public.siteUrl}/Sign192.png`,
-    "width": 192,
-    "height": 192,
-    "caption": "فروشگاه اینترنتی شاواز"
-  }
-}
+  const structureData =[
+    {
+      "@context": "http://schema.org/",
+      "@type": "Corporation",
+      "name": "شاواز",
+      "url": "https://shavaz.com/",
+      "id":"https://shavaz.com",
+      "alternateName":["صفحه اصلی","سلامت آوران یزدان نفیس"],
+      "legalName":"سلامت آوران یزدان نفیس",
+      "email":"Info@shavaz.com",
+      "sameAs":[
+        "https://twitter.com/ShavazCom",
+        "https://www.linkedin.com/company/shavaz/about",
+        "https://t.me/shavazcomm",
+        "https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4",
+        "https://www.instagram.com/shavazcom"
+      ],
+      "logo":{
+        "@type":"ImageObject",
+        "inLanguage":"fa-IR",
+        "url":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+        "contentUrl":`${runtimeConfig.public.siteUrl}/Sign192.png`,
+        "width":192,
+        "height":192,
+        "caption":"فروشگاه اینترنتی شاواز"
+      },
+      "contactPoint":{
+        "@type":"ContactPoint",
+        "telephone":"021-91552343",
+        "contactType":"customer service",
+        "areaServed":"IR",
+        "availableLanguage":"Persian",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "بزرگراه باکری جنوب کوی ارم خیابان شهیدمحسن یعقوبی(بهار جنوبی) نبش کوچه شهید اکبر اصغر زاده پلاک 18",
+          "addressLocality": "Tehran",
+          "addressRegion": "Tehran",
+          "postalCode": "1484633439",
+          "addressCountry": "Iran, Islamic Republic of",
+          "countryCode":"IR",
+          "areaServed":{
+            "@context":"https://schema.org",
+            "@type":"Place",
+            "geo": {"@type":"GeoCoordinates","latitude":"35.72814946987037","longitude":",51.290000176638316"},
+            "hasMap":true,
+            "addressCountry":{"@type":"Country","name":"Iran"}
+          }
+        },
+      },
+    },
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "url": "https://shavaz.com/",
+      "id":"https://shavaz.com",
+      "name": "شاواز",
+      "potentialAction":{
+        "@type":"SearchAction",
+        "target":"https://shavaz.com/search",
+        "query-input":{
+          "@type":"PropertyValueSpecification",
+          "valueRequired":"http://schema.org/{needle}",
+          "valueName":"needle"
+        }
+      },
+      "copyrightHolder":{
+        "@type":"Corporation",
+        "id":"https://shavaz.com/",
+        "name":"شاواز"
+      }
+    }
+
+  ]
 
 useHead({
   noscript: [{
@@ -93,7 +133,7 @@ useHead({
       //   async: true
       // }
     ],
-  }); 
+  });
 
   onMounted(() => {
     if(route.name !== 'game-slug'){

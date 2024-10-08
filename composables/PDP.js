@@ -90,28 +90,50 @@ export default function setup() {
                         productOldPriceMeta.value =mainResponse.data?.data?.info?.shps_list[0]?.site_price
                         if (mainResponse.data?.data?.info?.shps_list[0]?.stock === 1)   availability.value = 'instock'
                         else  availability.value = 'outofstock'
-
+                        let productImageGallery =[]
+                        mainResponse.data?.data?.detail?.image_gallery.forEach((image)=>{
+                            productImageGallery.push(`"${image.image_url}"`)
+                        })
                         /**Schema - structured data */
                         structuredData.value = {
                             "@context": "http://schema.org/",
                             "@type": "Product",
                             "name": mainResponse.data?.data?.info.label,
-                            "image": mainResponse.data?.data?.info.primary_image_url,
-                            "description": mainResponse.data?.data?.info.label,
-                            "url": `${runtimeConfig.public.siteUrl}/sku/${response.data.data.slug}`,
+                            "image":productImageGallery ,
+                            "description":  mainResponse.data?.data?.detail?.story,
+                            "url": `${runtimeConfig.public.siteUrl}/sku/${response.data.data?.info?.slug}`,
+                            "mpn": "", //ask milad
+                            "datePublished" : '', // need to api
+                            "reviewBody":mainResponse.data?.data?.detail.comments?.data[0]?.content,
                             "brand": {
                                 "@type": "Brand",
-                                "name": mainResponse.data?.data?.info.brand_name
+                                "name": mainResponse.data?.data?.info.brand_name,
+                                "url":`${runtimeConfig.public.siteUrl}/sku/${mainResponse.data?.data?.info.brand_slug}`,
+                                "id":`${runtimeConfig.public.siteUrl}/sku/${mainResponse.data?.data?.info.brand_slug}`,
                             },
                             "offers": {
                                 "@type": "Offer",
                                 "priceCurrency": "IRR",
                                 "availability": "http://schema.org/InStock",
                                 "price":mainResponse.data?.data?.info?.shps_list[0].customer_price,
+                                "itemCondition":"https://schema.org/NewCondition",
+
                             },
                             "aggregateRating": {
                                 "@type": "AggregateRating",
                                 "ratingValue": mainResponse.data?.data?.info.score,
+                                "reviewCount": mainResponse.data?.data?.detail.comments?.data?.length,
+                            },
+                            "review":{
+                                "@type":"Review",
+                                "reviewRating":{
+                                    "@type":"Rating",
+                                    "bestRating":5,
+                                    "ratingValue": mainResponse.data?.data?.info.score,
+                                }
+                            },
+                            "author":{
+                                "@type":"Person","name":"admin"
                             },
                             "seller": {
                                 "@context": "http://schema.org/",
@@ -130,8 +152,33 @@ export default function setup() {
                                 }
                             }
                         }
+
+                        const schemaBreadcrumbList = []
+
+                        const sortBreadcrumb = Object.entries(breadcrumb.value).reverse();
+
+                        sortBreadcrumb.forEach(([key, value], index) => {
+                            const schemaObj = {
+                                "@type": "ListItem",
+                                "position": index+1,
+                                "name": value.name,
+                                item:{
+                                    "@type":"Corporation",
+                                    "@id":key.includes('category') ? `${runtimeConfig.public.siteUrl}/category/${value.slug}` : key.includes('product') ? `${runtimeConfig.public.siteUrl}/product/${value.slug}`: key.includes('sku_group') ? `${runtimeConfig.public.siteUrl}/sku-group/${value.slug}`: ''
+                                }
+                            }
+                            schemaBreadcrumbList.push(schemaObj);
+                        });
+                        structuredDataBreadcrumb.value = {
+                            "@context": "http://schema.org/",
+                            "@type": "BreadcrumbList",
+                            itemListElement : schemaBreadcrumbList
+                        }
                         useHead({
-                            script: [{type: 'application/ld+json', children: JSON.stringify(structuredData.value)}]
+                            script: [
+                                {type: 'application/ld+json', children: JSON.stringify(structuredData.value)},
+                                {type: 'application/ld+json', children: JSON.stringify(structuredDataBreadcrumb.value)}
+                            ]
                         })
                     }
 
