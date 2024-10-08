@@ -48,6 +48,8 @@
                 class="mySwiper">
                 <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
                     <generalProductCard
+                        :cardIdImage="`home-${screenId}-${content?.id}-${index +1}-image`"
+                        :cardIdLabel="`home-${screenId}-${content?.id}-${index +1}-label`"
                         :content="item"
                         hideInfo
                         :index = "index + 1"
@@ -108,6 +110,13 @@ export default {
          * Content
          */
         content: Object,
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
+        },
     },
 
     mounted() {

@@ -7,10 +7,10 @@
         <div class="d-flex align-center">
             <div
                 class="banner__item"
-                v-for="item in items"
+                v-for="(item , index) in items"
                 :key="item.id"
                 @click="enhanceECommerce(item)">
-                <a class="banner__image d-block" :href="item.link">
+                <a class="banner__image d-block" :href="item.link" :id="`home-${screenId}-${sectionId}-${index + 1}`">
                     <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="300" height="200" />
                 </a>
             </div>
@@ -19,13 +19,13 @@
 
     <v-row v-else :class="device === 'mobile' ? 'ma-0' : ''">
         <v-col
-            v-for="item in items"
+            v-for="(item , index) in items"
             :key="item.id"
             :cols="generalCol"
             :class="device === 'mobile' ? 'pa-1' : ''"
             @click="enhanceECommerce(item)"
             :sm="col">
-            <a class="banner__image d-flex" :href="item.link">
+            <a class="banner__image d-flex" :href="item.link" :id="`home-${screenId}-${sectionId}-${index + 1}`">
                 <img class="d-block" :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
             </a>
         </v-col>
@@ -76,6 +76,20 @@ export default {
          device: {
             type: String,
             default: "desktop"
+        },
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
+        },
+        /**
+         * sectionId for id
+         */
+        sectionId: {
+          type: String,
+          default: ''
         },
     },
 

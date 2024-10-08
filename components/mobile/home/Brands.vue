@@ -36,7 +36,7 @@
                 }"
             class="mySwiper py-2">
             <swiper-slide v-for="(item, index) in brands" :key="`brands-${index}`">
-                <a class="brands__item w-100 pa-2 flex-column d-flex justify-center align-center bg-white" :href="item?.link" :title="item?.label">
+                <a class="brands__item w-100 pa-2 flex-column d-flex justify-center align-center bg-white" :id="`home-${screenId}-${items?.id}-${index +1}`" :href="item?.link" :title="item?.label">
                     <img class="flex-grow-1" :src="item.image?.image_url" :title="item?.label" :alt="item?.label" width="104" height="58" />
                     <h5 v-if="item.description" class="number-font w700 t10 text-sGray text-center mt-1">{{ item?.description }}</h5>
                 </a>
@@ -87,6 +87,14 @@ export default {
          device: {
             type: String,
             default: "desktop"
+        },
+
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
         },
     },
 

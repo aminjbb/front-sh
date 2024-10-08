@@ -36,7 +36,8 @@
             </swiper-slide>
 
             <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
-                <generalProductCard :content="item" hideInfo :index="index + 1" sectionName="سورپرایز" :shps="item?.pivot?.shps" class="mb-4" />
+                <generalProductCard  :cardIdImage="`home-${screenId}-${content?.id}-${index +1}-image`"
+                                     :cardIdLabel="`home-${screenId}-${content?.id}-${index +1}-label`" :content="item" hideInfo :index="index + 1" sectionName="سورپرایز" :shps="item?.pivot?.shps" class="mb-4" />
             </swiper-slide>
         </swiper>
     </div>
@@ -91,6 +92,14 @@ export default {
          * Content
          */
         content: Object,
+
+      /**
+       * screenId
+       */
+      screenId: {
+        type:String,
+        default:'M'
+      },
     },
 
     mounted() {
