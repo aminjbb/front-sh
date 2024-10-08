@@ -26,6 +26,7 @@ export default function setup() {
     const loading =ref(true)
     const categoryList = ref([]);
     const selectedLastCategory = ref(null)
+    const structuredDataItem = ref(null)
     const parentCategory = ref(null)
 
     function checkRouteForSlug() {
@@ -113,6 +114,7 @@ export default function setup() {
                         });
 
                         if(response1 && response2){
+                            let schemaList = []
                             response1?.data?.data?.data.slice(0,5).forEach((item, index) => {
                                 const schemaObj = {
                                     "@type": "ListItem",
