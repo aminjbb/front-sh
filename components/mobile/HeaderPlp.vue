@@ -27,8 +27,6 @@
             <div class="t16 w700 text-sGrayDarken2">{{ pageTitle }}</div>
         </div>
     </header>
-
-    <mobileMenu class="menu-plp" :class="{'has-banner': hasBanner }" />
 </client-only>
 </template>
 
@@ -93,7 +91,6 @@ export default {
          */
         handleScroll() {
             //let currentScrollTop = window.scrollY;
-            const menu = document.getElementById('menu--mobile');
             const header = document.getElementById('mobile-header');
             const filter = document.getElementById('filter-bg-mobile');
 
@@ -103,14 +100,10 @@ export default {
                 if (window.scrollY > 40) {
                     this.hasBanner = false;
                     header.style.top = '0px';
-                    menu.style.top = '';
-                    menu.style.height = '';
                 }
                 if (window.scrollY <= 40) {
                     this.hasBanner = true;
                     header.style.top = `${40 - window.scrollY}px`;
-                    menu.style.top = `${88 - window.scrollY}px`;
-                    menu.style.height = `calc(100% - ${144 - window.scrollY}px)`;
                 }
             }
 
