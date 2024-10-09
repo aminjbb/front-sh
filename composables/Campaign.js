@@ -39,11 +39,11 @@ export default function setup() {
                 },
             })
             .then((response) => {
-                useNuxtApp().$toast.success(response.data.data, {
+                /* useNuxtApp().$toast.success(response.data.data, {
                     rtl: true,
                     position: 'top-center',
                     theme: 'dark'
-                });
+                }); */
                 successGiftOrder.value = true
             })
             .catch((err) => {

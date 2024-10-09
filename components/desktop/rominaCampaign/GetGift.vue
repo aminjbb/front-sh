@@ -2,7 +2,7 @@
 <section class="get-gift d-flex align-center justify-center flex-column bg-white w-100" :class="screenType === 'desktop' ? ' px-15 pb-6 pt-9' : ' px-4 pb-4 pt-9'">
     <h2 class="w600 text-sGrayDarken2 mb-2" :class="screenType === 'desktop' ? 't22' : 't16'">هدیه رومینا برای تو که دوست شاوازی</h2>
 
-    <p class="w300 text-sGrayDarken2 mb-2 text-center" :class="screenType === 'desktop' ? 't20' : 't14'">فقط کافیه شماره‌ات رو وارد کنی و با انتخاب یا وارد کردن آدرست، هدیه شاواز و رومینا به دستت برسه!</p>
+    <p class="text-sGrayDarken2 mb-2 text-center" :class="screenType === 'desktop' ? 't20 w300' : 't14 w400'">فقط کافیه شماره‌ات رو وارد کنی و با انتخاب یا وارد کردن آدرست، هدیه شاواز و رومینا به دستت برسه!</p>
 
     <btn class="btn btn--submit br6 px-10 d-flex align-center cur-p" :class="screenType === 'desktop' ? 'mt-4' : 'mt-2'" :height="screenType === 'desktop' ? '44' : '34'" :width="screenType === 'desktop' ? '165' : '96'" @click="openModal()">
         <span class="w700 text-white" :class="screenType === 'desktop' ? 't16' : 't12'">دریافت هدیه</span>

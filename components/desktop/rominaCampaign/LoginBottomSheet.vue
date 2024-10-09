@@ -174,7 +174,7 @@
 
                 <template v-if="lastStep === true">
                     <div class="d-flex flex-column align-center justify-center">
-                        <img data-not-lazy class="mt-8 mb-8" src="~/assets/images/campaign/romina-login3.svg" width="140" height="130" />
+                        <img data-not-lazy class="mt-8 mb-8" src="~/assets/images/campaign/romina-last-step.svg" width="140" height="130" />
                         <div class="t16 w300 text-sGray l32">شاوازی عزیز اطلاعات آدرست با موفقیت ذخیره شد. </div>
                         <div class="t16 w300 text-sGray l32">هدیه‌‌‌‌‌‌ات به زودی به دستت می‌رسه.</div>
                         <div class="t16 w300 text-sGray l32">میتونی وضعیتش رو از لیست سفارشات پیگیری کنی.</div>
@@ -407,6 +407,7 @@ export default {
             this.showMore = false;
             this.lastStep = false;
             this.showAddAddress = false;
+            this.userAddress = null
 
             this.form = {
                 address: '',
@@ -687,7 +688,7 @@ export default {
         },
 
         userAddress(newVal){
-            if(newVal.length > 0){
+            if(newVal && newVal.length > 0){
                 this.selectAddressId = newVal[0].id
             }
         },
@@ -708,7 +709,8 @@ $parent: 'voucher-auth';
     position: relative;
 
     &--mobile {
-        border-radius: 8px !important;
+        border-top-right-radius: 16px !important;
+        border-top-left-radius: 16px !important;
 
         .campaign-auth__desc {
             margin-bottom: 20px !important;

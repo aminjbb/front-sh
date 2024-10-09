@@ -401,6 +401,7 @@ export default {
             this.showMore = false;
             this.lastStep = false;
             this.showAddAddress = false;
+            this.userAddress = null;
 
             this.form = {
                 address: '',
@@ -683,7 +684,7 @@ export default {
         },
 
         userAddress(newVal){
-            if(newVal.length > 0){
+            if(newVal && newVal.length > 0){
                 this.selectAddressId = newVal[0].id
             }
         },
