@@ -18,7 +18,7 @@
             <div class="s-tab__content">
                 <template v-if="filteredData?.length">
                     <template v-for="(item, index) in filteredData" :key="`tab-content-${index}`">
-                        <component v-if="activeExtraComponent === true && item.is_gift" :is="extraComponent" :content="item" />
+                        <component v-if="activeExtraComponent === true && item.is_gift" :is="extraComponent" :content="item" @updateList="updateList"/>
                         <component v-else  :is="component" :content="item" @updateList="updateList"/>
                     </template>
                 </template>

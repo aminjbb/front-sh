@@ -1,10 +1,10 @@
 <template>
-<section v-if="content" class="order-card order-card--gift mb-6" :class="screenType === 'desktop' ? 'pt-5' : ''">
+<section v-if="content" class="order-card order-card--gift mb-6" :class="screenType === 'desktop' ? 'pt-2' : ''">
     <div class="d-flex justify-space-between align-center mb-4">
        <div class="d-flex align-center">
-            <img src="~/assets/images/gift.png" alt="Shavaz 404 error image" width="36" height="36">
+            <img src="~/assets/images/gift.svg" alt="Shavaz 404 error image" width="36" height="36">
             <span class="t18 w700 text-sGrayDarken2 mx-1">سفارش هدیه ی</span>
-            <img src="~/assets/images/shavaz-logo2.png" alt="Shavaz 404 error image" width="54" height="26">
+            <img src="~/assets/images/shavaz-logo2.svg" alt="Shavaz 404 error image" width="54" height="26">
        </div>
 
        <img src="~/assets/images/free-badge.svg" alt="Shavaz 404 error image" width="70" height="33">
@@ -59,7 +59,7 @@
         <template v-else-if="content.status === 'sending'">
             <div class="w-100 d-flex align-center justify-space-between w-100">
                 <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
-                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :loading="receivedLoading" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">
                     <span class="text-sSuccess t12 w700">بلی</span>
                 </v-btn>
             </div>
@@ -73,6 +73,7 @@
 <script>
 import Basket from '@/composables/Basket.js'
 import Order from '@/composables/Order.js'
+import axios from "axios";
 
 export default {
 
@@ -86,10 +87,14 @@ export default {
     data() {
         return {
             screenType: 'desktop',
+            receivedLoading: false,
         }
     },
 
     setup() {
+        const runtimeConfig = useRuntimeConfig()
+        const userToken = useCookie('userToken');
+
         const {
             getBasket
         } = new Basket();
@@ -100,7 +105,9 @@ export default {
         return {
             getBasket,
             reCreateOrder,
-            reCreateOrderLoading
+            reCreateOrderLoading,
+            runtimeConfig,
+            userToken,
         }
     },
 
@@ -295,6 +302,38 @@ export default {
 
             return 'text-sGray';
         },
+
+         /**
+         * Received order
+         * @param {*} id 
+         */
+         receivedOrder(id){
+            console.log("🚀 ~ receivedOrder ~ id:", id)
+            this.receivedLoading = true;
+
+            const formData = new FormData()
+
+            formData.append('order_id', id)
+
+            axios
+                .post(this.runtimeConfig.public.apiBase + '/user/return-order/received', formData, {
+                    headers: {
+                        Authorization: `Bearer ${this.userToken}`,
+                    },
+                })
+                .then((response) => {
+                    this.$emit('updateList', true)
+                })
+                .catch((err) => {
+                    useNuxtApp().$toast.error(err.response.data.message, {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }).finally(() => {
+                    this.receivedLoading = false;
+                });
+        }
         
     },
 
@@ -324,11 +363,12 @@ export default {
     padding: 8px;
 
     &--gift{
-        background: url('~/assets/images/order-gift-desktop.jpg') no-repeat center center;
+        background: url('~/assets/images/order-gift-desktop.png') no-repeat center center;
         background-size: 100% 100% !important;
 
         @include gbp (0, 768) {
-            background: url('~/assets/images/order-gift-mobile.jpg') no-repeat center center;
+            background: url('~/assets/images/order-gift-mobile.png') no-repeat center center !important;
+            background-size: 100% 100% !important;
         }
     }
 

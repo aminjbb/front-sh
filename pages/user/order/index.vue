@@ -25,7 +25,7 @@
                             </div>
                         </template>
                         <template v-else>
-                            <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
+                            <div class="d-flex flex-column justify-center align-center pt-15 pb-15 px-2">
                                 <svgEmptyOrder />
 
                                 <span class="t18 w700 text-sGrayDarken2 mt-2 text-center mb-4">سفارشی در این بخش موجود نیست.</span>
