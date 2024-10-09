@@ -23,7 +23,7 @@
                             </v-btn>
                         </header>
 
-                        <div class="pt-3" :class="screenType === 'desktop' ? 'pb-8 pr-8 pl-8' : 'pb-4 pr-4 pl-4'">
+                        <div :class="screenType === 'desktop' ? 'pt-3 pb-8 pr-8 pl-8' : 'pt-1 pb-4 pr-3 pl-3'">
                             <div v-if="userOrder?.status === 'payment_in_progress' || userOrder?.status === 'payment_out_date' || userOrder?.status === 'received'" class="v-order__notification pa-4 bg-sWarningLighten2 br16 mb-6">
                                 <v-icon icon="mdi-alert-circle-outline" color="sWarningLighten1" />
                                 <span class="t12 fw500 text-sWarning number-font">
@@ -83,7 +83,7 @@
                                     <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
                                         <span class="t12 w700 text-sGrayLighten2">مبلغ سفارش : </span>
 
-                                        <span class="t12 fw700 text-sGrayDarken2 number-font">
+                                        <span class="t12 fw700 text-sGray number-font">
                                             {{splitChar(Number(String(userOrder.total_price).slice(0, -1)))}}
                                             <SvgToman />
                                         </span>
@@ -92,7 +92,7 @@
                                     <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
                                         <span class="t12 w700 text-sGrayLighten2">سود شما: </span>
 
-                                        <span class="t12 fw700 text-sGrayDarken2 number-font">
+                                        <span class="t12 fw700 text-sGray number-font">
                                             {{splitChar(Number(String(userOrder.total_discount).slice(0, -1)))}}
                                             <SvgToman />
                                         </span>
@@ -101,7 +101,7 @@
                                     <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
                                         <span class="t12 w700 text-sGrayLighten2">هزینه ارسال : </span>
 
-                                        <span class="t12 fw700 text-sGrayDarken2 number-font">
+                                        <span class="t12 fw700 text-sGray number-font">
                                             <template v-if="userOrder.sending_price && userOrder.sending_price !== 0">
                                                 {{splitChar(Number(String(userOrder.sending_price).slice(0, -1)))}}
                                                 <SvgToman />
@@ -437,6 +437,7 @@ export default {
          * @param {*} id 
          */
         receivedOrder() {
+            console.log('wcwec',this.userOrder ?.id);
             this.receivedLoading = true;
 
             const formData = new FormData()
@@ -450,7 +451,14 @@ export default {
                     },
                 })
                 .then((response) => {
-                    this.$emit('updateList', true)
+                    if (this.screenType === 'desktop') {
+                        this.$refs.changeStatusModal.dialog = false;
+                        this.$refs.changeStatusModal.loading = false;
+                    } else {
+                        this.$refs.changeStatusSheet.sheet = false;
+                        this.$refs.changeStatusSheet.loading = false;
+                    }
+                    this.getOrder();
                 })
                 .catch((err) => {
                     useNuxtApp().$toast.error(err.response.data.message, {
