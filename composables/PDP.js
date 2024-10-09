@@ -103,7 +103,7 @@ export default function setup() {
                             "description":  mainResponse.data?.data?.detail?.story,
                             "url": `${runtimeConfig.public.siteUrl}/sku/${response.data.data?.info?.slug}`,
                             "mpn": "", //ask milad
-                            "datePublished" : '', // need to api
+                            "datePublished" : mainResponse?.data?.data?.info?.created_at,
                             "reviewBody":mainResponse.data?.data?.detail.comments?.data[0]?.content,
                             "brand": {
                                 "@type": "Brand",
