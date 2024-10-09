@@ -84,7 +84,7 @@ export default function setup() {
         axios
             .get(runtimeConfig.public.apiBase + '/product/plp/category/best-selling')
             .then((response) => {
-                categoryList.value = response.data.data;
+                categoryList.value = response?.data?.data;
             })
             .catch((err) => {
             });
