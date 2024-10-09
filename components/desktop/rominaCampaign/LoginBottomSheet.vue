@@ -587,6 +587,17 @@ export default {
         showAddressList(){
             this.showAddress = true;
             this.showAddAddress = false;
+            this.form = {
+                address: '',
+                postal_code: '',
+                number: '',
+                room_number: '',
+                first_name: '',
+                last_name: '',
+                phone_number: '',
+                province: null,
+                city: null
+            }
         },
 
         async validate() {
@@ -641,6 +652,17 @@ export default {
                     this.getUserAddress2(this.tockenCookie);
                     this.showAddress = true;
                     this.showAddAddress = false;
+                    this.form = {
+                        address: '',
+                        postal_code: '',
+                        number: '',
+                        room_number: '',
+                        first_name: '',
+                        last_name: '',
+                        phone_number: '',
+                        province: null,
+                        city: null
+                    }
                 })
                 .catch((err) => {
                     auth.checkAuthorization(err.response)
