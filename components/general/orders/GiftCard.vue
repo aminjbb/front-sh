@@ -1,13 +1,13 @@
 <template>
-<section v-if="content" class="order-card mb-6" :class="screenType === 'desktop' ? 'pt-5' : ''">
-    <div d-flex justify-space-between align-center>
+<section v-if="content" class="order-card order-card--gift mb-6" :class="screenType === 'desktop' ? 'pt-5' : ''">
+    <div class="d-flex justify-space-between align-center mb-4">
        <div class="d-flex align-center">
-            <img src="~/assets/images/gift.png" class="mb-5" alt="Shavaz 404 error image" width="36" height="36">
-            <span>سفارش هدیه ی</span>
-            <img src="~/assets/images/shavaz-logo2.png" class="mb-5" alt="Shavaz 404 error image" width="54" height="26">
+            <img src="~/assets/images/gift.png" alt="Shavaz 404 error image" width="36" height="36">
+            <span class="t18 w700 text-sGrayDarken2 mx-1">سفارش هدیه ی</span>
+            <img src="~/assets/images/shavaz-logo2.png" alt="Shavaz 404 error image" width="54" height="26">
        </div>
 
-       <img src="~/assets/images/free-badge.png" class="mb-5" alt="Shavaz 404 error image" width="70" height="33">
+       <img src="~/assets/images/free-badge.svg" alt="Shavaz 404 error image" width="70" height="33">
     </div>
 
     <header class="d-flex justify-space-between align-center" :class="screenType === 'desktop' ? 'mb-4' : 'mb-2'">
@@ -39,8 +39,8 @@
 
     <div class="d-flex align-center justify-space-between mb-4 order-card__contents">
        <div class="scroll--x order-card__items d-flex align-center">
-            <a v-for="(sku, index) in content?.details" :key="`sku${index}`" class="order-card__item ov-h" :href="`/sku/${sku?.shps?.sku?.slug}`">
-                <img src="~/assets/images/order-gift-image.png" :title="sku?.shps?.sku?.label" :alt="sku?.shps?.sku?.label" width="79" height="80" />
+            <a class="order-card__item ov-h">
+                <img src="~/assets/images/order-gift-image.png" title="کاهای هدیه" alt="کالای هدیه" width="79" height="80" />
             </a>
        </div>
 
@@ -322,6 +322,15 @@ export default {
     border-radius: 6px;
     box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10) !important;
     padding: 8px;
+
+    &--gift{
+        background: url('~/assets/images/order-gift-desktop.jpg') no-repeat center center;
+        background-size: 100% 100% !important;
+
+        @include gbp (0, 768) {
+            background: url('~/assets/images/order-gift-mobile.jpg') no-repeat center center;
+        }
+    }
 
     @include gbp (0, 768) {
         box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10) !important;
