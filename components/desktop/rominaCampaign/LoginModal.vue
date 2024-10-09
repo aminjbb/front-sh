@@ -236,7 +236,6 @@ export default {
             loginStep: 1,
             mobile: '',
             otp: '',
-            loading: false,
             mobileRule: [
                 (v) => !!v || "این فیلد الزامی است",
                 (v) =>
@@ -253,7 +252,6 @@ export default {
             passwordType: 'password',
             activeButton: false,
             dialog: false,
-            loading: false,
             logined: false,
             userInfo: null,
             noOrder: false,
@@ -402,8 +400,10 @@ export default {
             this.lastStep = false;
             this.showAddAddress = false;
             this.userAddress = null;
+          this.successGiftOrder = false
 
-            this.form = {
+
+          this.form = {
                 address: '',
                 postal_code: '',
                 number: '',
