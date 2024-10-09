@@ -127,15 +127,15 @@ export default function setup() {
                                         "reviewRating":{
                                             "@type":"Rating",
                                             "bestRating":5,
-                                            "ratingValue":0 // fix after fix api
+                                            "ratingValue":item?.score
                                         },
                                         "author":{
                                             "@type":"Person",
                                             "name":"admin"
                                         },
-                                        "datePublished":item?.created_at, // fix after fix api
-                                        "reviewBody":item?.last_review, // fix after fix api
-                                        "name":'',// fix after fix api
+                                        "datePublished":item?.created_at,
+                                        "reviewBody":item?.last_review,
+                                        "name":'',
                                     },
                                     "aggregateRating":{
                                         "@type":"AggregateRating",
