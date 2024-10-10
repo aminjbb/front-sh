@@ -1,17 +1,17 @@
 <template>
 <section v-if="content" class="order-card order-card--gift mb-6" :class="screenType === 'desktop' ? 'pt-2' : ''">
     <div class="d-flex justify-space-between align-center mb-4">
-       <div class="d-flex align-center">
-            <img src="~/assets/images/gift.svg" alt="Shavaz 404 error image" width="36" height="36">
-            <span class="t18 w700 text-sGrayDarken2 mx-1">سفارش هدیه ی</span>
-            <img src="~/assets/images/shavaz-logo2.svg" alt="Shavaz 404 error image" width="54" height="26">
+        <div class="d-flex align-center">
+            <img src="~/assets/images/gift.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '36' : '24'" :height="screenType === 'desktop' ? '36' : '24'">
+            <span class="w700 text-sGrayDarken2 mx-1" :class="screenType === 'desktop' ? 't18' : 't12'">سفارش هدیه ی</span>
+            <img src="~/assets/images/shavaz-logo2.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '54' : '31'" :height="screenType === 'desktop' ? '26' : '15'">
        </div>
 
-       <img src="~/assets/images/free-badge.svg" alt="Shavaz 404 error image" width="70" height="33">
+       <img src="~/assets/images/free-badge.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '70' : '61'" :height="screenType === 'desktop' ? '33' : '29'">
     </div>
 
     <header class="d-flex justify-space-between align-center" :class="screenType === 'desktop' ? 'mb-4' : 'mb-2'">
-        <a v-if="content.order_number" class="t12 w700 text-sGray number-font bold" >
+        <a v-if="content.order_number" class="t12 w700 text-sGray number-font bold" :href="`/user/order/${content?.id}`">
             کد سفارش
             {{ content.order_number }}
         </a>
@@ -51,9 +51,9 @@
 
     <div class="order-card__action justify-end d-flex w-100">
         <template v-if="content.status === 'processing' || content.status === 'returned'" >
-<!--            <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-primary s-btn&#45;&#45;bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">-->
-<!--                <span class="text-primary t12 w700">مشاهده جزئیات</span>-->
-<!--            </v-btn>-->
+            <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">
+                <span class="text-primary t12 w700">مشاهده جزئیات</span>
+            </v-btn>
         </template>
 
         <template v-else-if="content.status === 'sending'">
@@ -308,6 +308,7 @@ export default {
          * @param {*} id 
          */
          receivedOrder(id){
+            console.log("🚀 ~ receivedOrder ~ id:", id)
             this.receivedLoading = true;
 
             const formData = new FormData()

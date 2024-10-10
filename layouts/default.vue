@@ -3,13 +3,13 @@
     <div v-show="show">
         <div v-if="screenType === 'desktop'">
 
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
+            <template v-if="$route.name !== 'campaign-romina' && $route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopHeader :userData="userData" />
             </template>
             <slot />
             <div id="body-cover" />
 
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
+            <template v-if="$route.name !== 'campaign-romina' && $route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopFooter />
             </template>
            <template v-if="$route.name === 'index'">
@@ -22,7 +22,7 @@
                 <mobileHeader />
             </template>
             <slot />
-            <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
+            <template v-if="$route.name !== 'campaign-romina' && $route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
                 <mobileFooter :userData="userData" />
             </template>
            <template v-if="$route.name === 'index'">
