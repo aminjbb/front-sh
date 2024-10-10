@@ -1,0 +1,116 @@
+//------------------------------------------------
+//  Campaign
+//------------------------------------------------
+@import "~/assets/scss/tools/bp";
+.campaign{
+    &--romina{
+        .romina-primary{
+            color: #1F74C9;
+        }
+
+        .swiper{
+            padding: 3px !important;
+        }
+
+        .product-card{
+            background: white;
+            box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 2px;
+            box-sizing: border-box;
+    
+            &__index {
+                position: absolute;
+                top: 0;
+                right: 0;
+                &::before {
+                    border-top: 32px solid #D72685;
+                    border-right: 32px solid #D72685;
+                    border-bottom: 32px solid transparent;
+                    border-left: 32px solid transparent;
+                    top: 0;
+                    right: 0;
+                    content: '';
+                    display: block;
+                    z-index: 1;
+                }
+        
+                span {
+                    color: white;
+                    text-align: center;
+                    position: absolute;
+                    z-index: 2;
+                    top: 6px;
+                    right: 5px;
+                    direction: ltr !important;
+                    z-index: 2;
+                    font-family: 'IranSansFaNum' !important;
+                }
+            }
+    
+            &__image{
+                height: 386px;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+        
+                @include gbp (0, 768) {
+                    max-height: 256px !important;
+                }
+        
+                img{
+                    max-width: 100%;
+                    height: 100%;
+                    width: auto;
+                }
+            }
+
+            h3, h3 a{
+                font-weight: 400 !important;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                -webkit-line-clamp: 2;
+                height: 48px;
+            }
+    
+            .btn{
+                border: var(--Space_2, 2px) solid var(--Border-Border, #CBCBCB);
+                background: white;
+                width: 100%;
+                height: 56px !important;
+            }
+
+            svg path{
+                fill: #D72685;
+            }
+
+            .without-discount{
+                svg path{
+                    fill: #616161 !important;
+                }
+            }
+
+            .bold{
+                font-weight: 700 !important;
+            }
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev{
+            &::after{
+               color: #170A1C;
+                font-size: 34px;
+
+                @include gbp (0, 768) {
+                    font-size: 25px !important;
+                }
+            }
+        }
+    }
+}
