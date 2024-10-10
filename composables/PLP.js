@@ -83,24 +83,33 @@ export default function setup() {
     else if (route.name == 'category-slug') endPoint.value = '/product/plp/category/'
     else if (route.name == 'promotion-slug') endPoint.value = '/product/plp/promotion/'
     else if (route.name == 'search') endPoint.value = `/product/plp/search/`
+    useAsyncData(
+        async () => {
+            let url = "".concat(
+                runtimeConfig.public.apiBase,
+                endPoint.value,
+                checkRouteForSlug()
+            );
 
-        useAsyncData(
-            async () => {
-                let url = "".concat(
-                    runtimeConfig.public.apiBase,
-                    endPoint.value,
-                    checkRouteForSlug()
-                );
+            try {
+                // First API
+                const response1 = await axios({
+                    method: 'get',
+                    url: url,
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
+                    },
+                    params: {...route.query}
+                });
 
-                try {
-                    // First API
-                    const response1 = await axios({
+                if(route.name !== 'promotion-slug' && route.name !=='search' && route.name !=='sku-group-slug'){
+                    // Second API
+                    const response2 = await axios({
                         method: 'get',
-                        url: url,
+                        url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
                         headers: {
                             Authorization: `Bearer ${userToken.value}`,
                         },
-                        params: {...route.query}
                     });
 
                     if(response1 && response2){
@@ -141,91 +150,50 @@ export default function setup() {
                             schemaList.push(schemaObj);
                         });
 
-                        if(response1 && response2){
-                            let schemaList = []
-                            response1?.data?.data?.data.slice(0,5).forEach((item, index) => {
-                                const schemaObj = {
-                                    "@type": "ListItem",
-                                    "position": index+1,
-                                    "name": item.label,
-                                    "item":{
-                                        "@type":"Product",
-                                        "name":item.label,
-                                        "url":`https://shavaz.com/sku/${item.slug}`,
-                                        "review":{
-                                            "@type":"Review",
-                                            "reviewRating":{
-                                                "@type":"Rating",
-                                                "bestRating":5,
-                                                "ratingValue":item?.score // fix after fix api
-                                            },
-                                            "author":{
-                                                "@type":"Person",
-                                                "name":"admin"
-                                            },
-                                            "datePublished":item?.created_at, // fix after fix api
-                                            "reviewBody":item?.last_review, // fix after fix api
-                                            "name":'',// fix after fix api
-                                        },
-                                        "aggregateRating":{
-                                            "@type":"AggregateRating",
-                                            "ratingValue":3,// fix after fix api
-                                            "reviewCount":item?.review_count// fix after fix api
-                                        },
-                                        "image":item.image_url
-                                    }
-                                }
-                                schemaList.push(schemaObj);
-                            });
-
-                            /** item list schema structure */
-                            structuredDataItem.value = {
-                                "@context": "http://schema.org/",
-                                "@type": "BreadcrumbList",
-                                itemListElement : schemaList
-                            }
-                            /** Set useHead for schema */
-                            useHead({
-                                script: [{ type: 'application/ld+json', children: JSON.stringify(structuredDataItem.value) }]
-                            })  
-
-
-                            productList.value = response1;
-    
-                            secondaryData.value = response2;
-                            plpTitle.value = response2.data.data.page.meta_title; // Get `title` of page
-                            description.value = response2.data.data.page.meta_description; // Get `description` of page 
-                            categoryList.value = response2.data.data?.categories // Get category page
-                            selectedLastCategory.value = categoryList.value.find(item => item.is_selected == true); // Get last category with is_selected: true
-                            parentCategory.value = response2.data.data?.parent_category // Get category patent name for categories page
+                        /** item list schema structure */
+                        structuredDataItem.value = {
+                            "@context": "http://schema.org/",
+                            "@type": "BreadcrumbList",
+                            itemListElement : schemaList
                         }
-                    }
-
-                    if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                        /** Set useHead for schema */
+                        useHead({
+                            script: [{ type: 'application/ld+json', children: JSON.stringify(structuredDataItem.value) }]
+                        })
                         productList.value = response1;
 
-                        if(route.name == 'promotion-slug'){
-                            plpTitle.value = response1.data.data.page.meta_title
-                            description.value = response1.data.data.page.meta_description;
-                        }
+                        secondaryData.value = response2;
+                        categoryList.value =response2?.data?.data.categories
+                        plpTitle.value = response2.data.data.page.meta_title;
+                        description.value = response2.data.data.page.meta_description;
                     }
+                }
 
-                } catch (error) {
-                    if (error.response) {
-                        showError({
-                            statusCode: error.response.status,
-                            statusMessage: error.response.statusText
-                        });
+                if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                    productList.value = response1;
+
+                    if(route.name == 'promotion-slug'){
+                        plpTitle.value = response1.data.data.page.meta_title
+                        description.value = response1.data.data.page.meta_description;
                     }
                 }
-                finally{
-                    loading.value= false
+
+            } catch (error) {
+                if (error.response) {
+                    showError({
+                        statusCode: error.response.status,
+                        statusMessage: error.response.statusText
+                    });
                 }
-            },
-            {
-                watch: [route]
             }
-        );
+            finally{
+                loading.value= false
+            }
+        },
+        {
+            watch: [route]
+        }
+    );
         
 
     return {
