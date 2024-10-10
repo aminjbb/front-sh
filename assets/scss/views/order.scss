@@ -9,7 +9,7 @@
 
     @include gbp (0, 768) {
         padding-bottom: 80px;
-        padding-top: 70px;
+        padding-top: 70px !important;
     }
 
     &__inner{
