@@ -21,7 +21,7 @@
                     '768': {
                         slidesPerView: 3.5,
                     }
-                }" class="mySwiper menu__slider mb-7 px-5">
+                }" class="mySwiper menu__slider mb-3 px-5">
                     <swiper-slide v-for="(category, index) in categoryList" :key="`category${index}`">
                         <a class="menu__slider__item d-flex flex-column justify-center align-center" :href="category?.link" :title="category?.label">
                             <img :src="category?.image" :alt="category?.image_alt" width="130" height="90" class="w-100" />
@@ -29,7 +29,7 @@
                     </swiper-slide>
                 </swiper>
 
-                <div class="menu__name">
+                <div class="menu__name pt-5">
                     <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
                         <path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 17C14 17.7956 14.3161 18.5587 14.8787 19.1213C15.4413 19.6839 16.2044 20 17 20C17.7956 20 18.5587 19.6839 19.1213 19.1213C19.6839 18.5587 20 17.7956 20 17C20 16.2044 19.6839 15.4413 19.1213 14.8787C18.5587 14.3161 17.7956 14 17 14C16.2044 14 15.4413 14.3161 14.8787 14.8787C14.3161 15.4413 14 16.2044 14 17Z" stroke="#3C3C3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -172,7 +172,7 @@ export default {
 
 .menu--mobile{
     padding-top: 160px;
-    padding-bottom: 70px;
+    padding-bottom: 150px;
 
     @include gbp (0, 768) {
         padding-top: 0;
