@@ -40,7 +40,7 @@
             </div>
             <div v-if="content?.shps?.sku?.brand" class="d-flex align-center">
                 <v-icon icon="mdi-briefcase-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
-                <span class="text-sGrayLighten2 t12 w500">فروشنده: {{ content?.shps?.sku?.brand?.label }}</span>
+                <span class="text-sGrayLighten2 t12 w500">برند: {{ content?.shps?.sku?.brand?.label }}</span>
             </div>
         </div>
     </div>
