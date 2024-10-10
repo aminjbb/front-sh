@@ -108,10 +108,24 @@ a {
       .btn {
         overflow: hidden;
 
-        &--cancel {
-          @include gbp(0, 768) {
-            width: 36.333%
-          }
+                &--cancel {
+                    @include gbp (0, 768) {
+                        width: 36.333%
+                    }
+                }
+
+                &--submit {
+                    @include gbp (0, 768) {
+                        margin-left: 0 !important;
+                        width: 100%;
+                        width: 61.666%;
+                    }
+
+                    .v-btn__content{
+                        font-variation-settings: "wght" 700 !important;
+                    }
+                }
+            }
         }
 
         &--submit {

@@ -27,7 +27,7 @@
         width="500px">
         <v-card class="pt-3 px-6 pb-5">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                <span class="t15 w400">
+                <span class="t16 w700 text-sGrayDarken2">
                     {{title}}
                 </span>
 
@@ -42,24 +42,26 @@
             </header>
 
             <div>
-                <p class="t14 w400 my-8 text-center text-grey-darken-2">{{text}}</p>
+                <p class="t12 w700 my-5 text-sGray">{{text}}</p>
 
-                <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
-                    <v-btn
-                        @click="closeModal()"
-                        height="44"
-                        title="انصراف"
-                        class="btn btn--cancel ml-1">
-                        انصراف
-                    </v-btn>
-
+                <div class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
                     <v-btn
                         :loading="loading"
                         @click="removeProduct()"
                         height="44"
                         :title="submitText"
-                        class="btn btn--submit">
-                        {{submitText}}
+                        width="49%"
+                        class="btn btn--submit br12 ov-h" >
+                        <span class="w700">{{submitText}}</span>
+                    </v-btn>
+
+                    <v-btn
+                        @click="closeModal()"
+                        height="44"
+                        title="انصراف"
+                        width="49%"
+                        class="btn btn--cancel ov-h br12">
+                        <span class="w700">انصراف</span>
                     </v-btn>
                 </div>
             </div>
@@ -121,10 +123,14 @@ export default {
     }
 
     &__header {
-        border-bottom: 1px solid #E0E0E0;
 
         &__btn {
             min-width: auto !important;
+
+            .v-btn__content{
+                background: #ddd;
+                border-radius:50% ;
+            }
         }
     }
 }
