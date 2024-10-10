@@ -11,7 +11,7 @@
     </div>
 
     <header class="d-flex justify-space-between align-center" :class="screenType === 'desktop' ? 'mb-4' : 'mb-2'">
-        <a v-if="content.order_number" class="t12 w700 text-sGray number-font bold" :href="`/user/order/${content?.id}`">
+        <a v-if="content.order_number" class="t12 w700 text-sGray number-font bold">
             کد سفارش
             {{ content.order_number }}
         </a>
@@ -51,9 +51,9 @@
 
     <div class="order-card__action justify-end d-flex w-100">
         <template v-if="content.status === 'processing' || content.status === 'returned'" >
-            <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">
-                <span class="text-primary t12 w700">مشاهده جزئیات</span>
-            </v-btn>
+<!--            <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-primary s-btn&#45;&#45;bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">-->
+<!--                <span class="text-primary t12 w700">مشاهده جزئیات</span>-->
+<!--            </v-btn>-->
         </template>
 
         <template v-else-if="content.status === 'sending'">
