@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="surprise-slider__info__image flex-grow-1 mb-2 d-flex align-center justify-center">
-                        <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
+                      <generalKitsImageSimage :src="mainBannerImage"  :title="mainBanner.label"  :alt="mainBanner.image_alt" width="111" height="118"  />
                     </div>
                     <div class="surprise-slider__info__title mb-2">
                         <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>

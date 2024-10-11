@@ -15,7 +15,7 @@
         <v-row v-if="screenType === 'desktop'">
             <v-col cols="6" class="d-flex align-center">
                 <template v-if="selectedLastCategory">
-                    <img :src="selectedLastCategory.image_url" :title="selectedLastCategory.label" width="32" height="32" class="ml-2 br12 ov-h">
+                  <generalKitsImageSimage :src="selectedLastCategory.image_url"  :title="selectedLastCategory.label"  :alt="selectedLastCategory.name" width="32" height="32" class="ml-2 br12 ov-h" />
                 </template>
                 <div class="t18 w700 text-sGrayDarken2">{{ pageTitle }}</div>
             </v-col>

@@ -26,8 +26,7 @@
                       {{payment.subtitle}}
                     </p>
                 </div>
-
-                <img :src="payment.logo" alt="payment-image" width="85" height="54">
+              <generalKitsImageSimage   :src="payment.logo" alt="payment-image" width="85" height="54" />
 
             </div>
             <v-divider
