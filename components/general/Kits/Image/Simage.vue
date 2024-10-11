@@ -1,5 +1,15 @@
 <template>
   <img
+      v-if="lazy"
+      :src="imgSrc"
+      :title="imgTitle"
+      :alt="imgAlt"
+      :width="width"
+      :height="height" />
+
+  <img
+      v-else
+      data-not-lazy
       :src="imgSrc"
       :title="imgTitle"
       :alt="imgAlt"
@@ -15,6 +25,10 @@ export default {
     imgTitle: String,
     width: Number,
     height: Number,
+    lazy:{
+      type:Boolean,
+      default:true
+    }
   }
 }
 </script>
