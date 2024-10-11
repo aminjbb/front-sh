@@ -8,13 +8,13 @@
                         class="image-gallery__thumbnail__item"
                         v-for="(item, index) in items"
                         :key="`image-gallery__thumbnail-${index}`">
-                        <img :src="item.image_url" :alt="item.alt" width="70" height="70" @click="selectImage(item.image_url)">
+                      <generalKitsImageSimage :src="item.image_url" :alt="item.alt" width="70" height="70"  @click="selectImage(item.image_url)"/>
                     </div>
                 </template>
 
                 <template v-else v-for="(item, index) in items.slice(0, 5)" :key="`image-gallery__thumbnail-${index}`">
                     <div v-if="index === 0 || index === 1 || index === 2 || index === 3" class="image-gallery__thumbnail__item">
-                        <img :src="item.image_url" :alt="item.alt" width="70" height="70" @click="selectImage(item.image_url)">
+                      <generalKitsImageSimage :src="item.image_url" :alt="item.alt" width="70" height="70"  @click="selectImage(item.image_url)"/>
                     </div>
 
                     <div
@@ -49,7 +49,7 @@
                         @click="checkFavorite()"
                         size="small" />
                 </div>
-                <img  data-not-lazy :src="selectedImage" :alt="imageAlt" width="351" height="351">
+              <generalKitsImageSimage :lazy="false" :src="selectedImage" :alt="imageAlt" width="351" height="351"/>
             </div>
         </div>
     </v-row>
@@ -83,7 +83,7 @@
                     :key="index"
                     class="h-100">
                     <div @click="openModal()" class="d-flex w-100 align-center justify-center h-100">
-                        <img :src="item.image_url" :title="item.alt" :alt="item.alt" width="300" height="300" />
+                      <generalKitsImageSimage :lazy="false" :src="item.image_url" :title="item.alt"  width="300" height="300"/>
                     </div>
                 </swiper-slide>
             </swiper>
