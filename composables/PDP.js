@@ -10,7 +10,7 @@ import {useStore} from 'vuex'
 export default function setup() {
     const product = ref([]);
     const secondaryData = ref([]);
-    const breadcrumb = ref(null);
+    const breadcrumb = ref([]);
     const color = ref(null);
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
