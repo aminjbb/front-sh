@@ -1,8 +1,6 @@
 <template>
   <div v-if="(items && items.length) && screenType === 'desktop'">
-    <v-breadcrumbs :items="items">
-
-    </v-breadcrumbs>
+    <v-breadcrumbs :items="items"></v-breadcrumbs>
   </div>
 </template>
 

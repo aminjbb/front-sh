@@ -69,11 +69,11 @@ export default function setup() {
 
                         },
                         params: {...route.query}
-                    }).catch((err) => {
+                    }).catch((error) => {
                         showError({
-                            statusCode: 404,
-                            statusMessage: "Page Not Found"
-                        })
+                            statusCode: error.response.status,
+                            statusMessage: error.response.statusText
+                        });
                     });
 
 
@@ -184,14 +184,7 @@ export default function setup() {
 
 
                 } catch (error) {
-                    if (error.response) {
-                        if (error.response?.status) {
-                            showError({
-                                statusCode: 404,
-                                statusMessage: "Page Not Found"
-                            })
-                        }
-                    }
+
                 } finally {
                     loading.value = false
                 }

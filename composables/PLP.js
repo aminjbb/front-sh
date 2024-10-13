@@ -100,6 +100,11 @@ export default function setup() {
                         Authorization: `Bearer ${userToken.value}`,
                     },
                     params: {...route.query}
+                }).catch(error=>{
+                    showError({
+                        statusCode: error.response.status,
+                        statusMessage: error.response.statusText
+                    });
                 });
 
                 if(route.name !== 'promotion-slug' && route.name !=='search' && route.name !=='sku-group-slug'){
@@ -179,12 +184,7 @@ export default function setup() {
                 }
 
             } catch (error) {
-                if (error.response) {
-                    showError({
-                        statusCode: error.response.status,
-                        statusMessage: error.response.statusText
-                    });
-                }
+
             }
             finally{
                 loading.value= false
