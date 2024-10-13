@@ -130,50 +130,13 @@
     </nav>
 </div>
 
-<v-bottom-sheet
-    v-if="sheet"
-    v-model="sheet"
-    color="white"
-    height="auto">
-    <v-card class="pt-3 px-6 pb-5">
-        <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-            <span class="t16 w700 text-sGrayDarken2">
-                خروج از حساب کاربری
-            </span>
-
-            <v-btn
-                class="c-modal__header__btn pa-0 text-none"
-                @click="closeModal()"
-                color="grey-darken-1"
-                size="large"
-                variant="icon">
-                <v-icon>mdi-close</v-icon>
-            </v-btn>
-        </header>
-
-        <div>
-            <p class="t12 w700 my-8 text-sGray">آیا از خروج از حساب اطمینان دارید؟ </p>
-
-            <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
-                <v-btn
-                    @click="logout()"
-                    height="44"
-                    title="خروج از حساب"
-                    class="btn btn--submit">
-                    خروج از حساب
-                </v-btn>
-
-                <v-btn
-                    @click="closeModal()"
-                    height="44"
-                    title="انصراف"
-                    class="btn btn--cancel mr-1">
-                    انصراف
-                </v-btn>
-            </div>
-        </div>
-    </v-card>
-</v-bottom-sheet>
+  <!--<v-bottom-sheet-->
+  <generalSheetsDelete
+      ref="logOutSheet"
+      title="خروج از حساب کاربری"
+      text="آیا از خروج اطمینان دارید؟"
+      submitText="خروج از حساب"
+      @removeProduct="logout" />
 </template>
 
 <script>
@@ -207,7 +170,7 @@ export default {
         },
 
         openModal() {
-            this.sheet = true;
+          this.$refs.logOutSheet.sheet = true
         },
 
         closeModal() {
