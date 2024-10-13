@@ -126,13 +126,13 @@
                                         </div>
                                     </template>
 
-                                    <template v-else-if="userOrder?.status === 'received'">
+                                    <!-- <template v-else-if="userOrder?.status === 'received'">
                                         <div class="d-flex align-center w-100 justify-center">
                                             <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" :href="`/user/order/${userOrder?.id}/return`">
                                                 <span class="text-white t12 w700">مرجوع سفارش</span>
                                             </v-btn>
                                         </div>
-                                    </template>
+                                    </template> -->
 
                                     <template v-else-if="userOrder?.status === 'payment_out_date' || userOrder?.status=== 'cancelled'">
                                         <div class="d-flex align-center w-100 justify-center">
@@ -177,7 +177,7 @@
                                     <span class="t10 fw400 number-font text-sGray">{{ userOrder?.details.length }} محصول</span>
                                 </header>
 
-                                <GeneralOrdersDetailsCard v-for="order in userOrder?.details" :key="`order${order.id}`" :content="order" class="mb-4" />
+                                <GeneralOrdersDetailsCard v-for="order in userOrder?.details" :key="`order${order.id}`" :content="order" class="mb-4" :orderId="userOrder?.id" :status="userOrder?.status"/>
                             </div>
                         </div>
                     </v-card>
@@ -437,7 +437,6 @@ export default {
          * @param {*} id 
          */
         receivedOrder() {
-            console.log('wcwec',this.userOrder ?.id);
             this.receivedLoading = true;
 
             const formData = new FormData()
