@@ -115,7 +115,7 @@
         <v-divider color="grey-lighten-3" />
 
         <div class="search-result__most-search">
-          <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
+          <p class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</p>
           <swiper
               v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"
               dir="rtl"

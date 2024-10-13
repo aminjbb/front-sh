@@ -12,7 +12,7 @@
 
         <div class="d-flex flex-column justify-center align-center pt-15 pb-15">
             <svgEmptyCart />
-            <h2 class="t13 w400 text-grey-darken-1 mt-5">سبد خرید شما خالی است!</h2>
+            <p class="t13 w400 text-grey-darken-1 mt-5">سبد خرید شما خالی است!</p>
             <v-btn
                 href="/"
                 title="مشاهده محصولات"

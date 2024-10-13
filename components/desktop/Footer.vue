@@ -19,7 +19,7 @@
             <v-col cols="12" md="7">
                 <div class="footer__menus">
                     <div>
-                        <header class="t16 mb-4">دسترسی سریع</header>
+                        <p class="t16 mb-4">دسترسی سریع</p>
                         <ul>
                             <li><a href="/category/category-cosmetic/" class="t13 text-grey">لوازم آرایشی</a></li>
                             <li><a href="/category/category-skin-care" class="t13 text-grey">مراقبت از پوست</a></li>
@@ -30,35 +30,29 @@
                     </div>
 
                     <div>
-                        <header class="mb-4">
-                            <h4 class="t16">درباره شاواز</h4>
-                        </header>
-                        <ul>
-                            <li><a href="/about" class="t13 text-grey">درباره ما</a></li>
-                            <li><a href="/contact" class="t13 text-grey">تماس با ما</a></li>
-                            <li><a href="/faq" class="t13 text-grey">سوالات متداول</a></li>
-                            <li><a href="/" class="t13 text-grey">فرصت‌های شغلی</a></li>
-                            <li><a href="/" class="t13 text-grey">فروشنده شوید</a></li>
-                        </ul>
+                      <p class="t16 mb-4">درباره شاواز</p>
+                      <ul>
+                        <li><a href="/about" class="t13 text-grey">درباره ما</a></li>
+                        <li><a href="/contact" class="t13 text-grey">تماس با ما</a></li>
+                        <li><a href="/faq" class="t13 text-grey">سوالات متداول</a></li>
+                        <li><a href="/" class="t13 text-grey">فرصت‌های شغلی</a></li>
+                        <li><a href="/" class="t13 text-grey">فروشنده شوید</a></li>
+                      </ul>
                     </div>
 
                     <div>
-                        <header class="mb-4">
-                            <h4 class="t16">راهنمای خرید</h4>
-                        </header>
-                        <ul>
-                            <li><a href="/faq" class="t13 text-grey">نحوه ثبت سفارش</a></li>
-                            <li><a href="/faq" class="t13 text-grey">روش‌های پرداخت</a></li>
-                            <li><a href="/faq" class="t13 text-grey">شیوه‌های ارسال</a></li>
-                            <li><a href="/faq" class="t13 text-grey">شرایط مرجوعی</a></li>
-                        </ul>
+                      <p class="t16 mb-4">راهنمای خرید</p>
+                      <ul>
+                        <li><a href="/faq" class="t13 text-grey">نحوه ثبت سفارش</a></li>
+                        <li><a href="/faq" class="t13 text-grey">روش‌های پرداخت</a></li>
+                        <li><a href="/faq" class="t13 text-grey">شیوه‌های ارسال</a></li>
+                        <li><a href="/faq" class="t13 text-grey">شرایط مرجوعی</a></li>
+                      </ul>
                     </div>
                 </div>
             </v-col>
             <v-col cols="12" md="5">
-                <header class="mb-4 mt-4">
-                   <h4 class="t16"> با ما در ارتباط باشید</h4>
-                </header>
+              <p class="t16 mb-4 mt-4"> با ما در ارتباط باشید</p>
 
                 <div class="footer__social-media mb-7">
                     <a href="https://www.instagram.com/shavazcom" title="Shavaz instagram account | اکانت اینستاگرام شاواز ">
@@ -140,7 +134,7 @@
         </v-row>
 
         <div class="footer__copy-right-text">
-            <p>استفاده از مطالب <h5 class="d-inline t12">فروشگاه اینترنتی شاواز</h5> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
+            <p>استفاده از مطالب <p class="d-inline t12">فروشگاه اینترنتی شاواز</p> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
         </div>
     </v-container>
 </footer>
