@@ -105,7 +105,7 @@
         <template v-else-if="content.status === 'pre_progress'">
             <div class="d-flex align-center w-100 justify-end">
                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content.id}/cancel`">
-                    <span class="text-white t12 w700">لفو سفارش</span>
+                    <span class="text-white t12 w700">لغو سفارش</span>
                 </v-btn>
 
                 <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">

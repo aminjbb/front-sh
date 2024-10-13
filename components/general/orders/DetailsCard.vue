@@ -40,9 +40,17 @@
             </div>
             <div v-if="content?.shps?.sku?.brand" class="d-flex align-center">
                 <v-icon icon="mdi-briefcase-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
-                <span class="text-sGrayLighten2 t12 w500">فروشنده: {{ content?.shps?.sku?.brand?.label }}</span>
+                <span class="text-sGrayLighten2 t12 w500">برند: {{ content?.shps?.sku?.brand?.label }}</span>
             </div>
         </div>
+
+        <template v-if="status === 'pre_progress'">
+            <div class="d-flex align-center w-100 justify-end">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="200" :href="`/user/order/${orderId}/sku/${content.id}/cancel`">
+                    <span class="text-primary t12 w700">لغو سفارش</span>
+                </v-btn>
+            </div>
+        </template>
     </div>
 </div>
 </template>
@@ -50,7 +58,9 @@
 <script>
 export default {
     props: {
-        content: Object
+        content: Object,
+        orderId: null,
+        status:null,
     }
 }
 </script>

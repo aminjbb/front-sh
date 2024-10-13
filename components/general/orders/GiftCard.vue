@@ -1,5 +1,5 @@
 <template>
-<section v-if="content" class="order-card order-card--gift mb-6" :class="screenType === 'desktop' ? 'pt-2' : ''">
+<section v-if="content" class="order-card order-card--gift mb-4" :class="screenType === 'desktop' ? 'pt-2' : ''">
     <div class="d-flex justify-space-between align-center mb-4">
        <div class="d-flex align-center">
             <img src="~/assets/images/gift.svg" alt="Shavaz 404 error image" width="36" height="36">
@@ -50,13 +50,7 @@
     </div>
 
     <div class="order-card__action justify-end d-flex w-100">
-        <template v-if="content.status === 'processing' || content.status === 'returned'" >
-<!--            <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-primary s-btn&#45;&#45;bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">-->
-<!--                <span class="text-primary t12 w700">مشاهده جزئیات</span>-->
-<!--            </v-btn>-->
-        </template>
-
-        <template v-else-if="content.status === 'sending'">
+        <template v-if="content.status === 'sending'">
             <div class="w-100 d-flex align-center justify-space-between w-100">
                 <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
                 <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :loading="receivedLoading" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">
