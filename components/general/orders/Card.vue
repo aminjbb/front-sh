@@ -17,7 +17,7 @@
         </div>
     </header>
     
-    <div class="d-flex align-center order-card__info" :class=" screenType === 'desktop' ? 'mb-5' : 'mb-1'">
+    <div v-if=" screenType === 'desktop'" class="d-flex align-center order-card__info mb-5">
         <div v-if="content.receiver_name" class="d-flex align-center">
             <v-icon icon="mdi-account-box-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
             <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده: {{ content.receiver_name }}</span>
@@ -29,6 +29,21 @@
         <div v-if="content.sending_method" class="d-flex align-center">
             <v-icon icon="mdi-truck-fast-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
             <span class="text-sGrayLighten2 t12 w500">نحوه ارسال: {{ getWayText(content.sending_method) }}</span>
+        </div>
+    </div>
+
+    <div v-else class="d-flex align-center order-card__info mb-1">
+        <div v-if="content?.submit_date_fa" class="d-flex align-center">
+            <v-icon icon="mdi-calendar-month-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
+            <span class="text-sGrayLighten2 t12 w500 number-font">{{ content?.submit_date_fa }}</span>
+        </div>
+        <div v-if="content.sending_method" class="d-flex align-center">
+            <v-icon icon="mdi-truck-fast-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
+            <span class="text-sGrayLighten2 t12 w500">نحوه ارسال: {{ getWayText(content.sending_method) }}</span>
+        </div>
+        <div v-if="content.receiver_name" class="d-flex align-center">
+            <v-icon icon="mdi-account-box-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
+            <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده: {{ content.receiver_name }}</span>
         </div>
     </div>
 
