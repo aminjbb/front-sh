@@ -50,7 +50,7 @@
     <template v-if="status === 'pre_progress' && content.count > 0">
         <div class="d-flex align-center w-100 justify-end">
             <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${orderId}/sku/${content.id}/cancel`">
-                <span class="text-primary t12 w700">لغو سفارش</span>
+                <span class="text-primary t12 w700">لغو محصول</span>
             </v-btn>
         </div>
     </template>
