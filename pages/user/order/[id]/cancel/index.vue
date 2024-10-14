@@ -1,5 +1,5 @@
 <template>
-<main class="v-order v-order--canceling">
+<main class="v-order v-order--canceling pt-15">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/order" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
@@ -9,7 +9,7 @@
 
     <v-container>
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
             <div class="col-9 pa-4 mobile-pa-0">
@@ -217,7 +217,8 @@ export default {
         console.log( this.cancelReasonValueTitle)
       },
       changeAllValue(e){
-        this.cancelReasonValueTitleAll = e?.value
+        console.log( e?.value)
+        this.cancelReasonValueTitleAll = e
       },
 
         /**
@@ -302,14 +303,13 @@ export default {
             if (this.selectedProducts && this.selectedProducts.length) {
                 this.selectedProducts.forEach((product, index) => {
                     const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
-                  console.log(findIndex)
                     formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
                     formData.append(`shps_list[${index}][count]`, product ?.count)
                     if (this.chooseAll) {
-                        if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.label) {
+                        if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.title) {
                             ChooseAllReason = false;
-                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
-                            formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
+                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.title)
+                            if (this.cancelReasonValueDescAll) formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
                         } else {
                             ChooseAllReason = true;
                         }
@@ -319,7 +319,7 @@ export default {
                         if (this.cancelReasonValueTitle && this.cancelReasonValueTitle[findIndex]) {
                             formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[findIndex].title)
                             if (this.cancelReasonValueDesc[findIndex])  formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[findIndex])
-                            this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].label);
+                            this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].title);
                             this.cancelReasonValueDescStep2.push(this.cancelReasonValueDesc[findIndex]);
                         } else {
                             useNuxtApp().$toast.error('علت لغو انتخاب نشده است', {

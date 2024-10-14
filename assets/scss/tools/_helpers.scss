@@ -220,3 +220,27 @@
 		}
 	}
 }
+
+//------------------------------------------------
+// Shadow 
+//------------------------------------------------
+
+.no-shadow{
+	box-shadow: none !important;
+}
+
+.no-shadow--xs{
+	@include gbp (0, 768) {
+		&::-webkit-scrollbar {
+			box-shadow: none !important;
+		}
+	}
+}
+
+.no-shadow--lg{
+	@include gbp (768) {
+		&::-webkit-scrollbar {
+			box-shadow: none !important;
+		}
+	}
+}

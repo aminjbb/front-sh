@@ -90,8 +90,13 @@ export default {
             })
         }
 
+        const voucherShownCookie = useCookie('voucher_shown', {
+            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days in seconds
+        });
+
         return {
             doCopy,
+            voucherShownCookie
         }
     },
 

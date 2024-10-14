@@ -104,7 +104,7 @@
 
                   <v-col cols="12" class="ticket__form__item ">
                     <span class="t16 w700 text-sGrayDarken2 mb-3 d-block">افزودن فایل</span>
-                    <generalUploader @getImage="getImage" :rules="uploadRules"
+                    <generalUploader @deleteImage="deleteImage" @getImage="getImage" :rules="uploadRules"
                                      :isMobile="isMobile === true ? true : false"/>
                   </v-col>
                 </v-row>
@@ -220,7 +220,15 @@ export default {
   },
 
   methods: {
-
+    /**
+     * Delete image
+     */
+    deleteImage(id) {
+      const index = this.images.findIndex(item => item === id);
+      if (index !== -1) {
+        this.images.splice(index, 1);
+      }
+    },
     changeTitle(value){
       this.form.title = value?.value
       this.subTitle = value?.title
@@ -337,7 +345,7 @@ export default {
                 ticketDescription: this.form.content, // The detailed description of the issue.
               });
 
-              this.$router.push(`/user/ticket/${response?.data?.data?.id}`);
+              this.$router.push(`/user/ticket`);
 
               useNuxtApp().$toast.success('تیکت شما با موفقیت ایجاد شد.', {
                 rtl: true,

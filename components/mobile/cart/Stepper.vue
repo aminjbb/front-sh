@@ -19,6 +19,15 @@
   </header>
 
   <div class="stepper__content">
+    <v-alert
+        v-if="ipCountry !== 'IR' "
+        color="sWarningLighten2"
+        class="mb-3"
+    >
+      <p class="t12 w400 text-sWarning">
+        در صورت روشن بودن نرم افزار های تغییر ip لطفا آن را خاموش کنید!
+      </p>
+    </v-alert>
     <template v-if="activeStep === 1">
       <template v-if="screenType === 'mobile'">
         <template v-for="(item, index) in data.details" :key="`header-product${index}`">
@@ -211,6 +220,9 @@ export default {
   },
 
   computed: {
+    ipCountry(){
+      return this.$store.getters['get_country']
+    },
     /**
      * Get user details
      */

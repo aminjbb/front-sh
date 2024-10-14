@@ -45,11 +45,11 @@
     </div>
 
 
-    <h3 v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
+    <p v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
         <a :id="cardIdLabel" class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}
         </a>
-    </h3>
+    </p>
 
     <div v-if="content.stock ||  skusObjectStock || relatedObjectStock" class="product-card__price-info mb-2" :class="showBasket ? 'd-flex align-center justify-space-between' : ''">
         <div>

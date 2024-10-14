@@ -4,110 +4,72 @@
         <a href="/user/ticket" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
         </a>
-        <span class="grey-darken-3 t14">جزئیات تیکت</span>
+        <span class="text-sGrayDarken2 t14 w700">جزئیات تیکت</span>
     </header>
 
     <v-container>
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
 
             <div class="col-9 pa-4 mobile-pa-0">
-                <v-card class="pa-8 mobile-pa-0 mobile-no-border has-header">
-                    <header class="d-flex align-center justify-space-between mb-5 xs-hide card__header">
-                        <span>جزئیات تیکت</span>
+                <v-card class="pa-8 mobile-pa-0 v-ticket__card" :class="isMobile && singleTicket?.threads.length === 0 ? 'margin-b-0' : ''">
+                    <div class="flex-grow-1 d-flex flex-column" :class="isMobile === true ? 'mb-2' : 'pa-8'">
+                        <header class="v-ticket__header d-flex align-center justify-space-between mb-3 xs-hide">
+                            <h1 class="t18 w700 text-sGrayDarken2">{{ singleTicket?.parent_topic }}</h1>
 
-                        <v-btn
-                            v-if="singleTicket?.status !== 'resolved'"
-                            @click="showAnswer()"
-                            height="36"
-                            title="ثبت پاسخ"
-                            class="btn--cancel">
-                            ثبت پاسخ
-                        </v-btn>
-                    </header>
+                            <v-btn
+                                v-if="singleTicket?.status !== 'resolved'"
+                                href="/user/ticket"
+                                height="45"
+                                title="بازگشت"
+                                class="btn--cancel br12">
+                                بازگشت
+                            </v-btn>
+                        </header>
 
-                    <div class="single-ticket flex-grow-1 d-flex flex-column" :class="isMobile === true ? 'px-3 mb-2' : 'px-6 mb-8'">
-                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" />
+                        <generalTicketSingleInfoCard v-if="singleTicket" :content="singleTicket" :more="singleTicket?.threads.length > 0 ? true : false"/>
 
-                        <div v-if="singleTicket" class="single-ticket__list">
-                            <generalTicketUserAnswer :content="singleTicket.content" :fileList="singleTicket.files"/>
+                        <div v-if="singleTicket?.threads && singleTicket?.threads.length > 0" class="v-ticket__list mt-6">
+                            
+                            <div class="v-ticket__list__sort" v-for="(ticketListByDate, index) in singleTicket.threads" :key="`parent${index}`">
+                                <header v-if="ticketListByDate.date" class="d-flex align-center justify-center">
+                                    <span class="bg-white px-2">
+                                        <span class="px-4 py-2 t10 w400 text-primary number-font s-border br12">{{ticketListByDate.date}}</span>
+                                    </span>
+                                </header>
 
-                            <template v-if="singleTicket.threads">
-                                <template v-for="ticket in singleTicket.threads" :key="ticket.id">
-                                    <template v-if="ticket.creator === 'user'">
-                                        <generalTicketUserAnswer :content="ticket.content" :fileList="ticket.files"/>
-                                    </template>
-                                    <template v-if="ticket.creator === 'admin'">
-                                        <generalTicketAdminAnswer :content="ticket.content" :fileList="ticket.files"/>
-                                    </template>
+                                <template v-if="ticketListByDate.items">
+                                    <generalTicketAnswerCard v-for="(ticket, index2) in ticketListByDate.items"  :key="`child${index2}`" @updateData="updateData" :lastThread = "index === 0 && index2 === 0 && ticket?.creator === 'admin' && singleTicket?.status !== 'resolved'  ? true : false" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
                                 </template>
-                            </template>
+                            </div>
                         </div>
                     </div>
                 </v-card>
+                <div class="v-ticket__mobile-no-threads" v-if="isMobile && singleTicket?.status === 'open' ||singleTicket?.status ===  'pending'">
+                    <img src="~/assets/images/emptyTicketTheards.svg"/>
+                    <div>
+                        <span class="text-white t14 w700 mb-1 d-block">پشتیبانی هنوز پاسخی نداده</span>
+                        <div class="d-flex align-center">
+                            <v-icon color="white" icon="mdi-phone-in-talk-outline" size="small"/>
+                            <span class="t10 text-white ml-2 d-block"> شماره پشتیبانی: ۹۱۰۳۲۳۴۳-۰۲۱</span>
+                            <span class="t10 text-white ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
+                        </div>
 
-                <v-divider
-                    v-if="isMobile"
-                    color="grey-lighten-1"
-                    class="mb-3" />
-
-                <div v-if="!showAnswerBox && singleTicket?.status !== 'resolved'" class="xs-show px-3">
-                    <v-btn
-                        @click="showAnswer()"
-                        height="36"
-                        title="ثبت پاسخ"
-                        class="btn--cancel w-100">
-                        ثبت پاسخ
-                    </v-btn>
+                    </div>
                 </div>
 
-                <v-card v-if="showAnswerBox && singleTicket?.status !== 'resolved'" class="pa-8 mobile-pa-0 mobile-no-border">
-                    <div class="ticket__form px-3">
-                        <v-form ref="ticket" v-model="valid">
-                            <v-row>
-                                <v-col cols="12" class="ticket__form__item ticket__form__item--text-field">
-                                    <label class="d-block t12 text-grey-darken-3 mb-2">توضیحات </label>
-
-                                    <v-textarea
-                                        variant="outlined"
-                                        v-model="form.content"
-                                        placeholder="توضیحات را اینجا بنویسید"
-                                        hide-details
-                                        rows="3" />
-                                </v-col>
-
-                                <v-col cols="12" class="ticket__form__item ">
-                                    <label class="d-block t12 text-grey-darken-3 mb-1">تصویر یا ویدیو </label>
-                                    <span class="t11 w400 text-grey mb-3 d-block">در صورت نیاز، تصویر یا ویدیو مورد نظر خود را بارگذاری نمایید.</span>
-
-                                    <generalUploader ref="imageUploader" @getImage="getImage" />
-                                </v-col>
-                            </v-row>
-
-                            <v-divider color="grey" class="my-5" />
-                        </v-form>
-                        <div class="d-flex justify-end w-100 mobile-pa-0 align-center">
-                            <v-btn
-                                href="/user/ticket"
-                                height="44"
-                                title="انصراف"
-                                class="btn btn--cancel ml-5">
-                                انصراف
-                            </v-btn>
-
-                            <v-btn
-                                :loading="loading"
-                                @click="addAnswer()"
-                                height="44"
-                                class="btn btn--submit px-8"
-                                title="ثبت تیکت">
-                                ثبت تیکت
-                            </v-btn>
-                        </div>
-                    </div>
-                </v-card>
+                <div v-if="isMobile" class="xs-show px-3">
+                    <v-btn
+                        href="/user/ticket"
+                        height="45"
+                        title="بستن جزئیات"
+                        block
+                        class="btn--cancel w-100 br12 no-shadow">
+                        بستن جزئیات
+                    </v-btn>
+                </div>
             </div>
         </v-row>
     </v-container>
@@ -182,54 +144,11 @@ export default {
             this.showAnswerBox = !this.showAnswerBox
         },
 
-        /**
-         * Add answer
-         */
-        addAnswer() {
-            this.loading = true;
-
-            const formData = new FormData();
-
-          console.log(this.images, 'image')
-
-            formData.append('content', this.form.content)
-            if (this.images) {
-                this.images.forEach((image, index) => {
-                    formData.append(`files_id[${index}]`, image)
-                })
+        updateData(value){
+            if(value === true){
+                this.getUserTicketById();
             }
-
-            axios
-                .post(this.runtimeConfig.public.apiBase + `/ticket/user/crud/update/threads/${this.$route.params.id}`, formData, {
-                    headers: {
-                        Authorization: `Bearer ${this.userToken}`,
-                    },
-                })
-                .then((response) => {
-                    useNuxtApp().$toast.success('پاسخ شما با موفقیت ارسال شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                    this.getUserTicketById();
-                    this.form= {
-                        content: null,
-                    },
-
-                    this.images = [];
-                    this.$refs.imageUploader.files = [];
-                    this.showAnswerBox = false;
-                })
-                .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }).finally(() => {
-                    this.loading = false;
-                });
-        },
+        }
     },
 
     mounted() {

@@ -9,7 +9,11 @@
     <v-container v-show="!loading">
         <v-row v-if="screenType === 'desktop'">
             <v-col cols="6" class="d-flex align-center">
-                <div class="t18 w700 text-sGrayDarken2">{{ pageTitle }}</div>
+                <div>
+                  <h1 class="t18 w700 text-sGrayDarken2">
+                    {{ pageTitle }}
+                  </h1>
+                </div>
             </v-col>
             <v-col cols="6">
                 <generalBreadcrumb :items="breadcrumbList" icon />
@@ -114,7 +118,7 @@ export default {
     },
 
     setup() {
-        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات فروشگاه شاواز')
+        const title = ref('فروشگاه اینترنتی شاواز | لیست محصولات ')
         const runtimeConfig = useRuntimeConfig()
 
         const {

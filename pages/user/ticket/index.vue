@@ -9,7 +9,7 @@
 
     <v-container>
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
 
@@ -24,22 +24,27 @@
                         </header>
 
                         <div class="px-3" :class="screenType === 'desktop' ? 'pb-5' : ''">
-                            <GeneralTicketTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedTickets" showAll AllTitle="همه تیکت ها" componentName="generalTicketCard" emptyText=" با کلیک بر روی دکمه زیر می‌توانید یک تیکت جدید ارسال کنید." emptyTitle="تیکتی" emptyButtonLink="/user/ticket/new" emptyButtonText="ثبت تیکت"/>
+                            <GeneralTicketTab :class="screenType === 'desktop' ? 'pr-5' : ''" :scroll="screenType === 'desktop' ? true : false" :height="screenType === 'desktop' ? '500px' : 'auto'" :tabHeader="statusList" :items="categorizedTickets" showAll AllTitle="همه تیکت ها" componentName="generalTicketCard" emptyText=" با کلیک بر روی دکمه زیر می‌توانید یک تیکت جدید ارسال کنید." emptyTitle="تیکتی" emptyButtonLink="/user/ticket/new" emptyButtonText="ثبت تیکت" :hideButton="screenType === 'desktop' ? false : true"/>
                         </div>
 
+                        <div v-if="screenType === 'mobile'" class="w-100 d-flex justify-center px-4 v-ticket__submit--mobile">
+                            <v-btn href="/user/ticket/new" height="44" block title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 mb-5 mx-5 px-7">
+                                ثبت تیکت
+                            </v-btn>
+                        </div>
                     </template>
 
                     <template v-else>
                         <div class="flex-grow-1 d-flex flex-column mb-8">
-                            <div class="d-flex flex-column justify-center align-center pt-10">
+                            <div class="d-flex flex-column justify-center align-center pt-10 px-4">
                                 <img src="~/assets/images/empty-ticket.png" class="ml-10" alt="ticket image" width="171" height="162">
 
-                                <span class="t18 w700 text-sGrayDarken2 mt-2">هنوز تیکتی ثبت نکرده‌اید</span>
+                                <span class="t18 w700 text-sGrayDarken2 mt-2 text-center">هنوز تیکتی ثبت نکرده‌اید</span>
 
-                                <p class="t12 w500 text-sGrayDarken1 mt-3 mb-6">
+                                <p class="t12 w500 text-sGrayDarken1 mt-3 mb-6 text-center">
                                     تیکتی ثبت نشده است. با کلیک بر روی دکمه زیر می‌توانید یک تیکت جدید ارسال کنید.
                                 </p>
-                                <v-btn href="/user/ticket/new" height="44" title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 px-7">
+                                <v-btn href="/user/ticket/new" height="44" title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 px-7" :block="screenType === 'mobile' ? true : false">
                                     ثبت تیکت
                                 </v-btn>
                             </div>
@@ -60,8 +65,13 @@ export default {
             screenType: 'desktop',
             statusList: [{
                     name: 'open',
-                    label: 'باز',
+                    label: 'باز نشده',
                     icon: 'mdi-message-outline'
+                },
+                {
+                    name: 'pending',
+                    label: 'در حال بررسی',
+                    icon: 'mdi-message-arrow-right-outline'
                 },
                 {
                     name: 'answered',
@@ -72,21 +82,6 @@ export default {
                     name: 'resolved',
                     label: 'بسته شده',
                     icon: 'mdi-message-off-outline'
-                },
-                {
-                    name: 'postponed',
-                    label: 'متوقف شده',
-                    icon: 'mdi-message-text-lock-outline'
-                },
-                {
-                    name: 'seen',
-                    label: 'دیده شده',
-                    icon: 'mdi-message-check-outline'
-                },
-                {
-                    name: 'pending',
-                    label: 'در انتظار پاسخ',
-                    icon: 'mdi-message-arrow-right-outline'
                 }
             ]
         }

@@ -1,5 +1,5 @@
 <template>
-<section class="address-card">
+<section class="address-card" :class="screenType === 'mobile' ? 'px-2' : ''">
     <div class="d-flex align-center justify-space-between">
         <div class="flex-grow-1 d-flex align-center address-card__info">
             <div class="d-flex align-center">
@@ -109,6 +109,12 @@ import axios from "axios";
 import auth from "~/middleware/auth.js";
 
 export default {
+
+  data(){
+    return{
+      screenType:null,
+    }
+  },
     setup() {
         const runtimeConfig = useRuntimeConfig()
         const userToken = useCookie('userToken');
@@ -167,6 +173,13 @@ export default {
                 });
         },
     },
+
+  mounted() {
+    /**
+     * Check screen size
+     */
+    window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+  },
 }
 </script>
 

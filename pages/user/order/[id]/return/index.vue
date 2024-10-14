@@ -1,5 +1,5 @@
 <template>
-<main class="v-order v-order--return">
+<main class="v-order v-order--return pt-15">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/order" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
@@ -9,7 +9,7 @@
 
     <v-container>
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
             <div class="col-9 pa-4 mobile-pa-0">

@@ -4,27 +4,21 @@
         <nav class="s-tab__header">
             <ul class="ma-0 pa-0">
                 <li v-if="showAll" :class="{ active: selectedTab === 'all' }" @click="activeTab('all')" id="tab-header-all" class="s-tab__header__item">
-                    <v-icon icon="mdi-message-processing-outline" class="ml-1" />
+                    <v-icon icon="mdi-message-processing-outline" class="ml-2" color="sGrayLighten2"/>
                     <span>{{ AllTitle }}</span>
                 </li>
 
                 <li v-for="(tab, index) in tabHeader" :key="`s-tab__${index}`" :class="{ 'active': selectedTab === tab.name }" @click="activeTab(tab.name , tab.label)" :id="`tab-header-${tab.name}`" class="s-tab__header__item">
-                    <v-icon v-if="tab.icon" :icon="tab.icon" class="ml-1" />
+                    <v-icon v-if="tab.icon" :icon="tab.icon" class="ml-2" color="sGrayLighten2"/>
                     <span>{{ tab.label }}</span>
                 </li>
             </ul>
         </nav>
-        <div class="s-tab__contents py-2" :class="{'active-scroll pl-5' : scroll}" :style="{height : `${height}`}">
+        <div class="s-tab__contents py-2" :class="{'active-scroll pl-4' : scroll}" :style="{height : `${height}`}">
             <div class="s-tab__content">
-              <template v-if="filteredData?.length">
-                <component v-for="(item, index) in filteredData" :key="`tab-content-${index}`" :is="component" :content="item" />
-                <div class="w-100 d-flex justify-center px-4">
-                  <v-btn v-if="screenType === 'mobile'" href="/user/ticket/new" height="44" block title=" ثبت تیکت" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 mb-5 mx-5 px-7">
-                    ثبت تیکت
-                  </v-btn>
-
-                </div>
-              </template>
+                <template v-if="filteredData?.length">
+                    <component v-for="(item, index) in filteredData" :key="`tab-content-${index}`" :is="component" :content="item" />
+                </template>
 
                 <div v-else class="flex-grow-1 d-flex flex-column mb-8">
                     <div class="d-flex flex-column justify-center align-center pt-10">
@@ -36,15 +30,8 @@
                             {{ emptyText }}
                         </p>
 
-                        <v-btn
-                            :href="emptyButtonLink"
-                            height="44"
-                            :title="emptyButtonText"
-                            color="primary"
-                            prepend-icon="mdi-message-processing-outline"
-                            class="btn btn--submit br12 px-7">
-                          
-                          {{emptyButtonText}}
+                        <v-btn v-if="!hideButton" :href="emptyButtonLink" height="44" :title="emptyButtonText" color="primary" prepend-icon="mdi-message-processing-outline" class="btn btn--submit br12 px-7">
+                            {{emptyButtonText}}
                         </v-btn>
                     </div>
                 </div>
@@ -53,7 +40,7 @@
     </div>
 </section>
 </template>
-
+  
 <script>
 import {
     resolveComponent
@@ -127,10 +114,12 @@ export default {
             default: auth
         },
 
-        emptyTitle:String,
-        emptyText:String,
-        emptyButtonText:String,
-        emptyButtonLink:String,
+
+        emptyTitle: String,
+        emptyText: String,
+        hideButton:Boolean,
+        emptyButtonText: String,
+        emptyButtonLink: String,
     },
 
     setup(props) {
@@ -178,7 +167,8 @@ export default {
     },
 }
 </script>
-
+  
+  
 <style>
 @import '~/assets/scss/components/general/s-tab.scss';
 </style>

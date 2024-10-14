@@ -1,5 +1,5 @@
 <template>
-<main class="v-wallet">
+<main class="v-wallet pt-15">
     <header class="v-user__mobile-page-head xs-show">
         <a href="/user/dashboard" class="ml-3">
             <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
@@ -12,13 +12,13 @@
             <div class="col-3 pa-3 xs-hide">
                 <generalUserSidebar />
             </div>
-            <div class="col-9">
+            <div class="col-9" :class="screenType === 'mobile' ? 'mt-15 ' : ''">
                 <v-row class="ma-0 pa-0">
                     <div class="col-5 pa-3">
                         <generalWalletCard :wallet="userWallet.wallet?.wallet" />
                     </div>
 
-                    <div class="col-7 pa-3">
+                    <div class="col-7 pa-3" >
                         <generalWalletTransaction :details="userWallet?.total" :tableHeader="tableHeader" :items="formatTransaction" />
                     </div>
                 </v-row>
@@ -37,6 +37,7 @@ export default {
 
     data() {
         return {
+          screenType:null,
             tableHeader: [{
                 title: 'ردیف',
                 key: 'index',
@@ -132,6 +133,7 @@ export default {
         }
     },
 
+
     mounted() {
         this.getUserWallet();
 
@@ -141,6 +143,8 @@ export default {
         if (token) {
             this.getTransactionData()
         }
+      window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+
     },
 }
 </script>

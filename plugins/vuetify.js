@@ -56,6 +56,9 @@ const myTheme = {
     sInfoLighten1: '#E1F5FE',
     sInfoLighten2: '#E1F5FE',
 
+    sYellow: '#F9A825',
+    sYellowLighten2: '#FFFDE7',
+
     sGray: '#6A6A6A',
     sGrayLighten1: '#9E9E9E',
     sGrayLighten2: '#9A9A9A',

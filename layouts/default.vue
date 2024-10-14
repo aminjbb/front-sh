@@ -12,7 +12,7 @@
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug'">
                 <desktopFooter />
             </template>
-            <template v-if="$route.name === 'index'">
+           <template v-if="$route.name === 'index'">
                 <generalModalsLogin :signupStatus="!loginStatus" image="voucher-login.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید" />
             </template>
         </div>
@@ -25,7 +25,7 @@
             <template v-if="$route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
                 <mobileFooter :userData="userData" />
             </template>
-            <template v-if="$route.name === 'index'">
+           <template v-if="$route.name === 'index'">
                 <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login-m.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید" />
             </template>
         </div>
@@ -60,7 +60,7 @@ export default {
             return this.$store.getters['get_loadingModal']
         },
         hasMobileHeader() {
-            const allowedName = ['index', 'user-dashboard', 'sku-slug', 'sku-group-slug', 'search', 'faq', 'rules-general-rules',
+            const allowedName = ['index', 'sku-slug', 'sku-group-slug', 'search', 'faq', 'rules-general-rules','categories', 
                 'rules-how-to-trade', 'rules-information', 'rules-iranian-products', 'rules-my-orders', 'rules-office-rights', 'rules-product-return', 'rules-standard'
             ]
             // allowedName.forEach(item => {
