@@ -27,8 +27,7 @@ export default function setup() {
     const structuredData = ref(null)
     const structuredDataBreadcrumb = ref(null)
     const loading = ref(true)
-
-
+    const event = useRequestEvent()
     async function getPdpData(orderType) {
         axios.get(runtimeConfig.public.apiBase + `/product/pdp/info/${route.params.slug}`,
             {
@@ -70,6 +69,7 @@ export default function setup() {
                         },
                         params: {...route.query}
                     }).catch((error) => {
+                        setResponseStatus(event, error.response.status)
                         showError({
                             statusCode: error.response.status,
                             statusMessage: error.response.statusText
