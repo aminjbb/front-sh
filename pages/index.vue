@@ -96,9 +96,6 @@
                         </div>
                     </section>
                 </div>
-              </div>
-            </section>
-          </div>
         </template>
       </div>
     </div>
