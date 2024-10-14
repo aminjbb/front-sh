@@ -57,8 +57,10 @@ export default function setup() {
                         "@type": "ListItem",
                         "position": index+1,
                         "name": value.name,
-                        "item": key.includes('category') ? `${runtimeConfig.public.siteUrl}/category/${value.slug}` : key.includes('product') ? `${runtimeConfig.public.siteUrl}/product/${value.slug}`: key.includes('sku_group') ? `${runtimeConfig.public.siteUrl}/sku-group/${value.slug}`: ''
-                    }
+                        "item": {
+                            "@type":"corporation",
+                            "id":`${runtimeConfig.public.siteUrl}${value.slug}`
+                        }}
                     schemaBreadcrumbList.push(schemaObj);
                 });
                 /** breadcrumb schema structure */
@@ -147,7 +149,7 @@ export default function setup() {
                                     },
                                     "aggregateRating":{
                                         "@type":"AggregateRating",
-                                        "ratingValue":3,// fix after fix api
+                                        "ratingValue":item?.score,// fix after fix api
                                         "reviewCount":item?.review_count// fix after fix api
                                     },
                                     "image":item.image_url
@@ -159,7 +161,7 @@ export default function setup() {
                         /** item list schema structure */
                         structuredDataItem.value = {
                             "@context": "http://schema.org/",
-                            "@type": "BreadcrumbList",
+                            "@type": "itemList",
                             itemListElement : schemaList
                         }
                         /** Set useHead for schema */
