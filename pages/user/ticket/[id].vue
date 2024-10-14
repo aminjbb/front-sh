@@ -41,7 +41,7 @@
                                 </header>
 
                                 <template v-if="ticketListByDate.items">
-                                    <generalTicketAnswerCard v-for="(ticket, index2) in ticketListByDate.items"  :key="`child${index2}`" @updateData="updateData" :lastThread = "index === 0 && index2 === 0 && ticket?.creator === 'admin'  ? true : false" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
+                                    <generalTicketAnswerCard v-for="(ticket, index2) in ticketListByDate.items"  :key="`child${index2}`" @updateData="updateData" :lastThread = "index === 0 && index2 === 0 && ticket?.creator === 'admin' && singleTicket?.status !== 'resolved'  ? true : false" :content="ticket" class="mb-6" :status="ticket?.creator === 'admin' ? 'admin' : 'user'" :class="ticket?.creator === 'admin' ? 'pb-9' : ''"/>
                                 </template>
                             </div>
                         </div>
