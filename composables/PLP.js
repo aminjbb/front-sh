@@ -28,7 +28,7 @@ export default function setup() {
     const selectedLastCategory = ref(null)
     const structuredDataItem = ref(null)
     const parentCategory = ref(null)
-
+    const event = useRequestEvent()
     function checkRouteForSlug() {
         if (route.name != 'search') {
              return route.params.slug
@@ -101,6 +101,7 @@ export default function setup() {
                     },
                     params: {...route.query}
                 }).catch(error=>{
+                    setResponseStatus(event, error.response.status)
                     showError({
                         statusCode: error.response.status,
                         statusMessage: error.response.statusText
