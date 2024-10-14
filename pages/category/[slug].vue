@@ -8,7 +8,7 @@
     </v-container>
 
     <div v-show="!loading">
-        <generalProductCategorySlider :items="categoryList" :title="screenType === 'desktop' ? `دسته بندی ${pageTitle}` : pageTitle"/>
+        <generalProductCategorySlider :items="categoryList" :title="parentCategoryLabel"/>
     </div>
 
     <v-container v-show="!loading">
@@ -185,6 +185,8 @@ export default {
     },
 
     computed: {
+
+
         /**
          * BreadCrumb
          */
@@ -257,6 +259,28 @@ export default {
                 return []
             }
         },
+        categoryTitle(){
+            const selected= this.categoryList.find(element => element.is_selected)
+            if (selected) return  this.secondaryData.data.data.parent_category.label
+            else return  this.secondaryData.data.data.page.label
+        },
+      /**
+         * Return parent category label
+         */
+        parentCategoryLabel() {
+            try {
+              if (this.screenType === 'desktop'){
+                return  `دسته بندی ${this.categoryTitle}`
+              }
+              else{
+                return  this.categoryTitle
+              }
+            } catch (e) {
+                return []
+            }
+        },
+
+
     },
 
     methods: {
