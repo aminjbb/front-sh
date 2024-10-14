@@ -1,154 +1,174 @@
 <template>
 <client-only>
     <footer class="footer footer--desktop">
+      <div class="footer__logo">
+        <button @click="scrollToTop">
+          <span class="t12 text-grey-darken-1">بازگشت به بالا</span>
+          <v-icon icon="mdi-chevron-up" />
+        </button>
+      </div>
     <v-container>
-        <div class="footer__logo">
+      <v-divider class="mb-8"/>
+      <v-row>
+        <v-col cols="7">
+          <p :class="{'show': show}" class="t14 w500 l32 text-grey" v-html="show ? fullText : shortText" />
+          <span class="d-flex align-center justify-end t12 w700 text-primary l32 cursor-pointer" @click="showMore()">
+            <span class="t12 w700">{{ show ? 'بستن' : 'نمایش بیشتر' }}</span>
+             <v-icon
+                 class="mr-1 cursor-pointer"
+                 :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+                 size="16"
+                 color="primary" />
+          </span>
+
+          <div class="footer__menus">
+            <div>
+              <p class="t14 w700 mb-4 text-grey-darken-2">درباره شاواز</p>
+              <ul>
+                <li><a href="/about" class="t12 mb-4 text-grey">درباره ما</a></li>
+                <li><a href="/contact" class="t12 mb-4 text-grey">تماس با ما</a></li>
+                <li><a href="/faq" class="t12 mb-4 text-grey">سوالات متداول</a></li>
+                <li><a href="/" class="t12 mb-4 text-grey">فرصت‌های شغلی</a></li>
+                <li><a href="/" class="t12 mb-4 text-grey">قوانین و مقررات</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <p class="t14 w700 mb-4 text-grey-darken-2">راهنمای خرید</p>
+              <ul>
+                <li><a href="/faq" class="t12 mb-4 text-grey">نحوه ثبت سفارش</a></li>
+                <li><a href="/faq" class="t12 mb-4 text-grey">روش‌های پرداخت</a></li>
+                <li><a href="/faq" class="t12 mb-4 text-grey">فرآیند مرجوعی</a></li>
+                <li><a href="/faq" class="t12 mb-4 text-grey">شرایط مرجوعی</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <p class="t14 w700 mb-4 text-grey-darken-2">دسترسی سریع</p>
+              <ul>
+                <li><a href="/category/category-cosmetic/" class="t12 mb-4 text-grey">لوازم آرایشی</a></li>
+                <li><a href="/category/category-skin-care" class="t12 mb-4 text-grey">مراقبت از پوست</a></li>
+                <li><a href="/category/category-detergents" class="t12 mb-4 text-grey">بهداشت خانگی</a></li>
+                <li><a href="/category/category-baby-care" class="t12 mb-4 text-grey">مراقبت از کودکان</a></li>
+                <li><a href="/category/category-personal-care" class="t12 mb-4 text-grey">لوازم بهداشتی</a></li>
+                <li><a href="/category/category-personal-care" class="t12 mb-4 text-grey">گردونه شانس</a></li>
+              </ul>
+            </div>
+          </div>
+        </v-col>
+
+        <v-col cols="5">
+          <div class="d-flex align-center justify-end">
             <a href="/" title="Shavaz logo">
-                <img data-not-lazy src="~/assets/images/shavaz-logo.svg" class="logo-shz" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
+              <img data-not-lazy src="~/assets/images/shavaz-logo.svg" class="logo-shz" alt="Shavaz Logo" width="88.94" height="31.59" title="Shavaz Logo" />
             </a>
+          </div>
 
-            <button @click="scrollToTop">
-                <span class="t12 text-grey-darken-1">
-                    بازگشت به بالا
-                </span>
-                <v-icon icon="mdi-arrow-up-thin" />
-            </button>
-        </div>
+          <div class="bg-grey-lighten-3 py-3 rounded-lg mt-8 text-center">
+            <span class="t14 w700 text-grey-darken-2 text-center">
+              پشتیبانی شاواز
+              <span class="t14 w500 text-grey mr-1">شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲</span>
+            </span>
 
-        <v-row>
-            <v-col cols="12" md="7">
-                <div class="footer__menus">
-                    <div>
-                        <header class="t16 mb-4">دسترسی سریع</header>
-                        <ul>
-                            <li><a href="/category/category-cosmetic/" class="t13 text-grey">لوازم آرایشی</a></li>
-                            <li><a href="/category/category-skin-care" class="t13 text-grey">مراقبت از پوست</a></li>
-                            <li><a href="/category/category-detergents" class="t13 text-grey">بهداشت خانگی</a></li>
-                            <li><a href="/category/category-baby-care" class="t13 text-grey">مراقبت از کودکان</a></li>
-                            <li><a href="/category/category-personal-care" class="t13 text-grey">لوازم بهداشتی</a></li>
-                        </ul>
-                    </div>
+            <div class="d-flex justify-center mt-1">
+              <v-icon color="grey-darken-2" icon="mdi-phone-in-talk-outline" size="20"/>
+              <span class="t14 text-grey ml-2 d-block"> ۰۲۱-۹۱۰۳۲۳۴۳ </span>
+              <span class="t14 text-grey ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
+            </div>
+          </div>
 
-                    <div>
-                        <header class="mb-4">
-                            <h4 class="t16">درباره شاواز</h4>
-                        </header>
-                        <ul>
-                            <li><a href="/about" class="t13 text-grey">درباره ما</a></li>
-                            <li><a href="/contact" class="t13 text-grey">تماس با ما</a></li>
-                            <li><a href="/faq" class="t13 text-grey">سوالات متداول</a></li>
-                            <li><a href="/" class="t13 text-grey">فرصت‌های شغلی</a></li>
-                            <li><a href="/" class="t13 text-grey">فروشنده شوید</a></li>
-                        </ul>
-                    </div>
+          <div class="footer__search-box d-flex align-center ga-2 mt-8">
+            <v-text-field
+                color="grey-lighten-3"
+                density="compact"
+                variant="outlined"
+                label="برای اطلاع از آخرین تخفیف‌‌ها ایمیل خود را وارد کنید"
+                single-line
+                hide-details
+                @click:append-inner="onClick" />
+            <div>
+              <v-btn
+                  @click="onClick"
+                  class="rounded-lg t14 w700"
+                  height="45"
+                  width="108"
+                  color="primary"
+                  flat
+                  type="submit">
+                ثبت ایمیل
+              </v-btn>
+          </div>
+          </div>
+          
+          <div class="d-flex justify-space-between mt-8">
+            <p class="t14 w700 mb-4 mt-4">شبکه‌های اجتماعی</p>
 
-                    <div>
-                        <header class="mb-4">
-                            <h4 class="t16">راهنمای خرید</h4>
-                        </header>
-                        <ul>
-                            <li><a href="/faq" class="t13 text-grey">نحوه ثبت سفارش</a></li>
-                            <li><a href="/faq" class="t13 text-grey">روش‌های پرداخت</a></li>
-                            <li><a href="/faq" class="t13 text-grey">شیوه‌های ارسال</a></li>
-                            <li><a href="/faq" class="t13 text-grey">شرایط مرجوعی</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </v-col>
-            <v-col cols="12" md="5">
-                <header class="mb-4 mt-4">
-                   <h4 class="t16"> با ما در ارتباط باشید</h4>
-                </header>
+            <div class="footer__social-media mb-7">
+              <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
+                <svg class="custom-svg-icon" width="30" height="30" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 6.58594C0 3.27223 2.68629 0.585938 6 0.585938H26C29.3137 0.585938 32 3.27223 32 6.58594V26.5859C32 29.8996 29.3137 32.5859 26 32.5859H6C2.68629 32.5859 0 29.8996 0 26.5859V6.58594Z" fill="#3C3C3C"/>
+                  <path d="M24.3044 8.41118C21.6661 9.56857 10.3517 14.5291 7.22592 15.8809C5.12974 16.7467 6.35708 17.5581 6.35708 17.5581C6.35708 17.5581 8.14598 18.2088 9.68059 18.695C11.2152 19.183 12.0328 18.6407 12.0328 18.6407L19.2414 13.497C21.7985 11.6571 21.184 13.1716 20.5712 13.8223C19.2414 15.2303 17.0428 17.4497 15.2027 19.2353C14.3851 19.9926 14.793 20.6433 15.1515 20.9667C16.4813 22.1578 20.112 24.5941 20.3151 24.7568C21.3959 25.5664 23.5203 26.7313 23.8435 24.2688L25.122 15.7688C25.5317 12.9005 25.9397 10.2473 25.9909 9.49004C26.1445 7.64831 24.3044 8.40744 24.3044 8.40744V8.41118Z" fill="#F5F5F5"/>
+                </svg>
+              </a>
 
-                <div class="footer__social-media mb-7">
-                    <a href="https://www.instagram.com/shavazcom" title="Shavaz instagram account | اکانت اینستاگرام شاواز ">
-                        <v-icon icon="mdi-instagram" />
-                    </a>
+              <a href="https://www.instagram.com/shavazcom" title="Shavaz instagram account | اکانت اینستاگرام شاواز ">
+                <v-icon icon="mdi-instagram" />
+              </a>
 
-                    <a href="https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4" title="Shavaz youtube account | اکانت یونیوب شاواز ">
-                        <v-icon icon="mdi-youtube" />
-                    </a>
+              <a href="https://twitter.com/ShavazCom" title="Shavaz twitter account | اکانت تویتر شاواز ">
+                <v-icon icon="mdi-twitter" />
+              </a>
 
-                    <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
-                        <svg class="custom-svg-icon" xmlns="http://www.w3.org/2000/svg" width="30" height="29" viewBox="0 0 28 28" fill="gray">
-                            <g clip-path="url(#clip0_322_133)">
-                                <path d="M28 14C28 17.713 26.525 21.274 23.8995 23.8995C21.274 26.525 17.713 28 14 28C10.287 28 6.72601 26.525 4.10051 23.8995C1.475 21.274 0 17.713 0 14C0 10.287 1.475 6.72601 4.10051 4.10051C6.72601 1.475 10.287 0 14 0C17.713 0 21.274 1.475 23.8995 4.10051C26.525 6.72601 28 10.287 28 14ZM14.5022 10.3355C13.1407 10.9025 10.4178 12.075 6.33675 13.853C5.67525 14.1155 5.327 14.3745 5.2955 14.6265C5.243 15.0517 5.77675 15.2198 6.503 15.449L6.80925 15.5453C7.52325 15.778 8.48575 16.0492 8.9845 16.0597C9.4395 16.0702 9.94525 15.8848 10.5035 15.4998C14.3167 12.9255 16.2855 11.6252 16.408 11.5972C16.4955 11.5763 16.618 11.5518 16.6985 11.6252C16.7808 11.697 16.772 11.8352 16.7633 11.872C16.7108 12.0977 14.616 14.0437 13.5327 15.0518C13.195 15.3667 12.9552 15.589 12.9062 15.6398C12.7984 15.75 12.6887 15.8585 12.5772 15.9653C11.9122 16.6058 11.4152 17.0853 12.6035 17.8693C13.1757 18.2473 13.6342 18.557 14.091 18.8685C14.588 19.208 15.085 19.5457 15.729 19.9692C15.8917 20.0743 16.0493 20.188 16.2015 20.2965C16.7808 20.7095 17.304 21.0805 17.9463 21.021C18.3207 20.986 18.7075 20.636 18.9035 19.586C19.3673 17.1063 20.279 11.7355 20.489 9.52175C20.5018 9.33772 20.4942 9.15284 20.4662 8.9705C20.4498 8.82336 20.3786 8.6878 20.2668 8.59075C20.1075 8.48083 19.9177 8.42389 19.7243 8.428C19.1992 8.43675 18.389 8.7185 14.5022 10.3355Z" fill="#616161" />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_322_133">
-                                    <rect
-                                        width="28"
-                                        height="28"
-                                        fill="white" />
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </a>
+              <a href="https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4" title="Shavaz youtube account | اکانت یونیوب شاواز ">
+                <v-icon icon="mdi-youtube" />
+              </a>
 
-                    <a href="https://twitter.com/ShavazCom" title="Shavaz twitter account | اکانت تویتر شاواز ">
-                        <v-icon icon="mdi-twitter" />
-                    </a>
+              <a href="https://www.linkedin.com/company/shavaz/about" title="shavaz linkedin account | اکانت لینکدین شاواز ">
+                <v-icon icon="mdi-linkedin" />
+              </a>
+            </div>
+          </div>
 
-                    <a href="https://www.linkedin.com/company/shavaz/about" title="shavaz linkedin account | اکانت لینکدین شاواز ">
-                        <v-icon icon="mdi-linkedin" />
-                    </a>
-                </div>
-
-                <div class="footer__search-box">
-                    <p class="t12 text-grey-darken-1 mb-3">برای اطلاع از آخرین تخفیف‌ها، ایمیل خود را ثبت نمایید.</p>
-                    <v-text-field
-                        color="grey-lighten-3"
-                        density="compact"
-                        variant="solo"
-                        label="ثبت ایمیل "
-                        append-inner-icon="mdi-email-outline"
-                        single-line
-                        hide-details
-                        @click:append-inner="onClick" />
-                </div>
-            </v-col>
-        </v-row>
-
-        <v-row class="footer__row2" align="center">
-            <v-col cols="12" lg="8">
-                <div class="footer__contact-us d-flex align-center">
-                    <v-icon color="grey-darken-1" icon="mdi-phone-in-talk-outline" />
-                    <span class="t14 text-grey-darken-1 ml-2 d-block"> پشتیبانی شاواز : ۹۱۰۳۲۳۴۳-۰۲۱</span>
-                    <span class="t14 text-grey-darken-1 ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
-                    <span class="t14 text-grey-darken-1">| شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲.</span>
-                </div>
-            </v-col>
-
-            <v-col cols="12" lg="4">
-                <div class="footer__logo-hologram">
-                    <a href="/" title="Shavaz hologram">
-                        <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="61" title="" />
-                    </a>
-
-                  <a title="Shavaz Enamad" referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF'><img width="52" height="61" referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF' alt='' style='cursor:pointer' Code='NdHOlUV0i4UFPJJJ5LXF'></a>
-
-
-                  <a href="/" >
-                        <img data-not-lazy src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="52" height="61" title="" />
-                    </a>
-
-                    <a href="/" title="Shavaz hologram">
-                        <img data-not-lazy src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="61" title="" />
-                    </a>
-                </div>
-            </v-col>
-        </v-row>
-
-        <div class="footer__copy-right-text">
-            <p>استفاده از مطالب <h5 class="d-inline t12">فروشگاه اینترنتی شاواز</h5> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
-        </div>
+        </v-col>
+      </v-row>
     </v-container>
+
+    <div class="footer-copy-right d-flex justify-space-between align-center bg-grey-lighten-3">
+        <p class="footer__copy-right-text">استفاده از مطالب <p class="d-inline t12">فروشگاه اینترنتی شاواز</p> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
+        <div class="footer__logo-hologram">
+          <a href="/" title="Shavaz hologram">
+            <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="31" title="" />
+          </a>
+
+          <a title="Shavaz Enamad" referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF'>
+            <img width="52" height="52" referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF' alt='' style='cursor:pointer' Code='NdHOlUV0i4UFPJJJ5LXF'>
+          </a>
+
+
+          <a href="/" >
+            <img data-not-lazy src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="44" height="51" title="" />
+          </a>
+
+          <a href="/" title="Shavaz hologram">
+            <img data-not-lazy src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="50" title="" />
+          </a>
+        </div>
+      </div>
 </footer>
 </client-only>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      show: false,
+      fullText: ' فروشگاه اینترنتی لوازم آرایشی و بهداشتی شاواز، مرجع مطمئن شما برای خرید لوازم آرایشی، بهداشتی و انواع محصولات مراقبتی برای آقایان، خانم‌ها و کودکان با کیفیت بالا است.<br>' +
+          '             با گشت‌و‌گذار در سایت لوازم آرایشی و بهداشتی ما، می‌توانید از برترین برندهای لوازم آرایشی با ضمانت اصالت کالا و پایین‌ترین قیمت بهره‌مند شوید. همچنین، با 7 روز ضمانت بازگشت کالا و ارسال سریع، تجربه‌ای متفاوت از خرید اینترنتی لوازم آرایشی و بهداشتی را برای خود رقم بزنید.',
+      shortText: 'فروشگاه اینترنتی لوازم آرایشی و بهداشتی شاواز، مرجع مطمئن شما برای خرید لوازم آرایشی، بهداشتی و انواع محصولات مراقبتی برای آقایان، خانم‌ها و کودکان با کیفیت بالا است...'
+    }
+  },
+
     methods: {
         /**
          * Scroll top
@@ -170,6 +190,10 @@ export default {
                 theme: 'dark'
             });
         },
+
+      showMore() {
+        this.show = !this.show;
+      },
     },
 };
 </script>
@@ -183,22 +207,20 @@ $parent: "footer";
     &--desktop {
         width: 100%;
         background: #FAFAFA;
-        display: flex;
-
-        flex-direction: column;
-
         .#{$parent}__logo {
             position: relative;
             display: flex;
-            justify-content: space-between;
+            justify-content: end;
             align-items: center;
 
-            img {
-                width: 107px;
-            }
-
             button {
-                color: #9f9b9b;
+              border: 2px solid #F3F3F3;
+              border-radius: 12px;
+              margin-left: 112px;
+              padding: 8px 16px 8px 16px;
+              color: #6A6A6A;
+              font-size: 12px;
+              font-weight: 500;
                 margin-top: 35px;
 
                 &:hover{
@@ -215,7 +237,6 @@ $parent: "footer";
                 top: 25px;
                 left: 0;
                 right: 8.5rem;
-                border-top: 0.5px solid var(--gray-400, #DDDDDD);
             }
         }
 
@@ -253,28 +274,19 @@ $parent: "footer";
             .v-input__control,
             .v-field__prepend-inner,
             .v-field__field {
-                height: 40px;
+                height: 42px;
             }
 
             .v-field {
                 box-shadow: none;
-                background: #F5F5F5;
-                border-radius: 2px;
-                border-radius: 4px !important;
+                border-radius: 8px;
+                border-radius: 8px !important;
             }
 
             .v-field__input,
             .v-field-label {
-                font-size: 13px !important;
-            }
-
-            .v-field__append-inner {
-                padding-right: 9px;
-                border-right: 1px solid #BDBDBD;
-
-                i {
-                    color: #BDBDBD;
-                }
+                font-size: 14px !important;
+                color: #6A6A6A;
             }
         }
 
@@ -292,13 +304,14 @@ $parent: "footer";
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                width: 67px;
-                height: 79px;
-                border: 1px solid var(--grey-grey-lighten-2, #e0e0e0);
+                width: 64px;
+                height: 64px;
+                border: 1px solid var(--grey-grey-lighten-1, #E8E8E8);
                 margin: 5px;
-                border-radius: 4px;
+                border-radius: 12px;
                 padding: 5px;
                 box-sizing: border-box;
+                background-color: #FFFFFF;
 
                 img {
                     object-fit: contain;
@@ -311,8 +324,8 @@ $parent: "footer";
 
             .v-icon {
                 color: white;
-                background-color: #616161;
-                border-radius: 50%;
+                background-color: #3c3c3c;
+                border-radius: 6px;
                 padding: 15px;
                 margin-left: 12px;
                 margin-bottom: 23px;
@@ -320,7 +333,10 @@ $parent: "footer";
             }
 
             .custom-svg-icon {
-                margin-left: 12px;
+              margin-left: 12px;
+              color: white;
+              border-radius: 6px;
+              background-color: #3c3c3c;
             }
         }
 
@@ -331,5 +347,12 @@ $parent: "footer";
             color: var(--grey-grey-darken-1, #757575);
         }
     }
+}
+
+.footer-copy-right {
+  padding-left: 7rem;
+  padding-right: 7rem;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 </style>

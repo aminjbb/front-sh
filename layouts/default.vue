@@ -28,6 +28,9 @@
            <template v-if="$route.name === 'index'">
                 <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login-m.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید" />
             </template>
+          <template v-if="$route.name === 'index' || $route.name ==='about' ||  $route.name ==='contact' || $route.name ==='faq'">
+            <mobileFooterMobile/>
+          </template>
         </div>
     </div>
 </v-app>
