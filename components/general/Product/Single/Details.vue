@@ -136,7 +136,7 @@
                 <span class="t13 w400 text-grey" :class="attr?.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr?.label}}: </span>
 
                 <template v-if="attr?.attribute_values">
-                    <span class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attr?.attribute_values.label}}</span>
+                    <span v-for="attrValue in attr?.attribute_values" class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attrValue.label}} </span>
                 </template>
                 <template v-else>
                     <div class="attr-select">
