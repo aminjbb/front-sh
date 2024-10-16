@@ -11,12 +11,12 @@
       <v-divider class="mb-8"/>
       <div class="d-flex align-center justify-start">
         <a href="/" title="Shavaz logo">
-          <img data-not-lazy src="~/assets/images/shavaz-logo.svg" class="logo-shz" alt="Shavaz Logo" width="88.94" height="31.59" title="Shavaz Logo" />
+          <img data-not-lazy src="~/assets/images/shavaz-logo-mobile-footer.png"  alt="Shavaz Logo" width="88" height="31" title="Shavaz Logo" />
         </a>
       </div>
 
       <div class="">
-        <p :class="{'show': show}" class="t14 w500 l32 text-grey" v-html="show ? fullText : shortText" />
+        <p :class="{'show': show}" class="t14 w500 l32 text-sGray" v-html="show ? fullText : shortText" />
         <span class="d-flex align-center justify-end t12 w700 text-primary l32 cursor-pointer" @click="showMore()">
           <span class="t12 w700">{{ show ? 'بستن' : 'نمایش بیشتر' }}</span>
            <v-icon
@@ -27,13 +27,15 @@
         </span>
       </div>
 
-      <div class="bg-grey-lighten-3 pa-3 rounded-lg mt-8">
-        <p class="t14 w700 text-right text-grey-darken-2">پشتیبانی شاواز</p>
-        <p class="t12 w500 text-grey mt-1">شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲</p>
+      <div class="bg-sGrayLighten3 br16 pa-3 rounded-lg mt-8">
+        <p class="t14 w700 text-right text-sGrayDarken2">پشتیبانی شاواز</p>
+        <p class="t12 w500 text-sGray mt-1 text-center">شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲</p>
         <div class="d-flex justify-center mt-1">
-          <v-icon color="grey-darken-2 ml-1" icon="mdi-phone-in-talk-outline" size="16"/>
-          <span class="t12 text-grey-darken-1 ml-2">۰۲۱-۹۱۰۳۲۳۴۳ </span>
-          <span class="t12 text-grey-darken-1 ml-2">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
+          <span class="ml-1">
+            <img src="@/assets/images/icons/call.svg" alt="call" width="16" height="16">
+          </span>
+          <span class="t12 w700 text-sGray ml-2">۰۲۱-۹۱۰۳۲۳۴۳ </span>
+          <span class="t12 w700 text-sGray ml-2">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
         </div>
       </div>
 
@@ -60,44 +62,57 @@
       <v-list v-model:opened="open">
         <v-list-group value="درباره شاواز">
           <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" title="درباره شاواز" class="t14 w700 text-grey-darken-2"/>
+            <v-list-item v-bind="props"  >
+              <span class="t14 w700 text-grey-darken-2">
+                درباره شاواز
+              </span>
+            </v-list-item>
           </template>
           <ul>
-            <li><a href="/about" class="t12 w700 mb-4 text-grey mr-4">درباره ما</a></li>
-            <li><a href="/contact" class="t12 w700 mb-4 text-grey mr-4">تماس با ما</a></li>
-            <li><a href="/faq" class="t12 w700 mb-4 text-grey mr-4">سوالات متداول</a></li>
-            <li><a href="/" class="t12 w700 mb-4 text-grey mr-4">فرصت‌های شغلی</a></li>
-            <li><a href="/" class="t12 w700 mb-4 text-grey mr-4">قوانین و مقررات</a></li>
+            <li class="my-1"><a href="/about" class="t12 w700 text-sGrayLighten2 mr-4">درباره ما</a></li>
+            <li class="my-1"><a href="/contact" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">تماس با ما</a></li>
+            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">سوالات متداول</a></li>
+            <li class="my-1"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرصت‌های شغلی</a></li>
+            <li class="my-1"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">قوانین و مقررات</a></li>
           </ul>
         </v-list-group>
         <v-list-group value="راهنمای خرید">
           <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" title="راهنمای خرید" class="t14 w700 text-grey-darken-2"/>
+            <v-list-item v-bind="props" class="t14 w700 text-grey-darken-2">
+                <span class="t14 w700 text-grey-darken-2">
+                راهنمای خرید
+              </span>
+            </v-list-item>
+
           </template>
           <ul>
-            <li><a href="/faq" class="t12 w700 mb-4 text-grey mr-4">نحوه ثبت سفارش</a></li>
-            <li><a href="/faq" class="t12 w700 mb-4 text-grey mr-4">روش‌های پرداخت</a></li>
-            <li><a href="/faq" class="t12 w700 mb-4 text-grey mr-4">فرآیند مرجوعی</a></li>
-            <li><a href="/faq" class="t12 w700 mb-4 text-grey mr-4">شرایط مرجوعی</a></li>
+            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">نحوه ثبت سفارش</a></li>
+            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">روش‌های پرداخت</a></li>
+            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرآیند مرجوعی</a></li>
+            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">شرایط مرجوعی</a></li>
           </ul>
         </v-list-group>
         <v-list-group value="دسترسی سریع">
           <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" title="دسترسی سریع" class="t14 w700 text-grey-darken-2"/>
+            <v-list-item v-bind="props" class="t14 w700 text-grey-darken-2">
+                <span class="t14 w700 text-grey-darken-2">
+               دسترسی سریع
+              </span>
+            </v-list-item>
           </template>
           <ul>
-            <li><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-grey mr-4">لوازم آرایشی</a></li>
-            <li><a href="/category/category-skin-care" class="t12 w700 mb-4 text-grey mr-4">مراقبت از پوست</a></li>
-            <li><a href="/category/category-detergents" class="t12 w700 mb-4 text-grey mr-4">بهداشت خانگی</a></li>
-            <li><a href="/category/category-baby-care" class="t12 w700 mb-4 text-grey mr-4">مراقبت از کودکان</a></li>
-            <li><a href="/category/category-personal-care" class="t12 w700 mb-4 text-grey mr-4">لوازم بهداشتی</a></li>
-            <li><a href="/category/category-personal-care" class="t12 w700 mb-4 text-grey mr-4">گردونه شانس</a></li>
+            <li class="my-1"><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم آرایشی</a></li>
+            <li class="my-1"><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از پوست</a></li>
+            <li class="my-1"><a href="/category/category-detergents" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">بهداشت خانگی</a></li>
+            <li class="my-1"><a href="/category/category-baby-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از کودکان</a></li>
+            <li class="my-1"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم بهداشتی</a></li>
+            <li class="my-1"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">گردونه شانس</a></li>
           </ul>
         </v-list-group>
       </v-list>
 
       <div class="d-flex justify-space-between mt-4">
-        <p class="t14 w700 mb-4 mt-4">شبکه‌های اجتماعی</p>
+        <p class="t14 w700 mb-4 mt-4 text-sGrayDarken2">شبکه‌های اجتماعی</p>
 
         <div class="footer__social-media">
           <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">

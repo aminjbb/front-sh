@@ -11,7 +11,7 @@
       <v-divider class="mb-8"/>
       <v-row>
         <v-col cols="7">
-          <p :class="{'show': show}" class="t14 w500 l32 text-grey" v-html="show ? fullText : shortText" />
+          <p :class="{'show': show}" class="t14 w500 l32 text-sGray" v-html="show ? fullText : shortText" />
           <span class="d-flex align-center justify-end t12 w700 text-primary l32 cursor-pointer" @click="showMore()">
             <span class="t12 w700">{{ show ? 'بستن' : 'نمایش بیشتر' }}</span>
              <v-icon
@@ -23,35 +23,35 @@
 
           <div class="footer__menus">
             <div>
-              <p class="t14 w700 mb-4 text-grey-darken-2">درباره شاواز</p>
+              <p class="t14 w700 mb-4 text-sGrayDarken2">درباره شاواز</p>
               <ul>
-                <li><a href="/about" class="t12 mb-4 text-grey">درباره ما</a></li>
-                <li><a href="/contact" class="t12 mb-4 text-grey">تماس با ما</a></li>
-                <li><a href="/faq" class="t12 mb-4 text-grey">سوالات متداول</a></li>
-                <li><a href="/" class="t12 mb-4 text-grey">فرصت‌های شغلی</a></li>
-                <li><a href="/" class="t12 mb-4 text-grey">قوانین و مقررات</a></li>
+                <li><a href="/about" class="t12 w700 mb-4 text-sGrayLighten2">درباره ما</a></li>
+                <li><a href="/contact" class="t12 w700 mb-4 text-sGrayLighten2">تماس با ما</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">سوالات متداول</a></li>
+                <li><a href="/" class="t12 w700 mb-4 text-sGrayLighten2">فرصت‌های شغلی</a></li>
+                <li><a href="/" class="t12 w700 mb-4 text-sGrayLighten2">قوانین و مقررات</a></li>
               </ul>
             </div>
 
             <div>
               <p class="t14 w700 mb-4 text-grey-darken-2">راهنمای خرید</p>
               <ul>
-                <li><a href="/faq" class="t12 mb-4 text-grey">نحوه ثبت سفارش</a></li>
-                <li><a href="/faq" class="t12 mb-4 text-grey">روش‌های پرداخت</a></li>
-                <li><a href="/faq" class="t12 mb-4 text-grey">فرآیند مرجوعی</a></li>
-                <li><a href="/faq" class="t12 mb-4 text-grey">شرایط مرجوعی</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">نحوه ثبت سفارش</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">روش‌های پرداخت</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">فرآیند مرجوعی</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">شرایط مرجوعی</a></li>
               </ul>
             </div>
 
             <div>
               <p class="t14 w700 mb-4 text-grey-darken-2">دسترسی سریع</p>
               <ul>
-                <li><a href="/category/category-cosmetic/" class="t12 mb-4 text-grey">لوازم آرایشی</a></li>
-                <li><a href="/category/category-skin-care" class="t12 mb-4 text-grey">مراقبت از پوست</a></li>
-                <li><a href="/category/category-detergents" class="t12 mb-4 text-grey">بهداشت خانگی</a></li>
-                <li><a href="/category/category-baby-care" class="t12 mb-4 text-grey">مراقبت از کودکان</a></li>
-                <li><a href="/category/category-personal-care" class="t12 mb-4 text-grey">لوازم بهداشتی</a></li>
-                <li><a href="/category/category-personal-care" class="t12 mb-4 text-grey">گردونه شانس</a></li>
+                <li><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2">لوازم آرایشی</a></li>
+                <li><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2">مراقبت از پوست</a></li>
+                <li><a href="/category/category-detergents" class="t12 w700 mb-4 text-sGrayLighten2">بهداشت خانگی</a></li>
+                <li><a href="/category/category-baby-care" class="t12 w700 mb-4 text-sGrayLighten2">مراقبت از کودکان</a></li>
+                <li><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2">لوازم بهداشتی</a></li>
+                <li><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2">گردونه شانس</a></li>
               </ul>
             </div>
           </div>
@@ -64,16 +64,18 @@
             </a>
           </div>
 
-          <div class="bg-grey-lighten-3 py-3 rounded-lg mt-8 text-center">
-            <span class="t14 w700 text-grey-darken-2 text-center">
+          <div class="bg-sGrayLighten3 py-3 br16 mt-8 text-center">
+            <span class="t14 w700 text-sGrayDarken2 text-center">
               پشتیبانی شاواز
-              <span class="t14 w500 text-grey mr-1">شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲</span>
+              <span class="t14 w500 text-sGray mr-1">شنبه تا چهارشنبه از ساعت ۹ الی ۲۴ و پنجشنبه ها از ۹ الی ۲۲</span>
             </span>
 
             <div class="d-flex justify-center mt-1">
-              <v-icon color="grey-darken-2" icon="mdi-phone-in-talk-outline" size="20"/>
-              <span class="t14 text-grey ml-2 d-block"> ۰۲۱-۹۱۰۳۲۳۴۳ </span>
-              <span class="t14 text-grey ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
+              <span class="ml-1">
+                <img src="@/assets/images/icons/call.svg">
+              </span>
+              <span class="t14 text-sGray ml-2 d-block"> ۰۲۱-۹۱۰۳۲۳۴۳ </span>
+              <span class="t14 text-sGray ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
             </div>
           </div>
 
@@ -89,7 +91,7 @@
             <div>
               <v-btn
                   @click="onClick"
-                  class="rounded-lg t14 w700"
+                  class="br12 t14 w700"
                   height="45"
                   width="108"
                   color="primary"
@@ -101,7 +103,7 @@
           </div>
           
           <div class="d-flex justify-space-between mt-8">
-            <p class="t14 w700 mb-4 mt-4">شبکه‌های اجتماعی</p>
+            <p class="t14 w700 mb-4 mt-4 text-sGrayDarken2">شبکه‌های اجتماعی</p>
 
             <div class="footer__social-media mb-7">
               <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
@@ -134,7 +136,7 @@
     </v-container>
 
     <div class="footer-copy-right d-flex justify-space-between align-center bg-grey-lighten-3">
-        <p class="footer__copy-right-text">استفاده از مطالب <p class="d-inline t12">فروشگاه اینترنتی شاواز</p> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
+        <p class="footer__copy-right-text t12 w700 text-sGrayLighten2">استفاده از مطالب <p class="d-inline  t12 w700">فروشگاه اینترنتی شاواز</p> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
         <div class="footer__logo-hologram">
           <a href="/" title="Shavaz hologram">
             <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="31" title="" />
