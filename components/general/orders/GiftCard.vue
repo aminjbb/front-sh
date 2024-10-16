@@ -56,14 +56,14 @@
 <!--            </v-btn>-->
         </template>
 
-        <template v-else-if="content.status === 'sending'">
-            <div class="w-100 d-flex align-center justify-space-between w-100">
-                <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
-                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :loading="receivedLoading" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">
-                    <span class="text-sSuccess t12 w700">بلی</span>
-                </v-btn>
-            </div>
-        </template>
+<!--        <template v-else-if="content.status === 'sending'">-->
+<!--            <div class="w-100 d-flex align-center justify-space-between w-100">-->
+<!--                <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>-->
+<!--                <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-success s-btn&#45;&#45;bg-white" :loading="receivedLoading" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">-->
+<!--                    <span class="text-sSuccess t12 w700">بلی</span>-->
+<!--                </v-btn>-->
+<!--            </div>-->
+<!--        </template>-->
     </div>
         
 </section>
