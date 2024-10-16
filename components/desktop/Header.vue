@@ -136,7 +136,7 @@
         
         <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
 
-        <generalModalsDelete
+        <generalModalsLogOut
             ref="logOutModal"
             title="خروج از حساب کاربری"
             text="آیا از خروج اطمینان دارید؟"

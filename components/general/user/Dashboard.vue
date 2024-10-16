@@ -131,7 +131,7 @@
 </div>
 
   <!--<v-bottom-sheet-->
-  <generalSheetsDelete
+  <generalSheetsLogOut
       ref="logOutSheet"
       title="خروج از حساب کاربری"
       text="آیا از خروج اطمینان دارید؟"
