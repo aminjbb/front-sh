@@ -52,19 +52,19 @@
             </v-btn>
         </template>
 
-<!--        <template v-else-if="content.status === 'sending'">-->
-<!--            <div class="w-100 d-flex align-end justify-center w-100 flex-column">-->
-<!--                <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-primary s-btn&#45;&#45;bg-white mb-4" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">-->
-<!--                    <span class="text-primary t12 w700">مشاهده جزئیات</span>-->
-<!--                </v-btn>-->
+        <template v-else-if="content.status === 'sending'">
+            <div class="w-100 d-flex align-end justify-center w-100 flex-column">
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white mb-4" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">
+                    <span class="text-primary t12 w700">مشاهده جزئیات</span>
+                </v-btn>
 <!--                <div class="w-100 d-flex align-center justify-space-between w-100">-->
 <!--                    <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>-->
 <!--                    <v-btn :loading="receivedLoading" class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-success s-btn&#45;&#45;bg-white" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">-->
 <!--                        <span class="text-sSuccess t12 w700">بلی</span>-->
 <!--                    </v-btn>-->
 <!--                </div>-->
-<!--            </div>-->
-<!--        </template>-->
+            </div>
+        </template>
 
         <template v-else-if="content.status === 'received'">
             <div class="d-flex align-center w-100 justify-end">
