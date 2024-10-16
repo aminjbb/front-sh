@@ -1,5 +1,5 @@
 <template>
-<div class="c-modal">
+<div class="">
     <template v-if="buttonType == 'icon'">
         <v-icon
             @click="openModal()"
@@ -23,9 +23,10 @@
     <v-bottom-sheet 
         v-if="sheet"
         v-model="sheet"
-        color="white"
-        width="500px">
-        <v-card class="pt-3 px-6 pb-5">
+        height="auto"
+        class="c-modal"
+        color="white">
+        <div class="pt-3 px-4 pb-5 bg-white h-100 delete-sheet">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
                 <span class="t16 w700 text-sGrayDarken2">
                     {{title}}
@@ -65,7 +66,7 @@
                     </v-btn>
                 </div>
             </div>
-        </v-card>
+        </div>
     </v-bottom-sheet>
 </div>
 </template>
@@ -118,9 +119,16 @@ export default {
 <style lang="scss">
 
 .c-modal {
-    .v-card {
-        background: #fff !important;
+    .v-bottom-sheet__content{
+        border-top-right-radius: 16px !important;
+        border-top-left-radius: 16px !important;
+        overflow: hidden;
     }
+
+        .delete-sheet{
+            border-top-left-radius: 16px !important;
+            border-top-right-radius: 16px !important;
+        }
 
     &__header {
 

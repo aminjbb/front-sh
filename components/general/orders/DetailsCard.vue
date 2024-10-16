@@ -29,7 +29,7 @@
             <div class="d-flex align-center details-order-card__info" :class=" screenType === 'desktop' ? 'mb-5' : 'mb-1'">
                 <div v-if="content?.id" class="d-flex align-center">
                     <v-icon icon="mdi-clipboard-text-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
-                    <span class="text-sGrayLighten2 t12 w500 number-font">شناسه: {{ content.id }}</span>
+                    <span class="text-sGrayLighten2 t12 w500 number-font">شناسه: {{ content?.shps?.id }}</span>
                 </div>
                 <div v-if="content?.shps?.sku?.color?.label" class="d-flex align-center">
                     <span class="color-code" :style="{ backgroundColor: content?.shps?.sku?.color?.color}" :class="content?.shps?.sku?.color?.color === '#ffffff' || content?.shps?.sku?.color?.color === '#FF00FF00' ? 's-border' : ''"></span>
