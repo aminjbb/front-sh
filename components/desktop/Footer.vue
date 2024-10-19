@@ -34,17 +34,18 @@
             </div>
 
             <div>
-              <p class="t14 w700 mb-4 text-grey-darken-2">راهنمای خرید</p>
+              <p class="t14 w700 mb-4 text-sGrayDarken2">راهنمای خرید</p>
               <ul>
                 <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">نحوه ثبت سفارش</a></li>
                 <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">روش‌های پرداخت</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">شیوه‌های ارسال</a></li>
                 <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">فرآیند مرجوعی</a></li>
-                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">شرایط مرجوعی</a></li>
+                <li><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">خرید اقساطی</a></li>
               </ul>
             </div>
 
             <div>
-              <p class="t14 w700 mb-4 text-grey-darken-2">دسترسی سریع</p>
+              <p class="t14 w700 mb-4 text-sGrayDarken2">دسترسی سریع</p>
               <ul>
                 <li><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2">لوازم آرایشی</a></li>
                 <li><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2">مراقبت از پوست</a></li>
@@ -74,8 +75,8 @@
               <span class="ml-1">
                 <img src="@/assets/images/icons/call.svg">
               </span>
-              <span class="t14 text-sGray ml-2 d-block"> ۰۲۱-۹۱۰۳۲۳۴۳ </span>
-              <span class="t14 text-sGray ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
+              <span class="t14 w700 text-sGray ml-2 d-block"> ۰۲۱-۹۱۰۳۲۳۴۳ </span>
+              <span class="t14 w700 text-sGray ml-2 d-block">و ۹۱۵۵۲۳۴۳-۰۲۱</span>
             </div>
           </div>
 
@@ -83,7 +84,7 @@
             <v-text-field
                 color="grey-lighten-3"
                 density="compact"
-                variant="outlined"
+                variant="text"
                 label="برای اطلاع از آخرین تخفیف‌‌ها ایمیل خود را وارد کنید"
                 single-line
                 hide-details
@@ -106,7 +107,7 @@
             <p class="t14 w700 mb-4 mt-4 text-sGrayDarken2">شبکه‌های اجتماعی</p>
 
             <div class="footer__social-media mb-7">
-              <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
+              <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز">
                 <svg class="custom-svg-icon" width="30" height="30" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 6.58594C0 3.27223 2.68629 0.585938 6 0.585938H26C29.3137 0.585938 32 3.27223 32 6.58594V26.5859C32 29.8996 29.3137 32.5859 26 32.5859H6C2.68629 32.5859 0 29.8996 0 26.5859V6.58594Z" fill="#3C3C3C"/>
                   <path d="M24.3044 8.41118C21.6661 9.56857 10.3517 14.5291 7.22592 15.8809C5.12974 16.7467 6.35708 17.5581 6.35708 17.5581C6.35708 17.5581 8.14598 18.2088 9.68059 18.695C11.2152 19.183 12.0328 18.6407 12.0328 18.6407L19.2414 13.497C21.7985 11.6571 21.184 13.1716 20.5712 13.8223C19.2414 15.2303 17.0428 17.4497 15.2027 19.2353C14.3851 19.9926 14.793 20.6433 15.1515 20.9667C16.4813 22.1578 20.112 24.5941 20.3151 24.7568C21.3959 25.5664 23.5203 26.7313 23.8435 24.2688L25.122 15.7688C25.5317 12.9005 25.9397 10.2473 25.9909 9.49004C26.1445 7.64831 24.3044 8.40744 24.3044 8.40744V8.41118Z" fill="#F5F5F5"/>
@@ -130,13 +131,12 @@
               </a>
             </div>
           </div>
-
         </v-col>
       </v-row>
     </v-container>
 
-    <div class="footer-copy-right d-flex justify-space-between align-center bg-grey-lighten-3">
-        <p class="footer__copy-right-text t12 w700 text-sGrayLighten2">استفاده از مطالب <p class="d-inline  t12 w700">فروشگاه اینترنتی شاواز</p> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
+    <div class="footer-copy-right d-flex justify-space-between align-center bg-sGrayLighten3">
+      <p class="footer__copy-right-text t12 w700 text-sGrayLighten2">استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می‌باشد.</p>
         <div class="footer__logo-hologram">
           <a href="/" title="Shavaz hologram">
             <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="31" title="" />
@@ -278,12 +278,13 @@ $parent: "footer";
             .v-field__prepend-inner,
             .v-field__field {
                 height: 42px;
+                border-radius: 8px;
             }
 
             .v-field {
-                box-shadow: none;
-                border-radius: 8px;
-                border-radius: 8px !important;
+              border: 1px solid #CBCBCB;
+              border-radius: 8px;
+              box-shadow: none;
             }
 
             .v-field__input,

@@ -1,7 +1,7 @@
 <template>
 <client-only>
     <footer class="footer footer--desktop mb-14">
-      <div class="footer__logo">
+      <div class="footer__logo d-flex justify-end">
         <button @click="scrollToTop">
           <span class="t12 text-grey-darken-1">بازگشت به بالا</span>
           <v-icon icon="mdi-chevron-up" />
@@ -43,14 +43,14 @@
         <v-text-field
             color="grey-lighten-3"
             density="compact"
-            variant="outlined"
+            variant="text"
             label="برای اطلاع از آخرین تخفیف‌‌ها ایمیل خود را وارد کنید"
             single-line
             hide-details
             @click:append-inner="onClick" />
         <v-btn
             @click="onClick"
-            class="rounded-lg t14 w700 mt-2 w-100"
+            class="email-btn t14 w700 mt-2 w-100"
             height="36"
             color="primary"
             flat
@@ -62,80 +62,75 @@
       <v-list v-model:opened="open">
         <v-list-group value="درباره شاواز">
           <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props"  >
-              <span class="t14 w700 text-grey-darken-2">
-                درباره شاواز
-              </span>
+            <v-list-item v-bind="props">
+              <span class="t14 w700 text-sGrayDarken2">درباره شاواز</span>
             </v-list-item>
           </template>
           <ul>
-            <li class="my-1"><a href="/about" class="t12 w700 text-sGrayLighten2 mr-4">درباره ما</a></li>
-            <li class="my-1"><a href="/contact" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">تماس با ما</a></li>
-            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">سوالات متداول</a></li>
-            <li class="my-1"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرصت‌های شغلی</a></li>
-            <li class="my-1"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">قوانین و مقررات</a></li>
+            <li class="my-2"><a href="/about" class="t12 w700 text-sGrayLighten2 mr-4">درباره ما</a></li>
+            <li class="my-2"><a href="/contact" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">تماس با ما</a></li>
+            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">سوالات متداول</a></li>
+            <li class="my-2"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرصت‌های شغلی</a></li>
+            <li class="my-2"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">قوانین و مقررات</a></li>
           </ul>
         </v-list-group>
         <v-list-group value="راهنمای خرید">
           <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" class="t14 w700 text-grey-darken-2">
-                <span class="t14 w700 text-grey-darken-2">
-                راهنمای خرید
-              </span>
+            <v-list-item v-bind="props" class="t14 w700 text-sGrayDarken2">
+                <span class="t14 w700 text-sGrayDarken2">راهنمای خرید</span>
             </v-list-item>
 
           </template>
           <ul>
-            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">نحوه ثبت سفارش</a></li>
-            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">روش‌های پرداخت</a></li>
-            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرآیند مرجوعی</a></li>
-            <li class="my-1"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">شرایط مرجوعی</a></li>
+            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">نحوه ثبت سفارش</a></li>
+            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">روش‌های پرداخت</a></li>
+            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرآیند مرجوعی</a></li>
+            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">شرایط مرجوعی</a></li>
           </ul>
         </v-list-group>
         <v-list-group value="دسترسی سریع">
           <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" class="t14 w700 text-grey-darken-2">
-                <span class="t14 w700 text-grey-darken-2">
-               دسترسی سریع
-              </span>
+            <v-list-item v-bind="props" class="t14 w700 text-sGrayDarken2">
+                <span class="t14 w700 text-sGrayDarken2">دسترسی سریع</span>
             </v-list-item>
           </template>
           <ul>
-            <li class="my-1"><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم آرایشی</a></li>
-            <li class="my-1"><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از پوست</a></li>
-            <li class="my-1"><a href="/category/category-detergents" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">بهداشت خانگی</a></li>
-            <li class="my-1"><a href="/category/category-baby-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از کودکان</a></li>
-            <li class="my-1"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم بهداشتی</a></li>
-            <li class="my-1"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">گردونه شانس</a></li>
+            <li class="my-2"><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم آرایشی</a></li>
+            <li class="my-2"><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از پوست</a></li>
+            <li class="my-2"><a href="/category/category-detergents" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">بهداشت خانگی</a></li>
+            <li class="my-2"><a href="/category/category-baby-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از کودکان</a></li>
+            <li class="my-2"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم بهداشتی</a></li>
+            <li class="my-2"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">گردونه شانس</a></li>
           </ul>
         </v-list-group>
       </v-list>
 
-      <div class="d-flex justify-space-between mt-4">
+      <div class="d-flex justify-space-between bg-white">
         <p class="t14 w700 mb-4 mt-4 text-sGrayDarken2">شبکه‌های اجتماعی</p>
 
         <div class="footer__social-media">
+
           <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
-            <svg class="custom-svg-icon" width="30" height="30" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="custom-svg-icon" width="32" height="32" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 6.58594C0 3.27223 2.68629 0.585938 6 0.585938H26C29.3137 0.585938 32 3.27223 32 6.58594V26.5859C32 29.8996 29.3137 32.5859 26 32.5859H6C2.68629 32.5859 0 29.8996 0 26.5859V6.58594Z" fill="#3C3C3C"/>
               <path d="M24.3044 8.41118C21.6661 9.56857 10.3517 14.5291 7.22592 15.8809C5.12974 16.7467 6.35708 17.5581 6.35708 17.5581C6.35708 17.5581 8.14598 18.2088 9.68059 18.695C11.2152 19.183 12.0328 18.6407 12.0328 18.6407L19.2414 13.497C21.7985 11.6571 21.184 13.1716 20.5712 13.8223C19.2414 15.2303 17.0428 17.4497 15.2027 19.2353C14.3851 19.9926 14.793 20.6433 15.1515 20.9667C16.4813 22.1578 20.112 24.5941 20.3151 24.7568C21.3959 25.5664 23.5203 26.7313 23.8435 24.2688L25.122 15.7688C25.5317 12.9005 25.9397 10.2473 25.9909 9.49004C26.1445 7.64831 24.3044 8.40744 24.3044 8.40744V8.41118Z" fill="#F5F5F5"/>
             </svg>
           </a>
 
           <a href="https://www.instagram.com/shavazcom" title="Shavaz instagram account | اکانت اینستاگرام شاواز ">
-            <v-icon icon="mdi-instagram" />
+            <v-icon icon="mdi-instagram" size="12"/>
           </a>
 
           <a href="https://twitter.com/ShavazCom" title="Shavaz twitter account | اکانت تویتر شاواز ">
-            <v-icon icon="mdi-twitter" />
+            <v-icon icon="mdi-twitter" size="12"/>
           </a>
 
           <a href="https://www.youtube.com/channel/UCh1GzMPHJXoIvTP9DtUli4" title="Shavaz youtube account | اکانت یونیوب شاواز ">
-            <v-icon icon="mdi-youtube" />
+            <v-icon icon="mdi-youtube" size="12"/>
           </a>
 
           <a href="https://www.linkedin.com/company/shavaz/about" title="shavaz linkedin account | اکانت لینکدین شاواز ">
-            <v-icon icon="mdi-linkedin" />
+            <v-icon icon="mdi-linkedin" size="12"/>
           </a>
         </div>
       </div>
@@ -160,7 +155,7 @@
             <img data-not-lazy src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="32" height="32" title="" />
           </a>
         </div>
-        <p class="footer__copy-right-text">استفاده از مطالب <p class="d-inline t12">فروشگاه اینترنتی شاواز</p> فقط برای مقاصد غیرتجاری و باذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می باشد. </p>
+        <p class="footer__copy-right-text">استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس‌می باشد.</p>
       </div>
 </footer>
 </client-only>
@@ -209,7 +204,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '~/assets/scss/components/mobile/general/menu.scss';
 @import "~/assets/scss/tools/bp";
 
@@ -221,8 +216,6 @@ $parent: "footer";
         background: #FAFAFA;
         .#{$parent}__logo {
             position: relative;
-            display: flex;
-            justify-content: end;
 
             button {
               border: 2px solid #F3F3F3;
@@ -237,11 +230,9 @@ $parent: "footer";
                 content: "";
                 position: absolute;
                 width: calc(100% - 144px);
-                margin-right: 20px;
-                display: flex;
+
                 top: 25px;
                 left: 0;
-                right: 8.5rem;
             }
         }
 
@@ -280,16 +271,19 @@ $parent: "footer";
             .v-field__prepend-inner,
             .v-field__field {
                 height: 42px;
+                border-radius: 8px;
             }
 
             .v-field {
-                box-shadow: none;
-
+              border: 1px solid #CBCBCB;
+              border-radius: 8px;
+              box-shadow: none;
             }
 
             .v-field__input,
             .v-field-label {
                 font-size: 12px !important;
+                font-weight: 500;
                 color: #6A6A6A;
             }
         }
@@ -327,19 +321,23 @@ $parent: "footer";
             margin-top: 10px;
 
             .v-icon {
+                width: 24px !important;
+                height: 24px !important;
                 color: white;
                 background-color: #3c3c3c;
-                border-radius: 6px;
-                padding: 15px;
+                border-radius: 4px;
+                padding: 6px;
                 margin-left: 12px;
                 margin-bottom: 23px;
                 font-size: 22px;
             }
 
             .custom-svg-icon {
+              width: 24px !important;
+              height: 24px !important;
               margin-left: 12px;
               color: white;
-              border-radius: 6px;
+              border-radius: 4px;
               background-color: #3c3c3c;
             }
         }
@@ -347,16 +345,22 @@ $parent: "footer";
         .#{$parent}__copy-right-text {
             text-align: justify;
             font-size: 10px;
-            color: var(--grey-grey-darken-1, #757575);
+            font-weight: 700;
+            color: #9A9A9A;
         }
     }
 }
 
-.v-list {
+.v-list .v-list-item {
   background: none;
+  padding: 0px !important;
+  padding-inline: 8px !important;
 }
 
 .footer-copy-right {
   padding: 8px 16px 8px 16px;
+}
+.email-btn {
+  border-radius: 12px;
 }
 </style>
