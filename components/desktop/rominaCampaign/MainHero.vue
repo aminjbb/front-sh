@@ -8,8 +8,8 @@
                 <v-col cols="12" sm="5" class="hero__text">
                     <img class="hero__logo mb-2" src="~/assets/images/should-delete/romina-logo.svg" width="141" height="29"/>
                     <span class="romina-primary w700 mb-3" :class="screenType === 'desktop' ? 't22' : 't16'">هر روز بدرخشی! </span>
-                    <h1 class="w700 text-sGrayDarken2 mb-2" :class="screenType === 'desktop' ? 't20 l40' : 't14 l26'">فصل جدید و داستان جدید برای سلامت پوست و موهات خلق کن.</h1>
-                    <p class="text-sGrayDarken2" :class="screenType === 'desktop' ? 'w300 t20 l40' : 'w400 t12 l27'"> درخشش پوستت و زیبایی ابریشمی موهات با فرمولاسیون پیشرفته محصولات رومینا محقق می‌شود.  برند رومینا با تمرکز بر زیبایی و درخشندگی، محصولات متنوعی برای مراقبت از پوست و مو ارائه می‌دهد.</p>
+                    <h1 class="w700 text-sGrayDarken2 mb-2" :class="screenType === 'desktop' ? 't20 l40' : 't14 l26'">فصل جدید‌ و داستانی نو</h1>
+                    <p class="text-sGrayDarken2" :class="screenType === 'desktop' ? 'w300 t20 l40' : 'w400 t12 l27'"> درخشش پوستت و زیبایی ابریشمی موهات با فرمولاسیون پیشرفته محصولات رومینا محقق می‌شود.برند رومینا با تمرکز بر زیبایی و درخشندگی، محصولات متنوعی برای مراقبت از پوست و مو ارائه می‌دهد.</p>
                 </v-col>
                 <v-col cols="6" sm="2" :class="screenType === 'desktop' ? '' : 'd-flex justify-center align-end pb-10'">
                     <div class="hero__sku d-flex flex-column align-center" :class="screenType === 'desktop' ? 'justify-center' : 'justify-start'">
