@@ -1,6 +1,6 @@
 <template>
 <section class="get-gift d-flex align-center justify-center flex-column bg-white w-100" :class="screenType === 'desktop' ? ' px-15 pb-6 pt-9' : ' px-4 pb-4 pt-9'">
-    <h2 class="w600 text-sGrayDarken2 mb-2" :class="screenType === 'desktop' ? 't22' : 't16'">هدیه رومینا برای تو که دوست شاوازی</h2>
+    <h2 class="w600 text-sGrayDarken2 mb-2" :class="screenType === 'desktop' ? 't22' : 't16'">هدیه رایگان رومینا برای تو که دوست شاوازی</h2>
 
     <p class="text-sGrayDarken2 mb-2 text-center" :class="screenType === 'desktop' ? 't20 w300' : 't14 w400'">فقط کافیه شماره‌ات رو وارد کنی و با انتخاب یا وارد کردن آدرست، هدیه شاواز و رومینا به دستت برسه!</p>
 
