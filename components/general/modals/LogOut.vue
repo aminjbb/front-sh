@@ -27,22 +27,13 @@
         class="br16"
         width="500px">
       <v-card class="pt-3 br16 px-6 pb-5" width="438">
-        <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                <span class="t18 w700 text-sGrayDarken2">
-                    {{title}}
-                </span>
+        <header class="c-modal__header d-flex justify-space-between align-center mt-4">
+          <span class="t18 w700 text-sGrayDarken2">{{title}}</span>
 
-          <v-btn
-              class="c-modal__header__btn pa-0 text-none"
-              @click="closeModal()"
-              color="grey-darken-1"
-              size="large"
-              variant="icon">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+          <v-icon @click="closeModal()" color="sGrayDarken1">mdi-close</v-icon>
         </header>
         <div>
-          <p class="t14 w500 my-8 text-sGray">{{text}}</p>
+          <p class="t14 w500 my-9 text-sGray">{{text}}</p>
 
           <div class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
 
