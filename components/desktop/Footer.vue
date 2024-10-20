@@ -135,27 +135,29 @@
       </v-row>
     </v-container>
 
-    <div class="footer-copy-right d-flex justify-space-between align-center bg-sGrayLighten3">
-      <p class="footer__copy-right-text t12 w700 text-sGrayLighten2">استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می‌باشد.</p>
-        <div class="footer__logo-hologram">
+    <div class="bg-sGrayLighten3">
+      <v-container class="d-flex justify-space-between align-center ">
+        <p class="footer__copy-right-text t12 w700 text-sGrayLighten2">استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس می‌باشد.</p>
+        <div class="d-flex justify-center align-center ga-4">
           <a href="/" title="Shavaz hologram">
-            <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="52" height="31" title="" />
+            <img data-not-lazy src="~/assets/images/snap-pay.png" class="" alt="snappay" title="" />
           </a>
 
-          <a title="Shavaz Enamad" referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF'>
-            <img width="52" height="52" referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF' alt='' style='cursor:pointer' Code='NdHOlUV0i4UFPJJJ5LXF'>
+          <a class="enamad-logo" title="Shavaz Enamad" referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF'>
+            <img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=221799&Code=NdHOlUV0i4UFPJJJ5LXF' alt='' style='cursor:pointer' Code='NdHOlUV0i4UFPJJJ5LXF'>
           </a>
 
 
           <a href="/" >
-            <img data-not-lazy src="~/assets/images/should-delete/logonama(1).png" class="frame-hologram" alt="" width="44" height="51" title="" />
+            <img data-not-lazy src="~/assets/images/logo-nama.png" class="frame-hologram" alt="" title="" />
           </a>
 
           <a href="/" title="Shavaz hologram">
-            <img data-not-lazy src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="52" height="50" title="" />
+            <img data-not-lazy src="~/assets/images/samandehi.png" class="" alt="samandehi" title="" />
           </a>
         </div>
-      </div>
+      </v-container>
+    </div>
 </footer>
 </client-only>
 </template>
@@ -294,35 +296,6 @@ $parent: "footer";
             }
         }
 
-        .#{$parent}__logo-hologram {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-
-            @include gbp(769, 1280) {
-                justify-content: flex-start;
-                margin-bottom: 20px;
-            }
-
-            a {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                width: 64px;
-                height: 64px;
-                border: 1px solid var(--grey-grey-lighten-1, #E8E8E8);
-                margin: 5px;
-                border-radius: 12px;
-                padding: 5px;
-                box-sizing: border-box;
-                background-color: #FFFFFF;
-
-                img {
-                    object-fit: contain;
-                }
-            }
-        }
-
         .#{$parent}__social-media {
             margin-top: 10px;
 
@@ -352,11 +325,14 @@ $parent: "footer";
         }
     }
 }
-
-.footer-copy-right {
-  padding-left: 7rem;
-  padding-right: 7rem;
-  padding-top: 24px;
-  padding-bottom: 24px;
+.enamad-logo {
+  width: 64px;
+  height: 64px;
+  background-color: #FFFFFF;
+  border: 0.7px solid #E8E8E8;
+  border-radius: 12px;
+  padding: 6px 10px 6px 10px;
+  margin-bottom: 8px;
 }
+
 </style>
