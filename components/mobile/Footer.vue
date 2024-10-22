@@ -30,7 +30,7 @@
                 <li v-if="isLogin" class="footer__menu__item">
                     <a href="/user/dashboard" :class="{ active: isActive('/user/dashboard') }">
                         <v-icon icon="mdi-account-outline" />
-                        <span class="t12 w-400">حساب کاربری</span>
+                        <span class="t12 w-400">پروفایل</span>
                     </a>
                 </li>
                 <li v-else class="footer__menu__item">
