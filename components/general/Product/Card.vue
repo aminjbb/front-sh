@@ -15,7 +15,7 @@
           <generalKitsImageSimage :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
         <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-          <generalKitsImageSimage :src="content?.image_url" :title="content.label"  :alt="content?.alt_image"  width="130" height="130"/>
+          <generalKitsImageSimage :src="content?.image_url" :title="content.label"  :alt="content?.image_alt"  width="130" height="130"/>
         </a>
     </template>
     <template v-else>
@@ -23,7 +23,7 @@
           <generalKitsImageSimage :lazy="false" :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
         <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-          <generalKitsImageSimage :lazy="false" :src="content?.image_url" :title="content.label"  :alt="content?.alt_image" width="130" height="130"/>
+          <generalKitsImageSimage :lazy="false" :src="content?.image_url" :title="content.label"  :alt="content?.image_alt" width="130" height="130"/>
         </a>
     </template>
 
