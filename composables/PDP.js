@@ -10,7 +10,7 @@ import {useStore} from 'vuex'
 export default function setup() {
     const product = ref([]);
     const secondaryData = ref([]);
-    const breadcrumb = ref(null);
+    const breadcrumb = ref([]);
     const color = ref(null);
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
@@ -27,8 +27,7 @@ export default function setup() {
     const structuredData = ref(null)
     const structuredDataBreadcrumb = ref(null)
     const loading = ref(true)
-
-
+    const event = useRequestEvent()
     async function getPdpData(orderType) {
         axios.get(runtimeConfig.public.apiBase + `/product/pdp/info/${route.params.slug}`,
             {
@@ -69,11 +68,12 @@ export default function setup() {
 
                         },
                         params: {...route.query}
-                    }).catch((err) => {
+                    }).catch((error) => {
+                        setResponseStatus(event, error.response.status)
                         showError({
-                            statusCode: 404,
-                            statusMessage: "Page Not Found"
-                        })
+                            statusCode: error.response.status,
+                            statusMessage: error.response.statusText
+                        });
                     });
 
 
@@ -94,6 +94,7 @@ export default function setup() {
                         mainResponse.data?.data?.detail?.image_gallery.forEach((image)=>{
                             productImageGallery.push(`"${image.image_url}"`)
                         })
+
                         /**Schema - structured data */
                         structuredData.value = {
                             "@context": "http://schema.org/",
@@ -101,7 +102,7 @@ export default function setup() {
                             "name": mainResponse.data?.data?.info.label,
                             "image":productImageGallery ,
                             "description":  mainResponse.data?.data?.detail?.story,
-                            "url": `${runtimeConfig.public.siteUrl}/sku/${response.data.data?.info?.slug}`,
+                            "url": `${runtimeConfig.public.siteUrl}/sku/${mainResponse.data.data?.info?.slug}`,
                             "mpn": "", //ask milad
                             "datePublished" : mainResponse?.data?.data?.info?.created_at,
                             "reviewBody":mainResponse.data?.data?.detail.comments?.data[0]?.content,
@@ -176,22 +177,15 @@ export default function setup() {
                         }
                         useHead({
                             script: [
-                                {type: 'application/ld+json', children: JSON.stringify(structuredData.value)},
-                                {type: 'application/ld+json', children: JSON.stringify(structuredDataBreadcrumb.value)}
+                                {type: 'application/ld+json', children: JSON.stringify(structuredData)},
+                                {type: 'application/ld+json', children: JSON.stringify(structuredDataBreadcrumb)}
                             ]
                         })
                     }
 
 
                 } catch (error) {
-                    if (error.response) {
-                        if (error.response?.status) {
-                            showError({
-                                statusCode: 404,
-                                statusMessage: "Page Not Found"
-                            })
-                        }
-                    }
+                    console.log(error , 'error')
                 } finally {
                     loading.value = false
                 }

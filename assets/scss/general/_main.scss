@@ -91,7 +91,6 @@ a {
         max-width: 100% !important;
     }
 }
-
 @include gbp(0, 768) {
     .v-overlay {
         &__content {
@@ -147,6 +146,7 @@ a {
         }
     }
 }
+
 
 .mobile-drop-down {
     &__items {

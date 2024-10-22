@@ -115,16 +115,16 @@
                                 </div>
 
                                 <div class="order-card__action justify-end d-flex w-100 mb-2">
-                                    <template v-if="userOrder?.status === 'sending'">
-                                        <div class="w-100 bg-white pa-3 s-border br12 s-border--light-gray">
-                                            <span class="t14 w700 text-sGrayDarken2 d-block w-100 text-right mb-2 mt-1">آیا سفارش به دست شما رسیده ؟</span>
-                                            <div class="d-flex justify-end">
-                                                <v-btn :loading="receivedLoading" class="bg-sSuccessLighten2 s-btn s-btn--outline s-btn--outline-success" width="128" @click="changeStatus()">
-                                                    <span class="text-sSuccess t12 w700">بلی</span>
-                                                </v-btn>
-                                            </div>
-                                        </div>
-                                    </template>
+<!--                                    <template v-if="userOrder?.status === 'sending'">-->
+<!--                                        <div class="w-100 bg-white pa-3 s-border br12 s-border&#45;&#45;light-gray">-->
+<!--                                            <span class="t14 w700 text-sGrayDarken2 d-block w-100 text-right mb-2 mt-1">آیا سفارش به دست شما رسیده ؟</span>-->
+<!--                                            <div class="d-flex justify-end">-->
+<!--                                                <v-btn :loading="receivedLoading" class="bg-sSuccessLighten2 s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-success" width="128" @click="changeStatus()">-->
+<!--                                                    <span class="text-sSuccess t12 w700">بلی</span>-->
+<!--                                                </v-btn>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </template>-->
 
                                     <!-- <template v-else-if="userOrder?.status === 'received'">
                                         <div class="d-flex align-center w-100 justify-center">
@@ -134,7 +134,7 @@
                                         </div>
                                     </template> -->
 
-                                    <template v-else-if="userOrder?.status === 'payment_out_date' || userOrder?.status=== 'cancelled'">
+                                    <template v-if="userOrder?.status === 'payment_out_date' || userOrder?.status=== 'cancelled'">
                                         <div class="d-flex align-center w-100 justify-center">
                                             <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" @click="createOrder()">
                                                 <span class="text-white t12 w700"> سفارش مجدد</span>
