@@ -1,9 +1,9 @@
 <template>
 <client-only>
     <footer class="footer footer--desktop mb-14">
-      <div class="footer__logo d-flex justify-end">
+      <div class="footer__logo">
         <button @click="scrollToTop">
-          <span class="text-sGray">بازگشت به بالا</span>
+          <span class="text-sGray w700">بازگشت به بالا</span>
           <v-icon icon="mdi-chevron-up" color="sGray" />
         </button>
       </div>
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="footer__search-box mt-4">
+      <div class="footer__search-box my-4">
         <v-text-field
             color="grey-lighten-3"
             density="compact"
@@ -67,14 +67,14 @@
             </v-list-item>
           </template>
           <ul>
-            <li class="my-2"><a href="/about" class="t12 w700 text-sGrayLighten2 mr-4">درباره ما</a></li>
-            <li class="my-2"><a href="/contact" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">تماس با ما</a></li>
-            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">سوالات متداول</a></li>
-            <li class="my-2"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرصت‌های شغلی</a></li>
-            <li class="my-2"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">قوانین و مقررات</a></li>
+            <li class="mt-2"><a href="/about" class="t12 w700 text-sGrayLighten2">درباره ما</a></li>
+            <li class="mt-4"><a href="/contact" class="t12 w700 mb-4 text-sGrayLighten2">تماس با ما</a></li>
+            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">سوالات متداول</a></li>
+            <li class="mt-4"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2">فرصت‌های شغلی</a></li>
+            <li class="mt-4"><a href="/" class="t12 w700 mb-4 text-sGrayLighten2">قوانین و مقررات</a></li>
           </ul>
         </v-list-group>
-        <v-list-group value="راهنمای خرید">
+        <v-list-group  class="mt-4"  value="راهنمای خرید">
           <template v-slot:activator="{ props }">
             <v-list-item v-bind="props" class="t14 w700 text-sGrayDarken2">
                 <span class="t14 w700 text-sGrayDarken2">راهنمای خرید</span>
@@ -82,31 +82,31 @@
 
           </template>
           <ul>
-            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">نحوه ثبت سفارش</a></li>
-            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">روش‌های پرداخت</a></li>
-            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">فرآیند مرجوعی</a></li>
-            <li class="my-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">شرایط مرجوعی</a></li>
+            <li class="mt-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">نحوه ثبت سفارش</a></li>
+            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">روش‌های پرداخت</a></li>
+            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">فرآیند مرجوعی</a></li>
+            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">شرایط مرجوعی</a></li>
           </ul>
         </v-list-group>
-        <v-list-group value="دسترسی سریع">
+        <v-list-group  class="mt-4"  value="دسترسی سریع">
           <template v-slot:activator="{ props }">
             <v-list-item v-bind="props" class="t14 w700 text-sGrayDarken2">
                 <span class="t14 w700 text-sGrayDarken2">دسترسی سریع</span>
             </v-list-item>
           </template>
           <ul>
-            <li class="my-2"><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم آرایشی</a></li>
-            <li class="my-2"><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از پوست</a></li>
-            <li class="my-2"><a href="/category/category-detergents" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">بهداشت خانگی</a></li>
-            <li class="my-2"><a href="/category/category-baby-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">مراقبت از کودکان</a></li>
-            <li class="my-2"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">لوازم بهداشتی</a></li>
-            <li class="my-2"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2 mr-4">گردونه شانس</a></li>
+            <li class="mt-2"><a href="/category/category-cosmetic/" class="t12 w700 mb-4 text-sGrayLighten2">لوازم آرایشی</a></li>
+            <li class="mt-4"><a href="/category/category-skin-care" class="t12 w700 mb-4 text-sGrayLighten2">مراقبت از پوست</a></li>
+            <li class="mt-4"><a href="/category/category-detergents" class="t12 w700 mb-4 text-sGrayLighten2">بهداشت خانگی</a></li>
+            <li class="mt-4"><a href="/category/category-baby-care" class="t12 w700 mb-4 text-sGrayLighten2">مراقبت از کودکان</a></li>
+            <li class="mt-4"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2">لوازم بهداشتی</a></li>
+            <li class="mt-4"><a href="/category/category-personal-care" class="t12 w700 mb-4 text-sGrayLighten2">گردونه شانس</a></li>
           </ul>
         </v-list-group>
       </v-list>
 
-      <div class="d-flex justify-space-between align-center bg-white">
-        <p class="t14 w700 px-2 text-sGrayDarken2">شبکه‌های اجتماعی</p>
+      <div class="d-flex justify-space-between align-center mt-4">
+        <p class="t14 w700 text-sGrayDarken2">شبکه‌های اجتماعی</p>
 
         <div class="footer__social-media">
           <a href="https://t.me/shavazcomm" title="Shavaz telegram account | اکانت تلگرام شاواز ">
@@ -172,7 +172,7 @@
       </div>
     </v-container>
 
-      <div class="footer-copy-right bg-grey-lighten-3">
+      <div class="footer-copy-right bg-sGrayLighten3">
         <div class="footer__logo-hologram d-flex justify-center align-center">
           <a href="/" title="Shavaz hologram">
             <img data-not-lazy src="~/assets/images/should-delete/snappay.png" class="" alt="snappay" width="32" height="19" title="" />
@@ -251,23 +251,15 @@ $parent: "footer";
         width: 100%;
         background: #FAFAFA;
         .#{$parent}__logo {
-            position: relative;
-
             button {
+              margin-top: 0px;
+              margin-left: 16px !important;
               border: 2px solid #F3F3F3;
               border-radius: 12px;
               padding: 8px 16px 8px 16px;
               color: #6A6A6A;
               font-size: 12px;
               font-weight: 700;
-            }
-
-            &:before {
-                content: "";
-                position: absolute;
-                width: calc(100% - 144px);
-                top: 25px;
-                left: 0;
             }
         }
 
@@ -367,10 +359,15 @@ $parent: "footer";
     }
 }
 
-.v-list .v-list-item {
-  background: none;
+.v-list {
+  background: none !important;
   padding: 0px !important;
-  padding-inline: 8px !important;
+}
+
+.v-list .v-list-item {
+  min-height: 21px ;
+  padding-inline: 0px !important;
+  margin-top: 0px !important;
 }
 
 .footer-copy-right {
