@@ -35,7 +35,7 @@
                 <swiper-slide v-for="(item, index) in items" :key="`slider-${index}`">
                     <a class="product-category-slider__item d-flex flex-column justify-center align-center" :href="`/${prefix}/${item?.slug}`" :title="item?.label" :class="item.is_selected === true ? 'selected' : ''">
                         <div class="product-category-slider__item__image">
-                            <img :src="item?.image_url" :title="item?.label" :alt="item?.label" width="76" height="76" />
+                          <generalKitsImageSimage :src="item.image_url"  :title="item.label"  :alt="item.name" width="76" height="76"  />
                         </div>
                         <p class="t14 w700 mt-3 text-sGrayLighten2 text-center product-category-slider__item__title">{{item?.label}}</p>
                     </a>

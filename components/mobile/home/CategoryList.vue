@@ -10,7 +10,8 @@
         <a v-for="(item , index) in categories.slice(0,8)" :key="item.id" :href="item.link" :id="`home-${screenId}-${items?.id}-${index +1}`"
            class="category-list__item mb-3 d-flex flex-column align-center">
             <div class="category-list__item__image">
-                <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="90" height="90" />
+              <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="90" height="90" />
+
             </div>
 
             <h3 v-if="item.label" class="t10 w700 text-center text-sGrayDarken2">

@@ -8,7 +8,7 @@
             </div>
 
             <div class="surprise-slider__info__image mb-4 flex-grow-1">
-                <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
+              <generalKitsImageSimage   :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label"  width="111" height="118"  />
             </div>
           <div class="surprise-slider__info__title mb-4">
                 <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>

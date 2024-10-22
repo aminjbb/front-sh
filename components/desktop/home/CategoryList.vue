@@ -9,7 +9,8 @@
     <div class="category-list__items d-flex justify-center">
         <a v-for="(item , index) in categories" :key="item.id" :href="item.link" class="category-list__item mb-3" :id="`home-${screenId}-${items?.id}-${index +1}`">
             <div class="category-list__item__image">
-                <img :src="item?.image.image_url" :title="item.label" :alt="item.label" width="72" height="72" />
+
+                <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="72" height="72"  />
             </div>
 
             <h3 v-if="item.label" class="t14 w700 text-center mt-2 text-sGrayDarken2">

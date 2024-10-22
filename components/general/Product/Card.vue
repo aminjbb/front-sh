@@ -12,18 +12,18 @@
 
     <template v-if="lazy">
         <a v-if="content.image && content.image.image_url && !isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-            <img :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
+          <generalKitsImageSimage :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
-        <a v-else-if="content.image_url && isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-            <img :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
+        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :id="cardIdImage" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+          <generalKitsImageSimage :src="content?.image_url" :title="content.label"  :alt="content?.image_alt"  width="130" height="130"/>
         </a>
     </template>
     <template v-else>
         <a v-if="content.image && content.image.image_url && !isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-            <img data-not-lazy :src="content?.image?.image_url" :title="content.label" :alt="content.label" width="130" height="130" />
+          <generalKitsImageSimage :lazy="false" :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
-        <a v-else-if="content.image_url && isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
-            <img data-not-lazy :src="content?.image_url" :title="content.label" :alt="content.label" width="150" height="150" />
+        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :id="cardIdImage" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+          <generalKitsImageSimage :lazy="false" :src="content?.image_url" :title="content.label"  :alt="content?.image_alt" width="130" height="130"/>
         </a>
     </template>
 
