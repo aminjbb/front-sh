@@ -1,12 +1,10 @@
 <template>
 <template v-if="view === 'desktop'">
-    <v-dialog v-if="dialog" v-model="dialog" color="white" width="480px">
-        <v-card class="pt-3 px-6 pb-5">
-            <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                <span class="t15 w500 text-black">
+    <v-dialog v-if="dialog" v-model="dialog" color="white" width="600px">
+        <v-card class="pt-4 px-3 pb-5">
+            <header class="d-flex justify-space-between align-center pb-1 mb-3">
+                <span class="t16 w700 text-sGrayDarken2">
                     روش پرداخت
-
-
                 </span>
 
                 <v-btn class="c-modal__header__btn pa-0 text-none" @click="closeModal()" color="grey-darken-1" size="large" variant="icon">
@@ -18,7 +16,7 @@
                 <generalOrdersPaymentMethod :orderId="orderId" ref="paymentStep" @selectedPayment="getPayment" />
             </div>
 
-            <div class="d-flex align-center justify-space-between my-8">
+            <!-- <div class="d-flex align-center justify-space-between my-8">
                 <span class="color-black w400 t12">مبلغ قابل پرداخت:</span>
                 <div class="d-flex align-center">
                     <span class="color-black w500 t16 ml-2 number-font">{{
@@ -26,26 +24,32 @@
                     }}</span>
                     <span class="color-black w400 t12">تومان</span>
                 </div>
+            </div> -->
+            
+            <div v-if="voucherCode" class="d-flex align-center justify-space-between my-8">
+                <span class="text-sGrayLighten2 w700 t12">کد تخفیف اعمال شده : </span>
+
+                <span class="color-sGrayDarken2 w700 t12 bold number-font">{{ voucherCode }}</span>
             </div>
 
             <div class="d-flex align-center justify-center mb-2">
-                <v-btn
-                    @click="reSubmitOrder()"
-                    height="28"
-                    style="height: 32px !important;"
-                    title="پرداخت"
-                    class="btn btn--submit px-10">
-                    پرداخت
+                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="49%" height="45" @click="reSubmitOrder()" :disabled="!activeButton">
+                    <span class="text-white t14 w700"> پرداخت</span>
+                </v-btn>
+
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" height="45" width="49%" @click="closeSheet()">
+                    <span class="text-primary t14 w700">انصراف</span>
                 </v-btn>
             </div>
         </v-card>
     </v-dialog>
 </template>
+
 <template v-if="view === 'mobile'">
-    <v-bottom-sheet v-model="sheet">
-        <v-card class="pt-3 px-6 pb-5">
-            <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                <span class="t15 w500 text-black">
+    <v-bottom-sheet v-model="sheet" height="auto">
+        <div class="pt-4 px-3 pb-5 bg-white h-100 bottom-sheet-br">
+            <header class="d-flex justify-space-between align-center pb-1 mb-6">
+                <span class="t16 w700 text-black">
                     روش پرداخت
                 </span>
 
@@ -55,11 +59,10 @@
             </header>
 
             <div>
-
                 <generalOrdersPaymentMethod :orderId="orderId" ref="paymentStep" @selectedPayment="getPayment" />
             </div>
 
-            <div class="d-flex align-center justify-space-between my-8">
+            <!-- <div class="d-flex align-center justify-space-between my-8">
                 <span class="color-black w400 t12">مبلغ قابل پرداخت:</span>
                 <div class="d-flex align-center">
                     <span class="color-black w500 t16 ml-2 number-font">{{
@@ -67,19 +70,25 @@
                     }}</span>
                     <span class="color-black w400 t12">تومان</span>
                 </div>
+            </div> -->
+
+            <div v-if="voucherCode" class="d-flex align-center justify-space-between my-8">
+                <span class="text-sGrayLighten2 w700 t12">کد تخفیف اعمال شده : </span>
+
+                <span class="color-sGrayDarken2 w700 t12 bold number-font">{{ voucherCode }}</span>
             </div>
 
             <div class="d-flex align-center justify-center mb-2">
-                <v-btn
-                    @click="reSubmitOrder()"
-                    height="28"
-                    style="height: 32px !important;"
-                    title="پرداخت"
-                    class="btn btn--submit px-10">
-                    پرداخت
+                
+                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="49%" height="45" @click="reSubmitOrder()" :disabled="!activeButton">
+                    <span class="text-white t14 w700"> پرداخت</span>
+                </v-btn>
+
+                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" height="45" width="49%" @click="closeSheet()">
+                    <span class="text-primary t14 w700">انصراف</span>
                 </v-btn>
             </div>
-        </v-card>
+        </div>
     </v-bottom-sheet>
 </template>
 </template>
@@ -90,9 +99,9 @@ export default {
     data() {
         return {
             activeButton: false,
-            sheet:false,
-            dialog:false,
-            paymentWay:null,
+            sheet: false,
+            dialog: false,
+            paymentWay: null,
         }
     },
 
@@ -102,7 +111,8 @@ export default {
             type: String
         },
         orderId: String | Number,
-        paidPrice: String | Number
+        paidPrice: String | Number,
+        voucherCode: String
     },
 
     setup() {
@@ -128,19 +138,18 @@ export default {
             }
         },
 
-        closeModal(){
+        closeModal() {
             this.dialog = false
         },
 
-        closeSheet(){
+        closeSheet() {
             this.sheet = false;
         },
 
-        reSubmitOrder(){
+        reSubmitOrder() {
             this.rePaymentOrder(this.orderId, this.paymentWay)
         }
     }
 
 }
 </script>
-

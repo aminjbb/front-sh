@@ -18,13 +18,13 @@
         }
 
         &__start {
-            border-top-right-radius: 3px !important;
-            border-bottom-right-radius: 3px !important;
+            border-top-right-radius: 6px !important;
+            border-bottom-right-radius: 6px !important;
         }
 
         &__end {
-            border-top-left-radius: 3px !important;
-            border-bottom-left-radius: 3px !important;
+            border-top-left-radius: 6px !important;
+            border-bottom-left-radius: 6px !important;
         }
 
         &__notch {
@@ -38,6 +38,7 @@
     &__input {
         padding: 14px 10px !important;
         font-family: 'IranSansFaNum' !important;
+        font-size: 13px;
     }
 }
 

@@ -100,9 +100,9 @@ $captionParent : 's-caption';
 // System design class for 'Border'
 //------------------------------------------------
 
-$captionParent : 's-border';
+$borderParent : 's-border';
 
-.#{$captionParent} {
+.#{$borderParent} {
     border:1px solid #E8E8E8;
 
     // border weight
@@ -134,6 +134,31 @@ $captionParent : 's-border';
 
     &--dark-gray{
         border-style: #CBCBCB !important;
+    }
+
+    // border situation
+    &--bottom{
+        border-top: 0 !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+
+    &--left{
+        border-top: 0 !important;
+        border-bottom: 0 !important;
+        border-right: 0 !important;
+    }
+
+    &--top{
+        border-bottom: 0 !important;
+        border-left: 0 !important;
+        border-right: 0 !important;
+    }
+
+    &--right{
+        border-top: 0 !important;
+        border-left: 0 !important;
+        border-bottom: 0 !important;
     }
 }
 
@@ -173,3 +198,46 @@ $shadowParent : 's-shadow';
 }
 
 @include borderRadius(6, 40);
+
+
+//---------------------------------------------
+//	Button
+//---------------------------------------------
+
+.s-btn{
+    &--outline{
+        border: 2px solid !important;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }
+
+    &--outline-primary{
+        border-color: #D72685 !important;
+    }
+
+    &--fill{
+        border: none;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }
+
+    &--fill-primary{
+        background-color: #D72685 !important;
+    }
+
+    &--outline-success{
+        border-color: #4CAF50 !important;
+    }
+
+    &--outline-disabled{
+        border-color: #BDBDBD !important;
+    }
+
+    &--no-bg{
+        background-color: transparent !important;
+    }
+
+    &--bg-white{
+        background-color: #fff !important;
+    }
+}

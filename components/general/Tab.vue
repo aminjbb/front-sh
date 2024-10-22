@@ -4,7 +4,7 @@
         <nav class="s-tab__header">
             <ul class="ma-0 pa-0">
                 <li v-if="showAll" :class="{ active: selectedTab === 'all' }" @click="activeTab('all')" id="tab-header-all" class="s-tab__header__item">
-                    <v-icon icon="mdi-message-processing-outline" class="ml-2" color="sGrayLighten2"/>
+                    <v-icon :icon="allIcon" class="ml-2" color="sGrayLighten2"/>
                     <span>{{ AllTitle }}</span>
                 </li>
 
@@ -17,12 +17,15 @@
         <div class="s-tab__contents py-2" :class="{'active-scroll pl-4' : scroll}" :style="{height : `${height}`}">
             <div class="s-tab__content">
                 <template v-if="filteredData?.length">
-                    <component v-for="(item, index) in filteredData" :key="`tab-content-${index}`" :is="component" :content="item" />
+                    <template v-for="(item, index) in filteredData" :key="`tab-content-${index}`">
+                        <component v-if="activeExtraComponent === true && item.is_gift" :is="extraComponent" :content="item" @updateList="updateList"/>
+                        <component v-else  :is="component" :content="item" @updateList="updateList"/>
+                    </template>
                 </template>
 
                 <div v-else class="flex-grow-1 d-flex flex-column mb-8">
                     <div class="d-flex flex-column justify-center align-center pt-10">
-                        <img src="~/assets/images/empty-ticket.png" class="ml-10" alt="ticket image" width="171" height="162">
+                        <img :src="imageAddress(emptyImage)" class="ml-10" alt="ticket image" width="171" height="162">
 
                         <span class="t18 w700 text-sGrayDarken2 mt-2">در این بخش {{ emptyTitle }} وجود ندارد</span>
 
@@ -78,7 +81,7 @@ export default {
         /**
          * get all Items
          */
-        AllItems: Array,
+         allItems: Array,
 
         /**
          * All title for tab
@@ -86,9 +89,30 @@ export default {
         AllTitle: String,
 
         /**
+         * All icon for all tab
+         */
+        allIcon:{
+            type: String,
+            default:'mdi-message-processing-outline'
+        },
+
+        /**
          * Get child component name
          */
         componentName: {
+            type: String,
+            default: 'generalProductCard'
+        },
+
+        /**
+         * Active extra component
+         */
+        activeExtraComponent:Boolean,
+
+        /**
+         * Extra component name
+         */
+        extraComponentName: {
             type: String,
             default: 'generalProductCard'
         },
@@ -120,6 +144,7 @@ export default {
         hideButton:Boolean,
         emptyButtonText: String,
         emptyButtonLink: String,
+        emptyImage: String,
     },
 
     setup(props) {
@@ -128,8 +153,14 @@ export default {
         } = props;
         const component = resolveComponent(componentName);
 
+        const {
+            extraComponentName
+        } = props;
+        const extraComponent = resolveComponent(extraComponentName);
+
         return {
             component,
+            extraComponent
         };
     },
 
@@ -138,7 +169,11 @@ export default {
             try {
                 if (this.selectedTab === 'all') {
                     // Combine all ticket arrays into a single array
-                    return Object.values(this.items).flat();
+                    if(this.allItems && this.allItems.length){
+                        return this.allItems
+                    }else{
+                        return Object.values(this.items).flat();
+                    }
                 }
 
                 return this.items[this.selectedTab]
@@ -163,6 +198,29 @@ export default {
         activeTab(status, label) {
             this.selectedTab = status;
             this.selectedTabLabel = label;
+        },
+
+        /**
+         * Image address
+         * @param {*} path 
+         */
+        imageAddress(path) {
+            const assets =
+                import.meta.glob('~/assets/images/*', {
+                    eager: true,
+                    import: 'default',
+                })
+            return assets['/assets/images/' + path]
+        },
+
+        /**
+         * Update form if card in tab has function
+         * @param {*} value 
+         */
+        updateList(value){
+            if(value === true){
+                this.$emit('updateList', value)
+            }
         }
     },
 }
