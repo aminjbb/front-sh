@@ -1,7 +1,7 @@
 <template>
     <client-only>
         <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
-            <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="40" :title="topBanner?.image_alt" />
+          <generalKitsImageSimage :lazy="false" :src="topBanner.image"  :title="topBanner.image_alt"  :alt="topBanner?.image_alt" width="1400" height="40" class="w-100 h-100"  />
         </a>
     
         <header

@@ -12,7 +12,8 @@
             @click="enhanceECommerce(item)"
             :sm="col">
             <a class="banner__image mb-3 d-block" :href="item.link">
-                <img :src="item.image?.image_url" title="بنرهای تبلیغاتی سایت شاواز" alt="بنرهای تبلیغاتی سایت شاواز" width="600" height="400" />
+              <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="600" height="400"  />
+
             </a>
         </v-col>
     </v-row>

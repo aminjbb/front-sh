@@ -11,7 +11,7 @@
                 :key="item.id"
                 @click="enhanceECommerce(item)">
                 <a class="banner__image d-block" :href="item.link">
-                    <img :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="300" height="200" />
+                  <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="380" height="200" />
                 </a>
             </div>
         </div>
@@ -26,7 +26,7 @@
             @click="enhanceECommerce(item)"
             :sm="col">
             <a class="banner__image d-flex" :href="item.link">
-                <img class="d-block" :src="item.image?.image_url" title="بنرهای تبلیغاتی فروشگاه شاواز" alt="بنرهای تبلیغاتی فروشگاه شاواز"  width="380" height="200" />
+              <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="380" height="200" />
             </a>
         </v-col>
     </v-row>
