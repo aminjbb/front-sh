@@ -110,7 +110,9 @@
                 query,
                 plpTitle,
                 description,
-                loading
+                secondaryData,
+                loading,
+              filterQuery
             } = new PLP()
             useHead({
                 title,
@@ -125,7 +127,9 @@
                 query,
                 plpTitle,
                 title,
-                loading
+                loading,
+                secondaryData,
+              filterQuery
             }
         },
 
@@ -190,7 +194,8 @@
            */
           productFilterSecondaryData() {
             try {
-              return []
+              return this.secondaryData.data.data.filters
+
             } catch (e) {
               return []
             }
