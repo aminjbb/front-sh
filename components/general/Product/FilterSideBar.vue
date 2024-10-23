@@ -196,7 +196,13 @@ export default {
          * Remove Filter For PLP Page
          */
         removeAllFilter() {
+          if (this.$route.name == 'search'){
+            this.$router.push(`${this.$route.path}?needle=${this.$route.query.needle}`)
+          }
+          else{
             this.$router.push(`${this.$route.path}`)
+          }
+
             this.clearAll = true
             this.selectedFilters = new Set([])
             this.$emit('clearFilterQuery')

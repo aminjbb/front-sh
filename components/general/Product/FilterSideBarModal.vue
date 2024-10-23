@@ -277,7 +277,13 @@ export default {
      * Delete All filter
      */
     deleteAllFilter() {
-      this.$router.push(`${this.$route.path}`)
+      if (this.$route.name === 'search'){
+        this.$router.push(`${this.$route.path}?needle=${this.$route.query.needle}`)
+      }
+      else{
+        this.$router.push(`${this.$route.path}`)
+      }
+
       this.closeSheet();
       this.selectedFilters = new Set([])
       this.filterQuery = []
@@ -519,7 +525,13 @@ export default {
         if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
         else paramQuery += `&stock=${this.$route.query.stock}`
       }
-      this.$router.push(this.$route.path + paramQuery)
+      if (this.$route.name === 'search'){
+        this.$router.push(this.$route.path + paramQuery + `&needle=${this.$route.query.needle}`)
+      }
+      else{
+        this.$router.push(this.$route.path + paramQuery)
+
+      }
       this.query = paramQuery
       setTimeout(() => {
         this.selectByAmount(this.amountModel)

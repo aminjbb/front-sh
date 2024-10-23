@@ -4,7 +4,7 @@
 
   <main class="v-product v-product--list">
     <v-container v-show="loading">
-      <generalSkeletonPlp :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'" />
+      <generalSkeletonPlp :loading="loading" :screenSize="screenType === 'desktop' ? 'desktop' : 'mobile'"/>
     </v-container>
 
     <v-container v-show="!loading">
@@ -17,14 +17,23 @@
           <client-only>
             <div class="filter-bg-mobile pa-3 w-100" id="filter-bg-mobile">
               <template v-if="screenType === 'desktop'">
-                <generalProductFilterSideBar :filterList="productFilterSecondaryData" @listFiltersModal="listFiltersModal" @selectFiltersModal="selectFiltersModal" @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount" />
+                <generalProductFilterSideBar :filterList="productFilterSecondaryData"
+                                             @listFiltersModal="listFiltersModal"
+                                             @selectFiltersModal="selectFiltersModal"
+                                             @clearFilterQuery="clearFilterQuery" @setAmount="selectByAmount"/>
               </template>
 
               <template v-if="screenType === 'mobile'">
                 <div class="d-flex align-center">
-                  <generalProductFilterSideBarModal :filterLength="selectedFilterLength" class="ml-1" :filterList="productFilterSecondaryData" @clearFilterQuery="clearFilterQuery" @listFiltersModal="listFiltersModal" @selectFiltersModal="selectFiltersModal" @setAmount="selectByAmount" />
+                  <generalProductFilterSideBarModal :filterLength="selectedFilterLength" class="ml-1"
+                                                    :filterList="productFilterSecondaryData"
+                                                    @clearFilterQuery="clearFilterQuery"
+                                                    @listFiltersModal="listFiltersModal"
+                                                    @selectFiltersModal="selectFiltersModal"
+                                                    @setAmount="selectByAmount"/>
 
-                  <generalProductSortModal @selectSort= "mobileSort" @sort="sort" :sortItems="sortItems" :sortType = "sortType" :orderType="orderType"/>
+                  <generalProductSortModal @selectSort="mobileSort" @sort="sort" :sortItems="sortItems"
+                                           :sortType="sortType" :orderType="orderType"/>
                 </div>
               </template>
             </div>
@@ -42,11 +51,26 @@
                   </div>
 
                   <ul class="v-product__filter__items d-flex align-center">
-                    <li class="t12 w700 px-4" :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('seen_count', 'desc')">محبوب ترین </li>
-                    <li class="t12 w700 px-4" :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('created_at', 'desc')">جدیدترین</li>
-                    <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'asc')">ارزان‌ترین</li>
-                    <li class="t12 w700 px-4" :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' " @click="sort('site_price', 'desc')">گران‌ترین</li>
-                    <li class="t12 w700 px-4" :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-sGray' " @click="sort('discount', 'desc')">بیشترین تخفیف</li>
+                    <li class="t12 w700 px-4"
+                        :class="(sortType=== 'seen_count' && orderType === 'desc') ? 'text-primary' : 'text-sGray' "
+                        @click="sort('seen_count', 'desc')">محبوب ترین
+                    </li>
+                    <li class="t12 w700 px-4"
+                        :class="(sortType=== 'created_at' && orderType === 'desc') ? 'text-primary' : 'text-sGray' "
+                        @click="sort('created_at', 'desc')">جدیدترین
+                    </li>
+                    <li class="t12 w700 px-4"
+                        :class="(sortType=== 'site_price' && orderType === 'asc') ? 'text-primary' : 'text-sGray' "
+                        @click="sort('site_price', 'asc')">ارزان‌ترین
+                    </li>
+                    <li class="t12 w700 px-4"
+                        :class="(sortType=== 'site_price' && orderType === 'desc') ? 'text-primary' : 'text-sGray' "
+                        @click="sort('site_price', 'desc')">گران‌ترین
+                    </li>
+                    <li class="t12 w700 px-4"
+                        :class="(sortType=== 'discount' && orderType ===  'desc') ? 'text-primary' : 'text-sGray' "
+                        @click="sort('discount', 'desc')">بیشترین تخفیف
+                    </li>
                   </ul>
                 </nav>
               </div>
@@ -55,14 +79,19 @@
 
           <div class="v-product__contents">
             <v-row v-if="productListData?.length" class="ma-0">
-              <v-col cols="6" md="3" v-for="(item, index) in productListData" :key="`card-${index}`" class="v-product__content d-flex">
-                <generalProductCard :content="item" :lazy=false class="mb-4 flex-grow-1" :hideInfo="true" :isPLP="true" :index="index + 1" showBasket :categoryName="category" :sectionName="` لیست کالاهای سرچ شده `" :showColors="true" />
+              <v-col cols="6" md="3" v-for="(item, index) in productListData" :key="`card-${index}`"
+                     class="v-product__content d-flex">
+                <generalProductCard :content="item" :lazy=false class="mb-4 flex-grow-1" :hideInfo="true" :isPLP="true"
+                                    :index="index + 1" showBasket :categoryName="category"
+                                    :sectionName="` لیست کالاهای سرچ شده `" :showColors="true"/>
               </v-col>
             </v-row>
           </div>
 
           <div class="v-product__pagination d-flex justify-center mt-8 w-100">
-            <v-pagination v-model="page" :length="productListPageLength" size="40" :total-visible="6" @click="backToTop" @next="changePagination()" @prev="changePagination()" prev-icon="mdi-chevron-right" next-icon="mdi-chevron-left" />
+            <v-pagination v-model="page" :length="productListPageLength" size="40" :total-visible="6" @click="backToTop"
+                          @next="changePagination()" @prev="changePagination()" prev-icon="mdi-chevron-right"
+                          next-icon="mdi-chevron-left"/>
           </div>
         </v-col>
       </v-row>
@@ -74,120 +103,123 @@
 import PLP from '@/composables/PLP.js'
 
 export default {
-    data() {
-        return {
-          productList: [],
-          filters: [],
-          screenType: null,
-          sortType: 'seen_count',
-          orderType: 'desc',
-          category: null,
-          selectedFilterLength: null,
-          sortItems: [{
-            label: 'محبوب ترین',
-            value: 'seen_count',
-            type: 'desc',
-            valueByType:'seen_count'
-          },
-            {
-              label: 'جدیدترین',
-              value: 'created_at',
-              type: 'desc',
-              valueByType:'created_at'
-            },
-            {
-              label: 'ارزان‌ترین',
-              value: 'site_price',
-              type: 'asc',
-              valueByType:'site_price_asc'
-            },
-            {
-              label: 'گران‌ترین',
-              value: 'site_price',
-              type: 'desc',
-              valueByType:'site_price_desc'
-            },
-            {
-              label: 'بیشترین تخفیف',
-              value: 'discount',
-              type: 'desc',
-              valueByType:'discount'
-            }
-          ],
-        }
-    },
-
-    setup() {
-        const title = ref('فروشگاه اینترنتی شاواز | جستجو در شاواز')
-        const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
-
-        const {
-            productList,
-            filterQuery,
-            page,
-            query,
-            loading
-        } = new PLP()
-
-        useHead({
-            title,
-            meta: [{
-                name: 'description',
-                content: description
-            }]
-        });
-
-        return {
-            productList,
-            filterQuery,
-            page,
-            query,
-            loading,
-            title
-        }
-    },
-
-    computed: {
-        /** return data product list  **/
-        productListData() {
-            try {
-                return this.productList.data.data.data
-            } catch (e) {
-                return []
-            }
-        },
-
-        /** return PageLength product list for pagination **/
-        productListPageLength() {
-            try {
-                return this.productList.data.data.last_page
-            } catch (e) {
-                return 1
-            }
-        },
-
-      /**
-       * Return filters on secondaryData slug route
-       */
-      productFilterSecondaryData() {
-        try {
-          return []
-        } catch (e) {
-          return []
-        }
+  data() {
+    return {
+      productList: [],
+      filters: [],
+      screenType: null,
+      sortType: 'seen_count',
+      orderType: 'desc',
+      category: null,
+      selectedFilterLength: null,
+      sortItems: [{
+        label: 'محبوب ترین',
+        value: 'seen_count',
+        type: 'desc',
+        valueByType: 'seen_count'
       },
-
-      /**
-       * Return filters on secondaryData slug route
-       */
-      productsSecondaryData() {
-        try {
-          return this.secondaryData.data.data.products
-        } catch (e) {
-          return []
+        {
+          label: 'جدیدترین',
+          value: 'created_at',
+          type: 'desc',
+          valueByType: 'created_at'
+        },
+        {
+          label: 'ارزان‌ترین',
+          value: 'site_price',
+          type: 'asc',
+          valueByType: 'site_price_asc'
+        },
+        {
+          label: 'گران‌ترین',
+          value: 'site_price',
+          type: 'desc',
+          valueByType: 'site_price_desc'
+        },
+        {
+          label: 'بیشترین تخفیف',
+          value: 'discount',
+          type: 'desc',
+          valueByType: 'discount'
         }
-      },
+      ],
+    }
+  },
+
+  setup() {
+    const title = ref('فروشگاه اینترنتی شاواز | جستجو در شاواز')
+    const description = ref(' فروشگاه اینترنتی شاواز، فروشگاه لوازم آرایشی و بهداشتی شاواز ، محصولات آرایشی زنانه، محصولات بهداشتی بانوان* محصولات بهداشتی آقایان،محصولات بهداشتی شخصی')
+
+    const {
+      productList,
+      page,
+      query,
+      plpTitle,
+      secondaryData,
+      loading,
+      filterQuery
+    } = new PLP()
+
+    useHead({
+      title,
+      meta: [{
+        name: 'description',
+        content: description
+      }]
+    });
+
+    return {
+      productList,
+      page,
+      query,
+      plpTitle,
+      secondaryData,
+      loading,
+      filterQuery
+    }
+  },
+
+  computed: {
+    /** return data product list  **/
+    productListData() {
+      try {
+        return this.productList.data.data.data
+      } catch (e) {
+        return []
+      }
     },
+
+    /** return PageLength product list for pagination **/
+    productListPageLength() {
+      try {
+        return this.productList.data.data.last_page
+      } catch (e) {
+        return 1
+      }
+    },
+
+    /**
+     * Return filters on secondaryData slug route
+     */
+    productFilterSecondaryData() {
+      try {
+        return this.secondaryData?.data?.data
+      } catch (e) {
+        return []
+      }
+    },
+
+    /**
+     * Return filters on secondaryData slug route
+     */
+    productsSecondaryData() {
+      try {
+        return this.secondaryData.data.data.products
+      } catch (e) {
+        return []
+      }
+    },
+  },
 
   methods: {
     /**
@@ -203,7 +235,7 @@ export default {
      */
     listFiltersModal(array) {
       let query = this.$route.query;
-      if (array ?.values) {
+      if (array?.values) {
         this.$router.push({
           query: {
             ...query,
@@ -241,15 +273,15 @@ export default {
      * @param {*} amount
      */
     async selectByAmount(amount) {
-      if (amount ?.param === "site_price") {
+      if (amount?.param === "site_price") {
         let site_price_to = ''
         let site_price_from = ''
 
-        if (amount ?.amount ?.from !== null) {
-          site_price_from = amount ?.amount ?.from
+        if (amount?.amount?.from !== null) {
+          site_price_from = amount?.amount?.from
         }
-        if (amount ?.amount ?.to !== null) {
-          site_price_to = amount ?.amount ?.to
+        if (amount?.amount?.to !== null) {
+          site_price_to = amount?.amount?.to
         }
 
         let query = this.$route.query;
@@ -284,7 +316,7 @@ export default {
     /**
      * Sort in mobile
      */
-    mobileSort(item){
+    mobileSort(item) {
       this.sort(item.value, item.type)
     },
 
@@ -319,7 +351,7 @@ export default {
     async paramGenerator(array) {
       let finalFilterObject = []
       const newObject = Object.create(this.filterQuery)
-      if (array ?.param === "stock") {
+      if (array?.param === "stock") {
         let param = ''
         if (array.values) {
           param = `1`
@@ -329,7 +361,7 @@ export default {
         let routeSplit = this.$route.fullPath.split('?')
         let query = this.$route.query;
         if (routeSplit[1]) {
-          if (this.$route.query ?.stock) {
+          if (this.$route.query?.stock) {
             if (query) {
               this.$router.replace({
                 query: {
@@ -443,7 +475,7 @@ export default {
         if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
         else paramQuery += `&stock=${this.$route.query.stock}`
       }
-      this.$router.push(this.$route.path + paramQuery)
+      this.$router.push(this.$route.path + paramQuery + `&needle=${this.$route.query.needle}`)
       this.query = paramQuery
       this.page = 1
     },
@@ -474,34 +506,87 @@ export default {
       })
     }
   },
-    mounted() {
-        /**
-         * Check screen size
-         */
-        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+  mounted() {
+    /**
+     * Check screen size
+     */
+    window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
 
-        if(this.$route.query?.page){
-            this.page = parseInt(this.$route.query.page)
-        }
-
-        if(this.$route.query && this.$route.query?.order){
-            this.sortType = this.$route.query?.order
-        }
-    },
-
-    watch: {
-        page(val) {
-            let query = this.$route.query;
-            if (val) {
-                this.$router.push({
-                    query: {
-                        ...query,
-                        page: val
-                    }
-                })
-            }
-        }
+    if (this.$route.query?.page) {
+      this.page = parseInt(this.$route.query.page)
     }
+
+    if (this.$route.query && this.$route.query?.order) {
+      this.sortType = this.$route.query?.order
+    }
+    if (Object.keys(this.$route?.query).length === 0) {
+      this.selectedFilterLength = 0
+    } else {
+      const routeSplit = this.$route?.fullPath.split('?')
+      const querySplit = routeSplit[1].split('&')
+      this.selectedFilterLength = querySplit.length
+
+      Object.keys(this.$route?.query).forEach(element => {
+        if (element === 'needle') {
+          this.selectedFilterLength = this.selectedFilterLength - 1
+        }
+        if (element === 'order') {
+          this.selectedFilterLength = this.selectedFilterLength - 1
+        }
+
+        if (element === 'order_type') {
+          this.selectedFilterLength = this.selectedFilterLength - 1
+        }
+
+        if (element === 'page') {
+          this.selectedFilterLength = this.selectedFilterLength - 1
+        }
+      });
+
+    }
+  },
+
+  watch: {
+    page(val) {
+      let query = this.$route.query;
+      if (val) {
+        this.$router.push({
+          query: {
+            ...query,
+            page: val
+          }
+        })
+      }
+    },
+    $route(newVal) {
+      if (Object.keys(newVal?.query).length === 0) {
+        this.selectedFilterLength = 0
+      } else {
+        const routeSplit = this.$route?.fullPath.split('?')
+        const querySplit = routeSplit[1].split('&')
+        this.selectedFilterLength = querySplit.length
+
+        Object.keys(newVal?.query).forEach(element => {
+          if (element === 'needle') {
+            this.selectedFilterLength = this.selectedFilterLength - 1
+          }
+          if (element === 'order') {
+            this.selectedFilterLength = this.selectedFilterLength - 1
+          }
+
+          if (element === 'order_type') {
+            this.selectedFilterLength = this.selectedFilterLength - 1
+          }
+
+          if (element === 'page') {
+            this.selectedFilterLength = this.selectedFilterLength - 1
+          }
+        });
+
+      }
+    }
+
+  }
 }
 </script>
 

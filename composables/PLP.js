@@ -111,14 +111,26 @@ export default function setup() {
                 });
 
                 if( route.name !=='sku-group-slug'){
-                    // Second API
-                    const response2 = await axios({
-                        method: 'get',
-                        url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
-                        headers: {
-                            Authorization: `Bearer ${userToken.value}`,
-                        },
-                    });
+                    let response2 = null
+                    if ( route.name !=='search'){
+                        // Second API
+                         response2 = await axios({
+                            method: 'get',
+                            url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
+                            headers: {
+                                Authorization: `Bearer ${userToken.value}`,
+                            },
+                        });
+                    }
+                    else{
+                         response2 = await axios({
+                            method: 'get',
+                            url: runtimeConfig.public.apiBase + `${endPoint.value}page/data?needle=${route.query.needle}`,
+                            headers: {
+                                Authorization: `Bearer ${userToken.value}`,
+                            },
+                        });
+                    }
 
                     if(response1 && response2){
                         let schemaList = []
