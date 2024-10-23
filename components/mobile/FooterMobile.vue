@@ -2,7 +2,7 @@
 <client-only>
     <footer class="footer footer--desktop mb-14">
       <div class="footer__logo">
-        <button @click="scrollToTop">
+        <button class="btn-logo" @click="scrollToTop">
           <span class="text-sGray w700">بازگشت به بالا</span>
           <v-icon icon="mdi-chevron-up" color="sGray" />
         </button>
@@ -84,8 +84,9 @@
           <ul>
             <li class="mt-2"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">نحوه ثبت سفارش</a></li>
             <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">روش‌های پرداخت</a></li>
+            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">شیوه‌های ارسال</a></li>
             <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">فرآیند مرجوعی</a></li>
-            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">شرایط مرجوعی</a></li>
+            <li class="mt-4"><a href="/faq" class="t12 w700 mb-4 text-sGrayLighten2">خرید اقساطی</a></li>
           </ul>
         </v-list-group>
         <v-list-group  class="mt-4"  value="دسترسی سریع">
@@ -191,7 +192,7 @@
             <img data-not-lazy src="~/assets/images/should-delete/samandehi.png" class="" alt="samandehi" width="32" height="32" title="" />
           </a>
         </div>
-        <p class="footer__copy-right-text">استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس‌می باشد.</p>
+        <p class="footer__copy-right-text t10 w700">استفاده از مطالب فروشگاه شاواز فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است. کلیه حقوق این سایت متعلق به شرکت سلامت آوران یزدان نفیس‌می باشد.</p>
       </div>
 </footer>
 </client-only>
@@ -251,7 +252,7 @@ $parent: "footer";
         width: 100%;
         background: #FAFAFA;
         .#{$parent}__logo {
-            button {
+          .btn-logo {
               margin-top: 0px;
               margin-left: 16px !important;
               border: 2px solid #F3F3F3;
@@ -352,8 +353,6 @@ $parent: "footer";
 
         .#{$parent}__copy-right-text {
             text-align: justify;
-            font-size: 10px;
-            font-weight: 700;
             color: #9A9A9A;
         }
     }
