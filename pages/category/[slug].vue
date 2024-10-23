@@ -90,6 +90,7 @@
   
 <script>
 import PLP from '@/composables/PLP.js'
+import {stringify} from "devalue";
 
 export default {
     data() {
@@ -569,6 +570,9 @@ export default {
         if (Object.keys(this.$route ?.query).length === 0) {
             this.selectedFilterLength = 0
         } else {
+          const routeSplit = this.$route?.fullPath.split('?')
+          const querySplit = routeSplit[1].split('&')
+          this.selectedFilterLength = querySplit.length
             this.selectedFilterLength = Object.keys(this.$route ?.query).length
 
             Object.keys(this.$route ?.query).forEach(element => {
@@ -601,7 +605,9 @@ export default {
             if (Object.keys(newVal ?.query).length === 0) {
                 this.selectedFilterLength = 0
             } else {
-                this.selectedFilterLength = Object.keys(newVal ?.query).length
+              const routeSplit = this.$route?.fullPath.split('?')
+              const querySplit = routeSplit[1].split('&')
+              this.selectedFilterLength = querySplit.length
 
                 Object.keys(newVal ?.query).forEach(element => {
                     if(element === 'order'){

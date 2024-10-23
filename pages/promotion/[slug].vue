@@ -57,6 +57,7 @@
 
 <script>
     import PLP from '@/composables/PLP.js'
+    import {stringify} from "devalue";
 
     export default {
         data() {
@@ -508,6 +509,29 @@
             if (this.$route.query ?.page) {
                 this.page = parseInt(this.$route.query.page)
             }
+
+          if (Object.keys(this.$route ?.query).length === 0) {
+            this.selectedFilterLength = 0
+          } else {
+            const routeSplit = this.$route?.fullPath.split('?')
+            const querySplit = routeSplit[1].split('&')
+            this.selectedFilterLength = querySplit.length
+
+            Object.keys(this.$route ?.query).forEach(element => {
+              if(element === 'order'){
+                this.selectedFilterLength = this.selectedFilterLength - 1
+              }
+
+              if(element === 'order_type'){
+                this.selectedFilterLength = this.selectedFilterLength - 1
+              }
+
+              if(element === 'page'){
+                this.selectedFilterLength = this.selectedFilterLength - 1
+              }
+            });
+
+          }
         },
 
         watch: {
@@ -525,7 +549,32 @@
 
             plpTitle(newVal) {
                 this.title = 'فروشگاه اینترنتی شاواز | ' + newVal
+            },
+          $route(newVal) {
+            if (Object.keys(newVal ?.query).length === 0) {
+              this.selectedFilterLength = 0
+            } else {
+              const routeSplit = this.$route?.fullPath.split('?')
+              const querySplit = routeSplit[1].split('&')
+              this.selectedFilterLength = querySplit.length
+
+              Object.keys(newVal ?.query).forEach(element => {
+                if(element === 'order'){
+                  this.selectedFilterLength = this.selectedFilterLength - 1
+                }
+
+                if(element === 'order_type'){
+                  this.selectedFilterLength = this.selectedFilterLength - 1
+                }
+
+                if(element === 'page'){
+                  this.selectedFilterLength = this.selectedFilterLength - 1
+                }
+              });
+
             }
+          }
+
         }
     }
     </script>
