@@ -3,7 +3,7 @@
     <footer class="footer footer--desktop">
       <div class="footer__logo">
         <button @click="scrollToTop">
-          <span class="t12 text-grey-darken-1">بازگشت به بالا</span>
+          <span class="t12 text-grey-darken-1 w700">بازگشت به بالا</span>
           <v-icon icon="mdi-chevron-up" />
         </button>
       </div>
