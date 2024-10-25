@@ -45,6 +45,13 @@
             <div>
                 <p class="t12 w700 my-5 text-sGray">{{text}}</p>
 
+                <div v-if="items" class="mb-4">
+                    <div v-for="(item, index) in items" :key="index" class="d-flex align-center justify-space-between">
+                        <span class="t12 w700 text-sGrayLighten2">{{ item.label }}</span>
+                        <span class="t14 fw700 text-sGrayLighten2 number-font">{{ item.value }} <SvgToman v-if="price"/></span>
+                    </div>
+                </div>
+
                 <div class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
                     <v-btn
                         :loading="loading"
@@ -96,6 +103,12 @@ export default {
          * Can be : icon - Text - mobile
          */
         buttonType: String,
+
+        /**show special list in data*/
+        items: Array,
+
+        /**If you have price in items value */
+        price:Boolean
     },
 
     methods: {

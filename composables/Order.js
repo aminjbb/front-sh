@@ -162,7 +162,7 @@ export default function setup() {
             })
             .then((response) => {
                 if (accept === 1) {
-                    useNuxtApp().$toast.success('درخواست شما با موفقیت ثبت شد', {
+                    useNuxtApp().$toast.success('سفارش با موفقیت لغو شد', {
                         rtl: true,
                         position: 'top-center',
                         theme: 'dark'
