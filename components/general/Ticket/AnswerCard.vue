@@ -29,7 +29,7 @@
                     کاربر شاواز
                 </template>
                 <template v-else>
-                    پاسخ پشتیبان {{ content?.creator_first_name }} {{ content?.creator_last_name }}
+                   پشتیبان شاواز
                 </template>
             </span>
         </div>
