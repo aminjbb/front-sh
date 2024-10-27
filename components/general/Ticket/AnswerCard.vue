@@ -29,7 +29,7 @@
                     کاربر شاواز
                 </template>
                 <template v-else>
-                   پشتیبان شاواز
+                  پاسخ پشتیبان شاواز
                 </template>
             </span>
         </div>
