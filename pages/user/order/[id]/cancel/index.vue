@@ -94,7 +94,8 @@ export default {
             cancelReasonValueDescAll: null,
             selectedProducts: [],
             orderId : null,
-            activeSubmit: true
+            activeSubmit: true,
+            refundItems:[]
         }
     },
 
@@ -272,6 +273,18 @@ export default {
         this.getOrder();
         this.orderId = this.$route.params.id
     },
+
+    watch:{
+        orderReturnOrReject(newVal){
+            if(newVal !== null){
+                const data = {
+                    label: 'مبلغ عودت داده شده : ' ,
+                    value: newVal?.refund
+                }
+                this.refundItems.push(data)
+            }
+        }
+    }
 }
 </script>
 
