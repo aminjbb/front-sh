@@ -277,6 +277,7 @@ export default {
     watch:{
         orderReturnOrReject(newVal){
             if(newVal !== null){
+                this.refundItems = [];
                 const data = {
                     label: 'مبلغ عودت داده شده : ' ,
                     value: newVal?.refund
