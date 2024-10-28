@@ -42,7 +42,7 @@
                     <div class="game-modal__pink-box">
                         <h4 class="t17 w700 text-pink-darken-3 mb-3">همین الان خرید کن</h4>
                         <div class="d-flex align-center justify-space-between px-2 py-1">
-                            <div class="voucher-code__code d-flex align-center cur-p" @click="doCopy(prize?.prize?.voucher_code)">
+                            <div class="voucher-code__code d-flex align-center cur-p"  @click="doCopy( prize?.prize?.voucher_code)">
                                 <v-icon icon="mdi-content-copy" class="ml-1" color="grey-darken-3" size="small"/>
                                 <span class="t14 w700 text-grey-darken-3 ml-3">کپی کد</span>
                                 <span class="text-grey-darken-1 t13 w500">{{ prize?.prize?.voucher_code }}</span>
@@ -93,27 +93,7 @@ export default {
     },
 
     setup() {
-        /**
-         * Copy identification code
-         * @param {*} code
-         */
-        const doCopy = (code) => {
-            copyText(code, undefined, (error, event) => {
-                if (error) {
-                    useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                } else {
-                    useNuxtApp().$toast.success('کد  با موفقیت کپی شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
-                }
-            })
-        }
+
 
         const {
             getUserPrize,
@@ -123,7 +103,6 @@ export default {
         return {
             getUserPrize,
             prize,
-            doCopy,
         }
     },
 
@@ -142,6 +121,14 @@ export default {
     },
 
     methods: {
+      doCopy(code){
+        navigator.clipboard.writeText(code);
+        useNuxtApp().$toast.success('کد  با موفقیت کپی شد.', {
+          rtl: true,
+          position: 'top-center',
+          theme: 'dark'
+        });
+      },
         /**
          * Calculate wheel children width and position
          */
