@@ -10,7 +10,7 @@
                     <img src="~/assets/images/wallet.svg" class="wallet-card__image" alt="Shavaz wallet image" width="339" height="146">
                     <div class="pos-a w-100 wallet-card__money">
                         <div class="pos-a d-flex align-center wallet-card__money--1st pa-2">
-                            <span v-if="wallet && wallet.value" class="text-primary t14 bold number-font">{{splitChar(amount)}}</span>
+                            <span v-if="wallet && wallet.value" class="text-primary t14 fw700 number-font">{{splitChar(amount)}}</span>
                             <span class="t11 w300 text-primary mr-2">تومان</span>
                         </div>
 
@@ -18,7 +18,7 @@
                             <span class="t12 w400 text-grey-darken-3">موجودی قابل برداشت: </span>
 
                             <div class="d-flex align-center">
-                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 bold number-font">{{splitChar(amount)}}</span>
+                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 fw700 number-font">{{splitChar(amount)}}</span>
                                 <span class="t11 w300 text-grey-darken-3 mr-2">تومان</span>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                             <span class="t12 w400 text-grey-darken-3">موجودی غیر قابل برداشت:</span>
 
                             <div class="d-flex align-center">
-                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 bold number-font">{{splitChar(inaccessible_value)}}</span>
+                                <span v-if="wallet && wallet.value" class="text-grey-darken-3 t14 fw700 number-font">{{splitChar(inaccessible_value)}}</span>
                                 <span class="t11 w300 text-grey-darken-3 mr-2">تومان</span>
                             </div>
                         </div>

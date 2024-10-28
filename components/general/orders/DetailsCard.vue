@@ -2,7 +2,7 @@
 <div class="details-order-card d-flex align-center justify-space-between">
     <a class="details-order-card__image ml-2" :href="`/sku/${content?.shps?.sku?.slug}`">
         <img :src="content?.shps?.sku?.image_url" :title="content?.shps?.sku?.label" :alt="content?.shps?.sku?.label" width="65" height="65" />
-        <span class="number-font bold t10 w700 text-primary d-flex align-center justify-center">{{ content?.count }}</span>
+        <span class="number-font fw700 t10 w700 text-primary d-flex align-center justify-center">{{ content?.count }}</span>
     </a>
 
     <div class="flex-grow-1">

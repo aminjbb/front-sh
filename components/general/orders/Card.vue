@@ -36,11 +36,11 @@
        <div class="scroll--x order-card__items d-flex align-center">
             <a v-for="(sku, index) in content?.details" :key="`sku${index}`" class="order-card__item" :href="`/sku/${sku?.shps?.sku?.slug}`">
                 <img :src="sku?.shps?.sku?.image_url" :title="sku?.shps?.sku?.label" :alt="sku?.shps?.sku?.label" width="79" height="80" />
-                <span class="number-font bold t10 w700 text-primary d-flex align-center justify-center">{{ sku.count }}</span>
+                <span class="number-font fw700 t10 w700 text-primary d-flex align-center justify-center">{{ sku.count }}</span>
             </a>
        </div>
 
-       <div class="t14 w700 number-font bold text-sGray d-flex justify-end align-center">
+       <div class="t14 w700 number-font fw700 text-sGray d-flex justify-end align-center">
             {{ splitChar(Number(String(content?.paid_price).slice(0, -1)))}}  <svgToman/>
        </div>
     </div>
