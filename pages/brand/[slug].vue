@@ -64,7 +64,7 @@
                     <div class="v-product__contents">
                         <v-row v-if="productListData?.length" class="ma-0">
                             <v-col cols="6" md="3" v-for="(item, index) in productListData" :key="`card-${index}`" class="v-product__content d-flex">
-                                <generalProductCard :content="item" :lazy=false class="mb-4 flex-grow-1" :index="index + 1" :sectionName="`لیست کالاهای برند ${plpTitle} `" :hideInfo="true" :isPLP="true" showBasket :categoryName="category" :showColors="true" />
+                                <generalProductCard :content="item" :lazy=false class="mb-4 flex-grow-1" :index="index + 1" :sectionName="`لیست کالاهای برند ${plpTitle} `" :hideInfo="true" :isPLP="true" showBasket :categoryName="category" :showColors="true" :isBrand="true" />
                             </v-col>
                         </v-row>
                     </div>
