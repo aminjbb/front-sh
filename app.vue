@@ -12,8 +12,9 @@ import {onMounted,} from 'vue'
 import {useRoute} from "vue-router";
 import axios from "axios";
 import {useStore} from "vuex";
+
 const store = useStore()
-  const route = useRoute();
+const route = useRoute();
 
 useSeoMeta({
   themeColor: '#D72685',
@@ -34,60 +35,77 @@ const runtimeConfig = useRuntimeConfig()
 
 
 useHead({
-  noscript: [{
-    children: `<iframe src="https://www.googletagmanager.com/ns.html?id=${runtimeConfig.public.gtagId}"
+  noscript: [
+    {
+      children: `<iframe src="https://www.googletagmanager.com/ns.html?id=${runtimeConfig.public.gtagId}"
       height="0" width="0" style="display:none;visibility:hidden"></iframe>
       `
-  }],
+    }
+  ],
   script: [
-      {
-    children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    {
+      children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','${runtimeConfig.public.gtagId}');` },
+      })(window,document,'script','dataLayer','${runtimeConfig.public.gtagId}');`
+    },
+    {
+      children: `window.onload = function () {
+        window.zebline.init({
+          token: "YOUR_ZEBLINE_ACCESS_TOKEN",
+          licence_code: "YOUR_ZEBLINE_LICENCE_CODE",
+          notificationRequest: true,
+        });
+      };`,
+      body:true
+    },
 
     {
       src: 'https://s1.mediaad.org/serve/27794/retargeting.js',
       type: 'text/javascript',
     },
-      // {
-      //   src: 'https://deemanetwork.com/pxjs/22896.js',
-      //   type: 'text/javascript',
-      //   async: true
-      // }
-    ],
-  });
+    {
+      src: "https://sdk.zebline.io/js/v1/sgm-sdk.js",
+      defer: "defer"
+    },
+    // {
+    //   src: 'https://deemanetwork.com/pxjs/22896.js',
+    //   type: 'text/javascript',
+    //   async: true
+    // }
+  ],
+});
 
-  onMounted(() => {
-    if(route.name !== 'game-slug'){
-      /* Takhfifan code */
-      const urlParams = new URLSearchParams(window.location.search);
-      const source = urlParams.get('utm_source');
+onMounted(() => {
+  if (route.name !== 'game-slug') {
+    /* Takhfifan code */
+    const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('utm_source');
 
-      // if(source === 'takhfifan'){
-      //     const tatokenValue = urlParams.get('tatoken');
-      //     const tatoken = useCookie('tatoken', {
-      //       maxAge: 2592000, // 30 days in seconds
-      //     });
-      //
-      //   tatoken.value = tatokenValue
-      // }
+    // if(source === 'takhfifan'){
+    //     const tatokenValue = urlParams.get('tatoken');
+    //     const tatoken = useCookie('tatoken', {
+    //       maxAge: 2592000, // 30 days in seconds
+    //     });
+    //
+    //   tatoken.value = tatokenValue
+    // }
 
-      if(source === 'affilinks'){
-          const altokenValue = urlParams.get('altoken');
-          const altoken = useCookie('altoken');
+    if (source === 'affilinks') {
+      const altokenValue = urlParams.get('altoken');
+      const altoken = useCookie('altoken');
 
-          altoken.value = altokenValue
-      }
+      altoken.value = altokenValue
     }
+  }
 
-    axios.get('https://api.my-ip.io/v2/ip.json')
-        .then((response) => {
-         store.commit('set_country' , response?.data?.country?.code)
-        })
-        .catch((err) => {
-          store.commit('set_country' , null)
-        })
+  axios.get('https://api.my-ip.io/v2/ip.json')
+      .then((response) => {
+        store.commit('set_country', response?.data?.country?.code)
+      })
+      .catch((err) => {
+        store.commit('set_country', null)
+      })
 })
 </script>
