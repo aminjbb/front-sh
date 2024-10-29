@@ -45,7 +45,7 @@ export default function setup() {
     }
 
     return {
-        zeblineLogin,zeblinLogout
+        zeblineLogin,zeblinLogout ,zeblinEventTrack
     }
 }
 
