@@ -54,8 +54,8 @@
                                 </v-btn>
                             </div>
 
-                            <generalModalsDelete ref="cancelOrderModal" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="بله" @removeProduct="createFormDataAndSendToServer(1)" />
-                            <generalSheetsDelete ref="cancelOrderSheet" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="بله" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalModalsDelete ref="cancelOrderModal" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalSheetsDelete ref="cancelOrderSheet" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
                         </div>
                     </v-card>
                 </div>
@@ -272,6 +272,13 @@ export default {
     beforeMount() {
         this.getOrder();
         this.orderId = this.$route.params.id
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
 
     watch:{
