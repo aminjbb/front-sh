@@ -17,7 +17,6 @@ export default function setup() {
      * @param {*} userId
      */
     async function zeblineLogin(userId){
-        console.log(userId)
         window.zebline.user.login(userId);
     }
 
@@ -46,7 +45,7 @@ export default function setup() {
     }
 
     return {
-        zeblineLogin
+        zeblineLogin,zeblinLogout
     }
 }
 
