@@ -363,6 +363,9 @@ export default {
           items: productArr
         }
       });
+      window.zebline.event.track('view_cart_popup' , {
+        items: productArr
+      })
     },
 
     /**

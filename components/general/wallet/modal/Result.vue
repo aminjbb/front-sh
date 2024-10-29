@@ -125,8 +125,11 @@ export default {
             window.dataLayer.push({
                 event: 'walletCharge', // The event name for tracking wallet charge actions.
                 amount: splitChar(Number(String(content.amount).slice(0, -1))), // The amount charged to the wallet base Toman.
-                userID: userId // The user's unique identifier.
             });
+          window.zebline.event.track('walletCharge' , {
+            amount: splitChar(Number(String(content.amount).slice(0, -1))), // The amount charged to the wallet base Toman.
+
+          })
         },
 
         /**

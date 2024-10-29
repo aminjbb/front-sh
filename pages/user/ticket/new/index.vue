@@ -344,6 +344,13 @@ export default {
                 ticketSubject: this.form.title, // The subject of the ticket.
                 ticketDescription: this.form.content, // The detailed description of the issue.
               });
+              window.zebline.event.track('submitTicket' ,
+                  {
+                    userID: this.$store.getters['get_userData'].id,
+                    ticketpriority: this.form.priority,
+                    ticketSubject: this.form.title,
+                    ticketDescription: this.form.content,
+                  })
 
               this.$router.push(`/user/ticket`);
 

@@ -259,7 +259,12 @@ export default {
                         userStatus: response.data ?.data ?.user ?.is_new === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
                         wheel: 'true', // or 'returning' depending on the user's status.
                     });
-
+                  window.zebline.event.track('userAuthentication' , {
+                    number: randomWord + randomNum + this.mobile.slice(1),
+                    event_type: response.data ?.data ?.user ?.is_new === 1 ?'signup' : 'login', // Type of event: 'login' or 'signup'.
+                    userStatus: response.data ?.data ?.user ?.is_new === 1 ?'new' : 'returning', // or 'returning' depending on the user's status.
+                    wheel: 'true', // or 'returning' depending on the user's status.
+                  })
                     useNuxtApp().$toast.success(response.data.message, {
                         rtl: true,
                         position: 'top-center',

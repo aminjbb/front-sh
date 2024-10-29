@@ -186,6 +186,19 @@ export default {
                         items: productArrLastTrue
                     }
                 });
+              window.zebline.event.track('purchase' , {
+                currency: 'USD',
+                value: Number(String(this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
+                order_id: this.order?.data?.data?.id,	// order id
+                um_source:this.umSource,
+                userID: this.order?.data?.data?.user_id,
+                coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
+                couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon
+
+                items: productArrLastTrue
+
+              })
 
             }  else{
                 let productArrLast = [];
@@ -211,6 +224,18 @@ export default {
                     
                     items: productArrLast
                 });
+              window.zebline.event.track('unsuccessful_purchase' , {
+                currency: 'USD',
+                userID: this.order?.data?.data?.user_id,
+                value: Number(String(this.order?.data?.data?.paid_price).slice(0, -1)),// order total (price of all products + shipping) based Toman.
+                shipping: Number(String(this.order?.data?.data?.sending_price).slice(0, -1)),	// shipping costs
+                order_id: this.order?.data?.data?.id,	// order id
+                coupon: this.order?.data?.data?.voucher_code,	// if coupon was applied to the order, include it here
+                couponvalue: Number(String(this.order?.data?.data?.voucher_amount).slice(0, -1)),   // if coupon was applied to the order, include value the amount deducted from the order by this coupon
+
+                items: productArrLast
+
+              })
             }
         },
     },

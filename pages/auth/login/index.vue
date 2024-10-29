@@ -379,6 +379,11 @@ export default {
             event_type: response.data?.data?.user?.is_new === 1 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
             userStatus: response.data?.data?.user?.is_new === 1 ? 'new' : 'returning', // or 'returning' depending on the user's status.
           });
+          window.zebline.event.track('userAuthentication' , {
+            number: randomWord + randomNum + this.mobile.slice(1),
+            event_type: response.data?.data?.user?.is_new === 1 ? 'signup' : 'login',
+            userStatus: response.data?.data?.user?.is_new === 1 ? 'new' : 'returning',
+          })
 
           const completeResponse = await axios.get(`${this.runtimeConfig.public.apiBase}/user/status/is-completed`, {
             headers: {

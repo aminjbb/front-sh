@@ -173,8 +173,12 @@ export default {
                         event: 'commentSubmission', // The event name for tracking comment submissions.
                         userID: userDetail?.id, // The user's mobile number used for login.
                         item_id: this.productSelectedSeller.sku_id, // The product ID related to the comment.
-                    }); 
+                    });
+                  window.zebline.event.track('commentSubmission' , {
+                    userID: userDetail?.id, // The user's mobile number used for login.
+                    item_id: this.productSelectedSeller.sku_id, // The product ID related to the comment.
 
+                  })
                     this.getSecondaryData()
                     this.$refs.addComment.reset()
                 })

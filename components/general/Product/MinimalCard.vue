@@ -34,17 +34,19 @@ export default {
     methods:{
         enhanceEcommerce(){
             window.dataLayer = window.dataLayer || [];
+            const selectItem = {
+              items: [{		// an array where all currently viewed products must be included
+                item_id: this.content?.id,	// insert an actual product ID
+                price: Number(String(this.content?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                section_name: this.sectionName, // insert the name of the list where the product is currently displayed
+                index: this.index 		// insert product's position in that list
+              }]
+            }
             window.dataLayer.push({
                 event: 'select_item',  	// name of the event. In this case, it always must be select_item
-                ecommerce: {							
-                    items: [{		// an array where all currently viewed products must be included
-                        item_id: this.content?.id,	// insert an actual product ID
-                        price: Number(String(this.content?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                        section_name: this.sectionName, // insert the name of the list where the product is currently displayed
-                        index: this.index 		// insert product's position in that list
-                    }]
-                }
+                ecommerce: selectItem
             });
+          window.zebline.event.track('select_item' , selectItem)
         }
     }
 }
