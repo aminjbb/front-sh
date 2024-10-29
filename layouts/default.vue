@@ -36,6 +36,7 @@
 <script>
 import LoadingModal from "~/components/general/LoadingModal.vue";
 import Basket from '@/composables/Basket.js'
+import Zebline from '@/composables/Zebline.js'
 import auth from '@/middleware/auth';
 
 export default {
@@ -76,12 +77,21 @@ export default {
 
     setup() {
         const userToken = useCookie('userToken')
-        const {
+      const loginZebline = useCookie('loginZebline',{
+        maxAge: 60 * 60 * 24 * 365, // 1 year
+      })
+
+      const {
             getBasket
         } = new Basket()
+      const {
+            zeblineLogin
+        } = new Zebline()
         return {
             getBasket,
-            userToken
+            userToken,
+            zeblineLogin,
+          loginZebline
         }
     },
 
@@ -111,6 +121,13 @@ export default {
                 if (this.userToken) {
                     const response = await auth.getUserProfile(this.userToken)
                     if (response.data.data) {
+                        if ( !this.loginZebline) {
+                          console.log('akbaar')
+                          this.zeblineLogin(response?.data?.data?.phone_number)
+                          this.loginZebline = 'true'
+
+
+                        }
                         this.$store.commit('set_userData', response.data.data)
                         this.userData = response.data.data
                         this.loginStatus = true;
