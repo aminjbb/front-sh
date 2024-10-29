@@ -4,7 +4,7 @@
         <a :href="`/user/order/${$route.params.id}`" class="ml-1">
             <v-icon icon="mdi-chevron-right" color="grey-darken-3" />
         </a>
-        <span class="text-sGrayDarken2 t14 w700">درخواست لغو</span>
+        <span class="text-sGrayDarken2 t14 fw700 number-font ltr">{{ orderId }} جزئیات سفارش</span>
     </header>
 
     <v-container>

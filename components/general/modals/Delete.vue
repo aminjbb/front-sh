@@ -48,7 +48,7 @@
                 <div v-if="items" class="mb-4">
                     <div v-for="(item, index) in items" :key="index" class="d-flex align-center justify-space-between">
                         <span class="t12 w700 text-sGrayLighten2">{{ item.label }}</span>
-                        <span class="t14 fw700 text-sGrayLighten2 number-font">
+                        <span class="t14 fw700 text-sGray number-font">
                             <template v-if="price">
                                 {{ splitChar(Number(String(item.value).slice(0, -1))) }} <SvgToman/>
                             </template>
