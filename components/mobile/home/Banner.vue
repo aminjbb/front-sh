@@ -81,14 +81,14 @@ export default {
          * screenId
          */
         screenId: {
-          type:String,
+          type:String|Number,
           default:'D'
         },
         /**
          * sectionId for id
          */
         sectionId: {
-          type: String,
+          type: String|Number,
           default: ''
         },
     },
