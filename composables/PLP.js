@@ -110,53 +110,67 @@ export default function setup() {
                     });
                 });
 
-                if(route.name !== 'promotion-slug' && route.name !=='search' && route.name !=='sku-group-slug'){
-                    // Second API
-                    const response2 = await axios({
-                        method: 'get',
-                        url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
-                        headers: {
-                            Authorization: `Bearer ${userToken.value}`,
-                        },
-                    });
+                if( route.name !=='sku-group-slug'){
+                    let response2 = null
+                    if ( route.name !=='search'){
+                        // Second API
+                         response2 = await axios({
+                            method: 'get',
+                            url: runtimeConfig.public.apiBase + `${endPoint.value}page/data/${route.params.slug}`,
+                            headers: {
+                                Authorization: `Bearer ${userToken.value}`,
+                            },
+                        });
+                    }
+                    else{
+                         response2 = await axios({
+                            method: 'get',
+                            url: runtimeConfig.public.apiBase + `${endPoint.value}page/data?needle=${route.query.needle}`,
+                            headers: {
+                                Authorization: `Bearer ${userToken.value}`,
+                            },
+                        });
+                    }
 
                     if(response1 && response2){
-                        // console.log(response1?.data?.data?.data)
                         let schemaList = []
-                        response1?.data?.data?.data.slice(0,5).forEach((item, index) => {
-                            const schemaObj = {
-                                "@type": "ListItem",
-                                "position": index+1,
-                                "name": item.label,
-                                "item":{
-                                    "@type":"Product",
-                                    "name":item.label,
-                                    "url":`https://shavaz.com/sku/${item.slug}`,
-                                    "review":{
-                                        "@type":"Review",
-                                        "reviewRating":{
-                                            "@type":"Rating",
-                                            "bestRating":5,
-                                            "ratingValue":item?.score
+                        if (route.name !== 'promotion-slug'){
+                            response1?.data?.data?.data.slice(0,5).forEach((item, index) => {
+                                const schemaObj = {
+                                    "@type": "ListItem",
+                                    "position": index+1,
+                                    "name": item.label,
+                                    "item":{
+                                        "@type":"Product",
+                                        "name":item.label,
+                                        "url":`https://shavaz.com/sku/${item.slug}`,
+                                        "review":{
+                                            "@type":"Review",
+                                            "reviewRating":{
+                                                "@type":"Rating",
+                                                "bestRating":5,
+                                                "ratingValue":item?.score
+                                            },
+                                            "author":{
+                                                "@type":"Person",
+                                                "name":"admin"
+                                            },
+                                            "datePublished":item?.created_at,
+                                            "reviewBody":item?.last_review,
+                                            "name":'',
                                         },
-                                        "author":{
-                                            "@type":"Person",
-                                            "name":"admin"
+                                        "aggregateRating":{
+                                            "@type":"AggregateRating",
+                                            "ratingValue":item?.score,// fix after fix api
+                                            "reviewCount":item?.review_count// fix after fix api
                                         },
-                                        "datePublished":item?.created_at,
-                                        "reviewBody":item?.last_review,
-                                        "name":'',
-                                    },
-                                    "aggregateRating":{
-                                        "@type":"AggregateRating",
-                                        "ratingValue":item?.score,// fix after fix api
-                                        "reviewCount":item?.review_count// fix after fix api
-                                    },
-                                    "image":item.image_url
+                                        "image":item.image_url
+                                    }
                                 }
-                            }
-                            schemaList.push(schemaObj);
-                        });
+                                schemaList.push(schemaObj);
+                            });
+                        }
+
 
                         /** item list schema structure */
                         structuredDataItem.value = {
@@ -177,13 +191,13 @@ export default function setup() {
                     }
                 }
 
-                if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                if( route.name =='sku-group-slug'){
                     productList.value = response1;
 
-                    if(route.name == 'promotion-slug'){
-                        plpTitle.value = response1.data.data.page.meta_title
-                        description.value = response1.data.data.page.meta_description;
-                    }
+                    // if(route.name == 'promotion-slug'){
+                    //     plpTitle.value = response1.data.data.page.meta_title
+                    //     description.value = response1.data.data.page.meta_description;
+                    // }
                 }
 
             } catch (error) {
