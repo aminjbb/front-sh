@@ -475,7 +475,8 @@ export default {
         if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
         else paramQuery += `&stock=${this.$route.query.stock}`
       }
-      this.$router.push(this.$route.path + paramQuery + `&needle=${this.$route.query.needle}`)
+      if (paramQuery) this.$router.push(this.$route.path + paramQuery + `&needle=${this.$route.query.needle}`)
+      else this.$router.push(this.$route.path  + `?needle=${this.$route.query.needle}`)
       this.query = paramQuery
       this.page = 1
     },
