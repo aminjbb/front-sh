@@ -4,7 +4,7 @@
         <a :href="`/user/order/${orderId}`" class="ml-1">
             <v-icon icon="mdi-chevron-right" color="grey-darken-3" />
         </a>
-        <span class="text-sGrayDarken2 t14 w700">درخواست لغو</span>
+        <span class="text-sGrayDarken2 t14 fw700 number-font ltr">{{ orderId }} جزئیات سفارش</span>
     </header>
 
     <v-container>
@@ -17,8 +17,7 @@
                     <v-card class="pa-8 mobile-pa-0 v-order__card">
                         <header class="v-ticket__header d-flex align-center justify-space-between xs-hide card__header pt-6">
                             <h1 class="t18 w700 text-sGrayDarken2 number-font bold ltr">{{ orderId }} جزئیات سفارش</h1>
-
-                            <v-btn :href="`/user/order/${orderId}`" height="45" title="بازگشت" class="btn--cancel px-6 br12 no-shadow">
+                            <v-btn @click="goBack(orderId)" height="45" title="بازگشت" class="btn--cancel px-6 br12 no-shadow">
                                 <span class="w700"> بازگشت</span>
                             </v-btn>
                         </header>
@@ -31,7 +30,7 @@
                                             <img :src="selectedSku?.shps?.sku?.image_url" :title="selectedSku?.shps?.sku?.label" :alt="selectedSku?.shps?.sku?.label" width="65" height="65" />
                                         </a>
                                         <div class="d-flex align-center justify-space-between">
-                                            <h2 class="t12 fw500 number-font text-sGrayDarken1">{{ selectedSku?.shps?.sku?.label }}</h2>
+                                            <h2 class="t12 fw500 number-font text-sGray">{{ selectedSku?.shps?.sku?.label }}</h2>
                                         </div>
                                     </div>
 
@@ -46,14 +45,14 @@
                                             </svg>
 
                                             <span class="t15 fw700 text-sGrayDarken2 number-font px-3">
-                                                <span class="px-1 t15 fw700 text-sGrayDarken2 number-font d-inline-block">{{count}}</span> از <span class="px-3 t15 fw700 text-sGrayDarken2 number-font d-inline-block">{{ selectedSku?.count }}</span>
+                                                <span class="px-1 t15 fw700 text-sGrayDarken2 number-font d-inline-block">{{count}}</span> از <span class="px-1 t15 fw700 text-sGrayDarken2 number-font d-inline-block">{{ selectedSku?.count }}</span>
                                             </span>
 
                                             <svg class="cur-p" @click="decreaseCount()" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="vuesax/linear/minus-square">
                                                 <g id="minus-square">
-                                                <path id="Vector" d="M10.668 16H21.3346" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path id="Vector_2" d="M12.0013 29.3332H20.0013C26.668 29.3332 29.3346 26.6665 29.3346 19.9998V11.9998C29.3346 5.33317 26.668 2.6665 20.0013 2.6665H12.0013C5.33464 2.6665 2.66797 5.33317 2.66797 11.9998V19.9998C2.66797 26.6665 5.33464 29.3332 12.0013 29.3332Z" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path id="Vector" d="M10.668 16H21.3346" :stroke="count === 1 ? '#BDBDBD':'#D72685'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path id="Vector_2" d="M12.0013 29.3332H20.0013C26.668 29.3332 29.3346 26.6665 29.3346 19.9998V11.9998C29.3346 5.33317 26.668 2.6665 20.0013 2.6665H12.0013C5.33464 2.6665 2.66797 5.33317 2.66797 11.9998V19.9998C2.66797 26.6665 5.33464 29.3332 12.0013 29.3332Z" :stroke="count === 1 ? '#BDBDBD':'#D72685'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                 </g>
                                                 </g>
                                             </svg>
@@ -61,7 +60,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="selectedSku" class="v-order__notification pa-4 bg-sWarningLighten2 br16 mb-4 mt-10">
+                                <div v-if="selectedSku?.count > 1" class="v-order__notification pa-4 bg-sWarningLighten2 br16 mb-4 mt-10">
                                     <v-icon icon="mdi-alert-circle-outline" color="sWarningLighten1" />
                                     <span class="t12 fw500 text-sWarning number-font">
                                         شاوازی عزیز تعداد محصولات جهت لغو مشخص کنید .
@@ -88,7 +87,7 @@
 
                             <div class="d-flex align-center w-100 justify-end cancel-button">
                                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="49%" @click="changeStatus" :disabled="activeSubmit === true ? true : false" :loading="loading">
-                                    <span class="text-white t12 w700"> لغو سفارش</span>
+                                    <span class="text-white t12 w700">لغو محصول</span>
                                 </v-btn>
 
                                 <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="49%" :href="`/user/order/${orderId}`">
@@ -96,8 +95,8 @@
                                 </v-btn>
                             </div>
 
-                            <generalModalsDelete ref="cancelOrderModal" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="بله" @removeProduct="createFormDataAndSendToServer(1)" />
-                            <generalSheetsDelete ref="cancelOrderSheet" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="بله" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalModalsDelete ref="cancelOrderModal" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو درخواست دریافت کالاها مطمئن هستید؟ در صورت لغو، مبلغ پرداخت شده برای کالاها به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalSheetsDelete ref="cancelOrderSheet" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو درخواست دریافت کالاها مطمئن هستید؟ در صورت لغو، مبلغ پرداخت شده برای کالاها به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
                         </div>
                     </v-card>
                 </div>
@@ -124,7 +123,7 @@ export default {
                     value: '1'
                 },
                 {
-                    label: 'سفارش تکراری ثبت کرده‌ام',
+                    label: 'محصول تکراری ثبت کردم',
                     value: '3'
                 },
                 {
@@ -138,7 +137,8 @@ export default {
             orderId: null,
             skuId: null,
             count: 1,
-            activeSubmit: true
+            activeSubmit: true,
+            refundItems:[]
         }
     },
 
@@ -211,8 +211,6 @@ export default {
             const formData = new FormData()
             let ChooseAllReason = false;
 
-
-            console.log("🚀 ~ createFormDataAndSendToServer ~ this.selectedSku:", this.selectedSku)
             if (this.selectedSku) {
                     formData.append(`shps_list[0][shps]`, this.selectedSku ?.shps ?.id)
                     formData.append(`shps_list[0][count]`, this.count)                   
@@ -253,10 +251,38 @@ export default {
          * Change order status confirm
          */
         changeStatus() {
-            if (this.screenType === 'desktop') {
-                this.$refs.cancelOrderModal.dialog = true;
-            } else {
-                this.$refs.cancelOrderSheet.sheet = true;
+            const formData = new FormData()
+            let ChooseAllReason = false;
+
+            if (this.selectedSku) {
+                    formData.append(`shps_list[0][shps]`, this.selectedSku ?.shps ?.id)
+                    formData.append(`shps_list[0][count]`, this.count)                   
+
+                    if (this.cancelReasonValueTitle && this.cancelReasonValueTitle.label) {
+                        ChooseAllReason = false;
+                        formData.append(`shps_list[0][reason]`, this.cancelReasonValueTitle.label)
+                        formData.append(`shps_list[0][description]`, this.cancelReasonValueDesc)
+                    } else {
+                        ChooseAllReason = true;
+                    }
+
+                if (ChooseAllReason) {
+                    useNuxtApp().$toast.error('علت لغو انتخاب نشده است', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                } else {
+                    formData.append(`order_id`, this.orderId)
+                    formData.append(`accept`, 0)
+                    this.returnOrRejectOrder(formData, '/order/cancel/crud/create', 0)
+                    if (this.screenType === 'desktop') {
+                        this.$refs.cancelOrderModal.dialog = true;
+                    } else {
+                        this.$refs.cancelOrderSheet.sheet = true;
+                    }
+                }
+
             }
         },
 
@@ -277,6 +303,10 @@ export default {
                 this.count --;
             }
         },
+
+        goBack(id){
+            this.$router.push(`/user/order/${id}`)
+        }
     },
 
     beforeMount() {
@@ -292,6 +322,19 @@ export default {
          */
         window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
     },
+
+    watch:{
+        orderReturnOrReject(newVal){
+            if(newVal !== null){
+                this.refundItems = [];
+                const data = {
+                    label: 'مبلغ عودت داده شده : ' ,
+                    value: newVal?.refund
+                }
+                this.refundItems.push(data)
+            }
+        }
+    }
 }
 </script>
     

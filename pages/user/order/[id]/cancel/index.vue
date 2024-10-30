@@ -4,7 +4,7 @@
         <a :href="`/user/order/${$route.params.id}`" class="ml-1">
             <v-icon icon="mdi-chevron-right" color="grey-darken-3" />
         </a>
-        <span class="text-sGrayDarken2 t14 w700">درخواست لغو</span>
+        <span class="text-sGrayDarken2 t14 fw700 number-font ltr">{{ orderId }} جزئیات سفارش</span>
     </header>
 
     <v-container>
@@ -46,7 +46,7 @@
 
                             <div class="d-flex align-center w-100 justify-end cancel-button">
                                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="49%" @click="changeStatus" :disabled="activeSubmit === true ? true : false" :loading="loading">
-                                    <span class="text-white t12 w700"> لغو سفارش</span>
+                                    <span class="text-white t12 w700"> لغو کل سفارش</span>
                                 </v-btn>
 
                                 <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="49%" :href="`/user/order/${$route.params.id}`">
@@ -54,8 +54,8 @@
                                 </v-btn>
                             </div>
 
-                            <generalModalsDelete ref="cancelOrderModal" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="بله" @removeProduct="createFormDataAndSendToServer(1)" />
-                            <generalSheetsDelete ref="cancelOrderSheet" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="بله" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalModalsDelete ref="cancelOrderModal" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalSheetsDelete ref="cancelOrderSheet" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
                         </div>
                     </v-card>
                 </div>
@@ -76,7 +76,7 @@ export default {
             products: [],
             screenType: 'desktop',
             cancelReasonItems: [{
-                    label: 'از خرید این کالا منصرف شده‌ام',
+                    label: 'از خرید این سفارش منصرف شدم',
                     value: '1'
                 },
                 {
@@ -94,7 +94,8 @@ export default {
             cancelReasonValueDescAll: null,
             selectedProducts: [],
             orderId : null,
-            activeSubmit: true
+            activeSubmit: true,
+            refundItems:[]
         }
     },
 
@@ -213,19 +214,85 @@ export default {
          * Change order status confirm
          */
          changeStatus() {
-            if (this.screenType === 'desktop') {
-                this.$refs.cancelOrderModal.dialog = true;
-            } else {
-                this.$refs.cancelOrderSheet.sheet = true;
+            const formData = new FormData()
+            let ChooseAllReason = false;
+
+            this.selectedValue = [];
+            this.value = [];
+            this.selectedProducts = [];
+
+            this.userOrder ?.details.forEach((product, index) => {
+                this.value[index] = product.id;
+                this.selectedValue[index] = product.id;
+
+                const obj = {
+                    count: product.count,
+                    id: product.id,
+                    item: product,
+                }
+                this.selectedProducts.push(obj);
+            })
+
+            if (this.selectedProducts && this.selectedProducts.length) {
+                this.selectedProducts.forEach((product, index) => {
+                    const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
+                    formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
+                    formData.append(`shps_list[${index}][count]`, product ?.count)
+
+                    if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.label) {
+                        ChooseAllReason = false;
+                        formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
+                        formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
+                    } else {
+                        ChooseAllReason = true;
+                    }
+                })
+                if(ChooseAllReason){
+                    useNuxtApp().$toast.error('علت لغو انتخاب نشده است', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
+                }else{
+                    formData.append(`order_id`, this.$route.params.id)
+                    formData.append(`accept`, 0)
+                    this.returnOrRejectOrder(formData, '/order/cancel/crud/create', 0)
+                    if (this.screenType === 'desktop') {
+                        this.$refs.cancelOrderModal.dialog = true;
+                    } else {
+                        this.$refs.cancelOrderSheet.sheet = true;
+                    }
+                }
+                
             }
+            
         },
     },
 
     beforeMount() {
         this.getOrder();
         this.orderId = this.$route.params.id
-        console.log("🚀 ~ beforeMount ~ this.orderId:", this.orderId)
     },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
+
+    watch:{
+        orderReturnOrReject(newVal){
+            if(newVal !== null){
+                this.refundItems = [];
+                const data = {
+                    label: 'مبلغ عودت داده شده : ' ,
+                    value: newVal?.refund
+                }
+                this.refundItems.push(data)
+            }
+        }
+    }
 }
 </script>
 
