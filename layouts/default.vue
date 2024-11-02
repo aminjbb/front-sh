@@ -22,12 +22,16 @@
                 <mobileHeader />
             </template>
             <slot />
+
             <template v-if="$route.name !== 'campaign-romina' && $route.name !== 'login' && $route.name !== 'forgotPassword' && $route.name !== 'welcome' && $route.name !== 'game-slug' && $route.name !== 'cart' ">
                 <mobileFooter :userData="userData" />
             </template>
            <template v-if="$route.name === 'index'">
                 <generalSheetsLogin :signupStatus="!loginStatus" image="voucher-login-m.png" voucherImage="voucher-cart.svg" title="با ثبت نام در شاواز کد تخفیف ۵۰ هزار تومانی دریافت کنید" />
             </template>
+          <template v-if="$route.name == 'index' || $route.name == 'about' || $route.name == 'contact' || $route.name == 'faq' ">
+            <mobileFooterMobile :userData="userData" />
+          </template>
         </div>
     </div>
 </v-app>
