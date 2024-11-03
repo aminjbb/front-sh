@@ -1,6 +1,7 @@
 <template>
 <div class="filter-sidebar__card__box">
     <v-text-field
+        v-if="isSearchable"
         density="compact"
         variant="outlined"
         :placeholder="` جستجو در ${title}`"
@@ -82,6 +83,11 @@ export default {
             type: Boolean,
             default: true
         },
+      isSearchable: {
+            type: Boolean,
+            default: false
+        },
+
     },
 
     computed: {
