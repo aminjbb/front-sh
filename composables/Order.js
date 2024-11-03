@@ -162,15 +162,17 @@ export default function setup() {
             })
             .then((response) => {
                 if (accept === 1) {
-                    store.commit('set_snackBar', {
-                        show:true , text:'سفارش با موفقیت لغو شد' , status:'success'
-                    })
+                    useNuxtApp().$toast.success('سفارش با موفقیت لغو شد', {
+                        rtl: true,
+                        position: 'top-center',
+                        theme: 'dark'
+                    });
                     router.push('/user/order')
                 }
                 orderReturnOrRejectObject.value = response
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
+                useNuxtApp().$toast.error(err?.response?.data?.message, {
                     rtl: true,
                     position: 'top-center',
                     theme: 'dark'
