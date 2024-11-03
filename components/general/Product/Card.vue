@@ -11,18 +11,18 @@
     </div>
 
     <template v-if="lazy">
-        <a v-if="content.image && content.image.image_url && !isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :id="cardIdImage" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :src="content?.image_url" :title="content.label"  :alt="content?.image_alt"  width="130" height="130"/>
         </a>
     </template>
     <template v-else>
-        <a v-if="content.image && content.image.image_url && !isPLP" :id="cardIdImage" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :lazy="false" :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :id="cardIdImage" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :lazy="false" :src="content?.image_url" :title="content.label"  :alt="content?.image_alt" width="130" height="130"/>
         </a>
     </template>
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-
+    
     <p v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
         <a :id="cardIdLabel" class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}

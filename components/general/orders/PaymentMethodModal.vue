@@ -29,7 +29,7 @@
             <div v-if="voucherCode" class="d-flex align-center justify-space-between my-8">
                 <span class="text-sGrayLighten2 w700 t12">کد تخفیف اعمال شده : </span>
 
-                <span class="color-sGrayDarken2 w700 t12 bold number-font">{{ voucherCode }}</span>
+                <span class="color-sGrayDarken2 w700 t12 fw700 number-font">{{ voucherCode }}</span>
             </div>
 
             <div class="d-flex align-center justify-center mb-2">
@@ -75,7 +75,7 @@
             <div v-if="voucherCode" class="d-flex align-center justify-space-between my-8">
                 <span class="text-sGrayLighten2 w700 t12">کد تخفیف اعمال شده : </span>
 
-                <span class="color-sGrayDarken2 w700 t12 bold number-font">{{ voucherCode }}</span>
+                <span class="color-sGrayDarken2 w700 t12 fw700 number-font">{{ voucherCode }}</span>
             </div>
 
             <div class="d-flex align-center justify-center mb-2">

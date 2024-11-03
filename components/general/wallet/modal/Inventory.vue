@@ -133,7 +133,7 @@
                             شماره شبا:
                         </span>
 
-                        <span class="t16 w500 text-black number-font my-2 bold ltr" style="letter-spacing: 2px;">{{cartNumber}}</span>
+                        <span class="t16 w500 text-black number-font my-2 fw700 ltr" style="letter-spacing: 2px;">{{cartNumber}}</span>
 
                         <div class="d-flex align-center">
                             <v-icon

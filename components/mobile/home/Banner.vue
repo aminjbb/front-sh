@@ -25,7 +25,7 @@
             :class="device === 'mobile' ? 'pa-1' : ''"
             @click="enhanceECommerce(item)"
             :sm="col">
-            <a class="banner__image d-flex" :href="item.link">
+            <a class="banner__image d-flex" :href="item.link" :id="`home-${screenId}-${sectionId}-${index + 1}`">
               <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="380" height="200" />
             </a>
         </v-col>
@@ -81,14 +81,14 @@ export default {
          * screenId
          */
         screenId: {
-          type:String,
+          type:String|Number,
           default:'D'
         },
         /**
          * sectionId for id
          */
         sectionId: {
-          type: String,
+          type: String|Number,
           default: ''
         },
     },

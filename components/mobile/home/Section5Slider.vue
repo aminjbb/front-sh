@@ -23,7 +23,7 @@
                         </h2>
 
                         <div class="d-flex flex-wrap">
-                            <a v-for="(item, index) in groups.skus?.slice(0, 4)" :key="`sku-${index}`" :id="`home-${screenId}-${content?.id}-${index}-${skuIndex}`" class="section5-slider__item" :href="`sku/${item.slug}`">
+                            <a v-for="(item, skuIndex) in groups.skus?.slice(0, 4)" :key="`sku-${index}`" class="section5-slider__item" :href="`sku/${item.slug}`" :id="`home-${screenId}-${content?.id}-${index}-${skuIndex}`">
                               <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="90" height="90" />
                             </a>
                         </div>

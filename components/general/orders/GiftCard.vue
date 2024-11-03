@@ -44,7 +44,7 @@
             </a>
         </div>
 
-        <div class="t14 w700 number-font bold text-sGray d-flex justify-end align-center">
+       <div class="t14 w700 number-font fw700 text-sGray d-flex justify-end align-center">
             0  <svgToman/>
         </div>
     </div>

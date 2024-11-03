@@ -18,20 +18,20 @@
         <div class="d-flex flex-column align-center justify-center">
             <template v-if="content.discount">
                 <div class="d-flex align-center">
-                    <span v-if="content.site_price" class="t16 bold text-primary text-center number-font">
+                    <span v-if="content.site_price" class="t16 fw700 text-primary text-center number-font">
                         {{splitChar(Number(String(content.site_price).slice(0, -1)))}}
                         <svgToman/>
                     </span>
                 </div>
 
-                <span v-if="content.customer_price" class="t12 bold number-font text-sGray" style="text-decoration: line-through;">
+                <span v-if="content.customer_price" class="t12 fw700 number-font text-sGray" style="text-decoration: line-through;">
                     {{ splitChar(Number(String(content.customer_price).slice(0, -1)))}}
                 </span>
             </template>
 
             <template v-else>
                 <div class="d-flex align-center without-discount">
-                    <span class="t16 bold text-sGray text-center number-font">{{splitChar(Number(String(1450000).slice(0, -1)))}}</span>
+                    <span class="t16 fw700 text-sGray text-center number-font">{{splitChar(Number(String(1450000).slice(0, -1)))}}</span>
                     <svgToman class="mr-1"/>
                 </div>
             </template>

@@ -16,7 +16,7 @@
                 <div>
                     <v-card class="pa-8 mobile-pa-0 v-order__card">
                         <header class="v-ticket__header d-flex align-center justify-space-between xs-hide card__header pt-6">
-                            <h1 class="t18 w700 text-sGrayDarken2 number-font bold ltr">{{ userOrder?.id }} جزئیات سفارش</h1>
+                            <h1 class="t18 w700 text-sGrayDarken2 number-font fw700 ltr">{{ userOrder?.id }} جزئیات سفارش</h1>
 
                             <v-btn href="/user/order" height="45" title="بازگشت" class="btn--cancel px-6 br12 no-shadow">
                                 <span class="w700"> بازگشت</span>
