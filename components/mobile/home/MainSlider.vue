@@ -10,7 +10,7 @@
             }"
         class="mySwiper">
         <swiper-slide v-for="(item,index) in mobileBanners" :key="index">
-            <a class="main-slider__item" :href="item?.link">
+            <a class="main-slider__item" :href="item?.link" :id="`home-${screenId}-${items?.id}-${index + 1}`">
                 <div class="main-slider__image">
                     <img data-not-lazy :src="item?.image?.image_url" :title="item?.title" :alt="item?.title" width="768" height="268" />
                 </div>
@@ -43,6 +43,13 @@ export default {
          * Item list
          */
         items: Object,
+      /**
+       * screenId
+       */
+      screenId: {
+        type:String,
+        default:'M'
+      },
     },
 
     components: {

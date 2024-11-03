@@ -97,6 +97,40 @@ export default function setup() {
     };
 
     /**
+     * Get user one order by Id
+     */
+    async function getOrder(id = null) {
+        if(id !== null){
+            axios
+            .get(runtimeConfig.public.apiBase + `/order/crud/get/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                order.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+        }else{
+            axios
+            .get(runtimeConfig.public.apiBase + `/order/crud/get/${route.params.id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                order.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+        }
+       
+    };
+
+    /**
      * Get user one order
      */
     async function getOrderById(id) {
@@ -131,7 +165,7 @@ export default function setup() {
             .then((response) => {
                 if (accept === 1) {
                     store.commit('set_snackBar', {
-                        show:true , text:'درخواست شما با موفقیت ثبت شد' , status:'success'
+                        show:true , text:'سفارش با موفقیت لغو شد' , status:'success'
                     })
                     router.push('/user/order')
                 }

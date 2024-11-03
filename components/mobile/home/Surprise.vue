@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="surprise-slider__info__image flex-grow-1 mb-2 d-flex align-center justify-center">
-                        <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
+                      <generalKitsImageSimage :src="mainBannerImage"  :title="mainBanner.label"  :alt="mainBanner.image_alt" width="111" height="118"  />
                     </div>
                     <div class="surprise-slider__info__title mb-2">
                         <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>
@@ -36,7 +36,8 @@
             </swiper-slide>
 
             <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
-                <generalProductCard :content="item" hideInfo :index="index + 1" sectionName="سورپرایز" :shps="item?.pivot?.shps" class="mb-4" />
+                <generalProductCard  :cardIdImage="`home-${screenId}-${content?.id}-${index +1}-image`"
+                                     :cardIdLabel="`home-${screenId}-${content?.id}-${index +1}-label`" :content="item" hideInfo :index="index + 1" sectionName="سورپرایز" :shps="item?.pivot?.shps" class="mb-4" />
             </swiper-slide>
         </swiper>
     </div>
@@ -91,6 +92,14 @@ export default {
          * Content
          */
         content: Object,
+
+      /**
+       * screenId
+       */
+      screenId: {
+        type:String,
+        default:'M'
+      },
     },
 
     mounted() {

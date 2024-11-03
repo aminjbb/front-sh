@@ -8,7 +8,7 @@
             </div>
 
             <div class="surprise-slider__info__image mb-4 flex-grow-1">
-                <img :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label" width="111" height="118" />
+              <generalKitsImageSimage   :src="mainBannerImage" :title="mainBanner?.label" :alt="mainBanner?.label"  width="111" height="118"  />
             </div>
           <div class="surprise-slider__info__title mb-4">
                 <span class="t16 w700 ml-2 text-white"> {{mainBanner?.label}}</span>
@@ -48,6 +48,8 @@
                 class="mySwiper">
                 <swiper-slide v-for="(item, index) in mainBannerSkus" :key="`skus-${index}`">
                     <generalProductCard
+                        :cardIdImage="`home-${screenId}-${content?.id}-${index +1}-image`"
+                        :cardIdLabel="`home-${screenId}-${content?.id}-${index +1}-label`"
                         :content="item"
                         hideInfo
                         :index = "index + 1"
@@ -108,6 +110,13 @@ export default {
          * Content
          */
         content: Object,
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
+        },
     },
 
     mounted() {

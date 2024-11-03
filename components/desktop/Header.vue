@@ -1,7 +1,7 @@
 <template>
     <client-only>
         <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
-            <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="40" :title="topBanner?.image_alt" />
+          <generalKitsImageSimage :lazy="false" :src="topBanner.image"  :title="topBanner.image_alt"  :alt="topBanner?.image_alt" width="1400" height="40" class="w-100 h-100"  />
         </a>
     
         <header
@@ -135,51 +135,13 @@
         </header>
         
         <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
-        
-        <v-dialog
-            v-if="dialog"
-            v-model="dialog"
-            color="white"
-            width="470px">
-            <v-card class="pt-3 px-6 pb-5">
-                <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                    <span class="t15 w400">
-                        خروج از حساب کاربری
-                    </span>
-        
-                    <v-btn
-                        class="c-modal__header__btn pa-0 text-none"
-                        @click="closeModal()"
-                        color="grey-darken-1"
-                        size="large"
-                        variant="icon">
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </header>
-        
-                <div>
-                    <p class="t14 w400 my-8 text-center text-grey-darken-2">آیا از خروج از حساب اطمینان دارید؟ </p>
-        
-                    <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
-                        <v-btn
-                            @click="closeModal()"
-                            height="44"
-                            title="انصراف"
-                            class="btn btn--cancel ml-1">
-                            انصراف
-                        </v-btn>
-        
-                        <v-btn
-                            @click="logout()"
-                            height="44"
-                            title="خروج از حساب"
-                            class="btn btn--submit">
-                            خروج از حساب
-                        </v-btn>
-                    </div>
-                </div>
-            </v-card>
-        </v-dialog>
+
+        <generalModalsLogOut
+            ref="logOutModal"
+            title="خروج از حساب کاربری"
+            text="آیا از خروج اطمینان دارید؟"
+            submitText="خروج از حساب"
+            @removeProduct="logout" />
     </client-only>
 </template>
 <script>
@@ -271,56 +233,58 @@ export default {
             let currentScrollTop = window.scrollY;
             let header = document.getElementById('header--desktop');
 
-            if (this.isBanner) {
-                if (window.scrollY > 185) {
-                    header.style.top = '0px';
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    this.hasBanner = false;
-
-                    if (currentScrollTop > this.lastScrollTop) {
+            if(header){
+                if (this.isBanner) {
+                    if (window.scrollY > 185) {
+                        header.style.top = '0px';
                         this.isHidden = true;
                         this.isFixed = false;
+                        this.hasBanner = false;
 
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+                        }
+
+                        this.lastScrollTop = currentScrollTop;
+                    }
+
+                    if (window.scrollY <= 185) {
+                        this.hasBanner = true;
+                        header.style.top = `${40 - window.scrollY}px`;
+                        
+                    }
+                } else {
+                    if (window.scrollY > 145) {
+                        this.isHidden = true;
+                        this.isFixed = false;
+                        header.style.top = '0px';
+
+                        if (currentScrollTop > this.lastScrollTop) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+
+                        } else {
+                            this.isFixed = true;
+                            this.isHidden = false;
+                        }
+                    }
+
+                    if (window.scrollY <= 145) {
+                        if (currentScrollTop > this.lastScrollTop) {
+                            header.style.top = `${0 - window.scrollY}px`;
+
+                        } else {
+                            header.style.top = '0px';
+                        }
                     }
 
                     this.lastScrollTop = currentScrollTop;
                 }
-
-                if (window.scrollY <= 185) {
-                    this.hasBanner = true;
-                    header.style.top = `${40 - window.scrollY}px`;
-                    
-                }
-            } else {
-                if (window.scrollY > 145) {
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    header.style.top = '0px';
-
-                    if (currentScrollTop > this.lastScrollTop) {
-                        this.isHidden = true;
-                        this.isFixed = false;
-
-                    } else {
-                        this.isFixed = true;
-                        this.isHidden = false;
-                    }
-                }
-
-                if (window.scrollY <= 145) {
-                    if (currentScrollTop > this.lastScrollTop) {
-                        header.style.top = `${0 - window.scrollY}px`;
-
-                    } else {
-                        header.style.top = '0px';
-                    }
-                }
-
-                this.lastScrollTop = currentScrollTop;
             }
         },
 
@@ -355,7 +319,7 @@ export default {
          * Open modal
          */
         openModal() {
-            this.dialog = true;
+          this.$refs.logOutModal.dialog = true
         },
 
         /**
@@ -413,8 +377,7 @@ $parent: 'header';
         z-index: 10;
         padding: 4px;
         padding-bottom: 0 !important;
-        border-bottom: 1px solid #DDDDDD;
-        box-shadow: 0px 4px 9px rgba(66, 66, 66, 0.1);
+        box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
         background: #fff;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;

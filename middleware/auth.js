@@ -75,7 +75,7 @@ export default {
       const response = await axios.post(`${this.runtimeConfig().public.apiBase}/auth/user/login-register/otp`, {
         phone_number: phoneNumber,
         code: otp,
-        is_takhfifan: tatoken.value !== null && tatoken.value !== '' ? true : false,
+        // is_takhfifan: tatoken.value !== null && tatoken.value !== '' ? true : false,
         is_affilink: altoken.value !== null && altoken.value !== '' ? true : false
       });
       return response;

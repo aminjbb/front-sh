@@ -4,20 +4,29 @@
         <img data-not-lazy :src="topBanner.image" class="w-100 h-100" :alt="topBanner?.image_alt" width="1400" height="40" :title="topBanner?.image_alt" />
     </a>
 
-    <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop }" id="mobile-header">
+    <header class="header header--mobile header--mobile-plp w-100" :class="{ 'fixed': isFixed, 'hidden': isHidden, 'has-banner': hasBanner, 'is-top':isTop, 'ov-v':submenu }" id="mobile-header">
         <div class="w-100 d-flex align-center justify-space-between header__logo-row">
             <div class="d-flex align-center">
-                <a href="/">
-                    <v-icon icon="mdi-chevron-right" color="text-gray-darken-3" class="ml-1" />
+                <a :href="pageReference && pageReference !== null && pageReference.slug ? `${runtimeConfig.public.siteUrl}/${pageSlug}/${pageReference.slug}` :'/' " class="text-sGrayDarken2">
+                    <v-icon icon="mdi-chevron-right" color="sGrayDarken2" class="ml-1" />
                 </a>
 
-                <span class="t14 w700 text-gray-darken-3">{{ pageTitle }}</span>
+                <span class="t14 w700 text-sGrayDarken2">
+                    <template v-if="pageReference && pageReference !== null && pageReference.label">{{ pageReference.label }}</template>
+                    <template v-else>{{ pageTitle }}</template>
+                </span>
             </div>
 
             <mobileSearchResult buttonType="icon" />
         </div>
+
+        <div v-if="submenu" class="header header--mobile-plp__submenu px-3 d-flex align-center" id="header--mobile-plp__submenu" :class="{ 'fixed': showSubMeu, 'hidden': hideSubMenu}">
+            <template v-if="pageImage">
+                <img :src="pageImage" :title="pageTitle" width="24" height="24" class="ml-2 br8 ov-h">
+            </template>
+            <div class="t16 w700 text-sGrayDarken2">{{ pageTitle }}</div>
+        </div>
     </header>
-    <mobileMenu class="menu-plp" :class="{'has-banner': hasBanner }"/>
 </client-only>
 </template>
 
@@ -33,14 +42,26 @@ export default {
             hasBanner: false,
             isBanner: false,
             isTop: false,
+            showSubMeu: false,
+            hideSubMenu: true,
         };
     },
 
     props: {
-        pageTitle: String
+        pageTitle: String,
+        items: Array,
+        pageReference: Object,
+        pageSlug: {
+            type: String,
+            default: 'category'
+        },
+        submenu: Boolean,
+        pageImage: String,
     },
 
     setup() {
+        const runtimeConfig = useRuntimeConfig()
+
         const {
             getTopBanner,
             topBanner,
@@ -48,13 +69,16 @@ export default {
 
         return {
             getTopBanner,
-            topBanner
+            topBanner,
+            runtimeConfig
         }
     },
 
     mounted() {
         window.addEventListener('scroll', this.handleScroll);
         this.getTopBanner();
+
+
     },
 
     beforeDestroy() {
@@ -66,67 +90,45 @@ export default {
          * Show and hide menu in scroll down and up
          */
         handleScroll() {
-            let currentScrollTop = window.scrollY;
-            const menu = document.getElementById('menu--mobile');
+            //let currentScrollTop = window.scrollY;
+            const header = document.getElementById('mobile-header');
+            const filter = document.getElementById('filter-bg-mobile');
+
+            const headerHeight = header.offsetHeight;
 
             if (this.isBanner) {
-                if (window.scrollY > 88) {
-                    this.isHidden = true;
-                    this.isFixed = false;
+                if (window.scrollY > 40) {
                     this.hasBanner = false;
-                    menu.style.top = '';
-                    menu.style.height = '';
+                    header.style.top = '0px';
+                }
+                if (window.scrollY <= 40) {
+                    this.hasBanner = true;
+                    header.style.top = `${40 - window.scrollY}px`;
+                }
+            }
+
+            const filterParent = document.getElementById('filter-parent');
+
+            if(filterParent){
+                const filterOffset = filterParent.offsetTop;
+                const margin = filterOffset - headerHeight;
+
+                // Fix category sub menu and filter
+                if(window.scrollY >= margin){
+                    filter.classList.add('fixed');
+
+                    if(this.submenu){
+                        this.showSubMeu = true;
+                        this.hideSubMenu = false;
+                        filter.style.top = '89px'
+                    }
+                }else if(window.scrollY < margin){
+                    filter.classList.remove('fixed')
                     
-                    if (menu) {
-                        if (currentScrollTop > this.lastScrollTop) {
-                            this.isHidden = true;
-                            this.isFixed = false;
-
-                            menu.classList.add('change-height');
-                            menu.style.top = 0;
-                        } else {
-                            this.isFixed = true;
-                            this.isHidden = false;
-
-                            menu.classList.remove('change-height');
-                            menu.style.top = '48px';
-                        }
+                    if(this.submenu){
+                        this.showSubMeu = false;
+                        this.hideSubMenu = true;
                     }
-                    this.lastScrollTop = currentScrollTop;
-                }
-                if (window.scrollY <= 88) {
-                    this.isFixed = false;
-                    this.isHidden = false;
-                    menu.style.top = `${88 - window.scrollY}px`;
-                    menu.style.height = `calc(100% - ${144 - window.scrollY}px)`;
-                }
-            } else {
-                if (window.scrollY > 48) {
-                    this.isHidden = true;
-                    this.isFixed = false;
-                    menu.style.top = '';
-                    menu.style.height = '';
-
-                    if (menu) {
-                        if (currentScrollTop > this.lastScrollTop) {
-                            this.isHidden = true;
-                            this.isFixed = false;
-
-                            menu.classList.add('change-height');
-                        } else {
-                            this.isFixed = true;
-                            this.isHidden = false;
-
-                            menu.classList.remove('change-height');
-                        }
-                    }
-                    this.lastScrollTop = currentScrollTop;
-                }
-                if (window.scrollY <= 48) {
-                    this.isFixed = false;
-                    this.isHidden = false;
-                    menu.style.top = `${48 - window.scrollY}px`;
-                    menu.style.height = `calc(100% - ${104 - window.scrollY}px)`;
                 }
             }
         },
@@ -160,11 +162,21 @@ $parent: 'header';
 
 .#{$parent} {
     &--mobile-plp {
+        position: fixed !important;
+        top: 0px;
+
+        &.has-banner {
+            top: 40px;
+        }
+
         .#{$parent}__logo-row {
             height: 48px;
+            overflow: hidden;
             padding: 0 16px 0 !important;
             background: #fff;
             box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
+            position: relative;
+            z-index: 3;
 
             .v-icon.mdi-chevron-right {
                 font-size: 25px !important;
@@ -176,6 +188,31 @@ $parent: 'header';
         flex-grow: 0 !important
     }
 
+}
+
+.#{$parent}--mobile-plp__submenu {
+    height: 44px;
+    width: 100%;
+    position: absolute;
+    top: 48px;
+    right: 0;
+    transition: opacity 0.1s ease-in-out;
+    z-index: 3;
+    background: #fff;
+    border-top: 1px solid #E8E8E8;
+
+    &.hidden {
+        opacity: 0;
+    }
+
+    &.fixed {
+        opacity: 1;
+    }
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .header__search-box {
@@ -305,9 +342,7 @@ $parent: 'header';
     opacity: 1;
     width: 100% !important;
     z-index: 11;
-
     background: #fff;
-    overflow: hidden;
     position: relative;
 
     &.hidden {
@@ -325,5 +360,9 @@ $parent: 'header';
         transform: translateY(0);
         transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     }
+}
+
+.filter-bg-mobile.fixed{
+    box-shadow: 0px 2px 4px 0px rgba(97, 97, 97, 0.10);
 }
 </style>

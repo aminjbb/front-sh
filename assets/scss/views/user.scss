@@ -4,11 +4,11 @@
 
 .v-user {
     padding-bottom: 60px;
-    padding-top: 170px;
+    padding-top: 170px !important;
 
     @include gbp (0, 768) {
         padding-bottom: 80px;
-        padding-top: 0;
+        padding-top: 70px !important;
     }
 
     &__mobile-page-head {
@@ -29,95 +29,123 @@
         }
     }
 
-    .card__header {
-        @include gbp (0, 768) {
-            display: none !important;
-        }
-    }
-
-    .pa-4{
-        @include gbp (768, 1280) {
-            padding: 8px !important;
-        } 
-    }
-
     &__sidebar {
+        border-radius: 16px;
+        border: 1px solid #CBCBCB;
+        background: #FFF;
+        padding: 24px 16px;
 
-        >div:first-child{
+        > div:first-child{
+            padding-bottom: 16px;
+
             @include gbp (768, 1280) {
                 padding-left: 5px !important;
                 padding-right: 5px !important;
+                border-bottom: 1px solid #E8E8E8;
+            }
+
+            .v-icon.mdi-account-circle-outline{
+                font-size: 49px !important;
             }
         }
 
-        .user-phone {
-            font-family: 'IranSansFaNum' !important;
-            color: #757575
+        &__edit-button{
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: var(--Space_2, 2px) solid var(--Background-Background, #FAFAFA);
+            background: var(--Primery-Primery-light-3, #FBE9F3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .v-icon{
+                font-size: 18px !important;
+            }
         }
 
         .user-nav {
             &__item {
-                padding: 14px 2px 13px;
+                padding: 16px 4px;
+                list-style: none;
+
+                a .v-icon {
+                    font-size: 22px !important;
+                    
+                }
 
                 &.active {
                     position: relative;
 
-                    &::before {
-                        border-radius: 4px 0px 0px 4px;
-                        background: var(--Conceptual-Primary, #D72685);
-                        width: 4px;
-                        height: 100%;
-                        content: "";
-                        top: 0;
-                        right: -20px;
-                        position: absolute;
-                    }
-
-                    a,
-                    .v-icon {
-                        color: #424242 !important;
+                    a .v-icon {
+                        color: #E77DB6 !important;
                     }
                 }
 
                 &:hover {
-
-                    a,
-                    .v-icon {
-                        color: #424242 !important;
+                    a .v-icon {
+                        color: #E77DB6 !important;
                     }
                 }
             }
 
             &__item:not(:last-child) {
-                border-bottom: 0.5px solid #BDBDBD;
-            }
-        }
-    }
-
-    .v-row.pa-5 {
-        @include gbp (0, 768) {
-            padding: 0 !important;
-        }
-    }
-
-    .btn {
-        overflow: hidden;
-
-        &--cancel {
-            @include gbp (0, 768) {
-                width: 36.333%
+                border-bottom: 1px solid #E8E8E8;
             }
         }
 
-        &--submit {
-            @include gbp (0, 768) {
-                margin-left: 0 !important;
-                width: 100%;
-                width: 61.666%;
+        &--mobile{
+            padding: 0;
+            border: 0;
+            background: transparent;
+
+            .v-user__sidebar {
+                &__top-section{
+                    position: relative;
+
+                    &::before{
+                        width: 100%;
+                        height: 60px;
+                        content: '';
+                        border-radius: 0px 0px 30px 30px;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        z-index: 1;
+                        background-color: #E8E8E8;
+                    }
+
+                    > div{
+                        position: relative;
+                        z-index: 2;
+                    }
+                }
+
+                &__image{
+                    margin-top: 19px;
+                    position: relative;
+
+                    > span{
+                        border: 2px solid #FAFAFA;
+                        border-radius: 50%;
+                        background-color: #FBE9F3;
+                        width: 90px;
+                        height: 90px;
+                        display: flex !important;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+
+                &__edit-button{
+                    position: absolute;
+                    bottom: 0px;
+                    border: 2px solid #FAFAFA;
+                    right: 0;
+                }
             }
         }
     }
-
 
     &--favorite-list {
         .favorite-list {
@@ -154,6 +182,42 @@
                 width: 100% !important;
                 background: #D72685 !important;
                 color: #fff !important;
+            }
+        }
+    }
+
+    .card__header {
+        @include gbp (0, 768) {
+            display: none !important;
+        }
+    }
+
+    .pa-4{
+        @include gbp (768, 1280) {
+            padding: 8px !important;
+        } 
+    }
+
+    .v-row.pa-5 {
+        @include gbp (0, 768) {
+            padding: 0 !important;
+        }
+    }
+
+    .btn {
+        overflow: hidden;
+
+        &--cancel {
+            @include gbp (0, 768) {
+                width: 36.333%
+            }
+        }
+
+        &--submit {
+            @include gbp (0, 768) {
+                margin-left: 0 !important;
+                width: 100%;
+                width: 61.666%;
             }
         }
     }

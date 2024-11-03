@@ -67,7 +67,7 @@
 
     <!-- color details -->
     <div class="colors-pallet mb-2">
-        <h4 class="t16 w400 text-grey-darken-3 mb-3">رنگ:</h4>
+        <p class="t16 w400 text-grey-darken-3 mb-3">رنگ:</p>
 
         <div>
             <swiper
@@ -124,7 +124,7 @@
 
     <v-divider color="grey" class="my-3" />
 
-    <h4 class="t16 w400 text-grey-darken-3 mb-3">مشخصات اصلی:</h4>
+    <p class="t16 w400 text-grey-darken-3 mb-3">مشخصات اصلی:</p>
 
     <nav class="attribute-list">
         <ul class="ma-0 pa-0 pr-5">
@@ -136,7 +136,7 @@
                 <span class="t13 w400 text-grey" :class="attr?.attribute_values.length >1 ? 'ml-2' : 'ml-1'">{{attr?.label}}: </span>
 
                 <template v-if="attr?.attribute_values">
-                    <span class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attr?.attribute_values.label}}</span>
+                    <span v-for="attrValue in attr?.attribute_values" class="t13 w400 text-grey-darken-1 mr-2 number-font">{{attrValue.label}} </span>
                 </template>
                 <template v-else>
                     <div class="attr-select">

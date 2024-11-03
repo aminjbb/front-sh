@@ -30,19 +30,14 @@
                   <span class="t12 w700">{{ filter.label }}</span>
                   <div class="d-flex align-center">
                     <!--                  <v-icon size="5" icon="mdi-checkbox-blank-circle" color="success" />-->
-                    <v-badge
-                        v-if="returnShowBadgeFilter(index)"
-                        color="primary"
-                        dot
-                        class="ml-2 mb-2">
-                    </v-badge>
+                    <v-badge v-if="returnShowBadgeFilter(index)" color="primary" dot class="ml-2 mb-2"/>
                     <v-icon icon="mdi-chevron-down" color="grey"/>
                   </div>
                 </header>
 
                 <template v-if="filter.type === 'select'">
                   <generalProductFilterSelects :index="index" @selectedFilter="addSelectedFilterForShowBadge"
-                                               :showEnName="filter.param === 'categories' ? true : false"
+                                               :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
                                                :items="filter.data" :clear="clearAll" :title="filter.label"
                                                :name="filter.label" :param="filter.param"
                                                @selectItems="selectFiltersModalEmit"
@@ -51,19 +46,22 @@
 
                 <template v-else-if="filter.type === 'switch'">
                   <generalProductFilterSwitch :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                              :selectedStock="stockModel"
                                               @selectedFilter="addSelectedFilterForShowBadge"
-                                              @changeClearToFalse="changeClearToFalse" :title="filter.label"
-                                              :clear="clearAll" :name="filter.label"
-                                              :param="filter.param" :switchName="filter.value"/>
+                                              @changeClearToFalse="changeClearToFalse"
+                                              @changeStatus="selectFiltersModalEmit" :title="filter.label"
+                                              :clear="clearAll" :name="filter.label" :param="filter.param"
+                                              :switchName="filter.value"/>
                 </template>
 
                 <template v-else-if="filter.type === 'checkbox'">
                   <generalProductFilterSelects :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                                               :selectedFilter="finalFilterObject"
                                                @selectedFilter="addSelectedFilterForShowBadge"
+                                               :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
                                                @changeClearToFalse="changeClearToFalse" :items="filter.data"
-                                               :title="filter.label" :name="filter.label"
-                                               :param="filter.param" :clear="clearAll"
-                                               @selectItems="selectFiltersModalEmit"/>
+                                               :title="filter.label" :name="filter.label" :param="filter.param"
+                                               :clear="clearAll" @selectItems="selectFiltersModalEmit"/>
                 </template>
 
                 <template v-else-if="filter.type === 'period'">
@@ -74,18 +72,16 @@
 
                       <div class="d-flex align-center">
                         <!--                  <v-icon size="5" icon="mdi-checkbox-blank-circle" color="success" />-->
-                        <v-badge
-                            v-if="returnShowBadgeFilter(index)"
-                            color="primary"
-                            dot
-                            class="ml-2 mb-2">
+                        <v-badge v-if="returnShowBadgeFilter(index)" color="primary" dot class="ml-2 mb-2">
                         </v-badge>
                         <v-icon icon="mdi-chevron-down" color="grey"/>
                       </div>
                     </header>
 
                     <div>
+
                       <generalProductFilterSelectsMount :index="index"
+                                                        :selectedAmount="amountModel"
                                                         @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                                         @selectedFilter="addSelectedFilterForShowBadge"
                                                         @changeClearToFalse="changeClearToFalse"
@@ -102,12 +98,13 @@
           </div>
 
           <div class="filter-mobile-btn pa-3">
-            <v-btn @click="closeSheet()" height="45" title="اعمال فیلتر" class="btn btn--submit">
+            <v-btn @click="createRoute(finalFilterObject)" height="45" title="اعمال فیلتر" class="btn btn--submit"
+                   :disabled="finalFilterObject.length == 0 && amountModel===null && stockModel === null">
               اعمال فیلتر
             </v-btn>
-
-            <v-btn @click="deleteAllFilter()" height="45" title="حذف فیلتر ها" class="btn btn--submit-border">
-              حذف فیلتر ها
+            <v-btn @click="deleteAllFilter()" height="45" title="حذف فیلتر ها" class="btn btn--submit-border"
+                   :disabled="!activeFilterButton && finalFilterObject.length == 0 && amountModel===null && stockModel === null">
+              حذف فیلترها
             </v-btn>
           </div>
         </div>
@@ -118,13 +115,23 @@
 
 <script>
 export default {
+  setup() {
+    const {
+      filterQuery,
+    } = new PLP()
+    return {filterQuery}
+  },
   data() {
     return {
       sheet: false,
       selectedItem: null,
       availableItems: false,
+      activeFilterButton: false,
       selectedFilters: new Set([]),
+      finalFilterObject:[],
       clearAll: false,
+      amountModel:null,
+      stockModel:null,
       amount: {
         max: null,
         min: null
@@ -233,7 +240,18 @@ export default {
      * @param {array} Arr
      */
     selectFiltersModalEmit(arr) {
-      this.$emit('selectFiltersModal', arr);
+      // this.$emit('selectFiltersModal', arr);
+    if (arr.param === 'stock'){
+      const form = {
+        param: arr.param,
+        value: arr.values
+      };
+      this.stockModel = form
+    }
+    else{
+      this.selectFiltersModal(arr)
+    }
+
     },
 
     /**
@@ -252,16 +270,26 @@ export default {
         param: field.param,
         amount: field.values
       };
-      this.$emit('setAmount', form);
+      this.amountModel = form
     },
 
     /**
      * Delete All filter
      */
     deleteAllFilter() {
-      this.$router.push(`${this.$route.path}`)
+      if (this.$route.name === 'search'){
+        this.$router.push(`${this.$route.path}?needle=${this.$route.query.needle}`)
+      }
+      else{
+        this.$router.push(`${this.$route.path}`)
+      }
+
       this.closeSheet();
       this.selectedFilters = new Set([])
+      this.filterQuery = []
+      this.finalFilterObject = []
+      this.amountModel = null
+      this.stockModel = null
       this.$emit('clearFilterQuery')
     },
 
@@ -272,7 +300,280 @@ export default {
     closeSheet() {
       this.sheet = false;
     },
+
+
+    /**
+     * Filter productList by select type items
+     * @param {*} array
+     */
+    selectFiltersModal(array) {
+      if (array.param === "stock") {
+        this.createQueryForFilter(array)
+      } else {
+        const findQueryIndex = this.filterQuery.findIndex(query => query.name === array.name);
+
+        if (findQueryIndex > -1) {
+          if (array.values.length) this.filterQuery[findQueryIndex].values = array.values
+          else this.filterQuery.splice(findQueryIndex, 1)
+        } else {
+          this.filterQuery.push(array)
+        }
+
+        this.createQueryForFilter()
+      }
+
+    },
+
+    /**
+     * Filter by amount
+     * @param {*} amount
+     */
+    async selectByAmount(amount) {
+      if (amount?.param === "site_price") {
+        let site_price_to = ''
+        let site_price_from = ''
+
+        if (amount?.amount?.from !== null) {
+          site_price_from = amount?.amount?.from
+        }
+        if (amount?.amount?.to !== null) {
+          site_price_to = amount?.amount?.to
+        }
+
+        let query = this.$route.query;
+
+        if (site_price_from && !site_price_to) {
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+            }
+          })
+        } else if (!site_price_from && site_price_to) {
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_to: site_price_to
+            }
+          })
+        } else if (site_price_from && site_price_to) {
+          this.$router.push({
+            query: {
+              ...query,
+              site_price_from: site_price_from,
+              site_price_to: site_price_to
+            }
+          })
+        }
+
+      }
+    }, /**
+     * Filter by amount
+     * @param {*} amount
+     */
+    async selectByStock(amount) {
+      if (amount?.param === "stock") {
+        let query = this.$route.query;
+
+        if (amount?.value ) {
+          this.$router.push({
+            query: {
+              ...query,
+              stock: 1,
+            }
+          })
+        } else if (!amount?.value) {
+          this.$router.push({
+            query: {
+              ...query,
+              stock: 0
+            }
+          })
+        }
+
+      }
+    },
+
+    /**
+     * Params generator
+     * @param {*} array
+     */
+    async paramGenerator(array) {
+      this.finalFilterObject = []
+      const newObject = Object.create(this.filterQuery)
+      if (array?.param === "stock") {
+        let param = ''
+        if (array.values) {
+          param = `1`
+        } else {
+          param = `0`
+        }
+        let routeSplit = this.$route.fullPath.split('?')
+        let query = this.$route.query;
+        if (routeSplit[1]) {
+          if (this.$route.query?.stock) {
+            if (query) {
+              this.$router.replace({
+                query: {
+                  ...query,
+                  stock: param,
+                  page: 1
+                }
+              })
+            } else {
+              this.$router.push({
+                query: {
+                  stock: param,
+                  page: 1
+                }
+              })
+            }
+
+          } else {
+            this.$router.replace({
+              query: {
+                ...query,
+                stock: param,
+                page: 1
+              }
+            })
+          }
+        } else {
+          this.$router.push(`${this.$route.path}?stock=${param}`)
+        }
+      } else {
+        await newObject.forEach((query, index) => {
+          query.values.forEach(value => {
+            const form = {
+              param: query.param,
+              value: value
+            }
+            this.finalFilterObject.push(form)
+          })
+        })
+        // this.createRoute(finalFilterObject)
+      }
+    },
+
+    /**
+     * Create route after filter
+     * @param {*} values
+     */
+    createRoute(values) {
+      let param = ''
+      let colorParam = ''
+      let brandParam = ''
+      let paramQuery = ''
+      let categoryQuery = ''
+      let productQuery = ''
+      const colorsObject = values.filter(filterValue => filterValue.param == "colors")
+      const attributeObject = values.filter(filterValue => filterValue.param == "attributes")
+      const brandObject = values.filter(filterValue => filterValue.param == "brands")
+      const categoriesObject = values.filter(filterValue => filterValue.param == "categories")
+      const productsObject = values.filter(filterValue => filterValue.param == "products")
+      attributeObject.forEach(element => {
+        param += `attributes[]=${element.value}&`
+      })
+      brandObject.forEach(element => {
+        brandParam += `brands[]=${element.value}&`
+      })
+      colorsObject.forEach(element => {
+        colorParam += `colors[]=${element.value}&`
+      })
+      categoriesObject.forEach(element => {
+        categoryQuery += `categories[]=${element.value}&`
+      })
+      productsObject.forEach(element => {
+        productQuery += `products[]=${element.value}&`
+      })
+
+      if (attributeObject.length) {
+
+        let finalParam = `${param.substring(0, param.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (brandObject.length) {
+        let finalParam = `${brandParam.substring(0, brandParam.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (colorsObject.length) {
+        let finalParam = `${colorParam.substring(0, colorParam.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (categoriesObject.length) {
+        let finalParam = `${categoryQuery.substring(0, categoryQuery.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (productsObject.length) {
+        let finalParam = `${productQuery.substring(0, productQuery.length - 1)}`
+        if (!paramQuery) paramQuery += `?${finalParam}`
+        else paramQuery += `&${finalParam}`
+      }
+      if (this.$route.query.site_price_from) {
+        if (!paramQuery) paramQuery += `?site_price_from=${this.$route.query.site_price_from}`
+        else paramQuery += `&site_price_from=${this.$route.query.site_price_from}`
+      }
+      if (this.$route.query.site_price_to) {
+        if (!paramQuery) paramQuery += `?site_price_to=${this.$route.query.site_price_to}`
+        else paramQuery += `&site_price_to=${this.$route.query.site_price_to}`
+      }
+      if (this.$route.query.stock) {
+        if (!paramQuery) paramQuery += `?stock=${this.$route.query.stock}`
+        else paramQuery += `&stock=${this.$route.query.stock}`
+      }
+      if (this.$route.name === 'search'){
+        this.$router.push(this.$route.path + paramQuery + `&needle=${this.$route.query.needle}`)
+      }
+      else{
+        this.$router.push(this.$route.path + paramQuery)
+
+      }
+      this.query = paramQuery
+      setTimeout(() => {
+        this.selectByAmount(this.amountModel)
+        setTimeout(()=>{
+          this.selectByStock(this.stockModel)
+        } ,200)
+      }, 200)
+      this.closeSheet()
+      this.$emit('resetPage')
+    },
+
+    async createQueryForFilter(array) {
+      await this.paramGenerator(array)
+    },
+
   },
+
+  mounted() {
+    if (Object.keys(this.$route?.query).length === 0) {
+      this.activeFilterButton = false
+    } else {
+      Object.keys(this.$route?.query).forEach(element => {
+        if (element !== 'order' && element !== 'order_type' && element !== 'page') {
+          this.activeFilterButton = true
+        }
+      });
+    }
+  },
+
+  watch: {
+    $route(newVal) {
+      if (Object.keys(newVal?.query).length === 0) {
+        this.activeFilterButton = false
+      } else {
+        Object.keys(newVal?.query).forEach(element => {
+          if (element !== 'order' && element !== 'order_type' && element !== 'page') {
+            this.activeFilterButton = true
+          }
+        });
+      }
+    }
+  }
 }
 </script>
 
@@ -289,6 +590,7 @@ export default {
 
   .selected-filters {
     background: #D72685;
+    border-color: transparent !important;
 
     .v-icon,
     span {
@@ -382,6 +684,43 @@ $parent: 'voucher-auth';
     > span:first-child {
       font-size: 15px;
       color: black !important;
+    }
+  }
+}
+</style>
+
+
+<style lang="scss">
+.filter-mobile-btn {
+  .v-btn__content {
+    font-variation-settings: "wght" 700 !important;
+    font-size: 14px !important;
+  }
+
+  .btn--submit.v-btn--disabled {
+    background-color: #BDBDBD !important;
+
+    .v-btn__content {
+      color: white !important
+    }
+
+    .v-btn__overlay {
+      background-color: transparent !important;
+    }
+  }
+
+  .btn--submit-border {
+    &.v-btn--disabled {
+      background-color: transparent !important;
+      border: 2px solid #BDBDBD !important;
+
+      .v-btn__content, .v-btn__content span {
+        color: #BDBDBD !important;
+      }
+
+      .v-btn__overlay {
+        background-color: transparent !important;
+      }
     }
   }
 }

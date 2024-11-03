@@ -4,7 +4,7 @@
       <div v-if="buttonType === 'form'" class="header__search-box__inner header__search-box__inner--show d-flex align-center w-100 px-2" @click="openModal()">
         <v-icon
             icon="mdi-magnify"
-            color="grey-darken-1"
+            color="sGrayDarken1"
             class="ml-1" />
           <span class="header__search-box__brand-name">شاواز</span>
         <input placeholder="جستجو در " id="inputSearchMobile"/>
@@ -13,7 +13,7 @@
       <div v-if="buttonType === 'icon'" @click="openModal()">
         <v-icon
             icon="mdi-magnify"
-            color="grey-darken-1"
+            color="sGrayDarken1"
             class="icon-mode ml-1" />
       </div>
 
@@ -27,7 +27,7 @@
           <div class="header__search-box__inner d-flex align-center w-100 px-2">
             <v-icon
                 icon="mdi-arrow-right"
-                color="grey-darken-1"
+                color="sGrayDarken1"
                 @click="closeModal"
                 class="ml-2" />
 
@@ -153,7 +153,7 @@
             <v-divider color="grey-lighten-3" />
 
             <div class="search-result__most-search">
-              <h5 class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</h5>
+              <p class="t13 w400 text-grey-darken-3 mb-1 mt-5">بیشترین جستجوهای اخیر</p>
 
               <swiper
                   v-if="mostSearchItems && mostSearchItems.data && mostSearchItems.data.length"

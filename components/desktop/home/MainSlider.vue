@@ -12,9 +12,9 @@
             }"
         class="mySwiper">
         <swiper-slide v-for="(item,index) in desktopBanners" :key="index">
-            <a class="main-slider__item" :href="item?.link">
+            <a class="main-slider__item" :href="item?.link" :id="`home-${screenId}-${items?.id}-${index + 1}`">
                 <div class="main-slider__image">
-                    <img :src="item?.image?.image_url" :title="item?.label" :alt="item?.label" width="1400"/>
+                  <generalKitsImageSimage :src="item?.image?.image_url"  :title="item.label" :alt="item.image?.alt" width="1400"/>
                 </div>
             </a>
         </swiper-slide>
@@ -45,6 +45,13 @@ export default {
          * Item list
          */
         items: Object,
+      /**
+       * screenId
+       */
+      screenId: {
+        type:String,
+        default:'D'
+      },
     },
 
     components: {

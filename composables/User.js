@@ -46,6 +46,29 @@ export default function setup() {
             });
     };
 
+     /**
+     * Get user address
+     */
+     async function getUserAddress2(token) {
+        axios
+            .get(runtimeConfig.public.apiBase + `/user/profile/address`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                userAddress.value = response.data.data
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+                useNuxtApp().$toast.error(err.response.data.message, {
+                    rtl: true,
+                    position: 'top-center',
+                    theme: 'dark'
+                });
+            });
+    };
+
     /**
      * Get user transaction
      */
@@ -225,6 +248,7 @@ export default function setup() {
         getRandomProducts,
         randomProducts,
         getUserTicketTitle,
-        titleList
+        titleList,
+        getUserAddress2
     }
 }

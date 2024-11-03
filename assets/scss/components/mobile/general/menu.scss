@@ -6,16 +6,16 @@ $parent: 'menu';
 
 .#{$parent} {
     &--mobile {
-        height: calc(100vh - 174px);
+        /* height: calc(100vh - 174px); */
         width: 100%;
-        position: fixed;
+        /* position: fixed;
         top: 118px;
         right: -100%;
-        z-index: 11;
+        z-index: 11; */
         background-color: #fafafa !important;
-        transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
-
-        &.change-height {
+/*         transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
+ */
+        /* &.change-height {
             height: calc(100vh - 56px);
             top: 0;
             transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
@@ -33,24 +33,24 @@ $parent: 'menu';
         }
 
         &.has-banner{
-            top: 182px;
-            height: calc(100vh - 238px);
-        }
+            top: 158px;
+            height: calc(100vh - 221px);
+        } */
 
         &.menu-plp{
             top: 48px;
-            height: calc(100vh - 104px);
+            /* height: calc(100vh - 104px); */
             
-            &.has-banner{
-                top: 112px;
-                height: calc(100vh - 168px);
+            /* &.has-banner{
+                top: 88px;
+                height: calc(100vh - 143px);
             }
 
             &.change-height {
                 height: calc(100vh - 56px);
                 top: 0;
                 transition: height 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
-            }
+            } */
         }
 
         a{

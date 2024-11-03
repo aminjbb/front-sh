@@ -34,7 +34,8 @@ export default defineNuxtConfig({
       apiBase: 'https://api.shvz.ir/api/v1',
       neshanMapKey:'web.0bfff696f3a1488d972d6047de31ab48',
       serviceKey:'service.217a0b81087143108632348cba35fe9e',
-      gtagId:'GTM-5RRH4PX'
+      gtagId:'GTM-5RRH4PX',
+      siteUrl: 'https://shavaz.com'
     }
   },
 
@@ -58,4 +59,6 @@ export default defineNuxtConfig({
       'process.env.DEBUG': false,
     },
   },
+
+  compatibilityDate: '2024-09-25',
 })

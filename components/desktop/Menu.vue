@@ -1,175 +1,151 @@
 <template>
 <client-only>
     <div class="c-menu">
-    <v-container class="pb-0">
-        <nav class="menu menu--desktop d-flex justify-space-between align-center">
-            <ul class="menu__items flex-grow-1 ml-3">
-                <li
-                    class="menu__item"
-                    v-for="(menu, index) in menuList"
-                    :key="menu.id"
-                    @mouseenter="showBodyCover(index)"
-                    @mouseleave="hideBodyCover"
-                    :class="{'has-child' : menu.children, 'has-mega-menu': index === 0}">
-                    <template v-if="menu.name !== 'promotion'">
-                        <div v-if="menu.name === 'categories'" class="menu__item__link">
-                            <v-icon :icon="`mdi-${menu.icon}`" />
-                            <span>{{menu.label}}</span>
-                        </div>
-
-                        <a v-else :href="menu.url" class="menu__item__link">
-                            <v-icon :icon="`mdi-${menu.icon}`" />
-                            <span>{{menu.label}}</span>
-                        </a>
-
-                        <template v-if="menu.name == 'categories'">
-                            <div
-                                v-if="menu.children && menu.children.length"
-                                class="mega-menu"
-                                id="mega-menu">
-                                <v-container>
-                                    <ul class="menu__items" @mouseleave="hideBodyCover">
-                                        <li v-for="(child1, index) in menu.children" :key="child1.id" :class="index === 0 ? {'firstOpen' : firstOpen} : ''" @mouseenter="removeFirstOpen">
-                                            <a :href="child1.url">
-                                                <div>
-                                                    <v-icon :icon="`mdi-${child1.icon}`" class="ml-1" />
-                                                    <span>{{ child1.label }}</span>
-                                                </div>
-                                                <v-icon icon="mdi-chevron-left" />
-                                            </a>
-
-                                            <div class="menu__items__image-child">
-                                                <div class="menu__items__image-ul">
-                                                    <ul class="menu__items">
-                                                        <div>
-                                                            <li v-if="child1.children&& child1.children[0]" class="menu__item">
-                                                                <a :href="child1.children[0].url">
-                                                                    <span>{{ child1.children[0].label }}</span>
-                                                                </a>
-
-                                                                <ul class="menu-items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child2 in child1.children[0].children"
-                                                                        :key="child2.id">
-                                                                        <a :href="child2.url">
-                                                                            <span>{{ child2.label }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </div>
-                                                        <div>
-                                                            <li v-if="child1.children && child1.children[1]" class="menu__item">
-                                                                <a :href="child1.children[1].url">
-                                                                    <span>{{ child1.children[1].label }}</span>
-                                                                </a>
-                                                                <ul class="menu-items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child2 in child1.children[1].children"
-                                                                        :key="child2.id">
-                                                                        <a :href="child2.url">
-                                                                            <span>{{ child2.label }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-
-                                                            <li v-if="child1.children && child1.children[2]" class="menu__item">
-                                                                <a :href="child1.children[2].url">
-                                                                    <span>{{ child1.children[2].label }}</span>
-                                                                </a>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child2 in child1.children[2].children"
-                                                                        :key="child2.id">
-                                                                        <a :href="child2.url">
-                                                                            <span>{{ child2.label }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </div>
-                                                        <div>
-                                                            <li v-if="child1.children[3]" class="menu__item">
-                                                                <a :href="child1.children[3].url">
-                                                                    <span>{{ child1.children[3].label }}</span>
-                                                                </a>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child2 in child1.children[3].children"
-                                                                        :key="child2.id">
-                                                                        <a :href="child2.url">
-                                                                            <span>{{ child2.label }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </div>
-                                                        <div>
-                                                            <li v-if="child1.children[4]" class="menu__item">
-                                                                <a :href="child1.children[4].url">
-                                                                    <span>{{ child1.children[4].label }}</span>
-                                                                </a>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child2 in child1.children[4].children"
-                                                                        :key="child2.id">
-                                                                        <a :href="child2.url">
-                                                                            <span>{{ child2.label }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-
-                                                            <li v-if="child1.children[5]" class="menu__item">
-                                                                <a :href="child1.children[5].url">
-                                                                    <span>{{ child1.children[5].label }}</span>
-                                                                </a>
-                                                                <ul class="menu__items">
-                                                                    <li
-                                                                        class="menu__item"
-                                                                        v-for="child2 in child1.children[5].children"
-                                                                        :key="child2.id">
-                                                                        <a :href="child2.url">
-                                                                            <span>{{ child2.label }}</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </div>
-                                                    </ul>
-                                                </div>
-
-                                                <div class="menu__items__image">
-                                                    <a class="d-block w-100" :href="child1?.image_url">
-                                                        <img v-if="child1?.image?.image_url && child1?.image?.image_url !== null" :src="child1?.image?.image_url" :title="child1.label" :alt="child1.label" width="184" height="388" />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </v-container>
+        <v-container class="pb-0">
+            <nav class="menu menu--desktop d-flex justify-space-between align-center">
+                <ul class="menu__items flex-grow-1 ml-3">
+                    <li class="menu__item" v-for="(menu, index) in menuList" :key="menu.id" @mouseenter="showBodyCover(index)" @mouseleave="hideBodyCover" :class="{'has-child' : menu.children, 'has-mega-menu': index === 0}">
+                        <template v-if="menu.name !== 'promotion'">
+                            <div v-if="menu.name === 'categories'" class="menu__item__link">
+                                <v-icon :icon="`mdi-${menu.icon}`" />
+                                <span>{{menu.label}}</span>
                             </div>
-                        </template>
-                    </template>
-                </li>
-            </ul>
 
-            <a v-if="getPromotionLink" class="d-flex align-center" :href="getPromotionLink.url">
-                <v-icon
-                    icon="mdi-fire"
-                    color="primary"
-                    class="ml-2" />
-                <span class="t14 w500 text-primary">فروش ویژه</span>
-            </a>
-        </nav>
-    </v-container>
-</div>
+                            <a v-else :href="menu.url" class="menu__item__link">
+                                <v-icon :icon="`mdi-${menu.icon}`" />
+                                <span>{{menu.label}}</span>
+                            </a>
+
+                            <template v-if="menu.name == 'categories'">
+                                <div v-if="menu.children && menu.children.length" class="mega-menu" id="mega-menu">
+                                    <v-container>
+                                        <ul class="menu__items" @mouseleave="hideBodyCover">
+                                            <li v-for="(child1, index) in menu.children" :key="child1.id" :class="index === 0 ? {'firstOpen' : firstOpen} : ''" @mouseenter="removeFirstOpen">
+                                                <div>
+                                                    <div>
+                                                        <v-icon :icon="`mdi-${child1.icon}`" class="ml-1" />
+                                                        <span>{{ child1.label }}</span>
+                                                    </div>
+                                                    <v-icon icon="mdi-chevron-left" />
+                                                </div>
+
+                                                <div class="menu__items__image-child">
+                                                    <div class="menu__items__image-ul">
+                                                        <ul class="menu__items">
+                                                            <div>
+                                                                <li v-if="child1.url" class="mb-2">
+                                                                    <a :href="child1.url">
+                                                                        <span class="t14 w700 text-primary"> همه محصولات {{ child1.label }}</span>
+                                                                    </a>
+                                                                </li>
+
+                                                                <li v-if="child1.children&& child1.children[0]" class="menu__item">
+                                                                    <a :href="child1.children[0].url">
+                                                                        <span>{{ child1.children[0].label }}</span>
+                                                                    </a>
+
+                                                                    <ul class="menu-items">
+                                                                        <li class="menu__item" v-for="child2 in child1.children[0].children" :key="child2.id">
+                                                                            <a :href="child2.url">
+                                                                                <span>{{ child2.label }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </div>
+                                                            <div>
+                                                                <li v-if="child1.children && child1.children[1]" class="menu__item">
+                                                                    <a :href="child1.children[1].url">
+                                                                        <span>{{ child1.children[1].label }}</span>
+                                                                    </a>
+                                                                    <ul class="menu-items">
+                                                                        <li class="menu__item" v-for="child2 in child1.children[1].children" :key="child2.id">
+                                                                            <a :href="child2.url">
+                                                                                <span>{{ child2.label }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+
+                                                                <li v-if="child1.children && child1.children[2]" class="menu__item">
+                                                                    <a :href="child1.children[2].url">
+                                                                        <span>{{ child1.children[2].label }}</span>
+                                                                    </a>
+                                                                    <ul class="menu__items">
+                                                                        <li class="menu__item" v-for="child2 in child1.children[2].children" :key="child2.id">
+                                                                            <a :href="child2.url">
+                                                                                <span>{{ child2.label }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </div>
+                                                            <div>
+                                                                <li v-if="child1.children[3]" class="menu__item">
+                                                                    <a :href="child1.children[3].url">
+                                                                        <span>{{ child1.children[3].label }}</span>
+                                                                    </a>
+                                                                    <ul class="menu__items">
+                                                                        <li class="menu__item" v-for="child2 in child1.children[3].children" :key="child2.id">
+                                                                            <a :href="child2.url">
+                                                                                <span>{{ child2.label }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </div>
+                                                            <div>
+                                                                <li v-if="child1.children[4]" class="menu__item">
+                                                                    <a :href="child1.children[4].url">
+                                                                        <span>{{ child1.children[4].label }}</span>
+                                                                    </a>
+                                                                    <ul class="menu__items">
+                                                                        <li class="menu__item" v-for="child2 in child1.children[4].children" :key="child2.id">
+                                                                            <a :href="child2.url">
+                                                                                <span>{{ child2.label }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+
+                                                                <li v-if="child1.children[5]" class="menu__item">
+                                                                    <a :href="child1.children[5].url">
+                                                                        <span>{{ child1.children[5].label }}</span>
+                                                                    </a>
+                                                                    <ul class="menu__items">
+                                                                        <li class="menu__item" v-for="child2 in child1.children[5].children" :key="child2.id">
+                                                                            <a :href="child2.url">
+                                                                                <span>{{ child2.label }}</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </div>
+                                                        </ul>
+                                                    </div>
+
+                                                    <div class="menu__items__image">
+                                                        <a class="d-block w-100" :href="child1?.image_url">
+                                                          <generalKitsImageSimage v-if="child1?.image?.image_url && child1?.image?.image_url !== null"  :lazy="false" :src="child1?.image?.image_url" :title="child1.label" :alt="child1.label" width="184" height="388" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </v-container>
+                                </div>
+                            </template>
+                        </template>
+                    </li>
+                </ul>
+
+                <a v-if="getPromotionLink" class="d-flex align-center" :href="getPromotionLink.url">
+                    <v-icon icon="mdi-fire" color="primary" class="ml-2" />
+                    <span class="t14 w500 text-primary">فروش ویژه</span>
+                </a>
+            </nav>
+        </v-container>
+    </div>
 </client-only>
 </template>
 
@@ -195,9 +171,9 @@ export default {
         };
     },
 
-    computed:{
-        getPromotionLink(){
-            const link = this.menuList.find(item => item.name ==='promotion')
+    computed: {
+        getPromotionLink() {
+            const link = this.menuList.find(item => item.name === 'promotion')
             return link
         }
     },
@@ -227,7 +203,7 @@ export default {
             document.body.classList.remove('active');
         },
 
-        removeFirstOpen(){
+        removeFirstOpen() {
             this.firstOpen = false;
         },
     },
@@ -310,7 +286,7 @@ $parent: 'menu';
                     .v-container {
                         padding: 0 !important;
 
-                        >ul {
+                        > ul {
                             display: flex;
                             flex-direction: column;
                             background-color: #fff;
@@ -337,7 +313,7 @@ $parent: 'menu';
                                 }
                             }
 
-                            >li {
+                            > li {
                                 width: 220px;
                                 padding: 13px 16px;
                                 z-index: 1;
@@ -348,7 +324,7 @@ $parent: 'menu';
                                     padding: 13px 5px;
                                 }
 
-                                >a {
+                                > div {
                                     width: 100%;
                                     flex: 1;
                                     display: flex;
@@ -365,7 +341,7 @@ $parent: 'menu';
                                         color: #757575;
                                     }
 
-                                    >div {
+                                    > div {
                                         .v-icon {
                                             margin-left: 6px;
                                             font-size: 20px !important;
@@ -386,7 +362,7 @@ $parent: 'menu';
                                     }
                                 }
 
-                                &.firstOpen{
+                                &.firstOpen {
                                     background-color: #FCE4EC;
 
                                     >span,
@@ -422,7 +398,7 @@ $parent: 'menu';
                                             width: 100%;
                                             border-radius: 6px;
                                             max-height: 100%;
-                                             height: auto;
+                                            height: auto;
                                         }
                                     }
 

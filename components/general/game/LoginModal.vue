@@ -265,13 +265,15 @@ export default {
         this.minutes = this.minutes < 10 ? `0${this.minutes}` : this.minutes;
         this.seconds = this.seconds < 10 ? `0${this.seconds}` : this.seconds;
 
-        this.counter = `${this.minutes}:${this.seconds}`;
-
-        if (--timer < 0) timer = duration;
-
-        if (this.counter === '00:00') {
-          this.showRetry = true;
-          clearInterval(myCountdown);
+        const runtimeConfig = useRuntimeConfig()
+        const userToken = useCookie('userToken', {
+            maxAge: 60 * 60 * 24 * 365, // 1 year
+        });
+        const randomNumberForBasket = useCookie('randomNumberForBasket')
+        return {
+            userToken,
+            runtimeConfig,
+            randomNumberForBasket
         }
 
         if (this.loginStep === 1) {

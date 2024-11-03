@@ -21,7 +21,7 @@
                     color="primary"
                     :value="item.id" />
 
-                <span v-if="item?.name && !showEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1 text-left ltr">{{item.name}}</span>
+                <span v-if="item?.name && ShowEnName && param !== 'colors'" class="t12 w500 text-grey-lighten-1 text-left ltr">{{item.name}}</span>
 
                 <template v-else-if="param === 'colors'">
                     <span class="filter-sidebar__card__color" :style="{ backgroundColor: item?.value }" :class="item?.value === '#ffffff' || item?.value === '#FF00FF00' ? 'border' : '' "></span>
@@ -60,6 +60,10 @@ export default {
          * List of item
          */
         items: Array,
+      /**
+         * List of selectedFilter
+         */
+        selectedFilter: Array,
 
         /**
          * index of filter
@@ -74,9 +78,9 @@ export default {
             default: false
         },
 
-        showEnName: {
+        ShowEnName: {
             type: Boolean,
-            default: false
+            default: true
         },
     },
 
@@ -168,6 +172,16 @@ export default {
               this.$emit('selectedFilter', this.index);
             }
           }
+          else {
+            const brandsFilter = this.selectedFilter.filter(obj=> obj.param === 'brands')
+            brandsFilter.forEach(item=>{
+              const findAttribute =  this.items.find(findAttribute=> findAttribute.id == item.value)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
         }
         else if (this.param === 'attributes'){
           if(typeof this.$route.query[`attributes[]`] ==='object'){
@@ -186,6 +200,16 @@ export default {
               this.itemsModel.push(findAttribute.id)
               this.$emit('selectedFilter', this.index);
             }
+          }
+          else {
+            const attributesFilter = this.selectedFilter.filter(obj=> obj.param === 'attributes')
+            attributesFilter.forEach(item=>{
+              const findAttribute =  this.items.find(findAttribute=> findAttribute.id == item.value)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
           }
         }
         else if (this.param === 'products'){
@@ -206,6 +230,16 @@ export default {
               this.$emit('selectedFilter', this.index);
             }
           }
+          else {
+            const productsFilter = this.selectedFilter.filter(obj=> obj.param === 'products')
+            productsFilter.forEach(item=>{
+              const findAttribute =  this.items.find(findAttribute=> findAttribute.id == item.value)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
         }
         else if (this.param === 'categories'){
           if(typeof this.$route.query[`categories[]`] ==='object'){
@@ -225,6 +259,16 @@ export default {
               this.$emit('selectedFilter', this.index);
             }
           }
+          else {
+            const catrgoriesFilter = this.selectedFilter.filter(obj=> obj.param === 'categories')
+            catrgoriesFilter.forEach(item=>{
+              const findAttribute =  this.items.find(findAttribute=> findAttribute.id == item.value)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
+          }
         }
         else if (this.param === 'colors'){
           if(typeof this.$route.query[`colors[]`] ==='object'){
@@ -243,6 +287,16 @@ export default {
               this.itemsModel.push(findAttribute.id)
               this.$emit('selectedFilter', this.index);
             }
+          }
+          else {
+            const colorFilter = this.selectedFilter.filter(obj=> obj.param === 'colors')
+            colorFilter.forEach(color=>{
+              const findAttribute =  this.items.find(findAttribute=> findAttribute.id == color.value)
+              if (findAttribute) {
+                this.itemsModel.push(findAttribute.id)
+                this.$emit('selectedFilter', this.index);
+              }
+            })
           }
         }
       }

@@ -56,6 +56,22 @@ const myTheme = {
     sInfoLighten1: '#E1F5FE',
     sInfoLighten2: '#E1F5FE',
 
+    sYellow: '#F9A825',
+    sYellowLighten1: '#FBC02D',
+    sYellowLighten2: '#FFFDE7',
+
+    sPurple: '#4527A0',
+    sPurpleLighten1: '#673AB7',
+    sPurpleLighten2: '#EDE7F6',
+
+    sCyan: '#00838F',
+    sCyanLighten1: '#00BCD4',
+    sCyanLighten2: '#E0F7FA',
+
+    sBrown: '#4E342E',
+    sBrownLighten1: '#795548',
+    sBrownLighten2: '#EFEBE9',
+
     sGray: '#6A6A6A',
     sGrayLighten1: '#9E9E9E',
     sGrayLighten2: '#9A9A9A',

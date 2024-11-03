@@ -2,12 +2,12 @@
 <main class="v-user v-user--dashboard">
     <h1 class="ov-h h-0">ناحیه کاربری</h1>
 
-    <v-container>
-        <v-row>
+    <v-container :class="screenType === 'mobile' ? 'pa-0' : ''">
+        <v-row v-if="screenType === 'desktop'">
             <v-col cols="12" md="3">
                 <generalUserSidebar />
             </v-col>
-            <v-col cols="12" md="9" class="xs-hide">
+            <v-col cols="12" md="9">
                 <v-card class="py-8 px-4 mobile-pa-0 mobile-no-border">
                     <h2 class="t16 w400 text-grey-darken-3 mb-3">
                         دعوت از دوستان
@@ -49,6 +49,7 @@
                 </v-card>
             </v-col>
         </v-row>
+        <generalUserDashboard v-else-if="screenType === 'mobile'"/>
     </v-container>
 </main>
 </template>
@@ -66,6 +67,7 @@ export default {
             identificationCode: '',
             products: [],
             userDetail: null,
+            screenType: null,
         }
     },
 
@@ -113,7 +115,15 @@ export default {
 
     created() {
         this.getProductUserHistory()
-    }
+    },
+
+    beforeMount() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+
+    },
 }
 </script>
 

@@ -20,6 +20,7 @@
         </div>
     </template>
 
+    
     <v-dialog
         v-if="dialog"
         v-model="dialog"
@@ -27,7 +28,7 @@
         width="500px">
         <v-card class="pt-3 px-6 pb-5">
             <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                <span class="t15 w400">
+                <span class="t16 w700 text-sGrayDarken2">
                     {{title}}
                 </span>
 
@@ -42,24 +43,38 @@
             </header>
 
             <div>
-                <p class="t14 w400 my-8 text-center text-grey-darken-2">{{text}}</p>
+                <p class="t12 w700 my-8 text-sGray">{{text}}</p>
 
-                <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
-                    <v-btn
-                        @click="closeModal()"
-                        height="44"
-                        title="انصراف"
-                        class="btn btn--cancel ml-1">
-                        انصراف
-                    </v-btn>
+                <div v-if="items" class="mb-4">
+                    <div v-for="(item, index) in items" :key="index" class="d-flex align-center justify-space-between">
+                        <span class="t12 w700 text-sGrayLighten2">{{ item.label }}</span>
+                        <span class="t14 fw700 text-sGray number-font">
+                            <template v-if="price">
+                                {{ splitChar(Number(String(item.value).slice(0, -1))) }} <SvgToman/>
+                            </template>
+                            <template v-else>{{ title }}</template>
+                        </span>
+                    </div>
+                </div>
 
+                <div class="d-flex align-center justify-space-between mt-2 mobile-pa-0 w-100">
                     <v-btn
                         :loading="loading"
                         @click="removeProduct()"
                         height="44"
                         :title="submitText"
-                        class="btn btn--submit">
-                        {{submitText}}
+                        width="49%"
+                        class="btn btn--submit br12 ov-h" >
+                        <span class="w700">{{submitText}}</span>
+                    </v-btn>
+
+                    <v-btn
+                        @click="closeModal()"
+                        height="44"
+                        title="انصراف"
+                        width="49%"
+                        class="btn btn--cancel ov-h br12">
+                        <span class="w700">انصراف</span>
                     </v-btn>
                 </div>
             </div>
@@ -93,6 +108,12 @@ export default {
          * Can be : icon - Text - mobile
          */
         buttonType: String,
+
+        /**show special list in data*/
+        items: Array,
+
+        /**If you have price in items value */
+        price:Boolean
     },
 
     methods: {
@@ -121,10 +142,14 @@ export default {
     }
 
     &__header {
-        border-bottom: 1px solid #E0E0E0;
 
         &__btn {
             min-width: auto !important;
+            
+            .v-btn__content{
+                background: #ddd;
+                border-radius:50% ;
+            }
         }
     }
 }

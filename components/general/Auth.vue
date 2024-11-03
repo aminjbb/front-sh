@@ -105,28 +105,31 @@ import auth from '@/middleware/auth';
 import axios from "axios";
 
 export default {
+  props:{
+    noLogo:{
+      type: Boolean,
+      default: false
+    },
+    showSuccess:{
+      type: Boolean,
+      default: true
+    },
 
-  props: {
-    noLogo: {
+    noTitle:{
       type: Boolean,
       default: false
     },
 
-    noTitle: {
-      type: Boolean,
-      default: false
-    },
+    showCancel:Boolean,
 
-    showCancel: Boolean,
-
-    loginDesc: {
+    loginDesc:{
       type: String,
-      default: null,
+      default:null,
     },
-    backToSiteText: {
+    backToSiteText:{
       type: String,
-      default: 'بازگشت به سایت'
-    }
+      default:'بازگشت به سایت'
+    },
   },
 
   data() {
@@ -321,7 +324,8 @@ export default {
         this.activeButton = false
       }
     }
-  }
+  },
+
 };
 </script>
 

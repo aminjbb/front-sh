@@ -1,123 +1,63 @@
 <template>
 <main class="v-order v-order--canceling">
     <header class="v-user__mobile-page-head xs-show">
-        <a href="/user/order" class="ml-3">
-            <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
+        <a :href="`/user/order/${$route.params.id}`" class="ml-1">
+            <v-icon icon="mdi-chevron-right" color="grey-darken-3" />
         </a>
-        <span class="grey-darken-3 t14">درخواست لغو</span>
+        <span class="text-sGrayDarken2 t14 fw700 number-font ltr">{{ orderId }} جزئیات سفارش</span>
     </header>
 
     <v-container>
         <v-row>
-            <div class="col-3 pa-4 xs-hide">
+            <div class="col-3 py-4 xs-hide">
                 <generalUserSidebar />
             </div>
             <div class="col-9 pa-4 mobile-pa-0">
-                <v-card class="py-5 mobile-pa-0 mobile-no-border v-order__inner d-flex flex-column">
-                    <header class="d-flex align-center justify-space-between mb-5 xs-hide px-5">
-                        <div class="d-flex align-center">
-                            <a href="/user/order" class="ml-3">
-                                <v-icon icon="mdi-arrow-right" color="grey-darken-3" />
-                            </a>
-                            <span>درخواست لغو</span>
-                        </div>
-                    </header>
-                    <v-divider color="grey" />
-                    <div v-if="cancelingStep === 1" class="px-5">
-                        <div class="">
-                            <v-checkbox v-model="checkAllProducts" @click="chooseAllProducts()" hide-details label="لغو کل سفارش" />
-                        </div>
-                        <v-divider color="grey" />
-                        <template v-for="(order, index) in userOrder?.details" :key="`order${order.id}`">
-                            <div v-if="order.count && order.count !== 0 " class="d-flex align-center justify-start">
-                                <div class="w-checkbox">
-                                    <v-checkbox hide-details v-model="selectedValue" @change="addToSelectedProduct(index,order)" :value="order.id" />
-                                </div>
-                                <generalProductOrderCard :ref="`orderCancelCard${order.id}`" class="flex-grow-1" :content="order" cancel hideButtons :index="index" :showCount="value[index] !== false && value[index] === order.id && chooseAll !== true ? true : false" :showAllCount="value[index] !== false && value[index]=== order.id && chooseAll === true ? true : false" @changeProductCount="changeProductCount" />
-                            </div>
+                <div>
+                    <v-card class="pa-8 mobile-pa-0 v-order__card">
+                        <header class="v-ticket__header d-flex align-center justify-space-between xs-hide card__header pt-6">
+                            <h1 class="t18 w700 text-sGrayDarken2 number-font bold ltr">{{ orderId }} جزئیات سفارش</h1>
 
-                            <div v-if="value[index] !== false && value[index] === order.id && chooseAll !== true" class="v-order--canceling__accordion">
-                                <div class="mb-5">
-                                    <label class="d-block t13 text-grey-darken-1 mb-2">علت لغو<span class="text-red-accent-4">*</span>
-                                    </label>
-                                    <v-select density="compact" variant="outlined" single-line :rules="rule" item-title="label" item-value="value" hide-details return-object :items="cancelReasonItems" @update:menu="onUpdateMenu" v-model="cancelReasonValueTitle[index]" />
-                                </div>
+                            <v-btn :href="`/user/order/${$route.params.id}`" height="45" title="بازگشت" class="btn--cancel px-6 br12 no-shadow">
+                                <span class="w700"> بازگشت</span>
+                            </v-btn>
+                        </header>
+
+                        <div class="px-5 mb-7">
+                            <div class="v-order--canceling__accordion mt-5">
+
+                                <template v-for="(reason , index) in cancelReasonItems" :key="`reason${index}`">
+                                    <v-radio-group v-model="cancelReasonValueTitleAll" @change="selectReason()" hide-details>
+                                        <v-radio hide-details :value="reason" color="primary" size="small" class="py-2">
+                                            <template v-slot:label>
+                                                <div class="d-flex align-center">
+                                                    <span class="t14 w500 text-sGrayDarken2 mb-1">{{ reason.label }}</span>
+                                                </div>
+                                            </template>
+                                        </v-radio>
+                                        <div v-if="index + 1 < cancelReasonItems.length" class="s-border s-border--bottom"></div>
+                                    </v-radio-group>    
+                                </template> 
 
                                 <div>
-                                    <label class="d-block t13 text-grey-darken-1 mb-2">توضیحات</label>
-                                    <v-textarea variant="outlined" v-model="cancelReasonValueDesc[index]" rows="3" />
+                                    <v-textarea variant="outlined" v-model="cancelReasonValueDescAll" rows="4" placeholder="توضیحات" class="mt-3 t13"/>
                                 </div>
                             </div>
 
-                            <v-divider color="grey-lighten-1" />
-                        </template>
-                        <div v-if="chooseAll === true" class="v-order--canceling__accordion mt-5">
-                            <div class="mb-5">
-                                <label class="d-block t13 text-grey-darken-1 mb-2">علت لغو<span class="text-red-accent-4">*</span>
-                                </label>
-                                <v-select density="compact" variant="outlined" single-line :rules="rule" item-title="label" item-value="value" hide-details return-object :items="cancelReasonItems" @update:menu="onUpdateMenu" v-model="cancelReasonValueTitleAll" />
+                            <div class="d-flex align-center w-100 justify-end cancel-button">
+                                <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" width="49%" @click="changeStatus" :disabled="activeSubmit === true ? true : false" :loading="loading">
+                                    <span class="text-white t12 w700"> لغو کل سفارش</span>
+                                </v-btn>
+
+                                <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" width="49%" :href="`/user/order/${$route.params.id}`">
+                                    <span class="text-primary t12 w700">انصراف</span>
+                                </v-btn>
                             </div>
 
-                            <div>
-                                <label class="d-block t13 text-grey-darken-1 mb-2">توضیحات</label>
-                                <v-textarea variant="outlined" v-model="cancelReasonValueDescAll" rows="3" />
-                            </div>
+                            <generalModalsDelete ref="cancelOrderModal" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
+                            <generalSheetsDelete ref="cancelOrderSheet" price :items="refundItems" title="تغییر وضعیت سفارش" text="آیا از لغو سفارش خود مطمئن هستید؟ در صورت لغو سفارش، مبلغ سفارش به کیف پول شما بازگشت داده خواهد شد" submitText="تایید" @removeProduct="createFormDataAndSendToServer(1)" />
                         </div>
-
-                        <div class="d-flex align-center justify-end mt-5">
-                            <v-btn @click="$router.go(-1)" height="44" title="بازگشت" class="btn btn--cancel ml-3">
-                                بازگشت
-                            </v-btn>
-                            <v-btn :loading="loading" @click="selectProducts()" height="44" :disabled="activeSubmit === true ? true : false" title="ادامه" class="btn btn--submit">
-                                ادامه
-                            </v-btn>
-                        </div>
-                    </div>
-
-                    <div v-if="cancelingStep === 2" class="px-5">
-                        <template v-for="(selected, index) in selectedProducts" :key="`orders${index}`">
-                            <generalProductOrderCard :hideButtons="true" :content="selected.item" :count="selected.count" :title="chooseAll === true ? cancelReasonValueTitleAll.label : cancelReasonValueTitleStep2[index]" :description="chooseAll === true ?cancelReasonValueDescAll : cancelReasonValueDescStep2[index]" />
-                            <v-divider v-if="index < selectedProducts.length" color="grey-lighten-1" />
-                        </template>
-
-                        <v-row class="mt-1 mb-1">
-                            <v-col cols="4" md="3" class="d-flex flex-column">
-                                <div class="t13 w400 text-grey mb-2">مبلغ مرجوعی کالا:</div>
-                                <div class="d-flex align-center">
-                                    <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar(Number(String(orderReturnOrReject?.refund).slice(0, -1))) }}
-                                    </span>
-                                    <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
-                                </div>
-                            </v-col>
-
-                            <v-col cols="4" md="3" class="d-flex flex-column">
-                                <div class="t13 w400 text-grey mb-2">هزینه مرجوعی کل سفارش:</div>
-                                <div class="d-flex align-center">
-                                    <span class="t19 w400 text-grey-darken-2 product-card__price-info__price product-card__price-info__price--main number-font ml-1">
-                                        {{ splitChar(Number(String(orderReturnOrReject?.total_refund).slice(0, -1))) }}
-                                    </span>
-                                    <span class="t12 w300 text-grey-darken-2 currency">تومان</span>
-                                </div>
-                            </v-col>
-
-                        </v-row>
-
-                        <v-divider color="grey-lighten-1" />
-
-                        <div class="d-flex align-center justify-end mt-5">
-                            <v-btn @click="backToFirstStep()" height="44" title="بازگشت" class="btn btn--cancel ml-3">
-                                بازگشت
-                            </v-btn>
-                            <v-btn :loading="loading" @click="createFormDataAndSendToServer(1)" height="44" title="ثبت درخواست" class="btn btn--submit">
-                                ثبت درخواست
-                            </v-btn>
-                        </div>
-                    </div>
-                </v-card>
-
-                <div>
-                    <generalWarning text="در صورت کاهش قیمت سفارش به کمتر از مبلغ ارسال رایگان، هزینه ارسال از مبلغ مرجوعی کسر خواهد شد." />
+                    </v-card>
                 </div>
             </div>
         </v-row>
@@ -131,13 +71,12 @@ import Order from '@/composables/Order.js'
 export default {
     data() {
         return {
-            cancelingStep: 1,
-            checkAllProducts: false,
             activeSubmit: false,
             chooseAll: false,
             products: [],
+            screenType: 'desktop',
             cancelReasonItems: [{
-                    label: 'از خرید این کالا منصرف شده‌ام',
+                    label: 'از خرید این سفارش منصرف شدم',
                     value: '1'
                 },
                 {
@@ -151,13 +90,12 @@ export default {
             ],
             value: [],
             selectedValue: [],
-            cancelReasonValueTitle: [],
-            cancelReasonValueDesc: [],
             cancelReasonValueTitleAll: null,
             cancelReasonValueDescAll: null,
             selectedProducts: [],
-            cancelReasonValueTitleStep2: [],
-            cancelReasonValueDescStep2: [],
+            orderId : null,
+            activeSubmit: true,
+            refundItems:[]
         }
     },
 
@@ -207,75 +145,9 @@ export default {
     },
 
     methods: {
-        /**
-         * Check checkbox and select item
-         * @param {*} productIndex
-         * @param {*} item
-         */
-        addToSelectedProduct(productIndex, item) {
-            if (this.checkAllProducts == true) {
-                this.checkAllProducts = false;
-                this.chooseAll = false;
-                // this.value = [];
-                // //this.selectedValue =[]
-                // this.selectedProducts = [];
-            }
-
-            const valuesIndex = this.value.findIndex(element => element == item.id);
-            const selectedProductIndex = this.selectedProducts.findIndex(element => element.id == item.id);
-            if (valuesIndex == -1) {
-                this.value[productIndex] = item.id;
-                const obj = {
-                    count: 1,
-                    id: item.id,
-                    item: item,
-                }
-                this.selectedProducts.push(obj);
-            } else {
-                if (selectedProductIndex !== -1) {
-                    this.selectedProducts.splice(selectedProductIndex, 1);
-                }
-                // this.value.splice(valuesIndex, 1);
-                this.value[valuesIndex] = null;
-                // this.selectedProducts.splice(valuesIndex, 1);
-                this.$refs[`orderCancelCard${item.id}`][0].productCount = 1;
-            }
-        },
-
-        /**
-         * Checked checkbox for choose all products
-         */
-        chooseAllProducts() {
-            this.chooseAll = !this.chooseAll;
-            this.selectedValue = [];
-            this.value = [];
-            this.selectedProducts = [];
-
-            if (this.chooseAll == true) {
-
-                this.userOrder ?.details.forEach((product, index) => {
-                    this.value[index] = product.id;
-                    this.selectedValue[index] = product.id;
-
-                    const obj = {
-                        count: product.count,
-                        id: product.id,
-                        item: product,
-                    }
-                    this.selectedProducts.push(obj);
-                })
-            }
-        },
-        /**
-         * Change product count
-         * @param {*} item
-         */
-        changeProductCount(item) {
-            const findProduct = this.selectedProducts.findIndex(element => element.id == item.id);
-
-            if (findProduct !== -1) {
-                this.selectedProducts.splice(findProduct, 1);
-                this.selectedProducts.push(item);
+        selectReason(){
+            if(this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.value){
+                this.activeSubmit = false
             }
         },
 
@@ -286,32 +158,34 @@ export default {
             const formData = new FormData()
             let ChooseAllReason = false;
 
+            this.selectedValue = [];
+            this.value = [];
+            this.selectedProducts = [];
+
+            this.userOrder ?.details.forEach((product, index) => {
+                this.value[index] = product.id;
+                this.selectedValue[index] = product.id;
+
+                const obj = {
+                    count: product.count,
+                    id: product.id,
+                    item: product,
+                }
+                this.selectedProducts.push(obj);
+            })
+
             if (this.selectedProducts && this.selectedProducts.length) {
                 this.selectedProducts.forEach((product, index) => {
                     const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
                     formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
                     formData.append(`shps_list[${index}][count]`, product ?.count)
-                    if (this.chooseAll) {
-                        if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.label) {
-                            ChooseAllReason = false;
-                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
-                            formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
-                        } else {
-                            ChooseAllReason = true;
-                        }
 
+                    if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.label) {
+                        ChooseAllReason = false;
+                        formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
+                        formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
                     } else {
-                        if (this.cancelReasonValueTitle && this.cancelReasonValueTitle[findIndex]) {
-                            formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitle[findIndex].label)
-                            formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDesc[findIndex])
-                            this.cancelReasonValueTitleStep2.push(this.cancelReasonValueTitle[findIndex].label);
-                            this.cancelReasonValueDescStep2.push(this.cancelReasonValueDesc[findIndex]);
-                        } else {
-                          this.$store.commit('set_snackBar', {
-                            show:true , text:'علت لغو انتخاب نشده است' , status:'error'
-                          })
-                        }
-
+                        ChooseAllReason = true;
                     }
                 })
                 if(ChooseAllReason){
@@ -323,58 +197,120 @@ export default {
                     formData.append(`order_id`, this.$route.params.id)
                     formData.append(`accept`, accept)
                     this.returnOrRejectOrder(formData, '/order/cancel/crud/create', accept)
+                    if (this.screenType === 'desktop') {
+                        this.$refs.cancelOrderModal.dialog = false;
+                        this.$refs.cancelOrderModal.loading = false;
+                    } else {
+                        this.$refs.cancelOrderSheet.sheet = false;
+                        this.$refs.cancelOrderSheet.loading = false;
+                    }
                 }
                 
-            } else {
-              this.$store.commit('set_snackBar', {
-                show:true , text:'هیچ آیتمی انتخاب نشده است.' , status:'error'
-              })
             }
         },
 
         /**
-         * Submit selected product
+         * Change order status confirm
          */
-        selectProducts() {
-            this.createFormDataAndSendToServer(0)
-        },
+         changeStatus() {
+            const formData = new FormData()
+            let ChooseAllReason = false;
 
-        /**
-         * Fix bug for select in c-select
-         */
-        onUpdateMenu(open) {
-            if (open) {
-                // WORKAROUND: fixes dialog menu popup position
-                setTimeout(() => window.dispatchEvent(new Event("resize")), 50);
-            }
-        },
+            this.selectedValue = [];
+            this.value = [];
+            this.selectedProducts = [];
 
-        backToFirstStep() {
-            this.cancelingStep = 1;
-            setTimeout(() => {
-                this.selectedProducts.forEach((product) => {
-                    this.$refs[`orderCancelCard${product.id}`][0].productCount = product.count;
+            this.userOrder ?.details.forEach((product, index) => {
+                this.value[index] = product.id;
+                this.selectedValue[index] = product.id;
+
+                const obj = {
+                    count: product.count,
+                    id: product.id,
+                    item: product,
+                }
+                this.selectedProducts.push(obj);
+            })
+
+            if (this.selectedProducts && this.selectedProducts.length) {
+                this.selectedProducts.forEach((product, index) => {
+                    const findIndex = this.userOrder.details.findIndex(item => item.id === product.id)
+                    formData.append(`shps_list[${index}][shps]`, product ?.item ?.shps ?.id)
+                    formData.append(`shps_list[${index}][count]`, product ?.count)
+
+                    if (this.cancelReasonValueTitleAll && this.cancelReasonValueTitleAll.label) {
+                        ChooseAllReason = false;
+                        formData.append(`shps_list[${index}][reason]`, this.cancelReasonValueTitleAll.label)
+                        formData.append(`shps_list[${index}][description]`, this.cancelReasonValueDescAll)
+                    } else {
+                        ChooseAllReason = true;
+                    }
                 })
-            }, 1000)
+                if(ChooseAllReason){
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'علت لغو انتخاب نشده است' , status:'error'
+                  })
 
-        }
-    },
-
-    watch: {
-        /** change Step After get data **/
-        orderReturnOrRejectObject(val) {
-            if (this.cancelingStep === 1) this.cancelingStep = 2
+                }else{
+                    formData.append(`order_id`, this.$route.params.id)
+                    formData.append(`accept`, 0)
+                    this.returnOrRejectOrder(formData, '/order/cancel/crud/create', 0)
+                    if (this.screenType === 'desktop') {
+                        this.$refs.cancelOrderModal.dialog = true;
+                    } else {
+                        this.$refs.cancelOrderSheet.sheet = true;
+                    }
+                }
+                
+            }
+            
         },
     },
 
     beforeMount() {
-        this.getOrder()
+        this.getOrder();
+        this.orderId = this.$route.params.id
+    },
+
+    mounted() {
+        /**
+         * Check screen size
+         */
+        window.innerWidth < 769 ? this.screenType = 'mobile' : this.screenType = 'desktop';
+    },
+
+    watch:{
+        orderReturnOrReject(newVal){
+            if(newVal !== null){
+                this.refundItems = [];
+                const data = {
+                    label: 'مبلغ عودت داده شده : ' ,
+                    value: newVal?.refund
+                }
+                this.refundItems.push(data)
+            }
+        }
     }
 }
 </script>
+
 
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
 @import '~/assets/scss/views/user.scss';
 @import '~/assets/scss/views/order.scss';
+
+.cancel-button{
+    .v-btn{
+        @include gbp(0, 768) {
+            height: 45px;
+        }
+
+        .v-btn__content span{
+            @include gbp(0, 768) {
+                font-size: 14px !important;
+            }
+        }
+    }
+}
 </style>
