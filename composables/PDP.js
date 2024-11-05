@@ -177,8 +177,8 @@ export default function setup() {
                         }
                         useHead({
                             script: [
-                                {type: 'application/ld+json', children: JSON.stringify(structuredData)},
-                                {type: 'application/ld+json', children: JSON.stringify(structuredDataBreadcrumb)}
+                                {type: 'application/ld+json', children: JSON.stringify(structuredData.value)},
+                                {type: 'application/ld+json', children: JSON.stringify(structuredDataBreadcrumb.value)}
                             ]
                         })
                     }
