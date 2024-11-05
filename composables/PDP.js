@@ -101,9 +101,11 @@ export default function setup() {
                             "@type": "Product",
                             "name": mainResponse.data?.data?.info.label,
                             "image":productImageGallery ,
-                            "description":  mainResponse.data?.data?.detail?.story,
+                            "description":  mainResponse.data?.data?.info?.page?.meta_description,
                             "url": `${runtimeConfig.public.siteUrl}/sku/${mainResponse.data.data?.info?.slug}`,
-                            "mpn": "", //ask milad
+                            "mpn": mainResponse.data?.data?.info?.shps_list?.length ? mainResponse.data?.data?.info?.shps_list[0]?.sku_id : '',
+                            "sku": mainResponse.data?.data?.info?.shps_list?.length ? mainResponse.data?.data?.info?.shps_list[0]?.sku_id : '',
+                            "category": mainResponse.data?.data?.info?.shps_list?.length ? mainResponse.data?.data?.info?.shps_list[0]?.sku_id : '',
                             "datePublished" : mainResponse?.data?.data?.info?.created_at,
                             "reviewBody":mainResponse.data?.data?.detail.comments?.data[0]?.content,
                             "brand": {
@@ -131,27 +133,14 @@ export default function setup() {
                                     "@type":"Rating",
                                     "bestRating":5,
                                     "ratingValue": mainResponse.data?.data?.info.score,
-                                }
+                                },
+                                "author":{
+                                    "@type":"Person","name":"admin"
+                                },
+                                "datePublished":mainResponse?.data?.data?.detail?.comments?.data?.length ? mainResponse?.data?.data?.detail?.comments?.data[0]?.created_at :'',
+                                "reviewBody":mainResponse?.data?.data?.detail?.comments?.data?.length ? mainResponse?.data?.data?.detail?.comments?.data[0]?.comment :'',
+                                "name":mainResponse?.data?.data?.detail?.comments?.data?.length ? mainResponse?.data?.data?.detail?.comments?.data[0]?.user?.first_name : ''
                             },
-                            "author":{
-                                "@type":"Person","name":"admin"
-                            },
-                            "seller": {
-                                "@context": "http://schema.org/",
-                                "@type": "Organization",
-                                "name": "shavaz",
-                                "url": "https://shavaz.com/",
-                                "countryCode": "IR",
-                                "logo": {
-                                    "@type": "ImageObject",
-                                    "inLanguage": "fa-IR",
-                                    "url": `${runtimeConfig.public.siteUrl}/Sign192.png`,
-                                    "contentUrl": `${runtimeConfig.public.siteUrl}/Sign192.png`,
-                                    "width": 192,
-                                    "height": 192,
-                                    "caption": "فروشگاه اینترنتی شاواز"
-                                }
-                            }
                         }
 
                         const schemaBreadcrumbList = []
