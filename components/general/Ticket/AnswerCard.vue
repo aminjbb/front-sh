@@ -94,6 +94,7 @@
     <generalTicketAnswerModal ref="answerModal" title=" پاسخ به پشتیبانی" text="عنوان" buttonText=" تایید پاسخ" @updateData="updateData"/>
     <generalTicketAnswerBottomSheet ref="answerBottomSheet" title=" پاسخ به پشتیبانی" text="عنوان" buttonText=" تایید پاسخ" @updateData="updateData"/>
 
+
     <generalTicketRatingModal v-if="status === 'admin'" ref="ratingModal" :itemId="content.id" :title="`امتیازدهی به پشتیبان شاواز`" text="عنوان" buttonText="ارسال امتیاز" @updateData="updateData"/>
     <generalTicketRatingBottomSheet v-if="status === 'admin'" ref="ratingBottomSheet" :itemId="content.id" :title="`امتیازدهی به پشتیبان شاواز `" text="عنوان" buttonText="ارسال امتیاز" @updateData="updateData" />
 </div>
