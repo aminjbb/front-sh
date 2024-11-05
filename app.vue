@@ -14,7 +14,6 @@ import axios from "axios";
 import {useStore} from "vuex";
 const store = useStore()
   const route = useRoute();
-
 useSeoMeta({
   themeColor: '#D72685',
   ogType: '',
@@ -34,6 +33,13 @@ const runtimeConfig = useRuntimeConfig()
 
 
 useHead({
+  link:
+  [
+    {
+      rel: 'canonical',
+      href: runtimeConfig.public.siteUrl + route.fullPath,
+    },
+  ],
   noscript: [{
     children: `<iframe src="https://www.googletagmanager.com/ns.html?id=${runtimeConfig.public.gtagId}"
       height="0" width="0" style="display:none;visibility:hidden"></iframe>
