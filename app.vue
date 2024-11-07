@@ -52,9 +52,9 @@ useHead({
     },
     {
       children: `window.onload = function () {
-          window.zebline.init({
-          token: ${runtimeConfig.public.zeblineToken},
-          licence_code:  ${runtimeConfig.public.zeblineLicenceCode},
+        window.zebline.init({
+          token: "YOUR_ZEBLINE_ACCESS_TOKEN",
+          licence_code: "YOUR_ZEBLINE_LICENCE_CODE",
           notificationRequest: true,
         });
       };`,
