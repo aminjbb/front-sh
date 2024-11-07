@@ -28,7 +28,14 @@
     </template>
 
     <div v-if="content?.brand_name || (content?.colors && content?.colors.length > 0)" class="d-flex align-center justify-space-between w-100 pl-1">
-        <span v-if="content?.brand_name" class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
+        <span v-if="content?.brand_name && !isBrand" >
+          <a class="t12 w400 text-grey py-2" :href="`/brand/${content.brand_slug}`">
+            {{ content.brand_name }}
+          </a>
+        </span>
+      <span class="t12 w400 text-grey py-2" v-if="content?.brand_name && isBrand" >
+          {{ content.brand_name }}
+        </span>
 
         <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center">
             <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
@@ -125,6 +132,13 @@ export default {
          * Show colors in card
          */
         showColors: Boolean,
+        /**
+           * product card is brand
+           */
+        isBrand: {
+          type:Boolean,
+          default:false
+        },
         /**
          * Shps id for go to pdp
          */
