@@ -35,7 +35,9 @@ export default defineNuxtConfig({
       neshanMapKey:'web.0bfff696f3a1488d972d6047de31ab48',
       serviceKey:'service.217a0b81087143108632348cba35fe9e',
       gtagId:'GTM-5RRH4PX',
-      siteUrl: 'https://shavaz.com'
+      siteUrl: 'https://shavaz.com',
+      zeblineToken: '1$U2VnbWVudCFuMA$WY6I5W5Cuo1681645598313',
+      zeblineLicenceCode: '1$U2VnbWVudCFuMA$p6v5+oyDh71681645598334',
     }
   },
 
