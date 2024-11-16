@@ -32,7 +32,9 @@
                 }
             }" class="mySwiper py-2">
         <swiper-slide v-for="(item, index) in items" :key="`section8-slider-${index}`">
-            <generalProductCard :sectionName="title" :content="item" :isPLP="isPLP" :index="index + 1" :showIndex="hideIndex !== true ? true : false" class="mb-4" />
+            <generalProductCard :cardIdImage="`home-${screenId}-${sectionId}-${index +1}-image`"
+                                :cardIdLabel="`home-${screenId}-${sectionId}-${index +1}-label`"
+                                :sectionName="title" :content="item" :isPLP="isPLP" :index="index + 1" :showIndex="hideIndex !== true ? true : false" class="mb-4" />
         </swiper-slide>
     </swiper>
 </section>
@@ -91,6 +93,20 @@ export default {
         device: {
             type: String,
             default: "desktop"
+        },
+       /**
+         * device
+         */
+        sectionId: {
+            type: String,
+            default: ""
+        },
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
         },
     },
 

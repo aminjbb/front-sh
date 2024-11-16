@@ -11,24 +11,31 @@
     </div>
 
     <template v-if="lazy">
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :src="content?.image_url" :title="content.label"  :alt="content?.image_alt"  width="130" height="130"/>
         </a>
     </template>
     <template v-else>
-        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-if="content.image && content.image.image_url && !isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :lazy="false" :src="content?.image.image_url" :title="content.label"  :alt="content?.image.alt" width="130" height="130"/>
         </a>
-        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`">
+        <a v-else-if="content.image_url && isPLP" class="product-card__image mb-3 mt-4" :href=" shps ?`/sku/${content.slug}?shps=${shps}` :`/sku/${content.slug}`" :id="cardIdImage">
           <generalKitsImageSimage :lazy="false" :src="content?.image_url" :title="content.label"  :alt="content?.image_alt" width="130" height="130"/>
         </a>
     </template>
 
     <div v-if="content?.brand_name || (content?.colors && content?.colors.length > 0)" class="d-flex align-center justify-space-between w-100 pl-1">
-        <span v-if="content?.brand_name" class="t12 w400 text-grey py-2">{{ content.brand_name }}</span>
+        <span v-if="content?.brand_name && !isBrand" >
+          <a class="t12 w400 text-grey py-2" :href="`/brand/${content.brand_slug}`">
+            {{ content.brand_name }}
+          </a>
+        </span>
+      <span class="t12 w400 text-grey py-2" v-if="content?.brand_name && isBrand" >
+          {{ content.brand_name }}
+        </span>
 
         <div v-if="content.colors && content.colors.length && showColors" class="product-card__colors d-flex align-center">
             <template v-if="content.colors.length !== 1 && content.colors[0].value !== 'FF00FF00'">
@@ -46,7 +53,7 @@
 
     
     <p v-if="!hideLabel && content.label" class="w-100 flex-grow-1 t12 l21 w500 product-card__title card-title">
-        <a class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
+        <a :id="cardIdLabel" class="t12 l21 w500 text-right" :href="`/sku/${content.slug}`">
             {{content.label}}
         </a>
     </p>
@@ -126,6 +133,13 @@ export default {
          */
         showColors: Boolean,
         /**
+           * product card is brand
+           */
+        isBrand: {
+          type:Boolean,
+          default:false
+        },
+        /**
          * Shps id for go to pdp
          */
         shps: String,
@@ -166,7 +180,22 @@ export default {
             default: null
         },
 
-        showBasket:Boolean
+        showBasket:Boolean,
+
+        /**
+         * card id for image
+         */
+        cardIdImage:{
+          type: String,
+          default: ''
+        },
+      /**
+         * Category name
+         */
+      cardIdLabel:{
+          type: String,
+          default: ''
+        },
     },
 
     methods: {

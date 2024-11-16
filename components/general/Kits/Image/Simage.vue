@@ -23,8 +23,8 @@ export default {
     imgSrc: String,
     imgAlt: String,
     imgTitle: String,
-    width: Number|String,
-    height: Number|String,
+    width: Number | String,
+    height: Number | String,
     lazy:{
       type:Boolean,
       default:true

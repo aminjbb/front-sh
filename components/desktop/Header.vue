@@ -50,143 +50,43 @@
                             }} {{ userData.last_name }}</span>
                           <!--                                                     <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span> -->
                         </div>
-                      </template>
-                      <template v-else>
-                        <span v-if="userData && userData.phone_number"
-                              class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
-                      </template>
-                    </a>
-                  </v-list-item>
-
-                  <v-list-item class="py-0 mt-2">
-                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/order">
-                      <v-icon
-                          icon="mdi-cart-outline"
-                          class="ml-2"
-                          color="grey"/>
-                      <span class="text-grey t14">لیست سفارشات</span>
-                    </a>
-                  </v-list-item>
-
-                  <v-list-item class="py-0">
-                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/address">
-                      <v-icon
-                          icon="mdi-map-marker-outline"
-                          class="ml-2"
-                          color="grey"/>
-                      <span class="text-grey t14">آدرس‌ها</span>
-                    </a>
-                  </v-list-item>
-
-                  <v-list-item class="py-0">
-                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/favorite-list">
-                      <v-icon
-                          icon="mdi-heart-outline"
-                          class="ml-2"
-                          size="small"
-                          color="grey"/>
-                      <span class="text-grey t14">علاقمندی‌ها</span>
-                    </a>
-                  </v-list-item>
-
-                  <v-list-item class="py-0">
-                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/ticket">
-                      <v-icon
-                          icon="mdi-chat-processing-outline"
-                          class="ml-2"
-                          size="small"
-                          color="grey"/>
-                      <span class="text-grey t14">ثبت تیکت</span>
-                    </a>
-                  </v-list-item>
-
-                  <v-list-item class="py-0">
-                    <a class="text-grey t14 d-flex align-center cur-p" @click="openModal()">
-                      <v-icon
-                          icon="mdi-exit-to-app"
-                          class="ml-2"
-                          color="grey"/>
-                      <span class="text-grey t14">خروج</span>
-                    </a>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-            <a v-else class="header__item header__item--btn t12 w400 text-grey cur-p" @click="goLoginPage()">
-              <v-icon icon="mdi-login" color="grey"/>
-              ورود | ثبت نام
-            </a>
-
-            <span class="header__item__sp"></span>
-
-            <a class="header__item" href="/user/favorite-list">
-              <v-icon icon="mdi-heart-outline"/>
-            </a>
-
-            <span class="header__item__sp"></span>
-
-            <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
-              <v-badge
-                  v-if="userBasket && userBasket.details && userBasket.details.length"
-                  color="primary"
-                  class="number-font"
-                  :content="userBasket.details.length"
-                  inline/>
-              <v-icon icon="mdi-cart-minus"/>
-            </a>
-          </div>
-        </div>
-      </v-container>
-      <desktopMenu/>
-    </header>
-
-    <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
-
-    <v-dialog
-        v-if="dialog"
-        v-model="dialog"
-        color="white"
-        width="470px">
-      <v-card class="pt-3 px-6 pb-5">
-        <header class="c-modal__header d-flex justify-space-between align-center pb-1">
-                    <span class="t15 w400">
-                        خروج از حساب کاربری
-                    </span>
-
-          <v-btn
-              class="c-modal__header__btn pa-0 text-none"
-              @click="closeModal()"
-              color="grey-darken-1"
-              size="large"
-              variant="icon">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+                        <a v-else class="header__item header__item--btn t12 w400 text-grey cur-p" @click="goLoginPage()">
+                            <v-icon icon="mdi-login" color="grey" />
+                            ورود | ثبت نام
+                        </a>
+        
+                        <span class="header__item__sp"></span>
+        
+                        <a class="header__item" href="/user/favorite-list">
+                            <v-icon icon="mdi-heart-outline" />
+                        </a>
+        
+                        <span class="header__item__sp"></span>
+        
+                        <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
+                            <v-badge
+                                v-if="userBasket && userBasket.details && userBasket.details.length"
+                                color="primary"
+                                class="number-font"
+                                :content="userBasket.details.length"
+                                inline />
+                            <v-icon icon="mdi-cart-minus" />
+                        </a>
+                    </div>
+                </div>
+            </v-container>
+            <desktopMenu />
         </header>
+        
+        <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
 
-        <div>
-          <p class="t14 w400 my-8 text-center text-grey-darken-2">آیا از خروج از حساب اطمینان دارید؟ </p>
-
-          <div class="d-flex align-center justify-center mt-2 mobile-pa-0 w-100">
-            <v-btn
-                @click="closeModal()"
-                height="44"
-                title="انصراف"
-                class="btn btn--cancel ml-1">
-              انصراف
-            </v-btn>
-
-            <v-btn
-                @click="logout()"
-                height="44"
-                title="خروج از حساب"
-                class="btn btn--submit">
-              خروج از حساب
-            </v-btn>
-          </div>
-        </div>
-      </v-card>
-    </v-dialog>
-  </client-only>
+        <generalModalsLogOut
+            ref="logOutModal"
+            title="خروج از حساب کاربری"
+            text="آیا از خروج اطمینان دارید؟"
+            submitText="خروج از حساب"
+            @removeProduct="logout" />
+    </client-only>
 </template>
 <script>
 
@@ -338,34 +238,127 @@ export default {
       }
     },
 
-    /**
-     * show header basket modal
-     */
-    showHeaderBasket() {
-      document.getElementById('basket-header').classList.add('show');
-      document.body.classList.add('active-basket');
+        /**
+         * show header basket modal
+         */
+        showHeaderBasket() {
+          document.getElementById('basket-header').classList.add('show');
+          document.body.classList.add('active-basket');
 
-      let productArr = [];
-      this.userBasket.details.forEach(item => {
-        const obj = {
-          item_id: item.shps?.sku?.id,
-          price: Number(String(item.current_site_price).slice(0, -1)),
-          item_brand: item?.shps?.sku?.brand?.name,
-          quantity: item.count,
-          name: item?.shps?.sku?.label
-        }
-        productArr.push(obj);
-      });
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: 'view_cart_popup',  // name of the event. In this case, it always must be view_cart_popup
-        ecommerce: {
-          items: productArr
-        }
-      });
-      window.zebline.event.track('view_cart_popup' , {
-        items: productArr
-      })
+                if(header){
+                    if (this.isBanner) {
+                        if (window.scrollY > 185) {
+                            header.style.top = '0px';
+                            this.isHidden = true;
+                            this.isFixed = false;
+                            this.hasBanner = false;
+
+                            if (currentScrollTop > this.lastScrollTop) {
+                                this.isHidden = true;
+                                this.isFixed = false;
+
+                            } else {
+                                this.isFixed = true;
+                                this.isHidden = false;
+                            }
+
+                            this.lastScrollTop = currentScrollTop;
+                        }
+
+                        if (window.scrollY <= 185) {
+                            this.hasBanner = true;
+                            header.style.top = `${40 - window.scrollY}px`;
+
+                        }
+                    } else {
+                        if (window.scrollY > 145) {
+                            this.isHidden = true;
+                            this.isFixed = false;
+                            header.style.top = '0px';
+
+                            if (currentScrollTop > this.lastScrollTop) {
+                                this.isHidden = true;
+                                this.isFixed = false;
+
+                            } else {
+                                this.isFixed = true;
+                                this.isHidden = false;
+                            }
+                        }
+
+                        if (window.scrollY <= 145) {
+                            if (currentScrollTop > this.lastScrollTop) {
+                                header.style.top = `${0 - window.scrollY}px`;
+
+                            } else {
+                                header.style.top = '0px';
+                            }
+                        }
+
+                        this.lastScrollTop = currentScrollTop;
+                    }
+                }
+            },
+
+        /**
+         * show header basket modal
+         */
+        showHeaderBasket() {
+            document.getElementById('basket-header').classList.add('show');
+            document.body.classList.add('active-basket');
+
+            let productArr = [];
+            this.userBasket.details.forEach(item =>{
+                const obj={
+                    item_id: item.shps?.sku?.id, 
+                    price: Number(String(item.current_site_price).slice(0, -1)),  
+                    item_brand: item?.shps?.sku?.brand?.name,   
+                    quantity: item.count,
+                    name: item?.shps?.sku?.label
+                }
+                productArr.push(obj);
+            });
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'view_cart_popup',  // name of the event. In this case, it always must be view_cart_popup
+                ecommerce: {							
+                    items: productArr
+                }
+            });
+        },
+
+        /**
+         * Open modal
+         */
+        openModal() {
+          this.$refs.logOutModal.dialog = true
+        },
+
+        /**
+         * Close modal
+         */
+        closeModal() {
+            this.dialog = false;
+        },
+
+        /**
+         * Logout
+         */
+        logout() {
+            this.userToken = '';
+            window.location = '/';
+            this.closeModal();
+            const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
+            itemDropdown.classList.toggle('show');
+        },
+
+        /**
+         * Login
+         */
+        goLoginPage(){
+            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
+            this.$router.push('/login')
+        },
     },
 
     /**

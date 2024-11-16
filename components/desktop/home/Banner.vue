@@ -6,12 +6,12 @@
 
     <v-row>
         <v-col
-            v-for="item in items"
+            v-for="(item , index) in items"
             :key="item.id"
             cols="12"
             @click="enhanceECommerce(item)"
             :sm="col">
-            <a class="banner__image mb-3 d-block" :href="item.link">
+            <a class="banner__image mb-3 d-block" :href="item.link" :id="`home-${screenId}-${sectionId}-${index + 1}`">
               <generalKitsImageSimage :src="item?.image.image_url" :title="item.label"  :alt="item.image_alt" width="600" height="400"  />
 
             </a>
@@ -35,11 +35,25 @@ export default {
             type: String,
             default: '6'
         },
+        /**
+         * sectionId for id
+         */
+        sectionId: {
+            type: String,
+            default: ''
+        },
 
         /**
          * Section title
          */
-        title: String
+        title: String,
+        /**
+         * screenId
+         */
+        screenId: {
+          type:String,
+          default:'D'
+        },
     },
 
     methods:{
