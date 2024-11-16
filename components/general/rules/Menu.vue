@@ -1,5 +1,5 @@
 <template>
-<nav class="rules-menu card">
+<nav class="rules-menu br16 s-border py-2 px-4 s-border--dark-gray">
     <div class="xs-show" @click="openMenu()">
         <v-icon
             id="rules-menu__icon"
@@ -15,9 +15,9 @@
             :class="{ active: isActive(menu.link) }">
             <v-icon
                 :icon="`mdi-${menu.icon}`"
-                color="grey"
+                color="sGrayLighten2"
                 class="ml-3" />
-            <a class="t14 text-grey" :href="menu.link" :title="menu.title">
+            <a class="t14 w700 text-sGray" :href="menu.link" :title="menu.title">
                 {{menu.title}}
             </a>
         </li>
@@ -77,6 +77,12 @@ export default {
                     title: "حقوق اداره کار",
                     link: "/rules/office-rights",
                     icon: "office-building-outline"
+                },
+                {
+                    id: 10,
+                    title: "فرایند مرجوعی",
+                    link: "/rules/return-order",
+                    icon: "package-variant-minus"
                 }
             ],
         }
@@ -99,6 +105,11 @@ export default {
 @import "~/assets/scss/tools/bp";
 
 .rules-menu {
+    >div:first-child.xs-show{
+        height: 51px;
+        line-height: 50px;
+    }
+
     &__items {
         @include gbp (0, 768) {
             transition: height 0.5s ease;
@@ -108,7 +119,7 @@ export default {
 
         &.open {
             transition: height 0.5s ease;
-            height: 420px;
+            height: 460px;
         }
     }
 
@@ -118,18 +129,14 @@ export default {
         cursor: pointer;
 
         &:hover {
-
-            a,
             .v-icon {
-                color: #D72685 !important;
+                color: #E77DB6 !important;
             }
         }
 
         &.active {
-
-            a,
             .v-icon {
-                color: #D72685 !important;
+                color: #E77DB6 !important;
             }
         }
     }
