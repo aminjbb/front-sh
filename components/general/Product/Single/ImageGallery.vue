@@ -333,18 +333,27 @@ export default {
                     this.addToFavorite()
 
                     window.dataLayer = window.dataLayer || [];
+                    const addToWishListItem ={
+                      items: [{// an array where all currently viewed products must be included
+                        item_id: this.productDetail.id,// insert an actual product ID
+                        price: Number(String(this.productSelectedSeller?.site_price).slice(0, -1)),// insert an actual product price. Number or a string. Don't include currency code
+                        item_brand: this.productDetail?.brand_label,// insert an actual product price
+                        item_category: this.productCategory,	// insert an actual product top-level category
+                        name: this.productDetail?.label
+                      }]
+                    }
                     window.dataLayer.push({
                         event: 'add_to_wishlist', // name of the event. In this case, it always must be add_to_wishlist
-                        ecommerce: {							
-                            items: [{// an array where all currently viewed products must be included
-                                item_id: this.productDetail.id,// insert an actual product ID
-                                price: Number(String(this.productSelectedSeller?.site_price).slice(0, -1)),// insert an actual product price. Number or a string. Don't include currency code
-                                item_brand: this.productDetail?.brand_label,// insert an actual product price
-                                item_category: this.productCategory,	// insert an actual product top-level category
-                                name: this.productDetail?.label
-                            }]
-                        }
+                        ecommerce:addToWishListItem
                     });
+                    try {
+                      window.zebline.event.track('add_to_wishlist' , addToWishListItem)
+
+                    }
+                    catch (e) {
+
+
+                    }
                 }
                    
                 else{

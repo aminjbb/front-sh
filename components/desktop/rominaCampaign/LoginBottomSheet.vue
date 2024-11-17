@@ -235,6 +235,7 @@ import User from '@/composables/User.js'
 import axios from "axios";
 import Public from '@/composables/Public.js'
 import Campaign from '@/composables/Campaign.js'
+import Zebline from "~/composables/Zebline.js";
 
 export default {
 
@@ -320,7 +321,12 @@ export default {
     const runtimeConfig = useRuntimeConfig()
     const userToken = useCookie('userToken')
     const randomNumberForBasket = useCookie('randomNumberForBasket')
-
+    const loginZebline = useCookie('loginZebline', {
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+    })
+    const {
+      zeblineLogin
+    } = new Zebline()
     const {
       getUserAddress2,
       userAddress
@@ -351,7 +357,10 @@ export default {
       getCities,
       createGiftOrder,
       successGiftOrder,
-      createLoading
+      createLoading,
+      loginZebline,
+      zeblineLogin
+
     }
   },
 
@@ -517,7 +526,8 @@ export default {
         if (response.status === 200) {
           this.userToken = response.data.data.token;
           this.tockenCookie = response.data.data.token;
-
+          this.zeblineLogin(this.mobile)
+          this.loginZebline = 'true'
           const characters = 'abcdefghijklmnopqrstuvwxyz';
           const numbers = '0123456789';
           let randomWord = '';
@@ -541,7 +551,18 @@ export default {
             userStatus: response.data?.data?.user?.is_new === 1 ? 'new' : 'returning', // or 'returning' depending on the user's status.
             wheel: 'true', // or 'returning' depending on the user's status.
           });
+          try {
+            window.zebline.event.track('userAuthentication' , {
+              number: randomWord + randomNum + this.mobile.slice(1),
+              event_type: response.data?.data?.user?.is_new === 1 ? 'signup' : 'login', // Type of event: 'login' or 'signup'.
+              userStatus: response.data?.data?.user?.is_new === 1 ? 'new' : 'returning', // or 'returning' depending on the user's status.
+              wheel: 'true', // or 'returning' depending on the user's status.
 
+            })
+          }
+          catch (e) {
+            
+          }
           if (!this.showSuccess) {
             useNuxtApp().$toast.success(response.data.message, {
               rtl: true,

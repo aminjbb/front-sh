@@ -116,32 +116,39 @@ export default function setup() {
                 if(getResponseCount && getResponseCount.count) count.value = getResponseCount.count;
                 if(method === 'increase'){
                     window.dataLayer = window.dataLayer || [];
+                    const addToCartItem = {
+                        items: [{	// an array where all currently viewed products must be included
+                            item_id: productDetails?.id,	// insert an actual product ID
+                            price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                            item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
+                            quantity: count.value,	// product quantity. In case of add to cart
+                            name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                        }]
+                    }
                     window.dataLayer.push({
                         event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
-                            ecommerce: {							
-                                items: [{	// an array where all currently viewed products must be included
-                                    item_id: productDetails?.id,	// insert an actual product ID
-                                    price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                                    item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
-                                    quantity: count.value,	// product quantity. In case of add to cart
-                                    name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
-                                }]
-                            }
+                            ecommerce: addToCartItem
                     });
-                }else if(method === 'decrease' && count.value !== 0){
+                    window.zebline.event.track('add_to_cart' ,addToCartItem )
+
+                }
+                else if(method === 'decrease' && count.value !== 0){
                     window.dataLayer = window.dataLayer || [];
+                    const addToCartItem={
+                        items: [{// an array where all currently viewed products must be included
+                            item_id: productDetails?.id,	// insert an actual product ID
+                            price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                            item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
+                            quantity:  count.value,	// product quantity. In case of add to cart
+                            name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                        }]
+                    }
                     window.dataLayer.push({
                     event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
-                        ecommerce: {							
-                            items: [{// an array where all currently viewed products must be included
-                                item_id: productDetails?.id,	// insert an actual product ID
-                                price: price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                                item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
-                                quantity:  count.value,	// product quantity. In case of add to cart
-                                name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
-                            }]
-                        }
+                        ecommerce: addToCartItem
                     });
+                    window.zebline.event.track('remove_from_cart' ,addToCartItem )
+
                 }
 
                 getBasket();
@@ -207,32 +214,38 @@ export default function setup() {
 
                 if(method === 'increase'){
                     window.dataLayer = window.dataLayer || [];
+                    const addToCardItem =  {
+                        items: [{	// an array where all currently viewed products must be included
+                            item_id: productDetails?.id,	// insert an actual product ID
+                            price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                            item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
+                            quantity: count.value,	// product quantity. In case of add to cart
+                            name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                        }]
+                    }
                     window.dataLayer.push({
                         event: 'add_to_cart',  	// name of the event. In this case, it always must be add_to_cart
-                            ecommerce: {							
-                                items: [{	// an array where all currently viewed products must be included
-                                    item_id: productDetails?.id,	// insert an actual product ID
-                                    price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                                    item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
-                                    quantity: count.value,	// product quantity. In case of add to cart
-                                    name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
-                                }]
-                            }
+                            ecommerce:addToCardItem
                     });
+                    window.zebline.event.track( 'add_to_cart' ,addToCardItem )
+
                 }else if(method === 'decrease'){
                     window.dataLayer = window.dataLayer || [];
+                    const addToCardItem = {
+                        items: [{// an array where all currently viewed products must be included
+                            item_id: productDetails?.id,	// insert an actual product ID
+                            price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                            item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
+                            quantity:  count.value,	// product quantity. In case of add to cart
+                            name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                        }]
+                    }
                     window.dataLayer.push({
                     event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
-                        ecommerce: {							
-                            items: [{// an array where all currently viewed products must be included
-                                item_id: productDetails?.id,	// insert an actual product ID
-                                price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                                item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
-                                quantity:  count.value,	// product quantity. In case of add to cart
-                                name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
-                            }]
-                        }
+                        ecommerce: addToCardItem
                     });
+                    window.zebline.event.track( 'remove_from_cart' ,addToCardItem )
+
                 }
 
                 getBasket()
@@ -286,20 +299,20 @@ export default function setup() {
                 count.value = 0;
                 
                 window.dataLayer = window.dataLayer || [];
+                const removeCardItem = {
+                    items: [{// an array where all currently viewed products must be included
+                        item_id: productDetails?.id,	// insert an actual product ID
+                        price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
+                        item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
+                        quantity:  count.value,	// product quantity. In case of add to cart
+                        name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
+                    }]
+                }
                 window.dataLayer.push({
                 event: 'remove_from_cart',  // name of the event. In this case, it always must be remove_from_cart
-                    ecommerce: {							
-                        items: [{// an array where all currently viewed products must be included
-                            item_id: productDetails?.id,	// insert an actual product ID
-                            price:price !== null ? Number(String(price?.site_price).slice(0, -1)) : Number(String(productDetails?.site_price).slice(0, -1)),	// insert an actual product price. Number or a string. Don't include currency code
-                            item_brand: productDetails?.brand_name ? productDetails?.brand_name :productDetails.shps?.sku?.brand?.name,// insert an actual product price
-                            quantity:  count.value,	// product quantity. In case of add to cart
-                            name: productDetails?.label ? productDetails?.label : productDetails.shps?.sku?.label
-                        }]
-                    }
+                    ecommerce: removeCardItem
                 });
-                
-
+                window.zebline.event.track('remove_from_cart' ,removeCardItem )
                 getBasket();
                
             })

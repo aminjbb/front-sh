@@ -90,6 +90,10 @@ export default function setup() {
                     percent:response?.data?.data?.prize.discount_amount,
                     number: randomWord + randomNum + this.$store.getters['get_userData']?.phone_number,
                 });
+                window.zebline.event.track('wheelPercent' , {
+                    percent:response?.data?.data?.prize.discount_amount,
+                    number: randomWord + randomNum + this.$store.getters['get_userData']?.phone_number,
+                })
             })
             .catch((err) => {
                 useNuxtApp().$toast.error(err.response.data.message, {

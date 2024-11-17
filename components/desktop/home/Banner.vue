@@ -67,6 +67,16 @@ export default {
                 banner_name: banner.image_alt,		// name of the promo campaign
                 banner_location: banner.homepage_section_id	
             });
+            try {
+              window.zebline.event.track('select_banner' , {
+                banner_name: banner.image_alt,		// name of the promo campaign
+                banner_location: banner.homepage_section_id
+
+              })
+            }
+            catch (e) {
+              
+            }
         },
     }
 }

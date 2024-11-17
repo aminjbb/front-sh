@@ -490,6 +490,14 @@ export default {
           items: productArr
         }
       });
+      try {
+        window.zebline.event.track('view_cart' , {
+          items: productArr
+        })
+      }
+      catch (e) {
+
+      }
     },
 
     /**
@@ -510,13 +518,20 @@ export default {
       });
 
       window.dataLayer = window.dataLayer || [];
+      const beginCheckout = {
+        userID: this.$store.getters['get_userData']?.id,
+        items: productArrBeginCheckout
+      }
       window.dataLayer.push({
         event: 'begin_checkout',
-        ecommerce: {
-          userID: this.$store.getters['get_userData']?.id,
-          items: productArrBeginCheckout
-        }
+        ecommerce:beginCheckout
       });
+      try {
+        window.zebline.event.track('begin_checkout', beginCheckout)
+      }
+      catch (e) {
+
+      }
     },
 
     /**
@@ -536,15 +551,23 @@ export default {
       });
 
       window.dataLayer = window.dataLayer || [];
+      const addShippingInfo = {
+        value: this.voucher && this.voucher?.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
+        shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis
+        userID: this.$store.getters['get_userData']?.id,
+        items: productArrAddShipping
+      }
       window.dataLayer.push({
         event: 'add_shipping_info',// name of the event.
-        ecommerce: {
-          value: this.voucher && this.voucher?.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
-          shipping_tier: this.$store.getters['get_orderSendingMethod'], //post | tipax | nafis
-          userID: this.$store.getters['get_userData']?.id,
-          items: productArrAddShipping
-        }
+        ecommerce:addShippingInfo
       });
+      try {
+        window.zebline.event.track('add_shipping_info' , addShippingInfo)
+
+      }
+      catch (e) {
+
+      }
     },
 
     /**
@@ -564,16 +587,23 @@ export default {
       });
 
       window.dataLayer = window.dataLayer || [];
+      const addPayInfo = {
+        value: this.voucher && this.voucher?.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
+        coupon: this.discountCode,
+        payment_type: this.orderPaymentMethod,
+        userID: this.$store.getters['get_userData']?.id,
+        items: productArr
+      }
       window.dataLayer.push({
         event: 'add_payment_info',// name of the event.
-        ecommerce: {
-          value: this.voucher && this.voucher?.paid_price ? Number(String(this.voucher.paid_price + this.voucher.sending_price).slice(0, -1)) : Number(String(this.data.paid_price + this.data.sending_price).slice(0, -1)),
-          coupon: this.discountCode,
-          payment_type: this.orderPaymentMethod,
-          userID: this.$store.getters['get_userData']?.id,
-          items: productArr
-        }
+        ecommerce:addPayInfo
       });
+      try {
+        window.zebline.event.track('add_payment_info' , addPayInfo)
+      }
+      catch (e) {
+
+      }
     },
   },
   
