@@ -17,21 +17,36 @@ export default function setup() {
      * @param {*} userId
      */
     async function zeblineLogin(userId){
-        window.zebline.user.login(userId);
+        try {
+            window.zebline.user.login(userId);
+        }
+        catch (e) {
+
+        }
     }
 
     /**
      * logout user in zebline
      */
     async function zeblinLogout(){
-        window.zebline.user.logout();
+        try {
+            window.zebline.user.logout();
+        }
+        catch (e) {
+
+        }
     }
     /**
      * set attribute user in zebline
      * @param {*} userData
      */
     async function zeblinSetAttribute(userData){
-        window.zebline.user.setAttribute(userData);
+        try {
+            window.zebline.user.setAttribute(userData);
+        }
+        catch (e) {
+
+        }
 
     }
     /**
@@ -40,7 +55,12 @@ export default function setup() {
      * @param {*} formData
      */
     async function zeblinEventTrack(eventName ,formData){
-        window.zebline.event.track(eventName ,formData )
+       try {
+           window.zebline.event.track(eventName ,formData )
+       }
+       catch (e) {
+
+       }
     }
 
     return {
