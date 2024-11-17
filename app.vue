@@ -58,8 +58,8 @@ useHead({
     {
       children: `window.onload = function () {
         window.zebline.init({
-          token: ${runtimeConfig.public.zeblineToken},
-          licence_code:  ${runtimeConfig.public.zeblineLicenceCode},
+          token: '${runtimeConfig.public.zeblineLogin}',
+          licence_code:  '${runtimeConfig.public.zeblineKey}',
           notificationRequest: true,
         });
       };`,

@@ -1,8 +1,7 @@
 <template>
   <client-only>
     <a v-if="topBanner && topBanner.image" class="fixed-banner d-block" id="top-banner" :href="topBanner.link">
-      <generalKitsImageSimage :lazy="false" :src="topBanner.image" :title="topBanner.image_alt"
-                              :alt="topBanner?.image_alt" width="1400" height="40" class="w-100 h-100"/>
+      <generalKitsImageSimage :lazy="false" :src="topBanner.image"  :title="topBanner.image_alt"  :alt="topBanner?.image_alt" width="1400" height="40" class="w-100 h-100"  />
     </a>
 
     <header
@@ -13,11 +12,10 @@
         <div class="header__inner d-flex align-center justify-space-between">
           <div class="header__col1 d-flex algin-center">
             <a href="/" class="header__logo" title="Shavaz logo">
-              <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107"
-                   height="38" title="Shavaz Logo"/>
+              <img data-not-lazy src="~/assets/images/mobile-logo.svg" class="" alt="Shavaz Logo" width="107" height="38" title="Shavaz Logo" />
             </a>
 
-            <desktopSearchResult/>
+            <desktopSearchResult />
           </div>
 
           <div class="header__col2 d-flex align-center justify-end">
@@ -29,8 +27,8 @@
                       v-bind="props"
                       class="cur-p"
                       id="mobile-drop-down__show-dashboard">
-                    <v-icon icon="mdi-account-outline"/>
-                    <v-icon icon="mdi-chevron-down"/>
+                    <v-icon icon="mdi-account-outline" />
+                    <v-icon icon="mdi-chevron-down" />
                   </div>
                 </template>
 
@@ -41,58 +39,115 @@
                           icon="mdi-account-circle-outline"
                           color="grey-darken-3"
                           size="large"
-                          class="ml-2"/>
+                          class="ml-2" />
 
                       <template v-if="userData && userData.first_name && userData.last_name">
                         <div class="d-flex flex-column">
-                          <span class="user-phone t14 text-grey-darken-3">{{
-                              userData.first_name
-                            }} {{ userData.last_name }}</span>
-                          <!--                                                     <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span> -->
-                        </div>
-                        <a v-else class="header__item header__item--btn t12 w400 text-grey cur-p" @click="goLoginPage()">
-                            <v-icon icon="mdi-login" color="grey" />
-                            ورود | ثبت نام
-                        </a>
-        
-                        <span class="header__item__sp"></span>
-        
-                        <a class="header__item" href="/user/favorite-list">
-                            <v-icon icon="mdi-heart-outline" />
-                        </a>
-        
-                        <span class="header__item__sp"></span>
-        
-                        <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
-                            <v-badge
-                                v-if="userBasket && userBasket.details && userBasket.details.length"
-                                color="primary"
-                                class="number-font"
-                                :content="userBasket.details.length"
-                                inline />
-                            <v-icon icon="mdi-cart-minus" />
-                        </a>
-                    </div>
-                </div>
-            </v-container>
-            <desktopMenu />
-        </header>
-        
-        <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
+                          <span class="user-phone t14 text-grey-darken-3">{{ userData.first_name }} {{ userData.last_name }}</span>
+                          <!--                                                     <span v-if="userData && userData.phone_number" class="user-phone t12 text-grey mt-1 number-font">{{userData.phone_number}}</span> -->                                                </div>
+                      </template>
+                      <template v-else>
+                        <span v-if="userData && userData.phone_number" class="user-phone t15 text-grey-darken-3 number-font">{{ userData.phone_number }}</span>
+                      </template>
+                    </a>
+                  </v-list-item>
 
-        <generalModalsLogOut
-            ref="logOutModal"
-            title="خروج از حساب کاربری"
-            text="آیا از خروج اطمینان دارید؟"
-            submitText="خروج از حساب"
-            @removeProduct="logout" />
-    </client-only>
+                  <v-list-item class="py-0 mt-2">
+                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/order">
+                      <v-icon
+                          icon="mdi-cart-outline"
+                          class="ml-2"
+                          color="grey" />
+                      <span class="text-grey t14">لیست سفارشات</span>
+                    </a>
+                  </v-list-item>
+
+                  <v-list-item class="py-0">
+                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/address">
+                      <v-icon
+                          icon="mdi-map-marker-outline"
+                          class="ml-2"
+                          color="grey" />
+                      <span class="text-grey t14">آدرس‌ها</span>
+                    </a>
+                  </v-list-item>
+
+                  <v-list-item class="py-0">
+                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/favorite-list">
+                      <v-icon
+                          icon="mdi-heart-outline"
+                          class="ml-2"
+                          size="small"
+                          color="grey" />
+                      <span class="text-grey t14">علاقمندی‌ها</span>
+                    </a>
+                  </v-list-item>
+
+                  <v-list-item class="py-0">
+                    <a class="text-grey t14 d-flex align-center cur-p" href="/user/ticket">
+                      <v-icon
+                          icon="mdi-chat-processing-outline"
+                          class="ml-2"
+                          size="small"
+                          color="grey" />
+                      <span class="text-grey t14">ثبت تیکت</span>
+                    </a>
+                  </v-list-item>
+
+                  <v-list-item class="py-0">
+                    <a class="text-grey t14 d-flex align-center cur-p" @click="openModal()">
+                      <v-icon
+                          icon="mdi-exit-to-app"
+                          class="ml-2"
+                          color="grey" />
+                      <span class="text-grey t14">خروج</span>
+                    </a>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+            <a v-else class="header__item header__item--btn t12 w400 text-grey cur-p" @click="goLoginPage()">
+              <v-icon icon="mdi-login" color="grey" />
+              ورود | ثبت نام
+            </a>
+
+            <span class="header__item__sp"></span>
+
+            <a class="header__item" href="/user/favorite-list">
+              <v-icon icon="mdi-heart-outline" />
+            </a>
+
+            <span class="header__item__sp"></span>
+
+            <a class="header__item header__item--basket cur-p" @click="showHeaderBasket()" id="toggle-basket">
+              <v-badge
+                  v-if="userBasket && userBasket.details && userBasket.details.length"
+                  color="primary"
+                  class="number-font"
+                  :content="userBasket.details.length"
+                  inline />
+              <v-icon icon="mdi-cart-minus" />
+            </a>
+          </div>
+        </div>
+      </v-container>
+      <desktopMenu />
+    </header>
+
+    <desktopHeaderBasket :userBasket="userBasket" :userData="userData"/>
+
+    <generalModalsLogOut
+        ref="logOutModal"
+        title="خروج از حساب کاربری"
+        text="آیا از خروج اطمینان دارید؟"
+        submitText="خروج از حساب"
+        @removeProduct="logout" />
+  </client-only>
 </template>
 <script>
 
 import Public from '~/composables/Public';
-import Zebline from "~/composables/Zebline.js";
-
+import Zebline from '@/composables/Zebline.js'
 export default {
   name: "Desktop Header",
 
@@ -112,22 +167,21 @@ export default {
     };
   },
 
-  props: {
-    userData: null
+  props:{
+    userData:null
   },
 
   computed: {
     userBasket() {
       try {
         const basket = this.$store.getters['get_basket']
-        return basket?.data?.data
+        return basket ?.data ?.data
       } catch (e) {
         return []
       }
     },
 
   },
-
   setup() {
     const userToken = useCookie('userToken')
     const {
@@ -155,18 +209,17 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
 
-  watch: {
-    userData(newVal) {
+  watch:{
+    userData(newVal){
       if (newVal && newVal.phone_number !== null) {
         this.isLogin = true
       } else {
         this.isLogin = false
-      }
-      ;
+      };
     },
 
-    topBanner(newVal) {
-      if (newVal && newVal !== null) {
+    topBanner(newVal){
+      if(newVal && newVal!==null){
         this.isBanner = true;
         this.hasBanner = true;
         document.getElementsByTagName('body')[0].classList.add('hasBanner');
@@ -183,7 +236,7 @@ export default {
       let currentScrollTop = window.scrollY;
       let header = document.getElementById('header--desktop');
 
-      if (header) {
+      if(header){
         if (this.isBanner) {
           if (window.scrollY > 185) {
             header.style.top = '0px';
@@ -238,134 +291,38 @@ export default {
       }
     },
 
-        /**
-         * show header basket modal
-         */
-        showHeaderBasket() {
-          document.getElementById('basket-header').classList.add('show');
-          document.body.classList.add('active-basket');
+    /**
+     * show header basket modal
+     */
+    showHeaderBasket() {
+      document.getElementById('basket-header').classList.add('show');
+      document.body.classList.add('active-basket');
 
-                if(header){
-                    if (this.isBanner) {
-                        if (window.scrollY > 185) {
-                            header.style.top = '0px';
-                            this.isHidden = true;
-                            this.isFixed = false;
-                            this.hasBanner = false;
-
-                            if (currentScrollTop > this.lastScrollTop) {
-                                this.isHidden = true;
-                                this.isFixed = false;
-
-                            } else {
-                                this.isFixed = true;
-                                this.isHidden = false;
-                            }
-
-                            this.lastScrollTop = currentScrollTop;
-                        }
-
-                        if (window.scrollY <= 185) {
-                            this.hasBanner = true;
-                            header.style.top = `${40 - window.scrollY}px`;
-
-                        }
-                    } else {
-                        if (window.scrollY > 145) {
-                            this.isHidden = true;
-                            this.isFixed = false;
-                            header.style.top = '0px';
-
-                            if (currentScrollTop > this.lastScrollTop) {
-                                this.isHidden = true;
-                                this.isFixed = false;
-
-                            } else {
-                                this.isFixed = true;
-                                this.isHidden = false;
-                            }
-                        }
-
-                        if (window.scrollY <= 145) {
-                            if (currentScrollTop > this.lastScrollTop) {
-                                header.style.top = `${0 - window.scrollY}px`;
-
-                            } else {
-                                header.style.top = '0px';
-                            }
-                        }
-
-                        this.lastScrollTop = currentScrollTop;
-                    }
-                }
-            },
-
-        /**
-         * show header basket modal
-         */
-        showHeaderBasket() {
-            document.getElementById('basket-header').classList.add('show');
-            document.body.classList.add('active-basket');
-
-            let productArr = [];
-            this.userBasket.details.forEach(item =>{
-                const obj={
-                    item_id: item.shps?.sku?.id, 
-                    price: Number(String(item.current_site_price).slice(0, -1)),  
-                    item_brand: item?.shps?.sku?.brand?.name,   
-                    quantity: item.count,
-                    name: item?.shps?.sku?.label
-                }
-                productArr.push(obj);
-            });
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                event: 'view_cart_popup',  // name of the event. In this case, it always must be view_cart_popup
-                ecommerce: {							
-                    items: productArr
-                }
-            });
-        },
-
-        /**
-         * Open modal
-         */
-        openModal() {
-          this.$refs.logOutModal.dialog = true
-        },
-
-        /**
-         * Close modal
-         */
-        closeModal() {
-            this.dialog = false;
-        },
-
-        /**
-         * Logout
-         */
-        logout() {
-            this.userToken = '';
-            window.location = '/';
-            this.closeModal();
-            const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
-            itemDropdown.classList.toggle('show');
-        },
-
-        /**
-         * Login
-         */
-        goLoginPage(){
-            localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
-            this.$router.push('/login')
-        },
+      let productArr = [];
+      this.userBasket.details.forEach(item =>{
+        const obj={
+          item_id: item.shps?.sku?.id,
+          price: Number(String(item.current_site_price).slice(0, -1)),
+          item_brand: item?.shps?.sku?.brand?.name,
+          quantity: item.count,
+          name: item?.shps?.sku?.label
+        }
+        productArr.push(obj);
+      });
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'view_cart_popup',  // name of the event. In this case, it always must be view_cart_popup
+        ecommerce: {
+          items: productArr
+        }
+      });
     },
 
     /**
      * Open modal
      */
     openModal() {
-      this.dialog = true;
+      this.$refs.logOutModal.dialog = true
     },
 
     /**
@@ -380,19 +337,18 @@ export default {
      */
     logout() {
       this.userToken = '';
-      this.zeblinLogout()
       window.location = '/';
       this.closeModal();
+      this.zeblinLogout()
       const itemDropdown = document.getElementById(`mobile-drop-down__items-dashboard`);
       itemDropdown.classList.toggle('show');
-
     },
 
     /**
      * Login
      */
-    goLoginPage() {
-      localStorage.setItem('returnPathAfterLogin', this.$route.fullPath);
+    goLoginPage(){
+      localStorage.setItem('returnPathAfterLogin' , this.$route.fullPath);
       this.$router.push('/login')
     },
   },
@@ -401,7 +357,6 @@ export default {
 
 <style lang="scss">
 @import "~/assets/scss/tools/bp";
-
 $parent: 'header';
 
 .fixed-banner {
@@ -412,7 +367,7 @@ $parent: 'header';
   position: absolute;
   z-index: 11;
 
-  img {
+  img{
     object-fit: cover !important;
   }
 }
@@ -560,16 +515,15 @@ $parent: 'header';
           font-size: 16px;
         }
 
-        &--basket {
+        &--basket{
           position: relative;
-
-          .v-badge {
+          .v-badge{
             position: absolute;
             z-index: 2;
             left: 5px;
             top: -5px;
 
-            &__badge {
+            &__badge{
               font-family: 'IranSansFaNum' !important;
             }
           }
@@ -596,9 +550,8 @@ $parent: 'header';
     }
   }
 }
-
-.profile-drop-down {
-  .v-list-item {
+.profile-drop-down{
+  .v-list-item{
     min-height: 40px !important;
   }
 }

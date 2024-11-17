@@ -343,9 +343,14 @@ export default {
                     items: productArr
                 }
             });
-          window.zebline.event.track('view_cart' , {
-            items: productArr
-          })
+            try {
+              window.zebline.event.track('view_cart' , {
+                items: productArr
+              })
+            }
+            catch (e) {
+
+            }
         },
 
         /**
@@ -373,10 +378,14 @@ export default {
                     items: productArrBeginCheckout
                 }
             });
-          window.zebline.event.track('begin_checkout' , {
-            userID: this.$store.getters['get_userData']?.id,
-            items: productArrBeginCheckout
-          })
+           try {
+             window.zebline.event.track('begin_checkout' , {
+               userID: this.$store.getters['get_userData']?.id,
+               items: productArrBeginCheckout
+             })
+           }
+           catch (e) {
+           }
         },
 
         /**
@@ -441,7 +450,13 @@ export default {
                 event: 'add_shipping_info', // name of the event.
                 ecommerce: addShippingInfo
             });
-          window.zebline.event.track('add_shipping_info' , addShippingInfo)
+            try {
+              window.zebline.event.track('add_shipping_info' , addShippingInfo)
+
+            }
+            catch (e) {
+
+            }
         },
 
         /**
@@ -504,7 +519,12 @@ export default {
                 event: 'add_payment_info', // name of the event.
                 ecommerce:addPayInfo
             });
-          window.zebline.event.track('add_payment_info' , addPayInfo)
+            try {
+              window.zebline.event.track('add_payment_info' , addPayInfo)
+            }
+            catch (e) {
+
+            }
         },
 
         /**

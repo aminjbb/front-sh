@@ -41,7 +41,6 @@ export default function setup() {
      */
     async function zeblinEventTrack(eventName ,formData){
         window.zebline.event.track(eventName ,formData )
-
     }
 
     return {

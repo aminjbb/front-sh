@@ -332,7 +332,12 @@ export default {
         event: 'view_item',  // name of the event. In this case, it always must be view_item_list
         ecommerce: viewItem
       });
-      window.zebline.event.track('view_item' , viewItem)
+      try {
+        window.zebline.event.track('view_item' , viewItem)
+      }
+      catch (e) {
+
+      }
     }
   },
 

@@ -46,7 +46,13 @@ export default {
                 event: 'select_item',  	// name of the event. In this case, it always must be select_item
                 ecommerce: selectItem
             });
-          window.zebline.event.track('select_item' , selectItem)
+            try {
+              window.zebline.event.track('select_item' , selectItem)
+
+            }
+            catch (e) {
+
+            }
         }
     }
 }

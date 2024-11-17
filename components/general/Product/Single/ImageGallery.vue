@@ -346,7 +346,14 @@ export default {
                         event: 'add_to_wishlist', // name of the event. In this case, it always must be add_to_wishlist
                         ecommerce:addToWishListItem
                     });
-                  window.zebline.event.track('add_to_wishlist' , addToWishListItem)
+                    try {
+                      window.zebline.event.track('add_to_wishlist' , addToWishListItem)
+
+                    }
+                    catch (e) {
+
+
+                    }
                 }
                    
                 else{
