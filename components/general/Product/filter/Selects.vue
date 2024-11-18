@@ -97,10 +97,16 @@ export default {
         filteredItems() {
             if (this.searchItem == null || this.searchItem == '') {
 
-                return this.items.sort((a, b) =>{
-                 if (a.label)  a.label.localeCompare(b.label)
-                  else  a.value.localeCompare(b.value)
-                });
+               try {
+                 return this.items.sort((a, b) =>{
+                   if (a.label)  a.label.localeCompare(b.label)
+                   else  a.value.localeCompare(b.value)
+                 });  
+               }
+               catch (e) {
+                 
+               }
+               
             } else {
                 const lowerCaseSearch = this.searchItem.toLowerCase();
                 if (this.param == 'brands' || this.param == 'colors'){

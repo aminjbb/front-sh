@@ -231,7 +231,7 @@ export default {
             this.activeDeleteButton = false
         } else{
             Object.keys(this.$route ?.query).forEach(element => {
-                if(element !== 'order' && element !== 'order_type' && element !== 'page'){
+                if(element !== 'order' && element !== 'order_type' && element !== 'page' && element !== 'needle'){
                     this.activeDeleteButton = true
                 }
             });
