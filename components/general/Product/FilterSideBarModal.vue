@@ -36,7 +36,7 @@
                 </header>
 
                 <template v-if="filter.type === 'select'">
-                  <generalProductFilterSelects :index="index" @selectedFilter="addSelectedFilterForShowBadge"
+                  <generalProductFilterSelects :isSearchable="filter.is_searchable" :index="index" @selectedFilter="addSelectedFilterForShowBadge"
                                                :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
                                                :items="filter.data" :clear="clearAll" :title="filter.label"
                                                :name="filter.label" :param="filter.param"
@@ -55,7 +55,7 @@
                 </template>
 
                 <template v-else-if="filter.type === 'checkbox'">
-                  <generalProductFilterSelects :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
+                  <generalProductFilterSelects :isSearchable="filter.is_searchable" :index="index" @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                                :selectedFilter="finalFilterObject"
                                                @selectedFilter="addSelectedFilterForShowBadge"
                                                :ShowEnName="filter.param === 'categories' || filter.param === 'products' ? false : true"
@@ -80,7 +80,7 @@
 
                     <div>
 
-                      <generalProductFilterSelectsMount :index="index"
+                      <generalProductFilterSelectsMount  :index="index"
                                                         :selectedAmount="amountModel"
                                                         @removeSelectedFilter="removeSelectedFilterForShowBadge"
                                                         @selectedFilter="addSelectedFilterForShowBadge"
