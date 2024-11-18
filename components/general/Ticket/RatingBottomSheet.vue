@@ -102,22 +102,18 @@ export default {
                     },
                 })
                 .then((response) => {
-                    useNuxtApp().$toast.success('امتیاز شما با موفقیت ثبت شد!', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'امتیاز شما با موفقیت ثبت شد!', status:'success'
+                  })
                     this.$emit('updateData', true);
                     this.form = {
                         content: null,
                     }
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
                 }).finally(() => {
                     this.loading = false;
                     this.sheet = false

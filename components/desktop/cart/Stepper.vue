@@ -259,11 +259,9 @@ export default {
                     const text = this.activeStep === 2 ? 'آدرس تحویل گیرنده یا روش ارسال انتخاب نشده است.' : this.activeStep === 3 ? 'روش پرداخت مورد نظر خود را انتخاب کنید.' : '';
 
                     if (!this.activeButton) {
-                        useNuxtApp().$toast.error(text, {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:text , status:'error'
+                      })
                     } else {
                         if (this.activeStep === 3) {
                             this.createOrder(this.orderSendingMethod, '', this.orderAddressId, this.orderPaymentMethod)
@@ -311,11 +309,9 @@ export default {
                         this.active[this.activeStep] = true;
                         this.previousSteps[this.activeStep - 1] = true;
                     } else {
-                        useNuxtApp().$toast.error('کاربر گرامی شما مجاز به انجام این عملیات نمی باشید.', {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:'کاربر گرامی شما مجاز به انجام این عملیات نمی باشید.' , status:'error'
+                      })
                     }
                 }
             }
@@ -393,7 +389,9 @@ export default {
          * @param {*} address
          */
         getAddress(address) {
-            if (address !== false) {
+          this.activeButton = false;
+
+          if (address !== false) {
                 this.$store.commit('set_orderAddress', address)
                 this.getSendingMethods(address)
                 if (this.$store.getters['get_orderSendingMethod']) {
@@ -413,8 +411,13 @@ export default {
             if (way !== false) {
                 this.$store.commit('set_orderSendingMethod', way)
                 this.calculateSendingPrice(this.orderAddressId, way)
+                if (way === 'nafis'){
+                  this.activeButton = false;
+                }
+                else {
+                  this.activeButton = true;
+                }
 
-                this.activeButton = true;
 
             } else {
                 this.$store.commit('set_orderSendingMethod', null);
@@ -464,8 +467,13 @@ export default {
          * @param {*} arr
          */
         getTime(arr) {
-            //TODO: Add set time to cart
+
+          if (arr.length){
+            this.$store.commit('set_orderSendingMethod', arr[0])
+            this.calculateSendingPrice(this.orderAddressId, arr[0] ,arr[1])
+
             this.activeButton = true;
+          }
         },
 
         /**

@@ -270,17 +270,13 @@ export default {
 
       /* Check required item in form */
       if (this.mandatoryFields && this.mandatoryFields.length) {
+        let errorText = []
         this.mandatoryFields.forEach(item => {
           if (item === 'seller_sku_id') {
             if (this.form.seller_sku_id !== null && this.form.seller_sku_id !== '') {
               skuAccess = true
             } else {
-              useNuxtApp().$toast.error('شناسه کالا انتخاب نشده است.', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-              });
-
+              errorText.push('شناسه کالا انتخاب نشده است.')
               skuAccess = false;
             }
           }
@@ -289,12 +285,7 @@ export default {
             if (this.form.order_number !== null && this.form.order_number !== '') {
               orderNumberAccess = true
             } else {
-              useNuxtApp().$toast.error('شماره سفارش انتخاب نشده است.', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-              });
-
+              errorText.push('شماره سفارش انتخاب نشده است.')
               orderNumberAccess = false;
             }
           }
@@ -303,16 +294,16 @@ export default {
             if (this.images && this.images.length) {
               photoAccess = true
             } else {
-              useNuxtApp().$toast.error('تصویری از محصول آپلود نشده است..', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-              });
-
+              errorText.push('تصویری از محصول آپلود نشده است.')
               photoAccess = false;
             }
           }
         });
+        if (errorText.length) {
+          this.$store.commit('set_snackBar', {
+            show:true , text:errorText, status:'error' , type:'array'
+          })
+        }
       }
 
       if (skuAccess === true && photoAccess === true && orderNumberAccess === true) {
@@ -359,50 +350,34 @@ export default {
 
 
               this.$router.push(`/user/ticket`);
+              this.$store.commit('set_snackBar', {
+                show:true , text:'تیکت شما با موفقیت ایجاد شد.', status:'success'
+              })
 
-              useNuxtApp().$toast.success('تیکت شما با موفقیت ایجاد شد.', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-              });
             })
             .catch((err) => {
+              const errorText = []
               if (err.response?.data?.details?.order_number) {
-                useNuxtApp().$toast.error(err.response?.data?.details?.order_number, {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
-                });
+                errorText.push(err.response?.data?.details?.order_number)
               }
               if (err.response?.data?.details?.seller_sku_id) {
-                useNuxtApp().$toast.error(err.response?.data?.details?.seller_sku_id, {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
-                });
+                errorText.push(err.response?.data?.details?.seller_sku_id)
               }
               if (err.response?.data?.details?.files_id) {
-                useNuxtApp().$toast.error(err.response?.data?.details?.files_id, {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
-                });
+                errorText.push(err.response?.data?.details?.files_id)
               }
 
               if (err.response?.data?.details?.topic_id) {
-                useNuxtApp().$toast.error(err.response?.data?.details?.topic_id, {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
-                });
+                errorText.push(err.response?.data?.details?.topic_id)
               }
 
               if (err.response?.data?.message) {
-                useNuxtApp().$toast.error(err.response?.data?.message, {
-                  rtl: true,
-                  position: 'top-center',
-                  theme: 'dark'
-                });
+                errorText.push(err.response?.data?.details?.order_number)
+              }
+              if (errorText.length){
+                this.$store.commit('set_snackBar', {
+                  show:true , text:errorText, status:'error' , type:'array'
+                })
               }
 
             }).finally(() => {

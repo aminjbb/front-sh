@@ -152,20 +152,15 @@ export default {
                     },
                 })
                 .then((response) => {
-
-                    useNuxtApp().$toast.success('آدرس شما با موفقیت حذف شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'آدرس شما با موفقیت حذف شد.' , status:'success'
+                  })
                 })
                 .catch((err) => {
                     auth.checkAuthorization(err.response)
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                  })
                 }).finally(() => {
                     this.$refs[`deleteAddress${address.id}`].loading = false;
                     this.$refs[`deleteAddress${address.id}`].dialog = false;

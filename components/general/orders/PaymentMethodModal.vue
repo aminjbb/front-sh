@@ -48,7 +48,7 @@
 <template v-if="view === 'mobile'">
     <v-bottom-sheet v-model="sheet" height="auto">
         <div class="pt-4 px-3 pb-5 bg-white h-100 bottom-sheet-br">
-            <header class="d-flex justify-space-between align-center pb-1">
+            <header class="d-flex justify-space-between align-center pb-1 mb-6">
                 <span class="t16 w700 text-black">
                     روش پرداخت
                 </span>
@@ -59,7 +59,6 @@
             </header>
 
             <div>
-
                 <generalOrdersPaymentMethod :orderId="orderId" ref="paymentStep" @selectedPayment="getPayment" />
             </div>
 

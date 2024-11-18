@@ -37,7 +37,7 @@
                         <div class="product-category-slider__item__image">
                           <generalKitsImageSimage :src="item.image_url"  :title="item.label"  :alt="item.name" width="76" height="76"  />
                         </div>
-                        <h2 class="t14 w700 mt-3 text-sGrayLighten2 text-center product-category-slider__item__title">{{item?.label}}</h2>
+                        <p class="t14 w700 mt-3 text-sGrayLighten2 text-center product-category-slider__item__title">{{item?.label}}</p>
                     </a>
                 </swiper-slide>
             </swiper>

@@ -17,10 +17,10 @@
         </div>
     </header>
     
-    <div class="d-flex align-center order-card__info" :class=" screenType === 'desktop' ? 'mb-5' : 'mb-1'">
+    <div v-if=" screenType === 'desktop'" class="d-flex align-center order-card__info mb-5">
         <div v-if="content.receiver_name" class="d-flex align-center">
             <v-icon icon="mdi-account-box-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
-            <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده:{{ content.receiver_name }}</span>
+            <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده: {{ content.receiver_name }}</span>
         </div>
         <div v-if="content?.submit_date_fa" class="d-flex align-center">
             <v-icon icon="mdi-calendar-month-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
@@ -29,6 +29,21 @@
         <div v-if="content.sending_method" class="d-flex align-center">
             <v-icon icon="mdi-truck-fast-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
             <span class="text-sGrayLighten2 t12 w500">نحوه ارسال: {{ getWayText(content.sending_method) }}</span>
+        </div>
+    </div>
+
+    <div v-else class="d-flex align-center order-card__info mb-1">
+        <div v-if="content?.submit_date_fa" class="d-flex align-center">
+            <v-icon icon="mdi-calendar-month-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
+            <span class="text-sGrayLighten2 t12 w500 number-font">{{ content?.submit_date_fa }}</span>
+        </div>
+        <div v-if="content.sending_method" class="d-flex align-center">
+            <v-icon icon="mdi-truck-fast-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
+            <span class="text-sGrayLighten2 t12 w500">نحوه ارسال: {{ getWayText(content.sending_method) }}</span>
+        </div>
+        <div v-if="content.receiver_name" class="d-flex align-center">
+            <v-icon icon="mdi-account-box-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
+            <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده: {{ content.receiver_name }}</span>
         </div>
     </div>
 
@@ -57,20 +72,20 @@
                 <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white mb-4" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">
                     <span class="text-primary t12 w700">مشاهده جزئیات</span>
                 </v-btn>
-<!--                <div class="w-100 d-flex align-center justify-space-between w-100">-->
-<!--                    <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>-->
-<!--                    <v-btn :loading="receivedLoading" class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-success s-btn&#45;&#45;bg-white" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">-->
-<!--                        <span class="text-sSuccess t12 w700">بلی</span>-->
-<!--                    </v-btn>-->
-<!--                </div>-->
+                <div class="w-100 d-flex align-center justify-space-between w-100">
+                    <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
+                    <v-btn :loading="receivedLoading" class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">
+                        <span class="text-sSuccess t12 w700">بلی</span>
+                    </v-btn>
+                </div>
             </div>
         </template>
 
         <template v-else-if="content.status === 'received'">
             <div class="d-flex align-center w-100 justify-end">
-<!--                <v-btn class="s-btn s-btn&#45;&#45;fill s-btn&#45;&#45;fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content?.id}/return`">-->
-<!--                    <span class="text-white t12 w700">مرجوع سفارش</span>-->
-<!--                </v-btn>-->
+                <!-- <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content?.id}/return`">
+                    <span class="text-white t12 w700">مرجوع سفارش</span>
+                </v-btn> -->
 
                 <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
                     <span class="text-primary t12 w700">مشاهده جزئیات</span>
@@ -105,7 +120,7 @@
         <template v-else-if="content.status === 'pre_progress'">
             <div class="d-flex align-center w-100 justify-end">
                 <v-btn class="s-btn s-btn--fill s-btn--fill-primary ml-3" :width="screenType === 'desktop' ? '200' : '49%'" :href="`/user/order/${content.id}/cancel`">
-                    <span class="text-white t12 w700">لفو سفارش</span>
+                    <span class="text-white t12 w700">لغو سفارش</span>
                 </v-btn>
 
                 <v-btn class="s-btn s-btn--outline s-btn--outline-primary s-btn--bg-white" :width="screenType === 'desktop' ? '200' : '48%'" :href="`/user/order/${content?.id}`">
@@ -375,11 +390,10 @@ export default {
                     this.$emit('updateList', true)
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
+
                 }).finally(() => {
                     this.receivedLoading = false;
                 });

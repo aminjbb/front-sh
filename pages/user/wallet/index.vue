@@ -96,11 +96,9 @@ export default {
             if(newVal.status === 'successful'){
                 this.$refs.resultModal.openModal();
             }else{
-                useNuxtApp().$toast.error(this.transactionErrorMassage, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:this.transactionErrorMassage , status:'error'
+              })
             }
         }
     },

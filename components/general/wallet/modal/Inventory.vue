@@ -340,19 +340,14 @@ export default {
                 })
                 .then((response) => {
                     this.closeModal();
-
-                    useNuxtApp().$toast.success('درخواست برداشت از کیف پول در صف انجام قرار گرفت.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'درخواست برداشت از کیف پول در صف انجام قرار گرفت.' , status:'success'
+                  })
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
                 }).finally(() => {
                     this.loading = false;
                 });

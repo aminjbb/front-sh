@@ -44,7 +44,7 @@
                             <div>
                                 <div class="order-details s-border s-border--bottom">
                                     <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
-                                        <span class="t12 w700 text-sGrayLighten2">وضعیت سفارش : </span>
+                                        <span class="t12 w700 text-sGrayLighten2">وضعیت سفارش: </span>
 
                                         <div class="order-details__status t10 w700" :class="[getStatusBg(userOrder?.status), getStatusColor(userOrder?.status)]">
                                             <v-icon :color="getStatusColor(userOrder.status)" :icon="getIcon(userOrder?.status)" class="ml-1" />
@@ -53,7 +53,7 @@
                                     </div>
 
                                     <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
-                                        <span class="t12 w700 text-sGrayLighten2">کد سفارش : </span>
+                                        <span class="t12 w700 text-sGrayLighten2">کد سفارش: </span>
 
                                         <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.order_number }}</span>
                                     </div>
@@ -61,19 +61,19 @@
 
                                 <div class="order-details s-border s-border--bottom" :class="screenType === 'desktop' ? 'pt-7' : 'pt-5'">
                                     <div v-if="userOrder && userOrder?.receiver_name" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
-                                        <span class="t12 w700 text-sGrayLighten2">تحویل گیرنده : </span>
+                                        <span class="t12 w700 text-sGrayLighten2">تحویل گیرنده: </span>
 
                                         <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_name }}</span>
                                     </div>
 
                                     <div v-if="userOrder && userOrder?.receiver_mobile" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
-                                        <span class="t12 w700 text-sGrayLighten2">شماره تماس : </span>
+                                        <span class="t12 w700 text-sGrayLighten2">شماره تماس: </span>
 
                                         <span class="t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_mobile }}</span>
                                     </div>
 
                                     <div v-if="userOrder && userOrder?.receiver_address" class="pb-7">
-                                        <span class="d-block t14 w700 text-sGrayLighten2 mb-3">آدرس :</span>
+                                        <span class="d-block t14 w700 text-sGrayLighten2 mb-3">آدرس:</span>
 
                                         <span class="d-block t12 fw700 text-sGrayDarken2 number-font">{{ userOrder?.receiver_address }}</span>
                                     </div>
@@ -81,7 +81,7 @@
 
                                 <div class="order-details" :class="screenType === 'desktop' ? 'pt-7' : 'pt-5'">
                                     <div v-if="userOrder && userOrder?.status" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
-                                        <span class="t12 w700 text-sGrayLighten2">مبلغ سفارش : </span>
+                                        <span class="t12 w700 text-sGrayLighten2">مبلغ سفارش: </span>
 
                                         <span class="t12 fw700 text-sGray number-font">
                                             {{splitChar(Number(String(userOrder.total_price).slice(0, -1)))}}
@@ -99,7 +99,7 @@
                                     </div>
 
                                     <div v-if="userOrder && userOrder?.order_number" class="d-flex align-center justify-space-between" :class="screenType === 'desktop' ? 'pb-7' : 'pb-5'">
-                                        <span class="t12 w700 text-sGrayLighten2">هزینه ارسال : </span>
+                                        <span class="t12 w700 text-sGrayLighten2">هزینه ارسال: </span>
 
                                         <span class="t12 fw700 text-sGray number-font">
                                             <template v-if="userOrder.sending_price && userOrder.sending_price !== 0">
@@ -126,13 +126,13 @@
 <!--                                        </div>-->
 <!--                                    </template>-->
 
-<!--                                    <template v-else-if="userOrder?.status === 'received'">-->
-<!--                                        <div class="d-flex align-center w-100 justify-center">-->
-<!--                                            <v-btn class="s-btn s-btn&#45;&#45;fill s-btn&#45;&#45;fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" :href="`/user/order/${userOrder?.id}/return`">-->
-<!--                                                <span class="text-white t12 w700">مرجوع سفارش</span>-->
-<!--                                            </v-btn>-->
-<!--                                        </div>-->
-<!--                                    </template>-->
+                                    <!-- <template v-else-if="userOrder?.status === 'received'">
+                                        <div class="d-flex align-center w-100 justify-center">
+                                            <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" :href="`/user/order/${userOrder?.id}/return`">
+                                                <span class="text-white t12 w700">مرجوع سفارش</span>
+                                            </v-btn>
+                                        </div>
+                                    </template> -->
 
                                     <template v-if="userOrder?.status === 'payment_out_date' || userOrder?.status=== 'cancelled'">
                                         <div class="d-flex align-center w-100 justify-center">
@@ -153,7 +153,7 @@
                                     <template v-else-if="userOrder?.status === 'pre_progress'">
                                         <div class="d-flex align-center w-100 justify-center">
                                             <v-btn class="s-btn s-btn--fill s-btn--fill-primary" :width="screenType === 'desktop' ? '50%' : '100%'" :href="`/user/order/${userOrder?.id}/cancel`">
-                                                <span class="text-white t12 w700">لفو سفارش</span>
+                                                <span class="text-white t12 w700">لغو کل سفارش</span>
                                             </v-btn>
                                         </div>
                                     </template>
@@ -177,7 +177,7 @@
                                     <span class="t10 fw400 number-font text-sGray">{{ userOrder?.details.length }} محصول</span>
                                 </header>
 
-                                <GeneralOrdersDetailsCard v-for="order in userOrder?.details" :key="`order${order.id}`" :content="order" class="mb-4" />
+                                <GeneralOrdersDetailsCard v-for="order in userOrder?.details" :key="`order${order.id}`" :content="order" class="mb-4" :orderId="userOrder?.id" :status="userOrder?.status"/>
                             </div>
                         </div>
                     </v-card>
@@ -437,7 +437,6 @@ export default {
          * @param {*} id 
          */
         receivedOrder() {
-            console.log('wcwec',this.userOrder ?.id);
             this.receivedLoading = true;
 
             const formData = new FormData()
@@ -461,11 +460,13 @@ export default {
                     this.getOrder();
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
+
                 }).finally(() => {
                     this.receivedLoading = false;
                 });

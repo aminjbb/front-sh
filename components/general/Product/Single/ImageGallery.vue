@@ -272,17 +272,13 @@ export default {
         const doCopy = () => {
             copyText(`https://shavaz.com${route.path}`, undefined, (error, event) => {
                 if (error) {
-                    useNuxtApp().$toast.error('کپی لینک با مشکل مواجه شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کپی لینک با مشکل مواجه شد.' , status:'error'
+                  })
                 } else {
-                    useNuxtApp().$toast.success('لینک  با موفقیت کپی شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'لینک  با موفقیت کپی شد.' , status:'success'
+                  })
                 }
             })
         }
@@ -360,11 +356,9 @@ export default {
                   this.deleteFavorite()
                 }
             } else {
-                useNuxtApp().$toast.error('کاربر محترم ابتدا لاگین کنید.', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'کاربر محترم ابتدا لاگین کنید.' , status:'error'
+              })
             }
 
         },
@@ -384,11 +378,9 @@ export default {
                 })
                 .then((response) => {
                     this.getPdpData();
-                    useNuxtApp().$toast.success('محصول با موفقت به لیست علاقه مندی ها اضافه شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'محصول با موفقت به لیست علاقه مندی ها اضافه شد.', status:'success'
+                  })
                 })
                 .catch((err) => {
 
@@ -406,11 +398,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    useNuxtApp().$toast.success('محصول با موفقت از لیست علاقه مندی ها حذف شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'محصول با موفقت از لیست علاقه مندی ها حذف شد.' , status:'success'
+                  })
                 })
                 .catch((err) => {
 

@@ -124,11 +124,10 @@ export default {
                     },
                 })
                 .then((response) => {
-                    useNuxtApp().$toast.success('پاسخ شما با موفقیت ارسال شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'پاسخ شما با موفقیت ارسال شد.', status:'success'
+                  })
+
                     this.$emit('updateData', true);
                     this.form = {
                         content: null,
@@ -138,11 +137,9 @@ export default {
                     this.$refs.imageUploader.files = [];
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
                 }).finally(() => {
                     this.loading = false;
                     this.dialog = false

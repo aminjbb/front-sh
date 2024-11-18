@@ -96,11 +96,9 @@ export default {
                     Authorization: `Bearer ${this.userToken}`,
                 },
             }).then((response) => {
-                useNuxtApp().$toast.success('مشخصات با موفقیت ثبت شد', {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'مشخصات با موفقیت ثبت شد' , status:'success'
+              })
                 this.dialog = false;
                 this.fetchUserProfile();
                 this.$emit('profileSubmitted')

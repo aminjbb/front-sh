@@ -75,11 +75,9 @@ export default {
                 .catch((err) => {
 
                     auth.checkAuthorization(err.response)
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                  })
                 }).finally(() => {
                     this.$refs.generalModalsDelete.dialog = false
                     this.$refs.generalModalsDelete.loading = false

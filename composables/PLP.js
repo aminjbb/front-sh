@@ -179,13 +179,13 @@ export default function setup() {
                     }
                 }
 
-                if(route.name == 'promotion-slug' || route.name =='search' || route.name =='sku-group-slug'){
+                if( route.name =='sku-group-slug'){
                     productList.value = response1;
 
-                    if(route.name == 'promotion-slug'){
-                        plpTitle.value = response1.data.data.page.meta_title
-                        description.value = response1.data.data.page.meta_description;
-                    }
+                    // if(route.name == 'promotion-slug'){
+                    //     plpTitle.value = response1.data.data.page.meta_title
+                    //     description.value = response1.data.data.page.meta_description;
+                    // }
                 }
 
             } catch (error) {

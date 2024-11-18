@@ -1,13 +1,13 @@
 <template>
-<section v-if="content" class="order-card order-card--gift mb-6" :class="screenType === 'desktop' ? 'pt-2' : ''">
+<section v-if="content" class="order-card order-card--gift mb-4" :class="screenType === 'desktop' ? 'pt-2' : ''">
     <div class="d-flex justify-space-between align-center mb-4">
         <div class="d-flex align-center">
             <img src="~/assets/images/gift.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '36' : '24'" :height="screenType === 'desktop' ? '36' : '24'">
             <span class="w700 text-sGrayDarken2 mx-1" :class="screenType === 'desktop' ? 't18' : 't12'">سفارش هدیه ی</span>
             <img src="~/assets/images/shavaz-logo2.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '54' : '31'" :height="screenType === 'desktop' ? '26' : '15'">
-       </div>
+        </div>
 
-       <img src="~/assets/images/free-badge.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '70' : '61'" :height="screenType === 'desktop' ? '33' : '29'">
+        <img src="~/assets/images/free-badge.svg" alt="Shavaz 404 error image" :width="screenType === 'desktop' ? '70' : '61'" :height="screenType === 'desktop' ? '33' : '29'">
     </div>
 
     <header class="d-flex justify-space-between align-center" :class="screenType === 'desktop' ? 'mb-4' : 'mb-2'">
@@ -25,7 +25,7 @@
     <div class="d-flex align-center order-card__info" :class=" screenType === 'desktop' ? 'mb-5' : 'mb-1'">
         <div v-if="content.receiver_name" class="d-flex align-center">
             <v-icon icon="mdi-account-box-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
-            <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده:{{ content.receiver_name }}</span>
+            <span class="text-sGrayLighten2 t12 w500 number-font">تحویل گیرنده: {{ content.receiver_name }}</span>
         </div>
         <div v-if="content?.submit_date_fa" class="d-flex align-center">
             <v-icon icon="mdi-calendar-month-outline" color="sGrayLighten2" size="x-small" class="ml-1"></v-icon>
@@ -38,32 +38,26 @@
     </div>
 
     <div class="d-flex align-center justify-space-between mb-4 order-card__contents">
-       <div class="scroll--x order-card__items d-flex align-center">
+        <div class="scroll--x order-card__items d-flex align-center">
             <a class="order-card__item ov-h">
                 <img src="~/assets/images/order-gift-image.png" title="کاهای هدیه" alt="کالای هدیه" width="79" height="80" />
             </a>
-       </div>
+        </div>
 
        <div class="t14 w700 number-font fw700 text-sGray d-flex justify-end align-center">
             0  <svgToman/>
-       </div>
+        </div>
     </div>
 
     <div class="order-card__action justify-end d-flex w-100">
-        <template v-if="content.status === 'processing' || content.status === 'returned'" >
-<!--            <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-primary s-btn&#45;&#45;bg-white" :width="screenType === 'desktop' ? '200' : '100%'" :href="`/user/order/${content?.id}`">-->
-<!--                <span class="text-primary t12 w700">مشاهده جزئیات</span>-->
-<!--            </v-btn>-->
+        <template v-if="content.status === 'sending'">
+            <div class="w-100 d-flex align-center justify-space-between w-100">
+                <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>
+                <v-btn class="s-btn s-btn--outline s-btn--outline-success s-btn--bg-white" :loading="receivedLoading" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">
+                    <span class="text-sSuccess t12 w700">بلی</span>
+                </v-btn>
+            </div>
         </template>
-
-<!--        <template v-else-if="content.status === 'sending'">-->
-<!--            <div class="w-100 d-flex align-center justify-space-between w-100">-->
-<!--                <span class="t12 w700 text-sGray">آیا سفارش به دست شما رسیده ؟</span>-->
-<!--                <v-btn class="s-btn s-btn&#45;&#45;outline s-btn&#45;&#45;outline-success s-btn&#45;&#45;bg-white" :loading="receivedLoading" :width="screenType === 'desktop' ? '200' : '48%'" @click="receivedOrder(content?.id)">-->
-<!--                    <span class="text-sSuccess t12 w700">بلی</span>-->
-<!--                </v-btn>-->
-<!--            </div>-->
-<!--        </template>-->
     </div>
         
 </section>
@@ -135,7 +129,7 @@ export default {
         /**
          * Get Way text
          */
-         getWayText(status) {
+            getWayText(status) {
 
             if (status == 'post') {
                 return 'پست';
@@ -190,7 +184,7 @@ export default {
         /**
          * Get status text
          */
-         getStatusText(status) {
+            getStatusText(status) {
 
             if (status == 'processing') {
                 return 'درحال پردازش';
@@ -228,7 +222,7 @@ export default {
         /**
          * Get status text
          */
-         getStatusBg(status) {
+            getStatusBg(status) {
             const text = '';
 
             if (status == 'processing') {
@@ -266,7 +260,7 @@ export default {
         /**
          * Get status text
          */
-         getStatusColor(status) {
+            getStatusColor(status) {
 
             if (status == 'processing') {
                 return 'text-sWarning';
@@ -303,11 +297,11 @@ export default {
             return 'text-sGray';
         },
 
-         /**
+            /**
          * Received order
          * @param {*} id 
          */
-         receivedOrder(id){
+            receivedOrder(id){
             console.log("🚀 ~ receivedOrder ~ id:", id)
             this.receivedLoading = true;
 
@@ -325,11 +319,10 @@ export default {
                     this.$emit('updateList', true)
                 })
                 .catch((err) => {
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
+
                 }).finally(() => {
                     this.receivedLoading = false;
                 });
@@ -396,9 +389,9 @@ export default {
             width: 30%;
             flex: 0 0 30%;
 
-             > svg{
+                > svg{
                 margin-right: 2px;
-             }
+                }
         }
     }
 
@@ -455,9 +448,10 @@ export default {
         }
 
         @include gbp (0, 768) {
-           flex-wrap:wrap !important
+            flex-wrap:wrap !important
         }
         
     }
 }
 </style>
+    

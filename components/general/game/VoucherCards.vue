@@ -61,18 +61,13 @@ export default {
         const doCopy = (code) => {
             copyText(code, undefined, (error, event) => {
                 if (error) {
-                  console.log(error)
-                    useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کپی کد با مشکل مواجه شد.' , status:'error'
+                  })
                 } else {
-                    useNuxtApp().$toast.success('کد  با موفقیت کپی شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کد  با موفقیت کپی شد.' , status:'success'
+                  })
                 }
             })
         }

@@ -74,18 +74,13 @@ export default {
         const doCopy = (code) => {
             copyText(code, undefined, (error, event) => {
                 if (error) {
-                    console.log(error)
-                    useNuxtApp().$toast.error('کپی کد با مشکل مواجه شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کپی کد با مشکل مواجه شد.' , status:'error'
+                  })
                 } else {
-                    useNuxtApp().$toast.success('کد  با موفقیت کپی شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'کد  با موفقیت کپی شد.' , status:'success'
+                  })
                 }
             })
         }
@@ -141,11 +136,10 @@ export default {
                 this.voucher_code = user?.voucher_code
 
             } else {
-              useNuxtApp().$toast.error('با این شماره قبلا سفارش ثبت شده است.', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-              });
+              this.$store.commit('set_snackBar', {
+                show:true , text:'با این شماره قبلا سفارش ثبت شده است.', status:'error'
+              })
+
                 this.dialog = false;
                 window.location.reload();
             }

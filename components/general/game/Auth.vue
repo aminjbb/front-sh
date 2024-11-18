@@ -197,11 +197,9 @@ export default {
                 }
             } catch (error) {
                 console.error('Send OTP error:', error);
-                useNuxtApp().$toast.error(error ?.response ?.data ?.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:error ?.response ?.data ?.message , status:'error'
+              })
             } finally {
                 this.loading = false;
             }
@@ -270,11 +268,9 @@ export default {
                     catch (e) {
 
                     }
-                    useNuxtApp().$toast.success(response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:response.data.message, status:'success'
+                  })
 
                     this.$emit('logined', true);
                 }

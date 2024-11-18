@@ -6,6 +6,7 @@ import {
 } from 'vue';
 import axios from 'axios'
 import auth from "~/middleware/auth.js";
+import {useStore} from "vuex";
 
 export default function setup() {
     const userAddress = ref([]);
@@ -21,6 +22,7 @@ export default function setup() {
     const userToken = useCookie('userToken')
     const route = useRoute()
     const randomProducts = ref([]);
+    const store = useStore()
 
     /**
      * Get user address
@@ -37,11 +39,10 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
+
             });
     };
 
@@ -101,11 +102,10 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
+
             });
     };
 
@@ -124,11 +124,9 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 
@@ -147,11 +145,10 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
+
             });
     };
 
@@ -170,11 +167,9 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 
@@ -193,11 +188,9 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 

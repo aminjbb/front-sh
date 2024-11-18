@@ -141,11 +141,9 @@ export default {
 
         addReport() {
             this.activeButton = true;
-            useNuxtApp().$toast.success('کاربر گرامی، گزارش شما با موفقیت ارسال شد.', {
-                rtl: true,
-                position: 'top-center',
-                theme: 'dark'
-            });
+          this.$store.commit('set_snackBar', {
+            show:true , text:'کاربر گرامی، گزارش شما با موفقیت ارسال شد.' , status:'success'
+          })
             this.dialog = false;
         },
     },

@@ -482,11 +482,9 @@ export default {
                 }
             
             } catch (error) {
-                useNuxtApp().$toast.error(error ?.response ?.data ?.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+              this.$store.commit('set_snackBar', {
+                show:true , text:error ?.response ?.data ?.message, status:'error'
+              })
             } finally {
                 this.loading = false;
             }
@@ -542,11 +540,10 @@ export default {
                     }
 
                     if (!this.showSuccess) {
-                        useNuxtApp().$toast.success(response.data.message, {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:response.data.message, status:'success'
+                      })
+
                     }
 
                     this.logined = true;
@@ -661,11 +658,9 @@ export default {
                     },
                 })
                 .then((response) => {
-                    useNuxtApp().$toast.success('آدرس شما با موفقیت ایجاد شد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'آدرس شما با موفقیت ایجاد شد.', status:'error'
+                  })
                     this.getUserAddress2(this.tockenCookie);
                     this.showAddress = true;
                     this.showAddAddress = false;
@@ -683,11 +678,10 @@ export default {
                 })
                 .catch((err) => {
                     auth.checkAuthorization(err.response)
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message, status:'error'
+                  })
+
                 }).finally(() => {
                     this.loading = false
                 });

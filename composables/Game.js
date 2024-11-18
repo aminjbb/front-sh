@@ -5,6 +5,7 @@ import {
     ref
 } from 'vue';
 import axios from 'axios'
+import {useStore} from "vuex";
 
 export default function setup() {
     const runtimeConfig = useRuntimeConfig()
@@ -13,6 +14,7 @@ export default function setup() {
     const prize = ref({});
     const luckyWheel = ref({})
     const turnPerUser = ref(0)
+    const store = useStore()
 
     /**
      * Get Lucky wheel
@@ -25,11 +27,9 @@ export default function setup() {
                 luckyWheel.value = response.data.data?.prizes;
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 
@@ -48,11 +48,9 @@ export default function setup() {
             })
             .catch((err) => {
                 if (err.response.status !=401)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                    store.commit('set_snackBar', {
+                        show:true , text:err.response.data.message , status:'error'
+                    })
             });
     };
 
@@ -96,11 +94,9 @@ export default function setup() {
                 })
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 

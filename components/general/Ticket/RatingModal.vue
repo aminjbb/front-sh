@@ -102,31 +102,27 @@ export default {
                     },
                 })
                 .then((response) => {
-                    useNuxtApp().$toast.success('امتیاز شما با موفقیت ثبت شد!', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'امتیاز شما با موفقیت ثبت شد!', status:'success'
+                  })
+
                     this.$emit('updateData', true);
                     this.form = {
                         content: null,
                     }
                 })
                 .catch((err) => {
-                  console.log(err.response.data.message)
                   if (err.response.data.details){
-                    useNuxtApp().$toast.error(err.response.data.details.rate[0], {
-                      rtl: true,
-                      position: 'top-center',
-                      theme: 'dark'
-                    });
+                    this.$store.commit('set_snackBar', {
+                      show:true , text:err.response.data.details.rate[0], status:'error'
+                    })
+
                   }
                   else if (err.response.data.message){
-                    useNuxtApp().$toast.error(err.response.data.message, {
-                      rtl: true,
-                      position: 'top-center',
-                      theme: 'dark'
-                    });
+                    this.$store.commit('set_snackBar', {
+                      show:true , text:err.response.data.message, status:'error'
+                    })
+
                   }
 
                 }).finally(() => {

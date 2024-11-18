@@ -391,19 +391,15 @@ export default {
           })
           .then((response) => {
             this.dialog = false;
-            useNuxtApp().$toast.success('آدرس شما با موفقیت ایجاد شد.', {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
+            this.$store.commit('set_snackBar', {
+              show:true , text:'آدرس شما با موفقیت ایجاد شد.' , status:'success'
+            })
           })
           .catch((err) => {
             auth.checkAuthorization(err.response)
-            useNuxtApp().$toast.error(err.response.data.message, {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
+            this.$store.commit('set_snackBar', {
+              show:true , text:err.response.data.message , status:'error'
+            })
           }).finally(() => {
         this.loading = false
         this.getUserAddress()

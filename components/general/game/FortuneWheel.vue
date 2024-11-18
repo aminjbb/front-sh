@@ -123,11 +123,9 @@ export default {
     methods: {
       doCopy(code){
         navigator.clipboard.writeText(code);
-        useNuxtApp().$toast.success('کد  با موفقیت کپی شد.', {
-          rtl: true,
-          position: 'top-center',
-          theme: 'dark'
-        });
+        this.$store.commit('set_snackBar', {
+          show:true , text:'کد  با موفقیت کپی شد.' , status:'success'
+        })
       },
         /**
          * Calculate wheel children width and position
@@ -175,11 +173,9 @@ export default {
             this.dialog = false;
           }
           else {
-            useNuxtApp().$toast.error('تعداد دفعات مجاز در بازی به پایان رسیده.', {
-              rtl: true,
-              position: 'top-center',
-              theme: 'dark'
-            });
+            this.$store.commit('set_snackBar', {
+              show:true , text:'تعداد دفعات مجاز در بازی به پایان رسیده.' , status:'error'
+            })
           }
 
         },

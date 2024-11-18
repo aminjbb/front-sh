@@ -1,8 +1,9 @@
 <template>
   <div>
-    <NuxtLayout>
-      <NuxtPage/>
-    </NuxtLayout>
+      <NuxtLayout>
+          <NuxtPage />
+          <generalKitsSnakbarShToast/>
+      </NuxtLayout>
   </div>
 </template>
 

@@ -229,6 +229,10 @@ $shadowParent : 's-shadow';
         border-color: #4CAF50 !important;
     }
 
+    &--outline-disabled{
+        border-color: #BDBDBD !important;
+    }
+
     &--no-bg{
         background-color: transparent !important;
     }

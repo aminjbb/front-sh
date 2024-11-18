@@ -103,20 +103,16 @@ export default {
 
             if (this.file ?.size > Number(this.fileSize) || (this.file ?.type !== "image/jpeg" && this.file ?.type !== "image/jpg" && this.file ?.type !== "image/png" && this.file ?.type !== "video/mp4" && this.file ?.type !== "video/mkv")) {
                 if (this.file ?.size > Number(this.fileSize)) {
-                    useNuxtApp().$toast.error('حجم فایل صحیح نمی‌باشد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'حجم فایل صحیح نمی‌باشد.' , status:'error'
+                  })
                     this.uploadLoading = false;
                 }
 
                 if (this.file ?.type !== "image/jpeg" && this.file ?.type !== "image/jpg" && this.file ?.type !== "image/png" && this.file ?.type !== "video/mp4" && this.file ?.type !== "video/mkv") {
-                    useNuxtApp().$toast.error('فرمت فایل صحیح نمی‌باشد.', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                  this.$store.commit('set_snackBar', {
+                    show:true , text:'فرمت فایل صحیح نمی‌باشد.' , status:'error'
+                  })
                     this.uploadLoading = false;
                 }
             } else {
@@ -130,11 +126,9 @@ export default {
                         },
                     })
                     .then((response) => {
-                        useNuxtApp().$toast.success("فایل مورد نظر با موفقیت ذخیره شد.", {
-                            rtl: true,
-                            position: 'top-center',
-                            theme: 'dark'
-                        });
+                      this.$store.commit('set_snackBar', {
+                        show:true , text:'فایل مورد نظر با موفقیت ذخیره شد.' , status:'success'
+                      })
 
                         this.$emit('getImage', response ?.data ?.data ?.data);
                         this.uploadedFiles.push(response ?.data ?.data ?.data);

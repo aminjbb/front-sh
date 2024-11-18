@@ -5,6 +5,7 @@ import {ref} from 'vue';
 import axios from 'axios'
 import {useRoute , useRouter} from "vue-router";
 import auth from '@/middleware/auth';
+import {useStore} from "vuex";
 
 export default function setup() {
     const orderList = ref([]);
@@ -20,6 +21,7 @@ export default function setup() {
     const route = useRoute();
     const router = useRouter();
     const trackingDetails = ref([]);
+    const store = useStore()
 
     /**
      * Get user order list
@@ -95,6 +97,40 @@ export default function setup() {
     };
 
     /**
+     * Get user one order by Id
+     */
+    async function getOrder(id = null) {
+        if(id !== null){
+            axios
+            .get(runtimeConfig.public.apiBase + `/order/crud/get/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                order.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+        }else{
+            axios
+            .get(runtimeConfig.public.apiBase + `/order/crud/get/${route.params.id}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken.value}`,
+                },
+            })
+            .then((response) => {
+                order.value = response
+            })
+            .catch((err) => {
+                auth.checkAuthorization(err.response)
+            });
+        }
+       
+    };
+
+    /**
      * Get user one order
      */
     async function getOrderById(id) {
@@ -128,21 +164,17 @@ export default function setup() {
             })
             .then((response) => {
                 if (accept === 1) {
-                    useNuxtApp().$toast.success('درخواست شما با موفقیت ثبت شد', {
-                        rtl: true,
-                        position: 'top-center',
-                        theme: 'dark'
-                    });
+                    store.commit('set_snackBar', {
+                        show:true , text:'سفارش با موفقیت لغو شد' , status:'success'
+                    })
                     router.push('/user/order')
                 }
                 orderReturnOrRejectObject.value = response
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
                 auth.checkAuthorization(err.response)
             }).finally(() => {
             loading.value = false
@@ -167,11 +199,10 @@ export default function setup() {
             })
             .catch((err) => {
                 auth.checkAuthorization(err.response)
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
+
             });
     };
 
@@ -233,11 +264,9 @@ export default function setup() {
 
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             });
     };
 
@@ -255,11 +284,9 @@ export default function setup() {
             .then((response) => {
             })
             .catch((err) => {
-                useNuxtApp().$toast.error(err.response.data.message, {
-                    rtl: true,
-                    position: 'top-center',
-                    theme: 'dark'
-                });
+                store.commit('set_snackBar', {
+                    show:true , text:err.response.data.message , status:'error'
+                })
             }).finally(() => {
             reCreateOrderLoading.value = false
         });
