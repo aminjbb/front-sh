@@ -6,31 +6,34 @@
     </div>
 
     <div v-show="!loading">
-        <!--  desktop size -->
-        <div v-if="screenType === 'desktop'">
-            <desktopHomeMainSlider  :items="responseDot(1)" />
-            <v-container class="pt-0">
-                <desktopHomeSurprise  class="mt-4" :content="responseDot(2)" />
+      <!--  desktop size -->
+      <div v-if="screenType === 'desktop'">
+        <desktopHomeMainSlider :items="responseDot(1)"/>
+        <v-container class="pt-0">
+          <desktopHomeSurprise class="mt-4" :content="responseDot(2)"/>
 
           <desktopHomeCategoryList :items="responseDot(3)"/>
 
-                <desktopHomeBanner :sectionId="responseDot(4)?.id" :items="desktopBanner1" col="6" class="pt-3 mb-4" />
+          <desktopHomeBanner :sectionId="responseDot(4)?.id" :items="desktopBanner1" col="6" class="pt-3 mb-4"/>
 
           <MobileHomeSection5Slider :content="responseDot(5)"/>
 
-                <generalTabSlider home :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px" :title="titleSection6" :componentProps="tabSlider1ComponentProps" mobileMode/>
+          <generalTabSlider home :items="responseDot(6)" class="tab-slider1 mb-0" limit="12" contentWidth="1080px"
+                            :title="titleSection6" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
           <mobileHomeBrands :items="responseDot(7)" class="mb-8"/>
 
-                <desktopHomeBanner :sectionId="responseDot(8)?.id" class="mt-3" :items="desktopBanner2" col="3" />
+          <desktopHomeBanner :sectionId="responseDot(8)?.id" class="mt-3" :items="desktopBanner2" col="3"/>
 
-                <mobileHomeSection8Slider :sectionId="responseDot(9)?.id" :items="homeSkus" :title="titleSection9" class="mb-10 mt-4"/>
+          <mobileHomeSection8Slider :sectionId="responseDot(9)?.id" :items="homeSkus" :title="titleSection9"
+                                    class="mb-10 mt-4"/>
 
-                <desktopHomeBanner :sectionId="responseDot(10)?.id" :items="desktopBanner3" col="3" class="mt-5"/>
+          <desktopHomeBanner :sectionId="responseDot(10)?.id" :items="desktopBanner3" col="3" class="mt-5"/>
 
-                <generalTabSlider home :items="responseDot(11)" class="tab-slider1 mb-8 mt-4" limit="12" contentWidth="1080px" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
+          <generalTabSlider home :items="responseDot(11)" class="tab-slider1 mb-8 mt-4" limit="12" contentWidth="1080px"
+                            :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
-                <desktopHomeBanner :sectionId="responseDot(12)?.id" :items="desktopBanner4" col="4" />
+          <desktopHomeBanner :sectionId="responseDot(12)?.id" :items="desktopBanner4" col="4"/>
 
           <template v-if="homeBlog && homeBlog.length">
             <header class="pa-3 pb-5">
@@ -39,14 +42,14 @@
               </h2>
             </header>
 
-                    <v-row>
-                        <v-col cols="12" md="3" sm="6" class="px-2" v-for="(item, index) in homeBlog" :key="`blogs-${index}`">
-                            <mobileHomeBlogCard :cardId="`home-D-${responseDot(12)?.id}-${index + 1}`" :content="item" />
-                        </v-col>
-                    </v-row>
-                </template>
-            </v-container>
-        </div>
+            <v-row>
+              <v-col cols="12" md="3" sm="6" class="px-2" v-for="(item, index) in homeBlog" :key="`blogs-${index}`">
+                <mobileHomeBlogCard :cardId="`home-D-${responseDot(12)?.id}-${index + 1}`" :content="item"/>
+              </v-col>
+            </v-row>
+          </template>
+        </v-container>
+      </div>
 
       <!--  mobile size -->
       <div v-if="screenType === 'mobile'">
@@ -58,27 +61,33 @@
           <mobileHomeCategoryList :items="responseDot(3)" class="px-5"/>
         </v-container>
 
-            <mobileHomeBanner :sectionId="responseDot(4)?.id" :items="mobileBanner1" scroll class="pr-4 mt-4"/>
+        <mobileHomeBanner :sectionId="responseDot(4)?.id" :items="mobileBanner1" scroll class="pr-4 mt-4"/>
 
         <v-container class="mobile-no-padd">
           <MobileHomeSection5Slider class="mt-4" :content="responseDot(5)"/>
         </v-container>
 
-            <generalTabSlider home screenId="M" :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile" title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
+        <generalTabSlider home screenId="M" :items="responseDot(6)" class="tab-slider1 pr-4" limit="12" device="mobile"
+                          title="پیشنهاد شاواز" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
-            <mobileHomeBanner  screenId="M"  :sectionId="responseDot(8)?.id" :items="mobileBanner2" scroll class="pr-4"/>
+        <mobileHomeBanner screenId="M" :sectionId="responseDot(8)?.id" :items="mobileBanner2" scroll class="pr-4"/>
 
-             <mobileHomeBrands  screenId="M"  :items="responseDot(7)" device="mobile" class="mb-3 pr-4" />
+        <mobileHomeBrands screenId="M" :items="responseDot(7)" device="mobile" class="mb-3 pr-4"/>
 
-            <v-container>
-                <mobileHomeBanner screenId="M"  :sectionId="responseDot(10)?.id" :items="mobileBanner3" generalCol="6" col="6" device="mobile"/>
-            </v-container>
+        <v-container>
+          <mobileHomeBanner screenId="M" :sectionId="responseDot(10)?.id" :items="mobileBanner3" generalCol="6" col="6"
+                            device="mobile"/>
+        </v-container>
 
-            <mobileHomeSection8Slider screenId="M"  :sectionId="responseDot(9)?.id" :items="homeSkus" :title="titleSection9" :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"  :navigation="true"/>
+        <mobileHomeSection8Slider screenId="M" :sectionId="responseDot(9)?.id" :items="homeSkus" :title="titleSection9"
+                                  :class="homeSkus && homeSkus.length > 0 ? 'mb-5 pr-4' : ''" device="mobile"
+                                  :navigation="true"/>
 
-            <mobileHomeBanner screenId="M"  :sectionId="responseDot(12)?.id" :items="mobileBanner4" generalCol="6" col="6" scroll class="pr-4"/>
+        <mobileHomeBanner screenId="M" :sectionId="responseDot(12)?.id" :items="mobileBanner4" generalCol="6" col="6"
+                          scroll class="pr-4"/>
 
-            <generalTabSlider home screenId="M" :items="responseDot(11)" class="tab-slider1 pr-4" limit="12" device="mobile" :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
+        <generalTabSlider home screenId="M" :items="responseDot(11)" class="tab-slider1 pr-4" limit="12" device="mobile"
+                          :title="titleSection11" :componentProps="tabSlider1ComponentProps" mobileMode/>
 
         <template v-if="homeBlog && homeBlog.length">
           <div class="pr-4 blog-section blog-section--mobile mb-6">
@@ -88,13 +97,13 @@
               </h2>
             </header>
 
-                    <section class="scroll--x scroll--x--hide">
-                        <div class="d-flex align-center flex-nowrap blog-section__contents">
-                            <div v-for="(item, index) in homeBlog" :key="`blogs-${index}`" class="blog-section__content">
-                                <mobileHomeBlogCard :cardId="`home-M-${responseDot(12)?.id}-${index + 1}`" :content="item" />
-                            </div>
-                        </div>
-                    </section>
+            <section class="scroll--x scroll--x--hide">
+              <div class="d-flex align-center flex-nowrap blog-section__contents">
+                <div v-for="(item, index) in homeBlog" :key="`blogs-${index}`" class="blog-section__content">
+                  <mobileHomeBlogCard :cardId="`home-M-${responseDot(12)?.id}-${index + 1}`" :content="item"/>
+                </div>
+              </div>
+            </section>
           </div>
         </template>
       </div>

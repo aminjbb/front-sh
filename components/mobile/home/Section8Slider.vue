@@ -97,10 +97,7 @@ export default {
        /**
          * device
          */
-        sectionId: {
-            type: String,
-            default: ""
-        },
+        sectionId: '',
         /**
          * screenId
          */

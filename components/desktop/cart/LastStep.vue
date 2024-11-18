@@ -206,7 +206,7 @@ export default {
           catch (e) {
             
           }
-          this.localStorage.setItem('tokenPurchase', this.$route.query.token)
+          localStorage.setItem('tokenPurchase', this.$route.query.token)
 
         }
         else {
@@ -250,7 +250,7 @@ export default {
           catch (e) {
             
           }
-          this.localStorage.setItem('tokenPurchase', this.$route.query.token)
+          localStorage.setItem('tokenPurchase', this.$route.query.token)
 
         }
       }
@@ -279,7 +279,6 @@ export default {
             //     this.sendInfoToTakhfifan(this.order?.data?.data) //Call Takhfifan code
             //     this.umSource = 'Takhfifan';
             // }
-
             if (this.alToken && this.alToken !== null && this.alToken !== '') {
               this.sendInfoToTaAffilinks(this.order?.data?.data) //Call Affilinks code
               this.umSource = 'Affilinks';

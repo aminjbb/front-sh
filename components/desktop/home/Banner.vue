@@ -38,10 +38,7 @@ export default {
         /**
          * sectionId for id
          */
-        sectionId: {
-            type: String,
-            default: ''
-        },
+        sectionId: '',
 
         /**
          * Section title

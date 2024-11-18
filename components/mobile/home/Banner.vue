@@ -80,17 +80,11 @@ export default {
         /**
          * screenId
          */
-        screenId: {
-          type:String|Number,
-          default:'D'
-        },
+        screenId: '',
         /**
          * sectionId for id
          */
-        sectionId: {
-          type: String|Number,
-          default: ''
-        },
+        sectionId: '',
     },
 
     methods:{

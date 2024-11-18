@@ -5,9 +5,12 @@ import axios from 'axios'
 
 
 export default function setup() {
+    const runtimeConfig = useRuntimeConfig()
+    const userToken = useCookie('userToken')
+
     /**
      * Send information to Takhfifan
-     * @param {*} data 
+     * @param {*} data
      */
     // async function sendInfoToTakhfifan(order) {
     //     console.log("🚀 ~ sendInfoToTakhfifan ~ order:", order)
@@ -47,7 +50,7 @@ export default function setup() {
 
     /**
      * Send information to Deema
-     * @param {*} order 
+     * @param {*} order
      */
     // async function sendInfoToDeema(order) {
     //     const deemaToken = useCookie('dm-clickid')
@@ -65,41 +68,21 @@ export default function setup() {
     /**
      * Send information to Affilinks
      * All price should be "Toman"
-     * @param {*} order 
+     * @param {*} order
      */
     async function sendInfoToTaAffilinks(order) {
         const alToken = useCookie('altoken')
 
-        let productList = [];
-        order?.details.forEach(item =>{
-            const obj={
-                price:Number(String(item?.site_price).slice(0, -1)) ,
-                quantity: item?.count,	
-                product_id: `${item?.shps?.sku?.id}`,
-                name: item?.shps?.sku?.label,
-                category: item?.shps?.sku?.category,
-                category_id: `${item?.shps?.sku?.category_id}`,
-            }
-            productList.push(obj);
-        });
-
         axios
-            .post('https://affilinks.ir/api/v1/third-party/track-purchase', {
-                token: alToken.value,
-                order_id:`${order?.id}`,
-                total: Number(String(order?.paid_price).slice(0, -1)),
-                shipping: Number(String(order?.sending_price).slice(0, -1)),
-                tax: Number(String(order?.tax).slice(0, -1)),
-                discount: Number(String(order?.total_discount).slice(0, -1)),
-                new_customer1: order?.is_affilink,
-                coupon_code: order?.voucher_code,
-                items: productList
-            },
-            {
-                headers: {
-                    authorization: '4e2c76387b9c5ea7e3d1ca0dcbbaa2af59caad8a96d8062ca98f445d92b51046',
+            .post(`${runtimeConfig.public.apiBase}/affiliates/affilink/track-purchase`, {
+                    user_token: alToken.value,
+                    order_id: `${order?.id}`,
                 },
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken.value}`,
+                    },
+                })
             .then((response) => {
                 alToken.value = '';
             })
@@ -107,7 +90,7 @@ export default function setup() {
             });
     };
 
-    return{
+    return {
         // sendInfoToTakhfifan,
         // sendInfoToDeema,
         sendInfoToTaAffilinks
