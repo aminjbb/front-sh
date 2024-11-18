@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
     <template v-if="status === 'pre_progress' && content.count > 0">
         <div class="d-flex align-center w-100 justify-end">
@@ -61,7 +61,6 @@
             </v-btn>
         </div>
     </template>
-</div>
 </template>
 
 <script>
